@@ -1,0 +1,11 @@
+
+/*#pimcore_panel_toolbar {
+    background: red !important;
+}*/
+.advancedimportexport_icon_definition {
+    background: url(/plugins/AdvancedImportExport/static/img/export.svg) center center no-repeat !important;
+}
+
+.advancedimportexport_icon_next {
+    background: url(/plugins/AdvancedImportExport/static/img/long_arrow_right.svg) center center no-repeat !important;
+}

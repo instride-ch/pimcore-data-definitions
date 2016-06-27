@@ -3,6 +3,7 @@
 namespace AdvancedImportExport\Model\Definition;
 
 use AdvancedImportExport\Model\AbstractProvider;
+use AdvancedImportExport\Model\Mapping;
 use Pimcore\Model;
 use Pimcore\Tool;
 
@@ -61,6 +62,19 @@ class Dao extends Model\Dao\PhpArrayTable
                         $this->model->setProviderConfiguration($provider);
                     }
                 }
+            } else if($key === 'mapping') {
+                $maps = array();
+
+                foreach($this->model->getMapping() as $map) {
+                    if(is_array($map)) {
+                        $mapObj = new Mapping();
+                        $mapObj->setValues($map);
+
+                        $maps[] = $mapObj;
+                    }
+                }
+
+                $this->model->setMapping($maps);
             }
         }
     }
@@ -111,12 +125,21 @@ class Dao extends Model\Dao\PhpArrayTable
         try {
             $dataRaw = get_object_vars($this->model);
             $data = [];
-            $allowedProperties = ['id', 'name', 'provider', 'class', 'providerConfiguration', 'creationDate', 'modificationDate'];
+            $allowedProperties = ['id', 'name', 'provider', 'class', 'providerConfiguration', 'creationDate', 'modificationDate', 'mapping', 'objectPath'];
 
             foreach ($dataRaw as $key => $value) {
                 if (in_array($key, $allowedProperties)) {
                     if($key === 'providerConfiguration') {
                         $data[$key] = get_object_vars($value);
+                    }
+                    else if($key === 'mapping') {
+                        $data[$key] = array();
+
+                        if(is_array($value)) {
+                            foreach ($value as $map) {
+                                $data[$key][] = get_object_vars($map);
+                            }
+                        }
                     }
                     else {
                         $data[$key] = $value;

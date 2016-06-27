@@ -14,6 +14,9 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
     {
         parent::init();
 
+        $product = new Pimcore\Model\Object\CoreShopProduct();
+        $product->getVariants()->getCoreShopDimensionTest();
+
         // check permissions
         //TODO: Permissions?
         /*$notRestrictedActions = array('list');
@@ -94,8 +97,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
             $data = \Zend_Json::decode($this->getParam('data'));
             
             $definition->setValues($data);
-
-                $providerClass = 'AdvancedImportExport\\Model\\Provider\\' . ucfirst($definition->getProvider());
+            $providerClass = 'AdvancedImportExport\\Model\\Provider\\' . ucfirst($definition->getProvider());
             
             if(\Pimcore\Tool::classExists($providerClass)) {
                 $provider = new $providerClass();
@@ -108,6 +110,17 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                 else {
                     $this->_helper->json(array('success' => false, 'message' => 'Provider Class found, but it needs to inherit from AdvancedImportExport\Model\AbstractProvider'));
                 }
+
+                $maps = [];
+
+                foreach($data['mapping'] as $map) {
+                    $mapping = new \AdvancedImportExport\Model\Mapping();
+                    $mapping->setValues($map);
+
+                    $maps[] = $mapping;
+                }
+
+                $definition->setMapping($maps);
             }
             else {
                 $this->_helper->json(array('success' => false, 'message' => 'Provider Class not found'));
@@ -141,9 +154,49 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         $definition = \AdvancedImportExport\Model\Definition::getById($id);
 
         if ($definition instanceof \AdvancedImportExport\Model\Definition) {
-            $headers = $definition->getProviderConfiguration()->getColumns();
+            $fromColumns = $definition->getProviderConfiguration()->getColumns();
+            $toColumns = $this->getClassDefinitionForFieldSelection(Object\ClassDefinition::getByName($definition->getClass()));
+            $mappings = $definition->getMapping();
+            $mappingDefinition = [];
+            $fromColumnsResult = [];
 
-            $this->_helper->json(array('success' => true, 'fromColumns' => $headers, 'toColumns' => $this->getClassDefinitionForFieldSelection(Object\ClassDefinition::getByName($definition->getClass()))));
+            foreach($fromColumns as $fromColumn) {
+                $fromColumn = get_object_vars($fromColumn);
+
+                $fromColumn['id'] = $fromColumn['identifier'];
+
+                $fromColumnsResult[] = $fromColumn;
+            }
+
+            foreach($toColumns as $classToColumn) {
+                $found = false;
+
+                if(is_array($mappings)) {
+                    foreach ($mappings as $mapping) {
+                        if ($mapping->getToColumn() === $classToColumn['id']) {
+                            $found = true;
+
+                            $mappingDefinition[] = [
+                                'fromColumn' => $mapping->getFromColumn(),
+                                'toColumn' => $mapping->getToColumn(),
+                                'primaryIdentifier' => $mapping->getPrimaryIdentifier()
+                            ];
+
+                            break;
+                        }
+                    }
+                }
+
+                if (!$found) {
+                    $mappingDefinition[] = [
+                        'fromColumn' => null,
+                        'toColumn' => $classToColumn['id'],
+                        'primaryIdentifier' => false
+                    ];
+                }
+            }
+            
+            $this->_helper->json(array('success' => true, 'mapping' => $mappingDefinition, 'fromColumns' => $fromColumnsResult, 'toColumns' => $toColumns));
         }
 
         $this->_helper->json(array('success' => false));
@@ -159,11 +212,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         $fields = $class->getFieldDefinitions();
 
         $result = array(
-            'fields' => array(
-                'nodeLabel' => 'fields',
-                'nodeType' => 'object',
-                'childs' => array(),
-            ),
+
         );
 
         foreach ($fields as $field) {
@@ -171,7 +220,11 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                 $localizedFields = $field->getFieldDefinitions();
 
                 foreach ($localizedFields as $localizedField) {
-                    $result[] = $this->getFieldConfiguration($localizedField);
+                    $field = $this->getFieldConfiguration($localizedField);;
+
+                    $field['type'] = 'localizedfield';
+
+                    $result[] = $field;
                 }
             } elseif ($field instanceof Object\ClassDefinition\Data\Objectbricks) {
                 $list = new Object\Objectbrick\Definition\Listing();
@@ -183,17 +236,16 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                         $classDefs = $brickDefinition->getClassDefinitions();
 
                         foreach ($classDefs as $classDef) {
-                            if ($classDef['classname'] === $class->getId()) {
+                            if ($classDef['classname'] === $class->getId() && $classDef['fieldname'] === $field->getName()) {
                                 $fields = $brickDefinition->getFieldDefinitions();
 
-                                $result[$key] = array();
-                                $result[$key]['nodeLabel'] = $key;
-                                $result[$key]['className'] = $key;
-                                $result[$key]['nodeType'] = 'objectbricks';
-                                $result[$key]['childs'] = array();
+                                foreach ($fields as $brickField) {
+                                    $resultField = $this->getFieldConfiguration($brickField);
+                                    $resultField['type'] = "objectbrick";
+                                    $resultField['class'] = $key;
+                                    $resultField['id'] = 'objectbrick~' . $field->getName() . '~' . $key . '~' . $resultField['id'];
 
-                                foreach ($fields as $field) {
-                                    $result[$key]['childs'][] = $this->getFieldConfiguration($field);
+                                    $result[] = $resultField;
                                 }
 
                                 break;
@@ -219,34 +271,24 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                 foreach ($groupConfigList as $config) {
                     $key = $config->getId().($config->getName() ? $config->getName() : 'EMPTY');
 
-                    $result[$key] = $this->getClassificationStoreGroupConfiguration($config);
+                    foreach ($config->getRelations() as $relation) {
+                        if ($relation instanceof Object\Classificationstore\KeyGroupRelation) {
+                            $keyId = $relation->getKeyId();
+
+                            $keyConfig = Object\Classificationstore\KeyConfig::getById($keyId);
+
+                            $resultField = $this->getClassificationStoreFieldConfiguration($keyConfig, $config);
+
+                            $resultField['class'] = $key;
+                            $resultField['type'] = 'classificationstore';
+                            $resultField['id'] = 'classificationstore~' . $field->getName() . '~' . $keyConfig->getId() . '~' . $config->getId();
+                            
+                            $result[] = $resultField;
+                        }
+                    }
                 }
             } else {
-                $result['fields']['childs'][] = $this->getFieldConfiguration($field);
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param Object\Classificationstore\GroupConfig $config
-     * @return array
-     */
-    protected function getClassificationStoreGroupConfiguration(Object\Classificationstore\GroupConfig $config)
-    {
-        $result = array();
-        $result['nodeLabel'] = $config->getName();
-        $result['nodeType'] = 'classificationstore';
-        $result['childs'] = array();
-
-        foreach ($config->getRelations() as $relation) {
-            if ($relation instanceof Object\Classificationstore\KeyGroupRelation) {
-                $keyId = $relation->getKeyId();
-
-                $keyConfig = Object\Classificationstore\KeyConfig::getById($keyId);
-
-                $result['childs'][] = $this->getClassificationStoreFieldConfiguration($keyConfig, $config);
+                $result[] = $this->getFieldConfiguration($field);
             }
         }
 
@@ -264,6 +306,8 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
             'fieldtype' => $field->getFieldtype(),
             'title' => $field->getTitle(),
             'tooltip' => $field->getTooltip(),
+            'type' => 'fields',
+            'id' => $field->getName()
         );
     }
 
@@ -280,7 +324,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
             'title' => $field->getName(),
             'tooltip' => $field->getDescription(),
             'keyConfigId' => $field->getId(),
-            'groupConfigId' => $groupConfig->getId(),
+            'groupConfigId' => $groupConfig->getId()
         );
     }
 }

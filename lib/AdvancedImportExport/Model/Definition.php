@@ -3,6 +3,7 @@
 namespace AdvancedImportExport\Model;
 
 use Pimcore\Model\AbstractModel;
+use Pimcore\Placeholder;
 
 /**
  * Class Definition
@@ -27,6 +28,11 @@ class Definition extends AbstractModel {
     /**
      * @var string
      */
+    public $objectPath;
+
+    /**
+     * @var string
+     */
     public $class;
 
     /**
@@ -43,6 +49,11 @@ class Definition extends AbstractModel {
      * @var int
      */
     public $modificationDate;
+
+    /**
+     * @var Mapping[]
+     */
+    public $mapping;
 
     /**
      * Get By Id.
@@ -74,6 +85,22 @@ class Definition extends AbstractModel {
         }
 
         return $definitionEntry;
+    }
+
+    /**
+     * @param $data
+     * @return string
+     */
+    public function createPath($data) {
+        $placeholderHelper = new Placeholder();
+        return $placeholderHelper->replacePlaceholders($this->getObjectPath(), $data);
+    }
+
+    /**
+     * @param array $params
+     */
+    public function doImport($params = []) {
+        $this->getProviderConfiguration()->runImport($this, $params);
     }
 
     /**
@@ -157,21 +184,21 @@ class Definition extends AbstractModel {
     }
 
     /**
-     * @return string
+     * @return Mapping[]
      */
-    public function getConfiguration()
+    public function getMapping()
     {
-        return $this->configuration;
+        return $this->mapping;
     }
 
     /**
-     * @param string $configuration
+     * @param Mapping[] $mapping
      */
-    public function setConfiguration($configuration)
+    public function setMapping($mapping)
     {
-        $this->configuration = $configuration;
+        $this->mapping = $mapping;
     }
-
+    
     /**
      * @return int
      */
@@ -202,5 +229,21 @@ class Definition extends AbstractModel {
     public function setModificationDate($modificationDate)
     {
         $this->modificationDate = $modificationDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObjectPath()
+    {
+        return $this->objectPath;
+    }
+
+    /**
+     * @param string $objectPath
+     */
+    public function setObjectPath($objectPath)
+    {
+        $this->objectPath = $objectPath;
     }
 }

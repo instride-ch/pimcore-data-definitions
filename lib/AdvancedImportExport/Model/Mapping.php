@@ -10,14 +10,19 @@ use AdvancedImportExport\Model\Mapping\ToColumn;
  */
 class Mapping {
     /**
-     * @var FromColumn
+     * @var string
      */
     public $fromColumn;
 
     /**
-     * @var ToColumn
+     * @var string
      */
     public $toColumn;
+
+    /**
+     * @var boolean
+     */
+    public $primaryIdentifier;
 
     /**
      * @param array $values
@@ -28,24 +33,60 @@ class Mapping {
             if ($key == 'type') {
                 continue;
             }
-
-            if($key === "fromColumn") {
-                $fromCol = new FromColumn();
-                $fromCol->setValues($value);
-
-                $value = $fromCol;
-            } else if($key === "toColumn") {
-                $toCol = new ToColumn();
-                $toCol->setValues($value);
-
-                $value = $toCol;
-            }
-
+            
             $setter = 'set'.ucfirst($key);
 
             if (method_exists($this, $setter)) {
                 $this->$setter($value);
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getToColumn()
+    {
+        return $this->toColumn;
+    }
+
+    /**
+     * @param string $toColumn
+     */
+    public function setToColumn($toColumn)
+    {
+        $this->toColumn = $toColumn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFromColumn()
+    {
+        return $this->fromColumn;
+    }
+
+    /**
+     * @param string $fromColumn
+     */
+    public function setFromColumn($fromColumn)
+    {
+        $this->fromColumn = $fromColumn;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getPrimaryIdentifier()
+    {
+        return $this->primaryIdentifier;
+    }
+
+    /**
+     * @param boolean $primaryIdentifier
+     */
+    public function setPrimaryIdentifier($primaryIdentifier)
+    {
+        $this->primaryIdentifier = $primaryIdentifier;
     }
 }

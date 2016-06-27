@@ -9,3 +9,11 @@
 .advancedimportexport_icon_next {
     background: url(/plugins/AdvancedImportExport/static/img/long_arrow_right.svg) center center no-repeat !important;
 }
+
+.td-icon[class*="pimcore_icon"] {
+    background-position: left center!important;
+}
+
+.td-icon .x-grid-cell-inner {
+    padding-left:25px;
+}

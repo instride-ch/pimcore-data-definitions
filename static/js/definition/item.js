@@ -113,6 +113,13 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                     store: classesStore,
                     width: 500,
                     value : this.data.class
+                },
+                {
+                    xtype : 'textfield',
+                    fieldLabel: t("path"),
+                    name: "objectPath",
+                    width: 500,
+                    value : this.data.objectPath
                 }
             ]
         });
@@ -172,25 +179,6 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
             if(this.data.provider) {
                 this.mappingSettings.enable();
 
-                var gridStore = new Ext.data.Store({
-                    fields : [
-                        'fromColumn',
-                        'toColumn'
-                    ]
-                });
-
-                var fromColumnStore = new Ext.data.Store({
-                    fields : [
-                        'identifier',
-                        'label'
-                    ],
-                    idProperty : 'identifier'
-                });
-
-                var pickerStore = new Ext.data.TreeStore({
-
-                });
-
                 Ext.Ajax.request({
                     url: '/plugin/AdvancedImportExport/admin_definition/get-columns',
                     params : {
@@ -201,14 +189,53 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                         var config = Ext.decode(result.responseText);
                         var gridStoreData = [];
 
-                        config.fromColumns.forEach(function(col) {
-                            gridStoreData.push({
-                                fromColumn : col
-                            });
+                        var fromColumnStore = new Ext.data.Store({
+                            fields : [
+                                'identifier',
+                                'label'
+                            ],
+                            data : config.fromColumns,
+                            listeners: {
+                                load: function(store){
+                                    var rec = { identifier: '', label: '' };
+                                    store.insert(0,rec);
+                                }
+                            }
                         });
 
-                        gridStore.loadRawData(gridStoreData);
-                        pickerStore.loadRawData(config.toColumns);
+                        var toColumnStore = new Ext.data.Store({
+                            data : config.toColumns
+                        });
+
+                        var gridStore = new Ext.data.Store({
+                            grouper : {
+                                groupFn : function(item) {
+                                    var rec = toColumnStore.getById(item.data.toColumn);
+
+                                    if(rec) {
+                                        if (rec.data.type === "objectbrick") {
+                                            return rec.data.class;
+                                        }
+
+                                        return rec.data.type;
+                                    }
+                                }
+                            },
+                            fields : [
+                                'fromColumn',
+                                'toColumn',
+                                'primaryIdentifier'
+                            ]
+                        });
+
+                        config.toColumns.forEach(function(col) {
+                            gridStoreData.push({
+                                toColumn : col.id
+                            })
+                        });
+
+
+                        gridStore.loadRawData(config.mapping);
 
                         var cellEditingPlugin = Ext.create('Ext.grid.plugin.CellEditing');
 
@@ -217,35 +244,59 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                             region : 'center',
                             store : gridStore,
                             plugins : [cellEditingPlugin],
+                            features: [{
+                                ftype: 'grouping',
+
+                                groupHeaderTpl: '{name}'
+                            }],
                             columns : {
                                 defaults : {},
                                 items : [
                                     {
-                                        text : t('advancedimportexport_fromColumn'),
-                                        dataIndex : 'fromColumn',
-                                        flex : 1,
-                                        editor : {
-                                            xtype : 'combo',
-                                            store : fromColumnStore
-                                        },
-                                        renderer : function(val) {
-                                            return val.label;
-                                        }
-                                    },
-                                    {
                                         text : t('advancedimportexport_toColumn'),
                                         dataIndex : 'toColumn',
                                         flex : 1,
-                                        editor : {
-                                            xtype : 'classTreePicker',
-                                            data : config.toColumns
-                                        },
-                                        renderer : function(val) {
-                                            if(val && Ext.isObject(val)) {
-                                                return val.objectType + (val.className ? "~" + val.className : "") + "~" + val.name;
+                                        renderer : function(val, metadata) {
+                                            var rec = toColumnStore.getById(val);
+
+                                            if(rec) {
+                                                metadata.tdCls = 'pimcore_icon_' + rec.data.fieldtype + ' td-icon';
+
+                                                return rec.data.name;
                                             }
 
                                             return val;
+                                        }
+                                    },
+                                    {
+                                        text : t('advancedimportexport_fromColumn'),
+                                        dataIndex : 'fromColumn',
+                                        flex : 1,
+                                        renderer : function(val) {
+                                            if(val) {
+                                                var rec = fromColumnStore.getById(val);
+
+                                                if(rec)
+                                                    return rec.get("label");
+                                            }
+
+                                            return val;
+                                        },
+                                        editor : {
+                                            xtype : 'combo',
+                                            store : fromColumnStore,
+                                            mode : 'local',
+                                            displayField: 'label',
+                                            valueField: 'id',
+                                            editable : false
+                                        }
+                                    },
+                                    {
+                                        xtype: 'checkcolumn',
+                                        text : t('advancedimportexport_primaryIdentifier'),
+                                        dataIndex : 'primaryIdentifier',
+                                        editor: {
+                                            xtype: 'checkbox'
                                         }
                                     }
                                 ]
@@ -262,9 +313,20 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
 
     getSaveData : function () {
         var data = {
-            configuration: {}
+            configuration: {},
+            mapping: []
         };
 
+        var mapping = this.mappingSettings.down("grid").getStore().getRange();
+        var mappingResult = [];
+
+        mapping.forEach(function(map) {
+            if(map.data.fromColumn) {
+                mappingResult.push(map.data);
+            }
+        });
+
+        Ext.apply(data.mapping, mappingResult);
         Ext.apply(data, this.configForm.getForm().getFieldValues());
 
         if(this.providerSettings.down("form")) {
@@ -288,16 +350,12 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
             params: saveData,
             success: function (response) {
                 try {
-                    if (this.parentPanel.store) {
-                        this.parentPanel.store.load();
-                    }
+                    var res = Ext.decode(response.responseText);
 
                     if (res.success) {
                         pimcore.helpers.showNotification(t('success'), t('success'), 'success');
 
                         this.data = res.data;
-
-                        this.panel.setTitle(this.getTitleText());
                     } else {
                         pimcore.helpers.showNotification(t('error'), t('error'),
                             'error', res.message);

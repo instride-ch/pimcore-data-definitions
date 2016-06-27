@@ -3,7 +3,9 @@
 namespace AdvancedImportExport\Model\Provider;
 
 use AdvancedImportExport\Model\AbstractProvider;
+use AdvancedImportExport\Model\Definition;
 use AdvancedImportExport\Model\Mapping\FromColumn;
+use Pimcore\Model\Object\Concrete;
 
 /**
  * CSV Import/Export Provider
@@ -105,5 +107,63 @@ class Csv extends AbstractProvider {
         }
 
         return $returnHeaders;
+    }
+
+    /**
+     * @param Definition $definition
+     * @param $params
+     * @return mixed
+     */
+    public function runImport($definition, $params)
+    {
+        $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
+
+        $columnMapping = [];
+
+        $row = 0;
+        if (($handle = fopen($file, "r")) !== false) {
+            while (($data = fgetcsv($handle, 1000, $this->getDelimiter(), $this->getEnclosure())) !== false) {
+                $num = count($data);
+
+                //Make Column Mapping
+                if($row === 0) {
+                    for ($c = 0; $c < $num; $c++) {
+                        $columnMapping[] = $data[$c];
+                    }
+                }
+                else {
+                    $this->importRow($definition, $columnMapping, $data);
+                }
+
+                $row++;
+            }
+            fclose($handle);
+        }
+    }
+
+    /**
+     * @param Definition $definition
+     * @param $map
+     * @param $data
+     *
+     * @return Concrete
+     */
+    private function importRow($definition, $map, $data) {
+        //Convert Data to map
+        $mappedData = [];
+
+        foreach($data as $index => $col) {
+            $mappedData[$map[$index]] = $col;
+        }
+
+        $object = $this->getObjectForPrimaryKey($definition, $mappedData);
+
+        foreach($definition->getMapping() as $map) {
+            $value = $mappedData[$map->getFromColumn()];
+
+            $this->setObjectValue($object, $map->getFromColumn(), $map->getToColumn(), $value);
+        }
+
+        return $object->save();
     }
 }

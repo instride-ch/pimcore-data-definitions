@@ -23,6 +23,14 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
     public function init()
     {
         parent::init();
+
+        \Pimcore::getEventManager()->attach('system.console.init', function (\Zend_EventManager_Event $e) {
+            /** @var \Pimcore\Console\Application $application */
+            $application = $e->getTarget();
+
+            // add a namespace to autoload commands from
+            $application->addAutoloadNamespace('AdvancedImportExport\\Console', PIMCORE_PLUGINS_PATH.'/AdvancedImportExport/lib/AdvancedImportExport/Console');
+        });
     }
 
     /**

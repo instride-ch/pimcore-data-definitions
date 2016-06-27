@@ -20,7 +20,7 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
         this.createStore();
 
         Ext.Ajax.request({
-            url: '/plugin/AdvancedImportExport/admin_definition/get-providers',
+            url: '/plugin/AdvancedImportExport/admin_definition/get-config',
             method: 'GET',
             success: function (result) {
                 var config = Ext.decode(result.responseText);

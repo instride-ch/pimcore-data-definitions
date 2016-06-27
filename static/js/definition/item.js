@@ -210,11 +210,11 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                         var gridStore = new Ext.data.Store({
                             grouper : {
                                 groupFn : function(item) {
-                                    var rec = toColumnStore.getById(item.data.toColumn);
+                                    var rec = toColumnStore.findRecord("identifier", item.data.toColumn);
 
                                     if(rec) {
                                         if (rec.data.type === "objectbrick") {
-                                            return rec.data.class;
+                                            return rec.data.config.class;
                                         }
 
                                         return rec.data.type;
@@ -257,12 +257,12 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                         dataIndex : 'toColumn',
                                         flex : 1,
                                         renderer : function(val, metadata) {
-                                            var rec = toColumnStore.getById(val);
+                                            var rec = toColumnStore.findRecord("identifier", val);
 
                                             if(rec) {
                                                 metadata.tdCls = 'pimcore_icon_' + rec.data.fieldtype + ' td-icon';
 
-                                                return rec.data.name;
+                                                return rec.data.label;
                                             }
 
                                             return val;
@@ -274,7 +274,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                         flex : 1,
                                         renderer : function(val) {
                                             if(val) {
-                                                var rec = fromColumnStore.getById(val);
+                                                var rec = fromColumnStore.findRecord("identifier", val);
 
                                                 if(rec)
                                                     return rec.get("label");

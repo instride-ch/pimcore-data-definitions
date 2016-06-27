@@ -25,10 +25,11 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         }*/
     }
 
-    public function getProvidersAction() {
+    public function getConfigAction() {
         $this->_helper->json(array(
             'success' => true,
-            'providers' => \AdvancedImportExport\Model\AbstractProvider::$availableProviders
+            'providers' => \AdvancedImportExport\Model\AbstractProvider::$availableProviders,
+            'interpreter' => \AdvancedImportExport\Model\Interpreter\AbstractInterpreter::$availableInterpreter
         ));
     }
 
@@ -173,7 +174,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
 
                 if(is_array($mappings)) {
                     foreach ($mappings as $mapping) {
-                        if ($mapping->getToColumn() === $classToColumn['id']) {
+                        if ($mapping->getToColumn() === $classToColumn->getIdentifier()) {
                             $found = true;
 
                             $mappingDefinition[] = [
@@ -190,7 +191,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                 if (!$found) {
                     $mappingDefinition[] = [
                         'fromColumn' => null,
-                        'toColumn' => $classToColumn['id'],
+                        'toColumn' => $classToColumn->getIdentifier(),
                         'primaryIdentifier' => false
                     ];
                 }
@@ -220,9 +221,9 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                 $localizedFields = $field->getFieldDefinitions();
 
                 foreach ($localizedFields as $localizedField) {
-                    $field = $this->getFieldConfiguration($localizedField);;
+                    $field = $this->getFieldConfiguration($localizedField);
 
-                    $field['type'] = 'localizedfield';
+                    $field->setType('localizedfield');
 
                     $result[] = $field;
                 }
@@ -241,9 +242,12 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
 
                                 foreach ($fields as $brickField) {
                                     $resultField = $this->getFieldConfiguration($brickField);
-                                    $resultField['type'] = "objectbrick";
-                                    $resultField['class'] = $key;
-                                    $resultField['id'] = 'objectbrick~' . $field->getName() . '~' . $key . '~' . $resultField['id'];
+
+                                    $resultField->setType("objectbrick");
+                                    $resultField->setIdentifier('objectbrick~' . $field->getName() . '~' . $key . '~' . $resultField->getIdentifier());
+                                    $resultField->setConfig([
+                                        "class" => $key
+                                    ]);
 
                                     $result[] = $resultField;
                                 }
@@ -277,13 +281,17 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
 
                             $keyConfig = Object\Classificationstore\KeyConfig::getById($keyId);
 
-                            $resultField = $this->getClassificationStoreFieldConfiguration($keyConfig, $config);
+                            $toColumn = new \AdvancedImportExport\Model\Mapping\ToColumn();
+                            $toColumn->setIdentifier('classificationstore~' . $field->getName() . '~' . $keyConfig->getId() . '~' . $config->getId());
+                            $toColumn->setType("classificationstore");
+                            $toColumn->setFieldtype($keyConfig->getType());
+                            $toColumn->setConfig([
+                                "keyId" => $keyConfig->getId(),
+                                "groupId" => $config->getId()
+                            ]);
+                            $toColumn->setLabel($keyConfig->getName());
 
-                            $resultField['class'] = $key;
-                            $resultField['type'] = 'classificationstore';
-                            $resultField['id'] = 'classificationstore~' . $field->getName() . '~' . $keyConfig->getId() . '~' . $config->getId();
-                            
-                            $result[] = $resultField;
+                            $result[] = $toColumn;
                         }
                     }
                 }
@@ -297,34 +305,16 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
 
     /**
      * @param Object\ClassDefinition\Data $field
-     * @return array
+     * @return \AdvancedImportExport\Model\Mapping\ToColumn
      */
     protected function getFieldConfiguration(Object\ClassDefinition\Data $field)
     {
-        return array(
-            'name' => $field->getName(),
-            'fieldtype' => $field->getFieldtype(),
-            'title' => $field->getTitle(),
-            'tooltip' => $field->getTooltip(),
-            'type' => 'fields',
-            'id' => $field->getName()
-        );
-    }
+        $toColumn = new \AdvancedImportExport\Model\Mapping\ToColumn();
 
-    /**
-     * @param Object\Classificationstore\KeyConfig $field
-     * @param Object\Classificationstore\GroupConfig $groupConfig
-     * @return array
-     */
-    protected function getClassificationStoreFieldConfiguration(Object\Classificationstore\KeyConfig $field, Object\Classificationstore\GroupConfig $groupConfig)
-    {
-        return array(
-            'name' => $field->getName(),
-            'fieldtype' => $field->getType(),
-            'title' => $field->getName(),
-            'tooltip' => $field->getDescription(),
-            'keyConfigId' => $field->getId(),
-            'groupConfigId' => $groupConfig->getId()
-        );
+        $toColumn->setLabel($field->getName());
+        $toColumn->setFieldtype($field->getFieldtype());
+        $toColumn->setIdentifier($field->getName());
+
+        return $toColumn;
     }
 }

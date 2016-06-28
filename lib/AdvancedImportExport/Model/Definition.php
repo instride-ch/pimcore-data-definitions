@@ -56,6 +56,11 @@ class Definition extends AbstractModel {
     public $mapping;
 
     /**
+     * @var string
+     */
+    public $cleaner;
+
+    /**
      * Get By Id.
      *
      * @param int $id
@@ -100,7 +105,7 @@ class Definition extends AbstractModel {
      * @param array $params
      */
     public function doImport($params = []) {
-        $this->getProviderConfiguration()->runImport($this, $params);
+        $this->getProviderConfiguration()->doImport($this, $params);
     }
 
     /**
@@ -245,5 +250,21 @@ class Definition extends AbstractModel {
     public function setObjectPath($objectPath)
     {
         $this->objectPath = $objectPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCleaner()
+    {
+        return $this->cleaner;
+    }
+
+    /**
+     * @param string $cleaner
+     */
+    public function setCleaner($cleaner)
+    {
+        $this->cleaner = $cleaner;
     }
 }

@@ -25,6 +25,11 @@ class Mapping {
     public $primaryIdentifier;
 
     /**
+     * @var array
+     */
+    public $config = [];
+
+    /**
      * @param array $values
      */
     public function setValues(array $values)
@@ -88,5 +93,21 @@ class Mapping {
     public function setPrimaryIdentifier($primaryIdentifier)
     {
         $this->primaryIdentifier = $primaryIdentifier;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param array $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
     }
 }

@@ -14,6 +14,8 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
     },
 
     providers : [],
+    cleaners : [],
+    interpreters : [],
 
     initialize: function () {
         // create layout
@@ -25,8 +27,20 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
             success: function (result) {
                 var config = Ext.decode(result.responseText);
 
+                this.providers = [];
+                this.cleaners = [];
+                this.interpreters = [];
+
                 config.providers.forEach(function(provider) {
                     this.providers.push([provider]);
+                }.bind(this));
+
+                config.interpreter.forEach(function(interpreter) {
+                    this.interpreters.push([interpreter]);
+                }.bind(this));
+
+                config.cleaner.forEach(function(cleaner) {
+                    this.cleaners.push([cleaner]);
                 }.bind(this));
 
                 var providerStore = new Ext.data.ArrayStore({
@@ -36,6 +50,22 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
                 });
 
                 pimcore.globalmanager.add("advancedimportexport_providers", providerStore);
+
+                var cleanersStore = new Ext.data.ArrayStore({
+                    data : this.cleaners,
+                    fields: ["cleaner"],
+                    idProperty : "cleaner"
+                });
+
+                pimcore.globalmanager.add("advancedimportexport_cleaners", cleanersStore);
+
+                var interpretersStore = new Ext.data.ArrayStore({
+                    data : this.interpreters,
+                    fields: ["interpreter"],
+                    idProperty : "interpreter"
+                });
+
+                pimcore.globalmanager.add("advancedimportexport_interpreters", interpretersStore);
 
                 this.getLayout();
             }.bind(this)

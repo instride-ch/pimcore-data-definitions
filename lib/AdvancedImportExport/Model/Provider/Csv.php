@@ -112,13 +112,14 @@ class Csv extends AbstractProvider {
     /**
      * @param Definition $definition
      * @param $params
-     * @return mixed
+     * @return Concrete[]
      */
-    public function runImport($definition, $params)
+    protected function runImport($definition, $params)
     {
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
 
         $columnMapping = [];
+        $objects = [];
 
         $row = 0;
         if (($handle = fopen($file, "r")) !== false) {
@@ -132,13 +133,15 @@ class Csv extends AbstractProvider {
                     }
                 }
                 else {
-                    $this->importRow($definition, $columnMapping, $data);
+                    $objects[] = $this->importRow($definition, $columnMapping, $data);
                 }
 
                 $row++;
             }
             fclose($handle);
         }
+
+        return $objects;
     }
 
     /**
@@ -161,9 +164,11 @@ class Csv extends AbstractProvider {
         foreach($definition->getMapping() as $map) {
             $value = $mappedData[$map->getFromColumn()];
 
-            $this->setObjectValue($object, $map->getFromColumn(), $map->getToColumn(), $value);
+            $this->setObjectValue($object, $map, $value);
         }
 
-        return $object->save();
+        $object->save();
+
+        return $object;
     }
 }

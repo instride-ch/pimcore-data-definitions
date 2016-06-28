@@ -29,7 +29,8 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         $this->_helper->json(array(
             'success' => true,
             'providers' => \AdvancedImportExport\Model\AbstractProvider::$availableProviders,
-            'interpreter' => \AdvancedImportExport\Model\Interpreter\AbstractInterpreter::$availableInterpreter
+            'interpreter' => \AdvancedImportExport\Model\Interpreter\AbstractInterpreter::$availableInterpreter,
+            'cleaner' => \AdvancedImportExport\Model\Cleaner\AbstractCleaner::$availableCleaner
         ));
     }
 
@@ -155,7 +156,13 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         $definition = \AdvancedImportExport\Model\Definition::getById($id);
 
         if ($definition instanceof \AdvancedImportExport\Model\Definition) {
+            $customFromColumn = new \AdvancedImportExport\Model\Mapping\FromColumn();
+            $customFromColumn->setIdentifier('custom');
+            $customFromColumn->setLabel('Custom');
+
             $fromColumns = $definition->getProviderConfiguration()->getColumns();
+            $fromColumns[] = $customFromColumn;
+
             $toColumns = $this->getClassDefinitionForFieldSelection(Object\ClassDefinition::getByName($definition->getClass()));
             $mappings = $definition->getMapping();
             $mappingDefinition = [];
@@ -180,7 +187,8 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                             $mappingDefinition[] = [
                                 'fromColumn' => $mapping->getFromColumn(),
                                 'toColumn' => $mapping->getToColumn(),
-                                'primaryIdentifier' => $mapping->getPrimaryIdentifier()
+                                'primaryIdentifier' => $mapping->getPrimaryIdentifier(),
+                                'config' => $mapping->getConfig()
                             ];
 
                             break;
@@ -192,7 +200,8 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                     $mappingDefinition[] = [
                         'fromColumn' => null,
                         'toColumn' => $classToColumn->getIdentifier(),
-                        'primaryIdentifier' => false
+                        'primaryIdentifier' => false,
+                        'config' => []
                     ];
                 }
             }

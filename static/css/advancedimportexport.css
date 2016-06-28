@@ -17,3 +17,9 @@
 .td-icon .x-grid-cell-inner {
     padding-left:25px;
 }
+
+.advancedimportexport-edit-button {
+    padding: 0px;
+    background: none;
+    border: none;
+}

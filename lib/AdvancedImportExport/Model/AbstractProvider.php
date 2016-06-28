@@ -2,8 +2,8 @@
 
 namespace AdvancedImportExport\Model;
 
-use AdvancedImportExport\Model\Interpreter\Classificationstore;
-use AdvancedImportExport\Model\Interpreter\Objectbrick;
+use AdvancedImportExport\Model\Cleaner\AbstractCleaner;
+use AdvancedImportExport\Model\Interpreter\AbstractInterpreter;
 use AdvancedImportExport\Model\Mapping\FromColumn;
 use Pimcore\File;
 use Pimcore\Model\Object\AbstractObject;
@@ -11,6 +11,7 @@ use Pimcore\Model\Object\ClassDefinition;
 use Pimcore\Model\Object\Concrete;
 use Pimcore\Model\Object\Listing;
 use Pimcore\Model\Object\Service;
+use Pimcore\Tool;
 
 /**
  * Base Class every Provider needs to implement
@@ -118,9 +119,69 @@ abstract class AbstractProvider {
     /**
      * @param Definition $definition
      * @param $params
-     * @return mixed
+     * @return Concrete[]
      */
-    public abstract function runImport($definition, $params);
+    protected abstract function runImport($definition, $params);
+
+    /**
+     * @param Definition $definition
+     * @param $params
+     */
+    public function doImport($definition, $params) {
+        $logs = new Log\Listing();
+        $logs->setCondition("definition = ?", array($definition->getId()));
+        $logs = $logs->getData();
+
+        $objects = $this->runImport($definition, $params);
+
+        //Compare with logs and cleanup
+        $notFound = [];
+
+        foreach($logs as $log) {
+            $found = false;
+
+            foreach($objects as $object) {
+                if(intval($log->getO_Id()) === $object->getId()) {
+                    $found = true;
+
+                    break;
+                }
+            }
+
+            if(!$found) {
+                $notFoundObject = Concrete::getById($log->getO_Id());
+
+                if($notFoundObject instanceof Concrete) {
+                    $notFound[] = $notFoundObject;
+                }
+            }
+        }
+
+        //Get Cleanup type
+        $type = $definition->getCleaner();
+        $class = 'AdvancedImportExport\\Model\\Cleaner\\' . ucfirst($type);
+        
+        if(Tool::classExists($class)) {
+            $class = new $class();
+            
+            if($class instanceof AbstractCleaner) {
+                $class->cleanup($objects, $logs, $notFound);
+            }
+        }
+
+        //Delete Logs
+        foreach($logs as $log) {
+            $log->delete();
+        }
+
+        //Save new Log
+        foreach($objects as $obj) {
+            $log = new Log();
+            $log->setO_Id($obj->getId());
+            $log->setDefinition($definition->getId());
+            $log->save();
+        }
+    }
 
     /**
      * @param Definition $definition
@@ -188,25 +249,25 @@ abstract class AbstractProvider {
 
     /**
      * @param Concrete $object
-     * @param $fromColumn
-     * @param $toColumn
+     * @param Mapping $map
      * @param $value
      */
-    public function setObjectValue(Concrete $object, $fromColumn, $toColumn, $value) {
-        $keyParts = explode("~", $toColumn);
+    public function setObjectValue(Concrete $object, Mapping $map, $value) {
+        $mapConfig = $map->getConfig();
 
-        if(count($keyParts) > 1) {
-            $type = $keyParts[0];
+        if($mapConfig['interpreter']) {
+            $class = 'AdvancedImportExport\Model\Interpreter\\' . ucfirst($mapConfig['interpreter']);
 
-            if($type === 'objectbrick') {
-                Objectbrick::interpret($object, $value, $fromColumn, $toColumn);
-            }
-            else if($type === 'classificationstore') {
-               Classificationstore::interpret($object, $value, $fromColumn, $toColumn);
+            if(Tool::classExists($class)) {
+                $class = new $class();
+
+                if($class instanceof AbstractInterpreter) {
+                    $class->interpret($object, $value, $map);
+                }
             }
         }
         else {
-            $object->setValue($toColumn, $value);
+            $object->setValue($map->getToColumn(), $value);
         }
     }
 }

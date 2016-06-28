@@ -1,6 +1,8 @@
 <?php
 
 namespace AdvancedImportExport\Model\Interpreter;
+use AdvancedImportExport\Model\Mapping;
+use Pimcore\Model\Object\Concrete;
 
 /**
  * Class Classificationstore
@@ -9,16 +11,16 @@ namespace AdvancedImportExport\Model\Interpreter;
 class Classificationstore extends AbstractInterpreter {
 
     /**
-     * @param $object
+     * @param Concrete $object
      * @param $value
-     * @param $fromColumn
-     * @param $toColumn
+     * @param Mapping $map
      * @return mixed
      */
-    public static function interpret($object, $value, $fromColumn, $toColumn) {
-        $keyParts = explode("~", $toColumn);
+    public function interpret(Concrete $object, $value, Mapping $map) {
+        $keyParts = explode("~", $map->getToColumn());
 
-        $fieldName = $keyParts[1];
+        $mapConfig = $map->getConfig();
+        $fieldName = $mapConfig['classificationstoreField'];
         $keyConfig = $keyParts[2];
         $groupConfig = $keyParts[3];
 

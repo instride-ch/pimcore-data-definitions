@@ -125,7 +125,7 @@ class Dao extends Model\Dao\PhpArrayTable
         try {
             $dataRaw = get_object_vars($this->model);
             $data = [];
-            $allowedProperties = ['id', 'name', 'provider', 'class', 'providerConfiguration', 'creationDate', 'modificationDate', 'mapping', 'objectPath'];
+            $allowedProperties = ['id', 'name', 'provider', 'class', 'providerConfiguration', 'creationDate', 'modificationDate', 'mapping', 'objectPath', 'cleaner'];
 
             foreach ($dataRaw as $key => $value) {
                 if (in_array($key, $allowedProperties)) {

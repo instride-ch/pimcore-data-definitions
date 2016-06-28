@@ -1,6 +1,8 @@
 <?php
 
 namespace AdvancedImportExport\Model\Interpreter;
+use AdvancedImportExport\Model\Mapping;
+use Pimcore\Model\Object\Concrete;
 
 /**
  * Class AbstractInterpreter
@@ -12,7 +14,7 @@ abstract class AbstractInterpreter{
      *
      * @var array
      */
-    public static $availableInterpreter = array('objectbrick', 'classificationstore');
+    public static $availableInterpreter = array('objectbrick', 'classificationstore', 'href', 'multiHref', 'defaultValue');
 
     /**
      * Add Interpreter.
@@ -27,11 +29,10 @@ abstract class AbstractInterpreter{
     }
 
     /**
-     * @param $object
+     * @param Concrete $object
      * @param $value
-     * @param $fromColumn
-     * @param $toColumn
+     * @param Mapping $map
      * @return mixed
      */
-    public static function interpret($object, $value, $fromColumn, $toColumn) {}
+    public abstract function interpret(Concrete $object, $value, Mapping $map);
 }

@@ -120,7 +120,22 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                     name: "objectPath",
                     width: 500,
                     value : this.data.objectPath
-                }
+                },
+                {
+                    xtype : 'combo',
+                    fieldLabel: t("advancedimportexport_cleaner"),
+                    name: "cleaner",
+                    displayField: "cleaner",
+                    valueField: "cleaner",
+                    store: pimcore.globalmanager.get("advancedimportexport_cleaners"),
+                    value : this.data.cleaner,
+                    width: 500,
+                    listeners : {
+                        change : function (combo, value) {
+                            this.data.cleaner = value;
+                        }.bind(this)
+                    }
+                },
             ]
         });
 
@@ -198,7 +213,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                             listeners: {
                                 load: function(store){
                                     var rec = { identifier: '', label: '' };
-                                    store.insert(0,rec);
+                                    store.insert(0, rec);
                                 }
                             }
                         });
@@ -217,7 +232,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                             return rec.data.config.class;
                                         }
 
-                                        return rec.data.type;
+                                        return rec.data.type ? rec.data.type : t("fields");
                                     }
                                 }
                             },
@@ -280,7 +295,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                                     return rec.get("label");
                                             }
 
-                                            return val;
+                                            return null;
                                         },
                                         editor : {
                                             xtype : 'combo',
@@ -288,7 +303,28 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                             mode : 'local',
                                             displayField: 'label',
                                             valueField: 'id',
-                                            editable : false
+                                            editable : false,
+                                            listeners : {
+                                                change :  function(combo, newValue, oldValue, eOpts) {
+                                                    if(newValue === '') {
+                                                        return;
+                                                    }
+                                                    
+                                                    var gridRecord = combo.up("grid").getSelectionModel().getSelection();
+
+                                                    if(gridRecord.length > 0) {
+                                                        gridRecord = gridRecord[0];
+
+                                                        var fromColumn = fromColumnStore.findRecord("identifier", newValue);
+                                                        var toColumn = toColumnStore.findRecord("identifier", gridRecord .get("toColumn"));
+
+                                                        if(fromColumn && toColumn) {
+                                                            var dialog = new pimcore.plugin.advancedimportexport.definition.configDialog();
+                                                            dialog.getConfigDialog(fromColumn, toColumn, gridRecord );
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     },
                                     {
@@ -298,6 +334,37 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                         editor: {
                                             xtype: 'checkbox'
                                         }
+                                    },
+                                    {
+                                        xtype : 'gridcolumn',
+                                        dataIndex : 'fromColumn',
+                                        flex : 1,
+                                        align : 'right',
+                                        renderer : function (value, metadata, record) {
+                                            var fromColumn = fromColumnStore.findRecord("identifier", record.get("fromColumn"));
+                                            var toColumn = toColumnStore.findRecord("identifier", record.get("toColumn"));
+
+                                            if(fromColumn && toColumn)
+                                            {
+                                                var id = Ext.id();
+                                                Ext.defer(function () {
+                                                    Ext.widget('button', {
+                                                        renderTo: id,
+                                                        iconCls : 'pimcore_icon_edit',
+                                                        flex : 1,
+                                                        cls : 'advancedimportexport-edit-button',
+                                                        handler: function () {
+                                                            var dialog = new pimcore.plugin.advancedimportexport.definition.configDialog();
+                                                            dialog.getConfigDialog(fromColumn, toColumn, record);
+                                                        }
+                                                    });
+                                                }, 50);
+
+                                                return Ext.String.format('<div id="{0}"></div>', id);
+                                            }
+
+                                            return '';
+                                        }.bind(this)
                                     }
                                 ]
                             }

@@ -3,6 +3,7 @@
 namespace AdvancedImportExport;
 
 use Pimcore\API\Plugin as PluginLib;
+use Pimcore\Db;
 
 /**
  * Pimcore Plugin
@@ -38,6 +39,14 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
      */
     public static function install()
     {
+        $db = Db::get();
+
+        $db->query("CREATE TABLE `advancedimportexport_log` (
+          `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          `definition` int NOT NULL,
+          `o_id` int NOT NULL
+        ");
+
         return true;
     }
 

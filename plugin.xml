@@ -18,8 +18,15 @@
             <path>/plugins/AdvancedImportExport/static/js/pimcore/ClassTreePicker.js</path>
             <path>/plugins/AdvancedImportExport/static/js/definition/panel.js</path>
             <path>/plugins/AdvancedImportExport/static/js/definition/item.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/definition/configDialog.js</path>
             <path>/plugins/AdvancedImportExport/static/js/provider/abstractprovider.js</path>
             <path>/plugins/AdvancedImportExport/static/js/provider/csv.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/interpreters/abstract.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/interpreters/objectbrick.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/interpreters/classificationstore.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/interpreters/href.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/interpreters/multihref.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/interpreters/defaultvalue.js</path>
         </pluginJsPaths>
         <pluginCssPaths>
             <path>/plugins/AdvancedImportExport/static/css/advancedimportexport.css</path>

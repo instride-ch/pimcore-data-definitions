@@ -251,8 +251,9 @@ abstract class AbstractProvider {
      * @param Concrete $object
      * @param Mapping $map
      * @param $value
+     * @param array $data
      */
-    public function setObjectValue(Concrete $object, Mapping $map, $value) {
+    public function setObjectValue(Concrete $object, Mapping $map, $value, $data) {
         $mapConfig = $map->getConfig();
 
         if($mapConfig['interpreter']) {
@@ -262,7 +263,7 @@ abstract class AbstractProvider {
                 $class = new $class();
 
                 if($class instanceof AbstractInterpreter) {
-                    $class->interpret($object, $value, $map);
+                    $class->interpret($object, $value, $map, $data);
                 }
             }
         }

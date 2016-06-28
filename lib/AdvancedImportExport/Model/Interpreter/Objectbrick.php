@@ -15,14 +15,15 @@ class Objectbrick extends AbstractInterpreter {
      * @param Concrete $object
      * @param $value
      * @param Mapping $map
+     * @param array $data
      * @return mixed
      */
-    public function interpret(Concrete $object, $value, Mapping $map) {
+    public function interpret(Concrete $object, $value, Mapping $map, $data) {
         $keyParts = explode("~", $map->getToColumn());
 
         $config = $map->getConfig();
         $fieldName = $config['brickField'];
-        $class = $keyParts[2];
+        $class = $config['class'];
         $brickField = $keyParts[3];
 
         $brickGetter = "get" . ucfirst($fieldName);
@@ -36,7 +37,7 @@ class Objectbrick extends AbstractInterpreter {
                 $object->$brickSetter($brick);
             }
 
-            if ($brick instanceof Objectbrick) {
+            if ($brick instanceof \Pimcore\Model\Object\Objectbrick) {
                 $brickClassGetter = "get" . $class;
                 $brickClassSetter = "set" . $class;
 

@@ -130,14 +130,18 @@ class Dao extends Model\Dao\PhpArrayTable
             foreach ($dataRaw as $key => $value) {
                 if (in_array($key, $allowedProperties)) {
                     if($key === 'providerConfiguration') {
-                        $data[$key] = get_object_vars($value);
+                        if($value) {
+                            $data[$key] = get_object_vars($value);
+                        }
                     }
                     else if($key === 'mapping') {
-                        $data[$key] = array();
+                        if($value) {
+                            $data[$key] = array();
 
-                        if(is_array($value)) {
-                            foreach ($value as $map) {
-                                $data[$key][] = get_object_vars($map);
+                            if (is_array($value)) {
+                                foreach ($value as $map) {
+                                    $data[$key][] = get_object_vars($map);
+                                }
                             }
                         }
                     }

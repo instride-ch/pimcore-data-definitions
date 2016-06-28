@@ -164,7 +164,7 @@ class Csv extends AbstractProvider {
         foreach($definition->getMapping() as $map) {
             $value = $mappedData[$map->getFromColumn()];
 
-            $this->setObjectValue($object, $map, $value);
+            $this->setObjectValue($object, $map, $value, $mappedData);
         }
 
         $object->save();

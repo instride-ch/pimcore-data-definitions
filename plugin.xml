@@ -27,6 +27,7 @@
             <path>/plugins/AdvancedImportExport/static/js/interpreters/href.js</path>
             <path>/plugins/AdvancedImportExport/static/js/interpreters/multihref.js</path>
             <path>/plugins/AdvancedImportExport/static/js/interpreters/defaultvalue.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/interpreters/localizedfield.js</path>
         </pluginJsPaths>
         <pluginCssPaths>
             <path>/plugins/AdvancedImportExport/static/css/advancedimportexport.css</path>

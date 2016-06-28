@@ -15,9 +15,10 @@ class DefaultValue extends AbstractInterpreter {
      * @param Concrete $object
      * @param $value
      * @param Mapping $map
+     * @param array $data
      * @return mixed
      */
-    public function interpret(Concrete $object, $value, Mapping $map) {
+    public function interpret(Concrete $object, $value, Mapping $map, $data) {
         $config = $map->getConfig();
         $value = $config['value'];
         

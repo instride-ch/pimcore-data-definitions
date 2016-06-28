@@ -14,15 +14,14 @@ class Classificationstore extends AbstractInterpreter {
      * @param Concrete $object
      * @param $value
      * @param Mapping $map
+     * @param array $data
      * @return mixed
      */
-    public function interpret(Concrete $object, $value, Mapping $map) {
-        $keyParts = explode("~", $map->getToColumn());
-
+    public function interpret(Concrete $object, $value, Mapping $map, $data) {
         $mapConfig = $map->getConfig();
         $fieldName = $mapConfig['classificationstoreField'];
-        $keyConfig = $keyParts[2];
-        $groupConfig = $keyParts[3];
+        $keyConfig = intval($mapConfig['keyId']);
+        $groupConfig = intval($mapConfig['groupId']);
 
         $classificationStoreGetter = "get" . ucfirst($fieldName);
 

@@ -10,7 +10,7 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
         this.record = record;
 
         fieldSetItems.push(new Ext.form.TextField({
-            fieldLabel : t('fromColumn'),
+            fieldLabel : t('advancedimportexport_fromColumn'),
             name : 'fromColumn',
             length : 255,
             value : fromColumn.data.label,
@@ -18,7 +18,7 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
         }));
 
         fieldSetItems.push(new Ext.form.TextField({
-            fieldLabel : t('toColumn'),
+            fieldLabel : t('advancedimportexport_toColumn'),
             name : 'fromColumn',
             length : 255,
             value : toColumn.data.label,
@@ -39,7 +39,7 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
         }
 
         fieldSetItems.push(new Ext.form.ComboBox({
-            fieldLabel : t('interpreter'),
+            fieldLabel : t('advancedimportexport_interpreters'),
             name : 'interpreter',
             length : 255,
             value : record.data.config.interpreter,
@@ -85,7 +85,7 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
             height: 400,
             resizeable : true,
             modal: true,
-            title: t('config'),
+            title: t('advancedimportexport_config') + ' ' + fromColumn.data.label + ' => ' + toColumn.data.label,
             layout: 'fit',
             items: [this.configPanel]
         });

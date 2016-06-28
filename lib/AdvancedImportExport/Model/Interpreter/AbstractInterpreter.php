@@ -32,7 +32,8 @@ abstract class AbstractInterpreter{
      * @param Concrete $object
      * @param $value
      * @param Mapping $map
+     * @param array $data
      * @return mixed
      */
-    public abstract function interpret(Concrete $object, $value, Mapping $map);
+    public abstract function interpret(Concrete $object, $value, Mapping $map, $data);
 }

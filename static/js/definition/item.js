@@ -11,7 +11,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
 
     initialize: function (parentPanel, data, panelKey, type) {
         this.parentPanel = parentPanel;
-        this.data = data;
+        this.data = data ? data : {};
         this.panelKey = panelKey;
         this.type = type;
 
@@ -98,8 +98,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                     width: 500,
                     listeners : {
                         change : function (combo, value) {
-                            this.data.provider = value;
-                            this.reloadProviderSettings();
+                            this.reloadProviderSettings(value);
                             this.reloadColumnMapping();
                         }.bind(this)
                     }
@@ -153,21 +152,32 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
         }
 
         if(this.data.provider) {
-            this.reloadProviderSettings();
+            this.reloadProviderSettings(this.data.provider);
         }
 
         return this.providerSettings;
     },
 
-    reloadProviderSettings : function() {
+    reloadProviderSettings : function(provider) {
         if(this.providerSettings) {
             this.providerSettings.removeAll();
 
-            if(pimcore.plugin.advancedimportexport.provider[this.data.provider] !== undefined) {
-                this.providerSettings.add(new pimcore.plugin.advancedimportexport.provider[this.data.provider](this.data.providerConfiguration).getForm());
-                this.providerSettings.enable();
+            if(pimcore.plugin.advancedimportexport.provider[provider] !== undefined) {
+                if(this.data.provider === null) {
+                    this.save(function() {
+                        this.updateProviderMapViews();
+                    }.bind(this));
+                }
+                else {
+                    this.updateProviderMapViews();
+                }
             }
         }
+    },
+
+    updateProviderMapViews : function() {
+        this.providerSettings.add(new pimcore.plugin.advancedimportexport.provider[this.data.provider](this.data.providerConfiguration ? this.data.providerConfiguration : {}).getForm());
+        this.providerSettings.enable();
     },
 
     getMappingSettings : function() {
@@ -384,16 +394,19 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
             mapping: []
         };
 
-        var mapping = this.mappingSettings.down("grid").getStore().getRange();
-        var mappingResult = [];
+        if(this.mappingSettings.down("grid")) {
+            var mapping = this.mappingSettings.down("grid").getStore().getRange();
+            var mappingResult = [];
 
-        mapping.forEach(function(map) {
-            if(map.data.fromColumn) {
-                mappingResult.push(map.data);
-            }
-        });
+            mapping.forEach(function (map) {
+                if (map.data.fromColumn) {
+                    mappingResult.push(map.data);
+                }
+            });
 
-        Ext.apply(data.mapping, mappingResult);
+            Ext.apply(data.mapping, mappingResult);
+        }
+
         Ext.apply(data, this.configForm.getForm().getFieldValues());
 
         if(this.providerSettings.down("form")) {
@@ -405,7 +418,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
         };
     },
 
-    save: function ()
+    save: function (callback)
     {
         var saveData = this.getSaveData();
 
@@ -426,6 +439,10 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                     } else {
                         pimcore.helpers.showNotification(t('error'), t('error'),
                             'error', res.message);
+                    }
+
+                    if(Ext.isFunction(callback)) {
+                        callback();
                     }
                 } catch (e) {
                     pimcore.helpers.showNotification(t('error'), t('error'), 'error');

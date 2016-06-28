@@ -6,10 +6,10 @@ use Pimcore\Model\Object\Concrete;
 use Pimcore\Tool;
 
 /**
- * Class MultiHref
+ * Class Localizedfield
  * @package AdvancedImportExport\Model\Interpreter
  */
-class MultiHref extends AbstractInterpreter {
+class Localizedfield extends AbstractInterpreter {
 
     /**
      * @param Concrete $object
@@ -20,20 +20,12 @@ class MultiHref extends AbstractInterpreter {
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data) {
         $config = $map->getConfig();
-        $objectClass = $config['class'];
 
-        $class = 'Pimcore\Model\Object\\' . $objectClass;
+        $setter = explode("~", $map->getToColumn());
+        $setter = "set" . ucfirst($setter[0]);
 
-        if(Tool::classExists($class)) {
-            $class = new $class();
-
-            if($class instanceof Concrete) {
-                $value = $class::getById($value);
-
-                if($value instanceof Concrete) {
-                    $object->setValue($map->getToColumn(), [$value]);
-                }
-            }
+        if(method_exists($object, $setter)) {
+            $object->$setter($value, $config['language']);
         }
     }
 }

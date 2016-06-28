@@ -70,7 +70,6 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         } else {
             $definition = new \AdvancedImportExport\Model\Definition();
             $definition->setName($name);
-            $definition->setConfiguration([]);
             $definition->save();
 
             $this->_helper->json(array('success' => true, 'data' => $definition));
@@ -201,7 +200,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                         'fromColumn' => null,
                         'toColumn' => $classToColumn->getIdentifier(),
                         'primaryIdentifier' => false,
-                        'config' => []
+                        'config' => $classToColumn->getConfig()
                     ];
                 }
             }
@@ -221,20 +220,44 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
     {
         $fields = $class->getFieldDefinitions();
 
+        $systemColumns = [
+            "published"
+        ];
+
         $result = array(
 
         );
 
+        $activatedLanguages = \Pimcore\Tool::getValidLanguages();
+
+        foreach($systemColumns as $sysColumn) {
+            $toColumn = new \AdvancedImportExport\Model\Mapping\ToColumn();
+
+            $toColumn->setLabel($sysColumn);
+            $toColumn->setFieldtype("input");
+            $toColumn->setIdentifier($sysColumn);
+            $toColumn->setType("systemColumn");
+
+            $result[] = $toColumn;
+        }
+
         foreach ($fields as $field) {
             if ($field instanceof Object\ClassDefinition\Data\Localizedfields) {
-                $localizedFields = $field->getFieldDefinitions();
+                foreach($activatedLanguages as $language) {
 
-                foreach ($localizedFields as $localizedField) {
-                    $field = $this->getFieldConfiguration($localizedField);
+                    $localizedFields = $field->getFieldDefinitions();
 
-                    $field->setType('localizedfield');
+                    foreach ($localizedFields as $localizedField) {
+                        $localizedField = $this->getFieldConfiguration($localizedField);
 
-                    $result[] = $field;
+                        $localizedField->setType('localizedfield.' . $language);
+                        $localizedField->setIdentifier($localizedField->getIdentifier() . "~" . $language);
+                        $localizedField->setConfig([
+                            "interpreter" => "localizedfield",
+                            "language" => $language
+                        ]);
+                        $result[] = $localizedField;
+                    }
                 }
             } elseif ($field instanceof Object\ClassDefinition\Data\Objectbricks) {
                 $list = new Object\Objectbrick\Definition\Listing();
@@ -255,7 +278,8 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                                     $resultField->setType("objectbrick");
                                     $resultField->setIdentifier('objectbrick~' . $field->getName() . '~' . $key . '~' . $resultField->getIdentifier());
                                     $resultField->setConfig([
-                                        "class" => $key
+                                        "class" => $key,
+                                        "interpreter" => "objectbrick"
                                     ]);
 
                                     $result[] = $resultField;
@@ -296,7 +320,8 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
                             $toColumn->setFieldtype($keyConfig->getType());
                             $toColumn->setConfig([
                                 "keyId" => $keyConfig->getId(),
-                                "groupId" => $config->getId()
+                                "groupId" => $config->getId(),
+                                "interpreter" => "classificationstore"
                             ]);
                             $toColumn->setLabel($keyConfig->getName());
 

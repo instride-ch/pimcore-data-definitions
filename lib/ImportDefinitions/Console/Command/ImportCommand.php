@@ -17,8 +17,8 @@ class ImportCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('importdefinitions:import')
-            ->setDescription('Import Definition')
+            ->setName('importdefinitions:run')
+            ->setDescription('Run Import Definition')
             ->addOption(
                 'definition', 'd',
                 InputOption::VALUE_REQUIRED,

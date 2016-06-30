@@ -1,5 +1,5 @@
 {
-    "name": "YourVendorName/ImportDefinitions",
+    "name": "w-vision/ImportDefinitions",
     "type": "pimcore-plugin",
     "require": {
         "pimcore/installer-plugin": ">=1"

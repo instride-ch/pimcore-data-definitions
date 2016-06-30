@@ -3,11 +3,19 @@
     background: red !important;
 }*/
 .importdefinitions_icon_definition {
-    background: url(/plugins/ImportDefinitions/static/img/export.svg) center center no-repeat !important;
+    background: url(/plugins/ImportDefinitions/static/img/definition.svg) center center no-repeat !important;
 }
 
-.importdefinitions_icon_next {
-    background: url(/plugins/ImportDefinitions/static/img/long_arrow_right.svg) center center no-repeat !important;
+.importdefinitions_icon_settings {
+    background: url(/plugins/ImportDefinitions/static/img/settings.svg) center center no-repeat !important;
+}
+
+.importdefinitions_icon_provider {
+    background: url(/plugins/ImportDefinitions/static/img/provider.svg) center center no-repeat !important;
+}
+
+.importdefinitions_icon_mapping {
+    background: url(/plugins/ImportDefinitions/static/img/mapping.svg) center center no-repeat !important;
 }
 
 .td-icon[class*="pimcore_icon"] {

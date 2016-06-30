@@ -43,7 +43,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
     getPanel: function () {
         var panel = new Ext.TabPanel({
             activeTab: 0,
-            title: this.data.name,
+            title: this.data.name + " (" + this.data.id + ")",
             closable: true,
             deferredRender: false,
             forceLayout: true,
@@ -82,6 +82,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
         this.configForm = new Ext.form.Panel({
             bodyStyle: 'padding:10px;',
             title : t('settings'),
+            iconCls: 'importdefinitions_icon_settings',
             autoScroll: true,
             defaults : {
                 labelWidth : 200
@@ -148,6 +149,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                 xtype : 'panel',
                 layout : 'border',
                 title : t('importdefinitions_provider_settings'),
+                iconCls: 'importdefinitions_icon_provider',
                 disabled : true
             });
         }
@@ -187,6 +189,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                 xtype : 'panel',
                 layout : 'border',
                 title : t('importdefinitions_mapping_settings'),
+                iconCls: 'importdefinitions_icon_mapping',
                 disabled : true
             });
         }

@@ -156,7 +156,7 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
                         {
                             metadata.tdCls = record.get('iconCls') + ' td-icon';
 
-                            return value;
+                            return value + " (" + record.get("id") + ")";
                         }
                     }
                 ],

@@ -1,12 +1,12 @@
 {
-    "name": "YourVendorName/AdvancedImportExport",
+    "name": "YourVendorName/ImportDefinitions",
     "type": "pimcore-plugin",
     "require": {
         "pimcore/installer-plugin": ">=1"
     },
     "autoload": {
         "psr-4": {
-            "AdvancedImportExport\\": "lib"
+            "ImportDefinitions\\": "lib"
         }
     }
 }

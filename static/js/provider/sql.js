@@ -1,46 +1,46 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.provider.sql');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.sql');
 
-pimcore.plugin.advancedimportexport.provider.sql = Class.create(pimcore.plugin.advancedimportexport.provider.abstractprovider, {
+pimcore.plugin.importdefinitions.provider.sql = Class.create(pimcore.plugin.importdefinitions.provider.abstractprovider, {
     getItems : function() {
         return [{
             xtype: 'textfield',
             name: 'host',
-            fieldLabel: t('advancedimportexport_sql_host'),
+            fieldLabel: t('importdefinitions_sql_host'),
             anchor : '100%',
             value: this.data['host'] ? this.data.host : ''
         },{
             xtype: 'textfield',
             name: 'username',
-            fieldLabel: t('advancedimportexport_sql_username'),
+            fieldLabel: t('importdefinitions_sql_username'),
             anchor : '100%',
             value: this.data['username'] ? this.data.username : ''
         },{
             xtype: 'textfield',
             name: 'password',
-            fieldLabel: t('advancedimportexport_sql_password'),
+            fieldLabel: t('importdefinitions_sql_password'),
             anchor : '100%',
             value: this.data['password'] ? this.data.password : ''
         },{
             xtype: 'textfield',
             name: 'database',
-            fieldLabel: t('advancedimportexport_sql_database'),
+            fieldLabel: t('importdefinitions_sql_database'),
             anchor : '100%',
             value: this.data['database'] ? this.data.database : ''
         },{
             xtype: 'textfield',
             name: 'port',
-            fieldLabel: t('advancedimportexport_sql_port'),
+            fieldLabel: t('importdefinitions_sql_port'),
             anchor : '100%',
             value: this.data['port'] ? this.data.port : '3306'
         },{
             xtype: 'textfield',
             name: 'adapter',
-            fieldLabel: t('advancedimportexport_sql_adapter'),
+            fieldLabel: t('importdefinitions_sql_adapter'),
             anchor : '100%',
             value: this.data['adapter'] ? this.data.adapter : 'Pdo_Mysql'
         },{
             xtype : 'textarea',
-            fieldLabel : t('advancedimportexport_sql_query'),
+            fieldLabel : t('importdefinitions_sql_query'),
             name : 'query',
             grow : true,
             anchor : '100%',

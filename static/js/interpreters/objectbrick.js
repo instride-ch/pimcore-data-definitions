@@ -1,6 +1,6 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.interpreters.objectbrick');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.objectbrick');
 
-pimcore.plugin.advancedimportexport.interpreters.objectbrick = Class.create(pimcore.plugin.advancedimportexport.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.objectbrick = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
     getLayout : function (fromColumn, toColumn, record) {
         return [{

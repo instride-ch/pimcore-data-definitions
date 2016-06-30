@@ -1,5 +1,5 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.interpreters.multihref');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.multihref');
 
-pimcore.plugin.advancedimportexport.interpreters.multihref = Class.create(pimcore.plugin.advancedimportexport.interpreters.href, {
+pimcore.plugin.importdefinitions.interpreters.multihref = Class.create(pimcore.plugin.importdefinitions.interpreters.href, {
     
 });

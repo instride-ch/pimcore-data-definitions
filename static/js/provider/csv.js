@@ -1,22 +1,22 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.provider.csv');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.csv');
 
-pimcore.plugin.advancedimportexport.provider.csv = Class.create(pimcore.plugin.advancedimportexport.provider.abstractprovider, {
+pimcore.plugin.importdefinitions.provider.csv = Class.create(pimcore.plugin.importdefinitions.provider.abstractprovider, {
     getItems : function() {
         return [{
             xtype: 'textfield',
             name: 'delimiter',
-            fieldLabel: t('advancedimportexport_csv_delimiter'),
+            fieldLabel: t('importdefinitions_csv_delimiter'),
             anchor : '100%',
             value: this.data['delimiter'] ? this.data.delimiter : ','
         },{
             xtype: 'textfield',
             name: 'enclosure',
-            fieldLabel: t('advancedimportexport_csv_enclosure'),
+            fieldLabel: t('importdefinitions_csv_enclosure'),
             anchor : '100%',
             value: this.data['enclosure'] ? this.data.enclosure : '"'
         },{
             xtype : 'textarea',
-            fieldLabel : t('advancedimportexport_csv_example'),
+            fieldLabel : t('importdefinitions_csv_example'),
             name : 'csvExample',
             grow : true,
             anchor : '100%',

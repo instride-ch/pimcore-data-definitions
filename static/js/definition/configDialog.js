@@ -1,6 +1,6 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.definition.configDialog');
+pimcore.registerNS('pimcore.plugin.importdefinitions.definition.configDialog');
 
-pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
+pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
 
     getConfigDialog : function(fromColumn, toColumn, record) {
         var fieldSetItems = [];
@@ -10,7 +10,7 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
         this.record = record;
 
         fieldSetItems.push(new Ext.form.TextField({
-            fieldLabel : t('advancedimportexport_fromColumn'),
+            fieldLabel : t('importdefinitions_fromColumn'),
             name : 'fromColumn',
             length : 255,
             value : fromColumn.data.label,
@@ -18,7 +18,7 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
         }));
 
         fieldSetItems.push(new Ext.form.TextField({
-            fieldLabel : t('advancedimportexport_toColumn'),
+            fieldLabel : t('importdefinitions_toColumn'),
             name : 'fromColumn',
             length : 255,
             value : toColumn.data.label,
@@ -39,11 +39,11 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
         }
 
         fieldSetItems.push(new Ext.form.ComboBox({
-            fieldLabel : t('advancedimportexport_interpreters'),
+            fieldLabel : t('importdefinitions_interpreters'),
             name : 'interpreter',
             length : 255,
             value : record.data.config.interpreter,
-            store : pimcore.globalmanager.get('advancedimportexport_interpreters'),
+            store : pimcore.globalmanager.get('importdefinitions_interpreters'),
             valueField : 'interpreter',
             displayField : 'interpreter',
             queryMode : 'local',
@@ -85,7 +85,7 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
             height: 400,
             resizeable : true,
             modal: true,
-            title: t('advancedimportexport_config') + ' ' + fromColumn.data.label + ' => ' + toColumn.data.label,
+            title: t('importdefinitions_config') + ' ' + fromColumn.data.label + ' => ' + toColumn.data.label,
             layout: 'fit',
             items: [this.configPanel]
         });
@@ -111,8 +111,8 @@ pimcore.plugin.advancedimportexport.definition.configDialog = Class.create({
         if (type) {
             type = type.toLowerCase();
 
-            if (pimcore.plugin.advancedimportexport.interpreters[type]) {
-                var interpreter = new pimcore.plugin.advancedimportexport.interpreters[type];
+            if (pimcore.plugin.importdefinitions.interpreters[type]) {
+                var interpreter = new pimcore.plugin.importdefinitions.interpreters[type];
 
                 this.getInterpreterPanel().add(interpreter.getLayout(this.fromColumn, this.toColumn, this.record));
                 this.getInterpreterPanel().show();

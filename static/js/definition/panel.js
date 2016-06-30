@@ -1,16 +1,16 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.definition.panel');
+pimcore.registerNS('pimcore.plugin.importdefinitions.definition.panel');
 
-pimcore.plugin.advancedimportexport.definition.panel = Class.create({
-    layoutId: 'advancedimportexport_definition_panel',
-    storeId : 'advancedimportexport_definitions',
-    iconCls : 'advancedimportexport_icon_definition',
+pimcore.plugin.importdefinitions.definition.panel = Class.create({
+    layoutId: 'importdefinitions_definition_panel',
+    storeId : 'importdefinitions_definitions',
+    iconCls : 'importdefinitions_icon_definition',
     type : 'definition',
 
     url : {
-        add : '/plugin/AdvancedImportExport/admin_definition/add',
-        delete : '/plugin/AdvancedImportExport/admin_definition/delete',
-        get : '/plugin/AdvancedImportExport/admin_definition/get',
-        list : '/plugin/AdvancedImportExport/admin_definition/list'
+        add : '/plugin/ImportDefinitions/admin_definition/add',
+        delete : '/plugin/ImportDefinitions/admin_definition/delete',
+        get : '/plugin/ImportDefinitions/admin_definition/get',
+        list : '/plugin/ImportDefinitions/admin_definition/list'
     },
 
     providers : [],
@@ -22,7 +22,7 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
         this.createStore();
 
         Ext.Ajax.request({
-            url: '/plugin/AdvancedImportExport/admin_definition/get-config',
+            url: '/plugin/ImportDefinitions/admin_definition/get-config',
             method: 'GET',
             success: function (result) {
                 var config = Ext.decode(result.responseText);
@@ -49,7 +49,7 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
                     idProperty : "provider"
                 });
 
-                pimcore.globalmanager.add("advancedimportexport_providers", providerStore);
+                pimcore.globalmanager.add("importdefinitions_providers", providerStore);
 
                 var cleanersStore = new Ext.data.ArrayStore({
                     data : this.cleaners,
@@ -57,7 +57,7 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
                     idProperty : "cleaner"
                 });
 
-                pimcore.globalmanager.add("advancedimportexport_cleaners", cleanersStore);
+                pimcore.globalmanager.add("importdefinitions_cleaners", cleanersStore);
 
                 var interpretersStore = new Ext.data.ArrayStore({
                     data : this.interpreters,
@@ -65,7 +65,7 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
                     idProperty : "interpreter"
                 });
 
-                pimcore.globalmanager.add("advancedimportexport_interpreters", interpretersStore);
+                pimcore.globalmanager.add("importdefinitions_interpreters", interpretersStore);
 
                 this.getLayout();
             }.bind(this)
@@ -105,7 +105,7 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
             // create new panel
             this.layout = new Ext.Panel({
                 id: this.layoutId,
-                title: t('advancedimportexport_definitions'),
+                title: t('importdefinitions_definitions'),
                 iconCls: this.iconCls,
                 border: false,
                 layout: 'border',
@@ -301,7 +301,7 @@ pimcore.plugin.advancedimportexport.definition.panel = Class.create({
     },
 
     getItemClass : function () {
-        return pimcore.plugin.advancedimportexport[this.type].item;
+        return pimcore.plugin.importdefinitions[this.type].item;
     },
 
     getTabPanel: function () {

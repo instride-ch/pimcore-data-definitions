@@ -1,6 +1,6 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.interpreters.classificationstore');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.classificationstore');
 
-pimcore.plugin.advancedimportexport.interpreters.classificationstore = Class.create(pimcore.plugin.advancedimportexport.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.classificationstore = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
     getLayout : function (fromColumn, toColumn, record) {
         return [{

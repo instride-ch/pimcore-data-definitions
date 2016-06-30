@@ -6,16 +6,13 @@ use Pimcore\Model\Object;
 /**
  * Controller for Definitions
  *
- * Class AdvancedImportExport_Admin_DefinitionController
+ * Class ImportDefinitions_Admin_DefinitionController
  */
-class AdvancedImportExport_Admin_DefinitionController extends Admin
+class ImportDefinitions_Admin_DefinitionController extends Admin
 {
     public function init()
     {
         parent::init();
-
-        $product = new Pimcore\Model\Object\CoreShopProduct();
-        $product->getVariants()->getCoreShopDimensionTest();
 
         // check permissions
         //TODO: Permissions?
@@ -28,15 +25,15 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
     public function getConfigAction() {
         $this->_helper->json(array(
             'success' => true,
-            'providers' => \AdvancedImportExport\Model\AbstractProvider::$availableProviders,
-            'interpreter' => \AdvancedImportExport\Model\Interpreter\AbstractInterpreter::$availableInterpreter,
-            'cleaner' => \AdvancedImportExport\Model\Cleaner\AbstractCleaner::$availableCleaner
+            'providers' => \ImportDefinitions\Model\AbstractProvider::$availableProviders,
+            'interpreter' => \ImportDefinitions\Model\Interpreter\AbstractInterpreter::$availableInterpreter,
+            'cleaner' => \ImportDefinitions\Model\Cleaner\AbstractCleaner::$availableCleaner
         ));
     }
 
     public function listAction()
     {
-        $list = new \AdvancedImportExport\Model\Definition\Listing();
+        $list = new \ImportDefinitions\Model\Definition\Listing();
 
         $data = array();
         if (is_array($list->getDefinitions())) {
@@ -47,7 +44,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         $this->_helper->json($data);
     }
 
-    protected function getTreeNodeConfig(\AdvancedImportExport\Model\Definition $definition)
+    protected function getTreeNodeConfig(\ImportDefinitions\Model\Definition $definition)
     {
         $tmp = array(
             'id' => $definition->getId(),
@@ -68,7 +65,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         if (strlen($name) <= 0) {
             $this->helper->json(array('success' => false, 'message' => $this->getTranslator()->translate('Name must be set')));
         } else {
-            $definition = new \AdvancedImportExport\Model\Definition();
+            $definition = new \ImportDefinitions\Model\Definition();
             $definition->setName($name);
             $definition->save();
 
@@ -79,9 +76,9 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
     public function getAction()
     {
         $id = $this->getParam('id');
-        $definition = \AdvancedImportExport\Model\Definition::getById($id);
+        $definition = \ImportDefinitions\Model\Definition::getById($id);
 
-        if ($definition instanceof \AdvancedImportExport\Model\Definition) {
+        if ($definition instanceof \ImportDefinitions\Model\Definition) {
             $this->_helper->json(array('success' => true, 'data' => $definition));
         } else {
             $this->_helper->json(array('success' => false));
@@ -90,9 +87,9 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
 
     public function testDataAction() {
         $id = $this->getParam("id");
-        $definition = \AdvancedImportExport\Model\Definition::getById($id);
+        $definition = \ImportDefinitions\Model\Definition::getById($id);
 
-        if ($definition instanceof \AdvancedImportExport\Model\Definition) {
+        if ($definition instanceof \ImportDefinitions\Model\Definition) {
             try {
                 if($definition->getProviderConfiguration()->testData()) {
                     $this->_helper->json(array('success' => true));
@@ -112,30 +109,30 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
     {
         $id = $this->getParam('id');
         $data = $this->getParam('data');
-        $definition = \AdvancedImportExport\Model\Definition::getById($id);
+        $definition = \ImportDefinitions\Model\Definition::getById($id);
 
-        if ($data && $definition instanceof \AdvancedImportExport\Model\Definition) {
+        if ($data && $definition instanceof \ImportDefinitions\Model\Definition) {
             $data = \Zend_Json::decode($this->getParam('data'));
             
             $definition->setValues($data);
-            $providerClass = 'AdvancedImportExport\\Model\\Provider\\' . ucfirst($definition->getProvider());
+            $providerClass = 'ImportDefinitions\\Model\\Provider\\' . ucfirst($definition->getProvider());
             
             if(\Pimcore\Tool::classExists($providerClass)) {
                 $provider = new $providerClass();
 
-                if($provider instanceof \AdvancedImportExport\Model\AbstractProvider) {
+                if($provider instanceof \ImportDefinitions\Model\AbstractProvider) {
                     $provider->setValues($data['configuration']);
 
                     $definition->setProviderConfiguration($provider);
                 }
                 else {
-                    $this->_helper->json(array('success' => false, 'message' => 'Provider Class found, but it needs to inherit from AdvancedImportExport\Model\AbstractProvider'));
+                    $this->_helper->json(array('success' => false, 'message' => 'Provider Class found, but it needs to inherit from ImportDefinitions\Model\AbstractProvider'));
                 }
 
                 $maps = [];
 
                 foreach($data['mapping'] as $map) {
-                    $mapping = new \AdvancedImportExport\Model\Mapping();
+                    $mapping = new \ImportDefinitions\Model\Mapping();
                     $mapping->setValues($map);
 
                     $maps[] = $mapping;
@@ -158,9 +155,9 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
     public function deleteAction()
     {
         $id = $this->getParam('id');
-        $definition = \AdvancedImportExport\Model\Definition::getById($id);
+        $definition = \ImportDefinitions\Model\Definition::getById($id);
 
-        if ($definition instanceof \AdvancedImportExport\Model\Definition) {
+        if ($definition instanceof \ImportDefinitions\Model\Definition) {
             $definition->delete();
 
             $this->_helper->json(array('success' => true));
@@ -172,10 +169,10 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
     public function getColumnsAction() {
         $id = $this->getParam('id');
 
-        $definition = \AdvancedImportExport\Model\Definition::getById($id);
+        $definition = \ImportDefinitions\Model\Definition::getById($id);
 
-        if ($definition instanceof \AdvancedImportExport\Model\Definition) {
-            $customFromColumn = new \AdvancedImportExport\Model\Mapping\FromColumn();
+        if ($definition instanceof \ImportDefinitions\Model\Definition) {
+            $customFromColumn = new \ImportDefinitions\Model\Mapping\FromColumn();
             $customFromColumn->setIdentifier('custom');
             $customFromColumn->setLabel('Custom');
 
@@ -256,7 +253,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         $activatedLanguages = \Pimcore\Tool::getValidLanguages();
 
         foreach($systemColumns as $sysColumn) {
-            $toColumn = new \AdvancedImportExport\Model\Mapping\ToColumn();
+            $toColumn = new \ImportDefinitions\Model\Mapping\ToColumn();
 
             $toColumn->setLabel($sysColumn);
             $toColumn->setFieldtype("input");
@@ -339,7 +336,7 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
 
                             $keyConfig = Object\Classificationstore\KeyConfig::getById($keyId);
 
-                            $toColumn = new \AdvancedImportExport\Model\Mapping\ToColumn();
+                            $toColumn = new \ImportDefinitions\Model\Mapping\ToColumn();
                             $toColumn->setIdentifier('classificationstore~' . $field->getName() . '~' . $keyConfig->getId() . '~' . $config->getId());
                             $toColumn->setType("classificationstore");
                             $toColumn->setFieldtype($keyConfig->getType());
@@ -364,11 +361,11 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
 
     /**
      * @param Object\ClassDefinition\Data $field
-     * @return \AdvancedImportExport\Model\Mapping\ToColumn
+     * @return \ImportDefinitions\Model\Mapping\ToColumn
      */
     protected function getFieldConfiguration(Object\ClassDefinition\Data $field)
     {
-        $toColumn = new \AdvancedImportExport\Model\Mapping\ToColumn();
+        $toColumn = new \ImportDefinitions\Model\Mapping\ToColumn();
 
         $toColumn->setLabel($field->getName());
         $toColumn->setFieldtype($field->getFieldtype());

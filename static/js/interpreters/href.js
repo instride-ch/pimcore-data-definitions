@@ -1,6 +1,6 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.interpreters.href');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.href');
 
-pimcore.plugin.advancedimportexport.interpreters.href = Class.create(pimcore.plugin.advancedimportexport.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.href = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
     getLayout : function (fromColumn, toColumn, record) {
         var classesStore = new Ext.data.JsonStore({

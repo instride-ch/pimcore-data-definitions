@@ -1,7 +1,7 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.interpreters');
-pimcore.registerNS('pimcore.plugin.advancedimportexport.interpreters.abstract');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.abstract');
 
-pimcore.plugin.advancedimportexport.interpreters.abstract = Class.create({
+pimcore.plugin.importdefinitions.interpreters.abstract = Class.create({
 
     getLayout : function () {
         return [];

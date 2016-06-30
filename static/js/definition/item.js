@@ -1,11 +1,11 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.definition.item');
+pimcore.registerNS('pimcore.plugin.importdefinitions.definition.item');
 
-pimcore.plugin.advancedimportexport.definition.item = Class.create({
+pimcore.plugin.importdefinitions.definition.item = Class.create({
 
-    iconCls : 'advancedimportexport_icon_definition',
+    iconCls : 'importdefinitions_icon_definition',
     url : {
-        save : '/plugin/AdvancedImportExport/admin_definition/save',
-        test : '/plugin/AdvancedImportExport/admin_definition/test-data'
+        save : '/plugin/ImportDefinitions/admin_definition/save',
+        test : '/plugin/ImportDefinitions/admin_definition/test-data'
     },
 
     providers : [],
@@ -90,11 +90,11 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
             items: [
                 {
                     xtype : 'combo',
-                    fieldLabel: t("advancedimportexport_provider"),
+                    fieldLabel: t("importdefinitions_provider"),
                     name: "provider",
                     displayField: "provider",
                     valueField: "provider",
-                    store: pimcore.globalmanager.get("advancedimportexport_providers"),
+                    store: pimcore.globalmanager.get("importdefinitions_providers"),
                     value : this.data.provider,
                     width: 500,
                     listeners : {
@@ -123,11 +123,11 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                 },
                 {
                     xtype : 'combo',
-                    fieldLabel: t("advancedimportexport_cleaner"),
+                    fieldLabel: t("importdefinitions_cleaner"),
                     name: "cleaner",
                     displayField: "cleaner",
                     valueField: "cleaner",
-                    store: pimcore.globalmanager.get("advancedimportexport_cleaners"),
+                    store: pimcore.globalmanager.get("importdefinitions_cleaners"),
                     value : this.data.cleaner,
                     width: 500,
                     listeners : {
@@ -147,7 +147,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
             this.providerSettings = Ext.create({
                 xtype : 'panel',
                 layout : 'border',
-                title : t('advancedimportexport_provider_settings'),
+                title : t('importdefinitions_provider_settings'),
                 disabled : true
             });
         }
@@ -163,7 +163,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
         if(this.providerSettings) {
             this.providerSettings.removeAll();
 
-            if(pimcore.plugin.advancedimportexport.provider[provider] !== undefined) {
+            if(pimcore.plugin.importdefinitions.provider[provider] !== undefined) {
                 if(this.data.provider === null) {
                     this.save(function() {
                         this.updateProviderMapViews();
@@ -177,7 +177,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
     },
 
     updateProviderMapViews : function() {
-        this.providerSettings.add(new pimcore.plugin.advancedimportexport.provider[this.data.provider](this.data.providerConfiguration ? this.data.providerConfiguration : {}, this).getForm());
+        this.providerSettings.add(new pimcore.plugin.importdefinitions.provider[this.data.provider](this.data.providerConfiguration ? this.data.providerConfiguration : {}, this).getForm());
         this.providerSettings.enable();
     },
 
@@ -186,7 +186,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
             this.mappingSettings = Ext.create({
                 xtype : 'panel',
                 layout : 'border',
-                title : t('advancedimportexport_mapping_settings'),
+                title : t('importdefinitions_mapping_settings'),
                 disabled : true
             });
         }
@@ -206,7 +206,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                 this.mappingSettings.enable();
 
                 Ext.Ajax.request({
-                    url: '/plugin/AdvancedImportExport/admin_definition/get-columns',
+                    url: '/plugin/ImportDefinitions/admin_definition/get-columns',
                     params : {
                         id : this.data.id
                     },
@@ -279,7 +279,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                 defaults : {},
                                 items : [
                                     {
-                                        text : t('advancedimportexport_toColumn'),
+                                        text : t('importdefinitions_toColumn'),
                                         dataIndex : 'toColumn',
                                         flex : 1,
                                         renderer : function(val, metadata) {
@@ -295,7 +295,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                         }
                                     },
                                     {
-                                        text : t('advancedimportexport_fromColumn'),
+                                        text : t('importdefinitions_fromColumn'),
                                         dataIndex : 'fromColumn',
                                         flex : 1,
                                         renderer : function(val) {
@@ -330,7 +330,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                                         var toColumn = toColumnStore.findRecord("identifier", gridRecord .get("toColumn"));
 
                                                         if(fromColumn && toColumn) {
-                                                            var dialog = new pimcore.plugin.advancedimportexport.definition.configDialog();
+                                                            var dialog = new pimcore.plugin.importdefinitions.definition.configDialog();
                                                             dialog.getConfigDialog(fromColumn, toColumn, gridRecord );
                                                         }
                                                     }
@@ -340,7 +340,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                     },
                                     {
                                         xtype: 'checkcolumn',
-                                        text : t('advancedimportexport_primaryIdentifier'),
+                                        text : t('importdefinitions_primaryIdentifier'),
                                         dataIndex : 'primaryIdentifier',
                                         editor: {
                                             xtype: 'checkbox'
@@ -363,9 +363,9 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
                                                         renderTo: id,
                                                         iconCls : 'pimcore_icon_edit',
                                                         flex : 1,
-                                                        cls : 'advancedimportexport-edit-button',
+                                                        cls : 'importdefinitions-edit-button',
                                                         handler: function () {
-                                                            var dialog = new pimcore.plugin.advancedimportexport.definition.configDialog();
+                                                            var dialog = new pimcore.plugin.importdefinitions.definition.configDialog();
                                                             dialog.getConfigDialog(fromColumn, toColumn, record);
                                                         }
                                                     });

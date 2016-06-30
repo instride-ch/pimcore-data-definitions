@@ -1,6 +1,6 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.provider.abstractprovider');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.abstractprovider');
 
-pimcore.plugin.advancedimportexport.provider.abstractprovider = Class.create({
+pimcore.plugin.importdefinitions.provider.abstractprovider = Class.create({
 
     data : {},
     parentItemPanel : null,

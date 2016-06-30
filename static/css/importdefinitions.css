@@ -1,0 +1,25 @@
+
+/*#pimcore_panel_toolbar {
+    background: red !important;
+}*/
+.importdefinitions_icon_definition {
+    background: url(/plugins/ImportDefinitions/static/img/export.svg) center center no-repeat !important;
+}
+
+.importdefinitions_icon_next {
+    background: url(/plugins/ImportDefinitions/static/img/long_arrow_right.svg) center center no-repeat !important;
+}
+
+.td-icon[class*="pimcore_icon"] {
+    background-position: left center!important;
+}
+
+.td-icon .x-grid-cell-inner {
+    padding-left:25px;
+}
+
+.importdefinitions-edit-button {
+    padding: 0px;
+    background: none;
+    border: none;
+}

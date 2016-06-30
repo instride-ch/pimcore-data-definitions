@@ -1,8 +1,8 @@
-pimcore.registerNS("pimcore.plugin.advancedimportexport");
+pimcore.registerNS("pimcore.plugin.importdefinitions");
 
-pimcore.plugin.advancedimportexport = Class.create(pimcore.plugin.admin, {
+pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
     getClassName: function() {
-        return "pimcore.plugin.advancedimportexport";
+        return "pimcore.plugin.importdefinitions";
     },
 
     initialize: function() {
@@ -16,8 +16,8 @@ pimcore.plugin.advancedimportexport = Class.create(pimcore.plugin.admin, {
         if(user.isAllowed('plugins')) {
 
             var exportMenu = new Ext.Action({
-                text: t('advancedimportexport_definitions'),
-                iconCls: 'advancedimportexport_icon_definition',
+                text: t('importdefinitions_definitions'),
+                iconCls: 'importdefinitions_icon_definition',
                 handler:this.openDefinitions
             });
 
@@ -36,13 +36,13 @@ pimcore.plugin.advancedimportexport = Class.create(pimcore.plugin.admin, {
     openDefinitions : function()
     {
         try {
-            pimcore.globalmanager.get('advancedimportexport_definitions_panel').activate();
+            pimcore.globalmanager.get('importdefinitions_definitions_panel').activate();
         }
         catch (e) {
-            pimcore.globalmanager.add('advancedimportexport_definitions_panel', new pimcore.plugin.advancedimportexport.definition.panel());
+            pimcore.globalmanager.add('importdefinitions_definitions_panel', new pimcore.plugin.importdefinitions.definition.panel());
         }
     }
 });
 
-var advancedimportexportPlugin = new pimcore.plugin.advancedimportexport();
+var importdefinitionsPlugin = new pimcore.plugin.importdefinitions();
 

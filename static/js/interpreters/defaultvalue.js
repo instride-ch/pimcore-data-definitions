@@ -1,6 +1,6 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.interpreters.defaultvalue');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.defaultvalue');
 
-pimcore.plugin.advancedimportexport.interpreters.defaultvalue = Class.create(pimcore.plugin.advancedimportexport.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.defaultvalue = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
     getLayout : function (fromColumn, toColumn, record) {
         return [{

@@ -1,6 +1,6 @@
-pimcore.registerNS('pimcore.plugin.advancedimportexport.interpreters.localizedfield');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.localizedfield');
 
-pimcore.plugin.advancedimportexport.interpreters.localizedfield = Class.create(pimcore.plugin.advancedimportexport.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.localizedfield = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
     getLayout : function (fromColumn, toColumn, record) {
         return [{

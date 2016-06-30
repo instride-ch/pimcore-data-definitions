@@ -94,16 +94,18 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
 
         if ($definition instanceof \AdvancedImportExport\Model\Definition) {
             try {
-                $definition->getProviderConfiguration()->testData();
+                if($definition->getProviderConfiguration()->testData()) {
+                    $this->_helper->json(array('success' => true));
+                }
             }
             catch(\Exception $ex) {
                 $this->_helper->json(array('success' => false, 'message' => $ex->getMessage()));
             }
 
             $this->_helper->json(array('success' => true));
-        } else {
-            $this->_helper->json(array('success' => false));
         }
+
+        $this->_helper->json(array('success' => false));
     }
 
     public function saveAction()
@@ -177,8 +179,13 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
             $customFromColumn->setIdentifier('custom');
             $customFromColumn->setLabel('Custom');
 
-            $fromColumns = $definition->getProviderConfiguration()->getColumns();
-            $fromColumns[] = $customFromColumn;
+            try {
+                $fromColumns = $definition->getProviderConfiguration()->getColumns();
+                $fromColumns[] = $customFromColumn;
+            }
+            catch(\Exception $e) {
+                $fromColumns = [];
+            }
 
             $toColumns = $this->getClassDefinitionForFieldSelection(Object\ClassDefinition::getByName($definition->getClass()));
             $mappings = $definition->getMapping();

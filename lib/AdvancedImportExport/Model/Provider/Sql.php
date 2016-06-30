@@ -8,9 +8,9 @@ use AdvancedImportExport\Model\Mapping\FromColumn;
 use Pimcore\Model\Object\Concrete;
 
 /**
- * CSV Import/Export Provider
+ * SQL Import Provider
  *
- * Class CSV
+ * Class Sql
  * @package AdvancedImportExport\Provider
  */
 class Sql extends AbstractProvider {

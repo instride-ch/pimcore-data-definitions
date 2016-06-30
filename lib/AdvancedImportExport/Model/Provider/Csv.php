@@ -79,6 +79,17 @@ class Csv extends AbstractProvider {
     }
 
     /**
+     * test data
+     * 
+     * @return boolean
+     * @throws \Exception
+     */
+    public function testData()
+    {
+        return true;
+    }
+    
+    /**
      * Get Columns from data
      *
      * @return FromColumn[]

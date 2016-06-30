@@ -88,6 +88,24 @@ class AdvancedImportExport_Admin_DefinitionController extends Admin
         }
     }
 
+    public function testDataAction() {
+        $id = $this->getParam("id");
+        $definition = \AdvancedImportExport\Model\Definition::getById($id);
+
+        if ($definition instanceof \AdvancedImportExport\Model\Definition) {
+            try {
+                $definition->getProviderConfiguration()->testData();
+            }
+            catch(\Exception $ex) {
+                $this->_helper->json(array('success' => false, 'message' => $ex->getMessage()));
+            }
+
+            $this->_helper->json(array('success' => true));
+        } else {
+            $this->_helper->json(array('success' => false));
+        }
+    }
+
     public function saveAction()
     {
         $id = $this->getParam('id');

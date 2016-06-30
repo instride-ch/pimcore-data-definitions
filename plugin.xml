@@ -21,6 +21,7 @@
             <path>/plugins/AdvancedImportExport/static/js/definition/configDialog.js</path>
             <path>/plugins/AdvancedImportExport/static/js/provider/abstractprovider.js</path>
             <path>/plugins/AdvancedImportExport/static/js/provider/csv.js</path>
+            <path>/plugins/AdvancedImportExport/static/js/provider/sql.js</path>
             <path>/plugins/AdvancedImportExport/static/js/interpreters/abstract.js</path>
             <path>/plugins/AdvancedImportExport/static/js/interpreters/objectbrick.js</path>
             <path>/plugins/AdvancedImportExport/static/js/interpreters/classificationstore.js</path>

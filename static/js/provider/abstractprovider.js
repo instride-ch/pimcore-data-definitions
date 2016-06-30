@@ -3,9 +3,11 @@ pimcore.registerNS('pimcore.plugin.advancedimportexport.provider.abstractprovide
 pimcore.plugin.advancedimportexport.provider.abstractprovider = Class.create({
 
     data : {},
+    parentItemPanel : null,
 
-    initialize: function (data) {
+    initialize: function (data, parentItemPanel) {
         this.data = data;
+        this.parentItemPanel = parentItemPanel;
     },
 
     getForm : function() {
@@ -18,7 +20,12 @@ pimcore.plugin.advancedimportexport.provider.abstractprovider = Class.create({
                     labelWidth: 200
                 },
                 border: false,
-                items: this.getItems()
+                items: this.getItems(),
+                buttons: [{
+                    text: t('test'),
+                    iconCls: 'pimcore_icon_apply',
+                    handler: this.test.bind(this)
+                }],
             });
         }
 
@@ -27,5 +34,30 @@ pimcore.plugin.advancedimportexport.provider.abstractprovider = Class.create({
 
     getItems : function() {
         return [];
+    },
+
+    test : function() {
+        this.parentItemPanel.save(function() {
+            Ext.Ajax.request({
+                url: this.parentItemPanel.url.test,
+                method: 'post',
+                params: {
+                    id : this.parentItemPanel.data.id
+                },
+                success: function (response) {
+                    try {
+                        var res = Ext.decode(response.responseText);
+
+                        if (res.success) {
+                            pimcore.helpers.showNotification(t('success'), t('success'), 'success');
+                        } else {
+                            pimcore.helpers.showNotification(t('error'), res.message, 'error');
+                        }
+                    } catch (e) {
+                        pimcore.helpers.showNotification(t('error'), t('error'), 'error');
+                    }
+                }.bind(this)
+            });
+        }.bind(this));
     }
 });

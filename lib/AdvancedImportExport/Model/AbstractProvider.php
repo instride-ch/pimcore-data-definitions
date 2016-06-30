@@ -110,6 +110,14 @@ abstract class AbstractProvider {
     }
 
     /**
+     * Test Data provided for this Provider
+     *
+     * @return boolean
+     * @throws \Exception
+     */
+    public abstract function testData();
+
+    /**
      * Get Columns from data
      *
      * @return FromColumn[]

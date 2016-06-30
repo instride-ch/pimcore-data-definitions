@@ -4,7 +4,8 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
 
     iconCls : 'advancedimportexport_icon_definition',
     url : {
-        save : '/plugin/AdvancedImportExport/admin_definition/save'
+        save : '/plugin/AdvancedImportExport/admin_definition/save',
+        test : '/plugin/AdvancedImportExport/admin_definition/test-data'
     },
 
     providers : [],
@@ -176,7 +177,7 @@ pimcore.plugin.advancedimportexport.definition.item = Class.create({
     },
 
     updateProviderMapViews : function() {
-        this.providerSettings.add(new pimcore.plugin.advancedimportexport.provider[this.data.provider](this.data.providerConfiguration ? this.data.providerConfiguration : {}).getForm());
+        this.providerSettings.add(new pimcore.plugin.advancedimportexport.provider[this.data.provider](this.data.providerConfiguration ? this.data.providerConfiguration : {}, this).getForm());
         this.providerSettings.enable();
     },
 

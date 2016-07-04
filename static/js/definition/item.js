@@ -178,6 +178,10 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
         }
     },
 
+    providerSettingsSuccess : function(providerPanel) {
+        this.reloadColumnMapping();
+    },
+
     updateProviderMapViews : function() {
         this.providerSettings.add(new pimcore.plugin.importdefinitions.provider[this.data.provider](this.data.providerConfiguration ? this.data.providerConfiguration : {}, this).getForm());
         this.providerSettings.enable();

@@ -15,7 +15,6 @@
         </pluginNamespaces>
         <pluginJsPaths>
             <path>/plugins/ImportDefinitions/static/js/startup.js</path>
-            <path>/plugins/ImportDefinitions/static/js/pimcore/ClassTreePicker.js</path>
             <path>/plugins/ImportDefinitions/static/js/definition/panel.js</path>
             <path>/plugins/ImportDefinitions/static/js/definition/item.js</path>
             <path>/plugins/ImportDefinitions/static/js/definition/configDialog.js</path>

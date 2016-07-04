@@ -50,6 +50,8 @@ pimcore.plugin.importdefinitions.provider.abstractprovider = Class.create({
 
                         if (res.success) {
                             pimcore.helpers.showNotification(t('success'), t('success'), 'success');
+
+                            this.parentItemPanel.providerSettingsSuccess(this);
                         } else {
                             pimcore.helpers.showNotification(t('error'), res.message, 'error');
                         }

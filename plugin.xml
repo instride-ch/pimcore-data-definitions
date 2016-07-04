@@ -30,6 +30,8 @@
             <path>/plugins/ImportDefinitions/static/js/interpreters/multihref.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/defaultvalue.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/localizedfield.js</path>
+            <path>/plugins/ImportDefinitions/static/js/interpreters/asseturl.js</path>
+            <path>/plugins/ImportDefinitions/static/js/interpreters/assetsurl.js</path>
         </pluginJsPaths>
         <pluginCssPaths>
             <path>/plugins/ImportDefinitions/static/css/importdefinitions.css</path>

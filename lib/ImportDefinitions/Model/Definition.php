@@ -61,6 +61,11 @@ class Definition extends AbstractModel {
     public $cleaner;
 
     /**
+     * @var string
+     */
+    public $key;
+
+    /**
      * Get By Id.
      *
      * @param int $id
@@ -99,6 +104,15 @@ class Definition extends AbstractModel {
     public function createPath($data) {
         $placeholderHelper = new Placeholder();
         return $placeholderHelper->replacePlaceholders($this->getObjectPath(), $data);
+    }
+
+    /**
+     * @param $data
+     * @return string
+     */
+    public function createKey($data) {
+        $placeholderHelper = new Placeholder();
+        return $placeholderHelper->replacePlaceholders($this->getKey(), $data);
     }
 
     /**
@@ -266,5 +280,21 @@ class Definition extends AbstractModel {
     public function setCleaner($cleaner)
     {
         $this->cleaner = $cleaner;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
     }
 }

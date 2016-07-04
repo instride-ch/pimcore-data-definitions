@@ -14,7 +14,7 @@ abstract class AbstractInterpreter{
      *
      * @var array
      */
-    public static $availableInterpreter = array('objectbrick', 'classificationstore', 'href', 'multiHref', 'defaultValue');
+    public static $availableInterpreter = array('objectbrick', 'classificationstore', 'href', 'multiHref', 'defaultValue', 'assetUrl', 'assetsUrl');
 
     /**
      * Add Interpreter.

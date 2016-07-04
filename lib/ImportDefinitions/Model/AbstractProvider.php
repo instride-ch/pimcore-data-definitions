@@ -202,6 +202,7 @@ abstract class AbstractProvider {
     public function getObjectForPrimaryKey($definition, $data) {
         $class = $definition->getClass();
         $classDefinition =ClassDefinition::getByName($class);
+        $obj = null;
 
         if(!$classDefinition instanceof ClassDefinition) {
             throw new \Exception("Class not found $class");
@@ -233,16 +234,23 @@ abstract class AbstractProvider {
             $objectData = $list->load();
 
             if(count($objectData) === 1) {
-                return $objectData[0];
+                $obj = $objectData[0];
             }
 
-            if(count($objectData) === 0) {
+            if(!isset($obj)) {
                 $obj = new $classObject();
+            }
 
-                if($obj instanceof AbstractObject) {
-                    $obj->setKey(File::getValidFilename(implode("-", $conditionValues)));
-                    $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
+            if($obj instanceof AbstractObject) {
+                $key = File::getValidFilename($definition->createKey($data));
+
+                if($definition->getKey() && $key) {
+                    $obj->setKey($key);
                 }
+                else {
+                    $obj->setKey(File::getValidFilename(implode("-", $conditionValues)));
+                }
+                $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
 
                 return $obj;
             }

@@ -123,6 +123,13 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                     value : this.data.objectPath
                 },
                 {
+                    xtype : 'textfield',
+                    fieldLabel: t("key"),
+                    name: "key",
+                    width: 500,
+                    value : this.data.key
+                },
+                {
                     xtype : 'combo',
                     fieldLabel: t("importdefinitions_cleaner"),
                     name: "cleaner",

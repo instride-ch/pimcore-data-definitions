@@ -8,47 +8,78 @@ use ImportDefinitions\Model\Mapping\FromColumn;
 use Pimcore\Model\Object\Concrete;
 
 /**
- * Json Import Provider
+ * XML Import Provider
  *
- * Class Json
+ * Class Xml
  * @package ImportDefinitions\Provider
  */
-class Json extends AbstractProvider {
+class Xml extends AbstractProvider {
 
     /**
      * @var string
      */
-    public $jsonExample;
+    public $xmlExample;
+
+    /**
+     * @var
+     */
+    public $rootNode;
 
     /**
      * @return string
      */
-    public function getJsonExample()
+    public function getXmlExample()
     {
-        return $this->jsonExample;
+        return $this->xmlExample;
     }
 
     /**
-     * @param string $jsonExample
+     * @param string $xmlExample
      */
-    public function setJsonExample($jsonExample)
+    public function setXmlExample($xmlExample)
     {
-        $this->jsonExample = $jsonExample;
+        $this->xmlExample = $xmlExample;
     }
 
     /**
-     * Calculate depth
-     *
+     * @return mixed
+     */
+    public function getRootNode()
+    {
+        return $this->rootNode;
+    }
+
+    /**
+     * @param mixed $rootNode
+     */
+    public function setRootNode($rootNode)
+    {
+        $this->rootNode = $rootNode;
+    }
+
+    /**
      * @param array $arr
      * @return int
      */
-    protected function getJsonDepth(array $arr) {
+    protected function getXmlDepth(array $arr) {
         $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
         $depth = 0;
         foreach ( $it as $v ) {
             $it->getDepth() > $depth and $depth = $it->getDepth();
         }
         return $depth;
+    }
+
+    /**
+     * @param $xml
+     * @return mixed
+     */
+    protected function convertXmlToArray($xml) {
+        $xml = simplexml_load_string($xml, "SimpleXMLElement", LIBXML_NOCDATA);
+        $json = json_encode($xml);
+        $array = json_decode($json,TRUE);
+
+        return $array;
     }
 
     /**
@@ -59,7 +90,9 @@ class Json extends AbstractProvider {
      */
     public function testData()
     {
-        return $this->getJsonDepth(\Zend_Json::decode($this->getJsonExample())) === 1;
+        $data = $this->convertXmlToArray($this->getXmlExample());;
+
+        return $this->getXmlDepth($data) === 1;
     }
 
     /**
@@ -69,8 +102,12 @@ class Json extends AbstractProvider {
      */
     public function getColumns()
     {
-        $rows = \Zend_Json::decode($this->getJsonExample());
+        $rows = $this->convertXmlToArray($this->getXmlExample());
         $returnHeaders = [];
+
+        if($this->getRootNode()) {
+            $rows = $rows[$this->getRootNode()];
+        }
 
         if(count($rows) > 0) {
             $firstRow = $rows[0];
@@ -95,11 +132,15 @@ class Json extends AbstractProvider {
     protected function runImport($definition, $params)
     {
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
-        $json = file_get_contents($file);
+        $xml = file_get_contents($file);
 
         $objects = [];
 
-        $data = \Zend_Json::decode($json);
+        $data = $this->convertXmlToArray($xml);
+
+        if($this->getRootNode()) {
+            $data = $data[$this->getRootNode()];
+        }
 
         foreach($data as $row) {
             $objects[] = $this->importRow($definition, $row);

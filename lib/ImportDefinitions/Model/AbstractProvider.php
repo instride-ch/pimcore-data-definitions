@@ -25,7 +25,7 @@ abstract class AbstractProvider {
      *
      * @var array
      */
-    public static $availableProviders = array('csv', 'sql', 'json');
+    public static $availableProviders = array('csv', 'sql', 'json', 'xml');
 
     /**
      * @var Mapping[]

@@ -2,7 +2,7 @@
 <zend-config xmlns:zf="http://framework.zend.com/xml/zend-config-xml/1.0/">
     <plugin>
         <pluginName>ImportDefinitions</pluginName>
-        <pluginDescription><![CDATA[Advanced Imports and Exports for Pimcore]]></pluginDescription>
+        <pluginDescription><![CDATA[Import Definitions for Pimcore]]></pluginDescription>
         <pluginVersion>0.1</pluginVersion>
         <pluginRevision>1</pluginRevision>
         <pluginBuildTimestamp>0</pluginBuildTimestamp>
@@ -23,6 +23,7 @@
             <path>/plugins/ImportDefinitions/static/js/provider/csv.js</path>
             <path>/plugins/ImportDefinitions/static/js/provider/sql.js</path>
             <path>/plugins/ImportDefinitions/static/js/provider/json.js</path>
+            <path>/plugins/ImportDefinitions/static/js/provider/xml.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/abstract.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/objectbrick.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/classificationstore.js</path>

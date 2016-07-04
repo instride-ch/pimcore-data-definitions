@@ -23,7 +23,7 @@ You can always programm a custom provider which takes care of imports. Just take
 Run following command
 
 ```
-pimcore/cli/console.php importdefinitions:list -d 1 -p "{\"file\":\"test.json\"}"
+pimcore/cli/console.php importdefinitions:list
 ```
 
 You can see the ID, the name and the Provider

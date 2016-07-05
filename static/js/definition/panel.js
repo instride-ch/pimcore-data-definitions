@@ -1,3 +1,16 @@
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
+
 pimcore.registerNS('pimcore.plugin.importdefinitions.definition.panel');
 
 pimcore.plugin.importdefinitions.definition.panel = Class.create({
@@ -32,53 +45,53 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
                 this.cleaners = [];
                 this.interpreters = [];
 
-                config.providers.forEach(function(provider) {
+                config.providers.forEach(function (provider) {
                     this.providers.push([provider]);
                 }.bind(this));
 
-                config.interpreter.forEach(function(interpreter) {
+                config.interpreter.forEach(function (interpreter) {
                     this.interpreters.push([interpreter]);
                 }.bind(this));
 
-                config.setter.forEach(function(setter) {
+                config.setter.forEach(function (setter) {
                     this.setters.push([setter]);
                 }.bind(this));
 
-                config.cleaner.forEach(function(cleaner) {
+                config.cleaner.forEach(function (cleaner) {
                     this.cleaners.push([cleaner]);
                 }.bind(this));
 
                 var providerStore = new Ext.data.ArrayStore({
                     data : this.providers,
-                    fields: ["provider"],
-                    idProperty : "provider"
+                    fields: ['provider'],
+                    idProperty : 'provider'
                 });
 
-                pimcore.globalmanager.add("importdefinitions_providers", providerStore);
+                pimcore.globalmanager.add('importdefinitions_providers', providerStore);
 
                 var cleanersStore = new Ext.data.ArrayStore({
                     data : this.cleaners,
-                    fields: ["cleaner"],
-                    idProperty : "cleaner"
+                    fields: ['cleaner'],
+                    idProperty : 'cleaner'
                 });
 
-                pimcore.globalmanager.add("importdefinitions_cleaners", cleanersStore);
+                pimcore.globalmanager.add('importdefinitions_cleaners', cleanersStore);
 
                 var interpretersStore = new Ext.data.ArrayStore({
                     data : this.interpreters,
-                    fields: ["interpreter"],
-                    idProperty : "interpreter"
+                    fields: ['interpreter'],
+                    idProperty : 'interpreter'
                 });
 
-                pimcore.globalmanager.add("importdefinitions_interpreters", interpretersStore);
+                pimcore.globalmanager.add('importdefinitions_interpreters', interpretersStore);
 
                 var settersStore = new Ext.data.ArrayStore({
                     data : this.setters,
-                    fields: ["setter"],
-                    idProperty : "setter"
+                    fields: ['setter'],
+                    idProperty : 'setter'
                 });
 
-                pimcore.globalmanager.add("importdefinitions_setters", settersStore);
+                pimcore.globalmanager.add('importdefinitions_setters', settersStore);
 
                 this.getLayout();
             }.bind(this)
@@ -87,7 +100,7 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
         this.panels = [];
     },
 
-    createStore : function() {
+    createStore : function () {
         var proxy = new Ext.data.HttpProxy({
             url : this.url.list
         });
@@ -169,7 +182,7 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
                         {
                             metadata.tdCls = record.get('iconCls') + ' td-icon';
 
-                            return value + " (" + record.get("id") + ")";
+                            return value + ' (' + record.get('id') + ')';
                         }
                     }
                 ],

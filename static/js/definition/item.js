@@ -1,3 +1,16 @@
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
+
 pimcore.registerNS('pimcore.plugin.importdefinitions.definition.item');
 
 pimcore.plugin.importdefinitions.definition.item = Class.create({
@@ -43,7 +56,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
     getPanel: function () {
         var panel = new Ext.TabPanel({
             activeTab: 0,
-            title: this.data.name + " (" + this.data.id + ")",
+            title: this.data.name + ' (' + this.data.id + ')',
             closable: true,
             deferredRender: false,
             forceLayout: true,
@@ -75,7 +88,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                 type: 'ajax',
                 url: '/admin/class/get-tree'
             },
-            fields: ["text"]
+            fields: ['text']
         });
         classesStore.load();
 
@@ -91,11 +104,11 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
             items: [
                 {
                     xtype : 'combo',
-                    fieldLabel: t("importdefinitions_provider"),
-                    name: "provider",
-                    displayField: "provider",
-                    valueField: "provider",
-                    store: pimcore.globalmanager.get("importdefinitions_providers"),
+                    fieldLabel: t('importdefinitions_provider'),
+                    name: 'provider',
+                    displayField: 'provider',
+                    valueField: 'provider',
+                    store: pimcore.globalmanager.get('importdefinitions_providers'),
                     value : this.data.provider,
                     width: 500,
                     listeners : {
@@ -107,35 +120,35 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                 },
                 {
                     xtype : 'combo',
-                    fieldLabel: t("class"),
-                    name: "class",
-                    displayField: "text",
-                    valueField: "text",
+                    fieldLabel: t('class'),
+                    name: 'class',
+                    displayField: 'text',
+                    valueField: 'text',
                     store: classesStore,
                     width: 500,
                     value : this.data.class
                 },
                 {
                     xtype : 'textfield',
-                    fieldLabel: t("path"),
-                    name: "objectPath",
+                    fieldLabel: t('path'),
+                    name: 'objectPath',
                     width: 500,
                     value : this.data.objectPath
                 },
                 {
                     xtype : 'textfield',
-                    fieldLabel: t("key"),
-                    name: "key",
+                    fieldLabel: t('key'),
+                    name: 'key',
                     width: 500,
                     value : this.data.key
                 },
                 {
                     xtype : 'combo',
-                    fieldLabel: t("importdefinitions_cleaner"),
-                    name: "cleaner",
-                    displayField: "cleaner",
-                    valueField: "cleaner",
-                    store: pimcore.globalmanager.get("importdefinitions_cleaners"),
+                    fieldLabel: t('importdefinitions_cleaner'),
+                    name: 'cleaner',
+                    displayField: 'cleaner',
+                    valueField: 'cleaner',
+                    store: pimcore.globalmanager.get('importdefinitions_cleaners'),
                     value : this.data.cleaner,
                     width: 500,
                     listeners : {
@@ -150,8 +163,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
         return this.configForm;
     },
 
-    getProviderSettings : function() {
-        if(!this.providerSettings) {
+    getProviderSettings : function () {
+        if (!this.providerSettings) {
             this.providerSettings = Ext.create({
                 xtype : 'panel',
                 layout : 'border',
@@ -161,41 +174,40 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
             });
         }
 
-        if(this.data.provider) {
+        if (this.data.provider) {
             this.reloadProviderSettings(this.data.provider);
         }
 
         return this.providerSettings;
     },
 
-    reloadProviderSettings : function(provider) {
-        if(this.providerSettings) {
+    reloadProviderSettings : function (provider) {
+        if (this.providerSettings) {
             this.providerSettings.removeAll();
 
-            if(pimcore.plugin.importdefinitions.provider[provider] !== undefined) {
-                if(this.data.provider === null) {
-                    this.save(function() {
+            if (pimcore.plugin.importdefinitions.provider[provider] !== undefined) {
+                if (this.data.provider === null) {
+                    this.save(function () {
                         this.updateProviderMapViews();
                     }.bind(this));
-                }
-                else {
+                } else {
                     this.updateProviderMapViews();
                 }
             }
         }
     },
 
-    providerSettingsSuccess : function(providerPanel) {
+    providerSettingsSuccess : function (providerPanel) {
         this.reloadColumnMapping();
     },
 
-    updateProviderMapViews : function() {
+    updateProviderMapViews : function () {
         this.providerSettings.add(new pimcore.plugin.importdefinitions.provider[this.data.provider](this.data.providerConfiguration ? this.data.providerConfiguration : {}, this).getForm());
         this.providerSettings.enable();
     },
 
-    getMappingSettings : function() {
-        if(!this.mappingSettings) {
+    getMappingSettings : function () {
+        if (!this.mappingSettings) {
             this.mappingSettings = Ext.create({
                 xtype : 'panel',
                 layout : 'border',
@@ -205,18 +217,18 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
             });
         }
 
-        if(this.data.provider) {
+        if (this.data.provider) {
             this.reloadColumnMapping();
         }
 
         return this.mappingSettings;
     },
 
-    reloadColumnMapping : function() {
-        if(this.mappingSettings) {
+    reloadColumnMapping : function () {
+        if (this.mappingSettings) {
             this.mappingSettings.removeAll();
 
-            if(this.data.provider) {
+            if (this.data.provider) {
                 this.mappingSettings.enable();
 
                 Ext.Ajax.request({
@@ -236,7 +248,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                             ],
                             data : config.fromColumns,
                             listeners: {
-                                load: function(store){
+                                load: function (store) {
                                     var rec = { identifier: '', label: '' };
                                     store.insert(0, rec);
                                 }
@@ -249,15 +261,15 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
 
                         var gridStore = new Ext.data.Store({
                             grouper : {
-                                groupFn : function(item) {
-                                    var rec = toColumnStore.findRecord("identifier", item.data.toColumn);
+                                groupFn : function (item) {
+                                    var rec = toColumnStore.findRecord('identifier', item.data.toColumn);
 
-                                    if(rec) {
-                                        if (rec.data.type === "objectbrick" || rec.data.type === "fieldcollection") {
+                                    if (rec) {
+                                        if (rec.data.type === 'objectbrick' || rec.data.type === 'fieldcollection') {
                                             return rec.data.setterConfig.class;
                                         }
 
-                                        return rec.data.type ? rec.data.type : t("fields");
+                                        return rec.data.type ? rec.data.type : t('fields');
                                     }
                                 }
                             },
@@ -268,12 +280,11 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                             ]
                         });
 
-                        config.toColumns.forEach(function(col) {
+                        config.toColumns.forEach(function (col) {
                             gridStoreData.push({
                                 toColumn : col.id
-                            })
+                            });
                         });
-
 
                         gridStore.loadRawData(config.mapping);
 
@@ -296,10 +307,10 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                         text : t('importdefinitions_toColumn'),
                                         dataIndex : 'toColumn',
                                         flex : 1,
-                                        renderer : function(val, metadata) {
-                                            var rec = toColumnStore.findRecord("identifier", val);
+                                        renderer : function (val, metadata) {
+                                            var rec = toColumnStore.findRecord('identifier', val);
 
-                                            if(rec) {
+                                            if (rec) {
                                                 metadata.tdCls = 'pimcore_icon_' + rec.data.fieldtype + ' td-icon';
 
                                                 return rec.data.label;
@@ -312,16 +323,17 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                         text : t('importdefinitions_fromColumn'),
                                         dataIndex : 'fromColumn',
                                         flex : 1,
-                                        renderer : function(val) {
-                                            if(val) {
-                                                var rec = fromColumnStore.findRecord("identifier", val);
+                                        renderer : function (val) {
+                                            if (val) {
+                                                var rec = fromColumnStore.findRecord('identifier', val);
 
-                                                if(rec)
-                                                    return rec.get("label");
+                                                if (rec)
+                                                    return rec.get('label');
                                             }
 
                                             return null;
                                         },
+
                                         editor : {
                                             xtype : 'combo',
                                             store : fromColumnStore,
@@ -330,22 +342,22 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                             valueField: 'id',
                                             editable : false,
                                             listeners : {
-                                                change :  function(combo, newValue, oldValue, eOpts) {
-                                                    if(newValue === '') {
+                                                change :  function (combo, newValue, oldValue, eOpts) {
+                                                    if (newValue === '') {
                                                         return;
                                                     }
-                                                    
-                                                    var gridRecord = combo.up("grid").getSelectionModel().getSelection();
 
-                                                    if(gridRecord.length > 0) {
+                                                    var gridRecord = combo.up('grid').getSelectionModel().getSelection();
+
+                                                    if (gridRecord.length > 0) {
                                                         gridRecord = gridRecord[0];
 
-                                                        var fromColumn = fromColumnStore.findRecord("identifier", newValue);
-                                                        var toColumn = toColumnStore.findRecord("identifier", gridRecord .get("toColumn"));
+                                                        var fromColumn = fromColumnStore.findRecord('identifier', newValue);
+                                                        var toColumn = toColumnStore.findRecord('identifier', gridRecord .get('toColumn'));
 
-                                                        if(fromColumn && toColumn) {
+                                                        if (fromColumn && toColumn) {
                                                             var dialog = new pimcore.plugin.importdefinitions.definition.configDialog();
-                                                            dialog.getConfigDialog(fromColumn, toColumn, gridRecord );
+                                                            dialog.getConfigDialog(fromColumn, toColumn, gridRecord);
                                                         }
                                                     }
                                                 }
@@ -366,10 +378,10 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                         flex : 1,
                                         align : 'right',
                                         renderer : function (value, metadata, record) {
-                                            var fromColumn = fromColumnStore.findRecord("identifier", record.get("fromColumn"));
-                                            var toColumn = toColumnStore.findRecord("identifier", record.get("toColumn"));
+                                            var fromColumn = fromColumnStore.findRecord('identifier', record.get('fromColumn'));
+                                            var toColumn = toColumnStore.findRecord('identifier', record.get('toColumn'));
 
-                                            if(fromColumn && toColumn)
+                                            if (fromColumn && toColumn)
                                             {
                                                 var id = Ext.id();
                                                 Ext.defer(function () {
@@ -409,8 +421,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
             mapping: []
         };
 
-        if(this.mappingSettings.down("grid")) {
-            var mapping = this.mappingSettings.down("grid").getStore().getRange();
+        if (this.mappingSettings.down('grid')) {
+            var mapping = this.mappingSettings.down('grid').getStore().getRange();
             var mappingResult = [];
 
             mapping.forEach(function (map) {
@@ -424,8 +436,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
 
         Ext.apply(data, this.configForm.getForm().getFieldValues());
 
-        if(this.providerSettings.down("form")) {
-            Ext.apply(data.configuration, this.providerSettings.down("form").getForm().getFieldValues());
+        if (this.providerSettings.down('form')) {
+            Ext.apply(data.configuration, this.providerSettings.down('form').getForm().getFieldValues());
         }
 
         return {
@@ -456,7 +468,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                             'error', res.message);
                     }
 
-                    if(Ext.isFunction(callback)) {
+                    if (Ext.isFunction(callback)) {
                         callback();
                     }
                 } catch (e) {

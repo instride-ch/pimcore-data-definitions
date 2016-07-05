@@ -1,4 +1,16 @@
 <?php
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
 
 namespace ImportDefinitions\Model\Provider;
 
@@ -13,7 +25,8 @@ use Pimcore\Model\Object\Concrete;
  * Class Sql
  * @package ImportDefinitions\Provider
  */
-class Sql extends AbstractProvider {
+class Sql extends AbstractProvider
+{
 
     /**
      * @var string
@@ -168,7 +181,8 @@ class Sql extends AbstractProvider {
      * @return boolean
      * @throws \Exception
      */
-    public function testData() {
+    public function testData()
+    {
         return is_object($this->getDb());
     }
 
@@ -177,7 +191,8 @@ class Sql extends AbstractProvider {
      * @throws \Exception
      * @returns \Zend_Db
      */
-    protected function getDb() {
+    protected function getDb()
+    {
         $config = [
             "username" => $this->getUsername(),
             "password" => $this->getPassword(),
@@ -213,8 +228,7 @@ class Sql extends AbstractProvider {
         if (isset($data[0])) {
             // there is at least one row - we can grab columns from it
             $columns = array_keys((array)$data[0]);
-        }
-        else {
+        } else {
             // there are no results - no need to use PDO functions
             $nr = $query->columnCount();
             for ($i = 0; $i < $nr; ++$i) {
@@ -222,7 +236,7 @@ class Sql extends AbstractProvider {
             }
         }
 
-        foreach($columns as $col) {
+        foreach ($columns as $col) {
             $returnCol = new FromColumn();
             $returnCol->setIdentifier($col);
             $returnCol->setLabel($col);
@@ -246,7 +260,7 @@ class Sql extends AbstractProvider {
 
         $objects = [];
 
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $objects[] = $this->importRow($definition, $row);
         }
 
@@ -259,10 +273,11 @@ class Sql extends AbstractProvider {
      *
      * @return Concrete
      */
-    private function importRow($definition, $data) {
+    private function importRow($definition, $data)
+    {
         $object = $this->getObjectForPrimaryKey($definition, $data);
 
-        foreach($definition->getMapping() as $map) {
+        foreach ($definition->getMapping() as $map) {
             $value = $data[$map->getFromColumn()];
 
             $this->setObjectValue($object, $map, $value, $data);

@@ -1,4 +1,16 @@
 <?php
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
 
 namespace ImportDefinitions\Model\Provider;
 
@@ -13,7 +25,8 @@ use Pimcore\Model\Object\Concrete;
  * Class Xml
  * @package ImportDefinitions\Provider
  */
-class Xml extends AbstractProvider {
+class Xml extends AbstractProvider
+{
 
     /**
      * @var string
@@ -61,10 +74,11 @@ class Xml extends AbstractProvider {
      * @param array $arr
      * @return int
      */
-    protected function getXmlDepth(array $arr) {
+    protected function getXmlDepth(array $arr)
+    {
         $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
         $depth = 0;
-        foreach ( $it as $v ) {
+        foreach ($it as $v) {
             $it->getDepth() > $depth and $depth = $it->getDepth();
         }
         return $depth;
@@ -74,10 +88,11 @@ class Xml extends AbstractProvider {
      * @param $xml
      * @return mixed
      */
-    protected function convertXmlToArray($xml) {
+    protected function convertXmlToArray($xml)
+    {
         $xml = simplexml_load_string($xml, "SimpleXMLElement", LIBXML_NOCDATA);
         $json = json_encode($xml);
-        $array = json_decode($json,TRUE);
+        $array = json_decode($json, true);
 
         return $array;
     }
@@ -90,7 +105,8 @@ class Xml extends AbstractProvider {
      */
     public function testData()
     {
-        $data = $this->convertXmlToArray($this->getXmlExample());;
+        $data = $this->convertXmlToArray($this->getXmlExample());
+        ;
 
         return $this->getXmlDepth($data) === 1;
     }
@@ -105,14 +121,14 @@ class Xml extends AbstractProvider {
         $rows = $this->convertXmlToArray($this->getXmlExample());
         $returnHeaders = [];
 
-        if($this->getRootNode()) {
+        if ($this->getRootNode()) {
             $rows = $rows[$this->getRootNode()];
         }
 
-        if(count($rows) > 0) {
+        if (count($rows) > 0) {
             $firstRow = $rows[0];
 
-            foreach($firstRow as $key => $val) {
+            foreach ($firstRow as $key => $val) {
                 $headerObj = new FromColumn();
                 $headerObj->setIdentifier($key);
                 $headerObj->setLabel($key);
@@ -138,11 +154,11 @@ class Xml extends AbstractProvider {
 
         $data = $this->convertXmlToArray($xml);
 
-        if($this->getRootNode()) {
+        if ($this->getRootNode()) {
             $data = $data[$this->getRootNode()];
         }
 
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $objects[] = $this->importRow($definition, $row);
         }
 
@@ -155,10 +171,11 @@ class Xml extends AbstractProvider {
      *
      * @return Concrete
      */
-    private function importRow($definition, $data) {
+    private function importRow($definition, $data)
+    {
         $object = $this->getObjectForPrimaryKey($definition, $data);
 
-        foreach($definition->getMapping() as $map) {
+        foreach ($definition->getMapping() as $map) {
             $value = $data[$map->getFromColumn()];
 
             $this->setObjectValue($object, $map, $value, $data);

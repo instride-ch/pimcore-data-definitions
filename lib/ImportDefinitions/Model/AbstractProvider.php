@@ -1,4 +1,16 @@
 <?php
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
 
 namespace ImportDefinitions\Model;
 
@@ -20,7 +32,8 @@ use Pimcore\Tool;
  * Class AbstractProvider
  * @package ImportDefinitions
  */
-abstract class AbstractProvider {
+abstract class AbstractProvider
+{
     /**
      * available Providers.
      *
@@ -57,11 +70,11 @@ abstract class AbstractProvider {
 
             $setter = 'set'.ucfirst($key);
 
-            if($key === "mappings") {
+            if ($key === "mappings") {
                 $mappings = [];
 
-                if(is_array($value)) {
-                    foreach($value as $vMap) {
+                if (is_array($value)) {
+                    foreach ($value as $vMap) {
                         $mapping = new Mapping();
                         $mapping->setValues($vMap);
 
@@ -116,27 +129,28 @@ abstract class AbstractProvider {
      * @return boolean
      * @throws \Exception
      */
-    public abstract function testData();
+    abstract public function testData();
 
     /**
      * Get Columns from data
      *
      * @return FromColumn[]
      */
-    public abstract function getColumns();
+    abstract public function getColumns();
 
     /**
      * @param Definition $definition
      * @param $params
      * @return Concrete[]
      */
-    protected abstract function runImport($definition, $params);
+    abstract protected function runImport($definition, $params);
 
     /**
      * @param Definition $definition
      * @param $params
      */
-    public function doImport($definition, $params) {
+    public function doImport($definition, $params)
+    {
         $logs = new Log\Listing();
         $logs->setCondition("definition = ?", array($definition->getId()));
         $logs = $logs->getData();
@@ -146,21 +160,21 @@ abstract class AbstractProvider {
         //Compare with logs and cleanup
         $notFound = [];
 
-        foreach($logs as $log) {
+        foreach ($logs as $log) {
             $found = false;
 
-            foreach($objects as $object) {
-                if(intval($log->getO_Id()) === $object->getId()) {
+            foreach ($objects as $object) {
+                if (intval($log->getO_Id()) === $object->getId()) {
                     $found = true;
 
                     break;
                 }
             }
 
-            if(!$found) {
+            if (!$found) {
                 $notFoundObject = Concrete::getById($log->getO_Id());
 
-                if($notFoundObject instanceof Concrete) {
+                if ($notFoundObject instanceof Concrete) {
                     $notFound[] = $notFoundObject;
                 }
             }
@@ -170,21 +184,21 @@ abstract class AbstractProvider {
         $type = $definition->getCleaner();
         $class = 'ImportDefinitions\\Model\\Cleaner\\' . ucfirst($type);
         
-        if(Tool::classExists($class)) {
+        if (Tool::classExists($class)) {
             $class = new $class();
             
-            if($class instanceof AbstractCleaner) {
+            if ($class instanceof AbstractCleaner) {
                 $class->cleanup($objects, $logs, $notFound);
             }
         }
 
         //Delete Logs
-        foreach($logs as $log) {
+        foreach ($logs as $log) {
             $log->delete();
         }
 
         //Save new Log
-        foreach($objects as $obj) {
+        foreach ($objects as $obj) {
             $log = new Log();
             $log->setO_Id($obj->getId());
             $log->setDefinition($definition->getId());
@@ -200,12 +214,13 @@ abstract class AbstractProvider {
      *
      * @return Concrete
      */
-    public function getObjectForPrimaryKey($definition, $data) {
+    public function getObjectForPrimaryKey($definition, $data)
+    {
         $class = $definition->getClass();
         $classDefinition =ClassDefinition::getByName($class);
         $obj = null;
 
-        if(!$classDefinition instanceof ClassDefinition) {
+        if (!$classDefinition instanceof ClassDefinition) {
             throw new \Exception("Class not found $class");
         }
 
@@ -214,19 +229,18 @@ abstract class AbstractProvider {
 
         $list = new $classList();
 
-        if($list instanceof Listing) {
+        if ($list instanceof Listing) {
             $mapping = $definition->getMapping();
             $condition = [];
             $conditionValues = [];
-            foreach($mapping as $map) {
-                if($map->getPrimaryIdentifier()) {
+            foreach ($mapping as $map) {
+                if ($map->getPrimaryIdentifier()) {
                     $condition[] = $map->getToColumn() . " = ?";
                     $conditionValues[] = $data[$map->getFromColumn()];
                 }
             }
 
-            if(count($condition) === 0)
-            {
+            if (count($condition) === 0) {
                 throw new \Exception("No primary identifier defined!");
             }
 
@@ -234,21 +248,20 @@ abstract class AbstractProvider {
             $list->setCondition(implode(" AND ", $condition), $conditionValues);
             $objectData = $list->load();
 
-            if(count($objectData) === 1) {
+            if (count($objectData) === 1) {
                 $obj = $objectData[0];
             }
 
-            if(!isset($obj)) {
+            if (!isset($obj)) {
                 $obj = new $classObject();
             }
 
-            if($obj instanceof AbstractObject) {
+            if ($obj instanceof AbstractObject) {
                 $key = File::getValidFilename($definition->createKey($data));
 
-                if($definition->getKey() && $key) {
+                if ($definition->getKey() && $key) {
                     $obj->setKey($key);
-                }
-                else {
+                } else {
                     $obj->setKey(File::getValidFilename(implode("-", $conditionValues)));
                 }
                 $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
@@ -256,7 +269,7 @@ abstract class AbstractProvider {
                 return $obj;
             }
 
-            if(count($objectData) > 1) {
+            if (count($objectData) > 1) {
                 throw new \Exception("Object with the same primary key was fount multiple times");
             }
         }
@@ -270,33 +283,33 @@ abstract class AbstractProvider {
      * @param $value
      * @param array $data
      */
-    public function setObjectValue(Concrete $object, Mapping $map, $value, $data) {
+    public function setObjectValue(Concrete $object, Mapping $map, $value, $data)
+    {
         $mapConfig = $map->getConfig();
 
-        if($mapConfig['interpreter']) {
+        if ($mapConfig['interpreter']) {
             $class = 'ImportDefinitions\Model\Interpreter\\' . ucfirst($mapConfig['interpreter']);
 
-            if(Tool::classExists($class)) {
+            if (Tool::classExists($class)) {
                 $class = new $class();
 
-                if($class instanceof AbstractInterpreter) {
+                if ($class instanceof AbstractInterpreter) {
                     $value = $class->interpret($object, $value, $map, $data);
                 }
             }
         }
 
-        if($mapConfig['setter']) {
+        if ($mapConfig['setter']) {
             $class = 'ImportDefinitions\Model\Setter\\' . ucfirst($mapConfig['setter']);
 
-            if(Tool::classExists($class)) {
+            if (Tool::classExists($class)) {
                 $class = new $class();
 
-                if($class instanceof AbstractSetter) {
+                if ($class instanceof AbstractSetter) {
                     $class->set($object, $value, $map, $data);
                 }
             }
-        }
-        else {
+        } else {
             $object->setValue($map->getToColumn(), $value);
         }
     }

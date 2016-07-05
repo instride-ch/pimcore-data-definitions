@@ -1,4 +1,18 @@
 <?php
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
+
+
 namespace ImportDefinitions\Model\Log;
 
 use Pimcore\Model\Dao\AbstractDao;
@@ -7,7 +21,8 @@ use Pimcore\Model\Dao\AbstractDao;
  * Class Dao
  * @package ImportDefinitions\Model\Log
  */
-class Dao extends AbstractDao {
+class Dao extends AbstractDao
+{
 
     protected $tableName = 'importdefinitions_log';
 
@@ -17,15 +32,17 @@ class Dao extends AbstractDao {
      * @param null $id
      * @throws \Exception
      */
-    public function getById($id = null) {
-
-        if ($id != null)
+    public function getById($id = null)
+    {
+        if ($id != null) {
             $this->model->setId($id);
+        }
 
         $data = $this->db->fetchRow('SELECT * FROM '.$this->tableName.' WHERE id = ?', $this->model->getId());
 
-        if(!$data["id"])
+        if (!$data["id"]) {
             throw new \Exception("Object with the ID " . $this->model->getId() . " doesn't exists");
+        }
 
         $this->assignVariablesToModel($data);
     }
@@ -35,33 +52,37 @@ class Dao extends AbstractDao {
      *
      * @throws \Zend_Db_Adapter_Exception
      */
-    public function save() {
+    public function save()
+    {
         $vars = get_object_vars($this->model);
 
         $buffer = [];
 
         $validColumns = $this->getValidTableColumns($this->tableName);
 
-        if(count($vars))
+        if (count($vars)) {
             foreach ($vars as $k => $v) {
-
-                if(!in_array($k, $validColumns))
+                if (!in_array($k, $validColumns)) {
                     continue;
+                }
 
                 $getter = "get" . ucfirst($k);
 
-                if(!is_callable([$this->model, $getter]))
+                if (!is_callable([$this->model, $getter])) {
                     continue;
+                }
 
                 $value = $this->model->$getter();
 
-                if(is_bool($value))
+                if (is_bool($value)) {
                     $value = (int)$value;
+                }
 
                 $buffer[$k] = $value;
             }
+        }
 
-        if($this->model->getId() !== null) {
+        if ($this->model->getId() !== null) {
             $this->db->update($this->tableName, $buffer, $this->db->quoteInto("id = ?", $this->model->getId()));
             return;
         }
@@ -73,8 +94,8 @@ class Dao extends AbstractDao {
     /**
      * delete vote
      */
-    public function delete() {
+    public function delete()
+    {
         $this->db->delete($this->tableName, $this->db->quoteInto("id = ?", $this->model->getId()));
     }
-
 }

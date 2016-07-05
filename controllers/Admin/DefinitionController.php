@@ -1,4 +1,16 @@
 <?php
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
 
 use Pimcore\Controller\Action\Admin;
 use Pimcore\Model\Object;
@@ -22,7 +34,8 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
         }*/
     }
 
-    public function getConfigAction() {
+    public function getConfigAction()
+    {
         $this->_helper->json(array(
             'success' => true,
             'providers' => \ImportDefinitions\Model\AbstractProvider::$availableProviders,
@@ -86,17 +99,17 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
         }
     }
 
-    public function testDataAction() {
+    public function testDataAction()
+    {
         $id = $this->getParam("id");
         $definition = \ImportDefinitions\Model\Definition::getById($id);
 
         if ($definition instanceof \ImportDefinitions\Model\Definition) {
             try {
-                if($definition->getProviderConfiguration()->testData()) {
+                if ($definition->getProviderConfiguration()->testData()) {
                     $this->_helper->json(array('success' => true));
                 }
-            }
-            catch(\Exception $ex) {
+            } catch (\Exception $ex) {
                 $this->_helper->json(array('success' => false, 'message' => $ex->getMessage()));
             }
 
@@ -118,21 +131,20 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
             $definition->setValues($data);
             $providerClass = 'ImportDefinitions\\Model\\Provider\\' . ucfirst($definition->getProvider());
             
-            if(\Pimcore\Tool::classExists($providerClass)) {
+            if (\Pimcore\Tool::classExists($providerClass)) {
                 $provider = new $providerClass();
 
-                if($provider instanceof \ImportDefinitions\Model\AbstractProvider) {
+                if ($provider instanceof \ImportDefinitions\Model\AbstractProvider) {
                     $provider->setValues($data['configuration']);
 
                     $definition->setProviderConfiguration($provider);
-                }
-                else {
+                } else {
                     $this->_helper->json(array('success' => false, 'message' => 'Provider Class found, but it needs to inherit from ImportDefinitions\Model\AbstractProvider'));
                 }
 
                 $maps = [];
 
-                foreach($data['mapping'] as $map) {
+                foreach ($data['mapping'] as $map) {
                     $mapping = new \ImportDefinitions\Model\Mapping();
                     $mapping->setValues($map);
 
@@ -140,8 +152,7 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                 }
 
                 $definition->setMapping($maps);
-            }
-            else {
+            } else {
                 $this->_helper->json(array('success' => false, 'message' => 'Provider Class not found'));
             }
             
@@ -167,7 +178,8 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
         $this->_helper->json(array('success' => false));
     }
 
-    public function getColumnsAction() {
+    public function getColumnsAction()
+    {
         $id = $this->getParam('id');
 
         $definition = \ImportDefinitions\Model\Definition::getById($id);
@@ -180,8 +192,7 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
             try {
                 $fromColumns = $definition->getProviderConfiguration()->getColumns();
                 $fromColumns[] = $customFromColumn;
-            }
-            catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $fromColumns = [];
             }
 
@@ -190,7 +201,7 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
             $mappingDefinition = [];
             $fromColumnsResult = [];
 
-            foreach($fromColumns as $fromColumn) {
+            foreach ($fromColumns as $fromColumn) {
                 $fromColumn = get_object_vars($fromColumn);
 
                 $fromColumn['id'] = $fromColumn['identifier'];
@@ -198,10 +209,10 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                 $fromColumnsResult[] = $fromColumn;
             }
 
-            foreach($toColumns as $classToColumn) {
+            foreach ($toColumns as $classToColumn) {
                 $found = false;
 
-                if(is_array($mappings)) {
+                if (is_array($mappings)) {
                     foreach ($mappings as $mapping) {
                         if ($mapping->getToColumn() === $classToColumn->getIdentifier()) {
                             $found = true;
@@ -257,7 +268,7 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
 
         $activatedLanguages = \Pimcore\Tool::getValidLanguages();
 
-        foreach($systemColumns as $sysColumn) {
+        foreach ($systemColumns as $sysColumn) {
             $toColumn = new \ImportDefinitions\Model\Mapping\ToColumn();
 
             $toColumn->setLabel($sysColumn);
@@ -270,8 +281,7 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
 
         foreach ($fields as $field) {
             if ($field instanceof Object\ClassDefinition\Data\Localizedfields) {
-                foreach($activatedLanguages as $language) {
-
+                foreach ($activatedLanguages as $language) {
                     $localizedFields = $field->getFieldDefinitions();
 
                     foreach ($localizedFields as $localizedField) {
@@ -323,12 +333,12 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
             } elseif ($field instanceof Object\ClassDefinition\Data\Fieldcollections) {
                 //TODO: implement FieldCollection
 
-                foreach($field->getAllowedTypes() as $type) {
+                foreach ($field->getAllowedTypes() as $type) {
                     $definition = Object\Fieldcollection\Definition::getByKey($type);
 
                     $fieldDefinition = $definition->getFieldDefinitions();
 
-                    foreach($fieldDefinition as $fieldcollectionField) {
+                    foreach ($fieldDefinition as $fieldcollectionField) {
                         $resultField = $this->getFieldConfiguration($fieldcollectionField);
 
                         $resultField->setType("fieldcollection");
@@ -342,9 +352,7 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
 
                         $result[] = $resultField;
                     }
-
                 }
-
             } elseif ($field instanceof Object\ClassDefinition\Data\Classificationstore) {
                 $list = new Object\Classificationstore\GroupConfig\Listing();
 

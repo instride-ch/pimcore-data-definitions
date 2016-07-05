@@ -1,4 +1,16 @@
 <?php
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
 
 namespace ImportDefinitions\Model\Provider;
 
@@ -13,7 +25,8 @@ use Pimcore\Model\Object\Concrete;
  * Class Csv
  * @package ImportDefinitions\Provider
  */
-class Csv extends AbstractProvider {
+class Csv extends AbstractProvider
+{
 
     /**
      * @var string
@@ -99,14 +112,14 @@ class Csv extends AbstractProvider {
         $returnHeaders = [];
         $rows = str_getcsv($this->getCsvExample(), "\n"); //parse the rows
 
-        if(count($rows) > 0) {
+        if (count($rows) > 0) {
             $headerRow = $rows[0];
 
             $headers = str_getcsv($headerRow, $this->getDelimiter(), $this->getEnclosure());
 
-            if(count($headers) > 0) {
+            if (count($headers) > 0) {
                 //First line are the headers
-                foreach($headers as $header) {
+                foreach ($headers as $header) {
                     $headerObj = new FromColumn();
                     $headerObj->setIdentifier($header);
                     $headerObj->setLabel($header);
@@ -114,7 +127,6 @@ class Csv extends AbstractProvider {
                     $returnHeaders[] = $headerObj;
                 }
             }
-
         }
 
         return $returnHeaders;
@@ -138,12 +150,11 @@ class Csv extends AbstractProvider {
                 $num = count($data);
 
                 //Make Column Mapping
-                if($row === 0) {
+                if ($row === 0) {
                     for ($c = 0; $c < $num; $c++) {
                         $columnMapping[] = $data[$c];
                     }
-                }
-                else {
+                } else {
                     $objects[] = $this->importRow($definition, $columnMapping, $data);
                 }
 
@@ -162,17 +173,18 @@ class Csv extends AbstractProvider {
      *
      * @return Concrete
      */
-    private function importRow($definition, $map, $data) {
+    private function importRow($definition, $map, $data)
+    {
         //Convert Data to map
         $mappedData = [];
 
-        foreach($data as $index => $col) {
+        foreach ($data as $index => $col) {
             $mappedData[$map[$index]] = $col;
         }
 
         $object = $this->getObjectForPrimaryKey($definition, $mappedData);
 
-        foreach($definition->getMapping() as $map) {
+        foreach ($definition->getMapping() as $map) {
             $value = $mappedData[$map->getFromColumn()];
 
             $this->setObjectValue($object, $map, $value, $mappedData);

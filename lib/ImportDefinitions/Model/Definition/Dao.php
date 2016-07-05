@@ -1,4 +1,16 @@
 <?php
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
 
 namespace ImportDefinitions\Model\Definition;
 
@@ -48,25 +60,25 @@ class Dao extends Model\Dao\PhpArrayTable
     {
         parent::assignVariablesToModel($data);
 
-        foreach($data as $key => $value) {
-            if($key === 'providerConfiguration') {
+        foreach ($data as $key => $value) {
+            if ($key === 'providerConfiguration') {
                 //get provider class
                 $class = 'ImportDefinitions\\Model\\Provider\\' . ucfirst($this->model->getProvider());
 
-                if(Tool::classExists($class)) {
+                if (Tool::classExists($class)) {
                     $provider = new $class();
 
-                    if($provider instanceof AbstractProvider) {
+                    if ($provider instanceof AbstractProvider) {
                         $provider->setValues($value);
 
                         $this->model->setProviderConfiguration($provider);
                     }
                 }
-            } else if($key === 'mapping') {
+            } elseif ($key === 'mapping') {
                 $maps = array();
 
-                foreach($this->model->getMapping() as $map) {
-                    if(is_array($map)) {
+                foreach ($this->model->getMapping() as $map) {
+                    if (is_array($map)) {
                         $mapObj = new Mapping();
                         $mapObj->setValues($map);
 
@@ -129,13 +141,12 @@ class Dao extends Model\Dao\PhpArrayTable
 
             foreach ($dataRaw as $key => $value) {
                 if (in_array($key, $allowedProperties)) {
-                    if($key === 'providerConfiguration') {
-                        if($value) {
+                    if ($key === 'providerConfiguration') {
+                        if ($value) {
                             $data[$key] = get_object_vars($value);
                         }
-                    }
-                    else if($key === 'mapping') {
-                        if($value) {
+                    } elseif ($key === 'mapping') {
+                        if ($value) {
                             $data[$key] = array();
 
                             if (is_array($value)) {
@@ -144,8 +155,7 @@ class Dao extends Model\Dao\PhpArrayTable
                                 }
                             }
                         }
-                    }
-                    else {
+                    } else {
                         $data[$key] = $value;
                     }
                 }

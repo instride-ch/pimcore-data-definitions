@@ -1,3 +1,16 @@
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
+
 pimcore.registerNS('pimcore.plugin.importdefinitions.provider.abstractprovider');
 
 pimcore.plugin.importdefinitions.provider.abstractprovider = Class.create({
@@ -10,8 +23,8 @@ pimcore.plugin.importdefinitions.provider.abstractprovider = Class.create({
         this.parentItemPanel = parentItemPanel;
     },
 
-    getForm : function() {
-        if(!this.form) {
+    getForm : function () {
+        if (!this.form) {
             this.form = new Ext.form.Panel({
                 bodyStyle: 'padding:10px;',
                 region : 'center',
@@ -32,12 +45,12 @@ pimcore.plugin.importdefinitions.provider.abstractprovider = Class.create({
         return this.form;
     },
 
-    getItems : function() {
+    getItems : function () {
         return [];
     },
 
-    test : function() {
-        this.parentItemPanel.save(function() {
+    test : function () {
+        this.parentItemPanel.save(function () {
             Ext.Ajax.request({
                 url: this.parentItemPanel.url.test,
                 method: 'post',

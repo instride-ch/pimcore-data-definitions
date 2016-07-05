@@ -1,4 +1,16 @@
 <?php
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
 
 namespace ImportDefinitions\Model;
 
@@ -9,7 +21,8 @@ use Pimcore\Placeholder;
  * Class Definition
  * @package ImportDefinitions
  */
-class Definition extends AbstractModel {
+class Definition extends AbstractModel
+{
     /**
      * @var int
      */
@@ -101,7 +114,8 @@ class Definition extends AbstractModel {
      * @param $data
      * @return string
      */
-    public function createPath($data) {
+    public function createPath($data)
+    {
         $placeholderHelper = new Placeholder();
         return $placeholderHelper->replacePlaceholders($this->getObjectPath(), $data);
     }
@@ -110,7 +124,8 @@ class Definition extends AbstractModel {
      * @param $data
      * @return string
      */
-    public function createKey($data) {
+    public function createKey($data)
+    {
         $placeholderHelper = new Placeholder();
         return $placeholderHelper->replacePlaceholders($this->getKey(), $data);
     }
@@ -118,7 +133,8 @@ class Definition extends AbstractModel {
     /**
      * @param array $params
      */
-    public function doImport($params = []) {
+    public function doImport($params = [])
+    {
         $this->getProviderConfiguration()->doImport($this, $params);
     }
 

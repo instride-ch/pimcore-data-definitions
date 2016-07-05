@@ -1,11 +1,24 @@
-pimcore.registerNS("pimcore.plugin.importdefinitions");
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
+
+pimcore.registerNS('pimcore.plugin.importdefinitions');
 
 pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
-    getClassName: function() {
-        return "pimcore.plugin.importdefinitions";
+    getClassName: function () {
+        return 'pimcore.plugin.importdefinitions';
     },
 
-    initialize: function() {
+    initialize: function () {
         pimcore.plugin.broker.registerPlugin(this);
     },
 
@@ -13,7 +26,7 @@ pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
 
         var user = pimcore.globalmanager.get('user');
 
-        if(user.isAllowed('plugins')) {
+        if (user.isAllowed('plugins')) {
 
             var exportMenu = new Ext.Action({
                 text: t('importdefinitions_definitions'),
@@ -28,12 +41,13 @@ pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
             });*/
 
             layoutToolbar.settingsMenu.add(exportMenu);
+
             //layoutToolbar.settingsMenu.add(importMenu);
 
         }
     },
 
-    openDefinitions : function()
+    openDefinitions : function ()
     {
         try {
             pimcore.globalmanager.get('importdefinitions_definition_panel').activate();

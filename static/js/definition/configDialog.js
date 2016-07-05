@@ -1,8 +1,21 @@
+/**
+ * Import Definitions.
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
+
 pimcore.registerNS('pimcore.plugin.importdefinitions.definition.configDialog');
 
 pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
 
-    getConfigDialog : function(fromColumn, toColumn, record) {
+    getConfigDialog : function (fromColumn, toColumn, record) {
         var fieldSetItems = [];
 
         this.fromColumn = fromColumn;
@@ -25,20 +38,17 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             disabled : true
         }));
 
-        if(!Ext.isObject(record.data.config)) {
+        if (!Ext.isObject(record.data.config)) {
             record.data.config = {};
         }
 
-
-        if(!record.data.config.setter) {
-            if(toColumn.data.type === "objectbrick") {
-                record.data.config.setter = "objectbrick";
-            }
-            else if(toColumn.data.type === "classificationstore") {
-                record.data.config.setter = "classificationstore";
-            }
-            else if(toColumn.data.type === "fieldcollection") {
-                record.data.config.setter = "fieldcollection";
+        if (!record.data.config.setter) {
+            if (toColumn.data.type === 'objectbrick') {
+                record.data.config.setter = 'objectbrick';
+            } else if (toColumn.data.type === 'classificationstore') {
+                record.data.config.setter = 'classificationstore';
+            } else if (toColumn.data.type === 'fieldcollection') {
+                record.data.config.setter = 'fieldcollection';
             }
         }
 
@@ -182,13 +192,13 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         var interpreterForm = this.getInterpreterPanel().getForm();
         var setterForm = this.getSetterPanel().getForm();
 
-        if(form.isValid() && interpreterForm.isValid() && setterForm.isValid()) {
+        if (form.isValid() && interpreterForm.isValid() && setterForm.isValid()) {
             Ext.Object.each(form.getFieldValues(), function (key, value) {
                 this.record.data.config[key] = value;
             }.bind(this));
 
             if (this.getInterpreterPanel().isVisible()) {
-                if(!Ext.isObject(this.record.data.interpreterConfig)) {
+                if (!Ext.isObject(this.record.data.interpreterConfig)) {
                     this.record.data.interpreterConfig = {};
                 }
 
@@ -198,7 +208,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             }
 
             if (this.getSetterPanel().isVisible()) {
-                if(!Ext.isObject(this.record.data.setterConfig)) {
+                if (!Ext.isObject(this.record.data.setterConfig)) {
                     this.record.data.setterConfig = {};
                 }
 

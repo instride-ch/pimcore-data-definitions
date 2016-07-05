@@ -35,6 +35,20 @@ ImportDefinitions\Model\AbstractProvider::addProvider('YourProvider');
 
 Take a look at the existing Providers to get a clue how they are working.
 
+## Cleaner
+A cleaner takes care about the clean-up process. It basically deletes or unpublishes the missing objects. Following Cleaners are currently available:
+
+ - Deleter: Deletes missing objects
+ - Unpublisher: Unpublishes missing objects
+ - Reference Cleaner: Deletes only when no references exists, otherwise the object will be unpublished
+
+To create your own cleaner your class needs to be in the namespace "ImportDefinitions\Model\Cleaner" and implement from "ImportDefinitions\Model\Cleaner\AbstractCleaner". You also need to add it:
+
+```
+ImportDefinitions\Model\Cleaner\AbstractCleaner::addClenaer('YourInterpreter');
+```
+
+
 ## Interpreter
 To prepare data before it goes to the Objects-Setter Method, there are these "Interpreters". Currently following are available:
 
@@ -48,7 +62,7 @@ This probably doesn't satisfy your needs. But you can also write your own Interp
 and call
 
 ```
-ImportDefinitions\Model\Interpreter::addInterpreter('YourInterpreter');
+ImportDefinitions\Model\Interpreter\AbstractInterpreter::addInterpreter('YourInterpreter');
 ```
 
 if you have to add some data within the UI, you also need to create a Pimcore Admin JS File:
@@ -61,7 +75,6 @@ pimcore.plugin.importdefinitions.interpreters.yourinterpreter = Class.create(pim
 });
 
 ```
-
 
 ## Setter
 A Setter sets the data to the object as it would be needed.

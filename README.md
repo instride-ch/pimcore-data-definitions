@@ -44,15 +44,6 @@ To prepare data before it goes to the Objects-Setter Method, there are these "In
  - Href -> solves the connection from an ID to an actual Pimcore Objet
  - MulitHref -> same as href, but for multihref fields
 
-
-## Setter
-A Setter sets the data to the object as it would be needed.
-
- - Objectbrick -> saves the data to an objectbrick
- - Localizedfield -> saves the data to the specific language field
- - Classificationstore -> Saves the data to a classificationstore field
- - Fieldcollection -> Saves the data to a fieldcollection
-
 This probably doesn't satisfy your needs. But you can also write your own Interpreters. You just need to create a new class within the "ImportDefinitions\Model\Interpreter" namespace
 and call
 
@@ -70,6 +61,17 @@ pimcore.plugin.importdefinitions.interpreters.yourinterpreter = Class.create(pim
 });
 
 ```
+
+
+## Setter
+A Setter sets the data to the object as it would be needed.
+
+ - Objectbrick -> saves the data to an objectbrick
+ - Localizedfield -> saves the data to the specific language field
+ - Classificationstore -> Saves the data to a classificationstore field
+ - Fieldcollection -> Saves the data to a fieldcollection
+
+Of course, you can also implement your own Setters. Its basically the same as with Interpreters.
 
 ## Placeholders for Keys and Paths
 Import Definitions allow you to specify a key and a path for the objects. To be really generic, you can use pimcores placeholders for that.

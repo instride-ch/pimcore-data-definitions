@@ -1,13 +1,6 @@
 # Pimcore - Import Definitions
 
 Import Definitions allows you to define your Object Import using a nice GUI and re-run the imports as often you like. Everything within Import Definitions is extendable.
-Currently following providers are supported:
-
- * CSV
- * SQL-Table
- * JSON (only when max-depth = 1)
-
-You can always programm a custom provider which takes care of imports. Just take a look at the existing providers.
 
 ![Interface](docs/mapping.png)
 

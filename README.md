@@ -11,6 +11,18 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
 * After Installation within Pimcore Extension Manager, you have to reload Pimcore
 * Open Settings -> Definitions
 
+or install it via composer on an existing pimcore installation
+
+```
+composer require w-vision/import-definitions
+```
+
+or for the nightly dev version
+
+```
+composer require w-vision/import-definitions dev-master
+```
+
 ## Providers
 Currently, only 4 types of providers are available:
 
@@ -38,7 +50,7 @@ A cleaner takes care about the clean-up process. It basically deletes or unpubli
 To create your own cleaner your class needs to be in the namespace "ImportDefinitions\Model\Cleaner" and implement from "ImportDefinitions\Model\Cleaner\AbstractCleaner". You also need to add it:
 
 ```
-ImportDefinitions\Model\Cleaner\AbstractCleaner::addCleaner('YourInterpreter');
+ImportDefinitions\Model\Cleaner\AbstractCleaner::addClenaer('YourInterpreter');
 ```
 
 

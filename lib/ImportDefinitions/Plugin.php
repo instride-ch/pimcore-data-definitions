@@ -57,7 +57,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
           `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
           `definition` int NOT NULL,
           `o_id` int NOT NULL
-        ");
+        );");
 
         return true;
     }

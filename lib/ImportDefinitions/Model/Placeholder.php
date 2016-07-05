@@ -19,7 +19,9 @@ class Placeholder {
         $myData = $data;
 
         foreach($myData as &$d) {
-            $d = File::getValidFilename($d);
+            if(is_string($d)) {
+                $d = File::getValidFilename($d);
+            }
         }
 
         $placeholderHelper = new \Pimcore\Placeholder();

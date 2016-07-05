@@ -1,6 +1,16 @@
 {
-    "name": "w-vision/ImportDefinitions",
+    "name": "w-vision/import-definitions",
     "type": "pimcore-plugin",
+    "license": "GPLv3",
+    "description": "Import Definitions is a plugin that allows saving and re-running of imports.",
+    "keywords": ["pimcore", "imports", "pimcore-plugin"],
+    "homepage": "https://github.com/w-vision/ImportDefinitions",
+    "authors": [{
+        "name": "Dominik Pfaffenbauer",
+        "email": "dominik@pfaffenbauer.at",
+        "homepage": "http://www.pfaffenbauer.at/",
+        "role": "Developer"
+    }],
     "require": {
         "pimcore/installer-plugin": ">=1"
     },

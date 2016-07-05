@@ -253,7 +253,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                     var rec = toColumnStore.findRecord("identifier", item.data.toColumn);
 
                                     if(rec) {
-                                        if (rec.data.type === "objectbrick") {
+                                        if (rec.data.type === "objectbrick" || rec.data.type === "fieldcollection") {
                                             return rec.data.config.class;
                                         }
 

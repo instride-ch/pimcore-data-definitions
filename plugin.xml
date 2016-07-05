@@ -32,6 +32,7 @@
             <path>/plugins/ImportDefinitions/static/js/interpreters/localizedfield.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/asseturl.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/assetsurl.js</path>
+            <path>/plugins/ImportDefinitions/static/js/interpreters/fieldcollection.js</path>
         </pluginJsPaths>
         <pluginCssPaths>
             <path>/plugins/ImportDefinitions/static/css/importdefinitions.css</path>

@@ -314,6 +314,27 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                 }
             } elseif ($field instanceof Object\ClassDefinition\Data\Fieldcollections) {
                 //TODO: implement FieldCollection
+
+                foreach($field->getAllowedTypes() as $type) {
+                    $definition = Object\Fieldcollection\Definition::getByKey($type);
+
+                    $fieldDefinition = $definition->getFieldDefinitions();
+
+                    foreach($fieldDefinition as $fieldcollectionField) {
+                        $resultField = $this->getFieldConfiguration($fieldcollectionField);
+
+                        $resultField->setType("fieldcollection");
+                        $resultField->setIdentifier("fieldcollection~" .  $field->getName() . "~" . $type . "~" . $resultField->getIdentifier());
+                        $resultField->setConfig([
+                            "class" => $type,
+                            "interpreter" => "fieldcollection"
+                        ]);
+
+                        $result[] = $resultField;
+                    }
+
+                }
+
             } elseif ($field instanceof Object\ClassDefinition\Data\Classificationstore) {
                 $list = new Object\Classificationstore\GroupConfig\Listing();
 

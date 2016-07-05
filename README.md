@@ -65,6 +65,24 @@ pimcore.plugin.importdefinitions.interpreters.yourinterpreter = Class.create(pim
 
 ```
 
+## Placeholders for Keys and Paths
+Import Definitions allow you to specify a key and a path for the objects. To be really generic, you can use pimcores placeholders for that.
+
+[https://www.pimcore.org/wiki/display/PIMCORE4/Placeholders](https://www.pimcore.org/wiki/display/PIMCORE4/Placeholders)
+
+
+## Fieldcollections
+Fieldcollections are something special here. Because they can (and will) have a 1:n relation, the connection between the Data and the Mapping is special.
+
+![Interface](docs/fieldcollection.png)
+
+As you can see in the screenshot above, we have to settings to make:
+
+ - Field: Of course, the field from the Main Object
+ - Keys: This is were the magic happens. Because fieldcollection may have a 1:n relation, we need to somehow map the Primary Key of the fieldcollection. This is done
+  using a special CSV Syntax "FROM:TO,FROM:TO". The Interpreter will split the keys and search for the appropriate entry in the collection. If found, it will change the value,
+  if its new, it will create a new entry. Because of the UI, you need to add this value to each entry of your fieldcollection mapping.
+
 ## List your Definitions (in CLI)
 
 Run following command

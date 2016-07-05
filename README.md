@@ -50,7 +50,7 @@ A cleaner takes care about the clean-up process. It basically deletes or unpubli
 To create your own cleaner your class needs to be in the namespace "ImportDefinitions\Model\Cleaner" and implement from "ImportDefinitions\Model\Cleaner\AbstractCleaner". You also need to add it:
 
 ```
-ImportDefinitions\Model\Cleaner\AbstractCleaner::addClenaer('YourInterpreter');
+ImportDefinitions\Model\Cleaner\AbstractCleaner::addCleaner('YourInterpreter');
 ```
 
 

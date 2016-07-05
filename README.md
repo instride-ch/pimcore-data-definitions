@@ -1,5 +1,8 @@
 # Pimcore - Import Definitions
 
+[![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](LICENSE.md)
+[![Latest Stable Version](https://poser.pugx.org/w-vision/import-definitions/v/stable)](https://packagist.org/packages/w-vision/import-definitions)
+
 Import Definitions allows you to define your Object Import using a nice GUI and re-run the imports as often you like. Everything within Import Definitions is extendable.
 
 ![Interface](docs/mapping.png)

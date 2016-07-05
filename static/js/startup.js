@@ -36,10 +36,10 @@ pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
     openDefinitions : function()
     {
         try {
-            pimcore.globalmanager.get('importdefinitions_definitions_panel').activate();
+            pimcore.globalmanager.get('importdefinitions_definition_panel').activate();
         }
         catch (e) {
-            pimcore.globalmanager.add('importdefinitions_definitions_panel', new pimcore.plugin.importdefinitions.definition.panel());
+            pimcore.globalmanager.add('importdefinitions_definition_panel', new pimcore.plugin.importdefinitions.definition.panel());
         }
     }
 });

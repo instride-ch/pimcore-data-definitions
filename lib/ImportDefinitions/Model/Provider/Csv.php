@@ -115,7 +115,7 @@ class Csv extends AbstractProvider
         if (count($rows) > 0) {
             $headerRow = $rows[0];
 
-            $headers = str_getcsv($headerRow, $this->getDelimiter(), $this->getEnclosure());
+            $headers = str_getcsv($headerRow, $this->getDelimiter(), $this->getEnclosure() ? $this->getEnclosure() : chr(8));
 
             if (count($headers) > 0) {
                 //First line are the headers
@@ -146,7 +146,7 @@ class Csv extends AbstractProvider
 
         $row = 0;
         if (($handle = fopen($file, "r")) !== false) {
-            while (($data = fgetcsv($handle, 1000, $this->getDelimiter(), $this->getEnclosure())) !== false) {
+            while (($data = fgetcsv($handle, 1000, $this->getDelimiter(), $this->getEnclosure() ? $this->getEnclosure() : chr(8))) !== false) {
                 $num = count($data);
 
                 //Make Column Mapping

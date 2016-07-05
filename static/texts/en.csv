@@ -11,6 +11,7 @@
 "importdefinitions_primaryIdentifier","Primary"
 "importdefinitions_config","Config"
 "importdefinitions_interpreters","Interpreter"
+"importdefinitions_setters","Setter"
 "importdefinitions_sql_host","Host"
 "importdefinitions_sql_username","Username"
 "importdefinitions_sql_password","Password"
@@ -22,3 +23,5 @@
 "importdefinitions_xml_example","XML Example"
 "importdefinitions_xml_rootNode","Root Node"
 "importdefinitions_keys","Keys (FROM:TO,FROM:TO)"
+"coreshop_index_setter_settings","Setter Settings"
+"coreshop_index_interpreter_settings","Interpreter Settings"

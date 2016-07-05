@@ -5,6 +5,7 @@ namespace ImportDefinitions\Model;
 use ImportDefinitions\Model\Cleaner\AbstractCleaner;
 use ImportDefinitions\Model\Interpreter\AbstractInterpreter;
 use ImportDefinitions\Model\Mapping\FromColumn;
+use ImportDefinitions\Model\Setter\AbstractSetter;
 use Pimcore\File;
 use Pimcore\Model\Object\AbstractObject;
 use Pimcore\Model\Object\ClassDefinition;
@@ -279,7 +280,19 @@ abstract class AbstractProvider {
                 $class = new $class();
 
                 if($class instanceof AbstractInterpreter) {
-                    $class->interpret($object, $value, $map, $data);
+                    $value = $class->interpret($object, $value, $map, $data);
+                }
+            }
+        }
+
+        if($mapConfig['setter']) {
+            $class = 'ImportDefinitions\Model\Setter\\' . ucfirst($mapConfig['setter']);
+
+            if(Tool::classExists($class)) {
+                $class = new $class();
+
+                if($class instanceof AbstractSetter) {
+                    $class->set($object, $value, $map, $data);
                 }
             }
         }

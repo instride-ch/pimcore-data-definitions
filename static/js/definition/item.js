@@ -254,7 +254,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
 
                                     if(rec) {
                                         if (rec.data.type === "objectbrick" || rec.data.type === "fieldcollection") {
-                                            return rec.data.config.class;
+                                            return rec.data.setterConfig.class;
                                         }
 
                                         return rec.data.type ? rec.data.type : t("fields");

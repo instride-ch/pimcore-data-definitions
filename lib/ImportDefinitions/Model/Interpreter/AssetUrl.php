@@ -22,7 +22,7 @@ class AssetUrl extends AbstractInterpreter {
      * @return mixed
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data) {
-        $config = $map->getConfig();
+        $config = $map->getInterpreterConfig();
         $path = $config['path'];
 
         if(filter_var($value, FILTER_VALIDATE_URL)) {
@@ -47,9 +47,7 @@ class AssetUrl extends AbstractInterpreter {
                     $asset->save();
                 }
             }
-
-            $object->setValue($map->getToColumn(), $value);
-
+            
             return $asset;
         }
 

@@ -24,6 +24,16 @@ class ToColumn extends AbstractColumn {
     public $config;
 
     /**
+     * @var array
+     */
+    public $setterConfig;
+
+    /**
+     * @var array
+     */
+    public $interpreterConfig;
+
+    /**
      * @return string
      */
     public function getType()
@@ -69,5 +79,37 @@ class ToColumn extends AbstractColumn {
     public function setConfig($config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSetterConfig()
+    {
+        return $this->setterConfig;
+    }
+
+    /**
+     * @param array $setterConfig
+     */
+    public function setSetterConfig($setterConfig)
+    {
+        $this->setterConfig = $setterConfig;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInterpreterConfig()
+    {
+        return $this->interpreterConfig;
+    }
+
+    /**
+     * @param array $interpreterConfig
+     */
+    public function setInterpreterConfig($interpreterConfig)
+    {
+        $this->interpreterConfig = $interpreterConfig;
     }
 }

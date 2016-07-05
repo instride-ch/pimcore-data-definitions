@@ -1,14 +1,14 @@
 <?php
 
-namespace ImportDefinitions\Model\Interpreter;
+namespace ImportDefinitions\Model\Setter;
 use ImportDefinitions\Model\Mapping;
 use Pimcore\Model\Object\Concrete;
 
 /**
  * Class Classificationstore
- * @package ImportDefinitions\Model\Interpreter
+ * @package ImportDefinitions\Model\Setter
  */
-class Classificationstore extends AbstractInterpreter {
+class Classificationstore extends AbstractSetter {
 
     /**
      * @param Concrete $object
@@ -17,8 +17,8 @@ class Classificationstore extends AbstractInterpreter {
      * @param array $data
      * @return mixed
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data) {
-        $mapConfig = $map->getConfig();
+    public function set(Concrete $object, $value, Mapping $map, $data) {
+        $mapConfig = $map->getSetterConfig();
         $fieldName = $mapConfig['classificationstoreField'];
         $keyConfig = intval($mapConfig['keyId']);
         $groupConfig = intval($mapConfig['groupId']);

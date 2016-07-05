@@ -1,15 +1,15 @@
 <?php
 
-namespace ImportDefinitions\Model\Interpreter;
+namespace ImportDefinitions\Model\Setter;
 use ImportDefinitions\Model\Mapping;
 use Pimcore\Model\Object\Concrete;
 use Pimcore\Tool;
 
 /**
  * Class Localizedfield
- * @package ImportDefinitions\Model\Interpreter
+ * @package ImportDefinitions\Model\Setter
  */
-class Localizedfield extends AbstractInterpreter {
+class Localizedfield extends AbstractSetter {
 
     /**
      * @param Concrete $object
@@ -18,8 +18,8 @@ class Localizedfield extends AbstractInterpreter {
      * @param array $data
      * @return mixed
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data) {
-        $config = $map->getConfig();
+    public function set(Concrete $object, $value, Mapping $map, $data) {
+        $config = $map->getSetterConfig();
 
         $setter = explode("~", $map->getToColumn());
         $setter = "set" . ucfirst($setter[0]);

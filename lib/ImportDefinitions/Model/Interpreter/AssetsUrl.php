@@ -25,7 +25,7 @@ class AssetsUrl extends AssetUrl {
         $asset = parent::interpret($object, $value, $map, $data);
 
         if($asset) {
-            $object->setValue($map->getToColumn(), [$asset]);
+            return [$asset];
         }
 
         return null;

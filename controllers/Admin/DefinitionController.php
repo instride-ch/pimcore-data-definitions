@@ -27,7 +27,8 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
             'success' => true,
             'providers' => \ImportDefinitions\Model\AbstractProvider::$availableProviders,
             'interpreter' => \ImportDefinitions\Model\Interpreter\AbstractInterpreter::$availableInterpreter,
-            'cleaner' => \ImportDefinitions\Model\Cleaner\AbstractCleaner::$availableCleaner
+            'cleaner' => \ImportDefinitions\Model\Cleaner\AbstractCleaner::$availableCleaner,
+            'setter' => \ImportDefinitions\Model\Setter\AbstractSetter::$availableSetter
         ));
     }
 
@@ -209,7 +210,9 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                                 'fromColumn' => $mapping->getFromColumn(),
                                 'toColumn' => $mapping->getToColumn(),
                                 'primaryIdentifier' => $mapping->getPrimaryIdentifier(),
-                                'config' => $mapping->getConfig()
+                                'config' => $mapping->getConfig(),
+                                'setterConfig' => $mapping->getSetterConfig(),
+                                'interpreterConfig' => $mapping->getInterpreterConfig()
                             ];
 
                             break;
@@ -222,7 +225,9 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                         'fromColumn' => null,
                         'toColumn' => $classToColumn->getIdentifier(),
                         'primaryIdentifier' => false,
-                        'config' => $classToColumn->getConfig()
+                        'config' => $classToColumn->getConfig(),
+                        'setterConfig' => $classToColumn->getSetterConfig(),
+                        'interpreterConfig' => $classToColumn->getInterpreterConfig()
                     ];
                 }
             }
@@ -275,9 +280,11 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                         $localizedField->setType('localizedfield.' . $language);
                         $localizedField->setIdentifier($localizedField->getIdentifier() . "~" . $language);
                         $localizedField->setConfig([
-                            "interpreter" => "localizedfield",
-                            "language" => $language
+                            "setter" => "localizedfield"
                         ]);
+                        $localizedField->setSetterConfig(array(
+                            "language" => $language
+                        ));
                         $result[] = $localizedField;
                     }
                 }
@@ -300,10 +307,11 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                                     $resultField->setType("objectbrick");
                                     $resultField->setIdentifier('objectbrick~' . $field->getName() . '~' . $key . '~' . $resultField->getIdentifier());
                                     $resultField->setConfig([
-                                        "class" => $key,
-                                        "interpreter" => "objectbrick"
+                                        "setter" => "objectbrick"
                                     ]);
-
+                                    $resultField->setSetterConfig(array(
+                                        "class" => $key
+                                    ));
                                     $result[] = $resultField;
                                 }
 
@@ -326,9 +334,11 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                         $resultField->setType("fieldcollection");
                         $resultField->setIdentifier("fieldcollection~" .  $field->getName() . "~" . $type . "~" . $resultField->getIdentifier());
                         $resultField->setConfig([
-                            "class" => $type,
-                            "interpreter" => "fieldcollection"
+                            "setter" => "fieldcollection"
                         ]);
+                        $resultField->setSetterConfig(array(
+                            "class" => $type
+                        ));
 
                         $result[] = $resultField;
                     }
@@ -362,10 +372,13 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                             $toColumn->setType("classificationstore");
                             $toColumn->setFieldtype($keyConfig->getType());
                             $toColumn->setConfig([
+
+                                "setter" => "classificationstore"
+                            ]);
+                            $toColumn->setSetterConfig(array(
                                 "keyId" => $keyConfig->getId(),
                                 "groupId" => $config->getId(),
-                                "interpreter" => "classificationstore"
-                            ]);
+                            ));
                             $toColumn->setLabel($keyConfig->getName());
 
                             $result[] = $toColumn;

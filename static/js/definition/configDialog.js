@@ -29,12 +29,16 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             record.data.config = {};
         }
 
-        if(!record.data.config.interpreter) {
+
+        if(!record.data.config.setter) {
             if(toColumn.data.type === "objectbrick") {
-                record.data.config.interpreter = "objectbrick";
+                record.data.config.setter = "objectbrick";
             }
             else if(toColumn.data.type === "classificationstore") {
-                record.data.config.interpreter = "classificationstore";
+                record.data.config.setter = "classificationstore";
+            }
+            else if(toColumn.data.type === "fieldcollection") {
+                record.data.config.setter = "fieldcollection";
             }
         }
 
@@ -56,6 +60,24 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             }
         }));
 
+        fieldSetItems.push(new Ext.form.ComboBox({
+            fieldLabel : t('importdefinitions_setters'),
+            name : 'setter',
+            length : 255,
+            value : record.data.config.setter,
+            store : pimcore.globalmanager.get('importdefinitions_setters'),
+            valueField : 'setter',
+            displayField : 'setter',
+            queryMode : 'local',
+            listeners : {
+                change : function (combo, newValue) {
+                    this.getSetterPanel().removeAll();
+
+                    this.getSetterPanelLayout(newValue);
+                }.bind(this)
+            }
+        }));
+
         this.configForm = new Ext.form.FormPanel({
             items : fieldSetItems,
             layout: 'form',
@@ -69,7 +91,8 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             items:
                 [
                     this.configForm,
-                    this.getInterpreterPanel()
+                    this.getInterpreterPanel(),
+                    this.getSetterPanel()
                 ],
             buttons: [{
                 text: t('apply'),
@@ -91,6 +114,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         });
 
         this.getInterpreterPanelLayout(record.data.config.interpreter);
+        this.getSetterPanelLayout(record.data.config.setter);
 
         this.window.show();
     },
@@ -114,7 +138,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             if (pimcore.plugin.importdefinitions.interpreters[type]) {
                 var interpreter = new pimcore.plugin.importdefinitions.interpreters[type];
 
-                this.getInterpreterPanel().add(interpreter.getLayout(this.fromColumn, this.toColumn, this.record));
+                this.getInterpreterPanel().add(interpreter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.interpreterConfig) ? this.record.data.interpreterConfig : {}));
                 this.getInterpreterPanel().show();
             } else {
                 this.getInterpreterPanel().hide();
@@ -124,18 +148,62 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         }
     },
 
+    getSetterPanel : function () {
+        if (!this.setterPanel) {
+            this.setterPanel = new Ext.form.FormPanel({
+                defaults: { anchor: '90%' },
+                layout: 'form',
+                title : t('coreshop_index_setter_settings')
+            });
+        }
+
+        return this.setterPanel;
+    },
+
+    getSetterPanelLayout : function (type) {
+        if (type) {
+            type = type.toLowerCase();
+
+            if (pimcore.plugin.importdefinitions.setters[type]) {
+                var setter = new pimcore.plugin.importdefinitions.setters[type];
+
+                this.getSetterPanel().add(setter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.setterConfig) ? this.record.data.setterConfig : {}));
+                this.getSetterPanel().show();
+            } else {
+                this.getSetterPanel().hide();
+            }
+        } else {
+            this.getSetterPanel().hide();
+        }
+    },
+
     commitData: function () {
         var form = this.configForm.getForm();
         var interpreterForm = this.getInterpreterPanel().getForm();
+        var setterForm = this.getSetterPanel().getForm();
 
-        if(form.isValid() && interpreterForm.isValid()) {
+        if(form.isValid() && interpreterForm.isValid() && setterForm.isValid()) {
             Ext.Object.each(form.getFieldValues(), function (key, value) {
                 this.record.data.config[key] = value;
             }.bind(this));
 
             if (this.getInterpreterPanel().isVisible()) {
+                if(!Ext.isObject(this.record.data.interpreterConfig)) {
+                    this.record.data.interpreterConfig = {};
+                }
+
                 Ext.Object.each(interpreterForm.getFieldValues(), function (key, value) {
-                    this.record.data.config[key] = value;
+                    this.record.data.interpreterConfig[key] = value;
+                }.bind(this));
+            }
+
+            if (this.getSetterPanel().isVisible()) {
+                if(!Ext.isObject(this.record.data.setterConfig)) {
+                    this.record.data.setterConfig = {};
+                }
+
+                Ext.Object.each(setterForm.getFieldValues(), function (key, value) {
+                    this.record.data.setterConfig[key] = value;
                 }.bind(this));
             }
 

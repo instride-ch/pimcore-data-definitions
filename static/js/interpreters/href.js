@@ -2,7 +2,7 @@ pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.href');
 
 pimcore.plugin.importdefinitions.interpreters.href = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
-    getLayout : function (fromColumn, toColumn, record) {
+    getLayout : function (fromColumn, toColumn, record, config) {
         var classesStore = new Ext.data.JsonStore({
             autoDestroy: true,
             proxy: {
@@ -21,7 +21,7 @@ pimcore.plugin.importdefinitions.interpreters.href = Class.create(pimcore.plugin
             valueField: "text",
             store: classesStore,
             width: 500,
-            value : record.data.config.class ? record.data.config.class : null
+            value : config.class ? config.class : null
         }];
     }
 });

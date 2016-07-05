@@ -24,15 +24,17 @@
             <path>/plugins/ImportDefinitions/static/js/provider/json.js</path>
             <path>/plugins/ImportDefinitions/static/js/provider/xml.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/abstract.js</path>
-            <path>/plugins/ImportDefinitions/static/js/interpreters/objectbrick.js</path>
-            <path>/plugins/ImportDefinitions/static/js/interpreters/classificationstore.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/href.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/multihref.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/defaultvalue.js</path>
-            <path>/plugins/ImportDefinitions/static/js/interpreters/localizedfield.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/asseturl.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/assetsurl.js</path>
-            <path>/plugins/ImportDefinitions/static/js/interpreters/fieldcollection.js</path>
+
+            <path>/plugins/ImportDefinitions/static/js/setters/abstract.js</path>
+            <path>/plugins/ImportDefinitions/static/js/setters/fieldcollection.js</path>
+            <path>/plugins/ImportDefinitions/static/js/setters/objectbrick.js</path>
+            <path>/plugins/ImportDefinitions/static/js/setters/classificationstore.js</path>
+            <path>/plugins/ImportDefinitions/static/js/setters/localizedfield.js</path>
         </pluginJsPaths>
         <pluginCssPaths>
             <path>/plugins/ImportDefinitions/static/css/importdefinitions.css</path>

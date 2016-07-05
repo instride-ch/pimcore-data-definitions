@@ -19,7 +19,7 @@ class Href extends AbstractInterpreter {
      * @return mixed
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data) {
-        $config = $map->getConfig();
+        $config = $map->getInterpreterConfig();
         $objectClass = $config['class'];
 
         $class = 'Pimcore\Model\Object\\' . $objectClass;
@@ -28,12 +28,14 @@ class Href extends AbstractInterpreter {
             $class = new $class();
 
             if($class instanceof Concrete) {
-                $value = $class::getById($value);
+                $ret = $class::getById($value);
 
-                if($value instanceof Concrete) {
-                    $object->setValue($map->getToColumn(), $value);
+                if($ret instanceof Concrete) {
+                    return $ret;
                 }
             }
         }
+
+        return $value;
     }
 }

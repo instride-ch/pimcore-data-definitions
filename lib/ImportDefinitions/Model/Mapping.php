@@ -30,6 +30,16 @@ class Mapping {
     public $config = [];
 
     /**
+     * @var array
+     */
+    public $interpreterConfig;
+
+    /**
+     * @var array
+     */
+    public $setterConfig;
+
+    /**
      * @param array $values
      */
     public function setValues(array $values)
@@ -109,5 +119,37 @@ class Mapping {
     public function setConfig($config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInterpreterConfig()
+    {
+        return $this->interpreterConfig;
+    }
+
+    /**
+     * @param array $interpreterConfig
+     */
+    public function setInterpreterConfig($interpreterConfig)
+    {
+        $this->interpreterConfig = $interpreterConfig;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSetterConfig()
+    {
+        return $this->setterConfig;
+    }
+
+    /**
+     * @param array $setterConfig
+     */
+    public function setSetterConfig($setterConfig)
+    {
+        $this->setterConfig = $setterConfig;
     }
 }

@@ -34,7 +34,7 @@ Currently, only 4 types of providers are available:
  - XML
  - SQL
 
-Because, the data needs to be non-hierarchial, XML and JSON are very limited. You can write your own provider to prepare the data for the plugin. Todo that, you simply
+Because, the data needs to be non-hierarchial, XML and JSON are very limited. You can write your own provider to prepare the data for the plugin. To do that, you simply
 need to create a new class within the "ImportDefinitions\Model\Provider" namespace and call
 
 ```
@@ -73,7 +73,7 @@ and call
 ImportDefinitions\Model\Interpreter\AbstractInterpreter::addInterpreter('YourInterpreter');
 ```
 
-if you have to add some data within the UI, you also need to create a Pimcore Admin JS File:
+If you have to add some data within the UI, you also need to create a Pimcore Admin JS File:
 
 ```
 pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.yourinterpreter');
@@ -130,7 +130,7 @@ pimcore/cli/console.php importdefinitions:run -d 1 -p "{\"file\":\"test.json\"}"
 ```
 
 ## Copyright and license 
-Copyright: [Woche Pass AG](http://www.w-vision.ch)
+Copyright: [Woche-Pass AG](http://www.w-vision.ch)
 For licensing details please visit [LICENSE.md](LICENSE.md) 
 
 ## Screenshots

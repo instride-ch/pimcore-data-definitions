@@ -331,8 +331,6 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                     }
                 }
             } elseif ($field instanceof Object\ClassDefinition\Data\Fieldcollections) {
-                //TODO: implement FieldCollection
-
                 foreach ($field->getAllowedTypes() as $type) {
                     $definition = Object\Fieldcollection\Definition::getByKey($type);
 

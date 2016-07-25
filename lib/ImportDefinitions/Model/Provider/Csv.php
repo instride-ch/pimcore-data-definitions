@@ -16,6 +16,7 @@ namespace ImportDefinitions\Model\Provider;
 
 use ImportDefinitions\Model\AbstractProvider;
 use ImportDefinitions\Model\Definition;
+use ImportDefinitions\Model\Filter\AbstractFilter;
 use ImportDefinitions\Model\Mapping\FromColumn;
 use Pimcore\Model\Object\Concrete;
 
@@ -135,9 +136,11 @@ class Csv extends AbstractProvider
     /**
      * @param Definition $definition
      * @param $params
+     * @param AbstractFilter|null $filter
+     *
      * @return Concrete[]
      */
-    protected function runImport($definition, $params)
+    protected function runImport($definition, $params, $filter = null)
     {
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
 
@@ -155,7 +158,11 @@ class Csv extends AbstractProvider
                         $columnMapping[] = $data[$c];
                     }
                 } else {
-                    $objects[] = $this->importRow($definition, $columnMapping, $data);
+                    $object = $this->importCsvRow($definition, $columnMapping, $data, $filter);
+
+                    if($object) {
+                        $objects[] = $object;
+                    }
                 }
 
                 $row++;
@@ -168,30 +175,21 @@ class Csv extends AbstractProvider
 
     /**
      * @param Definition $definition
-     * @param $map
+     * @param $columnMapping
      * @param $data
+     * @param AbstractFilter $filter
      *
      * @return Concrete
      */
-    private function importRow($definition, $map, $data)
+    protected function importCsvRow($definition, $columnMapping, $data, $filter = null)
     {
         //Convert Data to map
         $mappedData = [];
 
         foreach ($data as $index => $col) {
-            $mappedData[$map[$index]] = $col;
+            $mappedData[$columnMapping[$index]] = $col;
         }
 
-        $object = $this->getObjectForPrimaryKey($definition, $mappedData);
-
-        foreach ($definition->getMapping() as $map) {
-            $value = $mappedData[$map->getFromColumn()];
-
-            $this->setObjectValue($object, $map, $value, $mappedData);
-        }
-
-        $object->save();
-
-        return $object;
+        return parent::importRow($definition, $mappedData, $filter);
     }
 }

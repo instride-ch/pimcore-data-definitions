@@ -16,6 +16,7 @@ namespace ImportDefinitions\Model\Provider;
 
 use ImportDefinitions\Model\AbstractProvider;
 use ImportDefinitions\Model\Definition;
+use ImportDefinitions\Model\Filter\AbstractFilter;
 use ImportDefinitions\Model\Mapping\FromColumn;
 use Pimcore\Model\Object\Concrete;
 
@@ -250,9 +251,11 @@ class Sql extends AbstractProvider
     /**
      * @param Definition $definition
      * @param $params
+     * @param AbstractFilter|null $filter
+     *
      * @return Concrete[]
      */
-    protected function runImport($definition, $params)
+    protected function runImport($definition, $params, $filter = null)
     {
         $db = $this->getDb();
 
@@ -261,30 +264,13 @@ class Sql extends AbstractProvider
         $objects = [];
 
         foreach ($data as $row) {
-            $objects[] = $this->importRow($definition, $row);
+            $object = $this->importRow($definition, $row, $filter);
+
+            if($object) {
+                $objects[] = $object;
+            }
         }
 
         return $objects;
-    }
-
-    /**
-     * @param Definition $definition
-     * @param $data
-     *
-     * @return Concrete
-     */
-    private function importRow($definition, $data)
-    {
-        $object = $this->getObjectForPrimaryKey($definition, $data);
-
-        foreach ($definition->getMapping() as $map) {
-            $value = $data[$map->getFromColumn()];
-
-            $this->setObjectValue($object, $map, $value, $data);
-        }
-
-        $object->save();
-
-        return $object;
     }
 }

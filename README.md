@@ -94,6 +94,38 @@ A Setter sets the data to the object as it would be needed.
 
 Of course, you can also implement your own Setters. Its basically the same as with Interpreters.
 
+## Filter
+A Filter, as the name says, filters your data on runtime. Your method gets called on every "row" and you get to decide if you want to import it, or not.
+
+Example Implementation:
+
+```
+ImportDefinitions\Model\Filter\AbstractFilter::addFilter('YourFilter');
+```
+
+```
+namespace ImportDefinitions\Model\Filter;
+
+class YourFilter extends AbstractFilter
+{
+    /**
+     * @param Definition $definition -> Definition File
+     * @param array $data            -> Raw Data from Import File
+     * @param Concrete $object       -> Object, if there is any
+     *
+     * @return boolean
+     */
+    public function filter($definition, $data, $object) {
+        if($data['isActive'])
+        {
+            return true;            //Will be imported
+        }
+
+        return false;               //Will be ignored
+    }
+}
+```
+
 ## Placeholders for Keys and Paths
 Import Definitions allow you to specify a key and a path for the objects. To be really generic, you can use pimcores placeholders for that.
 

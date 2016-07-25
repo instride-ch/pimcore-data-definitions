@@ -25,14 +25,14 @@ abstract class AbstractCleaner
 {
 
     /**
-     * available Interpreter.
+     * available cleaner.
      *
      * @var array
      */
     public static $availableCleaner = array('deleter', 'referenceCleaner', 'unpublisher');
 
     /**
-     * Add Interpreter.
+     * Add cleaner.
      *
      * @param $cleaner
      */

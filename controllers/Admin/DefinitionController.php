@@ -41,7 +41,8 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
             'providers' => \ImportDefinitions\Model\AbstractProvider::$availableProviders,
             'interpreter' => \ImportDefinitions\Model\Interpreter\AbstractInterpreter::$availableInterpreter,
             'cleaner' => \ImportDefinitions\Model\Cleaner\AbstractCleaner::$availableCleaner,
-            'setter' => \ImportDefinitions\Model\Setter\AbstractSetter::$availableSetter
+            'setter' => \ImportDefinitions\Model\Setter\AbstractSetter::$availableSetter,
+            'filter' => \ImportDefinitions\Model\Filter\AbstractFilter::$availableFilter
         ));
     }
 

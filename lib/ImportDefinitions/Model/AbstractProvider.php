@@ -15,6 +15,7 @@
 namespace ImportDefinitions\Model;
 
 use ImportDefinitions\Model\Cleaner\AbstractCleaner;
+use ImportDefinitions\Model\Filter\AbstractFilter;
 use ImportDefinitions\Model\Interpreter\AbstractInterpreter;
 use ImportDefinitions\Model\Mapping\FromColumn;
 use ImportDefinitions\Model\Setter\AbstractSetter;
@@ -141,13 +142,44 @@ abstract class AbstractProvider
     /**
      * @param Definition $definition
      * @param $params
+     * @param AbstractFilter|null $filter
      * @return Concrete[]
      */
-    abstract protected function runImport($definition, $params);
+    abstract protected function runImport($definition, $params, $filter = null);
+
+    /**
+     * @param Definition $definition
+     * @param array $data
+     * @param AbstractFilter|null $filter
+     *
+     * @return Concrete
+     */
+    protected function importRow($definition, $data, $filter = null) {
+        $object = $this->getObjectForPrimaryKey($definition, $data);
+
+        if($filter instanceof AbstractFilter) {
+            if(!$filter->filter($definition, $data, $object)) {
+                return null;
+            }
+        }
+
+
+        foreach ($definition->getMapping() as $mapItem) {
+            $value = $data[$mapItem->getFromColumn()];
+
+            $this->setObjectValue($object, $mapItem, $value, $data);
+        }
+
+        $object->save();
+
+        return $object;
+    }
 
     /**
      * @param Definition $definition
      * @param $params
+     *
+     * @throws \Exception
      */
     public function doImport($definition, $params)
     {
@@ -155,7 +187,19 @@ abstract class AbstractProvider
         $logs->setCondition("definition = ?", array($definition->getId()));
         $logs = $logs->getData();
 
-        $objects = $this->runImport($definition, $params);
+        $filterObject = null;
+
+        if($definition->getFilter()) {
+            $filterClass = '\ImportDefinition\Model\Filter\\' . $definition->getFilter();
+
+            if(!Tool::classExists($filterClass)) {
+                throw new \Exception("Filter class not found ($filterClass)");
+            }
+
+            $filterObject = new $filterClass();
+        }
+
+        $objects = $this->runImport($definition, $params, $filterObject);
 
         //Compare with logs and cleanup
         $notFound = [];

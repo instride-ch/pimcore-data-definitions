@@ -79,6 +79,11 @@ class Definition extends AbstractModel
     public $key;
 
     /**
+     * @var string
+     */
+    public $filter;
+
+    /**
      * Get By Id.
      *
      * @param int $id
@@ -312,5 +317,21 @@ class Definition extends AbstractModel
     public function setKey($key)
     {
         $this->key = $key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * @param string $filter
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
     }
 }

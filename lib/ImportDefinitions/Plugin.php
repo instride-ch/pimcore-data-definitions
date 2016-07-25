@@ -71,11 +71,21 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
     }
 
     /**
-     * @return bool
+     * indicates wether this plugins is currently installed
+     * @return boolean
      */
-    public static function isInstalled()
-    {
-        return true;
+    public static function isInstalled() {
+        $result = null;
+
+        try
+        {
+            $result = Db::get()->describeTable("importdefinitions_log");
+        }
+        catch(\Exception $e) {
+
+        }
+
+        return !empty($result);
     }
 
     /**

@@ -157,7 +157,7 @@ abstract class AbstractProvider
      */
     protected function getLogger() {
         if(is_null($this->logger)) {
-            $this->logger = new \Monolog\Logger('core');
+            $this->logger = new \Monolog\Logger('import-definitions');
             $this->logger->pushHandler(new \Monolog\Handler\StreamHandler(PIMCORE_LOG_DIRECTORY . "/import-definitions-" . time() . ".log"));
         }
 

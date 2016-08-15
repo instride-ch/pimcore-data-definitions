@@ -15,33 +15,15 @@
 namespace ImportDefinitions\Model\Cleaner;
 
 use ImportDefinitions\Model\Log;
+use Pimcore\Model\Dependency;
 use Pimcore\Model\Object\Concrete;
 
 /**
- * Class AbstractCleaner
+ * Class None
  * @package ImportDefinitions\Model\Cleaner
  */
-abstract class AbstractCleaner
+class None extends AbstractCleaner
 {
-
-    /**
-     * available cleaner.
-     *
-     * @var array
-     */
-    public static $availableCleaner = array('deleter', 'referenceCleaner', 'unpublisher', 'none');
-
-    /**
-     * Add cleaner.
-     *
-     * @param $cleaner
-     */
-    public static function addCleaner($cleaner)
-    {
-        if (!in_array($cleaner, self::$availableCleaner)) {
-            self::$availableCleaner[] = $cleaner;
-        }
-    }
 
     /**
      * @param Concrete[] $objects
@@ -49,5 +31,8 @@ abstract class AbstractCleaner
      * @param Concrete[] $notFoundObjects
      * @return mixed
      */
-    abstract public function cleanup($objects, $logs, $notFoundObjects);
+    public function cleanup($objects, $logs, $notFoundObjects)
+    {
+
+    }
 }

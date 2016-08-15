@@ -48,6 +48,11 @@ abstract class AbstractProvider
     public $mappings;
 
     /**
+     * @var \Monolog\Logger|null
+     */
+    public $logger;
+
+    /**
      * Add Provider.
      *
      * @param $provider
@@ -148,6 +153,18 @@ abstract class AbstractProvider
     abstract protected function runImport($definition, $params, $filter = null);
 
     /**
+     * @return \Monolog\Logger
+     */
+    protected function getLogger() {
+        if(is_null($this->logger)) {
+            $this->logger = new \Monolog\Logger('core');
+            $this->logger->pushHandler(new \Monolog\Handler\StreamHandler(PIMCORE_LOG_DIRECTORY . "/import-definitions-" . time() . ".log"));
+        }
+
+        return $this->logger;
+    }
+
+    /**
      * @param Definition $definition
      * @param array $data
      * @param AbstractFilter|null $filter
@@ -163,6 +180,7 @@ abstract class AbstractProvider
             }
         }
 
+        $this->getLogger()->info("Imported Object: " . $object->getRealFullPath());
 
         foreach ($definition->getMapping() as $mapItem) {
             $value = $data[$mapItem->getFromColumn()];
@@ -174,6 +192,7 @@ abstract class AbstractProvider
 
         return $object;
     }
+
 
     /**
      * @param Definition $definition
@@ -227,10 +246,10 @@ abstract class AbstractProvider
         //Get Cleanup type
         $type = $definition->getCleaner();
         $class = 'ImportDefinitions\\Model\\Cleaner\\' . ucfirst($type);
-        
+
         if (Tool::classExists($class)) {
             $class = new $class();
-            
+
             if ($class instanceof AbstractCleaner) {
                 $class->cleanup($objects, $logs, $notFound);
             }

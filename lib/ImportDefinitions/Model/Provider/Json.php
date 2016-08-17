@@ -103,31 +103,46 @@ class Json extends AbstractProvider
     }
 
     /**
-     * @param Definition $definition
+     * @param $definition
      * @param $params
-     * @param AbstractFilter|null $filter
-     *
-     * @return Concrete[]
+     * @param null $filter
+     * @return array|mixed
      */
-    protected function runImport($definition, $params, $filter = null)
+    protected function getData($definition, $params, $filter = null)
     {
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
-        $objects = [];
 
         if(file_exists($file)) {
             $json = file_get_contents($file);
             $data = \Zend_Json::decode($json);
 
-            foreach ($data as $row) {
-                $object = $this->importRow($definition, $row, $filter);
-
-                if ($object) {
-                    $objects[] = $object;
-                }
-            }
+            return $data;
         }
         else {
             $this->getLogger()->alert("file not found . $file");
+        }
+
+        return array();
+    }
+
+    /**
+     * @param Definition $definition
+     * @param $params
+     * @param AbstractFilter|null $filter
+     * @param array $data
+     *
+     * @return Concrete[]
+     */
+    protected function runImport($definition, $params, $filter = null, $data = array())
+    {
+        $objects = [];
+
+        foreach ($data as $row) {
+            $object = $this->importRow($definition, $row, $filter);
+
+            if ($object) {
+                $objects[] = $object;
+            }
         }
 
         return $objects;

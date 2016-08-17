@@ -55,14 +55,42 @@ class ImportCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->disableLogging();
+
         $params = $input->getOption('params');
         $definition = Definition::getById($input->getOption("definition"));
+        $progress = null;
 
         if (!$definition instanceof Definition) {
             throw new \Exception("Definition not found");
         }
 
         \Zend_Registry::set("Zend_Locale", new \Zend_Locale("en"));
+
+        \Pimcore::getEventManager()->attach("importdefinitions.status", function(\Zend_EventManager_Event $e) use ($output, &$progress)  {
+            if($progress instanceof ProgressBar) {
+                $progress->setMessage($e->getTarget());
+                $progress->display();
+            }
+        });
+
+        \Pimcore::getEventManager()->attach("importdefinitions.total", function(\Zend_EventManager_Event $e) use ($output, &$progress) {
+            $progress = new ProgressBar($output, $e->getTarget());
+            $progress->start();
+        });
+
+        \Pimcore::getEventManager()->attach("importdefinitions.object.finished", function(\Zend_EventManager_Event $e) use ($output, &$progress) {
+            if($progress instanceof ProgressBar) {
+                $progress->advance();
+                $progress->display();
+            }
+        });
+
+        \Pimcore::getEventManager()->attach("importdefinitions.finished", function(\Zend_EventManager_Event $e) use ($output, &$progress) {
+            if($progress instanceof ProgressBar) {
+                $progress->finish();
+            }
+        });
 
         $definition->doImport(\Zend_Json::decode($params));
     }

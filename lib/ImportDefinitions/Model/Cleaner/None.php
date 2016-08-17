@@ -14,8 +14,7 @@
 
 namespace ImportDefinitions\Model\Cleaner;
 
-use ImportDefinitions\Model\Log;
-use Pimcore\Model\Dependency;
+use ImportDefinitions\Model\Definition;
 use Pimcore\Model\Object\Concrete;
 
 /**
@@ -26,13 +25,11 @@ class None extends AbstractCleaner
 {
 
     /**
+     * @param Definition $definition
      * @param Concrete[] $objects
-     * @param Log[] $logs
-     * @param Concrete[] $notFoundObjects
      * @return mixed
      */
-    public function cleanup($objects, $logs, $notFoundObjects)
+    public function cleanup($definition, $objects)
     {
-
     }
 }

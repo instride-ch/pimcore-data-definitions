@@ -148,9 +148,20 @@ abstract class AbstractProvider
      * @param Definition $definition
      * @param $params
      * @param AbstractFilter|null $filter
+     * @param array $data
+     *
      * @return Concrete[]
      */
-    abstract protected function runImport($definition, $params, $filter = null);
+    abstract protected function runImport($definition, $params, $filter = null, $data = array());
+
+    /**
+     * @param $definition
+     * @param $params
+     * @param null $filter
+     *
+     * @return array
+     */
+    abstract protected function getData($definition, $params, $filter = null);
 
     /**
      * @return \Monolog\Logger
@@ -188,6 +199,9 @@ abstract class AbstractProvider
             $this->setObjectValue($object, $mapItem, $value, $data);
         }
 
+        \Pimcore::getEventManager()->trigger("importdefinitions.status", "Imported Object " . $object->getFullPath());
+        \Pimcore::getEventManager()->trigger("importdefinitions.object.finished", $object);
+
         $object->save();
 
         return $object;
@@ -202,10 +216,6 @@ abstract class AbstractProvider
      */
     public function doImport($definition, $params)
     {
-        $logs = new Log\Listing();
-        $logs->setCondition("definition = ?", array($definition->getId()));
-        $logs = $logs->getData();
-
         $filterObject = null;
 
         if($definition->getFilter()) {
@@ -218,30 +228,12 @@ abstract class AbstractProvider
             $filterObject = new $filterClass();
         }
 
-        $objects = $this->runImport($definition, $params, $filterObject);
+        $data = $this->getData($definition, $params, $filterObject);
 
-        //Compare with logs and cleanup
-        $notFound = [];
+        \Pimcore::getEventManager()->trigger("importdefinitions.total", count($data));
 
-        foreach ($logs as $log) {
-            $found = false;
+        $objects = $this->runImport($definition, $params, $filterObject, $data);
 
-            foreach ($objects as $object) {
-                if (intval($log->getO_Id()) === $object->getId()) {
-                    $found = true;
-
-                    break;
-                }
-            }
-
-            if (!$found) {
-                $notFoundObject = Concrete::getById($log->getO_Id());
-
-                if ($notFoundObject instanceof Concrete) {
-                    $notFound[] = $notFoundObject;
-                }
-            }
-        }
 
         //Get Cleanup type
         $type = $definition->getCleaner();
@@ -251,22 +243,12 @@ abstract class AbstractProvider
             $class = new $class();
 
             if ($class instanceof AbstractCleaner) {
-                $class->cleanup($objects, $logs, $notFound);
+                $class->cleanup($definition, $objects);
             }
         }
 
-        //Delete Logs
-        foreach ($logs as $log) {
-            $log->delete();
-        }
 
-        //Save new Log
-        foreach ($objects as $obj) {
-            $log = new Log();
-            $log->setO_Id($obj->getId());
-            $log->setDefinition($definition->getId());
-            $log->save();
-        }
+        \Pimcore::getEventManager()->trigger("importdefinitions.finished");
     }
 
     /**

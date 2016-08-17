@@ -142,24 +142,37 @@ class Xml extends AbstractProvider
     }
 
     /**
-     * @param Definition $definition
+     * @param $definition
      * @param $params
-     * @param AbstractFilter|null $filter
-     *
-     * @return Concrete[]
+     * @param null $filter
+     * @return array
      */
-    protected function runImport($definition, $params, $filter = null)
+    protected function getData($definition, $params, $filter = null)
     {
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
         $xml = file_get_contents($file);
-
-        $objects = [];
 
         $data = $this->convertXmlToArray($xml);
 
         if ($this->getRootNode()) {
             $data = $data[$this->getRootNode()];
         }
+
+        return $data;
+    }
+
+
+    /**
+     * @param Definition $definition
+     * @param $params
+     * @param AbstractFilter|null $filter
+     * @param array $data
+     *
+     * @return Concrete[]
+     */
+    protected function runImport($definition, $params, $filter = null, $data = array())
+    {
+        $objects = [];
 
         foreach ($data as $row) {
             $object = $this->importRow($definition, $row, $filter);

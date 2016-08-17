@@ -14,7 +14,7 @@
 
 namespace ImportDefinitions\Model\Cleaner;
 
-use ImportDefinitions\Model\Log;
+use ImportDefinitions\Model\Definition;
 use Pimcore\Model\Dependency;
 use Pimcore\Model\Object\Concrete;
 
@@ -26,13 +26,15 @@ class ReferenceCleaner extends AbstractCleaner
 {
 
     /**
+     *
+     * @param Definition $definition
      * @param Concrete[] $objects
-     * @param Log[] $logs
-     * @param Concrete[] $notFoundObjects
      * @return mixed
      */
-    public function cleanup($objects, $logs, $notFoundObjects)
+    public function cleanup($definition, $objects)
     {
+        $notFoundObjects = $this->getObjectsToClean($definition, $objects);
+
         foreach ($notFoundObjects as $obj) {
             $dependency = $obj->getDependencies();
 

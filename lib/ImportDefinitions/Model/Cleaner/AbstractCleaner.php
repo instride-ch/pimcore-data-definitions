@@ -14,6 +14,7 @@
 
 namespace ImportDefinitions\Model\Cleaner;
 
+use ImportDefinitions\Model\Definition;
 use ImportDefinitions\Model\Log;
 use Pimcore\Model\Object\Concrete;
 
@@ -44,10 +45,73 @@ abstract class AbstractCleaner
     }
 
     /**
+     *
+     * @param Definition $definition
      * @param Concrete[] $objects
-     * @param Log[] $logs
-     * @param Concrete[] $notFoundObjects
      * @return mixed
      */
-    abstract public function cleanup($objects, $logs, $notFoundObjects);
+    abstract public function cleanup($definition, $objects);
+
+    /**
+     * @param Definition $definition
+     * @param Concrete[] $foundObjects
+     *
+     * @return Concrete[]
+     */
+    public function getObjectsToClean($definition, $foundObjects) {
+        $logs = new Log\Listing();
+        $logs->setCondition("definition = ?", array($definition->getId()));
+        $logs = $logs->load();
+
+        $notFound = [];
+
+        foreach ($logs as $log) {
+            $found = false;
+
+            foreach ($foundObjects as $object) {
+                if (intval($log->getO_Id()) === $object->getId()) {
+                    $found = true;
+
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $notFoundObject = Concrete::getById($log->getO_Id());
+
+                if ($notFoundObject instanceof Concrete) {
+                    $notFound[] = $notFoundObject;
+                }
+            }
+        }
+
+        $this->deleteLogs($logs);
+        $this->writeNewLogs($definition, $foundObjects);
+        
+        return $notFound;
+    }
+
+    /**
+     * @param Log[] $logs
+     */
+    public function deleteLogs($logs) {
+        //Delete Logs
+        foreach ($logs as $log) {
+            $log->delete();
+        }
+    }
+
+    /**
+     * @param Definition $definition
+     * @param Concrete[] $objects
+     */
+    public function writeNewLogs($definition, $objects) {
+        //Save new Log
+        foreach ($objects as $obj) {
+            $log = new Log();
+            $log->setO_Id($obj->getId());
+            $log->setDefinition($definition->getId());
+            $log->save();
+        }
+    }
 }

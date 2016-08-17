@@ -249,18 +249,31 @@ class Sql extends AbstractProvider
     }
 
     /**
-     * @param Definition $definition
+     * @param $definition
      * @param $params
-     * @param AbstractFilter|null $filter
-     *
-     * @return Concrete[]
+     * @param null $filter
+     * @return array
      */
-    protected function runImport($definition, $params, $filter = null)
+    protected function getData($definition, $params, $filter = null)
     {
         $db = $this->getDb();
 
         $data = $db->fetchAll($this->getQuery());
 
+        return $data;
+    }
+
+
+    /**
+     * @param Definition $definition
+     * @param $params
+     * @param AbstractFilter|null $filter
+     * @param array $data
+     *
+     * @return Concrete[]
+     */
+    protected function runImport($definition, $params, $filter = null, $data = array())
+    {
         $objects = [];
 
         foreach ($data as $row) {

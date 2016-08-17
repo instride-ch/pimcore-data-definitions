@@ -134,18 +134,17 @@ class Csv extends AbstractProvider
     }
 
     /**
-     * @param Definition $definition
+     * @param $definition
      * @param $params
-     * @param AbstractFilter|null $filter
-     *
-     * @return Concrete[]
+     * @param null $filter
+     * @return array
      */
-    protected function runImport($definition, $params, $filter = null)
+    protected function getData($definition, $params, $filter = null)
     {
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
 
         $columnMapping = [];
-        $objects = [];
+        $data = [];
 
         $row = 0;
         if (($handle = fopen($file, "r")) !== false) {
@@ -158,16 +157,38 @@ class Csv extends AbstractProvider
                         $columnMapping[] = $data[$c];
                     }
                 } else {
-                    $object = $this->importCsvRow($definition, $columnMapping, $data, $filter);
+                    $mappedData = [];
 
-                    if($object) {
-                        $objects[] = $object;
+                    foreach ($data as $index => $col) {
+                        $mappedData[$columnMapping[$index]] = $col;
                     }
+
+                    $data[] = $mappedData;
                 }
 
                 $row++;
             }
             fclose($handle);
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * @param Definition $definition
+     * @param $params
+     * @param AbstractFilter|null $filter
+     * @param array $data
+     *
+     * @return Concrete[]
+     */
+    protected function runImport($definition, $params, $filter = null, $data = array())
+    {
+        $objects = [];
+
+        foreach($data as $row) {
+            $objects[] = $this->importRow($definition, $row, $filter);
         }
 
         return $objects;

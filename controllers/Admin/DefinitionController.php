@@ -42,7 +42,7 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
             'interpreter' => \ImportDefinitions\Model\Interpreter\AbstractInterpreter::$availableInterpreter,
             'cleaner' => \ImportDefinitions\Model\Cleaner\AbstractCleaner::$availableCleaner,
             'setter' => \ImportDefinitions\Model\Setter\AbstractSetter::$availableSetter,
-            'filter' => \ImportDefinitions\Model\Filter\AbstractFilter::$availableFilter
+            'filters' => \ImportDefinitions\Model\Filter\AbstractFilter::$availableFilter
         ));
     }
 
@@ -82,6 +82,8 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
         } else {
             $definition = new \ImportDefinitions\Model\Definition();
             $definition->setName($name);
+            $definition->setRelocateExistingObjects(true);
+            $definition->setRenameExistingObjects(true);
             $definition->save();
 
             $this->_helper->json(array('success' => true, 'data' => $definition));

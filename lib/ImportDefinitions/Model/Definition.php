@@ -84,6 +84,16 @@ class Definition extends AbstractModel
     public $filter;
 
     /**
+     * @var bool
+     */
+    public $renameExistingObjects;
+
+    /**
+     * @var bool
+     */
+    public $relocateExistingObjects;
+
+    /**
      * Get By Id.
      *
      * @param int $id
@@ -333,5 +343,37 @@ class Definition extends AbstractModel
     public function setFilter($filter)
     {
         $this->filter = $filter;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getRenameExistingObjects()
+    {
+        return $this->renameExistingObjects;
+    }
+
+    /**
+     * @param boolean $renameExistingObjects
+     */
+    public function setRenameExistingObjects($renameExistingObjects)
+    {
+        $this->renameExistingObjects = $renameExistingObjects;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getRelocateExistingObjects()
+    {
+        return $this->relocateExistingObjects;
+    }
+
+    /**
+     * @param boolean $relocateExistingObjects
+     */
+    public function setRelocateExistingObjects($relocateExistingObjects)
+    {
+        $this->relocateExistingObjects = $relocateExistingObjects;
     }
 }

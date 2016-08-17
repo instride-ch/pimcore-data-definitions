@@ -322,12 +322,17 @@ abstract class AbstractProvider
             if ($obj instanceof AbstractObject) {
                 $key = File::getValidFilename($definition->createKey($data));
 
-                if ($definition->getKey() && $key) {
-                    $obj->setKey($key);
-                } else {
-                    $obj->setKey(File::getValidFilename(implode("-", $conditionValues)));
+                if($definition->getRenameExistingObjects() || !$obj->getId()) {
+                    if ($definition->getKey() && $key) {
+                        $obj->setKey($key);
+                    } else {
+                        $obj->setKey(File::getValidFilename(implode("-", $conditionValues)));
+                    }
                 }
-                $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
+
+                if($definition->getRelocateExistingObjects() || !$obj->getId()) {
+                    $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
+                }
 
                 return $obj;
             }

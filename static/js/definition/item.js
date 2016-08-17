@@ -157,6 +157,33 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                         }.bind(this)
                     }
                 },
+                {
+                    xtype : 'combo',
+                    fieldLabel: t('importdefinitions_filter'),
+                    name: 'filter',
+                    displayField: 'filter',
+                    valueField: 'filter',
+                    store: pimcore.globalmanager.get('importdefinitions_filters'),
+                    value : this.data.filter,
+                    width: 500,
+                    listeners : {
+                        change : function (combo, value) {
+                            this.data.filter = value;
+                        }.bind(this)
+                    }
+                },
+                {
+                    fieldLabel: t('importdefinitions_relocate_existing_objects'),
+                    xtype: 'checkbox',
+                    name: 'relocateExistingObjects',
+                    checked: this.data.relocateExistingObjects
+                },
+                {
+                    fieldLabel: t('importdefinitions_rename_existing_objects'),
+                    xtype: 'checkbox',
+                    name: 'renameExistingObjects',
+                    checked: this.data.renameExistingObjects
+                }
             ]
         });
 

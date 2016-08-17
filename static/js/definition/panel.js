@@ -30,6 +30,7 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
     cleaners : [],
     interpreters : [],
     setters : [],
+    filters : [],
 
     initialize: function () {
         // create layout
@@ -44,9 +45,14 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
                 this.providers = [];
                 this.cleaners = [];
                 this.interpreters = [];
+                this.filters = [];
 
                 config.providers.forEach(function (provider) {
                     this.providers.push([provider]);
+                }.bind(this));
+
+                config.filters.forEach(function (filter) {
+                    this.filters.push([filter]);
                 }.bind(this));
 
                 config.interpreter.forEach(function (interpreter) {
@@ -68,6 +74,14 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
                 });
 
                 pimcore.globalmanager.add('importdefinitions_providers', providerStore);
+
+                var filterStore = new Ext.data.ArrayStore({
+                    data : this.filters,
+                    fields: ['filter'],
+                    idProperty : 'filter'
+                });
+
+                pimcore.globalmanager.add('importdefinitions_filters', filterStore);
 
                 var cleanersStore = new Ext.data.ArrayStore({
                     data : this.cleaners,

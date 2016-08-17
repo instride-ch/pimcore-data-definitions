@@ -25,3 +25,6 @@
 "importdefinitions_keys","Keys (FROM:TO,FROM:TO)"
 "coreshop_index_setter_settings","Setter Settings"
 "coreshop_index_interpreter_settings","Interpreter Settings"
+"importdefinitions_relocate_existing_objects","Relocate existing Objects"
+"importdefinitions_rename_existing_objects","Rename existing Objects"
+"importdefinitions_filter","Filter"

@@ -112,18 +112,22 @@ class Json extends AbstractProvider
     protected function runImport($definition, $params, $filter = null)
     {
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
-        $json = file_get_contents($file);
-
         $objects = [];
 
-        $data = \Zend_Json::decode($json);
+        if(file_exists($file)) {
+            $json = file_get_contents($file);
+            $data = \Zend_Json::decode($json);
 
-        foreach ($data as $row) {
-            $object = $this->importRow($definition, $row, $filter);
+            foreach ($data as $row) {
+                $object = $this->importRow($definition, $row, $filter);
 
-            if($object) {
-                $objects[] = $object;
+                if ($object) {
+                    $objects[] = $object;
+                }
             }
+        }
+        else {
+            $this->getLogger()->alert("file not found . $file");
         }
 
         return $objects;

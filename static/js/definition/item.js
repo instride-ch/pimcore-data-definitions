@@ -411,18 +411,21 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                             if (fromColumn && toColumn)
                                             {
                                                 var id = Ext.id();
+
                                                 Ext.defer(function () {
-                                                    Ext.widget('button', {
-                                                        renderTo: id,
-                                                        iconCls : 'pimcore_icon_edit',
-                                                        flex : 1,
-                                                        cls : 'importdefinitions-edit-button',
-                                                        handler: function () {
-                                                            var dialog = new pimcore.plugin.importdefinitions.definition.configDialog();
-                                                            dialog.getConfigDialog(fromColumn, toColumn, record);
-                                                        }
-                                                    });
-                                                }, 50);
+                                                    if(Ext.get(id)) {
+                                                        new Ext.button.Button({
+                                                            renderTo: id,
+                                                            iconCls: 'pimcore_icon_edit',
+                                                            flex: 1,
+                                                            cls: 'importdefinitions-edit-button',
+                                                            handler: function () {
+                                                                var dialog = new pimcore.plugin.importdefinitions.definition.configDialog();
+                                                                dialog.getConfigDialog(fromColumn, toColumn, record);
+                                                            }
+                                                        });
+                                                    }
+                                                }, 200);
 
                                                 return Ext.String.format('<div id="{0}"></div>', id);
                                             }

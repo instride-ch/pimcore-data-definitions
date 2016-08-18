@@ -90,6 +90,10 @@ class ImportCommand extends AbstractCommand
             if($progress instanceof ProgressBar) {
                 $progress->finish();
             }
+
+
+            $output->writeln("Import finished!");
+            $output->writeln("");
         });
 
         $definition->doImport(\Zend_Json::decode($params));

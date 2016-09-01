@@ -138,7 +138,7 @@ class Json extends AbstractProvider
         $objects = [];
 
         foreach ($data as $row) {
-            $object = $this->importRow($definition, $row, $filter);
+            $object = $this->importRow($definition, $row, $params, $filter);
 
             if ($object) {
                 $objects[] = $object;

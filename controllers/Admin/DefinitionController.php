@@ -262,7 +262,7 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
         $fields = $class->getFieldDefinitions();
 
         $systemColumns = [
-            "published"
+            "published", "key", "parent"
         ];
 
         $result = array(

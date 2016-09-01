@@ -14,6 +14,7 @@
 
 namespace ImportDefinitions\Model\Interpreter;
 
+use ImportDefinitions\Model\Definition;
 use ImportDefinitions\Model\Mapping;
 use Pimcore\File;
 use Pimcore\Model\Asset;
@@ -33,11 +34,14 @@ class AssetsUrl extends AssetUrl
      * @param $value
      * @param Mapping $map
      * @param array $data
+     * @param Definition $definition
+     * @param array $params
+     *
      * @return mixed
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, Definition $definition, $params)
     {
-        $asset = parent::interpret($object, $value, $map, $data);
+        $asset = parent::interpret($object, $value, $map, $data, $definition, $params);
 
         if ($asset) {
             return [$asset];

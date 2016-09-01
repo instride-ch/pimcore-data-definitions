@@ -18,6 +18,7 @@ use ImportDefinitions\Model\AbstractProvider;
 use ImportDefinitions\Model\Definition;
 use ImportDefinitions\Model\Filter\AbstractFilter;
 use ImportDefinitions\Model\Mapping\FromColumn;
+use Pimcore\Model\Asset;
 use Pimcore\Model\Object\Concrete;
 
 /**
@@ -30,68 +31,78 @@ class Xml extends AbstractProvider
 {
 
     /**
-     * @var string
+     * @var int
      */
-    public $xmlExample;
+    public $exampleFile;
 
     /**
-     * @var
+     * @var string
      */
-    public $rootNode;
+    public $xPath;
+
+    /**
+     * @var string
+     */
+    public $exampleXPath;
+
+    /**
+     * @return int
+     */
+    public function getExampleFile()
+    {
+        return $this->exampleFile;
+    }
+
+    /**
+     * @param int $exampleFile
+     */
+    public function setExampleFile($exampleFile)
+    {
+        $this->exampleFile = $exampleFile;
+    }
 
     /**
      * @return string
      */
-    public function getXmlExample()
+    public function getXPath()
     {
-        return $this->xmlExample;
+        return $this->xPath;
     }
 
     /**
-     * @param string $xmlExample
+     * @param string $xPath
      */
-    public function setXmlExample($xmlExample)
+    public function setXPath($xPath)
     {
-        $this->xmlExample = $xmlExample;
+        $this->xPath = $xPath;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getRootNode()
+    public function getExampleXPath()
     {
-        return $this->rootNode;
+        return $this->exampleXPath;
     }
 
     /**
-     * @param mixed $rootNode
+     * @param string $exampleXPath
      */
-    public function setRootNode($rootNode)
+    public function setExampleXPath($exampleXPath)
     {
-        $this->rootNode = $rootNode;
-    }
-
-    /**
-     * @param array $arr
-     * @return int
-     */
-    protected function getXmlDepth(array $arr)
-    {
-        $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
-        $depth = 0;
-        foreach ($it as $v) {
-            $it->getDepth() > $depth and $depth = $it->getDepth();
-        }
-        return $depth;
+        $this->exampleXPath = $exampleXPath;
     }
 
     /**
      * @param $xml
      * @return mixed
      */
-    protected function convertXmlToArray($xml)
+    protected function convertXmlToArray($xml, $xpath)
     {
         $xml = simplexml_load_string($xml, "SimpleXMLElement", LIBXML_NOCDATA);
+        $xml = $xml->xpath($xpath);
+        // $xml->xpath
+
         $json = json_encode($xml);
         $array = json_decode($json, true);
 
@@ -106,10 +117,7 @@ class Xml extends AbstractProvider
      */
     public function testData()
     {
-        $data = $this->convertXmlToArray($this->getXmlExample());
-        ;
-
-        return $this->getXmlDepth($data) === 1;
+        return true;
     }
 
     /**
@@ -119,17 +127,18 @@ class Xml extends AbstractProvider
      */
     public function getColumns()
     {
-        $rows = $this->convertXmlToArray($this->getXmlExample());
+        $exampleFile = Asset::getById($this->getExampleFile());
+        $rows = $this->convertXmlToArray($exampleFile->getData(), $this->getExampleXPath());
+        $rows = $rows[0];
+
         $returnHeaders = [];
 
-        if ($this->getRootNode()) {
-            $rows = $rows[$this->getRootNode()];
-        }
+        if (count($rows) > 0)
+        {
+            $firstRow = $rows;
 
-        if (count($rows) > 0) {
-            $firstRow = $rows[0];
-
-            foreach ($firstRow as $key => $val) {
+            foreach ($firstRow as $key => $val)
+            {
                 $headerObj = new FromColumn();
                 $headerObj->setIdentifier($key);
                 $headerObj->setLabel($key);
@@ -152,11 +161,7 @@ class Xml extends AbstractProvider
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
         $xml = file_get_contents($file);
 
-        $data = $this->convertXmlToArray($xml);
-
-        if ($this->getRootNode()) {
-            $data = $data[$this->getRootNode()];
-        }
+        $data = $this->convertXmlToArray($xml, $this->getXPath());
 
         return $data;
     }
@@ -175,7 +180,7 @@ class Xml extends AbstractProvider
         $objects = [];
 
         foreach ($data as $row) {
-            $object = $this->importRow($definition, $row, $filter);
+            $object = $this->importRow($definition, $row, $params, $filter);
 
             if($object) {
                 $objects[] = $object;

@@ -178,11 +178,12 @@ abstract class AbstractProvider
     /**
      * @param Definition $definition
      * @param array $data
+     * @param array $params
      * @param AbstractFilter|null $filter
      *
      * @return Concrete
      */
-    protected function importRow($definition, $data, $filter = null) {
+    protected function importRow($definition, $data, $params, $filter = null) {
         $object = $this->getObjectForPrimaryKey($definition, $data);
 
         if($filter instanceof AbstractFilter) {
@@ -196,7 +197,7 @@ abstract class AbstractProvider
         foreach ($definition->getMapping() as $mapItem) {
             $value = $data[$mapItem->getFromColumn()];
 
-            $this->setObjectValue($object, $mapItem, $value, $data);
+            $this->setObjectValue($object, $mapItem, $value, $data, $definition, $params);
         }
 
         \Pimcore::getEventManager()->trigger("importdefinitions.status", "Imported Object " . $object->getFullPath());
@@ -332,8 +333,10 @@ abstract class AbstractProvider
      * @param Mapping $map
      * @param $value
      * @param array $data
+     * @param Definition $definition
+     * @param array $params
      */
-    public function setObjectValue(Concrete $object, Mapping $map, $value, $data)
+    public function setObjectValue(Concrete $object, Mapping $map, $value, $data, $definition, $params)
     {
         $mapConfig = $map->getConfig();
 
@@ -344,7 +347,7 @@ abstract class AbstractProvider
                 $class = new $class();
 
                 if ($class instanceof AbstractInterpreter) {
-                    $value = $class->interpret($object, $value, $map, $data);
+                    $value = $class->interpret($object, $value, $map, $data, $definition, $params);
                 }
             }
         }

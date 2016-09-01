@@ -14,6 +14,7 @@
 
 namespace ImportDefinitions\Model\Interpreter;
 
+use ImportDefinitions\Model\Definition;
 use ImportDefinitions\Model\Mapping;
 use Pimcore\Model\Object\Concrete;
 use Pimcore\Tool;
@@ -30,9 +31,12 @@ class DefaultValue extends AbstractInterpreter
      * @param $value
      * @param Mapping $map
      * @param array $data
+     * @param Definition $definition
+     * @param array $params
+     *
      * @return mixed
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, Definition $definition, $params)
     {
         $config = $map->getInterpreterConfig();
         $value = $config['value'];

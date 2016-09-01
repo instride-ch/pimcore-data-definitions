@@ -188,29 +188,9 @@ class Csv extends AbstractProvider
         $objects = [];
 
         foreach($data as $row) {
-            $objects[] = $this->importRow($definition, $row, $filter);
+            $objects[] = $this->importRow($definition, $row, $params, $filter);
         }
 
         return $objects;
-    }
-
-    /**
-     * @param Definition $definition
-     * @param $columnMapping
-     * @param $data
-     * @param AbstractFilter $filter
-     *
-     * @return Concrete
-     */
-    protected function importCsvRow($definition, $columnMapping, $data, $filter = null)
-    {
-        //Convert Data to map
-        $mappedData = [];
-
-        foreach ($data as $index => $col) {
-            $mappedData[$columnMapping[$index]] = $col;
-        }
-
-        return parent::importRow($definition, $mappedData, $filter);
     }
 }

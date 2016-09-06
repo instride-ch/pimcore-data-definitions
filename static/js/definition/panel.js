@@ -43,9 +43,10 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
                 var config = Ext.decode(result.responseText);
 
                 this.providers = [];
-                this.cleaners = [];
-                this.interpreters = [];
                 this.filters = [];
+                this.interpreters = [];
+                this.setters = [];
+                this.cleaners = [];
 
                 config.providers.forEach(function (provider) {
                     this.providers.push([provider]);

@@ -55,6 +55,8 @@ class ImportCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        \Zend_Session::$_unitTestEnabled = true;
+
         $this->disableLogging();
 
         $params = $input->getOption('params');

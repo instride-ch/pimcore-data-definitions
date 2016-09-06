@@ -15,33 +15,16 @@
 namespace ImportDefinitions\Model\Setter;
 
 use ImportDefinitions\Model\Mapping;
+use Pimcore\File;
 use Pimcore\Model\Object\Concrete;
+use Pimcore\Tool;
 
 /**
- * Class AbstractSetter
+ * Class Key
  * @package ImportDefinitions\Model\Setter
  */
-abstract class AbstractSetter
+class Key extends AbstractSetter
 {
-    /**
-     * available Setter.
-     *
-     * @var array
-     */
-    public static $availableSetter = array('objectbrick', 'classificationstore', 'fieldcollection', 'localizedfield', 'key');
-
-    /**
-     * Add Setter.
-     *
-     * @param $setter
-     */
-    public static function addSetter($setter)
-    {
-        if (!in_array($setter, self::$availableSetter)) {
-            self::$availableSetter[] = $setter;
-        }
-    }
-
     /**
      * @param Concrete $object
      * @param $value
@@ -49,5 +32,13 @@ abstract class AbstractSetter
      * @param array $data
      * @return mixed
      */
-    abstract public function set(Concrete $object, $value, Mapping $map, $data);
+    public function set(Concrete $object, $value, Mapping $map, $data)
+    {
+        $setter = explode("~", $map->getToColumn());
+        $setter = "set" . ucfirst($setter[0]);
+
+        if (method_exists($object, $setter)) {
+            $object->$setter(File::getValidFilename($value));
+        }
+    }
 }

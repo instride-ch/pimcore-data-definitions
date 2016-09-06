@@ -106,6 +106,14 @@ class Xml extends AbstractProvider
         $json = json_encode($xml);
         $array = json_decode($json, true);
 
+        foreach($array as &$arrayEntry) {
+            if(array_key_exists("@attributes", $arrayEntry)) {
+                foreach($arrayEntry['@attributes'] as $key => $value) {
+                    $arrayEntry['attr_' . $key] = $value;
+                }
+            }
+        }
+
         return $array;
     }
 

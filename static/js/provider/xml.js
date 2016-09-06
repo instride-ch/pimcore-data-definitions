@@ -20,7 +20,7 @@ pimcore.plugin.importdefinitions.provider.xml = Class.create(pimcore.plugin.impo
             name: 'xpath',
             fieldLabel: t('importdefinitions_xml_xpath'),
             anchor : '100%',
-            value: this.data['xpath'] ? this.data.xpath : ''
+            value: this.data['xPath'] ? this.data.xPath : ''
         }, {
             xtype: 'textfield',
             name: 'exampleXPath',

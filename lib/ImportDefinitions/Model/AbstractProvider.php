@@ -263,7 +263,7 @@ abstract class AbstractProvider
     public function getObjectForPrimaryKey($definition, $data)
     {
         $class = $definition->getClass();
-        $classDefinition =ClassDefinition::getByName($class);
+        $classDefinition = ClassDefinition::getByName($class);
         $obj = null;
 
         if (!$classDefinition instanceof ClassDefinition) {
@@ -335,6 +335,8 @@ abstract class AbstractProvider
      * @param array $data
      * @param Definition $definition
      * @param array $params
+     *
+     * @throws \Exception
      */
     public function setObjectValue(Concrete $object, Mapping $map, $value, $data, $definition, $params)
     {
@@ -349,6 +351,12 @@ abstract class AbstractProvider
                 if ($class instanceof AbstractInterpreter) {
                     $value = $class->interpret($object, $value, $map, $data, $definition, $params);
                 }
+            }
+        }
+
+        if($map->getToColumn() === "type") {
+            if($mapConfig['setter'] !== "objectType") {
+                throw new \Exception("Type has to be used with ObjectType Setter!");
             }
         }
 

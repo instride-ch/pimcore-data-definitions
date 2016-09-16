@@ -292,6 +292,7 @@ abstract class AbstractProvider
 
             $list->setUnpublished(true);
             $list->setCondition(implode(" AND ", $condition), $conditionValues);
+            $list->setObjectTypes([AbstractObject::OBJECT_TYPE_VARIANT, AbstractObject::OBJECT_TYPE_OBJECT, AbstractObject::OBJECT_TYPE_FOLDER]);
             $objectData = $list->load();
 
             if (count($objectData) === 1) {

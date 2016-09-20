@@ -220,7 +220,7 @@ abstract class AbstractProvider
         $filterObject = null;
 
         if($definition->getFilter()) {
-            $filterClass = '\ImportDefinition\Model\Filter\\' . $definition->getFilter();
+            $filterClass = '\ImportDefinitions\Model\Filter\\' . $definition->getFilter();
 
             if(!Tool::classExists($filterClass)) {
                 throw new \Exception("Filter class not found ($filterClass)");

@@ -31,6 +31,7 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
     interpreters : [],
     setters : [],
     filters : [],
+    runners : [],
 
     initialize: function () {
         // create layout
@@ -47,6 +48,7 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
                 this.interpreters = [];
                 this.setters = [];
                 this.cleaners = [];
+                this.runners = [];
 
                 config.providers.forEach(function (provider) {
                     this.providers.push([provider]);
@@ -66,6 +68,10 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
 
                 config.cleaner.forEach(function (cleaner) {
                     this.cleaners.push([cleaner]);
+                }.bind(this));
+
+                config.runner.forEach(function (runner) {
+                    this.runners.push([runner]);
                 }.bind(this));
 
                 var providerStore = new Ext.data.ArrayStore({
@@ -107,6 +113,14 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
                 });
 
                 pimcore.globalmanager.add('importdefinitions_setters', settersStore);
+
+                var runnersStore = new Ext.data.ArrayStore({
+                    data : this.runners,
+                    fields: ['runner'],
+                    idProperty : 'runner'
+                });
+
+                pimcore.globalmanager.add('importdefinitions_runners', runnersStore);
 
                 this.getLayout();
             }.bind(this)

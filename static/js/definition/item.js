@@ -173,6 +173,21 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                     }
                 },
                 {
+                    xtype : 'combo',
+                    fieldLabel: t('importdefinitions_runner'),
+                    name: 'runner',
+                    displayField: 'runner',
+                    valueField: 'runner',
+                    store: pimcore.globalmanager.get('importdefinitions_runners'),
+                    value : this.data.runner,
+                    width: 500,
+                    listeners : {
+                        change : function (combo, value) {
+                            this.data.runner = value;
+                        }.bind(this)
+                    }
+                },
+                {
                     fieldLabel: t('importdefinitions_relocate_existing_objects'),
                     xtype: 'checkbox',
                     name: 'relocateExistingObjects',

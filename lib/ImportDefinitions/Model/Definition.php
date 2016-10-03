@@ -94,6 +94,11 @@ class Definition extends AbstractModel
     public $relocateExistingObjects;
 
     /**
+     * @var string
+     */
+    public $runner;
+
+    /**
      * Get By Id.
      *
      * @param int $id
@@ -375,5 +380,21 @@ class Definition extends AbstractModel
     public function setRelocateExistingObjects($relocateExistingObjects)
     {
         $this->relocateExistingObjects = $relocateExistingObjects;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRunner()
+    {
+        return $this->runner;
+    }
+
+    /**
+     * @param string $runner
+     */
+    public function setRunner($runner)
+    {
+        $this->runner = $runner;
     }
 }

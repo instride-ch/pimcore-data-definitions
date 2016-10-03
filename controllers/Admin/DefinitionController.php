@@ -42,7 +42,8 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
             'interpreter' => \ImportDefinitions\Model\Interpreter\AbstractInterpreter::$availableInterpreter,
             'cleaner' => \ImportDefinitions\Model\Cleaner\AbstractCleaner::$availableCleaner,
             'setter' => \ImportDefinitions\Model\Setter\AbstractSetter::$availableSetter,
-            'filters' => \ImportDefinitions\Model\Filter\AbstractFilter::$availableFilter
+            'filters' => \ImportDefinitions\Model\Filter\AbstractFilter::$availableFilter,
+            'runner' => \ImportDefinitions\Model\Runner\AbstractRunner::$availableRunner
         ));
     }
 

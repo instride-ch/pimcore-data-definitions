@@ -334,6 +334,10 @@ abstract class AbstractProvider
             if ($obj instanceof AbstractObject) {
                 $key = File::getValidFilename($definition->createKey($data));
 
+                if($definition->getRelocateExistingObjects() || !$obj->getId()) {
+                    $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
+                }
+
                 if($definition->getRenameExistingObjects() || !$obj->getId()) {
                     if ($definition->getKey() && $key) {
                         $obj->setKey($key);
@@ -342,15 +346,13 @@ abstract class AbstractProvider
                     }
                 }
 
-                if($definition->getRelocateExistingObjects() || !$obj->getId()) {
-                    $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
-                }
+                $obj->setKey(Service::getUniqueKey($obj));
 
                 return $obj;
             }
 
             if (count($objectData) > 1) {
-                throw new \Exception("Object with the same primary key was fount multiple times");
+                throw new \Exception("Object with the same primary key was found multiple times");
             }
         }
 

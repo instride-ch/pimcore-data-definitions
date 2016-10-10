@@ -92,8 +92,8 @@ class ImportCommand extends AbstractCommand
         \Pimcore::getEventManager()->attach("importdefinitions.finished", function(\Zend_EventManager_Event $e) use ($output, &$progress) {
             if($progress instanceof ProgressBar) {
                 $progress->finish();
+                $output->writeln("");
             }
-
 
             $output->writeln("Import finished!");
             $output->writeln("");

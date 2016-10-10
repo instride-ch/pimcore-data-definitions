@@ -211,13 +211,8 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
                 
                 $name = $definition->getName();
                 unset($definition->id);
-                //unset($definition->classId);
-                //unset($definition->name);
                 unset($definition->creationDate);
                 unset($definition->modificationDate);
-                //unset($definition->userOwner);
-                //unset($definition->userModification);
-                //unset($definition->fieldDefinitions);
 
                 header("Content-type: application/json");
                 header("Content-Disposition: attachment; filename=\"custom_definition_" . $name . "_export.json\"");

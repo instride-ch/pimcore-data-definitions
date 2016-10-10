@@ -18,6 +18,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
     iconCls : 'importdefinitions_icon_definition',
     url : {
         save : '/plugin/ImportDefinitions/admin_definition/save',
+        upload : '/plugin/ImportDefinitions/admin_definition/import',
+        export : '/plugin/ImportDefinitions/admin_definition/export',
         test : '/plugin/ImportDefinitions/admin_definition/test-data'
     },
 
@@ -62,6 +64,19 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
             forceLayout: true,
             iconCls : this.iconCls,
             buttons: [{
+                text: t('import'),
+                iconCls: 'pimcore_icon_import',
+                handler: this.upload.bind(this)
+            },
+            {
+                text: t('export'),
+                iconCls: 'pimcore_icon_export',
+                handler: function() {
+                    var id = this.data.id;
+                    pimcore.helpers.download(this.url.export + "?id=" + id);
+                }.bind(this)
+            },
+            {
                 text: t('save'),
                 iconCls: 'pimcore_icon_apply',
                 handler: this.save.bind(this)
@@ -506,5 +521,29 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                 }
             }.bind(this)
         });
+    },
+
+    upload: function (callback)
+    {
+
+        pimcore.helpers.uploadDialog(this.url.upload + "?id=" + this.data.id, "Filedata", function() {
+
+            Ext.Ajax.request({
+                url: "/plugin/ImportDefinitions/admin_definition/get",
+                params: {
+                    id: this.data.id
+                },
+                success: function(response) {
+                    this.data = Ext.decode(response.responseText.data);
+                    this.parentPanel.getEditPanel().removeAll();
+                    this.addLayout();
+                    this.initLayoutFields();
+                    pimcore.layout.refresh();
+                }.bind(this)
+            });
+        }.bind(this), function () {
+            Ext.MessageBox.alert(t("error"), t("error"));
+        });
+
     }
 });

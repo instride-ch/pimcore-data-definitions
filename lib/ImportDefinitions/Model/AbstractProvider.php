@@ -18,6 +18,7 @@ use ImportDefinitions\Model\Cleaner\AbstractCleaner;
 use ImportDefinitions\Model\Filter\AbstractFilter;
 use ImportDefinitions\Model\Interpreter\AbstractInterpreter;
 use ImportDefinitions\Model\Mapping\FromColumn;
+use ImportDefinitions\Model\Runner\AbstractRunner;
 use ImportDefinitions\Model\Setter\AbstractSetter;
 use Pimcore\File;
 use Pimcore\Model\Object\AbstractObject;
@@ -182,8 +183,12 @@ abstract class AbstractProvider
      * @param AbstractFilter|null $filter
      *
      * @return Concrete
+     *
+     * @throws \Exception
      */
-    protected function importRow($definition, $data, $params, $filter = null) {
+    protected function importRow($definition, $data, $params, $filter = null, $runner = null) {
+        $runner = null;
+
         $object = $this->getObjectForPrimaryKey($definition, $data);
 
         if($filter instanceof AbstractFilter) {
@@ -192,10 +197,29 @@ abstract class AbstractProvider
             }
         }
 
+        if($definition->getRunner()) {
+            $runnerClass = '\ImportDefinitions\Model\Runner\\' . $definition->getRunner();
+
+            if(!Tool::classExists($runnerClass)) {
+                throw new \Exception("Runner class not found ($runnerClass)");
+            }
+
+            $runner = new $runnerClass;
+        }
+
+
+        if($runner instanceof AbstractRunner) {
+            $runner->preRun($object, $data, $definition, $params);
+        }
+
         $this->getLogger()->info("Imported Object: " . $object->getRealFullPath());
 
         foreach ($definition->getMapping() as $mapItem) {
-            $value = $data[$mapItem->getFromColumn()];
+            $value = null;
+
+            if(array_key_exists($mapItem->getFromColumn(), $data)) {
+                $value = $data[$mapItem->getFromColumn()];
+            }
 
             $this->setObjectValue($object, $mapItem, $value, $data, $definition, $params);
         }
@@ -204,6 +228,10 @@ abstract class AbstractProvider
         \Pimcore::getEventManager()->trigger("importdefinitions.object.finished", $object);
 
         $object->save();
+
+        if($runner instanceof AbstractRunner) {
+            $runner->postRun($object, $data, $definition, $params);
+        }
 
         return $object;
     }
@@ -306,6 +334,10 @@ abstract class AbstractProvider
             if ($obj instanceof AbstractObject) {
                 $key = File::getValidFilename($definition->createKey($data));
 
+                if($definition->getRelocateExistingObjects() || !$obj->getId()) {
+                    $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
+                }
+
                 if($definition->getRenameExistingObjects() || !$obj->getId()) {
                     if ($definition->getKey() && $key) {
                         $obj->setKey($key);
@@ -314,15 +346,13 @@ abstract class AbstractProvider
                     }
                 }
 
-                if($definition->getRelocateExistingObjects() || !$obj->getId()) {
-                    $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
-                }
+                $obj->setKey(Service::getUniqueKey($obj));
 
                 return $obj;
             }
 
             if (count($objectData) > 1) {
-                throw new \Exception("Object with the same primary key was fount multiple times");
+                throw new \Exception("Object with the same primary key was found multiple times");
             }
         }
 

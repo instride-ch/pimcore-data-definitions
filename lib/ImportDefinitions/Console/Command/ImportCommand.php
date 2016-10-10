@@ -78,6 +78,7 @@ class ImportCommand extends AbstractCommand
 
         \Pimcore::getEventManager()->attach("importdefinitions.total", function(\Zend_EventManager_Event $e) use ($output, &$progress) {
             $progress = new ProgressBar($output, $e->getTarget());
+            $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %message%');
             $progress->start();
         });
 

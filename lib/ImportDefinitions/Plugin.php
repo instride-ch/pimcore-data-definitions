@@ -16,6 +16,8 @@ namespace ImportDefinitions;
 
 use Pimcore\API\Plugin as PluginLib;
 use Pimcore\Db;
+use Pimcore\Model\Schedule\Maintenance\Job;
+use Pimcore\Model\Schedule\Manager\Procedural;
 
 /**
  * Pimcore Plugin
@@ -43,6 +45,15 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
             // add a namespace to autoload commands from
             $application->addAutoloadNamespace('ImportDefinitions\\Console', PIMCORE_PLUGINS_PATH.'/ImportDefinitions/lib/ImportDefinitions/Console');
+        });
+
+        \Pimcore::getEventManager()->attach('system.maintenance', function (\Zend_EventManager_Event $e) {
+            $manager = $e->getTarget();
+
+            if ($manager instanceof Procedural) {
+                $manager->registerJob(new Job('importdefinitions_cleanup_log', '\\ImportDefinitions\\Maintenance', 'archiveLogFiles'));
+                $manager->registerJob(new Job('importdefinitions_cleanup_log', '\\ImportDefinitions\\Maintenance', 'cleanupLogFiles'));
+            }
         });
     }
 

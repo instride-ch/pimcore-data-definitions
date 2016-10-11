@@ -26,6 +26,7 @@ use Pimcore\Model\Object\ClassDefinition;
 use Pimcore\Model\Object\Concrete;
 use Pimcore\Model\Object\Listing;
 use Pimcore\Model\Object\Service;
+use Pimcore\Model\Version;
 use Pimcore\Tool;
 
 /**
@@ -246,6 +247,13 @@ abstract class AbstractProvider
     public function doImport($definition, $params)
     {
         $filterObject = null;
+
+        if($definition->getCreateVersion()) {
+            Version::enable();
+        }
+        else {
+            Version::disable();
+        }
 
         if($definition->getFilter()) {
             $filterClass = '\ImportDefinitions\Model\Filter\\' . $definition->getFilter();

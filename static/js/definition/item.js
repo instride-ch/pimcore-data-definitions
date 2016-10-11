@@ -198,6 +198,12 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                     xtype: 'checkbox',
                     name: 'renameExistingObjects',
                     checked: this.data.renameExistingObjects
+                },
+                {
+                    fieldLabel: t('importdefinitions_create_version'),
+                    xtype: 'checkbox',
+                    name: 'createVersion',
+                    checked: this.data.createVersion
                 }
             ]
         });

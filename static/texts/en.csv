@@ -30,3 +30,4 @@
 "importdefinitions_rename_existing_objects","Rename existing Objects"
 "importdefinitions_filter","Filter"
 "importdefinitions_runner","Runner"
+"importdefinitions_create_version","Create new Version on every Run"

@@ -99,6 +99,11 @@ class Definition extends AbstractModel
     public $runner;
 
     /**
+     * @var boolean
+     */
+    public $createVersion;
+
+    /**
      * Get By Id.
      *
      * @param int $id
@@ -396,5 +401,21 @@ class Definition extends AbstractModel
     public function setRunner($runner)
     {
         $this->runner = $runner;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCreateVersion()
+    {
+        return $this->createVersion;
+    }
+
+    /**
+     * @param boolean $createVersion
+     */
+    public function setCreateVersion($createVersion)
+    {
+        $this->createVersion = $createVersion;
     }
 }

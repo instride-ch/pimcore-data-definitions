@@ -153,8 +153,33 @@ abstract class AbstractProvider
      * @param array $data
      *
      * @return Concrete[]
+     *
+     * @throws \Exception
      */
-    abstract protected function runImport($definition, $params, $filter = null, $data = array());
+    protected function runImport($definition, $params, $filter = null, $data = array())
+    {
+        $objects = [];
+
+        if(is_array($data)) {
+            foreach ($data as $row) {
+                try {
+                    $object = $this->importRow($definition, $row, $params, $filter);
+
+                    if ($object) {
+                        $objects[] = $object;
+                    }
+                } catch (\Exception $ex) {
+                    $this->logger->error($ex->getMessage(), $ex);
+
+                    if ($definition->getStopOnException()) {
+                        throw $ex;
+                    }
+                }
+            }
+        }
+
+        return $objects;
+    }
 
     /**
      * @param $definition
@@ -192,16 +217,16 @@ abstract class AbstractProvider
 
         $object = $this->getObjectForPrimaryKey($definition, $data);
 
-        if($filter instanceof AbstractFilter) {
-            if(!$filter->filter($definition, $data, $object)) {
+        if ($filter instanceof AbstractFilter) {
+            if (!$filter->filter($definition, $data, $object)) {
                 return null;
             }
         }
 
-        if($definition->getRunner()) {
+        if ($definition->getRunner()) {
             $runnerClass = '\ImportDefinitions\Model\Runner\\' . $definition->getRunner();
 
-            if(!Tool::classExists($runnerClass)) {
+            if (!Tool::classExists($runnerClass)) {
                 throw new \Exception("Runner class not found ($runnerClass)");
             }
 
@@ -209,7 +234,7 @@ abstract class AbstractProvider
         }
 
 
-        if($runner instanceof AbstractRunner) {
+        if ($runner instanceof AbstractRunner) {
             $runner->preRun($object, $data, $definition, $params);
         }
 
@@ -218,7 +243,7 @@ abstract class AbstractProvider
         foreach ($definition->getMapping() as $mapItem) {
             $value = null;
 
-            if(array_key_exists($mapItem->getFromColumn(), $data)) {
+            if (array_key_exists($mapItem->getFromColumn(), $data)) {
                 $value = $data[$mapItem->getFromColumn()];
             }
 
@@ -230,7 +255,7 @@ abstract class AbstractProvider
 
         $object->save();
 
-        if($runner instanceof AbstractRunner) {
+        if ($runner instanceof AbstractRunner) {
             $runner->postRun($object, $data, $definition, $params);
         }
 

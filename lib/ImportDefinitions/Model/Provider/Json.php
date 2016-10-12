@@ -124,27 +124,4 @@ class Json extends AbstractProvider
 
         return array();
     }
-
-    /**
-     * @param Definition $definition
-     * @param $params
-     * @param AbstractFilter|null $filter
-     * @param array $data
-     *
-     * @return Concrete[]
-     */
-    protected function runImport($definition, $params, $filter = null, $data = array())
-    {
-        $objects = [];
-
-        foreach ($data as $row) {
-            $object = $this->importRow($definition, $row, $params, $filter);
-
-            if ($object) {
-                $objects[] = $object;
-            }
-        }
-
-        return $objects;
-    }
 }

@@ -148,18 +148,18 @@ class Csv extends AbstractProvider
 
         $row = 0;
         if (($handle = fopen($file, "r")) !== false) {
-            while (($data = fgetcsv($handle, 1000, $this->getDelimiter(), $this->getEnclosure() ? $this->getEnclosure() : chr(8))) !== false) {
-                $num = count($data);
+            while (($csvData = fgetcsv($handle, 1000, $this->getDelimiter(), $this->getEnclosure() ? $this->getEnclosure() : chr(8))) !== false) {
+                $num = count($csvData);
 
                 //Make Column Mapping
                 if ($row === 0) {
                     for ($c = 0; $c < $num; $c++) {
-                        $columnMapping[] = $data[$c];
+                        $columnMapping[] = $csvData[$c];
                     }
                 } else {
                     $mappedData = [];
 
-                    foreach ($data as $index => $col) {
+                    foreach ($csvData as $index => $col) {
                         $mappedData[$columnMapping[$index]] = $col;
                     }
 
@@ -172,25 +172,5 @@ class Csv extends AbstractProvider
         }
 
         return $data;
-    }
-
-
-    /**
-     * @param Definition $definition
-     * @param $params
-     * @param AbstractFilter|null $filter
-     * @param array $data
-     *
-     * @return Concrete[]
-     */
-    protected function runImport($definition, $params, $filter = null, $data = array())
-    {
-        $objects = [];
-
-        foreach($data as $row) {
-            $objects[] = $this->importRow($definition, $row, $params, $filter);
-        }
-
-        return $objects;
     }
 }

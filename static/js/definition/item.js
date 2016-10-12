@@ -204,6 +204,12 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                     xtype: 'checkbox',
                     name: 'createVersion',
                     checked: this.data.createVersion
+                },
+                {
+                    fieldLabel: t('importdefinitions_stop_on_exception'),
+                    xtype: 'checkbox',
+                    name: 'stopOnException',
+                    checked: this.data.stopOnException
                 }
             ]
         });

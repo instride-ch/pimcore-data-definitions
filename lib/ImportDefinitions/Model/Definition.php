@@ -104,6 +104,11 @@ class Definition extends AbstractModel
     public $createVersion;
 
     /**
+     * @var boolean
+     */
+    public $stopOnException;
+
+    /**
      * Get By Id.
      *
      * @param int $id
@@ -417,5 +422,21 @@ class Definition extends AbstractModel
     public function setCreateVersion($createVersion)
     {
         $this->createVersion = $createVersion;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getStopOnException()
+    {
+        return $this->stopOnException;
+    }
+
+    /**
+     * @param boolean $stopOnException
+     */
+    public function setStopOnException($stopOnException)
+    {
+        $this->stopOnException = $stopOnException;
     }
 }

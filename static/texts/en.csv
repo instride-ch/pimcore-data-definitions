@@ -31,3 +31,4 @@
 "importdefinitions_filter","Filter"
 "importdefinitions_runner","Runner"
 "importdefinitions_create_version","Create new Version on every Run"
+"importdefinitions_stop_on_exception","Stop on Exception"

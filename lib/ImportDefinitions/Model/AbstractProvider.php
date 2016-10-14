@@ -159,15 +159,25 @@ abstract class AbstractProvider
     protected function runImport($definition, $params, $filter = null, $data = array())
     {
         $objects = [];
+        $count = 0;
+        $countToClean = 1000;
 
         if(is_array($data)) {
             foreach ($data as $row) {
                 try {
                     $object = $this->importRow($definition, $row, $params, $filter);
 
-                    if ($object) {
-                        $objects[] = $object;
+                    if ($object instanceof Concrete) {
+                        $objects[] = $object->getId();
                     }
+
+                    if($count % $countToClean === 0) {
+                        \Pimcore::collectGarbage();
+                        $this->logger->info("Clean Garbage");
+                        \Pimcore::getEventManager()->trigger("importdefinitions.status", "Collect Garbage");
+                    }
+
+                    $count++;
                 } catch (\Exception $ex) {
                     $this->logger->error($ex->getMessage(), $ex);
 
@@ -223,6 +233,9 @@ abstract class AbstractProvider
             }
         }
 
+        \Pimcore::getEventManager()->trigger("importdefinitions.status", "Import Object " . ($object->getId() ? $object->getFullPath() : "new"));
+        \Pimcore::getEventManager()->trigger("importdefinitions.object.start", $object);
+
         if ($definition->getRunner()) {
             $runnerClass = '\ImportDefinitions\Model\Runner\\' . $definition->getRunner();
 
@@ -250,10 +263,10 @@ abstract class AbstractProvider
             $this->setObjectValue($object, $mapItem, $value, $data, $definition, $params);
         }
 
+        $object->save();
+
         \Pimcore::getEventManager()->trigger("importdefinitions.status", "Imported Object " . $object->getFullPath());
         \Pimcore::getEventManager()->trigger("importdefinitions.object.finished", $object);
-
-        $object->save();
 
         if ($runner instanceof AbstractRunner) {
             $runner->postRun($object, $data, $definition, $params);

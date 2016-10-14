@@ -54,11 +54,11 @@ abstract class AbstractCleaner
 
     /**
      * @param Definition $definition
-     * @param Concrete[] $foundObjects
+     * @param array $foundObjectIds
      *
      * @return Concrete[]
      */
-    public function getObjectsToClean($definition, $foundObjects) {
+    public function getObjectsToClean($definition, $foundObjectIds) {
         $logs = new Log\Listing();
         $logs->setCondition("definition = ?", array($definition->getId()));
         $logs = $logs->load();
@@ -68,8 +68,8 @@ abstract class AbstractCleaner
         foreach ($logs as $log) {
             $found = false;
 
-            foreach ($foundObjects as $object) {
-                if (intval($log->getO_Id()) === $object->getId()) {
+            foreach ($foundObjectIds as $objectId) {
+                if (intval($log->getO_Id()) === $objectId) {
                     $found = true;
 
                     break;
@@ -86,7 +86,7 @@ abstract class AbstractCleaner
         }
 
         $this->deleteLogs($logs);
-        $this->writeNewLogs($definition, $foundObjects);
+        $this->writeNewLogs($definition, $foundObjectIds);
         
         return $notFound;
     }
@@ -103,13 +103,13 @@ abstract class AbstractCleaner
 
     /**
      * @param Definition $definition
-     * @param Concrete[] $objects
+     * @param array $objectIds
      */
-    public function writeNewLogs($definition, $objects) {
+    public function writeNewLogs($definition, $objectIds) {
         //Save new Log
-        foreach ($objects as $obj) {
+        foreach ($objectIds as $objId) {
             $log = new Log();
-            $log->setO_Id($obj->getId());
+            $log->setO_Id($objId);
             $log->setDefinition($definition->getId());
             $log->save();
         }

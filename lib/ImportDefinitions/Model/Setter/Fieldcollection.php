@@ -41,7 +41,7 @@ class Fieldcollection extends AbstractSetter
         $fieldName = $config['fieldcollectionField'];
         $class = $config['class'];
         $keys = explode(",", $keys);
-        $fieldCollectionClass = 'Pimcore\Model\Object\Fieldcollection\Data\\' . $class;
+        $fieldCollectionClass = 'Pimcore\Model\Object\Fieldcollection\Data\\' . ucfirst($class);
         $field = $keyParts[3];
 
         foreach ($keys as &$key) {

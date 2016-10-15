@@ -53,8 +53,8 @@ class Objectbrick extends AbstractSetter
             }
 
             if ($brick instanceof \Pimcore\Model\Object\Objectbrick) {
-                $brickClassGetter = "get" . $class;
-                $brickClassSetter = "set" . $class;
+                $brickClassGetter = "get" . ucfirst($class);
+                $brickClassSetter = "set" . ucfirst($class);
 
                 $brickFieldObject = $brick->$brickClassGetter();
 

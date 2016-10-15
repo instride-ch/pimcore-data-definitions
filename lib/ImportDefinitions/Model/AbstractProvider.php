@@ -344,8 +344,8 @@ abstract class AbstractProvider
             throw new \Exception("Class not found $class");
         }
 
-        $classObject = '\Pimcore\Model\Object\\' . $class;
-        $classList = '\Pimcore\Model\Object\\' . $class . '\Listing';
+        $classObject = '\Pimcore\Model\Object\\' . ucfirst($class);
+        $classList = '\Pimcore\Model\Object\\' . ucfirst($class) . '\Listing';
 
         $list = new $classList();
 

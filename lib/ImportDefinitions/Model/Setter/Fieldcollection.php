@@ -43,11 +43,12 @@ class Fieldcollection extends AbstractSetter
         $keys = explode(",", $keys);
         $fieldCollectionClass = 'Pimcore\Model\Object\Fieldcollection\Data\\' . ucfirst($class);
         $field = $keyParts[3];
+        $mappedKeys = [];
 
-        foreach ($keys as &$key) {
+        foreach ($keys as $key) {
             $tmp = explode(":", $key);
 
-            $key = [
+            $mappedKeys[] = [
                 "from" => $tmp[0],
                 "to" => $tmp[1]
             ];
@@ -68,7 +69,7 @@ class Fieldcollection extends AbstractSetter
 
             foreach ($items as $item) {
                 if (is_a($item, $fieldCollectionClass)) {
-                    if ($this->isValidKey($keys, $item, $data)) {
+                    if ($this->isValidKey($mappedKeys, $item, $data)) {
                         if ($item instanceof AbstractFieldCollection) {
                             $item->setValue($field, $value);
                         }
@@ -83,7 +84,7 @@ class Fieldcollection extends AbstractSetter
                 $item = new $fieldCollectionClass();
 
                 if ($item instanceof AbstractFieldCollection) {
-                    foreach ($keys as $key) {
+                    foreach ($mappedKeys as $key) {
                         $item->setValue($key['to'], $data[$key['from']]);
                     }
 

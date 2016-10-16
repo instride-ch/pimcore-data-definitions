@@ -27,7 +27,7 @@ class Dao extends Listing\Dao\AbstractDao
     /**
      * @var string
      */
-    protected $tableName = 'importdefinitions_log';
+    protected $tableName = 'plugin_importdefinitions_log';
 
     /**
      * Get tableName, either for localized or non-localized data.

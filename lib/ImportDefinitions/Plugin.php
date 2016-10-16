@@ -58,19 +58,33 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
     }
 
     /**
-     * @return bool
+     * @return string
      */
     public static function install()
     {
         $db = Db::get();
+        $result = false;
 
-        $db->query("CREATE TABLE `importdefinitions_log` (
-          `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-          `definition` int NOT NULL,
-          `o_id` int NOT NULL
-        );");
+        try
+        {
+            $result = $db->describeTable("importdefinitions_log");
 
-        return true;
+            if($result) {
+                $db->query("RENAME TABLE `importdefinitions_log` TO `plugin_importdefinitions_log`;");
+            }
+        }
+        catch(\Exception $e) {
+        }
+
+        if(!$result) {
+            $db->query("CREATE TABLE `plugin_importdefinitions_log` (
+              `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+              `definition` int NOT NULL,
+              `o_id` int NOT NULL
+            );");
+        }
+
+        return self::getTranslate()->_('importdefinitions_installed');
     }
 
     /**
@@ -78,7 +92,11 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
      */
     public static function uninstall()
     {
-        return true;
+        $db = Db::get();
+
+        $db->query("DROP TABLE `plugin_importdefinitions_log`;");
+
+        return self::getTranslate()->_('importdefinitions_uninstalled');
     }
 
     /**
@@ -90,7 +108,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
         try
         {
-            $result = Db::get()->describeTable("importdefinitions_log");
+            $result = Db::get()->describeTable("plugin_importdefinitions_log");
         }
         catch(\Exception $e) {
 

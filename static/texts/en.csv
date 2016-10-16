@@ -32,3 +32,5 @@
 "importdefinitions_runner","Runner"
 "importdefinitions_create_version","Create new Version on every Run"
 "importdefinitions_stop_on_exception","Stop on Exception"
+"importdefinitions_installed","ImportDefinitions has been installed"
+"importdefinitions_uninstalled","ImportDefinitions has been uninstalled"

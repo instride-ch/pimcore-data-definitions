@@ -24,7 +24,7 @@ use Pimcore\Model\Dao\AbstractDao;
 class Dao extends AbstractDao
 {
 
-    protected $tableName = 'importdefinitions_log';
+    protected $tableName = 'plugin_importdefinitions_log';
 
     /**
      * get log by id

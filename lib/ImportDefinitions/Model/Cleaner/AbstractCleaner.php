@@ -47,10 +47,10 @@ abstract class AbstractCleaner
     /**
      *
      * @param Definition $definition
-     * @param Concrete[] $objects
+     * @param int[] $objectIds
      * @return mixed
      */
-    abstract public function cleanup($definition, $objects);
+    abstract public function cleanup($definition, $objectIds);
 
     /**
      * @param Definition $definition

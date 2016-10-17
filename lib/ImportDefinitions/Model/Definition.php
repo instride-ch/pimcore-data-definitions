@@ -15,6 +15,7 @@
 namespace ImportDefinitions\Model;
 
 use Pimcore\Model\AbstractModel;
+use Pimcore\Model\Document;
 use Pimcore\Placeholder;
 
 /**
@@ -107,6 +108,16 @@ class Definition extends AbstractModel
      * @var boolean
      */
     public $stopOnException;
+
+    /**
+     * @var int
+     */
+    public $failureNotificationDocument;
+
+    /**
+     * @var int
+     */
+    public $successNotificationDocument;
 
     /**
      * Get By Id.
@@ -438,5 +449,37 @@ class Definition extends AbstractModel
     public function setStopOnException($stopOnException)
     {
         $this->stopOnException = $stopOnException;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFailureNotificationDocument()
+    {
+        return $this->failureNotificationDocument;
+    }
+
+    /**
+     * @param int $failureNotificationDocument
+     */
+    public function setFailureNotificationDocument($failureNotificationDocument)
+    {
+        $this->failureNotificationDocument = $failureNotificationDocument;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSuccessNotificationDocument()
+    {
+        return $this->successNotificationDocument;
+    }
+
+    /**
+     * @param int $successNotificationDocument
+     */
+    public function setSuccessNotificationDocument($successNotificationDocument)
+    {
+        $this->successNotificationDocument = $successNotificationDocument;
     }
 }

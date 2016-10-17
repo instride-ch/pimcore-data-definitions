@@ -210,6 +210,86 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                     xtype: 'checkbox',
                     name: 'stopOnException',
                     checked: this.data.stopOnException
+                },
+                {
+                    fieldLabel: t('importdefinitions_failure_document'),
+                    labelWidth: 350,
+                    name: 'failureNotificationDocument',
+                    fieldCls: 'pimcore_droptarget_input',
+                    value: this.data.failureNotificationDocument,
+                    xtype: 'textfield',
+                    listeners: {
+                        render: function (el) {
+                            new Ext.dd.DropZone(el.getEl(), {
+                                reference: this,
+                                ddGroup: 'element',
+                                getTargetFromEvent: function (e) {
+                                    return this.getEl();
+                                }.bind(el),
+
+                                onNodeOver : function (target, dd, e, data) {
+                                    data = data.records[0].data;
+
+                                    if (data.elementType == 'document') {
+                                        return Ext.dd.DropZone.prototype.dropAllowed;
+                                    }
+
+                                    return Ext.dd.DropZone.prototype.dropNotAllowed;
+                                },
+
+                                onNodeDrop : function (target, dd, e, data) {
+                                    data = data.records[0].data;
+
+                                    if (data.elementType == 'document') {
+                                        this.setValue(data.id);
+                                        return true;
+                                    }
+
+                                    return false;
+                                }.bind(el)
+                            });
+                        }
+                    }
+                },
+                {
+                    fieldLabel: t('importdefinitions_success_document'),
+                    labelWidth: 350,
+                    name: 'successNotificationDocument',
+                    fieldCls: 'pimcore_droptarget_input',
+                    value: this.data.successNotificationDocument,
+                    xtype: 'textfield',
+                    listeners: {
+                        render: function (el) {
+                            new Ext.dd.DropZone(el.getEl(), {
+                                reference: this,
+                                ddGroup: 'element',
+                                getTargetFromEvent: function (e) {
+                                    return this.getEl();
+                                }.bind(el),
+
+                                onNodeOver : function (target, dd, e, data) {
+                                    data = data.records[0].data;
+
+                                    if (data.elementType == 'document') {
+                                        return Ext.dd.DropZone.prototype.dropAllowed;
+                                    }
+
+                                    return Ext.dd.DropZone.prototype.dropNotAllowed;
+                                },
+
+                                onNodeDrop : function (target, dd, e, data) {
+                                    data = data.records[0].data;
+
+                                    if (data.elementType == 'document') {
+                                        this.setValue(data.id);
+                                        return true;
+                                    }
+
+                                    return false;
+                                }.bind(el)
+                            });
+                        }
+                    }
                 }
             ]
         });

@@ -21,6 +21,8 @@ use ImportDefinitions\Model\Mapping\FromColumn;
 use ImportDefinitions\Model\Runner\AbstractRunner;
 use ImportDefinitions\Model\Setter\AbstractSetter;
 use Pimcore\File;
+use Pimcore\Mail;
+use Pimcore\Model\Document;
 use Pimcore\Model\Object\AbstractObject;
 use Pimcore\Model\Object\ClassDefinition;
 use Pimcore\Model\Object\Concrete;
@@ -53,6 +55,16 @@ abstract class AbstractProvider
      * @var \Monolog\Logger|null
      */
     public $logger;
+
+    /**
+     * @var \Exception[]
+     */
+    protected $exceptions = [];
+
+    /**
+     * @var int[]
+     */
+    protected $objectIds = [];
 
     /**
      * Add Provider.
@@ -152,13 +164,10 @@ abstract class AbstractProvider
      * @param AbstractFilter|null $filter
      * @param array $data
      *
-     * @return Concrete[]
-     *
      * @throws \Exception
      */
     protected function runImport($definition, $params, $filter = null, $data = array())
     {
-        $objects = [];
         $count = 0;
         $countToClean = 1000;
 
@@ -168,7 +177,7 @@ abstract class AbstractProvider
                     $object = $this->importRow($definition, $row, $params, $filter);
 
                     if ($object instanceof Concrete) {
-                        $objects[] = $object->getId();
+                        $this->objectIds[] = $object->getId();
                     }
 
                     if($count % $countToClean === 0) {
@@ -181,14 +190,14 @@ abstract class AbstractProvider
                 } catch (\Exception $ex) {
                     $this->logger->error($ex->getMessage(), $ex);
 
+                    $this->exceptions[] = $ex;
+
                     if ($definition->getStopOnException()) {
                         throw $ex;
                     }
                 }
             }
         }
-
-        return $objects;
     }
 
     /**
@@ -307,8 +316,7 @@ abstract class AbstractProvider
 
         \Pimcore::getEventManager()->trigger("importdefinitions.total", count($data));
 
-        $objects = $this->runImport($definition, $params, $filterObject, $data);
-
+        $this->runImport($definition, $params, $filterObject, $data);
 
         //Get Cleanup type
         $type = $definition->getCleaner();
@@ -318,12 +326,46 @@ abstract class AbstractProvider
             $class = new $class();
 
             if ($class instanceof AbstractCleaner) {
-                $class->cleanup($definition, $objects);
+                $class->cleanup($definition, $this->objectIds);
             }
         }
 
+        if(count($this->exceptions) > 0) {
+            $this->sendDocument(Document::getById($definition->getFailureNotificationDocument()), $definition);
+        }
+        else {
+            $this->sendDocument(Document::getById($definition->getSuccessNotificationDocument()), $definition);
+        }
 
         \Pimcore::getEventManager()->trigger("importdefinitions.finished");
+    }
+
+    /**
+     * @param $document
+     * @param Definition $definition
+     */
+    public function sendDocument($document, $definition) {
+        if($document instanceof Document) {
+            $params = [
+                "exceptions" => $this->exceptions,
+                "objectIds" => $this->objectIds,
+                "className" => $definition->getClass(),
+                "countObjects" => count($this->objectIds),
+                "countExceptions" => count($this->exceptions),
+                "name" => $definition->getName(),
+                "provider" => $definition->getProvider()
+            ];
+
+            if ($document instanceof Document\Email) {
+                $mail = new Mail();
+                $mail->setDocument($document);
+                $mail->setParams($params);
+
+                $mail->send();
+            } else if (is_a($document, "\\Pimcore\\Model\\Document\\Pushover")) {
+                $document->send($params);
+            }
+        }
     }
 
     /**

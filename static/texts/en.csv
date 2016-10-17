@@ -34,3 +34,5 @@
 "importdefinitions_stop_on_exception","Stop on Exception"
 "importdefinitions_installed","ImportDefinitions has been installed"
 "importdefinitions_uninstalled","ImportDefinitions has been uninstalled"
+"importdefinitions_success_document","Success Notification Document"
+"importdefinitions_failure_document","Failure Notification Document"

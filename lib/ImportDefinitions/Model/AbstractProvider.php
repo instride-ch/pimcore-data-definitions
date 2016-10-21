@@ -180,7 +180,7 @@ abstract class AbstractProvider
                         $this->objectIds[] = $object->getId();
                     }
 
-                    if($count % $countToClean === 0) {
+                    if(($count + 1) % $countToClean === 0) {
                         \Pimcore::collectGarbage();
                         $this->logger->info("Clean Garbage");
                         \Pimcore::getEventManager()->trigger("importdefinitions.status", "Collect Garbage");
@@ -326,7 +326,13 @@ abstract class AbstractProvider
             $class = new $class();
 
             if ($class instanceof AbstractCleaner) {
+                $this->logger->info(sprintf("Running Cleaner '%s", $type));
+                \Pimcore::getEventManager()->trigger("importdefinitions.status", sprintf("Running Cleaner '%s", $type));
+
                 $class->cleanup($definition, $this->objectIds);
+
+                $this->logger->info(sprintf("Finished Cleaner '%s", $type));
+                \Pimcore::getEventManager()->trigger("importdefinitions.status", sprintf("Finished Cleaner '%s", $type));
             }
         }
 

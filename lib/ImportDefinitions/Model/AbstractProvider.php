@@ -272,6 +272,7 @@ abstract class AbstractProvider
             $this->setObjectValue($object, $mapItem, $value, $data, $definition, $params);
         }
 
+        $object->setUserModification(0); //Set User to "system"
         $object->save();
 
         \Pimcore::getEventManager()->trigger("importdefinitions.status", "Imported Object " . $object->getFullPath());

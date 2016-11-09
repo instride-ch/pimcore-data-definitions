@@ -188,7 +188,7 @@ abstract class AbstractProvider
 
                     $count++;
                 } catch (\Exception $ex) {
-                    $this->logger->error($ex->getMessage(), $ex);
+                    $this->logger->error($ex);
 
                     $this->exceptions[] = $ex;
 

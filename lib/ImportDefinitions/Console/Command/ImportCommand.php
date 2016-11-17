@@ -62,6 +62,7 @@ class ImportCommand extends AbstractCommand
         $params = $input->getOption('params');
         $definition = Definition::getById($input->getOption("definition"));
         $progress = null;
+        $process = null;
 
         if (!$definition instanceof Definition) {
             throw new \Exception("Definition not found");
@@ -69,29 +70,56 @@ class ImportCommand extends AbstractCommand
 
         \Zend_Registry::set("Zend_Locale", new \Zend_Locale("en"));
 
-        \Pimcore::getEventManager()->attach("importdefinitions.status", function(\Zend_EventManager_Event $e) use ($output, &$progress)  {
+        \Pimcore::getEventManager()->attach("importdefinitions.status", function(\Zend_EventManager_Event $e) use ($output, &$progress, &$process)  {
             if($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getTarget());
                 $progress->display();
             }
-        });
 
-        \Pimcore::getEventManager()->attach("importdefinitions.total", function(\Zend_EventManager_Event $e) use ($output, &$progress) {
-            $progress = new ProgressBar($output, $e->getTarget());
-            $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %message%');
-            $progress->start();
-        });
-
-        \Pimcore::getEventManager()->attach("importdefinitions.object.finished", function(\Zend_EventManager_Event $e) use ($output, &$progress) {
-            if($progress instanceof ProgressBar) {
-                $progress->advance();
+            if(class_exists('\ProcessManager\Model\Process')) {
+                if($process instanceof \ProcessManager\Model\Process) {
+                    $process->setMessage($e->getTarget());
+                    $process->save();
+                }
             }
         });
 
-        \Pimcore::getEventManager()->attach("importdefinitions.finished", function(\Zend_EventManager_Event $e) use ($output, &$progress) {
+        \Pimcore::getEventManager()->attach("importdefinitions.total", function(\Zend_EventManager_Event $e) use ($output, $definition, &$progress, &$process) {
+            $progress = new ProgressBar($output, $e->getTarget());
+            $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %message%');
+            $progress->start();
+
+            if(class_exists('\ProcessManager\Model\Process')) {
+                $process = new \ProcessManager\Model\Process();
+                $process->setName(sprintf('ImportDefinitions: %s', $definition->getName()));
+                $process->setTotal($e->getTarget());
+                $process->setMessage('Loading');
+                $process->setProgress(0);
+                $process->save();
+            }
+        });
+
+        \Pimcore::getEventManager()->attach("importdefinitions.object.finished", function(\Zend_EventManager_Event $e) use ($output, &$progress, &$process) {
+            if($progress instanceof ProgressBar) {
+                $progress->advance();
+            }
+
+            if(class_exists('\ProcessManager\Model\Process')) {
+                if($process instanceof \ProcessManager\Model\Process) {
+                    $process->progress();
+                }
+            }
+        });
+
+        \Pimcore::getEventManager()->attach("importdefinitions.finished", function(\Zend_EventManager_Event $e) use ($output, &$progress, &$process) {
             if($progress instanceof ProgressBar) {
                 $progress->finish();
                 $output->writeln("");
+            }
+            if(class_exists('\ProcessManager\Model\Process')) {
+                if($process instanceof \ProcessManager\Model\Process) {
+                    $process->delete();
+                }
             }
 
             $output->writeln("Import finished!");

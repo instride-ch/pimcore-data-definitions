@@ -36,3 +36,6 @@
 "importdefinitions_uninstalled","ImportDefinitions has been uninstalled"
 "importdefinitions_success_document","Success Notification Document"
 "importdefinitions_failure_document","Failure Notification Document"
+"processmanager_type_ImportDefinition","Import Definition"
+"importdefinitions_definition","Definition"
+"importdefinitions_processmanager_params","Params"

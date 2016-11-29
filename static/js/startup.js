@@ -44,6 +44,7 @@ pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
 
             //layoutToolbar.settingsMenu.add(importMenu);
 
+            this.createGlobalStores();
         }
     },
 
@@ -55,6 +56,26 @@ pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
         catch (e) {
             pimcore.globalmanager.add('importdefinitions_definition_panel', new pimcore.plugin.importdefinitions.definition.panel());
         }
+    },
+
+    createGlobalStores : function() {
+        var proxy = new Ext.data.HttpProxy({
+            url : '/plugin/ImportDefinitions/admin_definition/list'
+        });
+
+        var reader = new Ext.data.JsonReader({}, [
+            { name:'id' },
+            { name:'name' }
+        ]);
+
+        var store = new Ext.data.Store({
+            restful:    false,
+            proxy:      proxy,
+            reader:     reader,
+            autoload:   true
+        });
+
+        pimcore.globalmanager.add('importdefinitions_definitions', store);
     }
 });
 

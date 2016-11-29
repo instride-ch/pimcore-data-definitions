@@ -14,6 +14,7 @@
 
 namespace ImportDefinitions\Console\Command;
 
+use Carbon\Carbon;
 use ImportDefinitions\Model\Definition;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -78,6 +79,7 @@ class ImportCommand extends AbstractCommand
 
             if(class_exists('\ProcessManager\Model\Process')) {
                 if($process instanceof \ProcessManager\Model\Process) {
+                    $process->getLogger()->info($e->getTarget());
                     $process->setMessage($e->getTarget());
                     $process->save();
                 }
@@ -90,8 +92,9 @@ class ImportCommand extends AbstractCommand
             $progress->start();
 
             if(class_exists('\ProcessManager\Model\Process')) {
+                $date = Carbon::now();
                 $process = new \ProcessManager\Model\Process();
-                $process->setName(sprintf('ImportDefinitions: %s', $definition->getName()));
+                $process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized("%A %d %B %Y"), $definition->getName()));
                 $process->setTotal($e->getTarget());
                 $process->setMessage('Loading');
                 $process->setProgress(0);
@@ -115,11 +118,6 @@ class ImportCommand extends AbstractCommand
             if($progress instanceof ProgressBar) {
                 $progress->finish();
                 $output->writeln("");
-            }
-            if(class_exists('\ProcessManager\Model\Process')) {
-                if($process instanceof \ProcessManager\Model\Process) {
-                    $process->delete();
-                }
             }
 
             $output->writeln("Import finished!");

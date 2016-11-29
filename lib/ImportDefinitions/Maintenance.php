@@ -16,6 +16,10 @@ namespace ImportDefinitions;
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * Class Maintenance
+ * @package ImportDefinitions
+ */
 class Maintenance
 {
     /**

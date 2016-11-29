@@ -55,6 +55,10 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
                 $manager->registerJob(new Job('importdefinitions_cleanup_log', '\\ImportDefinitions\\Maintenance', 'cleanupLogFiles'));
             }
         });
+
+        if(class_exists('\ProcessManager\Model\Process')) {
+            \ProcessManager\Model\Executable::addType("ImportDefinition");
+        }
     }
 
     /**

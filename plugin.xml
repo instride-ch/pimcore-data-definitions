@@ -13,6 +13,7 @@
         </pluginIncludePaths>
         <pluginNamespaces>
             <namespace>ImportDefinitions</namespace>
+            <namespace>ProcessManager</namespace>
         </pluginNamespaces>
         <pluginJsPaths>
             <path>/plugins/ImportDefinitions/static/js/startup.js</path>
@@ -36,6 +37,8 @@
             <path>/plugins/ImportDefinitions/static/js/setters/objectbrick.js</path>
             <path>/plugins/ImportDefinitions/static/js/setters/classificationstore.js</path>
             <path>/plugins/ImportDefinitions/static/js/setters/localizedfield.js</path>
+
+            <path>/plugins/ImportDefinitions/static/js/processmanager/type/importDefinition.js</path>
         </pluginJsPaths>
         <pluginCssPaths>
             <path>/plugins/ImportDefinitions/static/css/importdefinitions.css</path>

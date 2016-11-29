@@ -22,8 +22,7 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
     url : {
         add : '/plugin/ImportDefinitions/admin_definition/add',
         delete : '/plugin/ImportDefinitions/admin_definition/delete',
-        get : '/plugin/ImportDefinitions/admin_definition/get',
-        list : '/plugin/ImportDefinitions/admin_definition/list'
+        get : '/plugin/ImportDefinitions/admin_definition/get'
     },
 
     providers : [],
@@ -35,8 +34,6 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
 
     initialize: function () {
         // create layout
-        this.createStore();
-
         Ext.Ajax.request({
             url: '/plugin/ImportDefinitions/admin_definition/get-config',
             method: 'GET',
@@ -127,26 +124,6 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create({
         });
 
         this.panels = [];
-    },
-
-    createStore : function () {
-        var proxy = new Ext.data.HttpProxy({
-            url : this.url.list
-        });
-
-        var reader = new Ext.data.JsonReader({}, [
-            { name:'id' },
-            { name:'name' }
-        ]);
-
-        var store = new Ext.data.Store({
-            restful:    false,
-            proxy:      proxy,
-            reader:     reader,
-            autoload:   true
-        });
-
-        pimcore.globalmanager.add(this.storeId, store);
     },
 
     activate: function () {

@@ -1,8 +1,5 @@
 
-/*#pimcore_panel_toolbar {
-    background: red !important;
-}*/
-.importdefinitions_icon_definition {
+.importdefinitions_icon_definition, .processmanager_icon_executable_type_importdefinition {
     background: url(/plugins/ImportDefinitions/static/img/definition.svg) center center no-repeat !important;
 }
 

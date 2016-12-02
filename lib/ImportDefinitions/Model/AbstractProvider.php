@@ -182,20 +182,24 @@ abstract class AbstractProvider
 
                     if(($count + 1) % $countToClean === 0) {
                         \Pimcore::collectGarbage();
-                        $this->logger->info("Clean Garbage");
+                        $this->getLogger()->info("Clean Garbage");
                         \Pimcore::getEventManager()->trigger("importdefinitions.status", "Collect Garbage");
                     }
 
                     $count++;
                 } catch (\Exception $ex) {
-                    $this->logger->error($ex);
+                    $this->getLogger()->error($ex);
 
                     $this->exceptions[] = $ex;
+
+                    \Pimcore::getEventManager()->trigger("importdefinitions.status", "Error: " . $ex->getMessage());
 
                     if ($definition->getStopOnException()) {
                         throw $ex;
                     }
                 }
+
+                \Pimcore::getEventManager()->trigger("importdefinitions.progress");
             }
         }
     }
@@ -327,12 +331,12 @@ abstract class AbstractProvider
             $class = new $class();
 
             if ($class instanceof AbstractCleaner) {
-                $this->logger->info(sprintf("Running Cleaner '%s", $type));
+                $this->getLogger()->info(sprintf("Running Cleaner '%s", $type));
                 \Pimcore::getEventManager()->trigger("importdefinitions.status", sprintf("Running Cleaner '%s", $type));
 
                 $class->cleanup($definition, $this->objectIds);
 
-                $this->logger->info(sprintf("Finished Cleaner '%s", $type));
+                $this->getLogger()->info(sprintf("Finished Cleaner '%s", $type));
                 \Pimcore::getEventManager()->trigger("importdefinitions.status", sprintf("Finished Cleaner '%s", $type));
             }
         }

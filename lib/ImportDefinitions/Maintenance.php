@@ -69,7 +69,7 @@ class Maintenance
     /**
      * Clean up old Log Files
      */
-    public function cleanupLogFiles()
+    public static function cleanupLogFiles()
     {
         // rotate logs
         $finder = new Finder();

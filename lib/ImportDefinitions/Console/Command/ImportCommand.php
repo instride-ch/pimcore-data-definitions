@@ -16,6 +16,7 @@ namespace ImportDefinitions\Console\Command;
 
 use Carbon\Carbon;
 use ImportDefinitions\Model\Definition;
+use Pimcore\API\Plugin\Broker;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -77,11 +78,13 @@ class ImportCommand extends AbstractCommand
                 $progress->display();
             }
 
-            if(class_exists('\ProcessManager\Model\Process')) {
-                if($process instanceof \ProcessManager\Model\Process) {
-                    $process->getLogger()->info($e->getTarget());
-                    $process->setMessage($e->getTarget());
-                    $process->save();
+            if(Broker::getInstance()->hasPlugin("ProcessManager")) {
+                if (class_exists('\ProcessManager\Model\Process')) {
+                    if ($process instanceof \ProcessManager\Model\Process) {
+                        $process->getLogger()->info($e->getTarget());
+                        $process->setMessage($e->getTarget());
+                        $process->save();
+                    }
                 }
             }
         });
@@ -108,8 +111,10 @@ class ImportCommand extends AbstractCommand
             }
 
             if(class_exists('\ProcessManager\Model\Process')) {
-                if($process instanceof \ProcessManager\Model\Process) {
-                    $process->progress();
+                if(Broker::getInstance()->hasPlugin("ProcessManager")) {
+                    if ($process instanceof \ProcessManager\Model\Process) {
+                        $process->progress();
+                    }
                 }
             }
         });

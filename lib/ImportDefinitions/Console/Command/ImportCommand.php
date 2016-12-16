@@ -78,7 +78,7 @@ class ImportCommand extends AbstractCommand
                 $progress->display();
             }
 
-            if(Broker::getInstance()->hasPlugin("ProcessManager")) {
+            if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
                 if (class_exists('\ProcessManager\Model\Process')) {
                     if ($process instanceof \ProcessManager\Model\Process) {
                         $process->getLogger()->info($e->getTarget());
@@ -94,14 +94,16 @@ class ImportCommand extends AbstractCommand
             $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %message%');
             $progress->start();
 
-            if(class_exists('\ProcessManager\Model\Process')) {
-                $date = Carbon::now();
-                $process = new \ProcessManager\Model\Process();
-                $process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized("%A %d %B %Y"), $definition->getName()));
-                $process->setTotal($e->getTarget());
-                $process->setMessage('Loading');
-                $process->setProgress(0);
-                $process->save();
+            if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
+                if (class_exists('\ProcessManager\Model\Process')) {
+                    $date = Carbon::now();
+                    $process = new \ProcessManager\Model\Process();
+                    $process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized("%A %d %B %Y"), $definition->getName()));
+                    $process->setTotal($e->getTarget());
+                    $process->setMessage('Loading');
+                    $process->setProgress(0);
+                    $process->save();
+                }
             }
         });
 
@@ -111,7 +113,7 @@ class ImportCommand extends AbstractCommand
             }
 
             if(class_exists('\ProcessManager\Model\Process')) {
-                if(Broker::getInstance()->hasPlugin("ProcessManager")) {
+                if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
                     if ($process instanceof \ProcessManager\Model\Process) {
                         $process->progress();
                     }

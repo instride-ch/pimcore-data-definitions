@@ -56,7 +56,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
             }
         });
 
-        if(PluginLib\Broker::getInstance()->hasPlugin("ProcessManager")) {
+        if(PluginLib\Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
             if (class_exists('\ProcessManager\Model\Process')) {
                 \ProcessManager\Model\Executable::addType("ImportDefinition");
             }

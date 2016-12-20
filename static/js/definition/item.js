@@ -129,11 +129,38 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                     value : this.data.class
                 },
                 {
-                    xtype : 'textfield',
+                    xtype: 'textfield',
                     fieldLabel: t('path'),
                     name: 'objectPath',
                     width: 500,
-                    value : this.data.objectPath
+                    cls: 'input_drop_target',
+                    value: this.data.objectPath,
+                    listeners: {
+                        'render': function (el) {
+                            new Ext.dd.DropZone(el.getEl(), {
+                                reference: this,
+                                ddGroup: 'element',
+                                getTargetFromEvent: function (e) {
+                                    return this.getEl();
+                                }.bind(el),
+
+                                onNodeOver: function (target, dd, e, data) {
+                                    return Ext.dd.DropZone.prototype.dropAllowed;
+                                },
+
+                                onNodeDrop: function (target, dd, e, data) {
+                                    var record = data.records[0];
+                                    var data = record.data;
+
+                                    if (data.elementType == 'object') {
+                                        this.setValue(data.path);
+                                        return true;
+                                    }
+                                    return false;
+                                }.bind(el)
+                            });
+                        }
+                    }
                 },
                 {
                     xtype : 'textfield',

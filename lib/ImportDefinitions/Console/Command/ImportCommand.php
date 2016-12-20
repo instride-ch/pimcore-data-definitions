@@ -79,12 +79,10 @@ class ImportCommand extends AbstractCommand
             }
 
             if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
-                if (class_exists('\ProcessManager\Model\Process')) {
-                    if ($process instanceof \ProcessManager\Model\Process) {
-                        $process->getLogger()->info($e->getTarget());
-                        $process->setMessage($e->getTarget());
-                        $process->save();
-                    }
+                if ($process instanceof \ProcessManager\Model\Process) {
+                    $process->getLogger()->info($e->getTarget());
+                    $process->setMessage($e->getTarget());
+                    $process->save();
                 }
             }
         });
@@ -95,15 +93,13 @@ class ImportCommand extends AbstractCommand
             $progress->start();
 
             if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
-                if (class_exists('\ProcessManager\Model\Process')) {
-                    $date = Carbon::now();
-                    $process = new \ProcessManager\Model\Process();
-                    $process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized("%A %d %B %Y"), $definition->getName()));
-                    $process->setTotal($e->getTarget());
-                    $process->setMessage('Loading');
-                    $process->setProgress(0);
-                    $process->save();
-                }
+                $date = Carbon::now();
+                $process = new \ProcessManager\Model\Process();
+                $process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized("%A %d %B %Y"), $definition->getName()));
+                $process->setTotal($e->getTarget());
+                $process->setMessage('Loading');
+                $process->setProgress(0);
+                $process->save();
             }
         });
 

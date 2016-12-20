@@ -56,11 +56,9 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
             }
         });
 
-        if(PluginLib\Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
-            if (class_exists('\ProcessManager\Model\Process')) {
-                \ProcessManager\Model\Executable::addType("ImportDefinition");
-            }
-        }
+        \Pimcore::getEventManager()->attach('processManager.init', function(\Zend_EventManager_Event $e) {
+            \ProcessManager\Model\Executable::addType("ImportDefinition");
+        });
     }
 
     /**

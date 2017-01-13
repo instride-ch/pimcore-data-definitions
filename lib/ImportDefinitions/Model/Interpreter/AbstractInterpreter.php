@@ -29,7 +29,7 @@ abstract class AbstractInterpreter
      *
      * @var array
      */
-    public static $availableInterpreter = array('href', 'multiHref', 'defaultValue', 'assetUrl', 'assetsUrl');
+    public static $availableInterpreter = array('href', 'multiHref', 'defaultValue', 'assetUrl', 'assetsUrl', 'checkbox');
 
     /**
      * Add Interpreter.

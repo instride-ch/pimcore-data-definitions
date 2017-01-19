@@ -484,7 +484,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                         dataIndex : 'toColumn',
                                         flex : 1,
                                         renderer : function (val, metadata) {
-                                            var rec = toColumnStore.findRecord('identifier', val);
+                                            var rec = toColumnStore.findRecord('identifier', val, 0, false, false, true);
 
                                             if (rec) {
                                                 metadata.tdCls = 'pimcore_icon_' + rec.data.fieldtype + ' td-icon';
@@ -501,7 +501,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                         flex : 1,
                                         renderer : function (val) {
                                             if (val) {
-                                                var rec = fromColumnStore.findRecord('identifier', val);
+                                                var rec = fromColumnStore.findRecord('identifier', val, 0, false, false, true);
 
                                                 if (rec)
                                                     return rec.get('label');
@@ -528,8 +528,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                                                     if (gridRecord.length > 0) {
                                                         gridRecord = gridRecord[0];
 
-                                                        var fromColumn = fromColumnStore.findRecord('identifier', newValue);
-                                                        var toColumn = toColumnStore.findRecord('identifier', gridRecord .get('toColumn'));
+                                                        var fromColumn = fromColumnStore.findRecord('identifier', newValue, 0, false, false, true);
+                                                        var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
 
                                                         if (fromColumn && toColumn) {
                                                             var dialog = new pimcore.plugin.importdefinitions.definition.configDialog();

@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -180,6 +180,52 @@ class ImportDefinitions_Admin_DefinitionController extends Admin
         }
 
         $this->_helper->json(array('success' => false));
+    }
+
+    public function importAction() 
+    {
+
+        $id = $this->getParam('id');
+        $filedata = file_get_contents($_FILES["Filedata"]["tmp_name"]);
+
+        $data = \Zend_Json::decode($filedata);
+        $data['configuration'] = $data['providerConfiguration'];
+        $this->setParam('data', \Zend_Json::encode($data));
+
+        $this->saveAction();
+
+        // set content-type to text/html, otherwise (when application/json is sent) chrome will complain in
+        // Ext.form.Action.Submit and mark the submission as failed
+        $this->getResponse()->setHeader("Content-Type", "text/html");
+    }
+
+    public function exportAction()
+    {
+        $this->removeViewRenderer();
+        $id = intval($this->getParam("id"));
+
+        if ($id) {
+
+            $definition = \ImportDefinitions\Model\Definition::getById($id);
+            if ($definition instanceof \ImportDefinitions\Model\Definition) {
+                
+                $name = $definition->getName();
+                unset($definition->id);
+                unset($definition->creationDate);
+                unset($definition->modificationDate);
+
+                header("Content-type: application/json");
+                header("Content-Disposition: attachment; filename=\"custom_definition_" . $name . "_export.json\"");
+                $json = json_encode($definition);
+                $json = \Zend_Json::prettyPrint($json);
+                echo $json;
+                die();
+            }
+        }
+
+        $errorMessage = ": Definition with id [ " . $id . " not found. ]";
+        \Logger::error($errorMessage);
+        echo $errorMessage;
     }
 
     public function getColumnsAction()

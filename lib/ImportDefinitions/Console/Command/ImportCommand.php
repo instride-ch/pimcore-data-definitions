@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -16,6 +16,7 @@ namespace ImportDefinitions\Console\Command;
 
 use Carbon\Carbon;
 use ImportDefinitions\Model\Definition;
+use Pimcore\API\Plugin\Broker;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -77,8 +78,8 @@ class ImportCommand extends AbstractCommand
                 $progress->display();
             }
 
-            if(class_exists('\ProcessManager\Model\Process')) {
-                if($process instanceof \ProcessManager\Model\Process) {
+            if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
+                if ($process instanceof \ProcessManager\Model\Process) {
                     $process->getLogger()->info($e->getTarget());
                     $process->setMessage($e->getTarget());
                     $process->save();
@@ -91,7 +92,7 @@ class ImportCommand extends AbstractCommand
             $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %message%');
             $progress->start();
 
-            if(class_exists('\ProcessManager\Model\Process')) {
+            if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
                 $date = Carbon::now();
                 $process = new \ProcessManager\Model\Process();
                 $process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized("%A %d %B %Y"), $definition->getName()));
@@ -108,8 +109,10 @@ class ImportCommand extends AbstractCommand
             }
 
             if(class_exists('\ProcessManager\Model\Process')) {
-                if($process instanceof \ProcessManager\Model\Process) {
-                    $process->progress();
+                if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
+                    if ($process instanceof \ProcessManager\Model\Process) {
+                        $process->progress();
+                    }
                 }
             }
         });

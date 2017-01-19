@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -20,10 +20,10 @@ use Pimcore\Model\Object\Concrete;
 use Pimcore\Tool;
 
 /**
- * Class MultiHref
+ * Class Checkbox
  * @package ImportDefinitions\Model\Interpreter
  */
-class MultiHref extends AbstractInterpreter
+class Checkbox extends AbstractInterpreter
 {
 
     /**
@@ -31,30 +31,12 @@ class MultiHref extends AbstractInterpreter
      * @param $value
      * @param Mapping $map
      * @param array $data
-     * @param Definition $definition
-     * @param array $params
-     *
      * @return mixed
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, Definition $definition, $params)
     {
-        $config = $map->getInterpreterConfig();
-        $objectClass = $config['class'];
 
-        $class = 'Pimcore\Model\Object\\' . $objectClass;
-
-        if (Tool::classExists($class)) {
-            $class = new $class();
-
-            if ($class instanceof Concrete) {
-                $ret = $class::getById($value);
-
-                if ($ret instanceof Concrete) {
-                    return [$ret];
-                }
-            }
-        }
-
-        return $value;
+        $boolval = is_string($value) ? filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : (bool) $value;
+        return ($boolval===null) ? false : $boolval;
     }
 }

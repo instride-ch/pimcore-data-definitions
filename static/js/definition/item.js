@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -18,6 +18,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
     iconCls : 'importdefinitions_icon_definition',
     url : {
         save : '/plugin/ImportDefinitions/admin_definition/save',
+        upload : '/plugin/ImportDefinitions/admin_definition/import',
+        export : '/plugin/ImportDefinitions/admin_definition/export',
         test : '/plugin/ImportDefinitions/admin_definition/test-data'
     },
 
@@ -62,6 +64,19 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
             forceLayout: true,
             iconCls : this.iconCls,
             buttons: [{
+                text: t('import'),
+                iconCls: 'pimcore_icon_import',
+                handler: this.upload.bind(this)
+            },
+            {
+                text: t('export'),
+                iconCls: 'pimcore_icon_export',
+                handler: function() {
+                    var id = this.data.id;
+                    pimcore.helpers.download(this.url.export + "?id=" + id);
+                }.bind(this)
+            },
+            {
                 text: t('save'),
                 iconCls: 'pimcore_icon_apply',
                 handler: this.save.bind(this)
@@ -129,11 +144,38 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                     value : this.data.class
                 },
                 {
-                    xtype : 'textfield',
+                    xtype: 'textfield',
                     fieldLabel: t('path'),
                     name: 'objectPath',
                     width: 500,
-                    value : this.data.objectPath
+                    cls: 'input_drop_target',
+                    value: this.data.objectPath,
+                    listeners: {
+                        'render': function (el) {
+                            new Ext.dd.DropZone(el.getEl(), {
+                                reference: this,
+                                ddGroup: 'element',
+                                getTargetFromEvent: function (e) {
+                                    return this.getEl();
+                                }.bind(el),
+
+                                onNodeOver: function (target, dd, e, data) {
+                                    return Ext.dd.DropZone.prototype.dropAllowed;
+                                },
+
+                                onNodeDrop: function (target, dd, e, data) {
+                                    var record = data.records[0];
+                                    var data = record.data;
+
+                                    if (data.elementType == 'object') {
+                                        this.setValue(data.path);
+                                        return true;
+                                    }
+                                    return false;
+                                }.bind(el)
+                            });
+                        }
+                    }
                 },
                 {
                     xtype : 'textfield',
@@ -613,5 +655,29 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                 }
             }.bind(this)
         });
+    },
+
+    upload: function (callback)
+    {
+
+        pimcore.helpers.uploadDialog(this.url.upload + "?id=" + this.data.id, "Filedata", function() {
+
+            Ext.Ajax.request({
+                url: "/plugin/ImportDefinitions/admin_definition/get",
+                params: {
+                    id: this.data.id
+                },
+                success: function(response) {
+                    this.data = Ext.decode(response.responseText.data);
+                    this.parentPanel.getEditPanel().removeAll();
+                    this.addLayout();
+                    this.initLayoutFields();
+                    pimcore.layout.refresh();
+                }.bind(this)
+            });
+        }.bind(this), function () {
+            Ext.MessageBox.alert(t("error"), t("error"));
+        });
+
     }
 });

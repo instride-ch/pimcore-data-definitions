@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -56,9 +56,9 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
             }
         });
 
-        if(class_exists('\ProcessManager\Model\Process')) {
+        \Pimcore::getEventManager()->attach('processManager.init', function(\Zend_EventManager_Event $e) {
             \ProcessManager\Model\Executable::addType("ImportDefinition");
-        }
+        });
     }
 
     /**

@@ -19,30 +19,11 @@ use ImportDefinitions\Model\Mapping;
 use Pimcore\Model\Object\Concrete;
 
 /**
- * Class AbstractInterpreter
+ * Class QuantityValue
  * @package ImportDefinitions\Model\Interpreter
  */
-abstract class AbstractInterpreter
+class QuantityValue extends AbstractInterpreter
 {
-    /**
-     * available Interpreter.
-     *
-     * @var array
-     */
-    public static $availableInterpreter = array('href', 'multiHref', 'defaultValue', 'assetUrl', 'assetsUrl', 'checkbox', 'quantityValue');
-
-    /**
-     * Add Interpreter.
-     *
-     * @param $interpreter
-     */
-    public static function addInterpreter($interpreter)
-    {
-        if (!in_array($interpreter, self::$availableInterpreter)) {
-            self::$availableInterpreter[] = $interpreter;
-        }
-    }
-
     /**
      * @param Concrete $object
      * @param $value
@@ -53,5 +34,11 @@ abstract class AbstractInterpreter
      *
      * @return mixed
      */
-    abstract public function interpret(Concrete $object, $value, Mapping $map, $data, Definition $definition, $params);
+    public function interpret(Concrete $object, $value, Mapping $map, $data, Definition $definition, $params)
+    {
+        $mapConfig = $map->getInterpreterConfig();
+        $unit = $mapConfig['unit'];
+
+        return new \Pimcore\Model\Object\Data\QuantityValue($value, $unit);
+    }
 }

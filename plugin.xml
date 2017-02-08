@@ -31,6 +31,7 @@
             <path>/plugins/ImportDefinitions/static/js/interpreters/defaultvalue.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/asseturl.js</path>
             <path>/plugins/ImportDefinitions/static/js/interpreters/assetsurl.js</path>
+            <path>/plugins/ImportDefinitions/static/js/interpreters/quantityvalue.js</path>
 
             <path>/plugins/ImportDefinitions/static/js/setters/abstract.js</path>
             <path>/plugins/ImportDefinitions/static/js/setters/fieldcollection.js</path>

@@ -52,6 +52,12 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             }
         }
 
+        if (!record.data.config.interpreter) {
+            if (toColumn.data.fieldtype === 'quantityValue') {
+                record.data.config.interpreter = 'quantityvalue';
+            }
+        }
+
         fieldSetItems.push(new Ext.form.ComboBox({
             fieldLabel : t('importdefinitions_interpreters'),
             name : 'interpreter',

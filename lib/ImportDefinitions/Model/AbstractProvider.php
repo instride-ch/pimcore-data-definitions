@@ -319,9 +319,11 @@ abstract class AbstractProvider
 
         $data = $this->getData($definition, $params, $filterObject);
 
-        \Pimcore::getEventManager()->trigger("importdefinitions.total", count($data));
+        if (count($data) > 0) {
+            \Pimcore::getEventManager()->trigger("importdefinitions.total", count($data));
 
-        $this->runImport($definition, $params, $filterObject, $data);
+            $this->runImport($definition, $params, $filterObject, $data);
+        }
 
         //Get Cleanup type
         $type = $definition->getCleaner();

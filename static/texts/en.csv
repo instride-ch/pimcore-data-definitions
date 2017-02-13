@@ -39,3 +39,5 @@
 "processmanager_type_ImportDefinition","Import Definition"
 "importdefinitions_definition","Definition"
 "importdefinitions_processmanager_params","Params"
+"importdefinitions_skip_new_objects","Skip New Objects"
+"importdefinitions_skip_existing_objects","Skip Existing Objects"

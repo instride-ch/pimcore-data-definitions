@@ -68,19 +68,19 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                 iconCls: 'pimcore_icon_import',
                 handler: this.upload.bind(this)
             },
-            {
-                text: t('export'),
-                iconCls: 'pimcore_icon_export',
-                handler: function() {
-                    var id = this.data.id;
-                    pimcore.helpers.download(this.url.export + "?id=" + id);
-                }.bind(this)
-            },
-            {
-                text: t('save'),
-                iconCls: 'pimcore_icon_apply',
-                handler: this.save.bind(this)
-            }],
+                {
+                    text: t('export'),
+                    iconCls: 'pimcore_icon_export',
+                    handler: function() {
+                        var id = this.data.id;
+                        pimcore.helpers.download(this.url.export + "?id=" + id);
+                    }.bind(this)
+                },
+                {
+                    text: t('save'),
+                    iconCls: 'pimcore_icon_apply',
+                    handler: this.save.bind(this)
+                }],
             items: this.getItems()
         });
 
@@ -240,6 +240,18 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                     xtype: 'checkbox',
                     name: 'renameExistingObjects',
                     checked: this.data.renameExistingObjects
+                },
+                {
+                    fieldLabel: t('importdefinitions_skip_existing_objects'),
+                    xtype: 'checkbox',
+                    name: 'skipExistingObjects',
+                    checked: this.data.skipExistingObjects
+                },
+                {
+                    fieldLabel: t('importdefinitions_skip_new_objects'),
+                    xtype: 'checkbox',
+                    name: 'skipNewObjects',
+                    checked: this.data.skipNewObjects
                 },
                 {
                     fieldLabel: t('importdefinitions_create_version'),

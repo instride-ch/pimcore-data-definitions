@@ -95,6 +95,16 @@ class Definition extends AbstractModel
     public $relocateExistingObjects;
 
     /**
+     * @var bool
+     */
+    public $skipNewObjects = false;
+
+    /**
+     * @var bool
+     */
+    public $skipExistingObjects = false;
+
+    /**
      * @var string
      */
     public $runner;
@@ -274,7 +284,7 @@ class Definition extends AbstractModel
     {
         $this->mapping = $mapping;
     }
-    
+
     /**
      * @return int
      */
@@ -481,5 +491,37 @@ class Definition extends AbstractModel
     public function setSuccessNotificationDocument($successNotificationDocument)
     {
         $this->successNotificationDocument = $successNotificationDocument;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSkipNewObjects()
+    {
+        return $this->skipNewObjects;
+    }
+
+    /**
+     * @param bool $skipNewObjects
+     */
+    public function setSkipNewObjects($skipNewObjects)
+    {
+        $this->skipNewObjects = $skipNewObjects;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSkipExistingObjects()
+    {
+        return $this->skipExistingObjects;
+    }
+
+    /**
+     * @param bool $skipExistingObjects
+     */
+    public function setSkipExistingObjects($skipExistingObjects)
+    {
+        $this->skipExistingObjects = $skipExistingObjects;
     }
 }

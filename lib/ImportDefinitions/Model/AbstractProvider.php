@@ -235,10 +235,23 @@ abstract class AbstractProvider
      *
      * @throws \Exception
      */
-    protected function importRow($definition, $data, $params, $filter = null, $runner = null) {
+    protected function importRow($definition, $data, $params, $filter = null) {
         $runner = null;
 
         $object = $this->getObjectForPrimaryKey($definition, $data);
+
+        if (!$object->getId()) {
+            if ($definition->getSkipNewObjects()) {
+                \Pimcore::getEventManager()->trigger("importdefinitions.status", "Ignoring new Product ");
+                return null;
+            }
+        }
+        else {
+            if ($definition->getSkipExistingObjects()) {
+                \Pimcore::getEventManager()->trigger("importdefinitions.status", "Ignoring existing Product");
+                return null;
+            }
+        }
 
         if ($filter instanceof AbstractFilter) {
             if (!$filter->filter($definition, $data, $object)) {

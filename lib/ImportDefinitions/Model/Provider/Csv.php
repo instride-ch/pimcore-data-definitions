@@ -45,6 +45,11 @@ class Csv extends AbstractProvider
     public $enclosure;
 
     /**
+     * @var string
+     */
+    public $csvHeaders;
+
+    /**
      * @return string
      */
     public function getCsvExample()
@@ -93,6 +98,22 @@ class Csv extends AbstractProvider
     }
 
     /**
+     * @return string
+     */
+    public function getCsvHeaders()
+    {
+        return $this->csvHeaders;
+    }
+
+    /**
+     * @param string $csvHeaders
+     */
+    public function setCsvHeaders($csvHeaders)
+    {
+        $this->csvHeaders = $csvHeaders;
+    }
+
+    /**
      * test data
      * 
      * @return boolean
@@ -111,7 +132,7 @@ class Csv extends AbstractProvider
     public function getColumns()
     {
         $returnHeaders = [];
-        $rows = str_getcsv($this->getCsvExample(), "\n"); //parse the rows
+        $rows = str_getcsv($this->getCsvHeaders() ? $this->getCsvHeaders() : $this->getCsvExample(), "\n"); //parse the rows
 
         if (count($rows) > 0) {
             $headerRow = $rows[0];
@@ -144,6 +165,11 @@ class Csv extends AbstractProvider
         $file = PIMCORE_DOCUMENT_ROOT . "/" . $params['file'];
 
         $columnMapping = [];
+
+        if ($this->getCsvHeaders()) {
+            $columnMapping = $this->getColumns();
+        }
+
         $data = [];
 
         $row = 0;
@@ -152,7 +178,7 @@ class Csv extends AbstractProvider
                 $num = count($csvData);
 
                 //Make Column Mapping
-                if ($row === 0) {
+                if ($row === 0 && !$this->getCsvHeaders()) {
                     for ($c = 0; $c < $num; $c++) {
                         $columnMapping[] = $csvData[$c];
                     }

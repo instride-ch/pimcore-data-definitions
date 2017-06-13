@@ -35,6 +35,18 @@ pimcore.plugin.importdefinitions.provider.csv = Class.create(pimcore.plugin.impo
             anchor : '100%',
             minHeight : 300,
             value : this.data['csvExample'] ? this.data.csvExample : ''
+        }, {
+            xtype: 'container',
+            html: '<strong>' + t('importdefinitions_csv_headers_description') + '</strong>',
+            padding: '0 0 0 200px'
+        }, {
+            xtype : 'textarea',
+            fieldLabel : t('importdefinitions_csv_headers'),
+            name : 'csvHeaders',
+            grow : true,
+            anchor : '100%',
+            minHeight : 300,
+            value : this.data['csvHeaders'] ? this.data.csvHeaders : ''
         }];
     }
 });

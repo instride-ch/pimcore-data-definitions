@@ -18,12 +18,18 @@
     }
   ],
   "require": {
-    "pimcore/installer-plugin": ">=1",
     "coreshop/resource-bundle": "dev-master"
   },
   "autoload": {
     "psr-4": {
-      "Wvision\\Bundle\\ImportDefinitions\\": "src/Wvision/Bundle"
+      "Wvision\\Bundle\\ImportDefinitionsBundle\\": "src/Wvision/Bundle/ImportDefinitions"
+    }
+  },
+  "extra": {
+    "pimcore": {
+      "bundles": [
+        "Wvision\\Bundle\\ImportDefinitionsBundle\\ImportDefinitionsBundle"
+      ]
     }
   }
 }

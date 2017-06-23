@@ -1,0 +1,149 @@
+services:
+  import_definition.registry.provider:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\ImportDefinitionsBundle\Provider\ProviderInterface
+      - 'Import Definition Providers'
+
+  import_definition.registry.cleaner:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\ImportDefinitionsBundle\Cleaner\CleanerInterface
+      - 'Import Definition Cleaners'
+
+  import_definition.registry.filter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\ImportDefinitionsBundle\Filter\FilterInterface
+      - 'Import Definition Filters'
+
+  import_definition.registry.interpreter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\ImportDefinitionsBundle\Interpreter\InterpreterInterface
+      - 'Import Definition Interpreters'
+
+  import_definition.registry.setter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\ImportDefinitionsBundle\Setter\SetterInterface
+      - 'Import Definition Setters'
+
+  import_definition.registry.runner:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\ImportDefinitionsBundle\Runner\RunnerInterface
+      - 'Import Definition Runners'
+
+
+  ### CLEANER
+  import_definition.cleaner.deleter:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Cleaner\Deleter
+    tags:
+      - { name: import_definition.cleaner, type: deleter }
+
+  import_definition.cleaner.none:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Cleaner\None
+    tags:
+      - { name: import_definition.cleaner, type: none }
+
+  import_definition.cleaner.reference_cleaner:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Cleaner\ReferenceCleaner
+    tags:
+      - { name: import_definition.cleaner, type: reference_cleaner }
+
+  import_definition.cleaner.unpuplisher:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Cleaner\Unpublisher
+    tags:
+      - { name: import_definition.cleaner, type: unpublisher }
+
+  ### INTERPRETER
+  import_definition.intepreter.assets_url:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\AssetsUrl
+    tags:
+      - { name: import_definition.interpreter, type: assets_url }
+
+  import_definition.intepreter.asset_url:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\AssetUrl
+    tags:
+      - { name: import_definition.interpreter, type: asset_url }
+
+  import_definition.intepreter.checkbox:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\Checkbox
+    tags:
+      - { name: import_definition.interpreter, type: checkbox }
+
+  import_definition.intepreter.default_value:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\DefaultValue
+    tags:
+      - { name: import_definition.interpreter, type: default_value }
+
+  import_definition.intepreter.href:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\Href
+    tags:
+      - { name: import_definition.interpreter, type: href }
+
+  import_definition.intepreter.multi_href:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\MultiHref
+    tags:
+      - { name: import_definition.interpreter, type: multi_href }
+
+  import_definition.intepreter.quantity_value:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\QuantityValue
+    tags:
+      - { name: import_definition.interpreter, type: quantity_value }
+
+  ### PROVIDER
+  import_definition.provider.csv:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Provider\Csv
+    tags:
+      - { name: import_definition.provider, type: csv }
+
+  import_definition.provider.json:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Provider\Json
+    tags:
+      - { name: import_definition.provider, type: json }
+
+  import_definition.provider.sql:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Provider\Sql
+    tags:
+      - { name: import_definition.provider, type: sql }
+
+  import_definition.provider.xml:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Provider\Xml
+    tags:
+      - { name: import_definition.provider, type: xml }
+
+  ### SETTER
+  import_definition.setter.classificationstore:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Setter\Classificationstore
+    tags:
+      - { name: import_definition.setter, type: classification_store }
+
+  import_definition.setter.fieldcollection:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Setter\Fieldcollection
+    tags:
+      - { name: import_definition.setter, type: fieldcollection }
+
+  import_definition.setter.key:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Setter\Key
+    tags:
+      - { name: import_definition.setter, type: key }
+
+  import_definition.setter.localizedfield:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Setter\Localizedfield
+    tags:
+      - { name: import_definition.setter, type: localizedfield }
+
+  import_definition.setter.objectbrick:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Setter\Objectbrick
+    tags:
+      - { name: import_definition.setter, type: objectbrick }
+
+  import_definition.setter.object_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Setter\ObjectType
+    tags:
+      - { name: import_definition.setter, type: object_type }
+
+
+

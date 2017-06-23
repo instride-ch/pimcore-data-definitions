@@ -14,13 +14,6 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model;
 
-use ImportDefinitions\Model\Mapping\FromColumn;
-use ImportDefinitions\Model\Mapping\ToColumn;
-
-/**
- * Class Mapping
- * @package ImportDefinitions\Model
- */
 class Mapping
 {
     /**
@@ -39,9 +32,14 @@ class Mapping
     public $primaryIdentifier;
 
     /**
-     * @var array
+     * @var string
      */
-    public $config = [];
+    public $setter;
+
+    /**
+     * @var string
+     */
+    public $interpreter;
 
     /**
      * @var array
@@ -120,19 +118,35 @@ class Mapping
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getConfig()
+    public function getSetter()
     {
-        return $this->config;
+        return $this->setter;
     }
 
     /**
-     * @param array $config
+     * @param string $setter
      */
-    public function setConfig($config)
+    public function setSetter(string $setter)
     {
-        $this->config = $config;
+        $this->setter = $setter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInterpreter()
+    {
+        return $this->interpreter;
+    }
+
+    /**
+     * @param string $interpreter
+     */
+    public function setInterpreter(string $interpreter)
+    {
+        $this->interpreter = $interpreter;
     }
 
     /**

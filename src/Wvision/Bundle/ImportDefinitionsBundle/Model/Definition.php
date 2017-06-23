@@ -14,10 +14,11 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model;
 
+use CoreShop\Component\Resource\Model\ResourceInterface;
 use Pimcore\Model\AbstractModel;
 use Pimcore\Placeholder;
 
-class Definition extends AbstractModel implements DefinitionInterface
+class Definition extends AbstractModel implements DefinitionInterface, ResourceInterface
 {
     /**
      * @var int
@@ -30,7 +31,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     public $name;
 
     /**
-     * @var string
+     * @var string<
      */
     public $provider;
 
@@ -47,7 +48,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @var array
      */
-    public $providerConfiguration;
+    public $configuration;
 
     /**
      * @var int
@@ -133,25 +134,9 @@ class Definition extends AbstractModel implements DefinitionInterface
      */
     public static function getById($id)
     {
-        $cacheKey = 'importdefinition_' . $id;
-
-        try {
-            $definitionEntry = \Zend_Registry::get($cacheKey);
-            if (!$definitionEntry) {
-                throw new \Exception('Definition in registry is null');
-            }
-        } catch (\Exception $e) {
-            try {
-                $definitionEntry = new self();
-                \Zend_Registry::set($cacheKey, $definitionEntry);
-                $definitionEntry->setId(intval($id));
-                $definitionEntry->getDao()->getById();
-            } catch (\Exception $e) {
-                \Logger::error($e);
-
-                return null;
-            }
-        }
+        $definitionEntry = new self();
+        $definitionEntry->setId(intval($id));
+        $definitionEntry->getDao()->getById();
 
         return $definitionEntry;
     }
@@ -174,14 +159,6 @@ class Definition extends AbstractModel implements DefinitionInterface
     {
         $placeholderHelper = new Placeholder();
         return $placeholderHelper->replacePlaceholders($this->getKey(), $data);
-    }
-
-    /**
-     * @param array $params
-     */
-    public function doImport($params = [])
-    {
-        $this->getProviderConfiguration()->doImport($this, $params);
     }
 
     /**
@@ -219,17 +196,17 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return array
      */
-    public function getProviderConfiguration()
+    public function getConfiguration()
     {
-        return $this->providerConfiguration;
+        return $this->configuration;
     }
 
     /**
-     * @param array $providerConfiguration
+     * @param array $configuration
      */
-    public function setProviderConfiguration($providerConfiguration)
+    public function setConfiguration($configuration)
     {
-        $this->providerConfiguration = $providerConfiguration;
+        $this->configuration = $configuration;
     }
 
     /**

@@ -140,7 +140,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             this.interpreterPanel = new Ext.form.FormPanel({
                 defaults: { anchor: '90%' },
                 layout: 'form',
-                title : t('coreshop_index_interpreter_settings')
+                title : t('importdefinitions_interpreter_settings')
             });
         }
 
@@ -169,7 +169,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             this.setterPanel = new Ext.form.FormPanel({
                 defaults: { anchor: '90%' },
                 layout: 'form',
-                title : t('coreshop_index_setter_settings')
+                title : t('importdefinition_setter_settings')
             });
         }
 

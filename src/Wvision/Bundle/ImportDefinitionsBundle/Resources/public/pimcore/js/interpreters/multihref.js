@@ -11,8 +11,8 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.multihref');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.multi_href');
 
-pimcore.plugin.importdefinitions.interpreters.multihref = Class.create(pimcore.plugin.importdefinitions.interpreters.href, {
+pimcore.plugin.importdefinitions.interpreters.multi_href = Class.create(pimcore.plugin.importdefinitions.interpreters.href, {
 
 });

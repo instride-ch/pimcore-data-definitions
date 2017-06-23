@@ -315,21 +315,19 @@ final class Importer implements ImporterInterface
      */
     protected function setObjectValue(Concrete $object, Mapping $map, $value, $data, DefinitionInterface $definition, $params)
     {
-        $mapConfig = $map->getConfig();
-
-        if ($mapConfig['interpreter']) {
-            $interpreter = $this->interpreterRegistry->get($mapConfig['interpreter']);
+        if ($map->getInterpreter()) {
+            $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
             $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params);
         }
 
         if ($map->getToColumn() === "type") {
-            if ($mapConfig['setter'] !== "objectType") {
+            if ($map->getSetter() !== "objectType") {
                 throw new \Exception("Type has to be used with ObjectType Setter!");
             }
         }
 
-        if ($mapConfig['setter']) {
-            $setter = $this->setterRegistry->get($mapConfig['setter']);
+        if ($map->getSetter()) {
+            $setter = $this->setterRegistry->get($map->getSetter());
             $setter->set($object, $value, $map, $data);
         } else {
             $object->setValue($map->getToColumn(), $value);

@@ -21,164 +21,17 @@ use Wvision\Bundle\ImportDefinitionsBundle\Model\Mapping\FromColumn;
 class Sql implements ProviderInterface
 {
     /**
-     * @var string
-     */
-    public $host;
-
-    /**
-     * @var string
-     */
-    public $username;
-
-    /**
-     * @var string
-     */
-    public $password;
-
-    /**
-     * @var string
-     */
-    public $database;
-
-    /**
-     * @var string
-     */
-    public $adapter;
-
-    /**
-     * @var string
-     */
-    public $port;
-
-    /**
-     * @var string
-     */
-    public $query;
-
-    /**
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->host;
-    }
-
-    /**
-     * @param string $host
-     */
-    public function setHost($host)
-    {
-        $this->host = $host;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDatabase()
-    {
-        return $this->database;
-    }
-
-    /**
-     * @param string $database
-     */
-    public function setDatabase($database)
-    {
-        $this->database = $database;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAdapter()
-    {
-        return $this->adapter;
-    }
-
-    /**
-     * @param string $adapter
-     */
-    public function setAdapter($adapter)
-    {
-        $this->adapter = $adapter;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPort()
-    {
-        return $this->port;
-    }
-
-    /**
-     * @param string $port
-     */
-    public function setPort($port)
-    {
-        $this->port = $port;
-    }
-
-    /**
-     * @return string
-     */
-    public function getQuery()
-    {
-        return $this->query;
-    }
-
-    /**
-     * @param string $query
-     */
-    public function setQuery($query)
-    {
-        $this->query = $query;
-    }
-
-    /**
      * @return \Doctrine\DBAL\Connection
      */
-    protected function getDb()
+    protected function getDb($configuration)
     {
         $config = new Configuration();
         $connectionParams = array(
-            'dbname' => $this->getDatabase(),
-            'user' => $this->getUsername(),
-            'password' => $this->getPassword(),
-            'host' => $this->getHost(),
-            'port' => $this->getPort(),
+            'dbname' => $configuration['database'],
+            'user' => $configuration['username'],
+            'password' => $configuration['password'],
+            'host' => $configuration['host'],
+            'port' => $configuration['port'],
             'driver' => 'pdo_mysql',
         );
         $conn = DriverManager::getConnection($connectionParams, $config);
@@ -189,18 +42,18 @@ class Sql implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function testData()
+    public function testData($configuration)
     {
-        return is_object($this->getDb());
+        return is_object($this->getDb($configuration));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getColumns()
+    public function getColumns($configuration)
     {
-        $db = $this->getDb();
-        $query = $db->query($this->getQuery());
+        $db = $this->getDb($configuration);
+        $query = $db->query($configuration['query']);
         $data = $query->fetchAll();
         $columns = [];
         $returnColumns = [];
@@ -226,11 +79,11 @@ class Sql implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($definition, $params, $filter = null)
+    public function getData($configuration, $definition, $params, $filter = null)
     {
-        $db = $this->getDb();
+        $db = $this->getDb($configuration);
 
-        $data = $db->fetchAll($this->getQuery());
+        $data = $db->fetchAll($configuration['query']);
 
         return $data;
     }

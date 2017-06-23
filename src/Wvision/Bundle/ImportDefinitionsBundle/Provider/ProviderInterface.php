@@ -21,24 +21,26 @@ interface ProviderInterface
     /**
      * Test Data provided for this Provider
      *
+     * @param array $configuration
      * @return boolean
      * @throws \Exception
      */
-    public function testData();
+    public function testData($configuration);
 
     /**
      * Get Columns from data
      *
+     * @param array $configuration
      * @return FromColumn[]
      */
-    public function getColumns();
+    public function getColumns($configuration);
 
     /**
+     * @param array $configuration
      * @param $definition
      * @param $params
      * @param null $filter
-     *
      * @return array
      */
-    public function getData($definition, $params, $filter = null);
+    public function getData($configuration, $definition, $params, $filter = null);
 }

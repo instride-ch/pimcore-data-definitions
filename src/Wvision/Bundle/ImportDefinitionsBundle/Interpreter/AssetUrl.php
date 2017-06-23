@@ -19,9 +19,23 @@ use Wvision\Bundle\ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\File;
 use Pimcore\Model\Asset;
 use Pimcore\Model\Object\Concrete;
+use Wvision\Bundle\ImportDefinitionsBundle\Service\Placeholder;
 
 class AssetUrl implements InterpreterInterface
 {
+    /**
+     * @var Placeholder
+     */
+    protected $placeholderService;
+
+    /**
+     * @param Placeholder $placeholderService
+     */
+    public function __construct(Placeholder $placeholderService)
+    {
+        $this->placeholderService = $placeholderService;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +49,7 @@ class AssetUrl implements InterpreterInterface
 
             //Convert placeholder path
 
-            $assetPath = Placeholder::replace($path, $data);
+            $assetPath = $this->placeholderService->replace($path, $data);
             $assetFullPath = $assetPath . "/" . $filename;
 
             $asset = Asset::getByPath($assetFullPath);

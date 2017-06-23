@@ -14,13 +14,8 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Log;
 
-use ImportDefinitions\Model\Log;
 use Pimcore\Model;
 
-/**
- * Class Listing
- * @package ImportDefinitions\Model\Log
- */
 class Listing extends Model\Listing\AbstractListing implements \Zend_Paginator_Adapter_Interface, \Zend_Paginator_AdapterAggregate, \Iterator
 {
     /**
@@ -31,7 +26,7 @@ class Listing extends Model\Listing\AbstractListing implements \Zend_Paginator_A
     public $data = null;
 
     /**
-     * @var string|\Zend_Locale
+     * @var string
      */
     public $locale;
 
@@ -129,7 +124,7 @@ class Listing extends Model\Listing\AbstractListing implements \Zend_Paginator_A
     /**
      * Get Locale.
      *
-     * @return string|\Zend_Locale
+     * @return string
      */
     public function getLocale()
     {

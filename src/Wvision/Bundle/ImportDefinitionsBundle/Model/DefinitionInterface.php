@@ -17,11 +17,6 @@ interface DefinitionInterface
     public function createKey($data);
 
     /**
-     * @param array $params
-     */
-    public function doImport($params = []);
-
-    /**
      * @return int
      */
     public function getId();
@@ -44,12 +39,12 @@ interface DefinitionInterface
     /**
      * @return array
      */
-    public function getProviderConfiguration();
+    public function getConfiguration();
 
     /**
-     * @param array $providerConfiguration
+     * @param array $configuration
      */
-    public function setProviderConfiguration($providerConfiguration);
+    public function setConfiguration($configuration);
 
     /**
      * @return int

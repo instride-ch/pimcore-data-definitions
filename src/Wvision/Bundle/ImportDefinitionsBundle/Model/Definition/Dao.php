@@ -14,8 +14,6 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Definition;
 
-use ImportDefinitions\Model\AbstractProvider;
-use ImportDefinitions\Model\Mapping;
 use Pimcore\Model;
 use Pimcore\Tool;
 
@@ -59,36 +57,6 @@ class Dao extends Model\Dao\PhpArrayTable
     protected function assignVariablesToModel($data)
     {
         parent::assignVariablesToModel($data);
-
-        foreach ($data as $key => $value) {
-            if ($key === 'providerConfiguration') {
-                //get provider class
-                $class = 'ImportDefinitions\\Model\\Provider\\' . ucfirst($this->model->getProvider());
-
-                if (Tool::classExists($class)) {
-                    $provider = new $class();
-
-                    if ($provider instanceof AbstractProvider) {
-                        $provider->setValues($value);
-
-                        $this->model->setProviderConfiguration($provider);
-                    }
-                }
-            } elseif ($key === 'mapping') {
-                $maps = array();
-
-                foreach ($this->model->getMapping() as $map) {
-                    if (is_array($map)) {
-                        $mapObj = new Mapping();
-                        $mapObj->setValues($map);
-
-                        $maps[] = $mapObj;
-                    }
-                }
-
-                $this->model->setMapping($maps);
-            }
-        }
     }
 
     /**
@@ -137,7 +105,7 @@ class Dao extends Model\Dao\PhpArrayTable
         try {
             $dataRaw = get_object_vars($this->model);
             $data = [];
-            $allowedProperties = ['id', 'name', 'provider', 'class', 'providerConfiguration', 'creationDate',
+            $allowedProperties = ['id', 'name', 'provider', 'class', 'configuration', 'creationDate',
                 'modificationDate', 'mapping', 'objectPath', 'cleaner', 'key', 'renameExistingObjects',
                 'relocateExistingObjects', 'filter', 'runner', 'createVersion', 'stopOnException',
                 'failureNotificationDocument', 'successNotificationDocument', 'skipExistingObjects', 'skipNewObjects'];

@@ -13,47 +13,17 @@
 
 pimcore.registerNS('pimcore.plugin.importdefinitions.definition.item');
 
-pimcore.plugin.importdefinitions.definition.item = Class.create({
+pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resource.item, {
 
     iconCls : 'importdefinitions_icon_definition',
     url : {
-        save : '/plugin/ImportDefinitions/admin_definition/save',
-        upload : '/plugin/ImportDefinitions/admin_definition/import',
-        export : '/plugin/ImportDefinitions/admin_definition/export',
-        test : '/plugin/ImportDefinitions/admin_definition/test-data'
+        save : '/admin/import_definitions/definitions/save',
+        //upload : '/plugin/ImportDefinitions/admin_definition/import',
+        //export : '/plugin/ImportDefinitions/admin_definition/export',
+        test : '/admin/import_definitions/definitions/test-data'
     },
 
     providers : [],
-
-    initialize: function (parentPanel, data, panelKey, type) {
-        this.parentPanel = parentPanel;
-        this.data = data ? data : {};
-        this.panelKey = panelKey;
-        this.type = type;
-
-        this.initPanel();
-    },
-
-    initPanel: function () {
-        this.panel = this.getPanel();
-
-        this.panel.on('beforedestroy', function () {
-            delete this.parentPanel.panels[this.panelKey];
-        }.bind(this));
-
-        this.parentPanel.getTabPanel().add(this.panel);
-        this.parentPanel.getTabPanel().setActiveItem(this.panel);
-    },
-
-    destroy : function () {
-        if (this.panel) {
-            this.panel.destroy();
-        }
-    },
-
-    activate : function () {
-        this.parentPanel.getTabPanel().setActiveItem(this.panel);
-    },
 
     getPanel: function () {
         var panel = new Ext.TabPanel({
@@ -117,6 +87,13 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
             },
             border:false,
             items: [
+                {
+                    xtype : 'textfield',
+                    fieldLabel: t('name'),
+                    name: 'name',
+                    width: 500,
+                    value : this.data.name
+                },
                 {
                     xtype : 'combo',
                     fieldLabel: t('importdefinitions_provider'),
@@ -390,7 +367,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
     },
 
     updateProviderMapViews : function () {
-        this.providerSettings.add(new pimcore.plugin.importdefinitions.provider[this.data.provider](this.data.providerConfiguration ? this.data.providerConfiguration : {}, this).getForm());
+        this.providerSettings.add(new pimcore.plugin.importdefinitions.provider[this.data.provider](this.data.configuration ? this.data.configuration : {}, this).getForm());
         this.providerSettings.enable();
     },
 
@@ -420,7 +397,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
                 this.mappingSettings.enable();
 
                 Ext.Ajax.request({
-                    url: '/plugin/ImportDefinitions/admin_definition/get-columns',
+                    url: '/admin/import_definitions/definitions/get-columns',
                     params : {
                         id : this.data.id
                     },
@@ -631,42 +608,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create({
             Ext.apply(data.configuration, this.providerSettings.down('form').getForm().getFieldValues());
         }
 
-        return {
-            data : Ext.encode(data)
-        };
-    },
-
-    save: function (callback)
-    {
-        var saveData = this.getSaveData();
-
-        saveData['id'] = this.data.id;
-
-        Ext.Ajax.request({
-            url: this.url.save,
-            method: 'post',
-            params: saveData,
-            success: function (response) {
-                try {
-                    var res = Ext.decode(response.responseText);
-
-                    if (res.success) {
-                        pimcore.helpers.showNotification(t('success'), t('success'), 'success');
-
-                        this.data = res.data;
-                    } else {
-                        pimcore.helpers.showNotification(t('error'), t('error'),
-                            'error', res.message);
-                    }
-
-                    if (Ext.isFunction(callback)) {
-                        callback();
-                    }
-                } catch (e) {
-                    pimcore.helpers.showNotification(t('error'), t('error'), 'error');
-                }
-            }.bind(this)
-        });
+        return data;
     },
 
     upload: function (callback)

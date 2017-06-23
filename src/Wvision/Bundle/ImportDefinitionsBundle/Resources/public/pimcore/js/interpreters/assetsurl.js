@@ -11,8 +11,8 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.assetsurl');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.assets_url');
 
-pimcore.plugin.importdefinitions.interpreters.assetsurl = Class.create(pimcore.plugin.importdefinitions.interpreters.asseturl, {
+pimcore.plugin.importdefinitions.interpreters.assets_url = Class.create(pimcore.plugin.importdefinitions.interpreters.asset_url, {
 
 });

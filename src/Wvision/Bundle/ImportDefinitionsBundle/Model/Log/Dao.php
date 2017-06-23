@@ -16,10 +16,6 @@ namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Log;
 
 use Pimcore\Model\Dao\AbstractDao;
 
-/**
- * Class Dao
- * @package ImportDefinitions\Model\Log
- */
 class Dao extends AbstractDao
 {
 

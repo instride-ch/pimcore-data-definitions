@@ -1,0 +1,81 @@
+Wvision\Bundle\ImportDefinitionsBundle\Model\Definition:
+  exclusion_policy: ALL
+  xml_root_name: definition
+  properties:
+    id:
+      expose: true
+      type: integer
+      xml_attribute: true
+      groups: [List, Detailed]
+    name:
+      expose: true
+      type: string
+      groups: [List, Detailed]
+    provider:
+      expose: true
+      type: string
+      groups: [Detailed]
+    objectPath:
+      expose: true
+      type: string
+      groups: [Detailed]
+    class:
+      expose: true
+      type: string
+      groups: [Detailed]
+    configuration:
+      expose: true
+      type: array
+      groups: [Detailed]
+    mapping:
+      expose: true
+      type: array
+      groups: [Detailed]
+    cleaner:
+      expose: true
+      type: string
+      groups: [Detailed]
+    key:
+      expose: true
+      type: string
+      groups: [Detailed]
+    filter:
+      expose: true
+      type: string
+      groups: [Detailed]
+    renameExistingObjects:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    relocateExistingObjects:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    skipNewObjects:
+      expose: true
+      type: string
+      groups: [Detailed]
+    skipExistingObjects:
+      expose: true
+      type: string
+      groups: [Detailed]
+    runner:
+      expose: true
+      type: string
+      groups: [Detailed]
+    createVersion:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    stopOnException:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    failureNotificationDocument:
+      expose: true
+      type: integer
+      groups: [Detailed]
+    successNotificationDocument:
+      expose: true
+      type: integer
+      groups: [Detailed]

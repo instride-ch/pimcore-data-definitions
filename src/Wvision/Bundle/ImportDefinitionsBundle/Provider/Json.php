@@ -19,27 +19,6 @@ use Wvision\Bundle\ImportDefinitionsBundle\Model\Mapping\FromColumn;
 class Json implements ProviderInterface
 {
     /**
-     * @var string
-     */
-    public $jsonExample;
-
-    /**
-     * @return string
-     */
-    public function getJsonExample()
-    {
-        return $this->jsonExample;
-    }
-
-    /**
-     * @param string $jsonExample
-     */
-    public function setJsonExample($jsonExample)
-    {
-        $this->jsonExample = $jsonExample;
-    }
-
-    /**
      * Calculate depth
      *
      * @param array $arr
@@ -58,17 +37,21 @@ class Json implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function testData()
+    public function testData($configuration)
     {
-        return $this->getJsonDepth(json_decode($this->getJsonExample(), true)) === 1;
+        $jsonExample = $configuration['jsonExample'];
+
+        return $this->getJsonDepth(json_decode($jsonExample, true)) === 1;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getColumns()
+    public function getColumns($configuration)
     {
-        $rows = json_decode($this->getJsonExample(), true);
+        $jsonExample = $configuration['jsonExample'];
+
+        $rows = json_decode($jsonExample, true);
         $returnHeaders = [];
 
         if (count($rows) > 0) {
@@ -89,7 +72,7 @@ class Json implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($definition, $params, $filter = null)
+    public function getData($configuration, $definition, $params, $filter = null)
     {
         $file = PIMCORE_PROJECT_ROOT . "/" . $params['file'];
 
@@ -98,9 +81,6 @@ class Json implements ProviderInterface
             $data = json_decode($json, true);
 
             return $data;
-        }
-        else {
-            $this->getLogger()->alert("file not found . $file");
         }
 
         return array();

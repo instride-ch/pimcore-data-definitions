@@ -17,6 +17,7 @@ class ImportDefinitionsExtension extends AbstractModelExtension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $this->registerResources('import_definitions', $config['driver'], $config['resources'], $container);
         $this->registerPimcoreResources('import_definitions', $config['pimcore_admin'], $container);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

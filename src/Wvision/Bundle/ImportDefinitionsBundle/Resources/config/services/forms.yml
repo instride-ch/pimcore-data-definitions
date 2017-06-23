@@ -1,0 +1,62 @@
+parameters:
+  import_definition.form.type.definition.validation_groups: [import_definition]
+  import_definition.form.type.mapping.validation_groups: [import_definition]
+
+services:
+  import_definition.form.class_choice_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\ClassChoiceType
+    tags:
+        - { name: form.type }
+
+  import_definition.form.cleaner_choice_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\CleanerChoiceType
+    arguments: ['%import_definition.cleaners%']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.filter_choice_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\FilterChoiceType
+    arguments: ['%import_definition.filters%']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.interpreter_choice_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\InterpreterChoiceType
+    arguments: ['%import_definition.interpreters%']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.provider_choice_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\ProviderChoiceType
+    arguments: ['%import_definition.providers%']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.runner_choice_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\RunnerChoiceType
+    arguments: ['%import_definition.runners%']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.setter_choice_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\SetterChoiceType
+    arguments: ['%import_definition.setters%']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.mapping_collection_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\MappingCollectionType
+    tags:
+        - { name: form.type }
+
+  import_definition.form.definition_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\DefinitionType
+    arguments: ['%import_definitions.model.definition.class%', '%import_definition.form.type.definition.validation_groups%', '@import_definition.form.registry.provider']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.mapping_type:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\MappingType
+    arguments: ['%import_definition.form.type.mapping.validation_groups%', '@import_definition.form.registry.setter', '@import_definition.form.registry.interpreter']
+    tags:
+        - { name: form.type }

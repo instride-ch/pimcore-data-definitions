@@ -1,0 +1,6 @@
+jms_serializer:
+    metadata:
+        directories:
+            import-definitions:
+                namespace_prefix: "Wvision\\Bundle\\ImportDefinitionsBundle"
+                path: "@ImportDefinitionsBundle/Resources/config/serializer"

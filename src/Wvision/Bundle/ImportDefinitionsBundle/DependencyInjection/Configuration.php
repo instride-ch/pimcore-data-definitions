@@ -2,9 +2,15 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\DependencyInjection;
 
+use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
+use CoreShop\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Wvision\Bundle\ImportDefinitionsBundle\Controller\DefinitionController;
+use Wvision\Bundle\ImportDefinitionsBundle\Form\Type\DefinitionType;
+use Wvision\Bundle\ImportDefinitionsBundle\Model\Definition;
+use Wvision\Bundle\ImportDefinitionsBundle\Model\DefinitionInterface;
 
 class Configuration implements ConfigurationInterface
 {
@@ -16,9 +22,50 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('wvision_import_definitions');
 
+        $rootNode
+            ->children()
+                ->scalarNode('driver')->defaultValue(CoreShopResourceBundle::DRIVER_PIMCORE)->end()
+            ->end()
+        ;
+
         $this->addPimcoreResourcesSection($rootNode);
+        $this->addModelsSection($rootNode);
 
         return $treeBuilder;
+    }
+
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addModelsSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('resources')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('definition')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->scalarNode('permission')->defaultValue('definition')->cannotBeOverwritten()->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Definition::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('interface')->defaultValue(DefinitionInterface::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('admin_controller')->defaultValue(DefinitionController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue(DefinitionType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 
     /**
@@ -33,32 +80,33 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('js')
                         ->addDefaultsIfNotSet()
                         ->children()
-                            ->scalarNode('definition_panel')->defaultValue('/bundles/importdefinition/pimcore/js/definition/panel.js')->end()
-                            ->scalarNode('definition_item')->defaultValue('/bundles/importdefinition/pimcore/js/definition/item.js')->end()
-                            ->scalarNode('definition_config')->defaultValue('/bundles/importdefinition/pimcore/js/definition/configDialog.js')->end()
-                            ->scalarNode('provider_abstract')->defaultValue('/bundles/importdefinition/pimcore/js/provider/abstractprovider.js')->end()
-                            ->scalarNode('provider_csv')->defaultValue('/bundles/importdefinition/pimcore/js/provider/csv.js')->end()
-                            ->scalarNode('provider_sql')->defaultValue('/bundles/importdefinition/pimcore/js/provider/sql.js')->end()
-                            ->scalarNode('provider_json')->defaultValue('/bundles/importdefinition/pimcore/js/provider/json.js')->end()
-                            ->scalarNode('provider_xml')->defaultValue('/bundles/importdefinition/pimcore/js/provider/xml.js')->end()
-                            ->scalarNode('interpreter_abstract')->defaultValue('/bundles/coreshopcurrency/pimcore/js/interpreters/abstract.js')->end()
-                            ->scalarNode('interpreter_href')->defaultValue('/bundles/importdefinition/pimcore/js/interpreters/href.js')->end()
-                            ->scalarNode('interpreter_multihref')->defaultValue('/bundles/importdefinition/pimcore/js/interpreters/multihref.js')->end()
-                            ->scalarNode('interpreter_defaultvalue')->defaultValue('/bundles/importdefinition/pimcore/js/interpreters/defaultvalue.js')->end()
-                            ->scalarNode('interpreter_asseturl')->defaultValue('/bundles/importdefinition/pimcore/js/interpreters/asseturl.js')->end()
-                            ->scalarNode('interpreter_assetsurl')->defaultValue('/bundles/importdefinition/pimcore/js/interpreters/assetsurl.js')->end()
-                            ->scalarNode('interpreter_quantityvalue')->defaultValue('/bundles/importdefinition/pimcore/js/interpreters/quantityvalue.js')->end()
-                            ->scalarNode('setter_abstract')->defaultValue('/bundles/importdefinition/pimcore/js/setters/abstract.js')->end()
-                            ->scalarNode('setter_fieldcollection')->defaultValue('/bundles/importdefinition/pimcore/js/setters/fieldcollection.js')->end()
-                            ->scalarNode('setter_objectbrick')->defaultValue('/bundles/importdefinition/pimcore/js/setters/objectbrick.js')->end()
-                            ->scalarNode('setter_classificationstore')->defaultValue('/bundles/importdefinition/pimcore/js/setters/classificationstore.js')->end()
-                            ->scalarNode('setter_localizedfield')->defaultValue('/bundles/importdefinition/pimcore/js/setters/localizedfield.js')->end()
+                            ->scalarNode('startup')->defaultValue('/bundles/importdefinitions/pimcore/js/startup.js')->end()
+                            ->scalarNode('definition_panel')->defaultValue('/bundles/importdefinitions/pimcore/js/definition/panel.js')->end()
+                            ->scalarNode('definition_item')->defaultValue('/bundles/importdefinitions/pimcore/js/definition/item.js')->end()
+                            ->scalarNode('definition_config')->defaultValue('/bundles/importdefinitions/pimcore/js/definition/configDialog.js')->end()
+                            ->scalarNode('provider_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/abstractprovider.js')->end()
+                            ->scalarNode('provider_csv')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/csv.js')->end()
+                            ->scalarNode('provider_sql')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/sql.js')->end()
+                            ->scalarNode('provider_json')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/json.js')->end()
+                            ->scalarNode('provider_xml')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/xml.js')->end()
+                            ->scalarNode('interpreter_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/abstract.js')->end()
+                            ->scalarNode('interpreter_href')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/href.js')->end()
+                            ->scalarNode('interpreter_multihref')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/multihref.js')->end()
+                            ->scalarNode('interpreter_defaultvalue')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/defaultvalue.js')->end()
+                            ->scalarNode('interpreter_asseturl')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/asseturl.js')->end()
+                            ->scalarNode('interpreter_assetsurl')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/assetsurl.js')->end()
+                            ->scalarNode('interpreter_quantityvalue')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/quantityvalue.js')->end()
+                            ->scalarNode('setter_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/abstract.js')->end()
+                            ->scalarNode('setter_fieldcollection')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/fieldcollection.js')->end()
+                            ->scalarNode('setter_objectbrick')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/objectbrick.js')->end()
+                            ->scalarNode('setter_classificationstore')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/classificationstore.js')->end()
+                            ->scalarNode('setter_localizedfield')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/localizedfield.js')->end()
                         ->end()
                     ->end()
                     ->arrayNode('css')
                         ->addDefaultsIfNotSet()
                         ->children()
-                            ->scalarNode('import_definition')->defaultValue('/bundles/importdefinition/pimcore/css/importdefinition.css')->end()
+                            ->scalarNode('import_definition')->defaultValue('/bundles/importdefinitions/pimcore/css/importdefinition.css')->end()
                         ->end()
                     ->end()
                 ->end()

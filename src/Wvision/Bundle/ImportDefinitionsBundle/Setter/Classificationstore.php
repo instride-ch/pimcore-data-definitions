@@ -25,9 +25,9 @@ class Classificationstore implements SetterInterface
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $mapConfig = $map->getSetterConfig();
-        $fieldName = $mapConfig['classificationstoreField'];
-        $keyConfig = intval($mapConfig['keyId']);
-        $groupConfig = intval($mapConfig['groupId']);
+        $fieldName = $mapConfig['field'];
+        $keyConfig = intval($mapConfig['keyConfig']);
+        $groupConfig = intval($mapConfig['groupConfig']);
 
         $classificationStoreGetter = "get" . ucfirst($fieldName);
 

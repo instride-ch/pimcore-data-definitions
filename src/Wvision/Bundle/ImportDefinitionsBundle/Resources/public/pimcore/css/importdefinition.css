@@ -1,18 +1,18 @@
 
 .importdefinitions_icon_definition, .processmanager_icon_executable_type_importdefinition {
-    background: url(/plugins/ImportDefinitions/static/img/definition.svg) center center no-repeat !important;
+    background: url(../img/definition.svg) center center no-repeat !important;
 }
 
 .importdefinitions_icon_settings {
-    background: url(/plugins/ImportDefinitions/static/img/settings.svg) center center no-repeat !important;
+    background: url(../img/settings.svg) center center no-repeat !important;
 }
 
 .importdefinitions_icon_provider {
-    background: url(/plugins/ImportDefinitions/static/img/provider.svg) center center no-repeat !important;
+    background: url(../img/provider.svg) center center no-repeat !important;
 }
 
 .importdefinitions_icon_mapping {
-    background: url(/plugins/ImportDefinitions/static/img/mapping.svg) center center no-repeat !important;
+    background: url(../img/mapping.svg) center center no-repeat !important;
 }
 
 .td-icon[class*="pimcore_icon"] {

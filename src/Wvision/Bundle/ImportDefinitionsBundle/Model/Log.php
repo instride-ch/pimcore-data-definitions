@@ -16,10 +16,6 @@ namespace Wvision\Bundle\ImportDefinitionsBundle\Model;
 
 use Pimcore\Model\AbstractModel;
 
-/**
- * Class Log
- * @package ImportDefinitions\Model
- */
 class Log extends AbstractModel
 {
 

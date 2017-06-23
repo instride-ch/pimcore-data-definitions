@@ -14,14 +14,9 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Log\Listing;
 
-use ImportDefinitions\Model\Log;
 use Pimcore\Model\Listing;
-use Pimcore\Tool;
+use Wvision\Bundle\ImportDefinitionsBundle\Model\Log;
 
-/**
- * Class Dao
- * @package ImportDefinitions\Model\Log\Listing
- */
 class Dao extends Listing\Dao\AbstractDao
 {
     /**

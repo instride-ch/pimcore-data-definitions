@@ -14,13 +14,9 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Definition;
 
-use ImportDefinitions\Model\Definition;
 use Pimcore\Model;
+use Wvision\Bundle\ImportDefinitionsBundle\Model\DefinitionInterface;
 
-/**
- * Class Listing
- * @package ImportDefinitions\Model\Definition
- */
 class Listing extends Model\Listing\JsonListing
 {
     /**
@@ -33,9 +29,9 @@ class Listing extends Model\Listing\JsonListing
     /**
      * Get Configurations.
      *
-     * @return Definition[]
+     * @return DefinitionInterface[]
      */
-    public function getDefinitions()
+    public function getObjects()
     {
         if (is_null($this->definitions)) {
             $this->load();
@@ -49,7 +45,7 @@ class Listing extends Model\Listing\JsonListing
      *
      * @param array $definitions
      */
-    public function setDefinitions($definitions)
+    public function setObjects($definitions)
     {
         $this->definitions = $definitions;
     }

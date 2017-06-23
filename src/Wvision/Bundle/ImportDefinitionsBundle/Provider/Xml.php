@@ -20,69 +20,6 @@ use Wvision\Bundle\ImportDefinitionsBundle\Model\Mapping\FromColumn;
 class Xml implements ProviderInterface
 {
     /**
-     * @var int
-     */
-    public $exampleFile;
-
-    /**
-     * @var string
-     */
-    public $xPath;
-
-    /**
-     * @var string
-     */
-    public $exampleXPath;
-
-    /**
-     * @return int
-     */
-    public function getExampleFile()
-    {
-        return $this->exampleFile;
-    }
-
-    /**
-     * @param int $exampleFile
-     */
-    public function setExampleFile($exampleFile)
-    {
-        $this->exampleFile = $exampleFile;
-    }
-
-    /**
-     * @return string
-     */
-    public function getXPath()
-    {
-        return $this->xPath;
-    }
-
-    /**
-     * @param string $xPath
-     */
-    public function setXPath($xPath)
-    {
-        $this->xPath = $xPath;
-    }
-
-    /**
-     * @return string
-     */
-    public function getExampleXPath()
-    {
-        return $this->exampleXPath;
-    }
-
-    /**
-     * @param string $exampleXPath
-     */
-    public function setExampleXPath($exampleXPath)
-    {
-        $this->exampleXPath = $exampleXPath;
-    }
-
-    /**
      * @param $xml
      * @return mixed
      */
@@ -109,7 +46,7 @@ class Xml implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function testData()
+    public function testData($configuration)
     {
         return true;
     }
@@ -117,10 +54,10 @@ class Xml implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getColumns()
+    public function getColumns($configuration)
     {
-        $exampleFile = Asset::getById($this->getExampleFile());
-        $rows = $this->convertXmlToArray($exampleFile->getData(), $this->getExampleXPath());
+        $exampleFile = Asset::getById($configuration['exampleFile']);
+        $rows = $this->convertXmlToArray($exampleFile->getData(), $configuration['exampleXPath']);
         $rows = $rows[0];
 
         $returnHeaders = [];
@@ -145,12 +82,12 @@ class Xml implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($definition, $params, $filter = null)
+    public function getData($configuration, $definition, $params, $filter = null)
     {
         $file = PIMCORE_PROJECT_ROOT . "/" . $params['file'];
         $xml = file_get_contents($file);
 
-        $data = $this->convertXmlToArray($xml, $this->getXPath());
+        $data = $this->convertXmlToArray($xml, $configuration['xpath']);
 
         return $data;
     }

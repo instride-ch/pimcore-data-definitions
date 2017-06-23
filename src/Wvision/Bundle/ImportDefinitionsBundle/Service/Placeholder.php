@@ -12,17 +12,12 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitions\Model;
+namespace Wvision\Bundle\ImportDefinitionsBundle\Service;
 
 use Pimcore\File;
 
-/**
- * Class Placeholder
- * @package ImportDefinitions\Model
- */
-class Placeholder
+final class Placeholder
 {
-
     /**
      * @param $placeholder
      * @param $data

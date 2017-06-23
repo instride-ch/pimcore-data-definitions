@@ -15,7 +15,7 @@
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Definition\Listing;
 
 use Pimcore;
-use ImportDefinitions\Model;
+use Wvision\Bundle\ImportDefinitionsBundle\Model\Definition;
 
 class Dao extends Pimcore\Model\Dao\PhpArrayTable
 {
@@ -39,10 +39,10 @@ class Dao extends Pimcore\Model\Dao\PhpArrayTable
 
         $routes = array();
         foreach ($routesData as $routeData) {
-            $routes[] = Model\Definition::getById($routeData['id']);
+            $routes[] = Definition::getById($routeData['id']);
         }
 
-        $this->model->setDefinitions($routes);
+        $this->model->setObjects($routes);
 
         return $routes;
     }

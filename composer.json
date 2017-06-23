@@ -22,7 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Wvision\\Bundle\\ImportDefinitionsBundle\\": "src/Wvision/Bundle/ImportDefinitions"
+      "Wvision\\Bundle\\ImportDefinitionsBundle\\": "src/Wvision/Bundle/ImportDefinitionsBundle"
     }
   },
   "extra": {

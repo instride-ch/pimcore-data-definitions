@@ -14,10 +14,6 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Mapping;
 
-/**
- * Class AbstractColumn
- * @package ImportDefinitions\Model\Mapping
- */
 abstract class AbstractColumn
 {
     /**

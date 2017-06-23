@@ -11,9 +11,9 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.defaultvalue');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.default_value');
 
-pimcore.plugin.importdefinitions.interpreters.defaultvalue = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.default_value = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
     getLayout : function (fromColumn, toColumn, record, config) {
         return [{

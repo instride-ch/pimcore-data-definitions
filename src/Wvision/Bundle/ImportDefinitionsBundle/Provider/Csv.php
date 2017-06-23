@@ -19,114 +19,30 @@ use Wvision\Bundle\ImportDefinitionsBundle\Model\Mapping\FromColumn;
 class Csv implements ProviderInterface
 {
     /**
-     * @var string
+     * {@inheritdoc}
      */
-    public $csvExample;
-
-    /**
-     * @var string
-     */
-    public $delimiter;
-
-    /**
-     * @var string
-     */
-    public $enclosure;
-
-    /**
-     * @var string
-     */
-    public $csvHeaders;
-
-    /**
-     * @return string
-     */
-    public function getCsvExample()
-    {
-        return $this->csvExample;
-    }
-
-    /**
-     * @param string $csvExample
-     */
-    public function setCsvExample($csvExample)
-    {
-        $this->csvExample = $csvExample;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDelimiter()
-    {
-        return $this->delimiter;
-    }
-
-    /**
-     * @param string $delimiter
-     */
-    public function setDelimiter($delimiter)
-    {
-        $this->delimiter = $delimiter;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEnclosure()
-    {
-        return $this->enclosure;
-    }
-
-    /**
-     * @param string $enclosure
-     */
-    public function setEnclosure($enclosure)
-    {
-        $this->enclosure = $enclosure;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCsvHeaders()
-    {
-        return $this->csvHeaders;
-    }
-
-    /**
-     * @param string $csvHeaders
-     */
-    public function setCsvHeaders($csvHeaders)
-    {
-        $this->csvHeaders = $csvHeaders;
-    }
-
-    /**
-     * test data
-     * 
-     * @return boolean
-     * @throws \Exception
-     */
-    public function testData()
+    public function testData($configuration)
     {
         return true;
     }
     
     /**
-     * Get Columns from data
-     *
-     * @return FromColumn[]
+     * {@inheritdoc}
      */
-    public function getColumns()
+    public function getColumns($configuration)
     {
+        $csvHeaders = $configuration['csvHeaders'];
+        $csvExample = $configuration['csvExample'];
+        $delimiter = $configuration['delimiter'];
+        $enclosure = $configuration['enclosure'];
+
         $returnHeaders = [];
-        $rows = str_getcsv($this->getCsvHeaders() ? $this->getCsvHeaders() : $this->getCsvExample(), "\n"); //parse the rows
+        $rows = str_getcsv($csvHeaders ? $csvHeaders : $csvExample, "\n"); //parse the rows
 
         if (count($rows) > 0) {
             $headerRow = $rows[0];
 
-            $headers = str_getcsv($headerRow, $this->getDelimiter(), $this->getEnclosure() ? $this->getEnclosure() : chr(8));
+            $headers = str_getcsv($headerRow, $delimiter, $enclosure ? $enclosure : chr(8));
 
             if (count($headers) > 0) {
                 //First line are the headers
@@ -144,30 +60,32 @@ class Csv implements ProviderInterface
     }
 
     /**
-     * @param $definition
-     * @param $params
-     * @param null $filter
-     * @return array
+     * {@inheritdoc}
      */
-    public function getData($definition, $params, $filter = null)
+    public function getData($configuration, $definition, $params, $filter = null)
     {
+        $csvHeaders = $configuration['csvHeaders'];
+        $csvExample = $configuration['csvExample'];
+        $delimiter = $configuration['delimiter'];
+        $enclosure = $configuration['enclosure'];
+
         $file = PIMCORE_PROJECT_ROOT . "/" . $params['file'];
 
         $columnMapping = [];
 
-        if ($this->getCsvHeaders()) {
-            $columnMapping = $this->getColumns();
+        if ($csvHeaders) {
+            $columnMapping = $this->getColumns($configuration);
         }
 
         $data = [];
 
         $row = 0;
         if (($handle = fopen($file, "r")) !== false) {
-            while (($csvData = fgetcsv($handle, 1000, $this->getDelimiter(), $this->getEnclosure() ? $this->getEnclosure() : chr(8))) !== false) {
+            while (($csvData = fgetcsv($handle, 1000, $delimiter, $enclosure ? $enclosure : chr(8))) !== false) {
                 $num = count($csvData);
 
                 //Make Column Mapping
-                if ($row === 0 && !$this->getCsvHeaders()) {
+                if ($row === 0 && !$csvHeaders) {
                     for ($c = 0; $c < $num; $c++) {
                         $columnMapping[] = $csvData[$c];
                     }

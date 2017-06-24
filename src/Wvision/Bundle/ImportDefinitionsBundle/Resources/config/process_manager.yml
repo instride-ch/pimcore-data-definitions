@@ -1,0 +1,13 @@
+services:
+  import_definition.process_manager.listener:
+    class: Wvision\Bundle\ImportDefinitionsBundle\ProcessManager\ProcessManagerListener
+    arguments: ['@process_manager.factory.process']
+    tags:
+      - { name: 'kernel.event_listener', event: 'import_definition.total', method: 'onTotalEvent' }
+      - { name: 'kernel.event_listener', event: 'import_definition.progress', method: 'onProgressEvent' }
+      - { name: 'kernel.event_listener', event: 'import_definition.status', method: 'onStatusEvent' }
+
+  import_definition.process_manager.process:
+    class: Wvision\Bundle\ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess
+    tags:
+      - { name: 'process_manager.process', type: 'importdefinition', form-type: 'Wvision\Bundle\ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType' }

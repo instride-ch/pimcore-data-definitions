@@ -54,7 +54,7 @@ final class MappingType extends AbstractResourceType
     {
         $builder
             ->add('fromColumn', TextType::class)
-            ->add('toType', TextType::class)
+            ->add('toColumn', TextType::class)
             ->add('primaryIdentifier', CheckboxType::class)
             ->add('setter', TextType::class)
             ->add('interpreter', TextType::class);
@@ -146,7 +146,7 @@ final class MappingType extends AbstractResourceType
      */
     protected function getSetterRegistryIdentifier(FormInterface $form, $data = null)
     {
-        if (null !== $data && null !== $data->getGetter()) {
+        if (null !== $data && null !== $data->getSetter()) {
             return $data->getGetter();
         }
 

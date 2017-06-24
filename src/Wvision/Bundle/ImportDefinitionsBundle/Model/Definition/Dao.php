@@ -16,6 +16,7 @@ namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Definition;
 
 use Pimcore\Model;
 use Pimcore\Tool;
+use Wvision\Bundle\ImportDefinitionsBundle\Model\Mapping;
 
 class Dao extends Model\Dao\PhpArrayTable
 {
@@ -57,6 +58,23 @@ class Dao extends Model\Dao\PhpArrayTable
     protected function assignVariablesToModel($data)
     {
         parent::assignVariablesToModel($data);
+
+        foreach ($data as $key => $value) {
+            if ($key === 'mapping') {
+                $maps = array();
+
+                foreach ($this->model->getMapping() as $map) {
+                    if (is_array($map)) {
+                        $mapObj = new Mapping();
+                        $mapObj->setValues($map);
+
+                        $maps[] = $mapObj;
+                    }
+                }
+
+                $this->model->setMapping($maps);
+            }
+        }
     }
 
     /**

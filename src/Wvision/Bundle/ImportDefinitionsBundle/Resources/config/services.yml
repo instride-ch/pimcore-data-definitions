@@ -5,6 +5,21 @@ services:
   import_definition.service.placeholder:
     class: Wvision\Bundle\ImportDefinitionsBundle\Service\Placeholder
 
+  import_definition.importer:
+    class: Wvision\Bundle\ImportDefinitionsBundle\Importer\Importer
+    arguments:
+      - '@import_definition.registry.provider'
+      - '@import_definition.registry.filter'
+      - '@import_definition.registry.runner'
+      - '@import_definition.registry.interpreter'
+      - '@import_definition.registry.setter'
+      - '@import_definition.registry.cleaner'
+      - '@event_dispatcher'
+      - '@logger'
+    tags:
+      - { name: monolog.logger, channel: import_definition }
+
+
   ### Registries
   import_definition.registry.provider:
     class: CoreShop\Component\Registry\ServiceRegistry

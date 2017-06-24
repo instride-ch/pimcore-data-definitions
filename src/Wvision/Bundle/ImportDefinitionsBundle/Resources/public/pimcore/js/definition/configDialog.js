@@ -42,13 +42,13 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             record.data.config = {};
         }
 
-        if (!record.data.config.setter) {
+        if (!record.data.setter) {
             if (toColumn.data.type === 'objectbrick') {
-                record.data.config.setter = 'objectbrick';
+                record.data.setter = 'objectbrick';
             } else if (toColumn.data.type === 'classificationstore') {
-                record.data.config.setter = 'classificationstore';
+                record.data.setter = 'classificationstore';
             } else if (toColumn.data.type === 'fieldcollection') {
-                record.data.config.setter = 'fieldcollection';
+                record.data.setter = 'fieldcollection';
             }
         }
 
@@ -80,7 +80,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             fieldLabel : t('importdefinitions_setters'),
             name : 'setter',
             length : 255,
-            value : record.data.config.setter,
+            value : record.data.setter,
             store : pimcore.globalmanager.get('importdefinitions_setters'),
             valueField : 'setter',
             displayField : 'setter',
@@ -129,8 +129,8 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             items: [this.configPanel]
         });
 
-        this.getInterpreterPanelLayout(record.data.config.interpreter);
-        this.getSetterPanelLayout(record.data.config.setter);
+        this.getInterpreterPanelLayout(record.data.interpreter);
+        this.getSetterPanelLayout(record.data.setter);
 
         this.window.show();
     },
@@ -200,7 +200,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
 
         if (form.isValid() && interpreterForm.isValid() && setterForm.isValid()) {
             Ext.Object.each(form.getFieldValues(), function (key, value) {
-                this.record.data.config[key] = value;
+                this.record.data[key] = value;
             }.bind(this));
 
             if (this.getInterpreterPanel().isVisible()) {

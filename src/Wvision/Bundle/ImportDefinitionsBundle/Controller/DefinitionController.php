@@ -98,8 +98,9 @@ class DefinitionController extends ResourceController
                                 'fromColumn' => $mapping->getFromColumn(),
                                 'toColumn' => $mapping->getToColumn(),
                                 'primaryIdentifier' => $mapping->getPrimaryIdentifier(),
-                                'config' => $mapping->getConfig(),
+                                'setter' => $mapping->getSetter(),
                                 'setterConfig' => $mapping->getSetterConfig(),
+                                'interpreter' => $mapping->getInterpreter(),
                                 'interpreterConfig' => $mapping->getInterpreterConfig()
                             ];
 
@@ -114,7 +115,9 @@ class DefinitionController extends ResourceController
                         'toColumn' => $classToColumn->getIdentifier(),
                         'primaryIdentifier' => false,
                         'config' => $classToColumn->getConfig(),
+                        'setter' => $classToColumn->getSetter(),
                         'setterConfig' => $classToColumn->getSetterConfig(),
+                        'interpreter' => $classToColumn->getInterpreter(),
                         'interpreterConfig' => $classToColumn->getInterpreterConfig()
                     ];
                 }
@@ -164,9 +167,7 @@ class DefinitionController extends ResourceController
 
                         $localizedField->setType('localizedfield.' . $language);
                         $localizedField->setIdentifier($localizedField->getIdentifier() . "~" . $language);
-                        $localizedField->setSetterConfig([
-                            "setter" => "localizedfield"
-                        ]);
+                        $localizedField->setSetter('localizedfield');
                         $localizedField->setSetterConfig(array(
                             "language" => $language
                         ));
@@ -191,9 +192,7 @@ class DefinitionController extends ResourceController
 
                                     $resultField->setType("objectbrick");
                                     $resultField->setIdentifier('objectbrick~' . $field->getName() . '~' . $key . '~' . $resultField->getIdentifier());
-                                    $resultField->setConfig([
-                                        "setter" => "objectbrick"
-                                    ]);
+                                    $resultField->setSetter('objectbrick');
                                     $resultField->setSetterConfig(array(
                                         "class" => $key
                                     ));
@@ -216,9 +215,7 @@ class DefinitionController extends ResourceController
 
                         $resultField->setType("fieldcollection");
                         $resultField->setIdentifier("fieldcollection~" . $field->getName() . "~" . $type . "~" . $resultField->getIdentifier());
-                        $resultField->setConfig([
-                            "setter" => "fieldcollection"
-                        ]);
+                        $resultField->setSetter('fieldcollection');
                         $resultField->setSetterConfig(array(
                             "class" => $type
                         ));
@@ -252,10 +249,7 @@ class DefinitionController extends ResourceController
                             $toColumn->setIdentifier('classificationstore~' . $field->getName() . '~' . $keyConfig->getId() . '~' . $config->getId());
                             $toColumn->setType("classificationstore");
                             $toColumn->setFieldtype($keyConfig->getType());
-                            $toColumn->setConfig([
-
-                                "setter" => "classificationstore"
-                            ]);
+                            $toColumn->setSetter('classificationstore');
                             $toColumn->setSetterConfig(array(
                                 "keyId" => $keyConfig->getId(),
                                 "groupId" => $config->getId(),

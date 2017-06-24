@@ -125,7 +125,7 @@ final class Importer implements ImporterInterface
         $data = $this->getData($definition, $params);
 
         if (count($data) > 0) {
-            $this->eventDispatcher->dispatch('total', new ImportDefinitionEvent($definition));
+            $this->eventDispatcher->dispatch('import_definition.total', new ImportDefinitionEvent($definition, count($data)));
 
             $this->runImport($definition, $params, $filter, $data);
         }
@@ -187,7 +187,7 @@ final class Importer implements ImporterInterface
          */
         $provider = $this->providerRegistry->get($definition->getProvider());
 
-        return $provider->getData($definition, $params);
+        return $provider->getData($definition->getConfiguration(), $definition, $params);
     }
 
     /**

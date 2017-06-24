@@ -19,7 +19,7 @@ use Wvision\Bundle\ImportDefinitionsBundle\Model\Log;
 use Pimcore\Model\Object\Concrete;
 use Wvision\Bundle\ImportDefinitionsBundle\Model\DefinitionInterface;
 
-abstract class AbstractCleaner
+abstract class AbstractCleaner implements CleanerInterface
 {
     /**
      *

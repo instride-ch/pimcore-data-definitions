@@ -31,6 +31,10 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create(coreshop.resour
     filters : [],
     runners : [],
 
+    getTitle: function () {
+        return t('importdefinitions_definitions');
+    },
+
     initialize: function () {
         Ext.Ajax.request({
             url: '/admin/import_definitions/definitions/get-config',

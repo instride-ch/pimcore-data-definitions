@@ -128,7 +128,7 @@ class Mapping
     /**
      * @param string $setter
      */
-    public function setSetter(string $setter)
+    public function setSetter($setter)
     {
         $this->setter = $setter;
     }
@@ -144,7 +144,7 @@ class Mapping
     /**
      * @param string $interpreter
      */
-    public function setInterpreter(string $interpreter)
+    public function setInterpreter($interpreter)
     {
         $this->interpreter = $interpreter;
     }

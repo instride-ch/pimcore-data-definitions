@@ -142,26 +142,6 @@ class Definition extends AbstractModel implements DefinitionInterface, ResourceI
     }
 
     /**
-     * @param $data
-     * @return string
-     */
-    public function createPath($data)
-    {
-        $placeholderHelper = new Placeholder();
-        return $placeholderHelper->replacePlaceholders($this->getObjectPath(), $data);
-    }
-
-    /**
-     * @param $data
-     * @return string
-     */
-    public function createKey($data)
-    {
-        $placeholderHelper = new Placeholder();
-        return $placeholderHelper->replacePlaceholders($this->getKey(), $data);
-    }
-
-    /**
      * @return int
      */
     public function getId()

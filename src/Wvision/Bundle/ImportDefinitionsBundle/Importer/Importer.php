@@ -12,6 +12,7 @@ use Pimcore\Model\Object\Concrete;
 use Pimcore\Model\Object\Listing;
 use Pimcore\Model\Object\Service;
 use Pimcore\Model\Version;
+use Pimcore\Placeholder;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\ImportDefinitionsBundle\Event\ImportDefinitionEvent;
@@ -385,10 +386,10 @@ final class Importer implements ImporterInterface
             }
 
             if ($obj instanceof AbstractObject) {
-                $key = File::getValidFilename($definition->createKey($data));
+                $key = File::getValidFilename($this->createKey($definition, $data));
 
                 if ($definition->getRelocateExistingObjects() || !$obj->getId()) {
-                    $obj->setParent(Service::createFolderByPath($definition->createPath($data)));
+                    $obj->setParent(Service::createFolderByPath($this->createPath($definition, $data)));
                 }
 
                 if ($definition->getRenameExistingObjects() || !$obj->getId()) {
@@ -397,6 +398,10 @@ final class Importer implements ImporterInterface
                     } else {
                         $obj->setKey(File::getValidFilename(implode("-", $conditionValues)));
                     }
+                }
+
+                if (!$obj->getKey()) {
+                    throw new \Exception('Not Key set, please check your import-data');
                 }
 
                 $obj->setKey(Service::getUniqueKey($obj));
@@ -410,5 +415,27 @@ final class Importer implements ImporterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param DefinitionInterface $definition
+     * @param $data
+     * @return string
+     */
+    protected function createPath(DefinitionInterface $definition, $data)
+    {
+        $placeholderHelper = new Placeholder();
+        return $placeholderHelper->replacePlaceholders($definition->getObjectPath(), $data);
+    }
+
+    /**
+     * @param DefinitionInterface $definition
+     * @param $data
+     * @return string
+     */
+    protected function createKey(DefinitionInterface $definition, $data)
+    {
+        $placeholderHelper = new Placeholder();
+        return $placeholderHelper->replacePlaceholders($definition->getKey(), $data);
     }
 }

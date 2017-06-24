@@ -5,18 +5,6 @@ namespace Wvision\Bundle\ImportDefinitionsBundle\Model;
 interface DefinitionInterface
 {
     /**
-     * @param $data
-     * @return string
-     */
-    public function createPath($data);
-
-    /**
-     * @param $data
-     * @return string
-     */
-    public function createKey($data);
-
-    /**
      * @return int
      */
     public function getId();

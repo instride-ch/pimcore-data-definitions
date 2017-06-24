@@ -14,16 +14,15 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Wvision\Bundle\ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use Wvision\Bundle\ImportDefinitionsBundle\Model\DefinitionInterface;
 
-final class ImportCommand extends ContainerAwareCommand
+final class ImportCommand extends AbstractCommand
 {
     /**
      * {@inheritdoc}
@@ -54,12 +53,6 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $outputStyle = new SymfonyStyle($input, $output);
-        $outputStyle->writeln(sprintf(
-            'Install Resources for Environment <info>%s</info>.',
-            $this->getContainer()->get('kernel')->getEnvironment()
-        ));
-
         $eventDispatcher = $this->getContainer()->get('event_dispatcher');
 
         $params = $input->getOption('params');

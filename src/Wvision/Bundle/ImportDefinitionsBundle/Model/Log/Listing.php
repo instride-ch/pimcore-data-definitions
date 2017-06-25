@@ -15,8 +15,11 @@
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Log;
 
 use Pimcore\Model;
+use Wvision\Bundle\ImportDefinitionsBundle\Model\Log;
+use Zend\Paginator\Adapter\AdapterInterface;
+use Zend\Paginator\AdapterAggregateInterface;
 
-class Listing extends Model\Listing\AbstractListing implements \Zend_Paginator_Adapter_Interface, \Zend_Paginator_AdapterAggregate, \Iterator
+class Listing extends Model\Listing\AbstractListing implements AdapterInterface, AdapterAggregateInterface, \Iterator
 {
     /**
      * List of Logs.
@@ -54,7 +57,7 @@ class Listing extends Model\Listing\AbstractListing implements \Zend_Paginator_A
     /**
      * @return Log[]
      */
-    public function getData()
+    public function getObjects()
     {
         if ($this->data === null) {
             $this->load();
@@ -66,13 +69,13 @@ class Listing extends Model\Listing\AbstractListing implements \Zend_Paginator_A
     /**
      * @param array $data
      */
-    public function setData($data)
+    public function setObjects($data)
     {
         $this->data = $data;
     }
 
     /**
-     * Methods for \Zend_Paginator_Adapter_Interface.
+     * Methods for AdapterInterface.
      */
 
     /**

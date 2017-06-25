@@ -15,7 +15,7 @@
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Definition;
 
 use Pimcore\Model;
-use Pimcore\Tool;
+
 use Wvision\Bundle\ImportDefinitionsBundle\Model\Mapping;
 
 class Dao extends Model\Dao\PhpArrayTable

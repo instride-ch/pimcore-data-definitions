@@ -147,7 +147,7 @@ final class MappingType extends AbstractResourceType
     protected function getSetterRegistryIdentifier(FormInterface $form, $data = null)
     {
         if (null !== $data && null !== $data->getSetter()) {
-            return $data->getGetter();
+            return $data->getSetter();
         }
 
         return null;

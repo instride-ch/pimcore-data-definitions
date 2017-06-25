@@ -18,8 +18,7 @@ use Pimcore\Model\Dao\AbstractDao;
 
 class Dao extends AbstractDao
 {
-
-    protected $tableName = 'plugin_importdefinitions_log';
+    protected $tableName = 'import_definitions_log';
 
     /**
      * get log by id
@@ -33,7 +32,7 @@ class Dao extends AbstractDao
             $this->model->setId($id);
         }
 
-        $data = $this->db->fetchRow('SELECT * FROM '.$this->tableName.' WHERE id = ?', $this->model->getId());
+        $data = $this->db->fetchRow('SELECT * FROM ' . $this->tableName . ' WHERE id = ?', $this->model->getId());
 
         if (!$data["id"]) {
             throw new \Exception("Object with the ID " . $this->model->getId() . " doesn't exists");
@@ -45,7 +44,7 @@ class Dao extends AbstractDao
     /**
      * save log
      *
-     * @throws \Zend_Db_Adapter_Exception
+     * @throws \Exception
      */
     public function save()
     {
@@ -78,7 +77,7 @@ class Dao extends AbstractDao
         }
 
         if ($this->model->getId() !== null) {
-            $this->db->update($this->tableName, $buffer, $this->db->quoteInto("id = ?", $this->model->getId()));
+            $this->db->update($this->tableName, $buffer, ["id", $this->model->getId()]);
             return;
         }
 
@@ -91,6 +90,6 @@ class Dao extends AbstractDao
      */
     public function delete()
     {
-        $this->db->delete($this->tableName, $this->db->quoteInto("id = ?", $this->model->getId()));
+        $this->db->delete($this->tableName, ["id", $this->model->getId()]);
     }
 }

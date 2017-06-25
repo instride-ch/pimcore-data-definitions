@@ -16,7 +16,7 @@ namespace Wvision\Bundle\ImportDefinitionsBundle\Model;
 
 use CoreShop\Component\Resource\Model\ResourceInterface;
 use Pimcore\Model\AbstractModel;
-use Pimcore\Placeholder;
+
 
 class Definition extends AbstractModel implements DefinitionInterface, ResourceInterface
 {

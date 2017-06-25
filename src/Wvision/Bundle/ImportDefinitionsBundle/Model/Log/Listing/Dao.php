@@ -14,6 +14,7 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Model\Log\Listing;
 
+use Pimcore\Db\ZendCompatibility\Expression;
 use Pimcore\Model\Listing;
 use Wvision\Bundle\ImportDefinitionsBundle\Model\Log;
 
@@ -22,7 +23,7 @@ class Dao extends Listing\Dao\AbstractDao
     /**
      * @var string
      */
-    protected $tableName = 'plugin_importdefinitions_log';
+    protected $tableName = 'import_definitions_log';
 
     /**
      * Get tableName, either for localized or non-localized data.
@@ -30,7 +31,6 @@ class Dao extends Listing\Dao\AbstractDao
      * @return string
      *
      * @throws \Exception
-     * @throws \Zend_Exception
      */
     protected function getTableName()
     {
@@ -38,15 +38,10 @@ class Dao extends Listing\Dao\AbstractDao
     }
 
     /**
-     * get select query.
-     *
-     * @return \Zend_Db_Select
-     *
-     * @throws \Exception
+     * @return \Pimcore\Db\ZendCompatibility\QueryBuilder
      */
     public function getQuery()
     {
-
         // init
         $select = $this->db->select();
 
@@ -54,7 +49,7 @@ class Dao extends Listing\Dao\AbstractDao
         $field = $this->getTableName().'.id';
         $select->from(
             [$this->getTableName()], [
-                new \Zend_Db_Expr(sprintf('SQL_CALC_FOUND_ROWS %s as id', $field, 'o_type')),
+                new Expression(sprintf('SQL_CALC_FOUND_ROWS %s as id', $field, 'o_type')),
             ]
         );
 
@@ -90,7 +85,7 @@ class Dao extends Listing\Dao\AbstractDao
             }
         }
 
-        $this->model->setData($objects);
+        $this->model->setObjects($objects);
 
         return $objects;
     }

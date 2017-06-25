@@ -14,7 +14,7 @@
 
 namespace Wvision\Bundle\ImportDefinitionsBundle\Cleaner;
 
-use Wvision\Bundle\ImportDefinitionsBundle\Model\Definition;
+
 use Wvision\Bundle\ImportDefinitionsBundle\Model\Log;
 use Pimcore\Model\Object\Concrete;
 use Wvision\Bundle\ImportDefinitionsBundle\Model\DefinitionInterface;
@@ -79,10 +79,10 @@ abstract class AbstractCleaner implements CleanerInterface
     }
 
     /**
-     * @param Definition $definition
+     * @param DefinitionInterface $definition
      * @param array $objectIds
      */
-    protected function writeNewLogs($definition, $objectIds) {
+    protected function writeNewLogs(DefinitionInterface $definition, $objectIds) {
         //Save new Log
         foreach ($objectIds as $objId) {
             $log = new Log();

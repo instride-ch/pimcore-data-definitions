@@ -121,6 +121,12 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('import_definition')->defaultValue('/bundles/importdefinitions/pimcore/css/importdefinition.css')->end()
                         ->end()
                     ->end()
+                    ->arrayNode('install')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('sql')->defaultValue(['@ImportDefinitionsBundle/Resources/install/pimcore/sql/data.sql'])->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ->end();

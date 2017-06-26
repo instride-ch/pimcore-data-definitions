@@ -53,7 +53,7 @@ pimcore.plugin.importdefinitions.provider.abstractprovider = Class.create({
         this.parentItemPanel.save(function () {
             Ext.Ajax.request({
                 url: this.parentItemPanel.url.test,
-                method: 'post',
+                method: 'get',
                 params: {
                     id : this.parentItemPanel.data.id
                 },

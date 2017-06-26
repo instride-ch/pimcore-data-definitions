@@ -16,13 +16,13 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
 
 or install it via composer on an existing pimcore installation
 
-```
+```cli
 composer require w-vision/import-definitions
 ```
 
 or for the nightly dev version
 
-```
+```cli
 composer require w-vision/import-definitions dev-master
 ```
 
@@ -37,7 +37,7 @@ Currently, only 4 types of providers are available:
 Because, the data needs to be non-hierarchial, XML and JSON are very limited. You can write your own provider to prepare the data for the plugin. To do that, you simply
 need to create a new class and implement ```Wvision\Bundle\ImportDefinitionsBundle\Provider\ProviderInterface``` namespace and add a new service:
 
-```
+```yml
 acme_bundle.import_definition.provider.my_provider:
     class: AcmeBundle\ImportDefinitions\MyProvider
     tags:
@@ -56,7 +56,7 @@ A cleaner takes care about the clean-up process. It basically deletes or unpubli
 
 To create your own cleaner you need to implement ```Wvision\Bundle\ImportDefinitionsBundle\Cleaner\CleanerInterface``` and add a new service
 
-```
+```yml
 acme_bundle.import_definition.my_cleaner:
     class: AcmeBundle\ImportDefinitions\MyCleaner
     tags:
@@ -78,7 +78,7 @@ To prepare data before it goes to the Objects-Setter Method, there are these "In
 This probably doesn't satisfy your needs. But you can also write your own Interpreters.
 Todo that, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
 
-```
+```yml
 acme_bundle.import_definition.my_interpter:
     class: AcmeBundle\ImportDefinitions\MyInterpreter
     tags:
@@ -87,7 +87,7 @@ acme_bundle.import_definition.my_interpter:
 
 If your Interpter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
 
-```
+```javascript
 pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.myinterpreter');
 
 pimcore.plugin.importdefinitions.interpreters.myinterpreter = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
@@ -117,7 +117,7 @@ Of course, you can also implement your own Setters. Its basically the same as wi
 
 Todo that, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Setter\SetterInterface``` and create a service
 
-```
+```yml
 acme_bundle.import_definition.my_interpter:
     class: AcmeBundle\ImportDefinitions\MySetter
     tags:
@@ -126,7 +126,7 @@ acme_bundle.import_definition.my_interpter:
 
 If your Setter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
 
-```
+```javascript
 pimcore.registerNS('pimcore.plugin.importdefinitions.setters.mysetter');
 
 pimcore.plugin.importdefinitions.setters.mysetter = Class.create(pimcore.plugin.importdefinitions.setters.abstract, {
@@ -150,14 +150,14 @@ A Filter, as the name says, filters your data on runtime. Your method gets calle
 
 To implement a new filter, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Filter\FilterInterface``` and add a new service
 
-```
+```yml
 acme_bundle.import_definition.my_filter:
     class: AcmeBundle\ImportDefinitions\MyFilter
     tags:
       - { name: import_definition.filter, type: my_filter }
 ```
 
-```
+```php
 namespace AcmeBundle\ImportDefinitions;
 
 class MyFilter implements FilterInterface
@@ -178,14 +178,14 @@ A runner gets called before and after every line is imported from your data-sour
 
 To implement a new Runner, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Runner\RunnerInterface``` and add a new service
 
-```
+```yml
 acme_bundle.import_definition.my_runner:
     class: AcmeBundle\ImportDefinitions\MyRunner
     tags:
       - { name: import_definition.runner, type: my_runner }
 ```
 
-```
+```php
 namespace AcmeBundle\ImportDefinitions;
 
 class MyRunner implements RunnerInterface
@@ -222,7 +222,7 @@ As you can see in the screenshot above, we have to settings to make:
 
 Run following command
 
-```
+```cli
 bin/console importdefinitions:list
 ```
 
@@ -231,7 +231,7 @@ You can see the ID, the name and the Provider
 ## Run your definition
 Definitions can only run (at the moment) using the Pimcore CLI. To run your definition, use following command
 
-```
+```cli
 bin/console importdefinitions:run -d 1 -p "{\"file\":\"test.json\"}"
 ```
 

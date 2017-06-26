@@ -10,4 +10,4 @@ services:
   import_definition.process_manager.process:
     class: Wvision\Bundle\ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess
     tags:
-      - { name: 'process_manager.process', type: 'importdefinition', form-type: 'Wvision\Bundle\ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType' }
+      - { name: 'process_manager.process', type: 'importdefinition', form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }

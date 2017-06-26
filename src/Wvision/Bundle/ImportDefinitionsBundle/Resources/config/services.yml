@@ -104,7 +104,7 @@ services:
   import_definition.intepreter.checkbox:
     class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\Checkbox
     tags:
-      - { name: import_definition.interpreter, type: checkbox, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\Interpreter\NoConfigurationType }
+      - { name: import_definition.interpreter, type: checkbox, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
   import_definition.intepreter.default_value:
     class: Wvision\Bundle\ImportDefinitionsBundle\Interpreter\DefaultValue
@@ -161,7 +161,7 @@ services:
   import_definition.setter.key:
     class: Wvision\Bundle\ImportDefinitionsBundle\Setter\Key
     tags:
-      - { name: import_definition.setter, type: key, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\Setter\NoConfigurationType }
+      - { name: import_definition.setter, type: key, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
   import_definition.setter.localizedfield:
     class: Wvision\Bundle\ImportDefinitionsBundle\Setter\Localizedfield
@@ -176,7 +176,7 @@ services:
   import_definition.setter.object_type:
     class: Wvision\Bundle\ImportDefinitionsBundle\Setter\ObjectType
     tags:
-      - { name: import_definition.setter, type: object_type, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\Setter\NoConfigurationType }
+      - { name: import_definition.setter, type: object_type, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
 
 

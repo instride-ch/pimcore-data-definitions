@@ -12,7 +12,7 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace Wvision\Bundle\ImportDefinitionsBundle\Form\Type\Setter;
+namespace Wvision\Bundle\ImportDefinitionsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 
@@ -30,6 +30,6 @@ final class NoConfigurationType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'import_definitions_setter_no_configuration';
+        return 'import_definitions_no_configuration';
     }
 }

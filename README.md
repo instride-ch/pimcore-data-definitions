@@ -98,11 +98,12 @@ pimcore.plugin.importdefinitions.interpreters.myinterpreter = Class.create(pimco
 
 You also need to load your Javascript File in your config.yml
 
+```yml
 import_definitions:
   pimcore_admin:
     js:
       my_interpter: '/static/pimcore/myinterpter.js'
-
+```
 
 ## Setter
 A Setter sets the data to the object as it would be needed.
@@ -134,13 +135,14 @@ pimcore.plugin.importdefinitions.setters.mysetter = Class.create(pimcore.plugin.
 
 ```
 
-You also need to load your Javascript File in your config.yml
 
+You also need to load your Javascript File in your config.yml
+```yml
 import_definitions:
   pimcore_admin:
     js:
       my_setter: '/static/pimcore/mysetter.js'
-
+```
 
 
 ## Filter

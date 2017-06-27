@@ -223,7 +223,7 @@ As you can see in the screenshot above, we have to settings to make:
 Run following command
 
 ```cli
-bin/console importdefinitions:list
+bin/console import-definitions:list
 ```
 
 You can see the ID, the name and the Provider
@@ -232,7 +232,7 @@ You can see the ID, the name and the Provider
 Definitions can only run (at the moment) using the Pimcore CLI. To run your definition, use following command
 
 ```cli
-bin/console importdefinitions:run -d 1 -p "{\"file\":\"test.json\"}"
+bin/console import-definitions:run -d 1 -p "{\"file\":\"test.json\"}"
 ```
 
 ## Copyright and license 

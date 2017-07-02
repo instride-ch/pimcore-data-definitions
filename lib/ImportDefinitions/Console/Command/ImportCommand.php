@@ -108,13 +108,12 @@ class ImportCommand extends AbstractCommand
                 $progress->advance();
             }
 
-            if(class_exists('\ProcessManager\Model\Process')) {
-                if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
-                    if ($process instanceof \ProcessManager\Model\Process) {
-                        $process->progress();
-                    }
+            if(Broker::getInstance()->hasPlugin("ProcessManager\\Plugin")) {
+                if ($process instanceof \ProcessManager\Model\Process) {
+                    $process->progress();
                 }
             }
+
         });
 
         \Pimcore::getEventManager()->attach("importdefinitions.finished", function(\Zend_EventManager_Event $e) use ($output, &$progress, &$process) {

@@ -57,7 +57,7 @@ class ImportDefinitionsBundle extends AbstractPimcoreBundle
 
     public function getInstaller()
     {
-        parent::getInstaller();
+        return new Installer\PimcoreInstaller();
     }
 
     /**

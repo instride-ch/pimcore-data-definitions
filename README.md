@@ -7,24 +7,30 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
 
 ![Interface](docs/mapping.png)
 
-## Getting started
+## Getting started/Installation
 
-* Download Plugin and place it in your plugins directory
-* Open Extension Manager in Pimcore and enable/install Plugin
-* After Installation within Pimcore Extension Manager, you have to reload Pimcore
-* Open Settings -> Definitions
+ * Since Import-Definitions depends on CoreShops ResourceBundle, and the ResourceBundle only exists in DEV yet, you need to set your "minimum-stability" to "dev" in your composer.json
+ * Install via composer ```composer require w-vision/import-definitions dev-import-definitions-2```
+ * Load needed Bundles:
+    ```php
+    <?php
 
-or install it via composer on an existing pimcore installation
-
-```cli
-composer require w-vision/import-definitions
-```
-
-or for the nightly dev version
-
-```cli
-composer require w-vision/import-definitions dev-master
-```
+    // app/AppKernel.php
+    public function registerBundlesToCollection(BundleCollection $collection)
+    {
+        $collection->addBundles(array(
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
+            new \CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle(),
+            new \FOS\RestBundle\FOSRestBundle(),
+            new \Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
+            new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
+        ), 120);
+    }
+    ```
+ * Open Extension Manager in Pimcore and enable/install Plugin
+ * It sometimes happens to me that assets are not getting installed right from pimcore, therefore run ```bin/console assets:install --symlink```
+ * Install via CLI ```bin/console coreshop:resources:install --application-name import_definitions```
+ * Open Settings -> Import Definitions
 
 ## Providers
 Currently, only 4 types of providers are available:

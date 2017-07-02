@@ -55,7 +55,7 @@ class PimcoreInstaller extends AbstractInstaller
      */
     public function canBeInstalled()
     {
-        return true;
+        return !$this->isInstalled();
     }
 
     /**

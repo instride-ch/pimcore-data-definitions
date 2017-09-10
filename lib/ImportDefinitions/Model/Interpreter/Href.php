@@ -43,6 +43,11 @@ class Href extends AbstractInterpreter
 
         $class = 'Pimcore\Model\Object\\' . $objectClass;
 
+        if (!Tool::classExists($class))
+        {
+            $class = 'Pimcore\Model\Object\\' . ucfirst($objectClass);             
+        }
+        
         if (Tool::classExists($class)) {
             $class = new $class();
 

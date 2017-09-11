@@ -27,9 +27,9 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
         ), 120);
     }
     ```
- * Open Extension Manager in Pimcore and enable/install Plugin
- * It sometimes happens to me that assets are not getting installed right from pimcore, therefore run ```bin/console assets:install --symlink```
- * Install via CLI ```bin/console coreshop:resources:install --application-name import_definitions```
+ * Enable Bundle by running ```bin/console pimcore:bundle:enable ImportDefinitionsBundle```
+ * Install Bundle by running ```bin/console pimcore:bundle:install ImportDefinitionsBundle```
+ * Reload Pimcore
  * Open Settings -> Import Definitions
 
 ## Providers
@@ -41,7 +41,7 @@ Currently, only 4 types of providers are available:
  - SQL
 
 Because, the data needs to be non-hierarchial, XML and JSON are very limited. You can write your own provider to prepare the data for the plugin. To do that, you simply
-need to create a new class and implement ```Wvision\Bundle\ImportDefinitionsBundle\Provider\ProviderInterface``` namespace and add a new service:
+need to create a new class and implement ```ImportDefinitionsBundle\Provider\ProviderInterface``` namespace and add a new service:
 
 ```yml
 acme_bundle.import_definition.provider.my_provider:
@@ -60,7 +60,7 @@ A cleaner takes care about the clean-up process. It basically deletes or unpubli
  - Reference Cleaner: Deletes only when no references exists, otherwise the object will be unpublished
  - None: does basically nothing
 
-To create your own cleaner you need to implement ```Wvision\Bundle\ImportDefinitionsBundle\Cleaner\CleanerInterface``` and add a new service
+To create your own cleaner you need to implement ```ImportDefinitionsBundle\Cleaner\CleanerInterface``` and add a new service
 
 ```yml
 acme_bundle.import_definition.my_cleaner:
@@ -82,13 +82,13 @@ To prepare data before it goes to the Objects-Setter Method, there are these "In
  - Quantity Value -> Interprets the data as Pimcore quantity value
 
 This probably doesn't satisfy your needs. But you can also write your own Interpreters.
-Todo that, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
+Todo that, you need to implement the interface ```ImportDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
 
 ```yml
 acme_bundle.import_definition.my_interpter:
     class: AcmeBundle\ImportDefinitions\MyInterpreter
     tags:
-      - { name: import_definition.interpreter, type: myinterpreter, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\Interpreter\NoConfigurationType }
+      - { name: import_definition.interpreter, type: myinterpreter, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\NoConfigurationType }
 ```
 
 If your Interpter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
@@ -121,13 +121,13 @@ A Setter sets the data to the object as it would be needed.
 
 Of course, you can also implement your own Setters. Its basically the same as with Interpreters.
 
-Todo that, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Setter\SetterInterface``` and create a service
+Todo that, you need to implement the interface ```ImportDefinitionsBundle\Setter\SetterInterface``` and create a service
 
 ```yml
 acme_bundle.import_definition.my_interpter:
     class: AcmeBundle\ImportDefinitions\MySetter
     tags:
-      - { name: import_definition.setter, type: mysetter, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+      - { name: import_definition.setter, type: mysetter, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 ```
 
 If your Setter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
@@ -154,7 +154,7 @@ import_definitions:
 ## Filter
 A Filter, as the name says, filters your data on runtime. Your method gets called on every "row" and you get to decide if you want to import it, or not.
 
-To implement a new filter, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Filter\FilterInterface``` and add a new service
+To implement a new filter, you need to implement the interface ```ImportDefinitionsBundle\Filter\FilterInterface``` and add a new service
 
 ```yml
 acme_bundle.import_definition.my_filter:
@@ -182,7 +182,7 @@ class MyFilter implements FilterInterface
 ## Runner
 A runner gets called before and after every line is imported from your data-source. This can help you do clean-up or similar stuff.
 
-To implement a new Runner, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Runner\RunnerInterface``` and add a new service
+To implement a new Runner, you need to implement the interface ```ImportDefinitionsBundle\Runner\RunnerInterface``` and add a new service
 
 ```yml
 acme_bundle.import_definition.my_runner:

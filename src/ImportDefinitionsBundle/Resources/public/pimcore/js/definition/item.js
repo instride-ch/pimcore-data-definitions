@@ -362,6 +362,20 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         }
     },
 
+    postSave: function() {
+        this.undirtyMappingRecords();
+    },
+
+    undirtyMappingRecords: function() {
+        if (this.mappingSettings) {
+            var store = this.mappingSettings.down("grid").getStore();
+
+            store.getRange().forEach(function(record) {
+                record.commit();
+            });
+        }
+    },
+
     providerSettingsSuccess : function (providerPanel) {
         this.reloadColumnMapping();
     },

@@ -10,7 +10,7 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
 ## Getting started/Installation
 
  * Since Import-Definitions depends on CoreShops ResourceBundle, and the ResourceBundle only exists in DEV yet, you need to set your "minimum-stability" to "dev" in your composer.json
- * Install via composer ```composer require w-vision/import-definitions ^2.0-dev```
+ * Install via composer ```composer require w-vision/import-definitions:^2.0-dev```
  * Load needed Bundles:
     ```php
     <?php
@@ -28,6 +28,7 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
     }
     ```
  * Enable Bundle by running ```bin/console pimcore:bundle:enable ImportDefinitionsBundle```
+ * Clear Cache by running ```bin/console clear:cache --no-warmup```
  * Install Bundle by running ```bin/console pimcore:bundle:install ImportDefinitionsBundle```
  * Reload Pimcore
  * Open Settings -> Import Definitions

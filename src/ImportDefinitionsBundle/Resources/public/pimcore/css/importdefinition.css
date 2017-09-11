@@ -24,7 +24,7 @@
 }
 
 .importdefinitions-edit-button {
-    padding: 0px;
-    background: none;
-    border: none;
+    padding: 0px!important;
+    background: none!important;
+    border: none!important;
 }

@@ -15,15 +15,15 @@ pimcore.registerNS('pimcore.plugin.importdefinitions.definition.item');
 
 pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resource.item, {
 
-    iconCls : 'importdefinitions_icon_definition',
-    url : {
-        save : '/admin/import_definitions/definitions/save',
+    iconCls: 'importdefinitions_icon_definition',
+    url: {
+        save: '/admin/import_definitions/definitions/save',
         //upload : '/plugin/ImportDefinitions/admin_definition/import',
         //export : '/plugin/ImportDefinitions/admin_definition/export',
-        test : '/admin/import_definitions/definitions/test-data'
+        test: '/admin/import_definitions/definitions/test-data'
     },
 
-    providers : [],
+    providers: [],
 
     getPanel: function () {
         var panel = new Ext.TabPanel({
@@ -32,7 +32,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
             closable: true,
             deferredRender: false,
             forceLayout: true,
-            iconCls : this.iconCls,
+            iconCls: this.iconCls,
             buttons: [{
                 text: t('import'),
                 iconCls: 'pimcore_icon_import',
@@ -41,7 +41,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                 {
                     text: t('export'),
                     iconCls: 'pimcore_icon_export',
-                    handler: function() {
+                    handler: function () {
                         var id = this.data.id;
                         pimcore.helpers.download(this.url.export + "?id=" + id);
                     }.bind(this)
@@ -57,7 +57,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         return panel;
     },
 
-    getItems : function () {
+    getItems: function () {
         return [
             this.getSettings(),
             this.getProviderSettings(),
@@ -65,7 +65,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         ];
     },
 
-    getSettings : function () {
+    getSettings: function () {
 
         var classesStore = new Ext.data.JsonStore({
             autoDestroy: true,
@@ -79,46 +79,46 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
 
         this.configForm = new Ext.form.Panel({
             bodyStyle: 'padding:10px;',
-            title : t('settings'),
+            title: t('settings'),
             iconCls: 'importdefinitions_icon_settings',
             autoScroll: true,
-            defaults : {
-                labelWidth : 200
+            defaults: {
+                labelWidth: 200
             },
-            border:false,
+            border: false,
             items: [
                 {
-                    xtype : 'textfield',
+                    xtype: 'textfield',
                     fieldLabel: t('name'),
                     name: 'name',
                     width: 500,
-                    value : this.data.name
+                    value: this.data.name
                 },
                 {
-                    xtype : 'combo',
+                    xtype: 'combo',
                     fieldLabel: t('importdefinitions_provider'),
                     name: 'provider',
                     displayField: 'provider',
                     valueField: 'provider',
                     store: pimcore.globalmanager.get('importdefinitions_providers'),
-                    value : this.data.provider,
+                    value: this.data.provider,
                     width: 500,
-                    listeners : {
-                        change : function (combo, value) {
+                    listeners: {
+                        change: function (combo, value) {
                             this.reloadProviderSettings(value);
                             this.reloadColumnMapping();
                         }.bind(this)
                     }
                 },
                 {
-                    xtype : 'combo',
+                    xtype: 'combo',
                     fieldLabel: t('class'),
                     name: 'class',
                     displayField: 'text',
                     valueField: 'text',
                     store: classesStore,
                     width: 500,
-                    value : this.data.class
+                    value: this.data.class
                 },
                 {
                     xtype: 'textfield',
@@ -155,53 +155,53 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                     }
                 },
                 {
-                    xtype : 'textfield',
+                    xtype: 'textfield',
                     fieldLabel: t('key'),
                     name: 'key',
                     width: 500,
-                    value : this.data.key
+                    value: this.data.key
                 },
                 {
-                    xtype : 'combo',
+                    xtype: 'combo',
                     fieldLabel: t('importdefinitions_cleaner'),
                     name: 'cleaner',
                     displayField: 'cleaner',
                     valueField: 'cleaner',
                     store: pimcore.globalmanager.get('importdefinitions_cleaners'),
-                    value : this.data.cleaner,
+                    value: this.data.cleaner,
                     width: 500,
-                    listeners : {
-                        change : function (combo, value) {
+                    listeners: {
+                        change: function (combo, value) {
                             this.data.cleaner = value;
                         }.bind(this)
                     }
                 },
                 {
-                    xtype : 'combo',
+                    xtype: 'combo',
                     fieldLabel: t('importdefinitions_filter'),
                     name: 'filter',
                     displayField: 'filter',
                     valueField: 'filter',
                     store: pimcore.globalmanager.get('importdefinitions_filters'),
-                    value : this.data.filter,
+                    value: this.data.filter,
                     width: 500,
-                    listeners : {
-                        change : function (combo, value) {
+                    listeners: {
+                        change: function (combo, value) {
                             this.data.filter = value;
                         }.bind(this)
                     }
                 },
                 {
-                    xtype : 'combo',
+                    xtype: 'combo',
                     fieldLabel: t('importdefinitions_runner'),
                     name: 'runner',
                     displayField: 'runner',
                     valueField: 'runner',
                     store: pimcore.globalmanager.get('importdefinitions_runners'),
-                    value : this.data.runner,
+                    value: this.data.runner,
                     width: 500,
-                    listeners : {
-                        change : function (combo, value) {
+                    listeners: {
+                        change: function (combo, value) {
                             this.data.runner = value;
                         }.bind(this)
                     }
@@ -258,7 +258,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                     return this.getEl();
                                 }.bind(el),
 
-                                onNodeOver : function (target, dd, e, data) {
+                                onNodeOver: function (target, dd, e, data) {
                                     data = data.records[0].data;
 
                                     if (data.elementType == 'document') {
@@ -268,7 +268,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                     return Ext.dd.DropZone.prototype.dropNotAllowed;
                                 },
 
-                                onNodeDrop : function (target, dd, e, data) {
+                                onNodeDrop: function (target, dd, e, data) {
                                     data = data.records[0].data;
 
                                     if (data.elementType == 'document') {
@@ -298,7 +298,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                     return this.getEl();
                                 }.bind(el),
 
-                                onNodeOver : function (target, dd, e, data) {
+                                onNodeOver: function (target, dd, e, data) {
                                     data = data.records[0].data;
 
                                     if (data.elementType == 'document') {
@@ -308,7 +308,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                     return Ext.dd.DropZone.prototype.dropNotAllowed;
                                 },
 
-                                onNodeDrop : function (target, dd, e, data) {
+                                onNodeDrop: function (target, dd, e, data) {
                                     data = data.records[0].data;
 
                                     if (data.elementType == 'document') {
@@ -328,14 +328,14 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         return this.configForm;
     },
 
-    getProviderSettings : function () {
+    getProviderSettings: function () {
         if (!this.providerSettings) {
             this.providerSettings = Ext.create({
-                xtype : 'panel',
-                layout : 'border',
-                title : t('importdefinitions_provider_settings'),
+                xtype: 'panel',
+                layout: 'border',
+                title: t('importdefinitions_provider_settings'),
                 iconCls: 'importdefinitions_icon_provider',
-                disabled : true
+                disabled: true
             });
         }
 
@@ -346,7 +346,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         return this.providerSettings;
     },
 
-    reloadProviderSettings : function (provider) {
+    reloadProviderSettings: function (provider) {
         if (this.providerSettings) {
             this.providerSettings.removeAll();
 
@@ -362,37 +362,37 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         }
     },
 
-    postSave: function() {
+    postSave: function () {
         this.undirtyMappingRecords();
     },
 
-    undirtyMappingRecords: function() {
+    undirtyMappingRecords: function () {
         if (this.mappingSettings) {
             var store = this.mappingSettings.down("grid").getStore();
 
-            store.getRange().forEach(function(record) {
+            store.getRange().forEach(function (record) {
                 record.commit();
             });
         }
     },
 
-    providerSettingsSuccess : function (providerPanel) {
+    providerSettingsSuccess: function (providerPanel) {
         this.reloadColumnMapping();
     },
 
-    updateProviderMapViews : function () {
+    updateProviderMapViews: function () {
         this.providerSettings.add(new pimcore.plugin.importdefinitions.provider[this.data.provider](this.data.configuration ? this.data.configuration : {}, this).getForm());
         this.providerSettings.enable();
     },
 
-    getMappingSettings : function () {
+    getMappingSettings: function () {
         if (!this.mappingSettings) {
             this.mappingSettings = Ext.create({
-                xtype : 'panel',
-                layout : 'border',
-                title : t('importdefinitions_mapping_settings'),
+                xtype: 'panel',
+                layout: 'border',
+                title: t('importdefinitions_mapping_settings'),
                 iconCls: 'importdefinitions_icon_mapping',
-                disabled : true
+                disabled: true
             });
         }
 
@@ -403,7 +403,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         return this.mappingSettings;
     },
 
-    reloadColumnMapping : function () {
+    reloadColumnMapping: function () {
         if (this.mappingSettings) {
             this.mappingSettings.removeAll();
 
@@ -412,8 +412,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
 
                 Ext.Ajax.request({
                     url: '/admin/import_definitions/definitions/get-columns',
-                    params : {
-                        id : this.data.id
+                    params: {
+                        id: this.data.id
                     },
                     method: 'GET',
                     success: function (result) {
@@ -421,26 +421,20 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                         var gridStoreData = [];
 
                         var fromColumnStore = new Ext.data.Store({
-                            fields : [
+                            fields: [
                                 'identifier',
                                 'label'
                             ],
-                            data : config.fromColumns,
-                            listeners: {
-                                load: function (store) {
-                                    var rec = { identifier: '', label: '' };
-                                    store.insert(0, rec);
-                                }
-                            }
+                            data: config.fromColumns
                         });
 
                         var toColumnStore = new Ext.data.Store({
-                            data : config.toColumns
+                            data: config.toColumns
                         });
 
                         var gridStore = new Ext.data.Store({
-                            grouper : {
-                                groupFn : function (item) {
+                            grouper: {
+                                groupFn: function (item) {
                                     var rec = toColumnStore.findRecord('identifier', item.data.toColumn);
 
                                     if (rec) {
@@ -452,7 +446,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                     }
                                 }
                             },
-                            fields : [
+                            fields: [
                                 'fromColumn',
                                 'toColumn',
                                 'primaryIdentifier'
@@ -461,7 +455,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
 
                         config.toColumns.forEach(function (col) {
                             gridStoreData.push({
-                                toColumn : col.id
+                                toColumn: col.id
                             });
                         });
 
@@ -470,23 +464,23 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                         var cellEditingPlugin = Ext.create('Ext.grid.plugin.CellEditing');
 
                         var grid = Ext.create({
-                            xtype : 'grid',
-                            region : 'center',
-                            store : gridStore,
-                            plugins : [cellEditingPlugin],
+                            xtype: 'grid',
+                            region: 'center',
+                            store: gridStore,
+                            plugins: [cellEditingPlugin],
                             features: [{
                                 ftype: 'grouping',
 
                                 groupHeaderTpl: '{name}'
                             }],
-                            columns : {
-                                defaults : {},
-                                items : [
+                            columns: {
+                                defaults: {},
+                                items: [
                                     {
-                                        text : t('importdefinitions_toColumn'),
-                                        dataIndex : 'toColumn',
-                                        flex : 1,
-                                        renderer : function (val, metadata) {
+                                        text: t('importdefinitions_toColumn'),
+                                        dataIndex: 'toColumn',
+                                        flex: 1,
+                                        renderer: function (val, metadata) {
                                             var rec = toColumnStore.findRecord('identifier', val, 0, false, false, true);
 
                                             if (rec) {
@@ -499,10 +493,10 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                         }
                                     },
                                     {
-                                        text : t('importdefinitions_fromColumn'),
-                                        dataIndex : 'fromColumn',
-                                        flex : 1,
-                                        renderer : function (val) {
+                                        text: t('importdefinitions_fromColumn'),
+                                        dataIndex: 'fromColumn',
+                                        flex: 1,
+                                        renderer: function (val) {
                                             if (val) {
                                                 var rec = fromColumnStore.findRecord('identifier', val, 0, false, false, true);
 
@@ -513,15 +507,15 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                             return null;
                                         },
 
-                                        editor : {
-                                            xtype : 'combo',
-                                            store : fromColumnStore,
-                                            mode : 'local',
+                                        editor: {
+                                            xtype: 'combo',
+                                            store: fromColumnStore,
+                                            mode: 'local',
                                             displayField: 'label',
                                             valueField: 'id',
-                                            editable : false,
-                                            listeners : {
-                                                change :  function (combo, newValue, oldValue, eOpts) {
+                                            editable: false,
+                                            listeners: {
+                                                change: function (combo, newValue, oldValue, eOpts) {
                                                     if (newValue === '') {
                                                         return;
                                                     }
@@ -545,27 +539,26 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                     },
                                     {
                                         xtype: 'checkcolumn',
-                                        text : t('importdefinitions_primaryIdentifier'),
-                                        dataIndex : 'primaryIdentifier',
+                                        text: t('importdefinitions_primaryIdentifier'),
+                                        dataIndex: 'primaryIdentifier',
                                         editor: {
                                             xtype: 'checkbox'
                                         }
                                     },
                                     {
-                                        xtype : 'gridcolumn',
-                                        dataIndex : 'fromColumn',
-                                        flex : 1,
-                                        align : 'right',
-                                        renderer : function (value, metadata, record) {
+                                        xtype: 'gridcolumn',
+                                        dataIndex: 'fromColumn',
+                                        width: 50,
+                                        align: 'right',
+                                        renderer: function (value, metadata, record) {
                                             var fromColumn = fromColumnStore.findRecord('identifier', record.get('fromColumn'));
                                             var toColumn = toColumnStore.findRecord('identifier', record.get('toColumn'));
 
-                                            if (fromColumn && toColumn)
-                                            {
+                                            if (fromColumn && toColumn) {
                                                 var id = Ext.id();
 
                                                 Ext.defer(function () {
-                                                    if(Ext.get(id)) {
+                                                    if (Ext.get(id)) {
                                                         new Ext.button.Button({
                                                             renderTo: id,
                                                             iconCls: 'pimcore_icon_edit',
@@ -581,9 +574,37 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
 
                                                 return Ext.String.format('<div id="{0}"></div>', id);
                                             }
+                                        }
+                                    },
+                                    {
+                                        xtype: 'gridcolumn',
+                                        dataIndex: 'fromColumn',
+                                        width: 50,
+                                        align: 'right',
+                                        renderer: function (value, metadata, record) {
+                                            var fromColumn = fromColumnStore.findRecord('identifier', record.get('fromColumn'));
+                                            var toColumn = toColumnStore.findRecord('identifier', record.get('toColumn'));
 
-                                            return '';
-                                        }.bind(this)
+                                            if (fromColumn && toColumn) {
+                                                var id = Ext.id();
+
+                                                Ext.defer(function () {
+                                                    if (Ext.get(id)) {
+                                                        new Ext.button.Button({
+                                                            renderTo: id,
+                                                            iconCls: 'pimcore_icon_delete',
+                                                            flex: 1,
+                                                            cls: 'importdefinitions-edit-button',
+                                                            handler: function () {
+                                                                record.set('fromColumn', null);
+                                                            }
+                                                        });
+                                                    }
+                                                }, 200);
+
+                                                return Ext.String.format('<div id="{0}"></div>', id);
+                                            }
+                                        }
                                     }
                                 ]
                             }
@@ -597,7 +618,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         }
     },
 
-    getSaveData : function () {
+    getSaveData: function () {
         var data = {
             configuration: {},
             mapping: []
@@ -625,17 +646,16 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         return data;
     },
 
-    upload: function (callback)
-    {
+    upload: function (callback) {
 
-        pimcore.helpers.uploadDialog(this.url.upload + "?id=" + this.data.id, "Filedata", function() {
+        pimcore.helpers.uploadDialog(this.url.upload + "?id=" + this.data.id, "Filedata", function () {
 
             Ext.Ajax.request({
                 url: "/plugin/ImportDefinitions/admin_definition/get",
                 params: {
                     id: this.data.id
                 },
-                success: function(response) {
+                success: function (response) {
                     this.data = Ext.decode(response.responseText.data);
                     this.parentPanel.getEditPanel().removeAll();
                     this.addLayout();

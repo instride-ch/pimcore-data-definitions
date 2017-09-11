@@ -1,5 +1,7 @@
 # Pimcore - Import Definitions
 
+**Looking for the current stable (version 1)? See https://github.com/w-vision/ImportDefinitions/tree/1.2**
+
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](LICENSE.md)
 [![Latest Stable Version](https://poser.pugx.org/w-vision/import-definitions/v/stable)](https://packagist.org/packages/w-vision/import-definitions)
 
@@ -81,6 +83,7 @@ To prepare data before it goes to the Objects-Setter Method, there are these "In
  - Href -> solves the connection from an ID to an actual Pimcore Objet
  - MulitHref -> same as href, but for multihref fields
  - Quantity Value -> Interprets the data as Pimcore quantity value
+ - Nested -> Allows you to nest/chain interpreters and pass results from one to another
 
 This probably doesn't satisfy your needs. But you can also write your own Interpreters.
 Todo that, you need to implement the interface ```ImportDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
@@ -119,6 +122,8 @@ A Setter sets the data to the object as it would be needed.
  - Localizedfield -> saves the data to the specific language field
  - Classificationstore -> Saves the data to a classificationstore field
  - Fieldcollection -> Saves the data to a fieldcollection
+ - Key -> Sets Object Key to a more dynamic value
+ - ObjectType -> Sets Object Type to a more dynamic value
 
 Of course, you can also implement your own Setters. Its basically the same as with Interpreters.
 

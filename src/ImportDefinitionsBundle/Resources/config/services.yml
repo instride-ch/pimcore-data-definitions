@@ -90,42 +90,49 @@ services:
       - { name: import_definition.cleaner, type: unpublisher }
 
   ### INTERPRETER
-  import_definition.intepreter.assets_url:
+  import_definition.interpreter.assets_url:
     class: ImportDefinitionsBundle\Interpreter\AssetsUrl
     arguments: ['@import_definition.service.placeholder']
     tags:
       - { name: import_definition.interpreter, type: assets_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetsUrlType }
 
-  import_definition.intepreter.asset_url:
+  import_definition.interpreter.asset_url:
     class: ImportDefinitionsBundle\Interpreter\AssetUrl
     arguments: ['@import_definition.service.placeholder']
     tags:
       - { name: import_definition.interpreter, type: asset_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlType }
 
-  import_definition.intepreter.checkbox:
+  import_definition.interpreter.checkbox:
     class: ImportDefinitionsBundle\Interpreter\Checkbox
     tags:
       - { name: import_definition.interpreter, type: checkbox, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
-  import_definition.intepreter.default_value:
+  import_definition.interpreter.default_value:
     class: ImportDefinitionsBundle\Interpreter\DefaultValue
     tags:
       - { name: import_definition.interpreter, type: default_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultValueType }
 
-  import_definition.intepreter.href:
+  import_definition.interpreter.href:
     class: ImportDefinitionsBundle\Interpreter\Href
     tags:
       - { name: import_definition.interpreter, type: href, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\HrefType }
 
-  import_definition.intepreter.multi_href:
+  import_definition.interpreter.multi_href:
     class: ImportDefinitionsBundle\Interpreter\MultiHref
     tags:
       - { name: import_definition.interpreter, type: multi_href, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\MultiHrefType }
 
-  import_definition.intepreter.quantity_value:
+  import_definition.interpreter.quantity_value:
     class: ImportDefinitionsBundle\Interpreter\QuantityValue
     tags:
       - { name: import_definition.interpreter, type: quantity_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\QuantityValueType }
+
+  import_definition.interpreter.nested:
+    class: ImportDefinitionsBundle\Interpreter\Nested
+    arguments:
+      - '@import_definition.registry.interpreter'
+    tags:
+      - { name: import_definition.interpreter, type: nested, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\NestedType }
 
   ### PROVIDER
   import_definition.provider.csv:

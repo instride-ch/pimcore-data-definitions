@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Filter;
 
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 
 interface FilterInterface

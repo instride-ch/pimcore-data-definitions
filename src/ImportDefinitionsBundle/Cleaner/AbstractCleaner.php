@@ -16,7 +16,7 @@ namespace ImportDefinitionsBundle\Cleaner;
 
 
 use ImportDefinitionsBundle\Model\Log;
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 
 abstract class AbstractCleaner implements CleanerInterface

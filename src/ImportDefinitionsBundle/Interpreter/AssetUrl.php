@@ -18,7 +18,7 @@ use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\File;
 use Pimcore\Model\Asset;
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Service\Placeholder;
 
 class AssetUrl implements InterpreterInterface
@@ -39,10 +39,9 @@ class AssetUrl implements InterpreterInterface
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $config = $map->getInterpreterConfig();
-        $path = $config['path'];
+        $path = $configuration['path'];
 
         if (filter_var($value, FILTER_VALIDATE_URL)) {
             $filename = File::getValidFilename(basename($value));

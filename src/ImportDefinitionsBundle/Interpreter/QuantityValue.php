@@ -16,18 +16,17 @@ namespace ImportDefinitionsBundle\Interpreter;
 
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 
 class QuantityValue implements InterpreterInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $mapConfig = $map->getInterpreterConfig();
-        $unit = $mapConfig['unit'];
+        $unit = $configuration['unit'];
 
-        return new \Pimcore\Model\Object\Data\QuantityValue($value, $unit);
+        return new \Pimcore\Model\DataObject\Data\QuantityValue($value, $unit);
     }
 }

@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\Mapping;
 
 class Classificationstore implements SetterInterface
@@ -34,7 +34,7 @@ class Classificationstore implements SetterInterface
         if (method_exists($object, $classificationStoreGetter)) {
             $classificationStore = $object->$classificationStoreGetter();
 
-            if ($classificationStore instanceof \Pimcore\Model\Object\Classificationstore) {
+            if ($classificationStore instanceof \Pimcore\Model\DataObject\Classificationstore) {
                 $groups = $classificationStore->getActiveGroups();
 
                 if (!$groups[$groupConfig]) {

@@ -18,11 +18,11 @@ use CoreShop\Component\Registry\ServiceRegistryInterface;
 use Pimcore\File;
 use Pimcore\Mail;
 use Pimcore\Model\Document;
-use Pimcore\Model\Object\AbstractObject;
-use Pimcore\Model\Object\ClassDefinition;
-use Pimcore\Model\Object\Concrete;
-use Pimcore\Model\Object\Listing;
-use Pimcore\Model\Object\Service;
+use Pimcore\Model\DataObject\AbstractObject;
+use Pimcore\Model\DataObject\ClassDefinition;
+use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Listing;
+use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\Version;
 use Pimcore\Placeholder;
 use Psr\Log\LoggerInterface;
@@ -330,7 +330,7 @@ final class Importer implements ImporterInterface
     {
         if ($map->getInterpreter()) {
             $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
-            $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params);
+            $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params, $map->getInterpreterConfig());
         }
 
         if ($map->getToColumn() === "type") {
@@ -363,8 +363,8 @@ final class Importer implements ImporterInterface
             throw new \Exception("Class not found $class");
         }
 
-        $classObject = '\Pimcore\Model\Object\\' . ucfirst($class);
-        $classList = '\Pimcore\Model\Object\\' . ucfirst($class) . '\Listing';
+        $classObject = '\Pimcore\Model\DataObject\\' . ucfirst($class);
+        $classList = '\Pimcore\Model\DataObject\\' . ucfirst($class) . '\Listing';
 
         $list = new $classList();
 

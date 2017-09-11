@@ -60,3 +60,20 @@ services:
     arguments: ['%import_definition.form.type.mapping.validation_groups%', '@import_definition.form.registry.setter', '@import_definition.form.registry.interpreter']
     tags:
         - { name: form.type }
+
+  import_definition.form.interpreter_type:
+    class: ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterType
+    arguments: ['@import_definition.form.registry.interpreter']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.interpreter_collection:
+    class: ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterCollectionType
+    arguments: ['@import_definition.registry.interpreter']
+    tags:
+        - { name: form.type }
+
+  import_definition.form.interpreter.nested:
+    class: ImportDefinitionsBundle\Form\Type\Interpreter\NestedType
+    tags:
+        - { name: form.type }

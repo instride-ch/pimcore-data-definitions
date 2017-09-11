@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 
@@ -27,8 +27,9 @@ interface InterpreterInterface
      * @param array $data
      * @param DefinitionInterface $definition
      * @param array $params
+     * @param array $configuration
      *
      * @return mixed
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params);
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration);
 }

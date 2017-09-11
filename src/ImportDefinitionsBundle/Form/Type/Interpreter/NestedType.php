@@ -12,25 +12,26 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Setter;
+namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\Mapping;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 
-class Localizedfield implements SetterInterface
+final class NestedType extends AbstractType
 {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+           ->add('interpreters', InterpreterCollectionType::class)
+        ;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function set(Concrete $object, $value, Mapping $map, $data)
+    public function getBlockPrefix()
     {
-        $config = $map->getSetterConfig();
-
-        $setter = explode("~", $map->getToColumn());
-        $setter = "set" . ucfirst($setter[0]);
-
-        if (method_exists($object, $setter)) {
-            $object->$setter($value, $config['language']);
-        }
+        return 'import_definitions_interpreter_nested';
     }
 }

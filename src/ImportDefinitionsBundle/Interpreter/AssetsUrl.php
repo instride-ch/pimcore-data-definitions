@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 
@@ -23,9 +23,9 @@ class AssetsUrl extends AssetUrl
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $asset = parent::interpret($object, $value, $map, $data, $definition, $params);
+        $asset = parent::interpret($object, $value, $map, $data, $definition, $params, $configuration);
 
         if ($asset) {
             return [$asset];

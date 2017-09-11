@@ -16,7 +16,7 @@ namespace ImportDefinitionsBundle\Interpreter;
 
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Tool;
 
 class Href implements InterpreterInterface
@@ -24,16 +24,15 @@ class Href implements InterpreterInterface
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $config = $map->getInterpreterConfig();
-        $objectClass = $config['class'];
+        $objectClass = $configuration['class'];
 
-        $class = 'Pimcore\Model\Object\\' . $objectClass;
+        $class = 'Pimcore\Model\DataObject\\' . $objectClass;
 
         if (!Tool::classExists($class))
         {
-            $class = 'Pimcore\Model\Object\\' . ucfirst($objectClass);             
+            $class = 'Pimcore\Model\DataObject\\' . ucfirst($objectClass);
         }
         
         if (Tool::classExists($class)) {

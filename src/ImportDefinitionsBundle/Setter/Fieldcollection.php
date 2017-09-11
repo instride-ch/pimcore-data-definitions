@@ -14,8 +14,8 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use Pimcore\Model\Object\Concrete;
-use Pimcore\Model\Object\Fieldcollection\Data\AbstractData as AbstractFieldCollection;
+use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Fieldcollection\Data\AbstractData as AbstractFieldCollection;
 use ImportDefinitionsBundle\Model\Mapping;
 
 class Fieldcollection implements SetterInterface
@@ -32,7 +32,7 @@ class Fieldcollection implements SetterInterface
         $fieldName = $config['fieldcollectionField'];
         $class = $config['class'];
         $keys = explode(",", $keys);
-        $fieldCollectionClass = 'Pimcore\Model\Object\Fieldcollection\Data\\' . ucfirst($class);
+        $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\' . ucfirst($class);
         $field = $keyParts[3];
         $mappedKeys = [];
 
@@ -51,8 +51,8 @@ class Fieldcollection implements SetterInterface
         if (method_exists($object, $getter)) {
             $fieldCollection = $object->$getter();
 
-            if (!$fieldCollection instanceof \Pimcore\Model\Object\Fieldcollection) {
-                $fieldCollection = new \Pimcore\Model\Object\Fieldcollection();
+            if (!$fieldCollection instanceof \Pimcore\Model\DataObject\Fieldcollection) {
+                $fieldCollection = new \Pimcore\Model\DataObject\Fieldcollection();
             }
 
             $items = $fieldCollection->getItems();

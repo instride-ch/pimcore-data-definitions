@@ -120,8 +120,8 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         });
 
         this.window = new Ext.Window({
-            width: 400,
-            height: 400,
+            width: 800,
+            height: 600,
             resizeable : true,
             modal: true,
             title: t('importdefinitions_config') + ' ' + fromColumn.data.label + ' => ' + toColumn.data.label,
@@ -167,7 +167,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
     getSetterPanel : function () {
         if (!this.setterPanel) {
             this.setterPanel = new Ext.form.FormPanel({
-                defaults: { anchor: '90%' },
+                defaults: { anchor: '100%' },
                 layout: 'form',
                 title : t('importdefinition_setter_settings')
             });
@@ -208,9 +208,14 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
                     this.record.data.interpreterConfig = {};
                 }
 
-                Ext.Object.each(interpreterForm.getFieldValues(), function (key, value) {
-                    this.record.data.interpreterConfig[key] = value;
-                }.bind(this));
+                if (Ext.isFunction(this.getInterpreterPanel().items.getAt(0).getInterpreterData)) {
+                    this.record.data.interpreterConfig = this.getInterpreterPanel().items.getAt(0).getInterpreterData();
+                }
+                else {
+                    Ext.Object.each(interpreterForm.getFieldValues(), function (key, value) {
+                        this.record.data.interpreterConfig[key] = value;
+                    }.bind(this));
+                }
             }
 
             if (this.getSetterPanel().isVisible()) {

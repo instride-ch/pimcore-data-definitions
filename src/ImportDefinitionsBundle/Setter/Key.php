@@ -15,7 +15,7 @@
 namespace ImportDefinitionsBundle\Setter;
 
 use Pimcore\File;
-use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\Mapping;
 
 class Key implements SetterInterface

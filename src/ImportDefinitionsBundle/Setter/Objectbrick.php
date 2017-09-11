@@ -14,8 +14,8 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use Pimcore\Model\Object\Concrete;
-use Pimcore\Model\Object\Objectbrick\Data\AbstractData;
+use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Objectbrick\Data\AbstractData;
 use ImportDefinitionsBundle\Model\Mapping;
 
 class Objectbrick implements SetterInterface
@@ -38,19 +38,19 @@ class Objectbrick implements SetterInterface
         if (method_exists($object, $brickGetter)) {
             $brick = $object->$brickGetter();
 
-            if (!$brick instanceof \Pimcore\Model\Object\Objectbrick) {
-                $brick = new \Pimcore\Model\Object\Objectbrick($object, $fieldName);
+            if (!$brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
+                $brick = new \Pimcore\Model\DataObject\Objectbrick($object, $fieldName);
                 $object->$brickSetter($brick);
             }
 
-            if ($brick instanceof \Pimcore\Model\Object\Objectbrick) {
+            if ($brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
                 $brickClassGetter = "get" . ucfirst($class);
                 $brickClassSetter = "set" . ucfirst($class);
 
                 $brickFieldObject = $brick->$brickClassGetter();
 
                 if (!$brickFieldObject instanceof AbstractData) {
-                    $brickFieldObjectClass = 'Pimcore\Model\Object\Objectbrick\Data\\' . $class;
+                    $brickFieldObjectClass = 'Pimcore\Model\DataObject\Objectbrick\Data\\' . $class;
 
                     $brickFieldObject = new $brickFieldObjectClass($object);
 

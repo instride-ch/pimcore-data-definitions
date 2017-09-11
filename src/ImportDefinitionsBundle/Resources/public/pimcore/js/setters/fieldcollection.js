@@ -19,15 +19,15 @@ pimcore.plugin.importdefinitions.setters.fieldcollection = Class.create(pimcore.
         return [{
             xtype : 'textfield',
             fieldLabel : t('field'),
-            name : 'fieldcollectionField',
+            name : 'field',
             length : 255,
-            value : config.fieldcollectionField ? config.fieldcollectionField : null
+            value : config.field ? config.field : null
         }, {
             xtype : 'textfield',
             fieldLabel : t('importdefinitions_keys'),
-            name : 'fieldcollectionKeys',
+            name : 'keys',
             length : 255,
-            value : config.fieldcollectionKeys ? config.fieldcollectionKeys : null
+            value : config.keys ? config.keys : null
         }];
     }
 });

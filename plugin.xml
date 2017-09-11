@@ -4,8 +4,8 @@
         <pluginName>ImportDefinitions</pluginName>
         <pluginNiceName>Import Definitions - W-Vision</pluginNiceName>
         <pluginDescription><![CDATA[Import Definitions allows you to create re-usable Definitions for Importing Objects]]></pluginDescription>
-        <pluginVersion>1.2.0</pluginVersion>
-        <pluginRevision>3</pluginRevision>
+        <pluginVersion>1.2.1</pluginVersion>
+        <pluginRevision>4</pluginRevision>
         <pluginBuildTimestamp>0</pluginBuildTimestamp>
         <pluginClassName>\ImportDefinitions\Plugin</pluginClassName>
         <pluginIncludePaths>

@@ -130,6 +130,6 @@ final class DefinitionType extends AbstractResourceType
      */
     public function getBlockPrefix()
     {
-        return 'coreshop_carrier';
+        return 'import_definitions_definition';
     }
 }

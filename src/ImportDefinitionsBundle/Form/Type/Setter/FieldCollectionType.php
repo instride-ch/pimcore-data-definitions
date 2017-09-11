@@ -26,12 +26,7 @@ final class FieldCollectionType extends AbstractType
         $builder
             ->add('field', TextType::class)
             ->add('class', TextType::class)
-            ->add('keys', CollectionType::class, [
-                'entry_type' => TextType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => true,
-            ])
+            ->add('keys', TextType::class)
         ;
     }
 

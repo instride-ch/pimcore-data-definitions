@@ -9,6 +9,9 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
 
 ![Interface](docs/mapping.png)
 
+## Requirements
+* Pimcore 5. Only with Build 105 or greater.
+
 ## Getting started/Installation
 
  * Since Import-Definitions depends on CoreShops ResourceBundle, and the ResourceBundle only exists in DEV yet, you need to set your "minimum-stability" to "dev" in your composer.json

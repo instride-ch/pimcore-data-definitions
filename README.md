@@ -7,24 +7,30 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
 
 ![Interface](docs/mapping.png)
 
-## Getting started
+## Getting started/Installation
 
-* Download Plugin and place it in your plugins directory
-* Open Extension Manager in Pimcore and enable/install Plugin
-* After Installation within Pimcore Extension Manager, you have to reload Pimcore
-* Open Settings -> Definitions
+ * Since Import-Definitions depends on CoreShops ResourceBundle, and the ResourceBundle only exists in DEV yet, you need to set your "minimum-stability" to "dev" in your composer.json
+ * Install via composer ```composer require w-vision/import-definitions dev-import-definitions-2```
+ * Load needed Bundles:
+    ```php
+    <?php
 
-or install it via composer on an existing pimcore installation
-
-```
-composer require w-vision/import-definitions
-```
-
-or for the nightly dev version
-
-```
-composer require w-vision/import-definitions dev-master
-```
+    // app/AppKernel.php
+    public function registerBundlesToCollection(BundleCollection $collection)
+    {
+        $collection->addBundles(array(
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
+            new \CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle(),
+            new \FOS\RestBundle\FOSRestBundle(),
+            new \Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
+            new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
+        ), 120);
+    }
+    ```
+ * Open Extension Manager in Pimcore and enable/install Plugin
+ * It sometimes happens to me that assets are not getting installed right from pimcore, therefore run ```bin/console assets:install --symlink```
+ * Install via CLI ```bin/console coreshop:resources:install --application-name import_definitions```
+ * Open Settings -> Import Definitions
 
 ## Providers
 Currently, only 4 types of providers are available:
@@ -35,10 +41,13 @@ Currently, only 4 types of providers are available:
  - SQL
 
 Because, the data needs to be non-hierarchial, XML and JSON are very limited. You can write your own provider to prepare the data for the plugin. To do that, you simply
-need to create a new class within the "ImportDefinitions\Model\Provider" namespace and call
+need to create a new class and implement ```Wvision\Bundle\ImportDefinitionsBundle\Provider\ProviderInterface``` namespace and add a new service:
 
-```
-ImportDefinitions\Model\AbstractProvider::addProvider('YourProvider');
+```yml
+acme_bundle.import_definition.provider.my_provider:
+    class: AcmeBundle\ImportDefinitions\MyProvider
+    tags:
+      - { name: import_definition.provider, type: my_provider, form-type: AcmeBundle\Form\Type\MyProviderType }
 ```
 
 Take a look at the existing Providers to get a clue how they are working.
@@ -49,11 +58,15 @@ A cleaner takes care about the clean-up process. It basically deletes or unpubli
  - Deleter: Deletes missing objects
  - Unpublisher: Unpublishes missing objects
  - Reference Cleaner: Deletes only when no references exists, otherwise the object will be unpublished
+ - None: does basically nothing
 
-To create your own cleaner your class needs to be in the namespace "ImportDefinitions\Model\Cleaner" and implement from "ImportDefinitions\Model\Cleaner\AbstractCleaner". You also need to add it:
+To create your own cleaner you need to implement ```Wvision\Bundle\ImportDefinitionsBundle\Cleaner\CleanerInterface``` and add a new service
 
-```
-ImportDefinitions\Model\Cleaner\AbstractCleaner::addCleaner('YourInterpreter');
+```yml
+acme_bundle.import_definition.my_cleaner:
+    class: AcmeBundle\ImportDefinitions\MyCleaner
+    tags:
+      - { name: import_definition.cleaner, type: my-cleaner }
 ```
 
 
@@ -63,25 +76,39 @@ To prepare data before it goes to the Objects-Setter Method, there are these "In
  - AssetsUrl -> Downloads an Asset from an Url and saves it to a multihref field
  - AssetUrl -> Downloads an Asset from an Url and saves it to a href field
  - DefaultValue -> Saves and Static-Value (definied in the UI) to the field
+ - Checkbox -> transform "yes" and "no" into a Boolean Value
  - Href -> solves the connection from an ID to an actual Pimcore Objet
  - MulitHref -> same as href, but for multihref fields
+ - Quantity Value -> Interprets the data as Pimcore quantity value
 
-This probably doesn't satisfy your needs. But you can also write your own Interpreters. You just need to create a new class within the "ImportDefinitions\Model\Interpreter" namespace
-and call
+This probably doesn't satisfy your needs. But you can also write your own Interpreters.
+Todo that, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
 
+```yml
+acme_bundle.import_definition.my_interpter:
+    class: AcmeBundle\ImportDefinitions\MyInterpreter
+    tags:
+      - { name: import_definition.interpreter, type: myinterpreter, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\Interpreter\NoConfigurationType }
 ```
-ImportDefinitions\Model\Interpreter\AbstractInterpreter::addInterpreter('YourInterpreter');
-```
 
-If you have to add some data within the UI, you also need to create a Pimcore Admin JS File:
+If your Interpter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
 
-```
-pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.yourinterpreter');
+```javascript
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.myinterpreter');
 
-pimcore.plugin.importdefinitions.interpreters.yourinterpreter = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.myinterpreter = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
 });
 
+```
+
+You also need to load your Javascript File in your config.yml
+
+```yml
+import_definitions:
+  pimcore_admin:
+    js:
+      my_interpter: '/static/pimcore/myinterpter.js'
 ```
 
 ## Setter
@@ -94,27 +121,53 @@ A Setter sets the data to the object as it would be needed.
 
 Of course, you can also implement your own Setters. Its basically the same as with Interpreters.
 
+Todo that, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Setter\SetterInterface``` and create a service
+
+```yml
+acme_bundle.import_definition.my_interpter:
+    class: AcmeBundle\ImportDefinitions\MySetter
+    tags:
+      - { name: import_definition.setter, type: mysetter, form-type: Wvision\Bundle\ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+```
+
+If your Setter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
+
+```javascript
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters.mysetter');
+
+pimcore.plugin.importdefinitions.setters.mysetter = Class.create(pimcore.plugin.importdefinitions.setters.abstract, {
+
+});
+
+```
+
+
+You also need to load your Javascript File in your config.yml
+```yml
+import_definitions:
+  pimcore_admin:
+    js:
+      my_setter: '/static/pimcore/mysetter.js'
+```
+
+
 ## Filter
 A Filter, as the name says, filters your data on runtime. Your method gets called on every "row" and you get to decide if you want to import it, or not.
 
-Example Implementation:
+To implement a new filter, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Filter\FilterInterface``` and add a new service
 
-```
-ImportDefinitions\Model\Filter\AbstractFilter::addFilter('YourFilter');
+```yml
+acme_bundle.import_definition.my_filter:
+    class: AcmeBundle\ImportDefinitions\MyFilter
+    tags:
+      - { name: import_definition.filter, type: my_filter }
 ```
 
-```
-namespace ImportDefinitions\Model\Filter;
+```php
+namespace AcmeBundle\ImportDefinitions;
 
-class YourFilter extends AbstractFilter
+class MyFilter implements FilterInterface
 {
-    /**
-     * @param Definition $definition -> Definition File
-     * @param array $data            -> Raw Data from Import File
-     * @param Concrete $object       -> Object, if there is any
-     *
-     * @return boolean
-     */
     public function filter($definition, $data, $object) {
         if($data['isActive'])
         {
@@ -122,6 +175,33 @@ class YourFilter extends AbstractFilter
         }
 
         return false;               //Will be ignored
+    }
+}
+```
+
+## Runner
+A runner gets called before and after every line is imported from your data-source. This can help you do clean-up or similar stuff.
+
+To implement a new Runner, you need to implement the interface ```Wvision\Bundle\ImportDefinitionsBundle\Runner\RunnerInterface``` and add a new service
+
+```yml
+acme_bundle.import_definition.my_runner:
+    class: AcmeBundle\ImportDefinitions\MyRunner
+    tags:
+      - { name: import_definition.runner, type: my_runner }
+```
+
+```php
+namespace AcmeBundle\ImportDefinitions;
+
+class MyRunner implements RunnerInterface
+{
+    public function preRun(Concrete $object, $data, DefinitionInterface $definition, $params) {
+        //gets called before the row gets imported
+    }
+
+    public function postRun(Concrete $object, $data, DefinitionInterface $definition, $params) {
+        //gets called after the row was imported
     }
 }
 ```
@@ -148,8 +228,8 @@ As you can see in the screenshot above, we have to settings to make:
 
 Run following command
 
-```
-pimcore/cli/console.php importdefinitions:list
+```cli
+bin/console import-definitions:list
 ```
 
 You can see the ID, the name and the Provider
@@ -157,8 +237,8 @@ You can see the ID, the name and the Provider
 ## Run your definition
 Definitions can only run (at the moment) using the Pimcore CLI. To run your definition, use following command
 
-```
-pimcore/cli/console.php importdefinitions:run -d 1 -p "{\"file\":\"test.json\"}"
+```cli
+bin/console import-definitions:run -d 1 -p "{\"file\":\"test.json\"}"
 ```
 
 ## Copyright and license 

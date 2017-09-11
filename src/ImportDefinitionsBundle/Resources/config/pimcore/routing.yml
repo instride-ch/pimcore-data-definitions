@@ -1,0 +1,17 @@
+importdefinitions_admin_definitions:
+  type: coreshop.resources
+  resource: |
+    alias: import_definitions.definition
+    additional_routes:
+      config:
+        path: get-config
+        action: getConfig
+        methods: [GET]
+      columns:
+        path: get-columns
+        action: getColumns
+        methods: [GET]
+      testData:
+        path: test-data
+        action: testData
+        methods: [GET]

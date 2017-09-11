@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ImportDefinitionsBundle\Installer:
+        public: true
+        arguments:
+            $bundle: "@=service('kernel').getBundle('ImportDefinitionsBundle')"

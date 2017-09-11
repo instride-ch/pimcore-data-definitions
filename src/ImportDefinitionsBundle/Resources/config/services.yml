@@ -1,0 +1,183 @@
+imports:
+    - { resource: "services/forms.yml" }
+    - { resource: "services/installer.yml" }
+
+services:
+  import_definition.service.placeholder:
+    class: ImportDefinitionsBundle\Service\Placeholder
+
+  import_definition.importer:
+    class: ImportDefinitionsBundle\Importer\Importer
+    arguments:
+      - '@import_definition.registry.provider'
+      - '@import_definition.registry.filter'
+      - '@import_definition.registry.runner'
+      - '@import_definition.registry.interpreter'
+      - '@import_definition.registry.setter'
+      - '@import_definition.registry.cleaner'
+      - '@event_dispatcher'
+      - '@logger'
+    tags:
+      - { name: monolog.logger, channel: import_definition }
+
+
+  ### Registries
+  import_definition.registry.provider:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - ImportDefinitionsBundle\Provider\ProviderInterface
+      - 'Import Definition Providers'
+
+  import_definition.form.registry.provider:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  import_definition.registry.cleaner:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - ImportDefinitionsBundle\Cleaner\CleanerInterface
+      - 'Import Definition Cleaners'
+
+  import_definition.registry.filter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - ImportDefinitionsBundle\Filter\FilterInterface
+      - 'Import Definition Filters'
+
+  import_definition.registry.interpreter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - ImportDefinitionsBundle\Interpreter\InterpreterInterface
+      - 'Import Definition Interpreters'
+
+  import_definition.form.registry.interpreter:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  import_definition.registry.setter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - ImportDefinitionsBundle\Setter\SetterInterface
+      - 'Import Definition Setters'
+
+  import_definition.form.registry.setter:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  import_definition.registry.runner:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - ImportDefinitionsBundle\Runner\RunnerInterface
+      - 'Import Definition Runners'
+
+
+  ### CLEANER
+  import_definition.cleaner.deleter:
+    class: ImportDefinitionsBundle\Cleaner\Deleter
+    tags:
+      - { name: import_definition.cleaner, type: deleter }
+
+  import_definition.cleaner.none:
+    class: ImportDefinitionsBundle\Cleaner\None
+    tags:
+      - { name: import_definition.cleaner, type: none }
+
+  import_definition.cleaner.reference_cleaner:
+    class: ImportDefinitionsBundle\Cleaner\ReferenceCleaner
+    tags:
+      - { name: import_definition.cleaner, type: reference_cleaner }
+
+  import_definition.cleaner.unpuplisher:
+    class: ImportDefinitionsBundle\Cleaner\Unpublisher
+    tags:
+      - { name: import_definition.cleaner, type: unpublisher }
+
+  ### INTERPRETER
+  import_definition.intepreter.assets_url:
+    class: ImportDefinitionsBundle\Interpreter\AssetsUrl
+    arguments: ['@import_definition.service.placeholder']
+    tags:
+      - { name: import_definition.interpreter, type: assets_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetsUrlType }
+
+  import_definition.intepreter.asset_url:
+    class: ImportDefinitionsBundle\Interpreter\AssetUrl
+    arguments: ['@import_definition.service.placeholder']
+    tags:
+      - { name: import_definition.interpreter, type: asset_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlType }
+
+  import_definition.intepreter.checkbox:
+    class: ImportDefinitionsBundle\Interpreter\Checkbox
+    tags:
+      - { name: import_definition.interpreter, type: checkbox, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  import_definition.intepreter.default_value:
+    class: ImportDefinitionsBundle\Interpreter\DefaultValue
+    tags:
+      - { name: import_definition.interpreter, type: default_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultValueType }
+
+  import_definition.intepreter.href:
+    class: ImportDefinitionsBundle\Interpreter\Href
+    tags:
+      - { name: import_definition.interpreter, type: href, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\HrefType }
+
+  import_definition.intepreter.multi_href:
+    class: ImportDefinitionsBundle\Interpreter\MultiHref
+    tags:
+      - { name: import_definition.interpreter, type: multi_href, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\MultiHrefType }
+
+  import_definition.intepreter.quantity_value:
+    class: ImportDefinitionsBundle\Interpreter\QuantityValue
+    tags:
+      - { name: import_definition.interpreter, type: quantity_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\QuantityValueType }
+
+  ### PROVIDER
+  import_definition.provider.csv:
+    class: ImportDefinitionsBundle\Provider\Csv
+    tags:
+      - { name: import_definition.provider, type: csv, form-type: ImportDefinitionsBundle\Form\Type\Provider\CsvType }
+
+  import_definition.provider.json:
+    class: ImportDefinitionsBundle\Provider\Json
+    tags:
+      - { name: import_definition.provider, type: json, form-type: ImportDefinitionsBundle\Form\Type\Provider\JsonType }
+
+  import_definition.provider.sql:
+    class: ImportDefinitionsBundle\Provider\Sql
+    tags:
+      - { name: import_definition.provider, type: sql, form-type: ImportDefinitionsBundle\Form\Type\Provider\SqlType }
+
+  import_definition.provider.xml:
+    class: ImportDefinitionsBundle\Provider\Xml
+    tags:
+      - { name: import_definition.provider, type: xml, form-type: ImportDefinitionsBundle\Form\Type\Provider\XmlType }
+
+  ### SETTER
+  import_definition.setter.classificationstore:
+    class: ImportDefinitionsBundle\Setter\Classificationstore
+    tags:
+      - { name: import_definition.setter, type: classification_store, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreType }
+
+  import_definition.setter.fieldcollection:
+    class: ImportDefinitionsBundle\Setter\Fieldcollection
+    tags:
+      - { name: import_definition.setter, type: fieldcollection, form-type: ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionType }
+
+  import_definition.setter.key:
+    class: ImportDefinitionsBundle\Setter\Key
+    tags:
+      - { name: import_definition.setter, type: key, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  import_definition.setter.localizedfield:
+    class: ImportDefinitionsBundle\Setter\Localizedfield
+    tags:
+      - { name: import_definition.setter, type: localizedfield, form-type: ImportDefinitionsBundle\Form\Type\Setter\LocalizedFieldType }
+
+  import_definition.setter.objectbrick:
+    class: ImportDefinitionsBundle\Setter\Objectbrick
+    tags:
+      - { name: import_definition.setter, type: objectbrick, form-type: ImportDefinitionsBundle\Form\Type\Setter\ObjectBrickType }
+
+  import_definition.setter.object_type:
+    class: ImportDefinitionsBundle\Setter\ObjectType
+    tags:
+      - { name: import_definition.setter, type: object_type, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+
+
+

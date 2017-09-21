@@ -49,6 +49,6 @@ class Installer extends MigrationInstaller
      */
     public function migrateUninstall(Schema $schema, Version $version)
     {
-        //TODO: Uninstalling of CoreShop eg. dropping all tables
+
     }
 }

@@ -15,6 +15,7 @@
 namespace ImportDefinitionsBundle;
 
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
+use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
@@ -25,6 +26,8 @@ use ImportDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerP
 
 class ImportDefinitionsBundle extends AbstractPimcoreBundle
 {
+     use PackageVersionTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -50,9 +53,12 @@ class ImportDefinitionsBundle extends AbstractPimcoreBundle
         return 'Import Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.';
     }
 
-    public function getVersion()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getComposerPackageName(): string
     {
-        return '2.0.0';
+        return 'w-vision/import-definitions';
     }
 
     public function getInstaller()

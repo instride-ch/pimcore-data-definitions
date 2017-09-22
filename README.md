@@ -33,7 +33,7 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
     }
     ```
  * Enable Bundle by running ```bin/console pimcore:bundle:enable ImportDefinitionsBundle```
- * Clear Cache by running ```bin/console clear:cache --no-warmup```
+ * Clear Cache by running ```bin/console cache:clear --no-warmup```
  * Install Bundle by running ```bin/console pimcore:bundle:install ImportDefinitionsBundle```
  * Reload Pimcore
  * Open Settings -> Import Definitions

@@ -14,7 +14,9 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-interface DefinitionInterface
+use CoreShop\Component\Resource\Model\ResourceInterface;
+
+interface DefinitionInterface extends ResourceInterface
 {
     /**
      * @return int

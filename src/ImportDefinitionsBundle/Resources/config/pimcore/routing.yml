@@ -15,3 +15,11 @@ importdefinitions_admin_definitions:
         path: test-data
         action: testData
         methods: [GET]
+      import:
+        path: import
+        action: import
+        methods: [GET,POST]
+      export:
+        path: export
+        action: export
+        methods: [GET]

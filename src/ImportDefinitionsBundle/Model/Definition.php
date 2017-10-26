@@ -18,7 +18,7 @@ use CoreShop\Component\Resource\Model\ResourceInterface;
 use Pimcore\Model\AbstractModel;
 
 
-class Definition extends AbstractModel implements DefinitionInterface, ResourceInterface
+class Definition extends AbstractModel implements DefinitionInterface
 {
     /**
      * @var int

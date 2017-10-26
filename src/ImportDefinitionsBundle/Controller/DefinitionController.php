@@ -15,11 +15,14 @@
 namespace ImportDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping\FromColumn;
-use Pimcore\Model\Object;
+use Pimcore\Model\DataObject;
 use ImportDefinitionsBundle\Model\Mapping\ToColumn;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefinitionController extends ResourceController
 {
@@ -85,7 +88,7 @@ class DefinitionController extends ResourceController
                 $fromColumns = [];
             }
 
-            $toColumns = $this->getClassDefinitionForFieldSelection(Object\ClassDefinition::getByName($definition->getClass()));
+            $toColumns = $this->getClassDefinitionForFieldSelection(DataObject\ClassDefinition::getByName($definition->getClass()));
             $mappings = $definition->getMapping();
             $mappingDefinition = [];
             $fromColumnsResult = [];
@@ -142,11 +145,78 @@ class DefinitionController extends ResourceController
     }
 
     /**
-     * @param Object\ClassDefinition $class
+     * @param Request $request
+     * @return Response
+     */
+    public function exportAction(Request $request)
+    {
+        $id = intval($request->get("id"));
+
+        if ($id) {
+            $definition = $this->repository->find($id);
+
+            if ($definition instanceof DefinitionInterface) {
+
+                $name = $definition->getName();
+                unset($definition->id);
+                unset($definition->creationDate);
+                unset($definition->modificationDate);
+
+                $response = new Response();
+                $response->headers->set('Content-Type', 'application/json');
+                $response->headers->set('Content-Disposition', 'attachment; filename="' . sprintf('import-definition-%s.json', $name) . '"');
+                $response->headers->set('Pragma', "no-cache");
+                $response->headers->set('Expires', "0");
+                $response->headers->set('Content-Transfer-Encoding', "binary");
+
+                $response->setContent(json_encode($definition));
+
+                return $response;
+            }
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function importAction(Request $request)
+    {
+        $id = intval($request->get("id"));
+        $definition = $this->repository->find($id);
+
+        if ($id && $request->files->has('Filedata') && $definition instanceof DefinitionInterface) {
+            $uploadedFile = $request->files->get('Filedata');
+
+            if ($uploadedFile instanceof UploadedFile) {
+                $jsonContent = file_get_contents($uploadedFile->getPathname());
+                $data = $this->decodeJson($jsonContent, false);
+
+                $form = $this->resourceFormFactory->create($this->metadata, $definition);
+                $handledForm = $form->submit($data);
+
+                if ($handledForm->isValid()) {
+                    $definition = $form->getData();
+
+                    $this->manager->persist($definition);
+                    $this->manager->flush();
+
+                    return $this->viewHandler->handle(['success' => true]);
+                }
+            }
+        }
+
+        return $this->viewHandler->handle(['success' => false]);
+    }
+
+    /**
+     * @param DataObject\ClassDefinition $class
      *
      * @return array
      */
-    public function getClassDefinitionForFieldSelection(Object\ClassDefinition $class)
+    public function getClassDefinitionForFieldSelection(DataObject\ClassDefinition $class)
     {
         $fields = $class->getFieldDefinitions();
 
@@ -170,7 +240,7 @@ class DefinitionController extends ResourceController
         }
 
         foreach ($fields as $field) {
-            if ($field instanceof Object\ClassDefinition\Data\Localizedfields) {
+            if ($field instanceof DataObject\ClassDefinition\Data\Localizedfields) {
                 foreach ($activatedLanguages as $language) {
                     $localizedFields = $field->getFieldDefinitions();
 
@@ -186,12 +256,12 @@ class DefinitionController extends ResourceController
                         $result[] = $localizedField;
                     }
                 }
-            } elseif ($field instanceof Object\ClassDefinition\Data\Objectbricks) {
-                $list = new Object\Objectbrick\Definition\Listing();
+            } elseif ($field instanceof DataObject\ClassDefinition\Data\Objectbricks) {
+                $list = new DataObject\Objectbrick\Definition\Listing();
                 $list = $list->load();
 
                 foreach ($list as $brickDefinition) {
-                    if ($brickDefinition instanceof Object\Objectbrick\Definition) {
+                    if ($brickDefinition instanceof DataObject\Objectbrick\Definition) {
                         $key = $brickDefinition->getKey();
                         $classDefs = $brickDefinition->getClassDefinitions();
 
@@ -216,9 +286,9 @@ class DefinitionController extends ResourceController
                         }
                     }
                 }
-            } elseif ($field instanceof Object\ClassDefinition\Data\Fieldcollections) {
+            } elseif ($field instanceof DataObject\ClassDefinition\Data\Fieldcollections) {
                 foreach ($field->getAllowedTypes() as $type) {
-                    $definition = Object\Fieldcollection\Definition::getByKey($type);
+                    $definition = DataObject\Fieldcollection\Definition::getByKey($type);
 
                     $fieldDefinition = $definition->getFieldDefinitions();
 
@@ -235,8 +305,8 @@ class DefinitionController extends ResourceController
                         $result[] = $resultField;
                     }
                 }
-            } elseif ($field instanceof Object\ClassDefinition\Data\Classificationstore) {
-                $list = new Object\Classificationstore\GroupConfig\Listing();
+            } elseif ($field instanceof DataObject\ClassDefinition\Data\Classificationstore) {
+                $list = new DataObject\Classificationstore\GroupConfig\Listing();
 
                 $allowedGroupIds = $field->getAllowedGroupIds();
 
@@ -252,10 +322,10 @@ class DefinitionController extends ResourceController
                     $key = $config->getId() . ($config->getName() ? $config->getName() : 'EMPTY');
 
                     foreach ($config->getRelations() as $relation) {
-                        if ($relation instanceof Object\Classificationstore\KeyGroupRelation) {
+                        if ($relation instanceof DataObject\Classificationstore\KeyGroupRelation) {
                             $keyId = $relation->getKeyId();
 
-                            $keyConfig = Object\Classificationstore\KeyConfig::getById($keyId);
+                            $keyConfig = DataObject\Classificationstore\KeyConfig::getById($keyId);
 
                             $toColumn = new ToColumn();
                             $toColumn->setIdentifier('classificationstore~' . $field->getName() . '~' . $keyConfig->getId() . '~' . $config->getId());
@@ -281,10 +351,10 @@ class DefinitionController extends ResourceController
     }
 
     /**
-     * @param Object\ClassDefinition\Data $field
+     * @param DataObject\ClassDefinition\Data $field
      * @return ToColumn
      */
-    protected function getFieldConfiguration(Object\ClassDefinition\Data $field)
+    protected function getFieldConfiguration(DataObject\ClassDefinition\Data $field)
     {
         $toColumn = new ToColumn();
 

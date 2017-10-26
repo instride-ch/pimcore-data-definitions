@@ -18,8 +18,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
     iconCls: 'importdefinitions_icon_definition',
     url: {
         save: '/admin/import_definitions/definitions/save',
-        //upload : '/plugin/ImportDefinitions/admin_definition/import',
-        //export : '/plugin/ImportDefinitions/admin_definition/export',
+        upload : '/admin/import_definitions/definitions/import',
+        export : '/admin/import_definitions/definitions/export',
         test: '/admin/import_definitions/definitions/test-data'
     },
 
@@ -33,13 +33,14 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
             deferredRender: false,
             forceLayout: true,
             iconCls: this.iconCls,
-            buttons: [{
-                text: t('import'),
-                iconCls: 'pimcore_icon_import',
-                handler: this.upload.bind(this)
-            },
+            buttons: [
                 {
-                    text: t('export'),
+                    text: t('importdefinitions_import_definition'),
+                    iconCls: 'pimcore_icon_import',
+                    handler: this.upload.bind(this)
+                },
+                {
+                    text: t('importdefinitions_export_definition'),
                     iconCls: 'pimcore_icon_export',
                     handler: function () {
                         var id = this.data.id;
@@ -356,6 +357,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                         this.updateProviderMapViews();
                     }.bind(this));
                 } else {
+                    this.data.provider = provider;
                     this.updateProviderMapViews();
                 }
             }
@@ -367,7 +369,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
     },
 
     undirtyMappingRecords: function () {
-        if (this.mappingSettings) {
+        if (this.mappingSettings && this.mappingSettings.down("grid")) {
             var store = this.mappingSettings.down("grid").getStore();
 
             store.getRange().forEach(function (record) {
@@ -647,22 +649,9 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
     },
 
     upload: function (callback) {
-
         pimcore.helpers.uploadDialog(this.url.upload + "?id=" + this.data.id, "Filedata", function () {
-
-            Ext.Ajax.request({
-                url: "/plugin/ImportDefinitions/admin_definition/get",
-                params: {
-                    id: this.data.id
-                },
-                success: function (response) {
-                    this.data = Ext.decode(response.responseText.data);
-                    this.parentPanel.getEditPanel().removeAll();
-                    this.addLayout();
-                    this.initLayoutFields();
-                    pimcore.layout.refresh();
-                }.bind(this)
-            });
+            this.panel.destroy();
+            this.parentPanel.openItem(this.data);
         }.bind(this), function () {
             Ext.MessageBox.alert(t("error"), t("error"));
         });

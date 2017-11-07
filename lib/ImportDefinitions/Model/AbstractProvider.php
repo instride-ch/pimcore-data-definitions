@@ -423,7 +423,7 @@ abstract class AbstractProvider
             $conditionValues = [];
             foreach ($mapping as $map) {
                 if ($map->getPrimaryIdentifier()) {
-                    $condition[] = $map->getToColumn() . " = ?";
+                    $condition[] = '`' . $map->getToColumn() . '` = ?';
                     $conditionValues[] = $data[$map->getFromColumn()];
                 }
             }

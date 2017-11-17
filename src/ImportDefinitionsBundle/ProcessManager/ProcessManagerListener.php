@@ -16,6 +16,7 @@ namespace ImportDefinitionsBundle\ProcessManager;
 
 use Carbon\Carbon;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
+use Pimcore\Log\Simple;
 use ProcessManagerBundle\Model\ProcessInterface;
 use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 
@@ -54,6 +55,7 @@ final class ProcessManagerListener
             $this->process->setProgress(0);
             $this->process->save();
         }
+        $this->logEvent('import_definition.total', $event->getSubject());
     }
 
     /**
@@ -65,6 +67,7 @@ final class ProcessManagerListener
             $this->process->progress();
             $this->process->save();
         }
+        $this->logEvent('import_definition.progress', $event->getSubject());
     }
 
     /**
@@ -76,5 +79,42 @@ final class ProcessManagerListener
             $this->process->setMessage($event->getSubject());
             $this->process->save();
         }
+        $this->logEvent('import_definition.status', $event->getSubject());
+    }
+
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onFinishedEvent(ImportDefinitionEvent $event)
+    {
+        $this->logEvent('import_definition.finished', $event->getSubject());
+    }
+
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onObjectStartEvent(ImportDefinitionEvent $event)
+    {
+        $this->logEvent('import_definition.object.start', $event->getSubject());
+    }
+
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onObjectFinishedEvent(ImportDefinitionEvent $event)
+    {
+        $this->logEvent('import_definition.object.finished', $event->getSubject());
+    }
+
+    protected function logEvent($eventName, $message)
+    {
+        if (!$this->process) {
+            return;
+        }
+
+        if (!is_dir(PIMCORE_LOG_DIRECTORY . '/imports/')) {
+            mkdir(PIMCORE_LOG_DIRECTORY . '/imports/');
+        }
+        Simple::log('imports/process_' . $this->process->getId(), $eventName . ': ' . $message);
     }
 }

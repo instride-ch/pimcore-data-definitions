@@ -306,6 +306,7 @@ class DefinitionController extends ResourceController
                     }
                 }
             } elseif ($field instanceof DataObject\ClassDefinition\Data\Classificationstore) {
+                continue;
                 $list = new DataObject\Classificationstore\GroupConfig\Listing();
 
                 $allowedGroupIds = $field->getAllowedGroupIds();

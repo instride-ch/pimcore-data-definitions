@@ -65,35 +65,4 @@ class ImportDefinitionsBundle extends AbstractPimcoreBundle
     {
         return $this->container->get(Installer::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getJsPaths()
-    {
-        $jsFiles = [];
-
-        if ($this->container->hasParameter('import_definitions.pimcore.admin.js')) {
-            $jsFiles = array_merge(
-                $this->container->get('coreshop.resource_loader')->loadResources($this->container->getParameter('core_shop_resource.pimcore.admin.js')),
-                $this->container->get('coreshop.resource_loader')->loadResources($this->container->getParameter('import_definitions.pimcore.admin.js'))
-            );
-        }
-
-        return $jsFiles;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCssPaths()
-    {
-        $cssFiles = [];
-
-        if ($this->container->hasParameter('import_definitions.pimcore.admin.css')) {
-            $cssFiles = $this->container->get('coreshop.resource_loader')->loadResources($this->container->getParameter('import_definitions.pimcore.admin.css'));
-        }
-
-        return $cssFiles;
-    }
 }

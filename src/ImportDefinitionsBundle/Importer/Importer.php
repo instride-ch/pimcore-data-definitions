@@ -334,7 +334,7 @@ final class Importer implements ImporterInterface
         }
 
         if ($map->getToColumn() === "type") {
-            if ($map->getSetter() !== "objectType") {
+            if ($map->getSetter() !== "object_type") {
                 throw new \Exception("Type has to be used with ObjectType Setter!");
             }
         }

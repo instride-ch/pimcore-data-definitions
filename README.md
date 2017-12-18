@@ -81,10 +81,10 @@ To prepare data before it goes to the Objects-Setter Method, there are these "In
 
  - AssetsUrl -> Downloads an Asset from an Url and saves it to a multihref field
  - AssetUrl -> Downloads an Asset from an Url and saves it to a href field
- - DefaultValue -> Saves and Static-Value (definied in the UI) to the field
+ - DefaultValue -> Saves a Static-Value (definied in the UI) to the field
  - Checkbox -> transform "yes" and "no" into a Boolean Value
- - Href -> solves the connection from an ID to an actual Pimcore Objet
- - MulitHref -> same as href, but for multihref fields
+ - Href -> solves the connection from an ID to an actual Pimcore Object
+ - MultiHref -> same as href, but for multihref fields
  - Quantity Value -> Interprets the data as Pimcore quantity value
  - Nested -> Allows you to nest/chain interpreters and pass results from one to another
 
@@ -247,7 +247,7 @@ You can see the ID, the name and the Provider
 Definitions can only run (at the moment) using the Pimcore CLI. To run your definition, use following command
 
 ```cli
-bin/console import-definitions:run -d 1 -p "{\"file\":\"test.json\"}"
+bin/console import-definitions:import -d 1 -p "{\"file\":\"test.json\"}"
 ```
 
 ## Copyright and license 

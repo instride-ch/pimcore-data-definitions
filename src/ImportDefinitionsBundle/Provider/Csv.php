@@ -47,6 +47,10 @@ class Csv implements ProviderInterface
             if (count($headers) > 0) {
                 //First line are the headers
                 foreach ($headers as $header) {
+                    if (!$header) {
+                        continue;
+                    }
+
                     $headerObj = new FromColumn();
                     $headerObj->setIdentifier($header);
                     $headerObj->setLabel($header);
@@ -75,6 +79,11 @@ class Csv implements ProviderInterface
 
         if ($csvHeaders) {
             $columnMapping = $this->getColumns($configuration);
+
+            foreach ($columnMapping as &$header) {
+                $header = $header->getIdentifier();
+            }
+
         }
 
         $data = [];

@@ -52,9 +52,9 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             }
         }
 
-        if (!record.data.config.interpreter) {
+        if (!record.data.interpreter) {
             if (toColumn.data.fieldtype === 'quantityValue') {
-                record.data.config.interpreter = 'quantityvalue';
+                record.data.interpreter = 'quantityvalue';
             }
         }
 
@@ -62,7 +62,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             fieldLabel : t('importdefinitions_interpreters'),
             name : 'interpreter',
             length : 255,
-            value : record.data.config.interpreter,
+            value : record.data.interpreter,
             store : pimcore.globalmanager.get('importdefinitions_interpreters'),
             valueField : 'interpreter',
             displayField : 'interpreter',
@@ -202,6 +202,9 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             Ext.Object.each(form.getFieldValues(), function (key, value) {
                 this.record.data[key] = value;
             }.bind(this));
+
+            this.record.data.interpreterConfig = [];
+            this.record.data.setterConfig = [];
 
             if (this.getInterpreterPanel().isVisible()) {
                 if (!Ext.isObject(this.record.data.interpreterConfig)) {

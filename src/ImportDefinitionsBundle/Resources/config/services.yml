@@ -96,6 +96,11 @@ services:
     tags:
       - { name: import_definition.interpreter, type: assets_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetsUrlType }
 
+  import_definition.interpreter.asset_url:
+      class: ImportDefinitionsBundle\Interpreter\AssetUrl
+      tags:
+        - { name: import_definition.interpreter, type: asset_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlType }
+
   import_definition.interpreter.asset:
     class: ImportDefinitionsBundle\Interpreter\Asset
     tags:

@@ -236,7 +236,7 @@ final class Importer implements ImporterInterface
 
                     $this->exceptions[] = $ex;
 
-                    $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, "Error: " . $ex->getMessage() . ' ' . $ex->getTraceAsString()));
+                    $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, "Error: " . $ex->getMessage()));
 
                     if ($definition->getStopOnException()) {
                         throw $ex;

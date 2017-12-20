@@ -3,13 +3,9 @@ services:
     class: ImportDefinitionsBundle\ProcessManager\ProcessManagerListener
     arguments: ['@process_manager.factory.process']
     tags:
-      - { name: 'kernel.event_listener', event: 'import_definition.total',           method: 'onTotalEvent' }
-      - { name: 'kernel.event_listener', event: 'import_definition.progress',        method: 'onProgressEvent' }
-      - { name: 'kernel.event_listener', event: 'import_definition.status',          method: 'onStatusEvent' }
-      - { name: 'kernel.event_listener', event: 'import_definition.finished',        method: 'onFinishedEvent' }
-      - { name: 'kernel.event_listener', event: 'import_definition.object.start',    method: 'onObjectStartEvent' }
-      - { name: 'kernel.event_listener', event: 'import_definition.object.finished', method: 'onObjectFinishedEvent' }
-
+      - { name: 'kernel.event_listener', event: 'import_definition.total', method: 'onTotalEvent' }
+      - { name: 'kernel.event_listener', event: 'import_definition.progress', method: 'onProgressEvent' }
+      - { name: 'kernel.event_listener', event: 'import_definition.status', method: 'onStatusEvent' }
 
   import_definition.process_manager.process:
     class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess

@@ -96,11 +96,10 @@ services:
     tags:
       - { name: import_definition.interpreter, type: assets_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetsUrlType }
 
-  import_definition.interpreter.asset_url:
-    class: ImportDefinitionsBundle\Interpreter\AssetUrl
-    arguments: ['@import_definition.service.placeholder']
+  import_definition.interpreter.asset:
+    class: ImportDefinitionsBundle\Interpreter\Asset
     tags:
-      - { name: import_definition.interpreter, type: asset_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlType }
+      - { name: import_definition.interpreter, type: asset, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\Asset }
 
   import_definition.interpreter.checkbox:
     class: ImportDefinitionsBundle\Interpreter\Checkbox
@@ -111,6 +110,11 @@ services:
     class: ImportDefinitionsBundle\Interpreter\DefaultValue
     tags:
       - { name: import_definition.interpreter, type: default_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultValueType }
+
+  import_definition.interpreter.default_object:
+      class: ImportDefinitionsBundle\Interpreter\DefaultObject
+      tags:
+        - { name: import_definition.interpreter, type: default_object, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultObjectType }
 
   import_definition.interpreter.href:
     class: ImportDefinitionsBundle\Interpreter\Href
@@ -186,5 +190,7 @@ services:
     tags:
       - { name: import_definition.setter, type: object_type, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
-
-
+  import_definition.setter.add_to_array:
+    class: ImportDefinitionsBundle\Setter\ObjectType
+    tags:
+      - { name: import_definition.setter, type: add_to_array, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }

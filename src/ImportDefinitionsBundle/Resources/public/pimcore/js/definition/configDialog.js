@@ -120,6 +120,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         });
 
         this.window = new Ext.Window({
+            renderTo: 'pimcore_body',
             width: 800,
             height: 600,
             resizeable : true,

@@ -252,8 +252,6 @@ bin/console import-definitions:import -d 1 -p "{\"file\":\"test.json\"}"
 ```
 
 ## License
-This bundle is for w-vision's internal use only. Please **do not** use without permission.
-
 [w-vision AG](https://www.w-vision.ch), Sandgruebestrasse 4, 6210 Sursee, Switzerland  
 https://www.w-vision.ch, support@w-vision.ch  
 Copyright © 2017 w-vision AG. All rights reserved.

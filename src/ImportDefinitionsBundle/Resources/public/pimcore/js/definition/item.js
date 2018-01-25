@@ -553,8 +553,11 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                         width: 50,
                                         align: 'right',
                                         renderer: function (value, metadata, record) {
-                                            var fromColumn = fromColumnStore.findRecord('identifier', record.get('fromColumn'));
-                                            var toColumn = toColumnStore.findRecord('identifier', record.get('toColumn'));
+                                            var fromColumnRecordNum = fromColumnStore.findExact('identifier', record.get('fromColumn'));
+                                            var fromColumn = fromColumnStore.getAt(fromColumnRecordNum);
+
+                                            var toColumnRecordNum = toColumnStore.findExact('identifier', record.get('toColumn'));
+                                            var toColumn = toColumnStore.getAt(toColumnRecordNum);
 
                                             if (fromColumn && toColumn) {
                                                 var id = Ext.id();

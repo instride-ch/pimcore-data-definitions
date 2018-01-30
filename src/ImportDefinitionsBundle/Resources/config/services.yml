@@ -20,7 +20,6 @@ services:
     tags:
       - { name: monolog.logger, channel: import_definition }
 
-
   ### Registries
   import_definition.registry.provider:
     class: CoreShop\Component\Registry\ServiceRegistry
@@ -186,5 +185,7 @@ services:
     tags:
       - { name: import_definition.setter, type: object_type, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
-
-
+  import_definition.listeners.index.delete:
+    class: ImportDefinitionsBundle\EventListener\ObjectDeleteListener
+    tags:
+      - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onDataObjectDelete }

@@ -77,7 +77,7 @@ class Dao extends AbstractDao
         }
 
         if ($this->model->getId() !== null) {
-            $this->db->update($this->tableName, $buffer, ["id", $this->model->getId()]);
+            $this->db->update($this->tableName, $buffer, ["id" => $this->model->getId()]);
             return;
         }
 
@@ -90,6 +90,6 @@ class Dao extends AbstractDao
      */
     public function delete()
     {
-        $this->db->delete($this->tableName, ["id", $this->model->getId()]);
+        $this->db->delete($this->tableName, ["id" => $this->model->getId()]);
     }
 }

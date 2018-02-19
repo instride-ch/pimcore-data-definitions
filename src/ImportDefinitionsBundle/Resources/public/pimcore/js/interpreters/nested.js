@@ -37,8 +37,7 @@ pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plug
                 iconCls: 'pimcore_icon_add',
                 menu: addMenu
             }],
-            border: false,
-            getInterpreterData: _this.getInterpreterData.bind(_this)
+            border: false
         });
 
         if (config && config.interpreters) {

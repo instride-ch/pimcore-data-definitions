@@ -15,13 +15,25 @@ pimcore.registerNS('pimcore.plugin.importdefinitions.setters.classification_stor
 
 pimcore.plugin.importdefinitions.setters.classification_store = Class.create(pimcore.plugin.importdefinitions.setters.abstract, {
 
-    getLayout : function (fromColumn, toColumn, record, config) {
-        return [{
+    getLayout : function (fromColumn, toColumn, record, config, definitionConfig) {
+        this.toColumn = toColumn;
+
+        this.classificationStoreField = Ext.create({
             xtype : 'textfield',
             fieldLabel : t('field'),
             name : 'classificationstoreField',
             length : 255,
             value : config.classificationstoreField ? config.classificationstoreField : null
-        }];
+        });
+
+        return [this.classificationStoreField];
+    },
+
+    getSetterData: function () {
+        return {
+            'keyId': this.toColumn.data.config.keyId,
+            'groupId': this.toColumn.data.config.groupId,
+            'classificationstoreField': this.classificationStoreField.getValue()
+        };
     }
 });

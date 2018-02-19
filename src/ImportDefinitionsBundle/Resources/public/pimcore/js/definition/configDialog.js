@@ -15,12 +15,13 @@ pimcore.registerNS('pimcore.plugin.importdefinitions.definition.configDialog');
 
 pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
 
-    getConfigDialog : function (fromColumn, toColumn, record) {
+    getConfigDialog : function (fromColumn, toColumn, record, config) {
         var fieldSetItems = [];
 
         this.fromColumn = fromColumn;
         this.toColumn = toColumn;
         this.record = record;
+        this.config = config;
 
         fieldSetItems.push(new Ext.form.TextField({
             fieldLabel : t('importdefinitions_fromColumn'),
@@ -153,12 +154,14 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             type = type.toLowerCase();
 
             if (pimcore.plugin.importdefinitions.interpreters[type]) {
-                var interpreter = new pimcore.plugin.importdefinitions.interpreters[type];
+                this.interpreter = new pimcore.plugin.importdefinitions.interpreters[type];
 
-                this.getInterpreterPanel().add(interpreter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.interpreterConfig) ? this.record.data.interpreterConfig : {}));
+                this.getInterpreterPanel().add(this.interpreter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.interpreterConfig) ? this.record.data.interpreterConfig : {}, this.config));
                 this.getInterpreterPanel().show();
             } else {
                 this.getInterpreterPanel().hide();
+
+                this.interpreter = null;
             }
         } else {
             this.getInterpreterPanel().hide();
@@ -182,12 +185,14 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             type = type.toLowerCase();
 
             if (pimcore.plugin.importdefinitions.setters[type]) {
-                var setter = new pimcore.plugin.importdefinitions.setters[type];
+                this.setter = new pimcore.plugin.importdefinitions.setters[type];
 
-                this.getSetterPanel().add(setter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.setterConfig) ? this.record.data.setterConfig : {}));
+                this.getSetterPanel().add(this.setter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.setterConfig) ? this.record.data.setterConfig : {}, this.config));
                 this.getSetterPanel().show();
             } else {
                 this.getSetterPanel().hide();
+
+                this.setter = null;
             }
         } else {
             this.getSetterPanel().hide();
@@ -204,16 +209,12 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
                 this.record.data[key] = value;
             }.bind(this));
 
-            this.record.data.interpreterConfig = [];
-            this.record.data.setterConfig = [];
+            this.record.data.interpreterConfig = {};
+            this.record.data.setterConfig = {};
 
             if (this.getInterpreterPanel().isVisible()) {
-                if (!Ext.isObject(this.record.data.interpreterConfig)) {
-                    this.record.data.interpreterConfig = {};
-                }
-
-                if (Ext.isFunction(this.getInterpreterPanel().items.getAt(0).getInterpreterData)) {
-                    this.record.data.interpreterConfig = this.getInterpreterPanel().items.getAt(0).getInterpreterData();
+                if (Ext.isFunction(this.interpreter.getInterpreterData)) {
+                    this.record.data.interpreterConfig = this.interpreter.getInterpreterData();
                 }
                 else {
                     Ext.Object.each(interpreterForm.getFieldValues(), function (key, value) {
@@ -223,13 +224,15 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             }
 
             if (this.getSetterPanel().isVisible()) {
-                if (!Ext.isObject(this.record.data.setterConfig)) {
-                    this.record.data.setterConfig = {};
+                if (Ext.isFunction(this.setter.getSetterData)) {
+                    this.record.data.setterConfig = this.setter.getSetterData();
+                }
+                else {
+                    Ext.Object.each(setterForm.getFieldValues(), function (key, value) {
+                        this.record.data.setterConfig[key] = value;
+                    }.bind(this));
                 }
 
-                Ext.Object.each(setterForm.getFieldValues(), function (key, value) {
-                    this.record.data.setterConfig[key] = value;
-                }.bind(this));
             }
 
             this.window.close();

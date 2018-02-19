@@ -15,17 +15,51 @@
 namespace ImportDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Request;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping\FromColumn;
-use Pimcore\Model\DataObject;
 use ImportDefinitionsBundle\Model\Mapping\ToColumn;
+use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
+use Pimcore\Model\DataObject;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefinitionController extends ResourceController
 {
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function saveAction(Request $request)
+    {
+        $this->isGrantedOr403();
+
+        $resource = $this->findOr404($request->get('id'));
+        //$resource->setMapping([]);
+
+        $form = $this->resourceFormFactory->create($this->metadata, $resource);
+        $handledForm = $form->handleRequest($request);
+
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true) && $handledForm->isValid()) {
+            $resource = $form->getData();
+
+            $this->eventDispatcher->dispatchPreEvent('save', $this->metadata, $resource, $request);
+
+            $this->manager->persist($resource);
+            $this->manager->flush();
+
+            $this->eventDispatcher->dispatchPostEvent('save', $this->metadata, $resource, $request);
+
+            return $this->viewHandler->handle(['data' => $resource, 'success' => true], ['group' => 'Detailed']);
+        }
+
+        $errors = $this->formErrorSerializer->serializeErrorFromHandledForm($handledForm);
+
+        return $this->viewHandler->handle(['success' => false, 'message' => implode(PHP_EOL, $errors)]);
+    }
+
     /**
      * @param Request $request
      * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
@@ -88,10 +122,21 @@ class DefinitionController extends ResourceController
                 $fromColumns = [];
             }
 
-            $toColumns = $this->getClassDefinitionForFieldSelection(DataObject\ClassDefinition::getByName($definition->getClass()));
+            $classDefinition = DataObject\ClassDefinition::getByName($definition->getClass());
+            $toColumns = $this->getClassDefinitionForFieldSelection($classDefinition);
             $mappings = $definition->getMapping();
             $mappingDefinition = [];
             $fromColumnsResult = [];
+            $bricks = [];
+            $collections = [];
+
+            foreach ($classDefinition->getFieldDefinitions() as $field) {
+                if ($field instanceof DataObject\ClassDefinition\Data\Objectbricks) {
+                    $bricks[$field->getName()] = $field->getAllowedTypes();
+                } elseif ($field instanceof DataObject\ClassDefinition\Data\Fieldcollections) {
+                    $collections[$field->getName()] = $field->getAllowedTypes();
+                }
+            }
 
             foreach ($fromColumns as $fromColumn) {
                 $fromColumn = get_object_vars($fromColumn);
@@ -105,11 +150,12 @@ class DefinitionController extends ResourceController
                 $found = false;
 
                 if (is_array($mappings)) {
-                    foreach ($mappings as $mapping) {
+                    foreach ($mappings as $index => $mapping) {
                         if ($mapping->getToColumn() === $classToColumn->getIdentifier()) {
                             $found = true;
 
                             $mappingDefinition[] = [
+                                'identifier' => $index,
                                 'fromColumn' => $mapping->getFromColumn(),
                                 'toColumn' => $mapping->getToColumn(),
                                 'primaryIdentifier' => $mapping->getPrimaryIdentifier(),
@@ -126,6 +172,7 @@ class DefinitionController extends ResourceController
 
                 if (!$found) {
                     $mappingDefinition[] = [
+                        'identifier' => null,
                         'fromColumn' => null,
                         'toColumn' => $classToColumn->getIdentifier(),
                         'primaryIdentifier' => false,
@@ -138,7 +185,14 @@ class DefinitionController extends ResourceController
                 }
             }
 
-            return $this->viewHandler->handle(['success' => true, 'mapping' => $mappingDefinition, 'fromColumns' => $fromColumnsResult, 'toColumns' => $toColumns]);
+            return $this->viewHandler->handle([
+                'success' => true,
+                'mapping' => $mappingDefinition,
+                'fromColumns' => $fromColumnsResult,
+                'toColumns' => $toColumns,
+                'bricks' => $bricks,
+                'fieldcollections' => $collections
+            ]);
         }
 
         return $this->viewHandler->handle(['success' => false]);
@@ -235,6 +289,7 @@ class DefinitionController extends ResourceController
             $toColumn->setFieldtype("input");
             $toColumn->setIdentifier($sysColumn);
             $toColumn->setType("systemColumn");
+            $toColumn->setGroup("systemColumn");
 
             $result[] = $toColumn;
         }
@@ -247,9 +302,13 @@ class DefinitionController extends ResourceController
                     foreach ($localizedFields as $localizedField) {
                         $localizedField = $this->getFieldConfiguration($localizedField);
 
+                        $localizedField->setGroup('localizedfield.' . strtolower($language));
                         $localizedField->setType('localizedfield.' . $language);
                         $localizedField->setIdentifier($localizedField->getIdentifier() . "~" . $language);
                         $localizedField->setSetter('localizedfield');
+                        $localizedField->setConfig([
+                            "language" => $language
+                        ]);
                         $localizedField->setSetterConfig(array(
                             "language" => $language
                         ));
@@ -266,16 +325,17 @@ class DefinitionController extends ResourceController
                         $classDefs = $brickDefinition->getClassDefinitions();
 
                         foreach ($classDefs as $classDef) {
-                            if ($classDef['classname'] === $class->getId() && $classDef['fieldname'] === $field->getName()) {
+                            if ($classDef['classname'] === $class->getName() && $classDef['fieldname'] === $field->getName()) {
                                 $fields = $brickDefinition->getFieldDefinitions();
 
                                 foreach ($fields as $brickField) {
                                     $resultField = $this->getFieldConfiguration($brickField);
 
+                                    $resultField->setGroup('objectbrick.' . $key);
                                     $resultField->setType("objectbrick");
                                     $resultField->setIdentifier('objectbrick~' . $field->getName() . '~' . $key . '~' . $resultField->getIdentifier());
                                     $resultField->setSetter('objectbrick');
-                                    $resultField->setSetterConfig(array(
+                                    $resultField->setConfig(array(
                                         "class" => $key
                                     ));
                                     $result[] = $resultField;
@@ -295,10 +355,11 @@ class DefinitionController extends ResourceController
                     foreach ($fieldDefinition as $fieldcollectionField) {
                         $resultField = $this->getFieldConfiguration($fieldcollectionField);
 
+                        $resultField->setGroup('fieldcollection.' . $type);
                         $resultField->setType("fieldcollection");
                         $resultField->setIdentifier("fieldcollection~" . $field->getName() . "~" . $type . "~" . $resultField->getIdentifier());
                         $resultField->setSetter('fieldcollection');
-                        $resultField->setSetterConfig(array(
+                        $resultField->setConfig(array(
                             "class" => $type
                         ));
 
@@ -328,11 +389,12 @@ class DefinitionController extends ResourceController
                             $keyConfig = DataObject\Classificationstore\KeyConfig::getById($keyId);
 
                             $toColumn = new ToColumn();
+                            $toColumn->setGroup('classificationstore');
                             $toColumn->setIdentifier('classificationstore~' . $field->getName() . '~' . $keyConfig->getId() . '~' . $config->getId());
                             $toColumn->setType("classificationstore");
                             $toColumn->setFieldtype($keyConfig->getType());
                             $toColumn->setSetter('classificationstore');
-                            $toColumn->setSetterConfig(array(
+                            $toColumn->setConfig(array(
                                 "keyId" => $keyConfig->getId(),
                                 "groupId" => $config->getId(),
                             ));
@@ -361,6 +423,7 @@ class DefinitionController extends ResourceController
         $toColumn->setLabel($field->getName());
         $toColumn->setFieldtype($field->getFieldtype());
         $toColumn->setIdentifier($field->getName());
+        $toColumn->setGroup('fields');
 
         return $toColumn;
     }

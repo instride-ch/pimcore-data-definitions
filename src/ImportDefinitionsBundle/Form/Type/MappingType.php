@@ -69,7 +69,7 @@ final class MappingType extends AbstractResourceType
                     return;
                 }
 
-                $this->addSetterConfigurationFields($event->getForm(), $this->setterTypeRegistry->get($type, 'default'));
+                //$this->addSetterConfigurationFields($event->getForm(), $this->setterTypeRegistry->get($type, 'default'));
             })
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $type = $this->getSetterRegistryIdentifier($event->getForm(), $event->getData());
@@ -99,7 +99,7 @@ final class MappingType extends AbstractResourceType
                     return;
                 }
 
-                $this->addInterpreterConfigurationFields($event->getForm(), $this->interpreterTypeRegistry->get($type, 'default'));
+                //$this->addInterpreterConfigurationFields($event->getForm(), $this->interpreterTypeRegistry->get($type, 'default'));
             })
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $type = $this->getInterpreterRegistryIdentifier($event->getForm(), $event->getData());

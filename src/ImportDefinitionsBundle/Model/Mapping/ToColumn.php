@@ -52,6 +52,11 @@ class ToColumn extends AbstractColumn
     public $interpreterConfig;
 
     /**
+     * @var string
+     */
+    public $group;
+
+    /**
      * @return string
      */
     public function getType()
@@ -161,5 +166,21 @@ class ToColumn extends AbstractColumn
     public function setInterpreter($interpreter)
     {
         $this->interpreter = $interpreter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param string $group
+     */
+    public function setGroup(string $group)
+    {
+        $this->group = $group;
     }
 }

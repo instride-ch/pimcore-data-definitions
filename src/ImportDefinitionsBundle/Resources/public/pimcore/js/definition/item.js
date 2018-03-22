@@ -353,6 +353,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
 
             if (pimcore.plugin.importdefinitions.provider[provider] !== undefined) {
                 if (this.data.provider === null) {
+                    this.data.provider = provider;
                     this.save(function () {
                         this.updateProviderMapViews();
                     }.bind(this));
@@ -430,6 +431,9 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                             data: config.fromColumns
                         });
 
+                        if(typeof config.toColumns == 'undefined') {
+                            config.toColumns = [];
+                        }
                         var toColumnStore = new Ext.data.Store({
                             data: config.toColumns
                         });

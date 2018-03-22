@@ -125,7 +125,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             width: 800,
             height: 600,
             resizeable : true,
-            modal: true,
+            modal: false,
             title: t('importdefinitions_config') + ' ' + fromColumn.data.label + ' => ' + toColumn.data.label,
             layout: 'fit',
             items: [this.configPanel]

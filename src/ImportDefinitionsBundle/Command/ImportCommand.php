@@ -64,26 +64,26 @@ EOT
             throw new \Exception("Definition not found");
         }
 
-        $eventDispatcher->addListener('import_definition.status', function(ImportDefinitionEvent $e) use ($output, &$progress, &$process)  {
+        $imStatus = function(ImportDefinitionEvent $e) use ($output, &$progress, &$process)  {
             if($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getSubject());
                 $progress->display();
             }
-        });
+        };
 
-        $eventDispatcher->addListener("import_definition.total", function(ImportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
+        $imTotal = function(ImportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
             $progress = new ProgressBar($output, $e->getSubject());
             $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %message%');
             $progress->start();
-        });
+        };
 
-        $eventDispatcher->addListener("import_definition.progress", function(ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imProgress = function(ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
             if($progress instanceof ProgressBar) {
                 $progress->advance();
             }
-        });
+        };
 
-        $eventDispatcher->addListener("import_definition.finished", function(ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imFinished = function(ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
             if($progress instanceof ProgressBar) {
                 $progress->finish();
                 $output->writeln("");
@@ -91,9 +91,19 @@ EOT
 
             $output->writeln("Import finished!");
             $output->writeln("");
-        });
+        };
 
-        $this->getContainer()->get('import_definition.importer')->doImport($definition, \GuzzleHttp\json_decode($params, true));
+        $eventDispatcher->addListener('import_definition.status', $imStatus);
+        $eventDispatcher->addListener("import_definition.total", $imTotal);
+        $eventDispatcher->addListener("import_definition.progress", $imProgress);
+        $eventDispatcher->addListener("import_definition.finished", $imFinished);
+
+        $this->getContainer()->get('import_definition.importer')->doImport($definition, json_decode($params, true));
+
+        $eventDispatcher->removeListener('import_definition.status', $imStatus);
+        $eventDispatcher->removeListener("import_definition.total", $imTotal);
+        $eventDispatcher->removeListener("import_definition.progress", $imProgress);
+        $eventDispatcher->removeListener("import_definition.finished", $imFinished);
 
         return 0;
     }

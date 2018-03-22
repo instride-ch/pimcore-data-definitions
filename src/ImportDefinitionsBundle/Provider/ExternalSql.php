@@ -14,15 +14,27 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use Pimcore\Db;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 
-class Sql extends AbstractSql
+class ExternalSql extends AbstractSql
 {
     /**
      * @return \Doctrine\DBAL\Connection
      */
     protected function getDb($configuration)
     {
-        return Db::get();
+        $config = new Configuration();
+        $connectionParams = array(
+            'dbname' => $configuration['database'],
+            'user' => $configuration['username'],
+            'password' => $configuration['password'],
+            'host' => $configuration['host'],
+            'port' => $configuration['port'],
+            'driver' => 'pdo_mysql',
+        );
+        $conn = DriverManager::getConnection($connectionParams, $config);
+
+        return $conn;
     }
 }

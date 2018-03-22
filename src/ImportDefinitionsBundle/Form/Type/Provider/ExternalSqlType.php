@@ -19,11 +19,17 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-final class SqlType extends AbstractType
+final class ExternalSqlType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('host', TextType::class)
+            ->add('username', TextType::class)
+            ->add('password', TextType::class)
+            ->add('database', TextType::class)
+            ->add('adapter', TextType::class)
+            ->add('port', NumberType::class)
             ->add('query', TextType::class)
         ;
     }
@@ -33,6 +39,6 @@ final class SqlType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'import_definitions_provider_sql';
+        return 'import_definitions_provider_external_sql';
     }
 }

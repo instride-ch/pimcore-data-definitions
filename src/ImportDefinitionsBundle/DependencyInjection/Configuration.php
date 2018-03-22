@@ -100,6 +100,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('provider_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/abstractprovider.js')->end()
                             ->scalarNode('provider_csv')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/csv.js')->end()
                             ->scalarNode('provider_sql')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/sql.js')->end()
+                            ->scalarNode('provider_external_sql')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/externalSql.js')->end()
                             ->scalarNode('provider_json')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/json.js')->end()
                             ->scalarNode('provider_xml')->defaultValue('/bundles/importdefinitions/pimcore/js/provider/xml.js')->end()
                             ->scalarNode('interpreter_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/abstract.js')->end()

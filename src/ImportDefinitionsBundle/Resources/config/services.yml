@@ -144,6 +144,11 @@ services:
     tags:
       - { name: import_definition.provider, type: json, form-type: ImportDefinitionsBundle\Form\Type\Provider\JsonType }
 
+  import_definition.provider.external_sql:
+    class: ImportDefinitionsBundle\Provider\ExternalSql
+    tags:
+      - { name: import_definition.provider, type: external_sql, form-type: ImportDefinitionsBundle\Form\Type\Provider\ExternalSqlType }
+
   import_definition.provider.sql:
     class: ImportDefinitionsBundle\Provider\Sql
     tags:

@@ -17,25 +17,8 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
 
  * Since Import-Definitions depends on CoreShops ResourceBundle, and the ResourceBundle only exists in DEV yet, you need to set your "minimum-stability" to "dev" in your composer.json
  * Install via composer ```composer require w-vision/import-definitions:^2.0-dev```
- * Load needed Bundles:
-    ```php
-    <?php
-
-    // app/AppKernel.php
-    public function registerBundlesToCollection(BundleCollection $collection)
-    {
-        $collection->addBundles(array(
-            new \JMS\SerializerBundle\JMSSerializerBundle(),
-            new \CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle(),
-            new \FOS\RestBundle\FOSRestBundle(),
-            new \Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
-            new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
-        ), 120);
-    }
-    ```
- * Enable Bundle by running ```bin/console pimcore:bundle:enable ImportDefinitionsBundle```
- * Clear Cache by running ```bin/console cache:clear --no-warmup```
- * Install Bundle by running ```bin/console pimcore:bundle:install ImportDefinitionsBundle```
+ * Enable via command-line (or inside the pimcore extension manager): ```bin/console pimcore:bundle:enable ImportDefinitionsBundle```
+ * Install via command-line (or inside the pimcore extension manager): ```bin/console pimcore:bundle:install ImportDefinitionsBundle```
  * Reload Pimcore
  * Open Settings -> Import Definitions
 

@@ -413,7 +413,7 @@ final class Importer implements ImporterInterface
                 }
 
                 if (!$obj->getKey()) {
-                    throw new \Exception('Not Key set, please check your import-data');
+                    throw new \Exception('No key set, please check your import-data');
                 }
 
                 $obj->setKey(Service::getUniqueKey($obj));

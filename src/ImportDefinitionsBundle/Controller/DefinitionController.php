@@ -29,39 +29,6 @@ class DefinitionController extends ResourceController
 {
     /**
      * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function saveAction(Request $request)
-    {
-        $this->isGrantedOr403();
-
-        $resource = $this->findOr404($request->get('id'));
-        //$resource->setMapping([]);
-
-        $form = $this->resourceFormFactory->create($this->metadata, $resource);
-        $handledForm = $form->handleRequest($request);
-
-        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true) && $handledForm->isValid()) {
-            $resource = $form->getData();
-
-            $this->eventDispatcher->dispatchPreEvent('save', $this->metadata, $resource, $request);
-
-            $this->manager->persist($resource);
-            $this->manager->flush();
-
-            $this->eventDispatcher->dispatchPostEvent('save', $this->metadata, $resource, $request);
-
-            return $this->viewHandler->handle(['data' => $resource, 'success' => true], ['group' => 'Detailed']);
-        }
-
-        $errors = $this->formErrorSerializer->serializeErrorFromHandledForm($handledForm);
-
-        return $this->viewHandler->handle(['success' => false, 'message' => implode(PHP_EOL, $errors)]);
-    }
-
-    /**
-     * @param Request $request
      * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function getConfigAction(Request $request)

@@ -367,6 +367,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
 
     postSave: function () {
         this.undirtyMappingRecords();
+        this.reloadColumnMapping();
     },
 
     undirtyMappingRecords: function () {
@@ -650,7 +651,9 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
             mapping.forEach(function (map) {
                 if (map.data.fromColumn) {
                     if (!map.data.identifier) {
-                        mappingResult[highestId++] = map.data;
+                        highestId++;
+
+                        mappingResult[highestId] = map.data;
                     }
                 }
             });

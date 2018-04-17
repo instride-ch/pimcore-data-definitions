@@ -43,18 +43,25 @@ class StorePriceSetter implements SetterInterface
     {
         $config = $map->getSetterConfig();
 
-        $store = $this->storeRepository->find($config['store']);
-
-        if (!$store instanceof StoreInterface) {
-            throw new \InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
+        if (!array_key_exists('stores', $config) || !is_array($config['stores'])) {
+            return;
         }
 
-        $setter = 'set' . ucfirst($map->getToColumn());
+        foreach ($config['stores'] as $store) {
+            $store = $this->storeRepository->find($store);
 
-        if (!method_exists($object, $setter)) {
-            throw new \InvalidArgumentException(sprintf('Expected a %s function but can not find it', $setter));
+            if (!$store instanceof StoreInterface) {
+                throw new \InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
+            }
+
+            $setter = 'set' . ucfirst($map->getToColumn());
+
+            if (!method_exists($object, $setter)) {
+                throw new \InvalidArgumentException(sprintf('Expected a %s function but can not find it', $setter));
+            }
+
+
+            $object->$setter($value, $store);
         }
-
-        $object->$setter($value, $store);
     }
 }

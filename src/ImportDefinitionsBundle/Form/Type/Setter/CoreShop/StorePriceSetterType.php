@@ -14,7 +14,11 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Setter\CoreShop;
 
+use CoreShop\Bundle\StoreBundle\Form\Type\StoreChoiceType;
+use CoreShop\Component\Store\Model\StoreInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -23,6 +27,29 @@ final class StorePriceSetterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('store', IntegerType::class);
+            ->add('stores', StoreChoiceType::class, [
+                'multiple' => true,
+            ])
+            ->addModelTransformer(new CallbackTransformer(
+                function ($value) {
+                    return $value;
+                },
+                function ($value) {
+                    $resolvedValues = [];
+                    if (is_array($value) && array_key_exists('stores', $value)) {
+                        if ($value['stores'] instanceof ArrayCollection) {
+                            foreach ($value['stores'] as $val) {
+                                if ($val instanceof StoreInterface) {
+                                    $resolvedValues[] = $val->getId();
+                                }
+                            }
+                        }
+                    }
+
+                    $value['stores'] = $resolvedValues;
+
+                    return $value;
+                }
+            ));
     }
 }

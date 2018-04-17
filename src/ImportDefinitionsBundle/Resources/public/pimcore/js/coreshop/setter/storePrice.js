@@ -17,8 +17,10 @@ pimcore.plugin.importdefinitions.setters.coreshop_store_price = Class.create(pim
     getLayout : function (fromColumn, toColumn, record, config) {
         return [{
             xtype: 'coreshop.store',
-            name: 'store',
-            value: config.store
+            name: 'stores',
+            multiSelect: true,
+            typeAhead: false,
+            value: config ? config.stores : []
         }];
     }
 });

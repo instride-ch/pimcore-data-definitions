@@ -365,9 +365,11 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         }
     },
 
-    postSave: function () {
-        this.undirtyMappingRecords();
-        this.reloadColumnMapping();
+    postSave: function (res) {
+        if (res.success) {
+            this.undirtyMappingRecords();
+            this.reloadColumnMapping();
+        }
     },
 
     undirtyMappingRecords: function () {

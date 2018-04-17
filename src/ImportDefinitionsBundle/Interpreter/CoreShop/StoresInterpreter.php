@@ -23,30 +23,10 @@ use Pimcore\Model\DataObject\Concrete;
 final class StoresInterpreter implements InterpreterInterface
 {
     /**
-     * @var StoreRepositoryInterface
-     */
-    private $storeRepository;
-
-    /**
-     * @param StoreRepositoryInterface $storeRepository
-     */
-    public function __construct(StoreRepositoryInterface $storeRepository)
-    {
-        $this->storeRepository = $storeRepository;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $stores = $configuration['stores'];
-        $resolvedStores = [];
-
-        foreach ($stores as $store) {
-            $resolvedStores[] = $this->storeRepository->find($store);
-        }
-
-        return $resolvedStores;
+        return $configuration['stores'];
     }
 }

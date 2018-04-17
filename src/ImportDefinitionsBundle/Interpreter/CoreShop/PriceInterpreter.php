@@ -30,6 +30,7 @@ class PriceInterpreter implements InterpreterInterface
         $inputIsFloat = $interpreterConfig['isFloat'];
 
         if (is_string($value)) {
+            $value = str_replace(',', '.', $value);
             $value = floatval($value);
         }
 

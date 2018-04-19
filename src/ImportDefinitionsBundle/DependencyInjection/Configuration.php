@@ -112,6 +112,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('interpreter_quantityvalue')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/quantityvalue.js')->end()
                             ->scalarNode('interpreter_nested')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/nested.js')->end()
                             ->scalarNode('interpreter_nested_container')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/nestedcontainer.js')->end()
+                            ->scalarNode('interpreter_empty')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/empty.js')->end()
                             ->scalarNode('setter_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/abstract.js')->end()
                             ->scalarNode('setter_fieldcollection')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/fieldcollection.js')->end()
                             ->scalarNode('setter_objectbrick')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/objectbrick.js')->end()

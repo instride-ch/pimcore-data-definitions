@@ -90,48 +90,48 @@ services:
 
   ### INTERPRETER
   import_definition.interpreter.assets_url:
-    class: ImportDefinitionsBundle\Interpreter\AssetsUrl
+    class: ImportDefinitionsBundle\Interpreter\AssetsUrlInterpreter
     arguments: ['@import_definition.service.placeholder']
     tags:
-      - { name: import_definition.interpreter, type: assets_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetsUrlType }
+      - { name: import_definition.interpreter, type: assets_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
 
   import_definition.interpreter.asset_url:
-    class: ImportDefinitionsBundle\Interpreter\AssetUrl
+    class: ImportDefinitionsBundle\Interpreter\AssetUrlInterpreter
     arguments: ['@import_definition.service.placeholder']
     tags:
-      - { name: import_definition.interpreter, type: asset_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlType }
+      - { name: import_definition.interpreter, type: asset_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
 
   import_definition.interpreter.checkbox:
-    class: ImportDefinitionsBundle\Interpreter\Checkbox
+    class: ImportDefinitionsBundle\Interpreter\CheckboxInterpreter
     tags:
       - { name: import_definition.interpreter, type: checkbox, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
   import_definition.interpreter.default_value:
-    class: ImportDefinitionsBundle\Interpreter\DefaultValue
+    class: ImportDefinitionsBundle\Interpreter\DefaultValueInterpreter
     tags:
-      - { name: import_definition.interpreter, type: default_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultValueType }
+      - { name: import_definition.interpreter, type: default_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultValueInterpreterType }
 
   import_definition.interpreter.href:
-    class: ImportDefinitionsBundle\Interpreter\Href
+    class: ImportDefinitionsBundle\Interpreter\HrefInterpreter
     tags:
-      - { name: import_definition.interpreter, type: href, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\HrefType }
+      - { name: import_definition.interpreter, type: href, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\HrefInterpreterType }
 
   import_definition.interpreter.multi_href:
-    class: ImportDefinitionsBundle\Interpreter\MultiHref
+    class: ImportDefinitionsBundle\Interpreter\MultiHrefInterpreter
     tags:
-      - { name: import_definition.interpreter, type: multi_href, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\MultiHrefType }
+      - { name: import_definition.interpreter, type: multi_href, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\MultiHrefInterpreterType }
 
   import_definition.interpreter.quantity_value:
-    class: ImportDefinitionsBundle\Interpreter\QuantityValue
+    class: ImportDefinitionsBundle\Interpreter\QuantityValueInterpreter
     tags:
-      - { name: import_definition.interpreter, type: quantity_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\QuantityValueType }
+      - { name: import_definition.interpreter, type: quantity_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType }
 
   import_definition.interpreter.nested:
-    class: ImportDefinitionsBundle\Interpreter\Nested
+    class: ImportDefinitionsBundle\Interpreter\NestedInterpreter
     arguments:
       - '@import_definition.registry.interpreter'
     tags:
-      - { name: import_definition.interpreter, type: nested, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\NestedType }
+      - { name: import_definition.interpreter, type: nested, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType }
 
   import_definition.interpreter.expression:
     class: ImportDefinitionsBundle\Interpreter\ExpressionInterpreter
@@ -142,62 +142,62 @@ services:
 
   ### PROVIDER
   import_definition.provider.csv:
-    class: ImportDefinitionsBundle\Provider\Csv
+    class: ImportDefinitionsBundle\Provider\CsvProvider
     tags:
-      - { name: import_definition.provider, type: csv, form-type: ImportDefinitionsBundle\Form\Type\Provider\CsvType }
+      - { name: import_definition.provider, type: csv, form-type: ImportDefinitionsBundle\Form\Type\Provider\CsvProviderType }
 
   import_definition.provider.json:
-    class: ImportDefinitionsBundle\Provider\Json
+    class: ImportDefinitionsBundle\Provider\JsonProvider
     tags:
-      - { name: import_definition.provider, type: json, form-type: ImportDefinitionsBundle\Form\Type\Provider\JsonType }
+      - { name: import_definition.provider, type: json, form-type: ImportDefinitionsBundle\Form\Type\Provider\JsonProviderType }
 
   import_definition.provider.external_sql:
-    class: ImportDefinitionsBundle\Provider\ExternalSql
+    class: ImportDefinitionsBundle\Provider\ExternalSqlProvider
     tags:
-      - { name: import_definition.provider, type: external_sql, form-type: ImportDefinitionsBundle\Form\Type\Provider\ExternalSqlType }
+      - { name: import_definition.provider, type: external_sql, form-type: ImportDefinitionsBundle\Form\Type\Provider\ExternalSqlProviderType }
 
   import_definition.provider.sql:
-    class: ImportDefinitionsBundle\Provider\Sql
+    class: ImportDefinitionsBundle\Provider\SqlProvider
     tags:
-      - { name: import_definition.provider, type: sql, form-type: ImportDefinitionsBundle\Form\Type\Provider\SqlType }
+      - { name: import_definition.provider, type: sql, form-type: ImportDefinitionsBundle\Form\Type\Provider\SqlProviderType }
 
   import_definition.provider.xml:
-    class: ImportDefinitionsBundle\Provider\Xml
+    class: ImportDefinitionsBundle\Provider\XmlProvider
     tags:
-      - { name: import_definition.provider, type: xml, form-type: ImportDefinitionsBundle\Form\Type\Provider\XmlType }
+      - { name: import_definition.provider, type: xml, form-type: ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType }
 
   ### SETTER
   import_definition.setter.classificationstore:
-    class: ImportDefinitionsBundle\Setter\Classificationstore
+    class: ImportDefinitionsBundle\Setter\ClassificationStoreSetter
     tags:
-      - { name: import_definition.setter, type: classification_store, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreType }
+      - { name: import_definition.setter, type: classification_store, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
 
   import_definition.setter.fieldcollection:
-    class: ImportDefinitionsBundle\Setter\Fieldcollection
+    class: ImportDefinitionsBundle\Setter\FieldCollectionSetter
     tags:
-      - { name: import_definition.setter, type: fieldcollection, form-type: ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionType }
+      - { name: import_definition.setter, type: fieldcollection, form-type: ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
 
   import_definition.setter.key:
-    class: ImportDefinitionsBundle\Setter\Key
+    class: ImportDefinitionsBundle\Setter\KeySetter
     tags:
       - { name: import_definition.setter, type: key, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
   import_definition.setter.localizedfield:
-    class: ImportDefinitionsBundle\Setter\Localizedfield
+    class: ImportDefinitionsBundle\Setter\LocalizedfieldSetter
     tags:
-      - { name: import_definition.setter, type: localizedfield, form-type: ImportDefinitionsBundle\Form\Type\Setter\LocalizedFieldType }
+      - { name: import_definition.setter, type: localizedfield, form-type: ImportDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
 
   import_definition.setter.objectbrick:
-    class: ImportDefinitionsBundle\Setter\Objectbrick
+    class: ImportDefinitionsBundle\Setter\ObjectbrickSetter
     tags:
-      - { name: import_definition.setter, type: objectbrick, form-type: ImportDefinitionsBundle\Form\Type\Setter\ObjectBrickType }
+      - { name: import_definition.setter, type: objectbrick, form-type: ImportDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
 
   import_definition.setter.object_type:
-    class: ImportDefinitionsBundle\Setter\ObjectType
+    class: ImportDefinitionsBundle\Setter\ObjectTypeSetter
     tags:
       - { name: import_definition.setter, type: object_type, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
-  import_definition.listeners.index.delete:
+  import_definition.listeners.object.delete:
     class: ImportDefinitionsBundle\EventListener\ObjectDeleteListener
     tags:
       - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onDataObjectDelete }

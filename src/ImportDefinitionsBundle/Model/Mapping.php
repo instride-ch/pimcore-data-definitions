@@ -17,37 +17,37 @@ namespace ImportDefinitionsBundle\Model;
 class Mapping
 {
     /**
-     * @var string
+     * @var null|string
      */
     public $fromColumn;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $toColumn;
 
     /**
-     * @var boolean
+     * @var null|boolean
      */
     public $primaryIdentifier;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $setter;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $interpreter;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $interpreterConfig;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $setterConfig;
 
@@ -70,9 +70,9 @@ class Mapping
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getToColumn(): string
+    public function getToColumn()
     {
         return $this->toColumn;
     }
@@ -86,9 +86,9 @@ class Mapping
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getFromColumn(): string
+    public function getFromColumn()
     {
         return $this->fromColumn;
     }
@@ -102,9 +102,9 @@ class Mapping
     }
 
     /**
-     * @return boolean
+     * @return bool|null
      */
-    public function getPrimaryIdentifier(): bool
+    public function getPrimaryIdentifier()
     {
         return $this->primaryIdentifier;
     }
@@ -118,9 +118,9 @@ class Mapping
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSetter(): string
+    public function getSetter()
     {
         return $this->setter;
     }
@@ -134,9 +134,9 @@ class Mapping
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getInterpreter(): string
+    public function getInterpreter()
     {
         return $this->interpreter;
     }
@@ -150,9 +150,9 @@ class Mapping
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getInterpreterConfig(): array
+    public function getInterpreterConfig()
     {
         return $this->interpreterConfig;
     }
@@ -166,9 +166,9 @@ class Mapping
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getSetterConfig(): array
+    public function getSetterConfig()
     {
         return $this->setterConfig;
     }

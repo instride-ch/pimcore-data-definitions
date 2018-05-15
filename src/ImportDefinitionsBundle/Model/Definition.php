@@ -19,107 +19,107 @@ use Pimcore\Model\AbstractModel;
 class Definition extends AbstractModel implements DefinitionInterface
 {
     /**
-     * @var int
+     * @var null|int
      */
     public $id;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $name;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $provider;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $objectPath;
 
     /**
-     * @var string
+     * @var null|int|string
      */
     public $class;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $configuration;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $creationDate;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $modificationDate;
 
     /**
-     * @var Mapping[]
+     * @var null|Mapping[]
      */
     public $mapping;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $cleaner;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $key;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $filter;
 
     /**
-     * @var bool
+     * @var null|bool
      */
     public $renameExistingObjects;
 
     /**
-     * @var bool
+     * @var null|bool
      */
     public $relocateExistingObjects;
 
     /**
-     * @var bool
+     * @var null|bool
      */
     public $skipNewObjects = false;
 
     /**
-     * @var bool
+     * @var null|bool
      */
     public $skipExistingObjects = false;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $runner;
 
     /**
-     * @var boolean
+     * @var null|boolean
      */
     public $createVersion;
 
     /**
-     * @var boolean
+     * @var null|boolean
      */
     public $stopOnException;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $failureNotificationDocument;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $successNotificationDocument;
 
@@ -139,9 +139,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -155,9 +155,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
-    public function getProvider(): string
+    public function getProvider()
     {
         return $this->provider;
     }
@@ -171,9 +171,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return array
+     * @return array|mixed|null
      */
-    public function getConfiguration(): array
+    public function getConfiguration()
     {
         return $this->configuration;
     }
@@ -187,9 +187,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null|string
      */
-    public function getClass(): int
+    public function getClass()
     {
         return $this->class;
     }
@@ -203,9 +203,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -219,9 +219,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return Mapping[]
+     * @return Mapping[]|mixed|null
      */
-    public function getMapping(): array
+    public function getMapping()
     {
         return $this->mapping;
     }
@@ -235,9 +235,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
-    public function getCreationDate(): int
+    public function getCreationDate()
     {
         return $this->creationDate;
     }
@@ -251,9 +251,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
-    public function getModificationDate(): int
+    public function getModificationDate()
     {
         return $this->modificationDate;
     }
@@ -267,9 +267,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
-    public function getObjectPath(): string
+    public function getObjectPath()
     {
         return $this->objectPath;
     }
@@ -283,9 +283,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
-    public function getCleaner(): string
+    public function getCleaner()
     {
         return $this->cleaner;
     }
@@ -299,9 +299,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
-    public function getKey(): string
+    public function getKey()
     {
         return $this->key;
     }
@@ -315,9 +315,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
-    public function getFilter(): string
+    public function getFilter()
     {
         return $this->filter;
     }
@@ -331,9 +331,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|mixed|null
      */
-    public function getRenameExistingObjects(): bool
+    public function getRenameExistingObjects()
     {
         return $this->renameExistingObjects;
     }
@@ -347,9 +347,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|mixed|null
      */
-    public function getRelocateExistingObjects(): bool
+    public function getRelocateExistingObjects()
     {
         return $this->relocateExistingObjects;
     }
@@ -363,9 +363,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
-    public function getRunner(): string
+    public function getRunner()
     {
         return $this->runner;
     }
@@ -379,9 +379,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|mixed|null
      */
-    public function getCreateVersion(): bool
+    public function getCreateVersion()
     {
         return $this->createVersion;
     }
@@ -395,9 +395,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|mixed|null
      */
-    public function getStopOnException(): bool
+    public function getStopOnException()
     {
         return $this->stopOnException;
     }
@@ -411,9 +411,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
-    public function getFailureNotificationDocument(): int
+    public function getFailureNotificationDocument()
     {
         return $this->failureNotificationDocument;
     }
@@ -427,9 +427,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
-    public function getSuccessNotificationDocument(): int
+    public function getSuccessNotificationDocument()
     {
         return $this->successNotificationDocument;
     }
@@ -443,9 +443,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool
+     * @return bool|mixed|null
      */
-    public function getSkipNewObjects(): bool
+    public function getSkipNewObjects()
     {
         return $this->skipNewObjects;
     }
@@ -459,9 +459,9 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool
+     * @return bool|mixed|null
      */
-    public function getSkipExistingObjects(): bool
+    public function getSkipExistingObjects()
     {
         return $this->skipExistingObjects;
     }

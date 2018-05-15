@@ -19,9 +19,9 @@ use CoreShop\Component\Resource\Model\ResourceInterface;
 interface DefinitionInterface extends ResourceInterface
 {
     /**
-     * @return int
+     * @return mixed
      */
-    public function getId(): int;
+    public function getId();
 
     /**
      * @param int $id
@@ -29,9 +29,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setId($id);
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getProvider(): string;
+    public function getProvider();
 
     /**
      * @param string $provider
@@ -39,9 +39,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setProvider($provider);
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getConfiguration(): array;
+    public function getConfiguration();
 
     /**
      * @param array $configuration
@@ -49,9 +49,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setConfiguration($configuration);
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getClass(): int;
+    public function getClass();
 
     /**
      * @param int $class
@@ -59,9 +59,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setClass($class);
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getName(): string;
+    public function getName();
 
     /**
      * @param string $name
@@ -69,9 +69,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setName($name);
 
     /**
-     * @return Mapping[]
+     * @return mixed
      */
-    public function getMapping(): array;
+    public function getMapping();
 
     /**
      * @param Mapping[] $mapping
@@ -79,9 +79,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setMapping($mapping);
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getCreationDate(): int;
+    public function getCreationDate();
 
     /**
      * @param int $creationDate
@@ -89,9 +89,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setCreationDate($creationDate);
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getModificationDate(): int;
+    public function getModificationDate();
 
     /**
      * @param int $modificationDate
@@ -99,9 +99,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setModificationDate($modificationDate);
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getObjectPath(): string;
+    public function getObjectPath();
 
     /**
      * @param string $objectPath
@@ -109,9 +109,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setObjectPath($objectPath);
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getCleaner(): string;
+    public function getCleaner();
 
     /**
      * @param string $cleaner
@@ -119,9 +119,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setCleaner($cleaner);
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getKey(): string;
+    public function getKey();
 
     /**
      * @param string $key
@@ -129,9 +129,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setKey($key);
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getFilter(): string;
+    public function getFilter();
 
     /**
      * @param string $filter
@@ -139,9 +139,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setFilter($filter);
 
     /**
-     * @return boolean
+     * @return mixed
      */
-    public function getRenameExistingObjects(): bool;
+    public function getRenameExistingObjects();
 
     /**
      * @param boolean $renameExistingObjects
@@ -149,9 +149,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setRenameExistingObjects($renameExistingObjects);
 
     /**
-     * @return boolean
+     * @return mixed
      */
-    public function getRelocateExistingObjects(): bool;
+    public function getRelocateExistingObjects();
 
     /**
      * @param boolean $relocateExistingObjects
@@ -159,9 +159,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setRelocateExistingObjects($relocateExistingObjects);
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getRunner(): string;
+    public function getRunner();
 
     /**
      * @param string $runner
@@ -169,9 +169,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setRunner($runner);
 
     /**
-     * @return boolean
+     * @return mixed
      */
-    public function getCreateVersion(): bool;
+    public function getCreateVersion();
 
     /**
      * @param boolean $createVersion
@@ -179,9 +179,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setCreateVersion($createVersion);
 
     /**
-     * @return boolean
+     * @return mixed
      */
-    public function getStopOnException(): bool;
+    public function getStopOnException();
 
     /**
      * @param boolean $stopOnException
@@ -189,9 +189,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setStopOnException($stopOnException);
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getFailureNotificationDocument(): int;
+    public function getFailureNotificationDocument();
 
     /**
      * @param int $failureNotificationDocument
@@ -199,9 +199,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setFailureNotificationDocument($failureNotificationDocument);
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getSuccessNotificationDocument(): int;
+    public function getSuccessNotificationDocument();
 
     /**
      * @param int $successNotificationDocument
@@ -209,9 +209,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setSuccessNotificationDocument($successNotificationDocument);
 
     /**
-     * @return bool
+     * @return mixed
      */
-    public function getSkipNewObjects(): bool;
+    public function getSkipNewObjects();
 
     /**
      * @param bool $skipNewObjects
@@ -219,9 +219,9 @@ interface DefinitionInterface extends ResourceInterface
     public function setSkipNewObjects($skipNewObjects);
 
     /**
-     * @return bool
+     * @return mixed
      */
-    public function getSkipExistingObjects(): bool;
+    public function getSkipExistingObjects();
 
     /**
      * @param bool $skipExistingObjects

@@ -19,17 +19,17 @@ use Pimcore\Model\AbstractModel;
 class Log extends AbstractModel
 {
     /**
-     * @var int
+     * @var null|int
      */
     public $id;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $definition;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $o_id;
 
@@ -53,9 +53,9 @@ class Log extends AbstractModel
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -69,9 +69,9 @@ class Log extends AbstractModel
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getDefinition(): int
+    public function getDefinition()
     {
         return $this->definition;
     }
@@ -85,9 +85,9 @@ class Log extends AbstractModel
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getO_Id(): int
+    public function getO_Id()
     {
         return $this->o_id;
     }

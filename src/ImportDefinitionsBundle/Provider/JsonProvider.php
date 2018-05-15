@@ -73,7 +73,7 @@ class JsonProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($configuration, $definition, $params, $filter = null)
+    public function getData($configuration, $definition, $params, $filter = null): array
     {
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
 

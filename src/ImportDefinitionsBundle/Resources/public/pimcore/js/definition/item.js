@@ -433,7 +433,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                             data: config.fromColumns
                         });
 
-                        if(typeof config.toColumns == 'undefined') {
+                        if (typeof config.toColumns == 'undefined') {
                             config.toColumns = [];
                         }
                         var toColumnStore = new Ext.data.Store({

@@ -38,11 +38,16 @@ final class StoresInterpreterType extends AbstractType
                 },
                 function ($value) {
                     $resolvedValues = [];
-                    if (\is_array($value) && array_key_exists('stores', $value) && $value['stores'] instanceof ArrayCollection) {
-                        foreach ($value['stores'] as $val) {
-                            if ($val instanceof StoreInterface) {
-                                $resolvedValues[] = $val->getId();
-                            }
+
+                    if (!\is_array($value) ||
+                        !array_key_exists('stores', $value) ||
+                        !$value['stores'] instanceof ArrayCollection) {
+                        return [];
+                    }
+
+                    foreach ($value['stores'] as $val) {
+                        if ($val instanceof StoreInterface) {
+                            $resolvedValues[] = $val->getId();
                         }
                     }
 

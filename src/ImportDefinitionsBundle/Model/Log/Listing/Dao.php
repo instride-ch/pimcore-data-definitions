@@ -8,13 +8,14 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Model\Log\Listing;
 
 use Pimcore\Db\ZendCompatibility\Expression;
+use Pimcore\Db\ZendCompatibility\QueryBuilder;
 use Pimcore\Model\Listing;
 use ImportDefinitionsBundle\Model\Log;
 
@@ -32,24 +33,25 @@ class Dao extends Listing\Dao\AbstractDao
      *
      * @throws \Exception
      */
-    protected function getTableName()
+    protected function getTableName(): string
     {
         return $this->tableName;
     }
 
     /**
-     * @return \Pimcore\Db\ZendCompatibility\QueryBuilder
+     * @return QueryBuilder
+     * @throws \Exception
      */
-    public function getQuery()
+    public function getQuery(): QueryBuilder
     {
         // init
         $select = $this->db->select();
 
         // create base
-        $field = $this->getTableName().'.id';
+        $field = sprintf('%s.id', $this->getTableName());
         $select->from(
             [$this->getTableName()], [
-                new Expression(sprintf('SQL_CALC_FOUND_ROWS %s as id', $field, 'o_type')),
+                new Expression(sprintf('SQL_CALC_FOUND_ROWS %s as id', $field)),
             ]
         );
 
@@ -72,8 +74,9 @@ class Dao extends Listing\Dao\AbstractDao
      * Loads objects from the database.
      *
      * @return Log[]
+     * @throws \Exception
      */
-    public function load()
+    public function load(): array
     {
         // load id's
         $list = $this->loadIdList();
@@ -91,7 +94,7 @@ class Dao extends Listing\Dao\AbstractDao
     }
 
     /**
-     * Loads a list for the specicifies parameters, returns an array of ids.
+     * Loads a list for the specified parameters, returns an array of ids.
      *
      * @return array
      * @throws \Exception
@@ -110,15 +113,14 @@ class Dao extends Listing\Dao\AbstractDao
     }
 
     /**
-     * Get Count.
+     * Get Count
      *
      * @return int
-     *
      * @throws \Exception
      */
-    public function getCount()
+    public function getCount(): int
     {
-        $amount = (int) $this->db->fetchOne('SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition().$this->getOffsetLimit(), $this->model->getConditionVariables());
+        $amount = (int) $this->db->fetchOne('SELECT COUNT(*) as amount FROM ' . $this->getTableName() . $this->getCondition() . $this->getOffsetLimit(), $this->model->getConditionVariables());
 
         return $amount;
     }
@@ -127,12 +129,11 @@ class Dao extends Listing\Dao\AbstractDao
      * Get Total Count.
      *
      * @return int
-     *
      * @throws \Exception
      */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
-        $amount = (int) $this->db->fetchOne('SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition(), $this->model->getConditionVariables());
+        $amount = (int) $this->db->fetchOne('SELECT COUNT(*) as amount FROM ' . $this->getTableName() . $this->getCondition(), $this->model->getConditionVariables());
 
         return $amount;
     }

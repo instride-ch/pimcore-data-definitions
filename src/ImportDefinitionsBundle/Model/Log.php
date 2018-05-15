@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -18,7 +18,6 @@ use Pimcore\Model\AbstractModel;
 
 class Log extends AbstractModel
 {
-
     /**
      * @var int
      */
@@ -35,7 +34,7 @@ class Log extends AbstractModel
     public $o_id;
 
     /**
-     * get Log by id
+     * Get Log by id
      *
      * @param $id
      * @return null|Log
@@ -47,7 +46,7 @@ class Log extends AbstractModel
             $obj->getDao()->getById($id);
             return $obj;
         } catch (\Exception $ex) {
-            \Logger::warn("Log with id $id not found");
+            \Logger::warn(sprintf('Log with ID %s not found', $id));
         }
 
         return null;
@@ -56,7 +55,7 @@ class Log extends AbstractModel
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -72,7 +71,7 @@ class Log extends AbstractModel
     /**
      * @return int
      */
-    public function getDefinition()
+    public function getDefinition(): int
     {
         return $this->definition;
     }
@@ -88,7 +87,7 @@ class Log extends AbstractModel
     /**
      * @return int
      */
-    public function getO_Id()
+    public function getO_Id(): int
     {
         return $this->o_id;
     }

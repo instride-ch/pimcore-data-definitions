@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -19,7 +19,6 @@ use CoreShop\Component\Store\Model\StoreInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class StorePriceSetterType extends AbstractType
@@ -36,12 +35,10 @@ final class StorePriceSetterType extends AbstractType
                 },
                 function ($value) {
                     $resolvedValues = [];
-                    if (is_array($value) && array_key_exists('stores', $value)) {
-                        if ($value['stores'] instanceof ArrayCollection) {
-                            foreach ($value['stores'] as $val) {
-                                if ($val instanceof StoreInterface) {
-                                    $resolvedValues[] = $val->getId();
-                                }
+                    if (\is_array($value) && array_key_exists('stores', $value) && $value['stores'] instanceof ArrayCollection) {
+                        foreach ($value['stores'] as $val) {
+                            if ($val instanceof StoreInterface) {
+                                $resolvedValues[] = $val->getId();
                             }
                         }
                     }

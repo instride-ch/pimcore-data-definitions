@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -38,6 +38,7 @@ class AssetUrlInterpreter implements InterpreterInterface
 
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
@@ -46,15 +47,14 @@ class AssetUrlInterpreter implements InterpreterInterface
         if (filter_var($value, FILTER_VALIDATE_URL)) {
             $filename = File::getValidFilename(basename($value));
 
-            //Convert placeholder path
-
+            // Convert placeholder path
             $assetPath = $this->placeholderService->replace($path, $data);
-            $assetFullPath = $assetPath . "/" . $filename;
+            $assetFullPath = sprintf('%s/%s', $assetPath, $filename);
 
             $asset = Asset::getByPath($assetFullPath);
 
             if (!$asset instanceof Asset) {
-                //Download
+                // Download
                 $data = @file_get_contents($value);
 
                 if ($data) {

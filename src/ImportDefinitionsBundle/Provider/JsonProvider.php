@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -24,20 +24,21 @@ class JsonProvider implements ProviderInterface
      * @param array $arr
      * @return int
      */
-    protected function getJsonDepth(array $arr)
+    protected function getJsonDepth(array $arr): int
     {
         $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
         $depth = 0;
         foreach ($it as $v) {
             $it->getDepth() > $depth and $depth = $it->getDepth();
         }
+
         return $depth;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function testData($configuration)
+    public function testData($configuration): bool
     {
         $jsonExample = $configuration['jsonExample'];
 
@@ -47,14 +48,14 @@ class JsonProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getColumns($configuration)
+    public function getColumns($configuration): array
     {
         $jsonExample = $configuration['jsonExample'];
 
         $rows = json_decode($jsonExample, true);
         $returnHeaders = [];
 
-        if (count($rows) > 0) {
+        if (\count($rows) > 0) {
             $firstRow = $rows[0];
 
             foreach ($firstRow as $key => $val) {
@@ -74,15 +75,14 @@ class JsonProvider implements ProviderInterface
      */
     public function getData($configuration, $definition, $params, $filter = null)
     {
-        $file = PIMCORE_PROJECT_ROOT . "/" . $params['file'];
+        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
 
-        if(file_exists($file)) {
+        if (file_exists($file)) {
             $json = file_get_contents($file);
-            $data = json_decode($json, true);
 
-            return $data;
+            return json_decode($json, true);
         }
 
-        return array();
+        return [];
     }
 }

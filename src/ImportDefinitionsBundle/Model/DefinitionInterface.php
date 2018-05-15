@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -21,7 +21,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return int
      */
-    public function getId();
+    public function getId(): int;
 
     /**
      * @param int $id
@@ -31,7 +31,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return string
      */
-    public function getProvider();
+    public function getProvider(): string;
 
     /**
      * @param string $provider
@@ -41,7 +41,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return array
      */
-    public function getConfiguration();
+    public function getConfiguration(): array;
 
     /**
      * @param array $configuration
@@ -51,7 +51,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return int
      */
-    public function getClass();
+    public function getClass(): int;
 
     /**
      * @param int $class
@@ -61,7 +61,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @param string $name
@@ -71,7 +71,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return Mapping[]
      */
-    public function getMapping();
+    public function getMapping(): array;
 
     /**
      * @param Mapping[] $mapping
@@ -81,7 +81,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return int
      */
-    public function getCreationDate();
+    public function getCreationDate(): int;
 
     /**
      * @param int $creationDate
@@ -91,7 +91,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return int
      */
-    public function getModificationDate();
+    public function getModificationDate(): int;
 
     /**
      * @param int $modificationDate
@@ -101,7 +101,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return string
      */
-    public function getObjectPath();
+    public function getObjectPath(): string;
 
     /**
      * @param string $objectPath
@@ -111,7 +111,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return string
      */
-    public function getCleaner();
+    public function getCleaner(): string;
 
     /**
      * @param string $cleaner
@@ -121,7 +121,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return string
      */
-    public function getKey();
+    public function getKey(): string;
 
     /**
      * @param string $key
@@ -131,7 +131,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return string
      */
-    public function getFilter();
+    public function getFilter(): string;
 
     /**
      * @param string $filter
@@ -141,7 +141,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return boolean
      */
-    public function getRenameExistingObjects();
+    public function getRenameExistingObjects(): bool;
 
     /**
      * @param boolean $renameExistingObjects
@@ -151,7 +151,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return boolean
      */
-    public function getRelocateExistingObjects();
+    public function getRelocateExistingObjects(): bool;
 
     /**
      * @param boolean $relocateExistingObjects
@@ -161,7 +161,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return string
      */
-    public function getRunner();
+    public function getRunner(): string;
 
     /**
      * @param string $runner
@@ -171,7 +171,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return boolean
      */
-    public function getCreateVersion();
+    public function getCreateVersion(): bool;
 
     /**
      * @param boolean $createVersion
@@ -181,7 +181,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return boolean
      */
-    public function getStopOnException();
+    public function getStopOnException(): bool;
 
     /**
      * @param boolean $stopOnException
@@ -191,7 +191,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return int
      */
-    public function getFailureNotificationDocument();
+    public function getFailureNotificationDocument(): int;
 
     /**
      * @param int $failureNotificationDocument
@@ -201,7 +201,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return int
      */
-    public function getSuccessNotificationDocument();
+    public function getSuccessNotificationDocument(): int;
 
     /**
      * @param int $successNotificationDocument
@@ -211,7 +211,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return bool
      */
-    public function getSkipNewObjects();
+    public function getSkipNewObjects(): bool;
 
     /**
      * @param bool $skipNewObjects
@@ -221,7 +221,7 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return bool
      */
-    public function getSkipExistingObjects();
+    public function getSkipExistingObjects(): bool;
 
     /**
      * @param bool $skipExistingObjects

@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -24,10 +24,11 @@ class ObjectTypeSetter implements SetterInterface
      */
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
-        if($value === Concrete::OBJECT_TYPE_FOLDER) {
+        if ($value === Concrete::OBJECT_TYPE_FOLDER) {
             return Concrete::OBJECT_TYPE_FOLDER;
         }
-        else if($value === Concrete::OBJECT_TYPE_VARIANT) {
+
+        if ($value === Concrete::OBJECT_TYPE_VARIANT) {
             return Concrete::OBJECT_TYPE_VARIANT;
         }
 

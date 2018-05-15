@@ -8,15 +8,13 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Model;
 
-use CoreShop\Component\Resource\Model\ResourceInterface;
 use Pimcore\Model\AbstractModel;
-
 
 class Definition extends AbstractModel implements DefinitionInterface
 {
@@ -31,7 +29,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     public $name;
 
     /**
-     * @var string<
+     * @var string
      */
     public $provider;
 
@@ -126,16 +124,15 @@ class Definition extends AbstractModel implements DefinitionInterface
     public $successNotificationDocument;
 
     /**
-     * Get By Id.
+     * Get By Id
      *
      * @param int $id
-     *
      * @return Definition
      */
-    public static function getById($id)
+    public static function getById($id): Definition
     {
         $definitionEntry = new self();
-        $definitionEntry->setId(intval($id));
+        $definitionEntry->setId((int) $id);
         $definitionEntry->getDao()->getById();
 
         return $definitionEntry;
@@ -144,7 +141,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -160,7 +157,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return string
      */
-    public function getProvider()
+    public function getProvider(): string
     {
         return $this->provider;
     }
@@ -176,7 +173,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return array
      */
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return $this->configuration;
     }
@@ -192,7 +189,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return int
      */
-    public function getClass()
+    public function getClass(): int
     {
         return $this->class;
     }
@@ -208,7 +205,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -224,7 +221,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return Mapping[]
      */
-    public function getMapping()
+    public function getMapping(): array
     {
         return $this->mapping;
     }
@@ -240,7 +237,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return int
      */
-    public function getCreationDate()
+    public function getCreationDate(): int
     {
         return $this->creationDate;
     }
@@ -256,7 +253,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return int
      */
-    public function getModificationDate()
+    public function getModificationDate(): int
     {
         return $this->modificationDate;
     }
@@ -272,7 +269,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return string
      */
-    public function getObjectPath()
+    public function getObjectPath(): string
     {
         return $this->objectPath;
     }
@@ -288,7 +285,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return string
      */
-    public function getCleaner()
+    public function getCleaner(): string
     {
         return $this->cleaner;
     }
@@ -304,7 +301,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -320,7 +317,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return string
      */
-    public function getFilter()
+    public function getFilter(): string
     {
         return $this->filter;
     }
@@ -336,7 +333,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return boolean
      */
-    public function getRenameExistingObjects()
+    public function getRenameExistingObjects(): bool
     {
         return $this->renameExistingObjects;
     }
@@ -352,7 +349,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return boolean
      */
-    public function getRelocateExistingObjects()
+    public function getRelocateExistingObjects(): bool
     {
         return $this->relocateExistingObjects;
     }
@@ -368,7 +365,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return string
      */
-    public function getRunner()
+    public function getRunner(): string
     {
         return $this->runner;
     }
@@ -384,7 +381,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return boolean
      */
-    public function getCreateVersion()
+    public function getCreateVersion(): bool
     {
         return $this->createVersion;
     }
@@ -400,7 +397,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return boolean
      */
-    public function getStopOnException()
+    public function getStopOnException(): bool
     {
         return $this->stopOnException;
     }
@@ -416,7 +413,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return int
      */
-    public function getFailureNotificationDocument()
+    public function getFailureNotificationDocument(): int
     {
         return $this->failureNotificationDocument;
     }
@@ -432,7 +429,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return int
      */
-    public function getSuccessNotificationDocument()
+    public function getSuccessNotificationDocument(): int
     {
         return $this->successNotificationDocument;
     }
@@ -448,7 +445,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return bool
      */
-    public function getSkipNewObjects()
+    public function getSkipNewObjects(): bool
     {
         return $this->skipNewObjects;
     }
@@ -464,7 +461,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @return bool
      */
-    public function getSkipExistingObjects()
+    public function getSkipExistingObjects(): bool
     {
         return $this->skipExistingObjects;
     }

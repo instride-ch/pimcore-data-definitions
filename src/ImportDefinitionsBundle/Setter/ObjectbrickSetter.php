@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -22,18 +22,19 @@ class ObjectbrickSetter implements SetterInterface
 {
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
-        $keyParts = explode("~", $map->getToColumn());
+        $keyParts = explode('~', $map->getToColumn());
 
         $config = $map->getSetterConfig();
         $fieldName = $config['brickField'];
         $class = $config['class'];
         $brickField = $keyParts[3];
 
-        $brickGetter = "get" . ucfirst($fieldName);
-        $brickSetter = "set" . ucfirst($fieldName);
+        $brickGetter = sprintf('get%s', ucfirst($fieldName));
+        $brickSetter = sprintf('set%s', ucfirst($fieldName));
 
         if (method_exists($object, $brickGetter)) {
             $brick = $object->$brickGetter();
@@ -44,8 +45,8 @@ class ObjectbrickSetter implements SetterInterface
             }
 
             if ($brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
-                $brickClassGetter = "get" . ucfirst($class);
-                $brickClassSetter = "set" . ucfirst($class);
+                $brickClassGetter = sprintf('get%s', ucfirst($class));
+                $brickClassSetter = sprintf('set%s', ucfirst($class));
 
                 $brickFieldObject = $brick->$brickClassGetter();
 
@@ -57,14 +58,12 @@ class ObjectbrickSetter implements SetterInterface
                     $brick->$brickClassSetter($brickFieldObject);
                 }
 
-                $setter = "set" . ucfirst($brickField);
+                $setter = sprintf('set%s', ucfirst($brickField));
 
                 if (method_exists($brickFieldObject, $setter)) {
                     $brickFieldObject->$setter($value);
                 }
             }
-        } else {
-            //Brick does not exist?
         }
     }
 }

@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -25,7 +25,7 @@ interface ProviderInterface
      * @return boolean
      * @throws \Exception
      */
-    public function testData($configuration);
+    public function testData($configuration): bool;
 
     /**
      * Get Columns from data
@@ -33,7 +33,7 @@ interface ProviderInterface
      * @param array $configuration
      * @return FromColumn[]
      */
-    public function getColumns($configuration);
+    public function getColumns($configuration): array;
 
     /**
      * @param array $configuration
@@ -42,5 +42,5 @@ interface ProviderInterface
      * @param null $filter
      * @return array
      */
-    public function getData($configuration, $definition, $params, $filter = null);
+    public function getData($configuration, $definition, $params, $filter = null): array;
 }

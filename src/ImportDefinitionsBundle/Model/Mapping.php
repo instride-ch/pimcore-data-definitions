@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -57,11 +57,11 @@ class Mapping
     public function setValues(array $values)
     {
         foreach ($values as $key => $value) {
-            if ($key == 'type') {
+            if ($key === 'o_type') {
                 continue;
             }
             
-            $setter = 'set'.ucfirst($key);
+            $setter = sprintf('set%s', ucfirst($key));
 
             if (method_exists($this, $setter)) {
                 $this->$setter($value);
@@ -72,7 +72,7 @@ class Mapping
     /**
      * @return string
      */
-    public function getToColumn()
+    public function getToColumn(): string
     {
         return $this->toColumn;
     }
@@ -88,7 +88,7 @@ class Mapping
     /**
      * @return string
      */
-    public function getFromColumn()
+    public function getFromColumn(): string
     {
         return $this->fromColumn;
     }
@@ -104,7 +104,7 @@ class Mapping
     /**
      * @return boolean
      */
-    public function getPrimaryIdentifier()
+    public function getPrimaryIdentifier(): bool
     {
         return $this->primaryIdentifier;
     }
@@ -120,7 +120,7 @@ class Mapping
     /**
      * @return string
      */
-    public function getSetter()
+    public function getSetter(): string
     {
         return $this->setter;
     }
@@ -136,7 +136,7 @@ class Mapping
     /**
      * @return string
      */
-    public function getInterpreter()
+    public function getInterpreter(): string
     {
         return $this->interpreter;
     }
@@ -152,7 +152,7 @@ class Mapping
     /**
      * @return array
      */
-    public function getInterpreterConfig()
+    public function getInterpreterConfig(): array
     {
         return $this->interpreterConfig;
     }
@@ -168,7 +168,7 @@ class Mapping
     /**
      * @return array
      */
-    public function getSetterConfig()
+    public function getSetterConfig(): array
     {
         return $this->setterConfig;
     }

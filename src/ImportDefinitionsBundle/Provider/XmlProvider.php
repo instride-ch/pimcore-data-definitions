@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -21,20 +21,20 @@ class XmlProvider implements ProviderInterface
 {
     /**
      * @param $xml
+     * @param $xpath
      * @return mixed
      */
     protected function convertXmlToArray($xml, $xpath)
     {
-        $xml = simplexml_load_string($xml, "SimpleXMLElement", LIBXML_NOCDATA);
+        $xml = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $xml = $xml->xpath($xpath);
-        // $xml->xpath
 
         $json = json_encode($xml);
         $array = json_decode($json, true);
 
-        foreach($array as &$arrayEntry) {
-            if(array_key_exists("@attributes", $arrayEntry)) {
-                foreach($arrayEntry['@attributes'] as $key => $value) {
+        foreach ($array as &$arrayEntry) {
+            if (array_key_exists('@attributes', $arrayEntry)) {
+                foreach ($arrayEntry['@attributes'] as $key => $value) {
                     $arrayEntry['attr_' . $key] = $value;
                 }
             }
@@ -46,7 +46,7 @@ class XmlProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function testData($configuration)
+    public function testData($configuration): bool
     {
         return true;
     }
@@ -54,7 +54,7 @@ class XmlProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getColumns($configuration)
+    public function getColumns($configuration): array
     {
         $exampleFile = Asset::getById($configuration['exampleFile']);
         $rows = $this->convertXmlToArray($exampleFile->getData(), $configuration['exampleXPath']);
@@ -62,12 +62,10 @@ class XmlProvider implements ProviderInterface
 
         $returnHeaders = [];
 
-        if (count($rows) > 0)
-        {
+        if (\count($rows) > 0) {
             $firstRow = $rows;
 
-            foreach ($firstRow as $key => $val)
-            {
+            foreach ($firstRow as $key => $val) {
                 $headerObj = new FromColumn();
                 $headerObj->setIdentifier($key);
                 $headerObj->setLabel($key);
@@ -82,13 +80,11 @@ class XmlProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($configuration, $definition, $params, $filter = null)
+    public function getData($configuration, $definition, $params, $filter = null): array
     {
-        $file = PIMCORE_PROJECT_ROOT . "/" . $params['file'];
+        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
         $xml = file_get_contents($file);
 
-        $data = $this->convertXmlToArray($xml, $configuration['xpath']);
-
-        return $data;
+        return $this->convertXmlToArray($xml, $configuration['xpath']);
     }
 }

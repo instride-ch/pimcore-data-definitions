@@ -149,13 +149,13 @@ final class Importer implements ImporterInterface
         if ($cleanerType) {
             $cleaner = $this->cleanerRegistry->get($cleanerType);
 
-            $this->logger->info(sprintf('Running Cleaner %s', $cleanerType));
-            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Running Cleaner %s', $cleanerType)));
+            $this->logger->info(sprintf('Running Cleaner "%s"', $cleanerType));
+            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Running Cleaner "%s"', $cleanerType)));
 
             $cleaner->cleanup($definition, $this->objectIds);
 
-            $this->logger->info(sprintf('Finished Cleaner %s', $cleanerType));
-            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Finished Cleaner %s', $cleanerType)));
+            $this->logger->info(sprintf('Finished Cleaner "%s"', $cleanerType));
+            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Finished Cleaner "%s"', $cleanerType)));
         }
 
         if (\count($this->exceptions) > 0) {
@@ -396,7 +396,7 @@ final class Importer implements ImporterInterface
                 $obj = $objectData[0];
             }
 
-            if ($obj === null) {
+            if (null === $obj) {
                 $obj = new $classObject();
             }
 

@@ -58,7 +58,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      */
     public function getObjects(): array
     {
-        if ($this->data === null) {
+        if (null === $this->data) {
             $this->load();
         }
 

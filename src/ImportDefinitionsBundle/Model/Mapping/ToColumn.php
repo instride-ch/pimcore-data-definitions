@@ -17,49 +17,49 @@ namespace ImportDefinitionsBundle\Model\Mapping;
 class ToColumn extends AbstractColumn
 {
     /**
-     * @var string
+     * @var null|string
      */
     public $type;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $fieldtype;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $config;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $setter;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $setterConfig;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $interpreter;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $interpreterConfig;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $group;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
@@ -73,9 +73,9 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getFieldtype(): string
+    public function getFieldtype()
     {
         return $this->fieldtype;
     }
@@ -89,9 +89,9 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getConfig(): array
+    public function getConfig()
     {
         return $this->config;
     }
@@ -105,9 +105,9 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getSetterConfig(): array
+    public function getSetterConfig()
     {
         return $this->setterConfig;
     }
@@ -121,9 +121,9 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getInterpreterConfig(): array
+    public function getInterpreterConfig()
     {
         return $this->interpreterConfig;
     }
@@ -137,9 +137,9 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSetter(): string
+    public function getSetter()
     {
         return $this->setter;
     }
@@ -153,9 +153,9 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getInterpreter(): string
+    public function getInterpreter()
     {
         return $this->interpreter;
     }
@@ -169,9 +169,9 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getGroup(): string
+    public function getGroup()
     {
         return $this->group;
     }

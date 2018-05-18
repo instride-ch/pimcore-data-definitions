@@ -7,14 +7,13 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.importdefinitions.definition.item');
 
 pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resource.item, {
-
     iconCls: 'importdefinitions_icon_definition',
     url: {
         save: '/admin/import_definitions/definitions/save',
@@ -44,7 +43,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                     iconCls: 'pimcore_icon_export',
                     handler: function () {
                         var id = this.data.id;
-                        pimcore.helpers.download(this.url.export + "?id=" + id);
+                        pimcore.helpers.download(this.url.export + '?id=' + id);
                     }.bind(this)
                 },
                 {
@@ -373,8 +372,8 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
     },
 
     undirtyMappingRecords: function () {
-        if (this.mappingSettings && this.mappingSettings.down("grid")) {
-            var store = this.mappingSettings.down("grid").getStore();
+        if (this.mappingSettings && this.mappingSettings.down('grid')) {
+            var store = this.mappingSettings.down('grid').getStore();
 
             store.getRange().forEach(function (record) {
                 record.commit();
@@ -434,7 +433,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                             data: config.fromColumns
                         });
 
-                        if(typeof config.toColumns == 'undefined') {
+                        if (typeof config.toColumns == 'undefined') {
                             config.toColumns = [];
                         }
                         var toColumnStore = new Ext.data.Store({
@@ -673,11 +672,11 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
     },
 
     upload: function (callback) {
-        pimcore.helpers.uploadDialog(this.url.upload + "?id=" + this.data.id, "Filedata", function () {
+        pimcore.helpers.uploadDialog(this.url.upload + '?id=' + this.data.id, 'Filedata', function () {
             this.panel.destroy();
             this.parentPanel.openItem(this.data);
         }.bind(this), function () {
-            Ext.MessageBox.alert(t("error"), t("error"));
+            Ext.MessageBox.alert(t('error'), t('error'));
         });
 
     }

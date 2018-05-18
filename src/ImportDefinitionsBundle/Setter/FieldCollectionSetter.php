@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -22,31 +22,32 @@ class FieldCollectionSetter implements SetterInterface
 {
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
-        $keyParts = explode("~", $map->getToColumn());
+        $keyParts = explode('~', $map->getToColumn());
 
         $config = $map->getSetterConfig();
         $keys = $config['fieldcollectionKeys'];
         $fieldName = $config['fieldcollectionField'];
         $class = $config['class'];
-        $keys = explode(",", $keys);
+        $keys = explode(',', $keys);
         $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\' . ucfirst($class);
         $field = $keyParts[3];
         $mappedKeys = [];
 
         foreach ($keys as $key) {
-            $tmp = explode(":", $key);
+            $tmp = explode(':', $key);
 
             $mappedKeys[] = [
-                "from" => $tmp[0],
-                "to" => $tmp[1]
+                'from' => $tmp[0],
+                'to' => $tmp[1]
             ];
         }
 
-        $getter = "get" . ucfirst($fieldName);
-        $setter = "set" . ucfirst($fieldName);
+        $getter = sprintf('get%s', ucfirst($fieldName));
+        $setter = sprintf('set%s', ucfirst($fieldName));
 
         if (method_exists($object, $getter)) {
             $fieldCollection = $object->$getter();
@@ -59,19 +60,17 @@ class FieldCollectionSetter implements SetterInterface
             $found = false;
 
             foreach ($items as $item) {
-                if (is_a($item, $fieldCollectionClass)) {
-                    if ($this->isValidKey($mappedKeys, $item, $data)) {
-                        if ($item instanceof AbstractFieldCollection) {
-                            $item->setValue($field, $value);
-                        }
-
-                        $found = true;
+                if (is_a($item, $fieldCollectionClass) && $this->isValidKey($mappedKeys, $item, $data)) {
+                    if ($item instanceof AbstractFieldCollection) {
+                        $item->setValue($field, $value);
                     }
+
+                    $found = true;
                 }
             }
 
             if (!$found) {
-                //Create new entry
+                // Create new entry
                 $item = new $fieldCollectionClass();
 
                 if ($item instanceof AbstractFieldCollection) {
@@ -93,13 +92,13 @@ class FieldCollectionSetter implements SetterInterface
      * @param array $keys
      * @param $fieldcollection
      * @param $data
-     *
-     * @returns boolean
+     * @return boolean
+     * @throws \Exception
      */
-    protected function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, $data)
+    protected function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, $data): bool
     {
         foreach ($keys as $key) {
-            $getter = "get" . ucfirst($key['to']);
+            $getter = sprintf('get%s', ucfirst($key['to']));
 
             if (method_exists($fieldcollection, $getter)) {
                 $keyValue = $fieldcollection->$getter();

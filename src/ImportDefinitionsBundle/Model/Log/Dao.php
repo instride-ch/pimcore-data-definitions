@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -21,28 +21,28 @@ class Dao extends AbstractDao
     protected $tableName = 'import_definitions_log';
 
     /**
-     * get log by id
+     * Get log by id
      *
      * @param null $id
      * @throws \Exception
      */
     public function getById($id = null)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->model->setId($id);
         }
 
         $data = $this->db->fetchRow('SELECT * FROM ' . $this->tableName . ' WHERE id = ?', $this->model->getId());
 
-        if (!$data["id"]) {
-            throw new \Exception("Object with the ID " . $this->model->getId() . " doesn't exists");
+        if (!$data['id']) {
+            throw new \InvalidArgumentException(sprintf('Object with the ID %s does not exist', $this->model->getId()));
         }
 
         $this->assignVariablesToModel($data);
     }
 
     /**
-     * save log
+     * Save log
      *
      * @throws \Exception
      */
@@ -54,22 +54,22 @@ class Dao extends AbstractDao
 
         $validColumns = $this->getValidTableColumns($this->tableName);
 
-        if (count($vars)) {
+        if (\count($vars)) {
             foreach ($vars as $k => $v) {
-                if (!in_array($k, $validColumns)) {
+                if (!\in_array($k, $validColumns, true)) {
                     continue;
                 }
 
-                $getter = "get" . ucfirst($k);
+                $getter = sprintf('get%s', ucfirst($k));
 
-                if (!is_callable([$this->model, $getter])) {
+                if (!\is_callable([$this->model, $getter])) {
                     continue;
                 }
 
                 $value = $this->model->$getter();
 
-                if (is_bool($value)) {
-                    $value = (int)$value;
+                if (\is_bool($value)) {
+                    $value = (int) $value;
                 }
 
                 $buffer[$k] = $value;
@@ -77,7 +77,7 @@ class Dao extends AbstractDao
         }
 
         if ($this->model->getId() !== null) {
-            $this->db->update($this->tableName, $buffer, ["id" => $this->model->getId()]);
+            $this->db->update($this->tableName, $buffer, ['id' => $this->model->getId()]);
             return;
         }
 
@@ -86,10 +86,12 @@ class Dao extends AbstractDao
     }
 
     /**
-     * delete vote
+     * Delete vote
+     *
+     * @throws \Exception
      */
     public function delete()
     {
-        $this->db->delete($this->tableName, ["id" => $this->model->getId()]);
+        $this->db->delete($this->tableName, ['id' => $this->model->getId()]);
     }
 }

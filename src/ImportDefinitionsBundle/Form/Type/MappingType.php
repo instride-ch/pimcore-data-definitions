@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -59,17 +59,13 @@ final class MappingType extends AbstractResourceType
             ->add('setter', TextType::class)
             ->add('interpreter', TextType::class);
 
-        /*
-         * Setter Configurations
-         */
+        /** Setter Configurations */
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $type = $this->getSetterRegistryIdentifier($event->getForm(), $event->getData());
                 if (null === $type) {
                     return;
                 }
-
-                //$this->addSetterConfigurationFields($event->getForm(), $this->setterTypeRegistry->get($type, 'default'));
             })
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $type = $this->getSetterRegistryIdentifier($event->getForm(), $event->getData());
@@ -79,7 +75,7 @@ final class MappingType extends AbstractResourceType
 
                 $event->getForm()->get('setter')->setData($type);
             })
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $data = $event->getData();
 
                 if (!isset($data['setter'])) {
@@ -89,17 +85,13 @@ final class MappingType extends AbstractResourceType
                 $this->addSetterConfigurationFields($event->getForm(), $this->setterTypeRegistry->get($data['setter'], 'default'));
             });
 
-        /*
-         * Interpreter Configurations
-         */
+        /** Interpreter Configurations */
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $type = $this->getInterpreterRegistryIdentifier($event->getForm(), $event->getData());
                 if (null === $type) {
                     return;
                 }
-
-                //$this->addInterpreterConfigurationFields($event->getForm(), $this->interpreterTypeRegistry->get($type, 'default'));
             })
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $type = $this->getInterpreterRegistryIdentifier($event->getForm(), $event->getData());
@@ -109,7 +101,7 @@ final class MappingType extends AbstractResourceType
 
                 $event->getForm()->get('interpreter')->setData($type);
             })
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $data = $event->getData();
 
                 if (!isset($data['interpreter'])) {
@@ -141,7 +133,6 @@ final class MappingType extends AbstractResourceType
     /**
      * @param FormInterface $form
      * @param mixed $data
-     *
      * @return string|null
      */
     protected function getSetterRegistryIdentifier(FormInterface $form, $data = null)
@@ -156,7 +147,6 @@ final class MappingType extends AbstractResourceType
     /**
      * @param FormInterface $form
      * @param mixed $data
-     *
      * @return string|null
      */
     protected function getInterpreterRegistryIdentifier(FormInterface $form, $data = null)

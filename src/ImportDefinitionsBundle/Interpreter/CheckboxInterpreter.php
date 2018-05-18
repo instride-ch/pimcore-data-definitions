@@ -25,7 +25,8 @@ class CheckboxInterpreter implements InterpreterInterface
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $boolVal = is_string($value) ? filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : (bool)$value;
-        return ($boolVal === null) ? false : $boolVal;
+        $boolVal = \is_string($value) ? filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : (bool) $value;
+
+        return $boolVal ?? false;
     }
 }

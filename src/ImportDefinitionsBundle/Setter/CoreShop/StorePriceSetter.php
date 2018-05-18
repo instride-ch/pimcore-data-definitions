@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -35,15 +35,15 @@ class StorePriceSetter implements SetterInterface
         $this->storeRepository = $storeRepository;
     }
 
-
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $config = $map->getSetterConfig();
 
-        if (!array_key_exists('stores', $config) || !is_array($config['stores'])) {
+        if (!array_key_exists('stores', $config) || !\is_array($config['stores'])) {
             return;
         }
 
@@ -54,12 +54,11 @@ class StorePriceSetter implements SetterInterface
                 throw new \InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
             }
 
-            $setter = 'set' . ucfirst($map->getToColumn());
+            $setter = sprintf('set%s', ucfirst($map->getToColumn()));
 
             if (!method_exists($object, $setter)) {
                 throw new \InvalidArgumentException(sprintf('Expected a %s function but can not find it', $setter));
             }
-
 
             $object->$setter($value, $store);
         }

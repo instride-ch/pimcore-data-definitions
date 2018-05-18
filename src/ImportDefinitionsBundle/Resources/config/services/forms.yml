@@ -73,7 +73,7 @@ services:
     tags:
         - { name: form.type }
 
-  import_definition.form.interpreter.nested:
-    class: ImportDefinitionsBundle\Form\Type\Interpreter\NestedType
+  import_definition.form.interpreter_nested:
+    class: ImportDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType
     tags:
         - { name: form.type }

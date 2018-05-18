@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -17,47 +17,47 @@ namespace ImportDefinitionsBundle\Model\Mapping;
 class ToColumn extends AbstractColumn
 {
     /**
-     * @var string
+     * @var null|string
      */
     public $type;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $fieldtype;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $config;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $setter;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $setterConfig;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $interpreter;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $interpreterConfig;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $group;
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getType()
     {
@@ -73,7 +73,7 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getFieldtype()
     {
@@ -89,7 +89,7 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return array
+     * @return array|null
      */
     public function getConfig()
     {
@@ -105,7 +105,7 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return array
+     * @return array|null
      */
     public function getSetterConfig()
     {
@@ -121,7 +121,7 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return array
+     * @return array|null
      */
     public function getInterpreterConfig()
     {
@@ -137,7 +137,7 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getSetter()
     {
@@ -153,7 +153,7 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getInterpreter()
     {
@@ -169,7 +169,7 @@ class ToColumn extends AbstractColumn
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getGroup()
     {

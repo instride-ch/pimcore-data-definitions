@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -19,7 +19,7 @@ use CoreShop\Component\Resource\Model\ResourceInterface;
 interface DefinitionInterface extends ResourceInterface
 {
     /**
-     * @return int
+     * @return mixed
      */
     public function getId();
 
@@ -29,7 +29,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setId($id);
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getProvider();
 
@@ -39,7 +39,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setProvider($provider);
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getConfiguration();
 
@@ -49,7 +49,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setConfiguration($configuration);
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getClass();
 
@@ -59,7 +59,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setClass($class);
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getName();
 
@@ -69,7 +69,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setName($name);
 
     /**
-     * @return Mapping[]
+     * @return mixed
      */
     public function getMapping();
 
@@ -79,7 +79,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setMapping($mapping);
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getCreationDate();
 
@@ -89,7 +89,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setCreationDate($creationDate);
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getModificationDate();
 
@@ -99,7 +99,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setModificationDate($modificationDate);
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getObjectPath();
 
@@ -109,7 +109,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setObjectPath($objectPath);
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getCleaner();
 
@@ -119,7 +119,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setCleaner($cleaner);
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getKey();
 
@@ -129,7 +129,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setKey($key);
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getFilter();
 
@@ -139,7 +139,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setFilter($filter);
 
     /**
-     * @return boolean
+     * @return mixed
      */
     public function getRenameExistingObjects();
 
@@ -149,7 +149,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setRenameExistingObjects($renameExistingObjects);
 
     /**
-     * @return boolean
+     * @return mixed
      */
     public function getRelocateExistingObjects();
 
@@ -159,7 +159,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setRelocateExistingObjects($relocateExistingObjects);
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getRunner();
 
@@ -169,7 +169,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setRunner($runner);
 
     /**
-     * @return boolean
+     * @return mixed
      */
     public function getCreateVersion();
 
@@ -179,7 +179,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setCreateVersion($createVersion);
 
     /**
-     * @return boolean
+     * @return mixed
      */
     public function getStopOnException();
 
@@ -189,7 +189,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setStopOnException($stopOnException);
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getFailureNotificationDocument();
 
@@ -199,7 +199,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setFailureNotificationDocument($failureNotificationDocument);
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getSuccessNotificationDocument();
 
@@ -209,7 +209,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setSuccessNotificationDocument($successNotificationDocument);
 
     /**
-     * @return bool
+     * @return mixed
      */
     public function getSkipNewObjects();
 
@@ -219,7 +219,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setSkipNewObjects($skipNewObjects);
 
     /**
-     * @return bool
+     * @return mixed
      */
     public function getSkipExistingObjects();
 

@@ -237,7 +237,7 @@ bin/console import-definitions:import -d 1 -p "{\"file\":\"test.json\"}"
 ## License
 [w-vision AG](https://www.w-vision.ch), Sandgruebestrasse 4, 6210 Sursee, Switzerland  
 https://www.w-vision.ch, support@w-vision.ch  
-Copyright © 2017 w-vision AG. All rights reserved.
+Copyright © 2018 w-vision AG. All rights reserved.
 
 For licensing details please visit [LICENSE.md](LICENSE.md) 
 

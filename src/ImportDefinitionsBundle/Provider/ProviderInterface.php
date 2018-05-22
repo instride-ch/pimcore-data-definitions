@@ -25,7 +25,7 @@ interface ProviderInterface
      * @return boolean
      * @throws \Exception
      */
-    public function testData($configuration): bool;
+    public function testData($configuration);
 
     /**
      * Get Columns from data
@@ -33,7 +33,7 @@ interface ProviderInterface
      * @param array $configuration
      * @return FromColumn[]
      */
-    public function getColumns($configuration): array;
+    public function getColumns($configuration);
 
     /**
      * @param array $configuration
@@ -42,5 +42,5 @@ interface ProviderInterface
      * @param null $filter
      * @return array
      */
-    public function getData($configuration, $definition, $params, $filter = null): array;
+    public function getData($configuration, $definition, $params, $filter = null);
 }

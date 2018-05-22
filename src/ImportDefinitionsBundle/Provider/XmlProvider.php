@@ -46,7 +46,7 @@ class XmlProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function testData($configuration): bool
+    public function testData($configuration)
     {
         return true;
     }
@@ -54,7 +54,7 @@ class XmlProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getColumns($configuration): array
+    public function getColumns($configuration)
     {
         $exampleFile = Asset::getById($configuration['exampleFile']);
         $rows = $this->convertXmlToArray($exampleFile->getData(), $configuration['exampleXPath']);
@@ -80,7 +80,7 @@ class XmlProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($configuration, $definition, $params, $filter = null): array
+    public function getData($configuration, $definition, $params, $filter = null)
     {
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
         $xml = file_get_contents($file);

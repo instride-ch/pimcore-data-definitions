@@ -26,5 +26,5 @@ interface FilterInterface
      *
      * @return boolean
      */
-    public function filter(DefinitionInterface $definition, $data, $object): bool;
+    public function filter(DefinitionInterface $definition, $data, $object);
 }

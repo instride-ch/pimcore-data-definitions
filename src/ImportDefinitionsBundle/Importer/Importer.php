@@ -202,7 +202,7 @@ final class Importer implements ImporterInterface
      * @param $params
      * @return array
      */
-    private function getData(DefinitionInterface $definition, $params): array
+    private function getData(DefinitionInterface $definition, $params)
     {
         /** @var ProviderInterface $provider */
         $provider = $this->providerRegistry->get($definition->getProvider());
@@ -437,7 +437,7 @@ final class Importer implements ImporterInterface
      * @param $data
      * @return string
      */
-    private function createPath(DefinitionInterface $definition, $data): string
+    private function createPath(DefinitionInterface $definition, $data)
     {
         $placeholderHelper = new Placeholder();
         return $placeholderHelper->replacePlaceholders($definition->getObjectPath(), $data);
@@ -448,7 +448,7 @@ final class Importer implements ImporterInterface
      * @param $data
      * @return string
      */
-    private function createKey(DefinitionInterface $definition, $data): string
+    private function createKey(DefinitionInterface $definition, $data)
     {
         $placeholderHelper = new Placeholder();
         return $placeholderHelper->replacePlaceholders($definition->getKey(), $data);

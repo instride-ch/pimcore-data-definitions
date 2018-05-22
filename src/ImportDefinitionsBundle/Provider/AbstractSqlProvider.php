@@ -23,12 +23,12 @@ abstract class AbstractSqlProvider implements ProviderInterface
      * @param $configuration
      * @return Connection
      */
-    abstract protected function getDb($configuration): Connection;
+    abstract protected function getDb($configuration);
     
     /**
      * {@inheritdoc}
      */
-    public function testData($configuration): bool
+    public function testData($configuration)
     {
         return \is_object($this->getDb($configuration));
     }
@@ -37,7 +37,7 @@ abstract class AbstractSqlProvider implements ProviderInterface
      * {@inheritdoc}
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getColumns($configuration): array
+    public function getColumns($configuration)
     {
         $db = $this->getDb($configuration);
         $query = $db->query($configuration['query']);
@@ -64,7 +64,7 @@ abstract class AbstractSqlProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($configuration, $definition, $params, $filter = null): array
+    public function getData($configuration, $definition, $params, $filter = null)
     {
         $db = $this->getDb($configuration);
 

@@ -25,7 +25,7 @@ class ExternalSqlProvider extends AbstractSqlProvider
      * @return Connection
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function getDb($configuration): Connection
+    protected function getDb($configuration)
     {
         $config = new Configuration();
         $connectionParams = [

@@ -23,7 +23,7 @@ class SqlProvider extends AbstractSqlProvider
      * @param $configuration
      * @return Connection
      */
-    protected function getDb($configuration): Connection
+    protected function getDb($configuration)
     {
         return Db::get();
     }

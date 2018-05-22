@@ -29,7 +29,7 @@ abstract class AbstractColumn
     /**
      * @return string
      */
-    public function getLabel(): string
+    public function getLabel()
     {
         return $this->label;
     }
@@ -45,7 +45,7 @@ abstract class AbstractColumn
     /**
      * @return string
      */
-    public function getIdentifier(): string
+    public function getIdentifier()
     {
         return $this->identifier;
     }

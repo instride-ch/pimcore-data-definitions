@@ -33,7 +33,7 @@ abstract class AbstractCleaner implements CleanerInterface
      * @return Concrete[]
      * @throws \Exception
      */
-    protected function getObjectsToClean(DefinitionInterface $definition, array $foundObjectIds): array
+    protected function getObjectsToClean(DefinitionInterface $definition, array $foundObjectIds)
     {
         $logs = new Log\Listing();
         $logs->setCondition('definition = ?', [$definition->getId()]);

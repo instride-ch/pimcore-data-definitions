@@ -42,7 +42,7 @@ final class ImportDefinitionEvent extends Event
     /**
      * @return DefinitionInterface
      */
-    public function getDefinition(): DefinitionInterface
+    public function getDefinition()
     {
         return $this->definition;
     }

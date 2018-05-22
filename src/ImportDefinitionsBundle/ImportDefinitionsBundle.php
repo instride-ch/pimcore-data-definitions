@@ -77,7 +77,7 @@ class ImportDefinitionsBundle extends AbstractResourceBundle implements PimcoreB
     /**
      * {@inheritdoc}
      */
-    protected function getComposerPackageName(): string
+    protected function getComposerPackageName()
     {
         return 'w-vision/import-definitions';
     }

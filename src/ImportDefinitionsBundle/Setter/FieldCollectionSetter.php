@@ -95,7 +95,7 @@ class FieldCollectionSetter implements SetterInterface
      * @return boolean
      * @throws \Exception
      */
-    protected function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, $data): bool
+    protected function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, $data)
     {
         foreach ($keys as $key) {
             $getter = sprintf('get%s', ucfirst($key['to']));

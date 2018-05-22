@@ -21,7 +21,7 @@ class CsvProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function testData($configuration): bool
+    public function testData($configuration)
     {
         return true;
     }
@@ -29,7 +29,7 @@ class CsvProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getColumns($configuration): array
+    public function getColumns($configuration)
     {
         $csvHeaders = $configuration['csvHeaders'];
         $csvExample = $configuration['csvExample'];
@@ -66,7 +66,7 @@ class CsvProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($configuration, $definition, $params, $filter = null): array
+    public function getData($configuration, $definition, $params, $filter = null)
     {
         $csvHeaders = $configuration['csvHeaders'];
         $delimiter = $configuration['delimiter'];

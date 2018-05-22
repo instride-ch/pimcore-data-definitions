@@ -33,7 +33,7 @@ class Dao extends Listing\Dao\AbstractDao
      *
      * @throws \Exception
      */
-    protected function getTableName(): string
+    protected function getTableName()
     {
         return $this->tableName;
     }
@@ -42,7 +42,7 @@ class Dao extends Listing\Dao\AbstractDao
      * @return QueryBuilder
      * @throws \Exception
      */
-    public function getQuery(): QueryBuilder
+    public function getQuery()
     {
         // init
         $select = $this->db->select();
@@ -76,7 +76,7 @@ class Dao extends Listing\Dao\AbstractDao
      * @return Log[]
      * @throws \Exception
      */
-    public function load(): array
+    public function load()
     {
         // load id's
         $list = $this->loadIdList();
@@ -118,7 +118,7 @@ class Dao extends Listing\Dao\AbstractDao
      * @return int
      * @throws \Exception
      */
-    public function getCount(): int
+    public function getCount()
     {
         $amount = (int) $this->db->fetchOne('SELECT COUNT(*) as amount FROM ' . $this->getTableName() . $this->getCondition() . $this->getOffsetLimit(), $this->model->getConditionVariables());
 
@@ -131,7 +131,7 @@ class Dao extends Listing\Dao\AbstractDao
      * @return int
      * @throws \Exception
      */
-    public function getTotalCount(): int
+    public function getTotalCount()
     {
         $amount = (int) $this->db->fetchOne('SELECT COUNT(*) as amount FROM ' . $this->getTableName() . $this->getCondition(), $this->model->getConditionVariables());
 

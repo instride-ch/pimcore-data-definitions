@@ -33,7 +33,7 @@ class Listing extends Model\Listing\JsonListing
      * @return DefinitionInterface[]
      * @throws \Exception
      */
-    public function getObjects(): array
+    public function getObjects()
     {
         if (null === $this->definitions) {
             $this->load();

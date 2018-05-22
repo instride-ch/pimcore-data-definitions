@@ -23,7 +23,7 @@ final class Placeholder
      * @param $data
      * @return string
      */
-    public function replace($placeholder, $data): string
+    public function replace($placeholder, $data)
     {
         $myData = $data;
         $placeholderHelper = new \Pimcore\Placeholder();

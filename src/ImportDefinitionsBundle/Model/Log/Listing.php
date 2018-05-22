@@ -47,7 +47,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      *
      * @return bool
      */
-    public function isValidOrderKey($key): bool
+    public function isValidOrderKey($key)
     {
         return \in_array($key, $this->validOrderKeys, true);
     }
@@ -56,7 +56,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      * @return Log[]
      * @throws \Exception
      */
-    public function getObjects(): array
+    public function getObjects()
     {
         if (null === $this->data) {
             $this->load();
@@ -107,7 +107,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      *
      * @return $this
      */
-    public function getPaginatorAdapter(): self
+    public function getPaginatorAdapter()
     {
         return $this;
     }
@@ -127,7 +127,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      *
      * @return string
      */
-    public function getLocale(): string
+    public function getLocale()
     {
         return $this->locale;
     }
@@ -192,7 +192,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      * @return bool
      * @throws \Exception
      */
-    public function valid(): bool
+    public function valid()
     {
         $this->getData();
 

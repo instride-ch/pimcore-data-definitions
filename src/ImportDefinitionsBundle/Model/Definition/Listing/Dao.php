@@ -34,7 +34,7 @@ class Dao extends Pimcore\Model\Dao\PhpArrayTable
      * @return array
      * @throws \Exception
      */
-    public function load(): array
+    public function load()
     {
         $routesData = $this->db->fetchAll($this->model->getFilter(), $this->model->getOrder());
 
@@ -54,7 +54,7 @@ class Dao extends Pimcore\Model\Dao\PhpArrayTable
      * @return int
      * @throws \Exception
      */
-    public function getTotalCount(): int
+    public function getTotalCount()
     {
         $data = $this->db->fetchAll($this->model->getFilter(), $this->model->getOrder());
 

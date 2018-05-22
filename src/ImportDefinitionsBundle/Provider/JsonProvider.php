@@ -24,7 +24,7 @@ class JsonProvider implements ProviderInterface
      * @param array $arr
      * @return int
      */
-    protected function getJsonDepth(array $arr): int
+    protected function getJsonDepth(array $arr)
     {
         $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
         $depth = 0;
@@ -38,7 +38,7 @@ class JsonProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function testData($configuration): bool
+    public function testData($configuration)
     {
         $jsonExample = $configuration['jsonExample'];
 
@@ -48,7 +48,7 @@ class JsonProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getColumns($configuration): array
+    public function getColumns($configuration)
     {
         $jsonExample = $configuration['jsonExample'];
 
@@ -73,7 +73,7 @@ class JsonProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($configuration, $definition, $params, $filter = null): array
+    public function getData($configuration, $definition, $params, $filter = null)
     {
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
 

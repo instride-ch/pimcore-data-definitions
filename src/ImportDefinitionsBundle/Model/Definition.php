@@ -129,7 +129,7 @@ class Definition extends AbstractModel implements DefinitionInterface
      * @param int $id
      * @return Definition
      */
-    public static function getById($id): Definition
+    public static function getById($id)
     {
         $definitionEntry = new self();
         $definitionEntry->setId((int) $id);

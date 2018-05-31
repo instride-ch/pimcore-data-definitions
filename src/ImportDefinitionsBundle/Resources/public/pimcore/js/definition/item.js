@@ -7,14 +7,13 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.importdefinitions.definition.item');
 
 pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resource.item, {
-
     iconCls: 'importdefinitions_icon_definition',
     url: {
         save: '/admin/import_definitions/definitions/save',
@@ -44,7 +43,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                     iconCls: 'pimcore_icon_export',
                     handler: function () {
                         var id = this.data.id;
-                        pimcore.helpers.download(this.url.export + "?id=" + id);
+                        pimcore.helpers.download(this.url.export + '?id=' + id);
                     }.bind(this)
                 },
                 {
@@ -353,6 +352,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
 
             if (pimcore.plugin.importdefinitions.provider[provider] !== undefined) {
                 if (this.data.provider === null) {
+                    this.data.provider = provider;
                     this.save(function () {
                         this.updateProviderMapViews();
                     }.bind(this));
@@ -364,13 +364,16 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
         }
     },
 
-    postSave: function () {
-        this.undirtyMappingRecords();
+    postSave: function (res) {
+        if (res.success) {
+            this.undirtyMappingRecords();
+            this.reloadColumnMapping();
+        }
     },
 
     undirtyMappingRecords: function () {
-        if (this.mappingSettings && this.mappingSettings.down("grid")) {
-            var store = this.mappingSettings.down("grid").getStore();
+        if (this.mappingSettings && this.mappingSettings.down('grid')) {
+            var store = this.mappingSettings.down('grid').getStore();
 
             store.getRange().forEach(function (record) {
                 record.commit();
@@ -430,21 +433,21 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                             data: config.fromColumns
                         });
 
+                        if (typeof config.toColumns == 'undefined') {
+                            config.toColumns = [];
+                        }
                         var toColumnStore = new Ext.data.Store({
                             data: config.toColumns
                         });
 
                         var gridStore = new Ext.data.Store({
                             grouper: {
+
                                 groupFn: function (item) {
                                     var rec = toColumnStore.findRecord('identifier', item.data.toColumn);
 
                                     if (rec) {
-                                        if (rec.data.type === 'objectbrick' || rec.data.type === 'fieldcollection') {
-                                            return rec.data.setterConfig.class;
-                                        }
-
-                                        return rec.data.type ? rec.data.type : t('fields');
+                                        return rec.data.group;
                                     }
                                 }
                             },
@@ -532,7 +535,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
 
                                                         if (fromColumn && toColumn) {
                                                             var dialog = new pimcore.plugin.importdefinitions.definition.configDialog();
-                                                            dialog.getConfigDialog(fromColumn, toColumn, gridRecord);
+                                                            dialog.getConfigDialog(fromColumn, toColumn, gridRecord, config);
                                                         }
                                                     }
                                                 }
@@ -553,8 +556,11 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                         width: 50,
                                         align: 'right',
                                         renderer: function (value, metadata, record) {
-                                            var fromColumn = fromColumnStore.findRecord('identifier', record.get('fromColumn'));
-                                            var toColumn = toColumnStore.findRecord('identifier', record.get('toColumn'));
+                                            var fromColumnRecordNum = fromColumnStore.findExact('identifier', record.get('fromColumn'));
+                                            var fromColumn = fromColumnStore.getAt(fromColumnRecordNum);
+
+                                            var toColumnRecordNum = toColumnStore.findExact('identifier', record.get('toColumn'));
+                                            var toColumn = toColumnStore.getAt(toColumnRecordNum);
 
                                             if (fromColumn && toColumn) {
                                                 var id = Ext.id();
@@ -568,7 +574,7 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                                                             cls: 'importdefinitions-edit-button',
                                                             handler: function () {
                                                                 var dialog = new pimcore.plugin.importdefinitions.definition.configDialog();
-                                                                dialog.getConfigDialog(fromColumn, toColumn, record);
+                                                                dialog.getConfigDialog(fromColumn, toColumn, record, config);
                                                             }
                                                         });
                                                     }
@@ -623,16 +629,33 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
     getSaveData: function () {
         var data = {
             configuration: {},
-            mapping: []
+            mapping: {}
         };
 
         if (this.mappingSettings.down('grid')) {
             var mapping = this.mappingSettings.down('grid').getStore().getRange();
-            var mappingResult = [];
+            var mappingResult = {};
+            var highestId = 0;
 
             mapping.forEach(function (map) {
                 if (map.data.fromColumn) {
-                    mappingResult.push(map.data);
+                    if (map.data.identifier) {
+                        mappingResult[map.data.identifier] = map.data;
+
+                        if (map.data.identifier > highestId) {
+                            highestId = map.data.identifier;
+                        }
+                    }
+                }
+            });
+
+            mapping.forEach(function (map) {
+                if (map.data.fromColumn) {
+                    if (!map.data.identifier) {
+                        highestId++;
+
+                        mappingResult[highestId] = map.data;
+                    }
                 }
             });
 
@@ -649,11 +672,11 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
     },
 
     upload: function (callback) {
-        pimcore.helpers.uploadDialog(this.url.upload + "?id=" + this.data.id, "Filedata", function () {
+        pimcore.helpers.uploadDialog(this.url.upload + '?id=' + this.data.id, 'Filedata', function () {
             this.panel.destroy();
             this.parentPanel.openItem(this.data);
         }.bind(this), function () {
-            Ext.MessageBox.alert(t("error"), t("error"));
+            Ext.MessageBox.alert(t('error'), t('error'));
         });
 
     }

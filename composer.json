@@ -1,7 +1,7 @@
 {
   "name": "w-vision/import-definitions",
   "type": "pimcore-bundle",
-  "license": "GPLv3",
+  "license": "GPL-3.0-or-later",
   "description": "Import Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.",
   "keywords": [
     "pimcore",
@@ -12,9 +12,9 @@
   "homepage": "https://github.com/w-vision/ImportDefinitions",
   "authors": [
     {
-      "name": "w-vision | Woche-Pass AG",
+      "name": "w-vision AG",
       "email": "support@w-vision.ch",
-      "homepage": "http://www.w-vision.ch",
+      "homepage": "https://www.w-vision.ch",
       "role": "Web Development Agency"
     },
     {

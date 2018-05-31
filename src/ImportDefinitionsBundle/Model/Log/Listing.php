@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -26,7 +26,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      *
      * @var array
      */
-    public $data = null;
+    public $data;
 
     /**
      * @var string
@@ -38,9 +38,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      *
      * @var array
      */
-    public $validOrderKeys = array(
-        'id'
-    );
+    public $validOrderKeys = ['id'];
 
     /**
      * Test if the passed key is valid.
@@ -51,15 +49,16 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      */
     public function isValidOrderKey($key)
     {
-        return in_array($key, $this->validOrderKeys);
+        return \in_array($key, $this->validOrderKeys, true);
     }
 
     /**
      * @return Log[]
+     * @throws \Exception
      */
     public function getObjects()
     {
-        if ($this->data === null) {
+        if (null === $this->data) {
             $this->load();
         }
 
@@ -74,14 +73,13 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
         $this->data = $data;
     }
 
-    /**
-     * Methods for AdapterInterface.
-     */
+    /** Methods for AdapterInterface */
 
     /**
-     * get total count.
+     * Get total count
      *
      * @return mixed
+     * @throws \Exception
      */
     public function count()
     {
@@ -89,12 +87,12 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
     }
 
     /**
-     * get all items.
+     * Get all items
      *
      * @param int $offset
      * @param int $itemCountPerPage
-     *
      * @return mixed
+     * @throws \Exception
      */
     public function getItems($offset, $itemCountPerPage)
     {
@@ -105,7 +103,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
     }
 
     /**
-     * Get Paginator Adapter.
+     * Get Paginator Adapter
      *
      * @return $this
      */
@@ -115,7 +113,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
     }
 
     /**
-     * Set Locale.
+     * Set Locale
      *
      * @param mixed $locale
      */
@@ -125,7 +123,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
     }
 
     /**
-     * Get Locale.
+     * Get Locale
      *
      * @return string
      */
@@ -135,11 +133,13 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
     }
 
     /**
-     * Methods for Iterator.
+     * Methods for Iterator
      */
 
     /**
-     * Rewind.
+     * Rewind
+     *
+     * @throws \Exception
      */
     public function rewind()
     {
@@ -148,54 +148,54 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
     }
 
     /**
-     * current.
+     * Current
      *
      * @return mixed
+     * @throws \Exception
      */
     public function current()
     {
         $this->getData();
-        $var = current($this->data);
 
-        return $var;
+        return current($this->data);
     }
 
     /**
-     * key.
+     * Key
      *
      * @return mixed
+     * @throws \Exception
      */
     public function key()
     {
         $this->getData();
-        $var = key($this->data);
 
-        return $var;
+        return key($this->data);
     }
 
     /**
-     * next.
+     * Next
      *
      * @return mixed
+     * @throws \Exception
      */
     public function next()
     {
         $this->getData();
-        $var = next($this->data);
 
-        return $var;
+        return next($this->data);
     }
 
     /**
-     * valid.
+     * Valid
      *
      * @return bool
+     * @throws \Exception
      */
     public function valid()
     {
         $this->getData();
-        $var = $this->current() !== false;
 
-        return $var;
+        return $this->current() !== false;
     }
 }

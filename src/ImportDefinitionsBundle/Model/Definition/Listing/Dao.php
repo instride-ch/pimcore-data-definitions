@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -20,7 +20,7 @@ use ImportDefinitionsBundle\Model\Definition;
 class Dao extends Pimcore\Model\Dao\PhpArrayTable
 {
     /**
-     * configure.
+     * Configure
      */
     public function configure()
     {
@@ -29,9 +29,10 @@ class Dao extends Pimcore\Model\Dao\PhpArrayTable
     }
 
     /**
-     * Loads a list of Definitions for the specicifies parameters, returns an array of Definitions elements.
+     * Loads a list of Definitions for the specified parameters, returns an array of Definitions elements.
      *
      * @return array
+     * @throws \Exception
      */
     public function load()
     {
@@ -48,15 +49,15 @@ class Dao extends Pimcore\Model\Dao\PhpArrayTable
     }
 
     /**
-     * get total count.
+     * Get total count
      *
      * @return int
+     * @throws \Exception
      */
     public function getTotalCount()
     {
         $data = $this->db->fetchAll($this->model->getFilter(), $this->model->getOrder());
-        $amount = count($data);
 
-        return $amount;
+        return \count($data);
     }
 }

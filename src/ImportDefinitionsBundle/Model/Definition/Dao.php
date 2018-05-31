@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -21,7 +21,7 @@ use ImportDefinitionsBundle\Model\Mapping;
 class Dao extends Model\Dao\PhpArrayTable
 {
     /**
-     * Configure Configuration File.
+     * Configure Configuration File
      */
     public function configure()
     {
@@ -30,15 +30,14 @@ class Dao extends Model\Dao\PhpArrayTable
     }
 
     /**
-     * Get Configuration By Id.
+     * Get Configuration By Id
      *
      * @param null $id
-     *
      * @throws \Exception
      */
     public function getById($id = null)
     {
-        if ($id != null) {
+        if ($id !== null) {
             $this->model->setId($id);
         }
 
@@ -47,13 +46,14 @@ class Dao extends Model\Dao\PhpArrayTable
         if (isset($data['id'])) {
             $this->assignVariablesToModel($data);
         } else {
-            throw new \Exception('Definition with id: '.$this->model->getId().' does not exist');
+            throw new \InvalidArgumentException(sprintf('Definition with id: %s does not exist', $this->model->getId()));
         }
     }
 
     /**
      * @param array $data
      * @return void
+     * @throws \Exception
      */
     protected function assignVariablesToModel($data)
     {
@@ -63,12 +63,12 @@ class Dao extends Model\Dao\PhpArrayTable
             if ($key === 'mapping') {
                 $maps = array();
 
-                foreach ($this->model->getMapping() as $map) {
-                    if (is_array($map)) {
+                foreach ($this->model->getMapping() as $index=>$map) {
+                    if (\is_array($map)) {
                         $mapObj = new Mapping();
                         $mapObj->setValues($map);
 
-                        $maps[] = $mapObj;
+                        $maps[$index] = $mapObj;
                     }
                 }
 
@@ -81,34 +81,29 @@ class Dao extends Model\Dao\PhpArrayTable
      * Get Definition by name.
      *
      * @param null $name
-     *
      * @throws \Exception
      */
     public function getByName($name = null)
     {
-        if ($name != null) {
+        if ($name !== null) {
             $this->model->setName($name);
         }
 
         $name = $this->model->getName();
 
         $data = $this->db->fetchAll(function ($row) use ($name) {
-            if ($row['name'] == $name) {
-                return true;
-            }
-
-            return false;
+            return $row['name'] === $name;
         });
 
-        if (count($data) && $data[0]['id']) {
+        if ($data[0]['id'] && \count($data)) {
             $this->assignVariablesToModel($data[0]);
         } else {
-            throw new \Exception('Definition with name: '.$this->model->getName().' does not exist');
+            throw new \InvalidArgumentException(sprintf('Definition with name: %s does not exist', $this->model->getName()));
         }
     }
 
     /**
-     * save configuration.
+     * Save Configuration
      *
      * @throws \Exception
      */
@@ -129,7 +124,7 @@ class Dao extends Model\Dao\PhpArrayTable
                 'failureNotificationDocument', 'successNotificationDocument', 'skipExistingObjects', 'skipNewObjects'];
 
             foreach ($dataRaw as $key => $value) {
-                if (in_array($key, $allowedProperties)) {
+                if (\in_array($key, $allowedProperties, true)) {
                     if ($key === 'providerConfiguration') {
                         if ($value) {
                             $data[$key] = get_object_vars($value);
@@ -138,9 +133,9 @@ class Dao extends Model\Dao\PhpArrayTable
                         if ($value) {
                             $data[$key] = array();
 
-                            if (is_array($value)) {
-                                foreach ($value as $map) {
-                                    $data[$key][] = get_object_vars($map);
+                            if (\is_array($value)) {
+                                foreach ($value as $index => $map) {
+                                    $data[$key][$index] = get_object_vars($map);
                                 }
                             }
                         }
@@ -160,7 +155,8 @@ class Dao extends Model\Dao\PhpArrayTable
     }
 
     /**
-     * Deletes object from database.
+     * Deletes object from database
+     * @throws \Exception
      */
     public function delete()
     {

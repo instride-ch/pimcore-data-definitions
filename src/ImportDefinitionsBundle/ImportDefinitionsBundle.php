@@ -8,25 +8,46 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle;
 
-use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
-use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
+use CoreShop\Bundle\ResourceBundle\ComposerPackageBundleInterface;
+use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
+use Pimcore\Extension\Bundle\PimcoreBundleInterface;
+use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class ImportDefinitionsBundle extends AbstractPimcoreBundle
+class ImportDefinitionsBundle extends AbstractResourceBundle implements PimcoreBundleInterface, ComposerPackageBundleInterface
 {
-     use PackageVersionTrait;
+    use PackageVersionTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPackageName()
+    {
+        return 'w-vision/import-definitions';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSupportedDrivers()
+    {
+        return [
+            CoreShopResourceBundle::DRIVER_PIMCORE,
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -56,7 +77,7 @@ class ImportDefinitionsBundle extends AbstractPimcoreBundle
     /**
      * {@inheritdoc}
      */
-    protected function getComposerPackageName(): string
+    protected function getComposerPackageName()
     {
         return 'w-vision/import-definitions';
     }
@@ -64,5 +85,45 @@ class ImportDefinitionsBundle extends AbstractPimcoreBundle
     public function getInstaller()
     {
         return $this->container->get(Installer::class);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAdminIframePath()
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getJsPaths()
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCssPaths()
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEditmodeJsPaths()
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEditmodeCssPaths()
+    {
+        return [];
     }
 }

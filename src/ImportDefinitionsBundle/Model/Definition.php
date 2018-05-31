@@ -8,141 +8,138 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Model;
 
-use CoreShop\Component\Resource\Model\ResourceInterface;
 use Pimcore\Model\AbstractModel;
-
 
 class Definition extends AbstractModel implements DefinitionInterface
 {
     /**
-     * @var int
+     * @var null|int
      */
     public $id;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $name;
 
     /**
-     * @var string<
+     * @var null|string
      */
     public $provider;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $objectPath;
 
     /**
-     * @var string
+     * @var null|int|string
      */
     public $class;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $configuration;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $creationDate;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $modificationDate;
 
     /**
-     * @var Mapping[]
+     * @var null|Mapping[]
      */
     public $mapping;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $cleaner;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $key;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $filter;
 
     /**
-     * @var bool
+     * @var null|bool
      */
     public $renameExistingObjects;
 
     /**
-     * @var bool
+     * @var null|bool
      */
     public $relocateExistingObjects;
 
     /**
-     * @var bool
+     * @var null|bool
      */
     public $skipNewObjects = false;
 
     /**
-     * @var bool
+     * @var null|bool
      */
     public $skipExistingObjects = false;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $runner;
 
     /**
-     * @var boolean
+     * @var null|boolean
      */
     public $createVersion;
 
     /**
-     * @var boolean
+     * @var null|boolean
      */
     public $stopOnException;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $failureNotificationDocument;
 
     /**
-     * @var int
+     * @var null|int
      */
     public $successNotificationDocument;
 
     /**
-     * Get By Id.
+     * Get By Id
      *
      * @param int $id
-     *
      * @return Definition
      */
     public static function getById($id)
     {
         $definitionEntry = new self();
-        $definitionEntry->setId(intval($id));
+        $definitionEntry->setId((int) $id);
         $definitionEntry->getDao()->getById();
 
         return $definitionEntry;
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
     public function getId()
     {
@@ -158,7 +155,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
     public function getProvider()
     {
@@ -174,7 +171,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return array
+     * @return array|mixed|null
      */
     public function getConfiguration()
     {
@@ -190,7 +187,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null|string
      */
     public function getClass()
     {
@@ -206,7 +203,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
     public function getName()
     {
@@ -222,7 +219,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return Mapping[]
+     * @return Mapping[]|mixed|null
      */
     public function getMapping()
     {
@@ -238,7 +235,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
     public function getCreationDate()
     {
@@ -254,7 +251,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
     public function getModificationDate()
     {
@@ -270,7 +267,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
     public function getObjectPath()
     {
@@ -286,7 +283,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
     public function getCleaner()
     {
@@ -302,7 +299,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
     public function getKey()
     {
@@ -318,7 +315,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
     public function getFilter()
     {
@@ -334,7 +331,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|mixed|null
      */
     public function getRenameExistingObjects()
     {
@@ -350,7 +347,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|mixed|null
      */
     public function getRelocateExistingObjects()
     {
@@ -366,7 +363,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return string
+     * @return mixed|null|string
      */
     public function getRunner()
     {
@@ -382,7 +379,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|mixed|null
      */
     public function getCreateVersion()
     {
@@ -398,7 +395,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|mixed|null
      */
     public function getStopOnException()
     {
@@ -414,7 +411,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
     public function getFailureNotificationDocument()
     {
@@ -430,7 +427,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int
+     * @return int|mixed|null
      */
     public function getSuccessNotificationDocument()
     {
@@ -446,7 +443,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool
+     * @return bool|mixed|null
      */
     public function getSkipNewObjects()
     {
@@ -462,7 +459,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool
+     * @return bool|mixed|null
      */
     public function getSkipExistingObjects()
     {

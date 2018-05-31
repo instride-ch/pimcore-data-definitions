@@ -1,13 +1,14 @@
-/*
- * CoreShop.
+/**
+ * Import Definitions.
+ *
+ * LICENSE
  *
  * This source file is subject to the GNU General Public License version 3 (GPLv3)
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2015-2017 Dominik Pfaffenbauer (https://www.pfaffenbauer.at)
- * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
- *
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.nested');
@@ -21,7 +22,7 @@ pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plug
 
         Ext.each(records, function (interpreter) {
             if (interpreter === 'abstract')
-                return;
+                return;getInterpreterClassItem
 
             addMenu.push({
                 text: interpreter,
@@ -37,8 +38,7 @@ pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plug
                 iconCls: 'pimcore_icon_add',
                 menu: addMenu
             }],
-            border: false,
-            getInterpreterData: _this.getInterpreterData.bind(_this)
+            border: false
         });
 
         if (config && config.interpreters) {
@@ -61,7 +61,7 @@ pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plug
             return pimcore.plugin.importdefinitions.interpreters[type];
         }
 
-        return false;
+        return pimcore.plugin.importdefinitions.interpreters.empty;
     },
 
     addInterpreter: function (type, fromColumn, toColumn, record, config) {

@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -24,12 +24,12 @@ final class ProcessManagerListener
     /**
      * @var ProcessInterface
      */
-    protected $process = null;
+    private $process;
 
     /**
      * @var FactoryInterface
      */
-    protected $processFactory;
+    private $processFactory;
 
     /**
      * @param FactoryInterface $processFactory
@@ -48,7 +48,7 @@ final class ProcessManagerListener
             $date = Carbon::now();
 
             $this->process = $this->processFactory->createNew();
-            $this->process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized("%A %d %B %Y"), $event->getDefinition()->getName()));
+            $this->process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized('%A %d %B %Y'), $event->getDefinition()->getName()));
             $this->process->setTotal($event->getSubject());
             $this->process->setMessage('Loading');
             $this->process->setProgress(0);
@@ -56,10 +56,7 @@ final class ProcessManagerListener
         }
     }
 
-    /**
-     * @param ImportDefinitionEvent $event
-     */
-    public function onProgressEvent(ImportDefinitionEvent $event)
+    public function onProgressEvent()
     {
         if ($this->process) {
             $this->process->progress();

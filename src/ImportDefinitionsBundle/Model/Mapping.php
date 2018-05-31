@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2017 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -17,37 +17,37 @@ namespace ImportDefinitionsBundle\Model;
 class Mapping
 {
     /**
-     * @var string
+     * @var null|string
      */
     public $fromColumn;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $toColumn;
 
     /**
-     * @var boolean
+     * @var null|boolean
      */
     public $primaryIdentifier;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $setter;
 
     /**
-     * @var string
+     * @var null|string
      */
     public $interpreter;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $interpreterConfig;
 
     /**
-     * @var array
+     * @var null|array
      */
     public $setterConfig;
 
@@ -57,11 +57,11 @@ class Mapping
     public function setValues(array $values)
     {
         foreach ($values as $key => $value) {
-            if ($key == 'type') {
+            if ($key === 'o_type') {
                 continue;
             }
             
-            $setter = 'set'.ucfirst($key);
+            $setter = sprintf('set%s', ucfirst($key));
 
             if (method_exists($this, $setter)) {
                 $this->$setter($value);
@@ -70,7 +70,7 @@ class Mapping
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getToColumn()
     {
@@ -86,7 +86,7 @@ class Mapping
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getFromColumn()
     {
@@ -102,7 +102,7 @@ class Mapping
     }
 
     /**
-     * @return boolean
+     * @return bool|null
      */
     public function getPrimaryIdentifier()
     {
@@ -118,7 +118,7 @@ class Mapping
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getSetter()
     {
@@ -134,7 +134,7 @@ class Mapping
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getInterpreter()
     {
@@ -150,7 +150,7 @@ class Mapping
     }
 
     /**
-     * @return array
+     * @return array|null
      */
     public function getInterpreterConfig()
     {
@@ -166,7 +166,7 @@ class Mapping
     }
 
     /**
-     * @return array
+     * @return array|null
      */
     public function getSetterConfig()
     {

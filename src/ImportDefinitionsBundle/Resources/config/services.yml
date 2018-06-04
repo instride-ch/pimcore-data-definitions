@@ -101,10 +101,11 @@ services:
     tags:
       - { name: import_definition.interpreter, type: asset_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
 
-  import_definition.interpreter.asset:
-    class: ImportDefinitionsBundle\Interpreter\Asset
+  import_definition.interpreter.asset_by_path:
+    class: ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter
+    arguments: ['@import_definition.service.placeholder']
     tags:
-      - { name: import_definition.interpreter, type: asset, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\Asset }
+      - { name: import_definition.interpreter, type: asset_by_path, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType }
 
   import_definition.interpreter.checkbox:
     class: ImportDefinitionsBundle\Interpreter\CheckboxInterpreter
@@ -116,10 +117,10 @@ services:
     tags:
       - { name: import_definition.interpreter, type: default_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultValueInterpreterType }
 
-  import_definition.interpreter.default_object:
-      class: ImportDefinitionsBundle\Interpreter\DefaultObject
+  import_definition.interpreter.specific_object:
+      class: ImportDefinitionsBundle\Interpreter\SpecificObjectInterpreter
       tags:
-        - { name: import_definition.interpreter, type: default_object, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultObjectType }
+        - { name: import_definition.interpreter, type: specific_object, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\SpecificObjectInterpreterType }
 
   import_definition.interpreter.href:
     class: ImportDefinitionsBundle\Interpreter\HrefInterpreter
@@ -211,8 +212,3 @@ services:
     class: ImportDefinitionsBundle\EventListener\ObjectDeleteListener
     tags:
       - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onDataObjectDelete }
-
-  import_definition.setter.add_to_array:
-    class: ImportDefinitionsBundle\Setter\ObjectType
-    tags:
-      - { name: import_definition.setter, type: add_to_array, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }

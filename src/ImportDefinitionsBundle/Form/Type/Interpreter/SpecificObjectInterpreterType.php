@@ -18,12 +18,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class ValidKeyType
- *
- * @package Divante\ImporterBundle\ImportDefinitions\Form\Type\Interpreter
- */
-final class AssetType extends AbstractType
+final class SpecificObjectInterpreterType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -32,7 +27,7 @@ final class AssetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('path', TextType::class)
+            ->add('objectId', TextType::class)
         ;
     }
 
@@ -41,6 +36,6 @@ final class AssetType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'import_definitions_interpreter_asset';
+        return 'import_definitions_interpreter_specific_object';
     }
 }

@@ -19,12 +19,7 @@ use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Service\Placeholder;
 
-/**
- * Class Asset
- *
- * @package ImportDefinitionsBundle\Interpreter
- */
-class Asset implements InterpreterInterface
+class AssetByPathInterpreter implements InterpreterInterface
 {
     /**
      * @var Placeholder
@@ -40,14 +35,7 @@ class Asset implements InterpreterInterface
     }
 
     /**
-     * @param Concrete $object
-     * @param string $value
-     * @param Mapping $map
-     * @param array $data
-     * @param DefinitionInterface $definition
-     * @param array $params
-     * @param array $configuration
-     * @return null|\Pimcore\Model\Asset
+     * {@inheritdoc}
      */
     public function interpret(
         Concrete $object,
@@ -59,12 +47,7 @@ class Asset implements InterpreterInterface
         $configuration
     ) {
         $assetFullPath = $configuration['path'] . "/" . $value;
-        $asset = \Pimcore\Model\Asset::getByPath($assetFullPath);
 
-        if (!$asset) {
-            return null;
-        }
-
-        return $asset;
+        return \Pimcore\Model\Asset::getByPath($assetFullPath);
     }
 }

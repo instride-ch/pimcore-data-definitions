@@ -1,6 +1,6 @@
-pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.asset');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.asset_by_path');
 
-pimcore.plugin.importdefinitions.interpreters.asset = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.asset_by_path = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
         return [{
             xtype : 'textfield',

@@ -12,34 +12,29 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Setter;
+namespace ImportDefinitionsBundle\Interpreter;
 
+use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
+use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 
-/**
- * Class AddToArray
- *
- * @package ImportDefinitionsBundle\Setter
- */
-class AddToArray implements SetterInterface
+class SpecificObjectInterpreter implements InterpreterInterface
 {
     /**
-     * @param Concrete $object
-     * @param mixed $value
-     * @param Mapping $map
-     * @param array $data
-     * @return mixed
+     *{@inheritdoc}
      */
-    public function set(Concrete $object, $value, Mapping $map, $data)
-    {
-        $setter = "set" . ucfirst($map->toColumn);
-        $getter = "get" . ucfirst($map->toColumn);
+    public function interpret(
+        Concrete $object,
+        $value,
+        Mapping $map,
+        $data,
+        DefinitionInterface $definition,
+        $params,
+        $configuration
+    ) {
+        $objectId = $configuration['objectId'];
 
-        $existing = $object->$getter();
-
-        $existing[] = $value;
-
-        $object->$setter($existing);
+        return DataObject::getById($objectId);
     }
 }

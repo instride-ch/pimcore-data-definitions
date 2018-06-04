@@ -1,10 +1,10 @@
-pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.default_object');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.specific_object');
 
-pimcore.plugin.importdefinitions.interpreters.default_object = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
+pimcore.plugin.importdefinitions.interpreters.specific_object = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
 
     getLayout : function (fromColumn, toColumn, record, config) {
         this.defaultObjectField = new Ext.form.TextField({
-            name: "path",
+            name: "objectId",
             value: config.path,
             width: 500
         });
@@ -12,7 +12,7 @@ pimcore.plugin.importdefinitions.interpreters.default_object = Class.create(pimc
         return [{
             xtype: 'fieldcontainer',
             layout: 'hbox',
-            fieldLabel: t("Default object"),
+            fieldLabel: t("Predefined object"),
             items: [
                 {
                     xtype: "button",
@@ -32,7 +32,7 @@ pimcore.plugin.importdefinitions.interpreters.default_object = Class.create(pimc
 
     addDataFromSelector: function (objectIndex, item) {
         if (item) {
-            this.defaultObjectField.setValue(item.fullpath);
+            this.defaultObjectField.setValue(item.id);
         }
     }
 });

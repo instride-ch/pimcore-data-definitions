@@ -18,12 +18,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class HrefGetByType
- *
- * @package Divante\ImporterBundle\ImportDefinitions\Form\Type\Interpreter
- */
-final class DefaultObjectType extends AbstractType
+final class AssetByPathInterpreterType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -41,6 +36,6 @@ final class DefaultObjectType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'import_definitions_interpreter_defaultobject';
+        return 'import_definitions_interpreter_asset_by_path';
     }
 }

@@ -65,12 +65,14 @@ To prepare data before it goes to the Objects-Setter Method, there are these "In
 
  - AssetsUrl -> Downloads an Asset from an Url and saves it to a multihref field
  - AssetUrl -> Downloads an Asset from an Url and saves it to a href field
+ - AssetByPath -> Gets Asset object by path and saves it to a the field
  - DefaultValue -> Saves a Static-Value (definied in the UI) to the field
  - Checkbox -> transform "yes" and "no" into a Boolean Value
  - Href -> solves the connection from an ID to an actual Pimcore Object
  - MultiHref -> same as href, but for multihref fields
  - Quantity Value -> Interprets the data as Pimcore quantity value
  - Nested -> Allows you to nest/chain interpreters and pass results from one to another
+ - SpecificObject -> Saves predefined object (in the UI) to the field
 
 This probably doesn't satisfy your needs. But you can also write your own Interpreters.
 Todo that, you need to implement the interface ```ImportDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service

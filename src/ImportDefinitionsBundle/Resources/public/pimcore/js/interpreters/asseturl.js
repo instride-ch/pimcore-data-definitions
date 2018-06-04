@@ -17,10 +17,49 @@ pimcore.plugin.importdefinitions.interpreters.asset_url = Class.create(pimcore.p
     getLayout : function (fromColumn, toColumn, record, config) {
         return [{
             xtype : 'textfield',
-            fieldLabel: t('path'),
+            fieldLabel: t('importdefinitions_asset_save_path'),
             name: 'path',
             width: 500,
-            value : config.path ? config.path : null
+            value : config.path || null,
+            cls: 'input_drop_target',
+            ddValidator: {
+                elementType: 'asset'
+            },
+            canDrop: function(data)
+            {
+                if(!data.records[0] || !data.records[0].data) {
+                    return false;
+                }
+                var recordData = data.records[0].data;
+                return recordData.type === 'folder' && recordData.elementType === 'asset';
+            },
+            listeners: {
+                'render': function (el) {
+                    new Ext.dd.DropZone(el.getEl(), {
+                        reference: this,
+                        ddGroup: 'element',
+                        getTargetFromEvent: function (e) {
+                            return this.getEl();
+                        }.bind(el),
+
+                        onNodeOver: function (target, dd, e, data) {
+                            if (this.canDrop(data)) {
+                                return Ext.dd.DropZone.prototype.dropAllowed;
+                            } else {
+                                return Ext.dd.DropZone.prototype.dropNotAllowed;
+                            }
+                        }.bind(el),
+
+                        onNodeDrop: function (target, dd, e, data) {
+                            if (this.canDrop(data)) {
+                                this.setValue(data.records[0].data.path);
+                                return true;
+                            }
+                            return false;
+                        }.bind(el)
+                    });
+                }
+            }
         }];
     }
 });

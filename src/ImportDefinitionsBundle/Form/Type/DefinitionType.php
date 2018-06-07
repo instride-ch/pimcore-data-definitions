@@ -61,6 +61,7 @@ final class DefinitionType extends AbstractResourceType
             ->add('stopOnException', CheckboxType::class)
             ->add('skipNewObjects', CheckboxType::class)
             ->add('skipExistingObjects', CheckboxType::class)
+            ->add('omitMandatoryCheck', CheckboxType::class)
             ->add('failureNotificationDocument', IntegerType::class)
             ->add('successNotificationDocument', IntegerType::class)
             ->add('mapping', MappingCollectionType::class)

@@ -191,6 +191,16 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return mixed
      */
+    public function getOmitMandatoryCheck();
+
+    /**
+     * @param boolean $omitMandatoryCheck
+     */
+    public function setOmitMandatoryCheck($omitMandatoryCheck);
+
+    /**
+     * @return mixed
+     */
     public function getFailureNotificationDocument();
 
     /**

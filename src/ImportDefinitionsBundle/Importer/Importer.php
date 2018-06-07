@@ -311,6 +311,11 @@ final class Importer implements ImporterInterface
         }
 
         $object->setUserModification(0); //Set User to "system"
+
+        if ($definition->getOmitMandatoryCheck()) {
+            $object->setOmitMandatoryCheck(true);
+        }
+
         $object->save();
 
         $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Imported Object %s', $object->getFullPath())));

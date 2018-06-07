@@ -114,6 +114,11 @@ class Definition extends AbstractModel implements DefinitionInterface
     public $stopOnException;
 
     /**
+     * @var null|boolean
+     */
+    public $omitMandatoryCheck;
+
+    /**
      * @var null|int
      */
     public $failureNotificationDocument;
@@ -408,6 +413,22 @@ class Definition extends AbstractModel implements DefinitionInterface
     public function setStopOnException($stopOnException)
     {
         $this->stopOnException = $stopOnException;
+    }
+
+    /**
+     * @return bool|mixed|null
+     */
+    public function getOmitMandatoryCheck()
+    {
+        return $this->omitMandatoryCheck;
+    }
+
+    /**
+     * @param boolean $omitMandatoryCheck
+     */
+    public function setOmitMandatoryCheck($omitMandatoryCheck)
+    {
+        $this->omitMandatoryCheck = $omitMandatoryCheck;
     }
 
     /**

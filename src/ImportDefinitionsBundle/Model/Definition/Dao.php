@@ -120,7 +120,7 @@ class Dao extends Model\Dao\PhpArrayTable
             $data = [];
             $allowedProperties = ['id', 'name', 'provider', 'class', 'configuration', 'creationDate',
                 'modificationDate', 'mapping', 'objectPath', 'cleaner', 'key', 'renameExistingObjects',
-                'relocateExistingObjects', 'filter', 'runner', 'createVersion', 'stopOnException',
+                'relocateExistingObjects', 'filter', 'runner', 'createVersion', 'stopOnException', 'omitMandatoryCheck',
                 'failureNotificationDocument', 'successNotificationDocument', 'skipExistingObjects', 'skipNewObjects'];
 
             foreach ($dataRaw as $key => $value) {

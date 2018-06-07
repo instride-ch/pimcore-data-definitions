@@ -189,6 +189,16 @@ interface DefinitionInterface extends ResourceInterface
     public function setStopOnException($stopOnException);
 
     /**
+     * @return bool
+     */
+    public function getOmitMandatoryCheck();
+
+    /**
+     * @param bool $omitMandatoryCheck
+     */
+    public function setOmitMandatoryCheck($omitMandatoryCheck);
+
+    /**
      * @return mixed
      */
     public function getFailureNotificationDocument();

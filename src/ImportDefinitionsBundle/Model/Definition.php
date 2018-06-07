@@ -416,7 +416,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool|mixed|null
+     * {@inheritdoc}
      */
     public function getOmitMandatoryCheck()
     {
@@ -424,7 +424,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param boolean $omitMandatoryCheck
+     * {@inheritdoc}
      */
     public function setOmitMandatoryCheck($omitMandatoryCheck)
     {

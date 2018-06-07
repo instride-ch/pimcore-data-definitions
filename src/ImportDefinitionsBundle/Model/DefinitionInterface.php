@@ -189,12 +189,12 @@ interface DefinitionInterface extends ResourceInterface
     public function setStopOnException($stopOnException);
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getOmitMandatoryCheck();
 
     /**
-     * @param boolean $omitMandatoryCheck
+     * @param bool $omitMandatoryCheck
      */
     public function setOmitMandatoryCheck($omitMandatoryCheck);
 

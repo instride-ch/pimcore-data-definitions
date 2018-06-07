@@ -312,9 +312,7 @@ final class Importer implements ImporterInterface
 
         $object->setUserModification(0); //Set User to "system"
 
-        if ($definition->getOmitMandatoryCheck()) {
-            $object->setOmitMandatoryCheck(true);
-        }
+        $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
 
         $object->save();
 

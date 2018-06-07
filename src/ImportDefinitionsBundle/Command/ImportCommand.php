@@ -63,7 +63,7 @@ EOT
 
         if (!$definition instanceof DefinitionInterface) {
             throw new \Exception('Definition not found');
-        }
+        }<
 
         $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process)  {
             if ($progress instanceof ProgressBar) {

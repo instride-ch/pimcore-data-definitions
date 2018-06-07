@@ -19,112 +19,112 @@ use Pimcore\Model\AbstractModel;
 class Definition extends AbstractModel implements DefinitionInterface
 {
     /**
-     * @var null|int
+     * @var int
      */
     public $id;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $name;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $provider;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $objectPath;
 
     /**
-     * @var null|int|string
+     * @var string
      */
     public $class;
 
     /**
-     * @var null|array
+     * @var array
      */
     public $configuration;
 
     /**
-     * @var null|int
+     * @var int
      */
     public $creationDate;
 
     /**
-     * @var null|int
+     * @var int
      */
     public $modificationDate;
 
     /**
-     * @var null|Mapping[]
+     * @var Mapping[]
      */
     public $mapping;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $cleaner;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $key;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $filter;
 
     /**
-     * @var null|bool
+     * @var bool
      */
     public $renameExistingObjects;
 
     /**
-     * @var null|bool
+     * @var bool
      */
     public $relocateExistingObjects;
 
     /**
-     * @var null|bool
+     * @var bool
      */
     public $skipNewObjects = false;
 
     /**
-     * @var null|bool
+     * @var bool
      */
     public $skipExistingObjects = false;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $runner;
 
     /**
-     * @var null|boolean
+     * @var boolean
      */
     public $createVersion;
 
     /**
-     * @var null|boolean
+     * @var boolean
      */
     public $stopOnException;
 
     /**
-     * @var null|boolean
+     * @var boolean
      */
     public $omitMandatoryCheck;
 
     /**
-     * @var null|int
+     * @var int
      */
     public $failureNotificationDocument;
 
     /**
-     * @var null|int
+     * @var int
      */
     public $successNotificationDocument;
 
@@ -144,7 +144,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int|mixed|null
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -152,7 +152,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param int $id
+     * {@inheritdoc}
      */
     public function setId($id)
     {
@@ -160,7 +160,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return mixed|null|string
+     * {@inheritdoc}
      */
     public function getProvider()
     {
@@ -168,7 +168,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param string $provider
+     * {@inheritdoc}
      */
     public function setProvider($provider)
     {
@@ -176,7 +176,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return array|mixed|null
+     * {@inheritdoc}
      */
     public function getConfiguration()
     {
@@ -184,7 +184,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param array $configuration
+     * {@inheritdoc}
      */
     public function setConfiguration($configuration)
     {
@@ -192,7 +192,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int|mixed|null|string
+     * {@inheritdoc}
      */
     public function getClass()
     {
@@ -200,7 +200,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param int $class
+     * {@inheritdoc}
      */
     public function setClass($class)
     {
@@ -208,7 +208,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return mixed|null|string
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -216,7 +216,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param string $name
+     * {@inheritdoc}
      */
     public function setName($name)
     {
@@ -224,7 +224,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return Mapping[]|mixed|null
+     * {@inheritdoc}
      */
     public function getMapping()
     {
@@ -232,7 +232,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param Mapping[] $mapping
+     * {@inheritdoc}
      */
     public function setMapping($mapping)
     {
@@ -240,7 +240,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int|mixed|null
+     * {@inheritdoc}
      */
     public function getCreationDate()
     {
@@ -248,7 +248,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param int $creationDate
+     * {@inheritdoc}
      */
     public function setCreationDate($creationDate)
     {
@@ -256,7 +256,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int|mixed|null
+     * {@inheritdoc}
      */
     public function getModificationDate()
     {
@@ -264,7 +264,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param int $modificationDate
+     * {@inheritdoc}
      */
     public function setModificationDate($modificationDate)
     {
@@ -272,7 +272,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return mixed|null|string
+     * {@inheritdoc}
      */
     public function getObjectPath()
     {
@@ -280,7 +280,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param string $objectPath
+     * {@inheritdoc}
      */
     public function setObjectPath($objectPath)
     {
@@ -288,7 +288,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return mixed|null|string
+     * {@inheritdoc}
      */
     public function getCleaner()
     {
@@ -296,7 +296,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param string $cleaner
+     * {@inheritdoc}
      */
     public function setCleaner($cleaner)
     {
@@ -304,7 +304,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return mixed|null|string
+     * {@inheritdoc}
      */
     public function getKey()
     {
@@ -312,7 +312,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param string $key
+     * {@inheritdoc}
      */
     public function setKey($key)
     {
@@ -320,7 +320,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return mixed|null|string
+     * {@inheritdoc}
      */
     public function getFilter()
     {
@@ -328,7 +328,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param string $filter
+     * {@inheritdoc}
      */
     public function setFilter($filter)
     {
@@ -336,7 +336,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool|mixed|null
+     * {@inheritdoc}
      */
     public function getRenameExistingObjects()
     {
@@ -344,7 +344,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param boolean $renameExistingObjects
+     * {@inheritdoc}
      */
     public function setRenameExistingObjects($renameExistingObjects)
     {
@@ -352,7 +352,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool|mixed|null
+     * {@inheritdoc}
      */
     public function getRelocateExistingObjects()
     {
@@ -360,7 +360,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param boolean $relocateExistingObjects
+     * {@inheritdoc}
      */
     public function setRelocateExistingObjects($relocateExistingObjects)
     {
@@ -368,7 +368,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return mixed|null|string
+     * {@inheritdoc}
      */
     public function getRunner()
     {
@@ -376,7 +376,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param string $runner
+     * {@inheritdoc}
      */
     public function setRunner($runner)
     {
@@ -384,7 +384,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool|mixed|null
+     * {@inheritdoc}
      */
     public function getCreateVersion()
     {
@@ -392,7 +392,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param boolean $createVersion
+     * {@inheritdoc}
      */
     public function setCreateVersion($createVersion)
     {
@@ -400,7 +400,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool|mixed|null
+     * {@inheritdoc}
      */
     public function getStopOnException()
     {
@@ -408,7 +408,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param boolean $stopOnException
+     * {@inheritdoc}
      */
     public function setStopOnException($stopOnException)
     {
@@ -432,7 +432,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int|mixed|null
+     * {@inheritdoc}
      */
     public function getFailureNotificationDocument()
     {
@@ -440,7 +440,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param int $failureNotificationDocument
+     * {@inheritdoc}
      */
     public function setFailureNotificationDocument($failureNotificationDocument)
     {
@@ -448,7 +448,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return int|mixed|null
+     * {@inheritdoc}
      */
     public function getSuccessNotificationDocument()
     {
@@ -456,7 +456,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param int $successNotificationDocument
+     * {@inheritdoc}
      */
     public function setSuccessNotificationDocument($successNotificationDocument)
     {
@@ -464,7 +464,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool|mixed|null
+     * {@inheritdoc}
      */
     public function getSkipNewObjects()
     {
@@ -472,7 +472,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param bool $skipNewObjects
+     * {@inheritdoc}
      */
     public function setSkipNewObjects($skipNewObjects)
     {
@@ -480,7 +480,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @return bool|mixed|null
+     * {@inheritdoc}
      */
     public function getSkipExistingObjects()
     {
@@ -488,7 +488,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     }
 
     /**
-     * @param bool $skipExistingObjects
+     * {@inheritdoc}
      */
     public function setSkipExistingObjects($skipExistingObjects)
     {

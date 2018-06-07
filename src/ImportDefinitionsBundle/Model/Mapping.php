@@ -17,37 +17,37 @@ namespace ImportDefinitionsBundle\Model;
 class Mapping
 {
     /**
-     * @var null|string
+     * @var string
      */
     public $fromColumn;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $toColumn;
 
     /**
-     * @var null|boolean
+     * @var boolean
      */
     public $primaryIdentifier;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $setter;
 
     /**
-     * @var null|string
+     * @var string
      */
     public $interpreter;
 
     /**
-     * @var null|array
+     * @var array
      */
     public $interpreterConfig;
 
     /**
-     * @var null|array
+     * @var array
      */
     public $setterConfig;
 

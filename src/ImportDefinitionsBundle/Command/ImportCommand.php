@@ -74,7 +74,7 @@ EOT
 
         $imTotal = function (ImportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
             $progress = new ProgressBar($output, $e->getSubject());
-            $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %message%');
+            $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%');
             $progress->start();
         };
 

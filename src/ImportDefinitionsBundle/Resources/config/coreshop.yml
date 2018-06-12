@@ -15,3 +15,10 @@ services:
         class: ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter
         tags:
             - { name: import_definition.interpreter, type: coreshop_stores, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType }
+
+    importdefinitions.coreshop.interpreter.currency:
+        class: ImportDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter
+        arguments:
+            - '@coreshop.repository.currency'
+        tags:
+            - { name: import_definition.interpreter, type: coreshop_currency, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }

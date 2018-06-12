@@ -75,6 +75,9 @@ class CsvProvider implements ProviderInterface
         $delimiter = $configuration['delimiter'];
         $enclosure = $configuration['enclosure'];
 
+        $offset = $params['offset'];
+        $limit = $params['limit'];
+
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
 
         $csv = Reader::createFromPath($file, 'r');
@@ -102,6 +105,15 @@ class CsvProvider implements ProviderInterface
         }
 
         $stmt = new Statement();
+
+        if ($offset) {
+            $stmt = $stmt->offset(intval($offset));
+        }
+
+        if ($limit) {
+            $stmt = $stmt->limit(intval($limit));
+        }
+
         $records = $stmt->process($csv);
 
         return iterator_to_array($records);

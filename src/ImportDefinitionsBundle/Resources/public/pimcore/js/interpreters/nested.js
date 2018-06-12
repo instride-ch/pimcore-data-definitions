@@ -22,7 +22,7 @@ pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plug
 
         Ext.each(records, function (interpreter) {
             if (interpreter === 'abstract')
-                return;getInterpreterClassItem
+                return;
 
             addMenu.push({
                 text: interpreter,

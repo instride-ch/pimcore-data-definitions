@@ -15,6 +15,9 @@
 namespace ImportDefinitionsBundle\Provider;
 
 use ImportDefinitionsBundle\Model\Mapping\FromColumn;
+use League\Csv\Reader;
+use League\Csv\Statement;
+use League\Csv\Writer;
 
 class CsvProvider implements ProviderInterface
 {
@@ -25,7 +28,7 @@ class CsvProvider implements ProviderInterface
     {
         return true;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -74,46 +77,33 @@ class CsvProvider implements ProviderInterface
 
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
 
-        $columnMapping = [];
+        $csv = Reader::createFromPath($file, 'r');
+        $csv->setDelimiter($delimiter);
+        $csv->setEnclosure($enclosure);
 
         if ($csvHeaders) {
-            $columnMapping = $this->getColumns($configuration);
+            $headers = array_map(function(FromColumn $column) {
+                return $column->getIdentifier();
+            }, $this->getColumns($configuration));
 
-            foreach ($columnMapping as &$header) {
-                $header = $header->getIdentifier();
-            }
+            $writer = Writer::createFromString('');
 
-            unset($header);
+            $stmt = new Statement();
+            $records = $stmt->process($csv);
+
+            $writer->insertOne($headers);
+            $writer->insertAll($records);
+
+            $csv = Reader::createFromString($writer->getContent());
+            $csv->setHeaderOffset(0);
+        }
+        else {
+            $csv->setHeaderOffset(0);
         }
 
-        $data = [];
+        $stmt = new Statement();
+        $records = $stmt->process($csv);
 
-        $row = 0;
-        if (($handle = fopen($file, 'rb')) !== false) {
-            while (($csvData = fgetcsv($handle, 1000, $delimiter, $enclosure ?: \chr(8))) !== false) {
-                $num = \count($csvData);
-
-                // Make Column Mapping
-                if ($row === 0 && !$csvHeaders) {
-                    for ($c = 0; $c < $num; $c++) {
-                        $columnMapping[] = $csvData[$c];
-                    }
-                } else {
-                    $mappedData = [];
-
-                    foreach ($csvData as $index => $col) {
-                        $mappedData[$columnMapping[$index]] = $col;
-                    }
-
-                    $data[] = $mappedData;
-                }
-
-                $row++;
-            }
-
-            fclose($handle);
-        }
-
-        return $data;
+        return iterator_to_array($records);
     }
 }

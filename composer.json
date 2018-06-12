@@ -25,7 +25,8 @@
     }
   ],
   "require": {
-    "coreshop/resource-bundle": "^2.0"
+    "coreshop/resource-bundle": "^2.0",
+    "league/csv": "^9.0"
   },
   "autoload": {
     "psr-4": {

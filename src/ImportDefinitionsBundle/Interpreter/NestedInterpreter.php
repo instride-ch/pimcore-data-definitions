@@ -38,14 +38,14 @@ final class NestedInterpreter implements InterpreterInterface
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, $dataSet, DefinitionInterface $definition, $params, $configuration)
     {
         Assert::keyExists($configuration, 'interpreters');
         Assert::isArray($configuration['interpreters'], 'Interpreter Config needs to be array');
 
         foreach ($map->getInterpreterConfig()['interpreters'] as $interpreter) {
             $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
-            $value = $interpreterObject->interpret($object, $value, $map, $data, $definition, $params, $interpreter['interpreterConfig']);
+            $value = $interpreterObject->interpret($object, $value, $map, $data, $dataSet, $definition, $params, $interpreter['interpreterConfig']);
         }
 
         return $value;

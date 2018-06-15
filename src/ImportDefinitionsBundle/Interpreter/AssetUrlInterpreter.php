@@ -40,7 +40,7 @@ class AssetUrlInterpreter implements InterpreterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, $dataSet, DefinitionInterface $definition, $params, $configuration)
     {
         $path = $configuration['path'];
 

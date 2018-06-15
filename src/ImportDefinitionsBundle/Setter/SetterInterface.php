@@ -24,7 +24,7 @@ interface SetterInterface
      * @param $value
      * @param Mapping $map
      * @param array $data
-     * @return mixed
+     * @param array $dataSet
      */
-    public function set(Concrete $object, $value, Mapping $map, $data);
+    public function set(Concrete $object, $value, Mapping $map, $data, $dataSet);
 }

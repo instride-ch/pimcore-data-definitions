@@ -39,7 +39,7 @@ class StorePriceSetter implements SetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, Mapping $map, $data)
+    public function set(Concrete $object, $value, Mapping $map, $data, $dataSet)
     {
         $config = $map->getSetterConfig();
 

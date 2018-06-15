@@ -215,56 +215,55 @@ final class Importer implements ImporterInterface
      * @param DefinitionInterface $definition
      * @param $params
      * @param null $filter
-     * @param array $data
+     * @param array $dataSet
      * @throws \Exception
      */
-    private function runImport(DefinitionInterface $definition, $params, $filter = null, array $data = [])
+    private function runImport(DefinitionInterface $definition, $params, $filter = null, array $dataSet = [])
     {
         $count = 0;
         $countToClean = 1000;
 
-        if (\is_array($data)) {
-            foreach ($data as $row) {
-                try {
-                    $object = $this->importRow($definition, $row, $params, $filter);
+        foreach ($dataSet as $row) {
+            try {
+                $object = $this->importRow($definition, $row, $dataSet, $params, $filter);
 
-                    if ($object instanceof Concrete) {
-                        $this->objectIds[] = $object->getId();
-                    }
-
-                    if (($count + 1) % $countToClean === 0) {
-                        \Pimcore::collectGarbage();
-                        $this->logger->info('Clean Garbage');
-                        $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, 'Collect Garbage'));
-                    }
-
-                    $count++;
-                } catch (\Exception $ex) {
-                    $this->logger->error($ex);
-
-                    $this->exceptions[] = $ex;
-
-                    $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage())));
-
-                    if ($definition->getStopOnException()) {
-                        throw $ex;
-                    }
+                if ($object instanceof Concrete) {
+                    $this->objectIds[] = $object->getId();
                 }
 
-                $this->eventDispatcher->dispatch('import_definition.progress', new ImportDefinitionEvent($definition));
+                if (($count + 1) % $countToClean === 0) {
+                    \Pimcore::collectGarbage();
+                    $this->logger->info('Clean Garbage');
+                    $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, 'Collect Garbage'));
+                }
+
+                $count++;
+            } catch (\Exception $ex) {
+                $this->logger->error($ex);
+
+                $this->exceptions[] = $ex;
+
+                $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage())));
+
+                if ($definition->getStopOnException()) {
+                    throw $ex;
+                }
             }
+
+            $this->eventDispatcher->dispatch('import_definition.progress', new ImportDefinitionEvent($definition));
         }
     }
 
     /**
      * @param DefinitionInterface $definition
      * @param $data
+     * @param $dataSet
      * @param $params
      * @param null $filter
      * @return null|Concrete
      * @throws \Exception
      */
-    private function importRow(DefinitionInterface $definition, $data, $params, $filter = null)
+    private function importRow(DefinitionInterface $definition, $data, $dataSet, $params, $filter = null)
     {
         $runner = null;
 
@@ -282,7 +281,7 @@ final class Importer implements ImporterInterface
             }
         }
 
-        if ($filter instanceof FilterInterface && !$filter->filter($definition, $data, $object)) {
+        if ($filter instanceof FilterInterface && !$filter->filter($definition, $data, $dataSet, $object)) {
             $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, 'Filtered Object'));
             return null;
         }
@@ -296,7 +295,7 @@ final class Importer implements ImporterInterface
 
 
         if ($runner instanceof RunnerInterface) {
-            $runner->preRun($object, $data, $definition, $params);
+            $runner->preRun($object, $data, $dataSet, $definition, $params);
         }
 
         $this->logger->info(sprintf('Imported Object: %s', $object->getRealFullPath()));
@@ -308,7 +307,7 @@ final class Importer implements ImporterInterface
                 $value = $data[$mapItem->getFromColumn()];
             }
 
-            $this->setObjectValue($object, $mapItem, $value, $data, $definition, $params, $runner);
+            $this->setObjectValue($object, $mapItem, $value, $data, $dataSet, $definition, $params, $runner);
         }
 
         $object->setUserModification(0); //Set User to "system"
@@ -321,7 +320,7 @@ final class Importer implements ImporterInterface
         $this->eventDispatcher->dispatch('import_definition.object.finished', new ImportDefinitionEvent($definition, $object));
 
         if ($runner instanceof RunnerInterface) {
-            $runner->postRun($object, $data, $definition, $params);
+            $runner->postRun($object, $data, $dataSet, $definition, $params);
         }
 
         return $object;
@@ -332,11 +331,12 @@ final class Importer implements ImporterInterface
      * @param Mapping $map
      * @param $value
      * @param $data
+     * @param $dataSet
      * @param DefinitionInterface $definition
      * @param $params
      * @param RunnerInterface $runner
      */
-    private function setObjectValue(Concrete $object, Mapping $map, $value, $data, DefinitionInterface $definition, $params, RunnerInterface $runner = null)
+    private function setObjectValue(Concrete $object, Mapping $map, $value, $data, $dataSet, DefinitionInterface $definition, $params, RunnerInterface $runner = null)
     {
         if ($map->getInterpreter()) {
             $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
@@ -350,7 +350,7 @@ final class Importer implements ImporterInterface
         $shouldSetField = true;
 
         if ($runner instanceof SetterRunnerInterface) {
-            $shouldSetField = $runner->shouldSetField($object, $map, $value, $data, $definition, $params);
+            $shouldSetField = $runner->shouldSetField($object, $map, $value, $data, $dataSet, $definition, $params);
         }
 
         if (!$shouldSetField) {
@@ -359,7 +359,7 @@ final class Importer implements ImporterInterface
 
         if ($map->getSetter()) {
             $setter = $this->setterRegistry->get($map->getSetter());
-            $setter->set($object, $value, $map, $data);
+            $setter->set($object, $value, $map, $data, $dataSet);
         } else {
             $object->setValue($map->getToColumn(), $value);
         }

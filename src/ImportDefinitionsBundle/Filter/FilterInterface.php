@@ -22,9 +22,10 @@ interface FilterInterface
     /**
      * @param DefinitionInterface $definition
      * @param array $data
+     * @param array $dataSet
      * @param Concrete $object
      *
      * @return boolean
      */
-    public function filter(DefinitionInterface $definition, $data, $object);
+    public function filter(DefinitionInterface $definition, $data, $dataSet, $object);
 }

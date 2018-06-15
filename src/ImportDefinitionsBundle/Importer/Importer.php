@@ -15,6 +15,7 @@
 namespace ImportDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
 use Pimcore\File;
 use Pimcore\Mail;
 use Pimcore\Model\Document;
@@ -307,7 +308,7 @@ final class Importer implements ImporterInterface
                 $value = $data[$mapItem->getFromColumn()];
             }
 
-            $this->setObjectValue($object, $mapItem, $value, $data, $definition, $params);
+            $this->setObjectValue($object, $mapItem, $value, $data, $definition, $params, $runner);
         }
 
         $object->setUserModification(0); //Set User to "system"
@@ -333,8 +334,9 @@ final class Importer implements ImporterInterface
      * @param $data
      * @param DefinitionInterface $definition
      * @param $params
+     * @param RunnerInterface $runner
      */
-    private function setObjectValue(Concrete $object, Mapping $map, $value, $data, DefinitionInterface $definition, $params)
+    private function setObjectValue(Concrete $object, Mapping $map, $value, $data, DefinitionInterface $definition, $params, RunnerInterface $runner = null)
     {
         if ($map->getInterpreter()) {
             $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
@@ -343,6 +345,16 @@ final class Importer implements ImporterInterface
 
         if ($map->getToColumn() === 'o_type' && $map->getSetter() !== 'object_type') {
             throw new \InvalidArgumentException('Type has to be used with ObjectType Setter!');
+        }
+
+        $shouldSetField = true;
+
+        if ($runner instanceof SetterRunnerInterface) {
+            $shouldSetField = $runner->shouldSetField($object, $map, $value, $data, $definition, $params);
+        }
+
+        if (!$shouldSetField) {
+            return;
         }
 
         if ($map->getSetter()) {

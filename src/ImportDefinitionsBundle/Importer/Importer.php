@@ -416,7 +416,7 @@ final class Importer implements ImporterInterface
             }
 
             if ($obj instanceof AbstractObject) {
-                $key = File::getValidFilename($this->createKey($definition, $data));
+                $key = Service::getValidKey($this->createKey($definition, $data), 'object');
 
                 if ($definition->getRelocateExistingObjects() || !$obj->getId()) {
                     $obj->setParent(Service::createFolderByPath($this->createPath($definition, $data)));

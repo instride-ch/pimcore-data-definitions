@@ -77,3 +77,8 @@ services:
     class: ImportDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType
     tags:
         - { name: form.type }
+
+  import_definition.form.interpreter_object_resolver:
+    class: ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType
+    tags:
+        - { name: form.type }

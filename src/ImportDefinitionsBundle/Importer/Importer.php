@@ -15,6 +15,7 @@
 namespace ImportDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
 use Pimcore\File;
 use Pimcore\Mail;
@@ -339,8 +340,13 @@ final class Importer implements ImporterInterface
     private function setObjectValue(Concrete $object, Mapping $map, $value, $data, DefinitionInterface $definition, $params, RunnerInterface $runner = null)
     {
         if ($map->getInterpreter()) {
-            $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
-            $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params, $map->getInterpreterConfig());
+            try {
+                $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
+                $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params, $map->getInterpreterConfig());
+            }
+            catch (DoNotSetException $ex) {
+                return;
+            }
         }
 
         if ($map->getToColumn() === 'o_type' && $map->getSetter() !== 'object_type') {

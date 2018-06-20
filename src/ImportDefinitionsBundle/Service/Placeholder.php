@@ -14,19 +14,25 @@
 
 namespace ImportDefinitionsBundle\Service;
 
+use ImportDefinitionsBundle\PlaceholderContext;
 use Pimcore\File;
 
 final class Placeholder
 {
     /**
-     * @param $placeholder
-     * @param $data
+     * @var \Pimcore\Placeholder
+     */
+    private $helper;
+
+    /**
+     * @param                    $placeholder
+     * @param PlaceholderContext $context
+     *
      * @return string
      */
-    public function replace($placeholder, $data)
+    public function replace($placeholder, PlaceholderContext $context)
     {
-        $myData = $data;
-        $placeholderHelper = new \Pimcore\Placeholder();
+        $myData = $context->toArray();
 
         foreach ($myData as &$d) {
             if (\is_string($d)) {
@@ -36,6 +42,18 @@ final class Placeholder
 
         unset($d);
 
-        return $placeholderHelper->replacePlaceholders($placeholder, $myData);
+        return $this->getHelper()->replacePlaceholders($placeholder, $myData);
+    }
+
+    /**
+     * @return \Pimcore\Placeholder
+     */
+    private function getHelper()
+    {
+        if (null === $this->helper) {
+            $this->helper = new \Pimcore\Placeholder();
+        }
+
+        return $this->helper;
     }
 }

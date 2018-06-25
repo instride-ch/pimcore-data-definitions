@@ -32,7 +32,7 @@ trait DataSetAwareTrait
     /**
      * @param array $dataSet
      */
-    public function setDataSet(array $dataSet)
+    public function setDataSet($dataSet)
     {
         $this->dataSet = $dataSet;
     }

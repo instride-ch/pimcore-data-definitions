@@ -12,25 +12,35 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Setter;
+namespace ImportDefinitionsBundle;
 
-use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\Mapping;
 
-class KeySetter implements SetterInterface
+final class PlaceholderContext
 {
     /**
-     * {@inheritdoc}
-     * @throws \Exception
+     * @var array
      */
-    public function set(Concrete $object, $value, Mapping $map, $data)
-    {
-        $setter = explode('~', $map->getToColumn());
-        $setter = sprintf('set%s', ucfirst($setter[0]));
+    private $params;
 
-        if (method_exists($object, $setter)) {
-            $object->$setter(DataObject\Service::getValidKey($value,"object"));
+    /**
+     * @param array         $params
+     * @param null|Concrete $object
+     */
+    public function __construct(array $params, Concrete $object = null)
+    {
+        $this->params = $params;
+
+        if (null !== $object) {
+            $this->params['o_object'] = $object;
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->params;
     }
 }

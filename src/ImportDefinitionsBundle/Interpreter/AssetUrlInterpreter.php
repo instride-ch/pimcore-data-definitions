@@ -18,6 +18,7 @@ use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\PlaceholderContext;
 use Pimcore\File;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
@@ -52,7 +53,8 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
             $filename = File::getValidFilename(basename($value));
 
             // Convert placeholder path
-            $assetPath = $this->placeholderService->replace($path, $data);
+            $context = new PlaceholderContext($data, $object);
+            $assetPath = $this->placeholderService->replace($path, $context);
             $assetFullPath = sprintf('%s/%s', $assetPath, $filename);
 
             $asset = Asset::getByPath($assetFullPath);

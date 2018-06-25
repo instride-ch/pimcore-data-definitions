@@ -243,7 +243,7 @@ class DefinitionController extends ResourceController
         $fields = $class->getFieldDefinitions();
 
         $systemColumns = [
-            'o_published', 'o_key', 'o_parentId', 'o_type'
+            'o_published', 'o_key', 'o_parentId', 'o_parent', 'o_type'
         ];
 
         $result = [];

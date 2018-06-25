@@ -16,6 +16,7 @@ namespace ImportDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
+use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
 use ImportDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\File;
@@ -355,13 +356,19 @@ final class Importer implements ImporterInterface
     private function setObjectValue(Concrete $object, Mapping $map, $value, $data, $dataSet, DefinitionInterface $definition, $params, RunnerInterface $runner = null)
     {
         if ($map->getInterpreter()) {
-            $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
+            try {
+                $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
 
-            if ($interpreter instanceof DataSetAwareInterface) {
-                $interpreter->setDataSet($dataSet);
+                if ($interpreter instanceof DataSetAwareInterface) {
+                    $interpreter->setDataSet($dataSet);
+                }
+
+                $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params, $map->getInterpreterConfig());
+            }
+            catch (DoNotSetException $ex) {
+                return;
             }
 
-            $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params, $map->getInterpreterConfig());
         }
 
         if ($map->getToColumn() === 'o_type' && $map->getSetter() !== 'object_type') {
@@ -448,7 +455,7 @@ final class Importer implements ImporterInterface
             }
 
             if ($obj instanceof AbstractObject) {
-                $key = File::getValidFilename($this->createKey($definition, $data));
+                $key = Service::getValidKey($this->createKey($definition, $data), 'object');
 
                 if ($definition->getRelocateExistingObjects() || !$obj->getId()) {
                     $obj->setParent(Service::createFolderByPath($this->createPath($definition, $data)));

@@ -14,6 +14,7 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
+use ImportDefinitionsBundle\Exception\DoNotSetException;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
@@ -29,6 +30,8 @@ interface InterpreterInterface
      * @param array $params
      * @param array $configuration
      * @return mixed
+     *
+     * @throws DoNotSetException
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration);
 }

@@ -258,8 +258,8 @@ final class Importer implements ImporterInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param $data
-     * @param $dataSet
+     * @param array $data
+     * @param array $dataSet
      * @param $params
      * @param null $filter
      * @return null|Concrete
@@ -346,8 +346,8 @@ final class Importer implements ImporterInterface
      * @param Concrete $object
      * @param Mapping $map
      * @param $value
-     * @param $data
-     * @param $dataSet
+     * @param array $data
+     * @param array $dataSet
      * @param DefinitionInterface $definition
      * @param $params
      * @param RunnerInterface $runner
@@ -399,7 +399,7 @@ final class Importer implements ImporterInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param $data
+     * @param array $data
      * @return null|Concrete
      * @throws \Exception
      */
@@ -481,7 +481,7 @@ final class Importer implements ImporterInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param $data
+     * @param array $data
      * @return string
      */
     private function createPath(DefinitionInterface $definition, $data)
@@ -492,7 +492,7 @@ final class Importer implements ImporterInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param $data
+     * @param array $data
      * @return string
      */
     private function createKey(DefinitionInterface $definition, $data)

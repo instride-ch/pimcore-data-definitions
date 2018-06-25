@@ -283,9 +283,15 @@ final class Importer implements ImporterInterface
             }
         }
 
-        if ($filter instanceof FilterInterface && !$filter->filter($definition, $data, $dataSet, $object)) {
-            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, 'Filtered Object'));
-            return null;
+        if ($filter instanceof FilterInterface) {
+            if ($filter instanceof DataSetAwareInterface) {
+                $filter->setDataSet($dataSet);
+            }
+
+            if (!$filter->filter($definition, $data, $object)) {
+                $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, 'Filtered Object'));
+                return null;
+            }
         }
 
         $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Import Object %s', ($object->getId() ? $object->getFullPath() : 'new'))));

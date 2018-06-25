@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use Pimcore\File;
+use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\Mapping;
 
@@ -30,7 +30,7 @@ class KeySetter implements SetterInterface
         $setter = sprintf('set%s', ucfirst($setter[0]));
 
         if (method_exists($object, $setter)) {
-            $object->$setter(File::getValidFilename($value));
+            $object->$setter(DataObject\Service::getValidKey($value,"object"));
         }
     }
 }

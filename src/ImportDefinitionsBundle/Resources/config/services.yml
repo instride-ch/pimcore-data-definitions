@@ -101,6 +101,12 @@ services:
     tags:
       - { name: import_definition.interpreter, type: asset_url, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
 
+  import_definition.interpreter.asset_by_path:
+    class: ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter
+    arguments: ['@import_definition.service.placeholder']
+    tags:
+      - { name: import_definition.interpreter, type: asset_by_path, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType }
+
   import_definition.interpreter.checkbox:
     class: ImportDefinitionsBundle\Interpreter\CheckboxInterpreter
     tags:
@@ -110,6 +116,11 @@ services:
     class: ImportDefinitionsBundle\Interpreter\DefaultValueInterpreter
     tags:
       - { name: import_definition.interpreter, type: default_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultValueInterpreterType }
+
+  import_definition.interpreter.specific_object:
+      class: ImportDefinitionsBundle\Interpreter\SpecificObjectInterpreter
+      tags:
+        - { name: import_definition.interpreter, type: specific_object, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\SpecificObjectInterpreterType }
 
   import_definition.interpreter.href:
     class: ImportDefinitionsBundle\Interpreter\HrefInterpreter

@@ -107,6 +107,8 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('interpreter_href')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/href.js')->end()
                             ->scalarNode('interpreter_multihref')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/multihref.js')->end()
                             ->scalarNode('interpreter_defaultvalue')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/defaultvalue.js')->end()
+                            ->scalarNode('interpreter_specificobject')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/specificobject.js')->end()
+                            ->scalarNode('interpreter_assetbypath')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/assetbypath.js')->end()
                             ->scalarNode('interpreter_asseturl')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/asseturl.js')->end()
                             ->scalarNode('interpreter_assetsurl')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/assetsurl.js')->end()
                             ->scalarNode('interpreter_quantityvalue')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/quantityvalue.js')->end()

@@ -24,7 +24,7 @@ class ObjectbrickSetter implements SetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, Mapping $map, $data, $dataSet)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $keyParts = explode('~', $map->getToColumn());
 

@@ -23,7 +23,7 @@ class ClassificationStoreSetter implements SetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, Mapping $map, $data, $dataSet)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $mapConfig = $map->getSetterConfig();
         $fieldName = $mapConfig['field'];

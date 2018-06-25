@@ -14,18 +14,22 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
+use ImportDefinitionsBundle\Model\DataSetAwareInterface;
+use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 
-class CheckboxInterpreter implements InterpreterInterface
+class CheckboxInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
+    use DataSetAwareTrait;
+
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, $dataSet, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $boolVal = \is_string($value) ? filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : (bool) $value;
+        $boolVal = \is_string($value) ? filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : (bool)$value;
 
         return $boolVal ?? false;
     }

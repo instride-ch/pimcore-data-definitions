@@ -15,7 +15,9 @@
 namespace ImportDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
+use ImportDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\File;
 use Pimcore\Mail;
 use Pimcore\Model\Document;
@@ -295,7 +297,11 @@ final class Importer implements ImporterInterface
 
 
         if ($runner instanceof RunnerInterface) {
-            $runner->preRun($object, $data, $dataSet, $definition, $params);
+            if ($runner instanceof DataSetAwareInterface) {
+                $runner->setDataSet($dataSet);
+            }
+
+            $runner->preRun($object, $data, $definition, $params);
         }
 
         $this->logger->info(sprintf('Imported Object: %s', $object->getRealFullPath()));
@@ -320,7 +326,11 @@ final class Importer implements ImporterInterface
         $this->eventDispatcher->dispatch('import_definition.object.finished', new ImportDefinitionEvent($definition, $object));
 
         if ($runner instanceof RunnerInterface) {
-            $runner->postRun($object, $data, $dataSet, $definition, $params);
+            if ($runner instanceof DataSetAwareInterface) {
+                $runner->setDataSet($dataSet);
+            }
+
+            $runner->postRun($object, $data, $definition, $params);
         }
 
         return $object;
@@ -340,6 +350,11 @@ final class Importer implements ImporterInterface
     {
         if ($map->getInterpreter()) {
             $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
+
+            if ($interpreter instanceof DataSetAwareInterface) {
+                $interpreter->setDataSet($dataSet);
+            }
+
             $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params, $map->getInterpreterConfig());
         }
 
@@ -350,7 +365,11 @@ final class Importer implements ImporterInterface
         $shouldSetField = true;
 
         if ($runner instanceof SetterRunnerInterface) {
-            $shouldSetField = $runner->shouldSetField($object, $map, $value, $data, $dataSet, $definition, $params);
+            if ($runner instanceof DataSetAwareInterface) {
+                $runner->setDataSet($dataSet);
+            }
+
+            $shouldSetField = $runner->shouldSetField($object, $map, $value, $data, $definition, $params);
         }
 
         if (!$shouldSetField) {
@@ -359,7 +378,14 @@ final class Importer implements ImporterInterface
 
         if ($map->getSetter()) {
             $setter = $this->setterRegistry->get($map->getSetter());
-            $setter->set($object, $value, $map, $data, $dataSet);
+
+            if ($setter instanceof SetterInterface) {
+                if ($setter instanceof DataSetAwareInterface) {
+                    $setter->setDataSet($dataSet);
+                }
+
+                $setter->set($object, $value, $map, $data);
+            }
         } else {
             $object->setValue($map->getToColumn(), $value);
         }

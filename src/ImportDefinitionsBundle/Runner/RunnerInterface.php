@@ -22,18 +22,16 @@ interface RunnerInterface
     /**
      * @param Concrete $object
      * @param array $data
-     * @param array $dataSet
      * @param DefinitionInterface $definition
      * @param array $params
      */
-    public function preRun(Concrete $object, $data, $dataSet, DefinitionInterface $definition, $params);
+    public function preRun(Concrete $object, $data, DefinitionInterface $definition, $params);
 
     /**
      * @param Concrete $object
      * @param array $data
-     * @param array $dataSet
      * @param DefinitionInterface $definition
      * @param array $params
      */
-    public function postRun(Concrete $object, $data, $dataSet, DefinitionInterface $definition, $params);
+    public function postRun(Concrete $object, $data, DefinitionInterface $definition, $params);
 }

@@ -12,20 +12,28 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Interpreter\CoreShop;
+namespace ImportDefinitionsBundle\Model;
 
-use ImportDefinitionsBundle\Interpreter\InterpreterInterface;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
-use Pimcore\Model\DataObject\Concrete;
-
-final class StoresInterpreter implements InterpreterInterface
+trait DataSetAwareTrait
 {
     /**
-     * {@inheritdoc}
+     * @var array
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    protected $dataSet;
+
+    /**
+     * @return array
+     */
+    public function getDataSet()
     {
-        return $configuration['stores'];
+        return $this->dataSet;
+    }
+
+    /**
+     * @param array $dataSet
+     */
+    public function setDataSet(array $dataSet)
+    {
+        $this->dataSet = $dataSet;
     }
 }

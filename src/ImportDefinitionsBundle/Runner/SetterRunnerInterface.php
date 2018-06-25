@@ -25,10 +25,9 @@ interface SetterRunnerInterface extends RunnerInterface
      * @param Mapping $map
      * @param $value
      * @param $data
-     * @param $dataSet
      * @param DefinitionInterface $definition
      * @param $params
      * @return mixed
      */
-    public function shouldSetField(Concrete $object, Mapping $map, $value, $data, $dataSet, DefinitionInterface $definition, $params);
+    public function shouldSetField(Concrete $object, Mapping $map, $value, $data, DefinitionInterface $definition, $params);
 }

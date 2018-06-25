@@ -24,7 +24,7 @@ class KeySetter implements SetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, Mapping $map, $data, $dataSet)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $setter = explode('~', $map->getToColumn());
         $setter = sprintf('set%s', ucfirst($setter[0]));

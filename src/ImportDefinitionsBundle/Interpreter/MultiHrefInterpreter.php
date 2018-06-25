@@ -14,13 +14,17 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
+use ImportDefinitionsBundle\Model\DataSetAwareInterface;
+use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Tool;
 
-class MultiHrefInterpreter implements InterpreterInterface
+class MultiHrefInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
+    use DataSetAwareTrait;
+
     /**
      * {@inheritdoc}
      */

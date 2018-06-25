@@ -69,7 +69,7 @@ interface DefinitionInterface extends ResourceInterface
     public function setName($name);
 
     /**
-     * @return mixed
+     * @return Mapping[]
      */
     public function getMapping();
 

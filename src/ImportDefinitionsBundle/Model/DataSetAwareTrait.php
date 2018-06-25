@@ -12,18 +12,28 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Setter;
+namespace ImportDefinitionsBundle\Model;
 
-use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\Mapping;
-
-interface SetterInterface
+trait DataSetAwareTrait
 {
     /**
-     * @param Concrete $object
-     * @param $value
-     * @param Mapping $map
-     * @param array $data
+     * @var array
      */
-    public function set(Concrete $object, $value, Mapping $map, $data);
+    protected $dataSet;
+
+    /**
+     * @return array
+     */
+    public function getDataSet()
+    {
+        return $this->dataSet;
+    }
+
+    /**
+     * @param array $dataSet
+     */
+    public function setDataSet($dataSet)
+    {
+        $this->dataSet = $dataSet;
+    }
 }

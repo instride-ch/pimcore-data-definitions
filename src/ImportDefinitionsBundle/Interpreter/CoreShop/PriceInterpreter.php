@@ -19,7 +19,7 @@ use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 
-class PriceInterpreter implements InterpreterInterface
+final class PriceInterpreter implements InterpreterInterface
 {
     /**
      * {@inheritdoc}

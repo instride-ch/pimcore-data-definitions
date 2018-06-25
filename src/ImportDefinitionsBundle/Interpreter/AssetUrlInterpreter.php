@@ -14,6 +14,8 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
+use ImportDefinitionsBundle\Model\DataSetAwareInterface;
+use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\PlaceholderContext;
@@ -22,8 +24,10 @@ use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Service\Placeholder;
 
-class AssetUrlInterpreter implements InterpreterInterface
+class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
+    use DataSetAwareTrait;
+
     /**
      * @var Placeholder
      */

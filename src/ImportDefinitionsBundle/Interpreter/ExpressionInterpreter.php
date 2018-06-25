@@ -15,13 +15,17 @@
 namespace ImportDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Pimcore\ExpressionLanguage\ExpressionLanguage;
+use ImportDefinitionsBundle\Model\DataSetAwareInterface;
+use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ExpressionInterpreter implements InterpreterInterface
+class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
+    use DataSetAwareTrait;
+
     /**
      * @var ContainerInterface
      */

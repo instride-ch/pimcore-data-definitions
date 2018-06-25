@@ -15,13 +15,17 @@
 namespace ImportDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use ImportDefinitionsBundle\Model\DataSetAwareInterface;
+use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Webmozart\Assert\Assert;
 
-final class NestedInterpreter implements InterpreterInterface
+final class NestedInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
+    use DataSetAwareTrait;
+
     /**
      * @var ServiceRegistryInterface
      */
@@ -45,6 +49,11 @@ final class NestedInterpreter implements InterpreterInterface
 
         foreach ($map->getInterpreterConfig()['interpreters'] as $interpreter) {
             $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
+
+            if ($interpreterObject instanceof DataSetAwareInterface) {
+                $interpreterObject->setDataSet($this->getDataSet());
+            }
+
             $value = $interpreterObject->interpret($object, $value, $map, $data, $definition, $params, $interpreter['interpreterConfig']);
         }
 

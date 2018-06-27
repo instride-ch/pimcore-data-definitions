@@ -16,6 +16,7 @@ namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
 use ImportDefinitionsBundle\Form\Type\ClassChoiceType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -28,7 +29,8 @@ class ObjectResolverType extends AbstractType
     {
         $builder
             ->add('class', ClassChoiceType::class)
-            ->add('field', TextType::class);
+            ->add('field', TextType::class)
+            ->add('match_unpublished', CheckboxType::class);
     }
 
     /**

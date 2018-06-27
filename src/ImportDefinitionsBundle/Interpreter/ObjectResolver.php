@@ -44,6 +44,7 @@ class ObjectResolver implements InterpreterInterface
          * @var Listing $listing
          */
         $listing = $class::$lookup($value);
+        $listing->setUnpublished($configuration['match_unpublished']);
         $found = $listing->count();
 
         if ($found < 1 || $found > 1) {

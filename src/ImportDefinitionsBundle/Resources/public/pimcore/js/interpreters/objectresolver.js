@@ -41,6 +41,12 @@ pimcore.plugin.importdefinitions.interpreters.object_resolver = Class.create(pim
                 name: 'field',
                 width: 500,
                 value : config.field ? config.field : null
+            },
+            {
+                xtype : 'checkbox',
+                fieldLabel: t('importdefinitions_interpreter_object_resolver_match_unpublished'),
+                name: 'match_unpublished',
+                value : config.match_unpublished ? config.match_unpublished : true
             }];
     }
 });

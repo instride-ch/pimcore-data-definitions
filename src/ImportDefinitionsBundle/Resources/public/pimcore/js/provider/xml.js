@@ -17,7 +17,7 @@ pimcore.plugin.importdefinitions.provider.xml = Class.create(pimcore.plugin.impo
     getItems : function () {
         return [{
             xtype: 'textfield',
-            name: 'xpath',
+            name: 'xPath',
             fieldLabel: t('importdefinitions_xml_xpath'),
             anchor : '100%',
             value: this.data['xPath'] ? this.data.xPath : ''

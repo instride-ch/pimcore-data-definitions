@@ -85,6 +85,6 @@ class XmlProvider implements ProviderInterface
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
         $xml = file_get_contents($file);
 
-        return $this->convertXmlToArray($xml, $configuration['xpath']);
+        return $this->convertXmlToArray($xml, $configuration['xPath']);
     }
 }

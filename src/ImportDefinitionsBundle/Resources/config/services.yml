@@ -189,7 +189,7 @@ services:
   import_definition.setter.classificationstore:
     class: ImportDefinitionsBundle\Setter\ClassificationStoreSetter
     tags:
-      - { name: import_definition.setter, type: classification_store, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
+      - { name: import_definition.setter, type: classificationstore, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
 
   import_definition.setter.fieldcollection:
     class: ImportDefinitionsBundle\Setter\FieldCollectionSetter

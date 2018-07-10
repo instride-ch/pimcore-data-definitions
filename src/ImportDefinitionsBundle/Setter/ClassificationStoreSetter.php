@@ -25,6 +25,10 @@ class ClassificationStoreSetter implements SetterInterface
      */
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
+        if (!$value) {
+            return;
+        }
+
         $mapConfig = $map->getSetterConfig();
         $fieldName = $mapConfig['field'];
         $keyConfig = (int) $mapConfig['keyConfig'];

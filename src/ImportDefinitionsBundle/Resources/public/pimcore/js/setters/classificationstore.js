@@ -11,18 +11,18 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-pimcore.registerNS('pimcore.plugin.importdefinitions.setters.classification_store');
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters.classificationstore');
 
-pimcore.plugin.importdefinitions.setters.classification_store = Class.create(pimcore.plugin.importdefinitions.setters.abstract, {
+pimcore.plugin.importdefinitions.setters.classificationstore = Class.create(pimcore.plugin.importdefinitions.setters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
         this.toColumn = toColumn;
 
         this.classificationStoreField = Ext.create({
             xtype : 'textfield',
             fieldLabel : t('field'),
-            name : 'classificationstoreField',
+            name : 'field',
             length : 255,
-            value : config.classificationstoreField ? config.classificationstoreField : null
+            value : config.field ? config.field : null
         });
 
         return [this.classificationStoreField];
@@ -30,9 +30,9 @@ pimcore.plugin.importdefinitions.setters.classification_store = Class.create(pim
 
     getSetterData: function () {
         return {
-            'keyId': this.toColumn.data.config.keyId,
-            'groupId': this.toColumn.data.config.groupId,
-            'classificationstoreField': this.classificationStoreField.getValue()
+            'keyConfig': this.toColumn.data.config.keyId,
+            'groupConfig': this.toColumn.data.config.groupId,
+            'field': this.classificationStoreField.getValue()
         };
     }
 });

@@ -25,13 +25,15 @@ class ObjectTypeSetter implements SetterInterface
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
         if ($value === Concrete::OBJECT_TYPE_FOLDER) {
-            return Concrete::OBJECT_TYPE_FOLDER;
+            $object->setType(Concrete::OBJECT_TYPE_FOLDER);
+            return;
         }
 
         if ($value === Concrete::OBJECT_TYPE_VARIANT) {
-            return Concrete::OBJECT_TYPE_VARIANT;
+            $object->setType(Concrete::OBJECT_TYPE_VARIANT);
+            return;
         }
 
-        return Concrete::OBJECT_TYPE_OBJECT;
+        $object->setType(Concrete::OBJECT_TYPE_OBJECT);
     }
 }

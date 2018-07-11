@@ -18,6 +18,9 @@ pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plug
         // init
         var _this = this;
         var addMenu = [];
+
+        pimcore.globalmanager.get('importdefinitions_interpreters').clearFilter();
+
         var records = pimcore.globalmanager.get('importdefinitions_interpreters').getRange().map(function(interpreter) {return interpreter.get('interpreter')});
 
         Ext.each(records, function (interpreter) {

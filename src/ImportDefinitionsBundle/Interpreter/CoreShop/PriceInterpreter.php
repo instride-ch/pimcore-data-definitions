@@ -26,8 +26,7 @@ final class PriceInterpreter implements InterpreterInterface
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $interpreterConfig = $map->getInterpreterConfig();
-        $inputIsFloat = $interpreterConfig['isFloat'];
+        $inputIsFloat = $configuration['isFloat'];
 
         if (\is_string($value)) {
             $value = str_replace(',', '.', $value);

@@ -30,6 +30,21 @@ class MappingInterpreter implements InterpreterInterface, DataSetAwareInterface
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
+        $map = $configuration['mapping'];
+        $resolvedMap = [];
 
+        if (!is_array($map)) {
+            return $value;
+        }
+
+        foreach ($map as $itemMap) {
+            $resolvedMap[$itemMap['from']] = $itemMap['to'];
+        }
+
+        if (array_key_exists($value, $resolvedMap)) {
+            return $resolvedMap[$value];
+        }
+
+        return $value;
     }
 }

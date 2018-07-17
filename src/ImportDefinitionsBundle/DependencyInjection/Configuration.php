@@ -117,6 +117,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('interpreter_empty')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/empty.js')->end()
                             ->scalarNode('interpreter_expression')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/expression.js')->end()
                             ->scalarNode('interpreter_object_resolver')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/objectresolver.js')->end()
+                            ->scalarNode('interpreter_mapping')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/mapping.js')->end()
                             ->scalarNode('setter_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/abstract.js')->end()
                             ->scalarNode('setter_fieldcollection')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/fieldcollection.js')->end()
                             ->scalarNode('setter_objectbrick')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/objectbrick.js')->end()

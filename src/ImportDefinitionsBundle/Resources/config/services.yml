@@ -158,6 +158,13 @@ services:
     tags:
       - { name: import_definition.interpreter, type: object_resolver, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType }
 
+  import_definition.interpreter.mapping:
+    class: ImportDefinitionsBundle\Interpreter\MappingInterpreter
+    arguments:
+        - '@service_container'
+    tags:
+      - { name: import_definition.interpreter, type: mapping, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\MappingInterpreterType }
+
 
   ### PROVIDER
   import_definition.provider.csv:

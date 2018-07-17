@@ -88,30 +88,9 @@ pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plug
             var interpreterItem = interpreters[i];
             var interpreterClass = interpreterItem.xparent;
 
+
             if (Ext.isFunction(interpreterClass['getValues'])) {
                 configuration = interpreterClass.getValues();
-            } else {
-                var form = interpreterClass.form;
-
-                if (Ext.isFunction(form.getValues)) {
-                    configuration = form.getValues();
-                }
-                else {
-                    for (var c = 0; c < form.items.length; c++) {
-                        var item = form.items.get(c);
-
-                        try {
-                            configuration[item.getName()] = item.getValue();
-                        }
-                        catch (e) {
-
-                        }
-                    }
-                }
-            }
-
-            if (interpreterClass.data.id) {
-                action['id'] = interpreterClass.data.id;
             }
 
             interpreter['interpreterConfig'] = configuration;

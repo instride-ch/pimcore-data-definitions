@@ -47,6 +47,10 @@ pimcore.plugin.importdefinitions.interpreters.nestedcontainer = Class.create({
     },
 
     getValues: function () {
+        if (Ext.isFunction(this.interpreterItem['getInterpreterData'])) {
+            return this.interpreterItem.getInterpreterData();
+        }
+
         return this.layout.down('form').getForm().getFieldValues();
     },
 

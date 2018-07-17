@@ -34,7 +34,7 @@ class MappingInterpreter implements InterpreterInterface, DataSetAwareInterface
         $resolvedMap = [];
 
         if (!is_array($map)) {
-            return $value;
+            $map = [];
         }
 
         foreach ($map as $itemMap) {

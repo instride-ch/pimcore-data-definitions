@@ -45,6 +45,10 @@ class MappingInterpreter implements InterpreterInterface, DataSetAwareInterface
             return $resolvedMap[$value];
         }
 
+        if ($configuration['return_null_when_not_found']) {
+            return null;
+        }
+
         return $value;
     }
 }

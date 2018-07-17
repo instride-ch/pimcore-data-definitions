@@ -86,11 +86,21 @@ pimcore.plugin.importdefinitions.interpreters.mapping = Class.create(pimcore.plu
             }
         });
 
+        me.checkbox = Ext.create({
+            xtype : 'checkbox',
+            fieldLabel: t('importdefinitions_interpreter_mapping_null_when_not_found'),
+            name: 'return_null_when_not_found',
+            value : Ext.isDefined(config.return_null_when_not_found) ? config.return_null_when_not_found : true
+        });
+
         return new Ext.Panel({
             autoScroll: true,
             forceLayout: true,
             border: false,
-            items: grid
+            items: [
+                me.checkbox,
+                grid
+            ]
         });
     },
 

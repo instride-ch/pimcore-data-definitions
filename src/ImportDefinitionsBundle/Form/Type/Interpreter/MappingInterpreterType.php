@@ -15,6 +15,7 @@
 namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -31,6 +32,7 @@ final class MappingInterpreterType extends AbstractType
                'allow_add' => true,
                'allow_delete' => true,
            ])
+            ->add('return_null_when_not_found', CheckboxType::class)
         ;
     }
 

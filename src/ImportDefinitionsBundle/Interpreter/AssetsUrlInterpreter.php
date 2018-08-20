@@ -25,12 +25,15 @@ class AssetsUrlInterpreter extends AssetUrlInterpreter
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $asset = parent::interpret($object, $value, $map, $data, $definition, $params, $configuration);
+        $assets = [];
+        foreach ((array) $value as $item) {
+            $asset = parent::interpret($object, $item, $map, $data, $definition, $params, $configuration);
 
-        if ($asset) {
-            return [$asset];
+            if ($asset) {
+                $assets[] = $asset;
+            }
         }
 
-        return null;
+        return $assets ?: null;
     }
 }

@@ -15,6 +15,7 @@
 namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -27,6 +28,7 @@ final class AssetsUrlInterpreterType extends AbstractType
     {
         $builder
             ->add('path', TextType::class)
+            ->add('deduplicate_by_url', CheckboxType::class)
         ;
     }
 

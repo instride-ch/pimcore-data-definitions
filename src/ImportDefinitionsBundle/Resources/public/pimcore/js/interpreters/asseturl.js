@@ -60,6 +60,12 @@ pimcore.plugin.importdefinitions.interpreters.asset_url = Class.create(pimcore.p
                     });
                 }
             }
+        },
+        {
+            xtype : 'checkbox',
+            fieldLabel: t('importdefinitions_interpreter_asset_url_deduplicate_by_url'),
+            name: 'deduplicate_by_url',
+            value : Ext.isDefined(config.deduplicate_by_url) ? config.deduplicate_by_url : false
         }];
     }
 });

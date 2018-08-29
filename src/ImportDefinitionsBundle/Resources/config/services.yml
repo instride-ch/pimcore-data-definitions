@@ -147,6 +147,7 @@ services:
   import_definition.interpreter.expression:
     class: ImportDefinitionsBundle\Interpreter\ExpressionInterpreter
     arguments:
+        - '@=container.has("coreshop.expression_language") ? service("coreshop.expression_language") : null'
         - '@service_container'
     tags:
       - { name: import_definition.interpreter, type: expression, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }

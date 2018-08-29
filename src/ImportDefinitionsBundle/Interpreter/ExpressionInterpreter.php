@@ -14,17 +14,22 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use CoreShop\Component\Pimcore\ExpressionLanguage\ExpressionLanguage;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
     use DataSetAwareTrait;
+
+    /**
+     * @var ExpressionLanguage
+     */
+    protected $expressionLanguage;
 
     /**
      * @var ContainerInterface
@@ -32,10 +37,12 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
     protected $container;
 
     /**
+     * @param ExpressionLanguage $expressionLanguage
      * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(?ExpressionLanguage $expressionLanguage, ContainerInterface $container)
     {
+        $this->expressionLanguage = $expressionLanguage ?: new \CoreShop\Component\Pimcore\ExpressionLanguage\ExpressionLanguage();
         $this->container = $container;
     }
 
@@ -46,9 +53,7 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
     {
         $expression = $configuration['expression'];
 
-        $expr = new ExpressionLanguage();
-
-        return $expr->evaluate($expression, [
+        return $this->expressionLanguage->evaluate($expression, [
             'value' => $value,
             'object' => $object,
             'map' => $map,

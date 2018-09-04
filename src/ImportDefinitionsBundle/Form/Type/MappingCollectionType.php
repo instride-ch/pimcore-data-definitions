@@ -15,17 +15,41 @@
 namespace ImportDefinitionsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class MappingCollectionType extends AbstractType
 {
+    /**
+     * @var DataMapperInterface
+     */
+    private $dataMapper;
+
+    /**
+     * @param DataMapperInterface $dataMapper
+     */
+    public function __construct(
+        DataMapperInterface $dataMapper
+    ) {
+        $this->dataMapper = $dataMapper;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getParent()
     {
         return CollectionType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->setDataMapper($this->dataMapper);
     }
 
     /**

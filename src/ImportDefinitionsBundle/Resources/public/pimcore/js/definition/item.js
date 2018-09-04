@@ -635,33 +635,17 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
     getSaveData: function () {
         var data = {
             configuration: {},
-            mapping: {}
+            mapping: []
         };
 
         if (this.mappingSettings.down('grid')) {
             var mapping = this.mappingSettings.down('grid').getStore().getRange();
-            var mappingResult = {};
-            var highestId = 0;
+            var mappingResult = [];
 
             mapping.forEach(function (map) {
                 if (map.data.fromColumn) {
-                    if (map.data.identifier) {
-                        mappingResult[map.data.identifier] = map.data;
-
-                        if (map.data.identifier > highestId) {
-                            highestId = map.data.identifier;
-                        }
-                    }
-                }
-            });
-
-            mapping.forEach(function (map) {
-                if (map.data.fromColumn) {
-                    if (!map.data.identifier) {
-                        highestId++;
-
-                        mappingResult[highestId] = map.data;
-                    }
+                    delete map.data.id;
+                    mappingResult.push(map.data);
                 }
             });
 

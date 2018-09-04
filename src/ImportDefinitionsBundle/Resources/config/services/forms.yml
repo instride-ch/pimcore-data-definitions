@@ -3,6 +3,14 @@ parameters:
   import_definition.form.type.mapping.validation_groups: [import_definition]
 
 services:
+  import_definition.form.definition.data_mapper:
+      class: ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper
+      arguments:
+          - !service
+              class: Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper
+              arguments:
+                  - '@property_accessor'
+
   import_definition.form.class_choice_type:
     class: ImportDefinitionsBundle\Form\Type\ClassChoiceType
     tags:
@@ -46,6 +54,8 @@ services:
 
   import_definition.form.mapping_collection_type:
     class: ImportDefinitionsBundle\Form\Type\MappingCollectionType
+    arguments:
+        - '@import_definition.form.definition.data_mapper'
     tags:
         - { name: form.type }
 

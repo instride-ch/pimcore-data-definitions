@@ -74,6 +74,8 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                 $asset = Asset::getByPath($assetFullPath);
             }
 
+            $parent = Asset\Service::createFolderByPath($assetPath);
+
             if (!$asset instanceof Asset) {
                 // Download
                 $data = @file_get_contents($value);
@@ -81,9 +83,25 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                 if ($data) {
                     $asset = new Asset();
                     $asset->setFilename($filename);
-                    $asset->setParent(Asset\Service::createFolderByPath($assetPath));
+                    $asset->setParent($parent);
                     $asset->setData($data);
                     $asset->addMetadata(self::METADATA_ORIGIN_URL, 'text', $value);
+                    $asset->save();
+                }
+            } else {
+                $save = false;
+
+                if ($configuration['relocate_existing_objects'] && $asset->getParent() !== $parent) {
+                    $asset->setParent($parent);
+                    $save = true;
+                }
+
+                if ($configuration['rename_existing_objects'] && $asset->getFilename() !== $filename) {
+                    $asset->setFilename($filename);
+                    $save = true;
+                }
+
+                if ($save) {
                     $asset->save();
                 }
             }

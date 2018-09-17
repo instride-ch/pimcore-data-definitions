@@ -37,7 +37,7 @@ class DefinitionMappingDataMapper implements DataMapperInterface
      */
     public function mapDataToForms($data, $forms): void
     {
-        $this->propertyPathDataMapper->mapDataToForms($data, $forms);
+
     }
 
     /**
@@ -45,6 +45,8 @@ class DefinitionMappingDataMapper implements DataMapperInterface
      */
     public function mapFormsToData($forms, &$data): void
     {
+        $actualData = [];
+
         foreach ($forms as $key => $form) {
             $formData = $form->getData();
             $found = false;
@@ -53,21 +55,9 @@ class DefinitionMappingDataMapper implements DataMapperInterface
                 continue;
             }
 
-            foreach ($data as &$map) {
-                if (!$map instanceof Mapping) {
-                    continue;
-                }
-
-                if ($map->getToColumn() === $formData->getToColumn()) {
-                    $map = $formData;
-                    $found = true;
-                    break;
-                }
-            }
-
-            if (!$found) {
-                $data[] = $formData;
-            }
+            $actualData[] = $formData;
         }
+
+        $data = $actualData;
     }
 }

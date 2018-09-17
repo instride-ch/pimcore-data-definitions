@@ -49,8 +49,7 @@ class DefinitionMappingDataMapper implements DataMapperInterface
 
         foreach ($forms as $key => $form) {
             $formData = $form->getData();
-            $found = false;
-
+            
             if (!$formData instanceof Mapping) {
                 continue;
             }

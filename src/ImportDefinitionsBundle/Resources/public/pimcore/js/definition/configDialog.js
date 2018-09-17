@@ -54,7 +54,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
 
         if (!record.data.interpreter) {
             if (toColumn.data.fieldtype === 'quantityValue') {
-                record.data.interpreter = 'quantityvalue';
+                record.data.interpreter = 'quantity_value';
             }
         }
 

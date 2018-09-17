@@ -63,12 +63,12 @@ class Dao extends Model\Dao\PhpArrayTable
             if ($key === 'mapping') {
                 $maps = array();
 
-                foreach ($this->model->getMapping() as $index=>$map) {
+                foreach ($this->model->getMapping() as $map) {
                     if (\is_array($map)) {
                         $mapObj = new Mapping();
                         $mapObj->setValues($map);
 
-                        $maps[$index] = $mapObj;
+                        $maps[] = $mapObj;
                     }
                 }
 
@@ -134,8 +134,8 @@ class Dao extends Model\Dao\PhpArrayTable
                             $data[$key] = array();
 
                             if (\is_array($value)) {
-                                foreach ($value as $index => $map) {
-                                    $data[$key][$index] = get_object_vars($map);
+                                foreach ($value as $map) {
+                                    $data[$key][] = get_object_vars($map);
                                 }
                             }
                         }

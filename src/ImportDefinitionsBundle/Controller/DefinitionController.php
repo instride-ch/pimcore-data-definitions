@@ -241,6 +241,7 @@ class DefinitionController extends ResourceController
     public function getClassDefinitionForFieldSelection(DataObject\ClassDefinition $class): array
     {
         $fields = $class->getFieldDefinitions();
+        $csLoadedGroupIds = [];
 
         $systemColumns = [
             'o_published', 'o_key', 'o_parentId', 'o_parent', 'o_type'
@@ -332,14 +333,24 @@ class DefinitionController extends ResourceController
                 $allowedGroupIds = $field->getAllowedGroupIds();
 
                 if ($allowedGroupIds) {
-                    $list->setCondition('ID in (' . implode(',', $allowedGroupIds) . ')');
+                    $list->setCondition('ID in (' . implode(',', $allowedGroupIds) . ') AND storeId = ?', [$field->getStoreId()]);
+                }
+                else {
+                    $list->setCondition('storeId = ?', [$field->getStoreId()]);
                 }
 
                 $list->load();
 
                 $groupConfigList = $list->getList();
 
+                /**
+                 * @var DataObject\Classificationstore\GroupConfig $config
+                 */
                 foreach ($groupConfigList as $config) {
+                    if (in_array($config->getId(), $csLoadedGroupIds)) {
+                        continue;
+                    }
+
                     foreach ($config->getRelations() as $relation) {
                         if ($relation instanceof DataObject\Classificationstore\KeyGroupRelation) {
                             $keyId = $relation->getKeyId();
@@ -347,7 +358,7 @@ class DefinitionController extends ResourceController
                             $keyConfig = DataObject\Classificationstore\KeyConfig::getById($keyId);
 
                             $toColumn = new ToColumn();
-                            $toColumn->setGroup('classificationstore');
+                            $toColumn->setGroup(sprintf('classificationstore - %s (%s)', $config->getName(), $config->getId()));
                             $toColumn->setIdentifier(sprintf('classificationstore~%s~%s~%s', $field->getName(), $keyConfig->getId(), $config->getId()));
                             $toColumn->setType('classificationstore');
                             $toColumn->setFieldtype($keyConfig->getType());
@@ -361,6 +372,8 @@ class DefinitionController extends ResourceController
                             $result[] = $toColumn;
                         }
                     }
+
+                    $csLoadedGroupIds[] = $config->getId();
                 }
             } else {
                 $result[] = $this->getFieldConfiguration($field);

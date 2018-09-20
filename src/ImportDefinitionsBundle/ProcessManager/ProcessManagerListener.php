@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
 use ProcessManagerBundle\Model\ProcessInterface;
 use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
+use ProcessManagerBundle\Service\ProcessLogInterface;
 
 final class ProcessManagerListener
 {
@@ -32,11 +33,20 @@ final class ProcessManagerListener
     private $processFactory;
 
     /**
-     * @param FactoryInterface $processFactory
+     * @var ProcessLogInterface
      */
-    public function __construct(FactoryInterface $processFactory)
+    private $processLog;
+
+    /**
+     * ProcessManagerListener constructor.
+     *
+     * @param FactoryInterface $processFactory
+     * @param ProcessLogInterface $processLog
+     */
+    public function __construct(FactoryInterface $processFactory, ProcessLogInterface $processLog)
     {
         $this->processFactory = $processFactory;
+        $this->processLog     = $processLog;
     }
 
     /**
@@ -54,14 +64,19 @@ final class ProcessManagerListener
             $this->process->setProgress(0);
             $this->process->save();
         }
+        $this->logEvent('import_definition.total', $event->getSubject());
     }
 
-    public function onProgressEvent()
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onProgressEvent(ImportDefinitionEvent $event)
     {
         if ($this->process) {
             $this->process->progress();
             $this->process->save();
         }
+        $this->logEvent('import_definition.progress', $event->getSubject());
     }
 
     /**
@@ -73,5 +88,42 @@ final class ProcessManagerListener
             $this->process->setMessage($event->getSubject());
             $this->process->save();
         }
+        $this->logEvent('import_definition.status', $event->getSubject());
+    }
+
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onFinishedEvent(ImportDefinitionEvent $event)
+    {
+        $this->logEvent('import_definition.finished', $event->getSubject());
+    }
+
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onObjectStartEvent(ImportDefinitionEvent $event)
+    {
+        $this->logEvent('import_definition.object.start', $event->getSubject());
+    }
+
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onObjectFinishedEvent(ImportDefinitionEvent $event)
+    {
+        $this->logEvent('import_definition.object.finished', $event->getSubject());
+    }
+
+    /**
+     * @param string $eventName
+     * @param string $message
+     */
+    protected function logEvent($eventName, $message)
+    {
+        if (!$this->process) {
+            return;
+        }
+        $this->processLog->logEvent($this->process->getId(), $eventName . ': ' . $message);
     }
 }

@@ -16,8 +16,10 @@ namespace ImportDefinitionsBundle\ProcessManager;
 
 use Carbon\Carbon;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
-use ProcessManagerBundle\Model\ProcessInterface;
 use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
+use ProcessManagerBundle\Factory\ProcessFactoryInterface;
+use ProcessManagerBundle\Logger\ProcessLogger;
+use ProcessManagerBundle\Model\ProcessInterface;
 
 final class ProcessManagerListener
 {
@@ -27,16 +29,23 @@ final class ProcessManagerListener
     private $process;
 
     /**
-     * @var FactoryInterface
+     * @var ProcessFactoryInterface
      */
     private $processFactory;
 
     /**
-     * @param FactoryInterface $processFactory
+     * @var ProcessLogger
      */
-    public function __construct(FactoryInterface $processFactory)
+    private $processLogger;
+
+    /**
+     * @param FactoryInterface $processFactory
+     * @param ProcessLogger    $processLogger
+     */
+    public function __construct(FactoryInterface $processFactory, ProcessLogger $processLogger)
     {
         $this->processFactory = $processFactory;
+        $this->processLogger = $processLogger;
     }
 
     /**
@@ -47,12 +56,20 @@ final class ProcessManagerListener
         if (null === $this->process) {
             $date = Carbon::now();
 
-            $this->process = $this->processFactory->createNew();
-            $this->process->setName(sprintf('ImportDefinitions (%s): %s', $date->formatLocalized('%A %d %B %Y'), $event->getDefinition()->getName()));
-            $this->process->setTotal($event->getSubject());
-            $this->process->setMessage('Loading');
-            $this->process->setProgress(0);
+            $this->process = $this->processFactory->createProcess(
+                sprintf(
+                    'ImportDefinitions (%s): %s',
+                    $date->formatLocalized('%A %d %B %Y'),
+                    $event->getDefinition()->getName()
+                ),
+                'import_definitions',
+                'Loading',
+                $event->getSubject(),
+                0
+            );
             $this->process->save();
+
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_TOTAL.$event->getSubject());
         }
     }
 
@@ -61,6 +78,8 @@ final class ProcessManagerListener
         if ($this->process) {
             $this->process->progress();
             $this->process->save();
+
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_PROGRESS);
         }
     }
 
@@ -72,6 +91,8 @@ final class ProcessManagerListener
         if ($this->process) {
             $this->process->setMessage($event->getSubject());
             $this->process->save();
+
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS.$event->getSubject());
         }
     }
 }

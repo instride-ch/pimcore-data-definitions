@@ -166,6 +166,12 @@ services:
     tags:
       - { name: import_definition.interpreter, type: mapping, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\MappingInterpreterType }
 
+  import_definition.interpreter.iterator:
+    class: ImportDefinitionsBundle\Interpreter\IteratorInterpreter
+    arguments:
+      - '@import_definition.registry.interpreter'
+    tags:
+      - { name: import_definition.interpreter, type: iterator, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
 
   ### PROVIDER
   import_definition.provider.csv:

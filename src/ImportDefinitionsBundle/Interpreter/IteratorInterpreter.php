@@ -47,14 +47,13 @@ final class IteratorInterpreter implements InterpreterInterface, DataSetAwareInt
         Assert::isArray($value, 'IteratorInterpreter can only be used with array values');
 
         $interpreter = $configuration['interpreter'];
+        $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
+
+        if ($interpreterObject instanceof DataSetAwareInterface) {
+            $interpreterObject->setDataSet($this->getDataSet());
+        }
 
         foreach ($value as &$val) {
-            $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
-
-            if ($interpreterObject instanceof DataSetAwareInterface) {
-                $interpreterObject->setDataSet($this->getDataSet());
-            }
-
             $val = $interpreterObject->interpret($object, $val, $map, $data, $definition, $params, $interpreter['interpreterConfig']);
         }
 

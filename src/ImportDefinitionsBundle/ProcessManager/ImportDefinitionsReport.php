@@ -22,6 +22,7 @@ class ImportDefinitionsReport implements ReportInterface
     const EVENT_TOTAL = 'import_definition.total: ';
     const EVENT_STATUS = 'import_definition.status: ';
     const EVENT_PROGRESS = 'import_definition.progress: ';
+    const EVENT_FINISHED = 'import_definition.finished: ';
     const EVENT_STATUS_ERROR = self::EVENT_STATUS . 'Error: ';
     const EVENT_STATUS_IMPORT_NEW = self::EVENT_STATUS . 'Import Object new';
     const EVENT_STATUS_IMPORT_EXISTING = self::EVENT_STATUS . 'Import Object';
@@ -175,7 +176,7 @@ class ImportDefinitionsReport implements ReportInterface
      * @param $result
      * @return bool
      */
-    protected function checkForTotal($line, $result)
+    protected function checkForTotal($line, &$result)
     {
         $pos = strpos($line, self::EVENT_TOTAL);
         if ($pos) {

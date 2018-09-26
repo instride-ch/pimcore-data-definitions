@@ -95,4 +95,12 @@ final class ProcessManagerListener
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS.$event->getSubject());
         }
     }
+
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onFinishedEvent(ImportDefinitionEvent $event)
+    {
+        $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
+    }
 }

@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\DependencyInjection\Compiler;
 
-use CoreShop\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRegistryTypePass;
+use CoreShop\Bundle\PimcoreBundle\DependencyInjection\Compiler\RegisterRegistryTypePass;
 
 final class SetterRegistryCompilerPass extends RegisterRegistryTypePass
 {

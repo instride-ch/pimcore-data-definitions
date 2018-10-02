@@ -40,9 +40,9 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
      * @param ExpressionLanguage $expressionLanguage
      * @param ContainerInterface $container
      */
-    public function __construct(?ExpressionLanguage $expressionLanguage, ContainerInterface $container)
+    public function __construct(ExpressionLanguage $expressionLanguage, ContainerInterface $container)
     {
-        $this->expressionLanguage = $expressionLanguage ?: new \CoreShop\Component\Pimcore\ExpressionLanguage\ExpressionLanguage();
+        $this->expressionLanguage = $expressionLanguage;
         $this->container = $container;
     }
 

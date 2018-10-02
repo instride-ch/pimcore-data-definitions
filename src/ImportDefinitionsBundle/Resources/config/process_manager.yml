@@ -1,13 +1,21 @@
 services:
-  import_definition.process_manager.listener:
-    class: ImportDefinitionsBundle\ProcessManager\ProcessManagerListener
-    arguments: ['@process_manager.factory.process']
-    tags:
-      - { name: 'kernel.event_listener', event: 'import_definition.total', method: 'onTotalEvent' }
-      - { name: 'kernel.event_listener', event: 'import_definition.progress', method: 'onProgressEvent' }
-      - { name: 'kernel.event_listener', event: 'import_definition.status', method: 'onStatusEvent' }
+    import_definition.process_manager.listener:
+        class: ImportDefinitionsBundle\ProcessManager\ProcessManagerListener
+        arguments:
+            - '@process_manager.factory.process'
+            - '@process_manager.logger'
+        tags:
+            - { name: 'kernel.event_listener', event: 'import_definition.total', method: 'onTotalEvent' }
+            - { name: 'kernel.event_listener', event: 'import_definition.progress', method: 'onProgressEvent' }
+            - { name: 'kernel.event_listener', event: 'import_definition.status', method: 'onStatusEvent' }
+            - { name: 'kernel.event_listener', event: 'import_definition.finished', method: 'onFinishedEvent' }
 
-  import_definition.process_manager.process:
-    class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess
-    tags:
-      - { name: 'process_manager.process', type: 'importdefinition', form-type: ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }
+    import_definition.process_manager.process:
+        class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess
+        tags:
+            - { name: 'process_manager.process', type: 'importdefinition', form-type: ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }
+
+    import_definitions.process_manager.report:
+        class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport
+        tags:
+            - { name: process_manager.process_report, type: import_definitions }

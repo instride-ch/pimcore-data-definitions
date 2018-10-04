@@ -237,4 +237,14 @@ interface DefinitionInterface extends ResourceInterface
      * @param bool $skipExistingObjects
      */
     public function setSkipExistingObjects($skipExistingObjects);
+
+    /**
+     * @return boolean
+     */
+    public function getForceLoadObject();
+
+    /**
+     * @param $forceLoadObject
+     */
+    public function setForceLoadObject($forceLoadObject);
 }

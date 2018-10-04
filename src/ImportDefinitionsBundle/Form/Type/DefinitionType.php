@@ -65,6 +65,7 @@ final class DefinitionType extends AbstractResourceType
             ->add('failureNotificationDocument', IntegerType::class)
             ->add('successNotificationDocument', IntegerType::class)
             ->add('mapping', MappingCollectionType::class)
+            ->add('forceLoadObject', CheckboxType::class)
         ;
 
         $builder

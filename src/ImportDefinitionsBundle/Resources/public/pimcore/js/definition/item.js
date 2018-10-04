@@ -249,6 +249,12 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                     checked: this.data.omitMandatoryCheck
                 },
                 {
+                    fieldLabel: t('importdefinitions_force_load_object'),
+                    xtype: 'checkbox',
+                    name: 'forceLoadObject',
+                    checked: this.data.forceLoadObject
+                },
+                {
                     fieldLabel: t('importdefinitions_failure_document'),
                     labelWidth: 350,
                     name: 'failureNotificationDocument',

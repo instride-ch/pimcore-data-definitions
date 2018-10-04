@@ -83,3 +83,7 @@ ImportDefinitionsBundle\Model\Definition:
       expose: true
       type: integer
       groups: [Detailed]
+    forceLoadObject:
+      expose: true
+      type: boolean
+      groups: [Detailed]

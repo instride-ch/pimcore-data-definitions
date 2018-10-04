@@ -14,9 +14,8 @@
 
 namespace ImportDefinitionsBundle\Model\Definition;
 
-use Pimcore\Model;
-
 use ImportDefinitionsBundle\Model\Mapping;
+use Pimcore\Model;
 
 class Dao extends Model\Dao\PhpArrayTable
 {
@@ -118,10 +117,31 @@ class Dao extends Model\Dao\PhpArrayTable
         try {
             $dataRaw = get_object_vars($this->model);
             $data = [];
-            $allowedProperties = ['id', 'name', 'provider', 'class', 'configuration', 'creationDate',
-                'modificationDate', 'mapping', 'objectPath', 'cleaner', 'key', 'renameExistingObjects',
-                'relocateExistingObjects', 'filter', 'runner', 'createVersion', 'stopOnException', 'omitMandatoryCheck',
-                'failureNotificationDocument', 'successNotificationDocument', 'skipExistingObjects', 'skipNewObjects'];
+            $allowedProperties = [
+                'id',
+                'name',
+                'provider',
+                'class',
+                'configuration',
+                'creationDate',
+                'modificationDate',
+                'mapping',
+                'objectPath',
+                'cleaner',
+                'key',
+                'renameExistingObjects',
+                'relocateExistingObjects',
+                'filter',
+                'runner',
+                'createVersion',
+                'stopOnException',
+                'omitMandatoryCheck',
+                'failureNotificationDocument',
+                'successNotificationDocument',
+                'skipExistingObjects',
+                'skipNewObjects',
+                'forceLoadObject',
+            ];
 
             foreach ($dataRaw as $key => $value) {
                 if (\in_array($key, $allowedProperties, true)) {

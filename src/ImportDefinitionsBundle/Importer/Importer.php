@@ -21,6 +21,7 @@ use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
 use ImportDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\File;
 use Pimcore\Mail;
+use Pimcore\Model\DataObject;
 use Pimcore\Model\Document;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\ClassDefinition;
@@ -448,6 +449,14 @@ final class Importer implements ImporterInterface
 
             if (\count($objectData) === 1) {
                 $obj = $objectData[0];
+
+                if ($definition->getForceLoadObject()) {
+                    $obj = DataObject::getById($obj->getId(), true);
+
+                    if (!$obj instanceof $classObject) {
+                        $obj = new $classObject();
+                    }
+                }
             }
 
             if (null === $obj) {

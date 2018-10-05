@@ -14,10 +14,11 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
+use ImportDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\Mapping;
 
-class LocalizedfieldSetter implements SetterInterface
+class LocalizedfieldSetter implements SetterInterface, GetterInterface
 {
     /**
      * {@inheritdoc}
@@ -33,5 +34,19 @@ class LocalizedfieldSetter implements SetterInterface
         if (method_exists($object, $setter)) {
             $object->$setter($value, $config['language']);
         }
+    }
+
+    public function get(Concrete $object, Mapping $map, $data)
+    {
+        $config = $map->getSetterConfig();
+
+        $getter = explode('~', $map->getToColumn());
+        $getter = sprintf('get%s', ucfirst($getter[0]));
+
+        if (method_exists($object, $getter)) {
+            $object->$getter($config['language']);
+        }
+
+        return null;
     }
 }

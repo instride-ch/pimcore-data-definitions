@@ -48,6 +48,7 @@ final class DefinitionType extends AbstractResourceType
     {
         $builder
             ->add('provider', ProviderChoiceType::class)
+            ->add('fetcher', FetcherChoiceType::class)
             ->add('class', ClassChoiceType::class)
             ->add('cleaner', CleanerChoiceType::class)
             ->add('filter', FilterChoiceType::class)

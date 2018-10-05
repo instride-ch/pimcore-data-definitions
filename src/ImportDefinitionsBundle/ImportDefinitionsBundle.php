@@ -18,9 +18,12 @@ use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\ComposerPackageBundleInterface;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
+use ImportDefinitionsBundle\DependencyInjection\Compiler\FetcherRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
+use ImportDefinitionsBundle\DependencyInjection\Compiler\GetterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
+use ImportDefinitionsBundle\DependencyInjection\Compiler\ReverseInterpreterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
 use Pimcore\Extension\Bundle\PimcoreBundleInterface;
@@ -62,6 +65,9 @@ class ImportDefinitionsBundle extends AbstractResourceBundle implements PimcoreB
         $builder->addCompilerPass(new ProviderRegistryCompilerPass());
         $builder->addCompilerPass(new RunnerRegistryCompilerPass());
         $builder->addCompilerPass(new SetterRegistryCompilerPass());
+        $builder->addCompilerPass(new GetterRegistryCompilerPass());
+        $builder->addCompilerPass(new FetcherRegistryCompilerPass());
+        $builder->addCompilerPass(new ReverseInterpreterRegistryCompilerPass());
     }
 
     public function getNiceName()

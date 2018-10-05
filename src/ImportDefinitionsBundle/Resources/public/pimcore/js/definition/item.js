@@ -112,6 +112,16 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                 },
                 {
                     xtype: 'combo',
+                    fieldLabel: t('importdefinitions_fetcher'),
+                    name: 'fetcher',
+                    displayField: 'fetcher',
+                    valueField: 'fetcher',
+                    store: pimcore.globalmanager.get('importdefinitions_fetchers'),
+                    value: this.data.fetcher,
+                    width: 500
+                },
+                {
+                    xtype: 'combo',
                     fieldLabel: t('class'),
                     name: 'class',
                     displayField: 'text',

@@ -47,9 +47,29 @@ class Mapping
     public $interpreterConfig;
 
     /**
+     * @var string
+     */
+    public $reverseInterpreter;
+
+    /**
+     * @var array
+     */
+    public $reverseInterpreterConfig;
+
+    /**
      * @var array
      */
     public $setterConfig;
+
+    /**
+     * @var string
+     */
+    public $getter;
+
+    /**
+     * @var array
+     */
+    public $getterConfig;
 
     /**
      * @param array $values
@@ -60,7 +80,7 @@ class Mapping
             if ($key === 'o_type') {
                 continue;
             }
-            
+
             $setter = sprintf('set%s', ucfirst($key));
 
             if (method_exists($this, $setter)) {
@@ -179,5 +199,69 @@ class Mapping
     public function setSetterConfig($setterConfig)
     {
         $this->setterConfig = $setterConfig;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGetter()
+    {
+        return $this->getter;
+    }
+
+    /**
+     * @param string $getter
+     */
+    public function setGetter($getter)
+    {
+        $this->getter = $getter;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGetterConfig()
+    {
+        return $this->getterConfig;
+    }
+
+    /**
+     * @param array $getterConfig
+     */
+    public function setGetterConfig($getterConfig)
+    {
+        $this->getterConfig = $getterConfig;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReverseInterpreter()
+    {
+        return $this->reverseInterpreter;
+    }
+
+    /**
+     * @param string $reverseInterpreter
+     */
+    public function setReverseInterpreter($reverseInterpreter)
+    {
+        $this->reverseInterpreter = $reverseInterpreter;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReverseInterpreterConfig()
+    {
+        return $this->reverseInterpreterConfig;
+    }
+
+    /**
+     * @param array $reverseInterpreterConfig
+     */
+    public function setReverseInterpreterConfig($reverseInterpreterConfig)
+    {
+        $this->reverseInterpreterConfig = $reverseInterpreterConfig;
     }
 }

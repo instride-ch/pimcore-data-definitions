@@ -141,6 +141,7 @@ class Dao extends Model\Dao\PhpArrayTable
                 'skipExistingObjects',
                 'skipNewObjects',
                 'forceLoadObject',
+                'fetcher',
             ];
 
             foreach ($dataRaw as $key => $value) {

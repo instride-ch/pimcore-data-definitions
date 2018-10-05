@@ -15,6 +15,10 @@ ImportDefinitionsBundle\Model\Definition:
       expose: true
       type: string
       groups: [Detailed]
+    fetcher:
+      expose: true
+      type: string
+      groups: [Detailed]
     objectPath:
       expose: true
       type: string

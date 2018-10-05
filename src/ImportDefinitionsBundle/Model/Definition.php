@@ -41,6 +41,11 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @var string
      */
+    public $fetcher;
+
+    /**
+     * @var string
+     */
     public $objectPath;
 
     /**
@@ -196,9 +201,25 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * {@inheritdoc}
      */
+    public function getFetcher()
+    {
+        return $this->fetcher;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setLoader($loader)
     {
         $this->loader = $loader;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFetcher($fetcher)
+    {
+        $this->fetcher = $fetcher;
     }
 
     /**

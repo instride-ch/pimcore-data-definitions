@@ -14,14 +14,26 @@
 pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.nested');
 
 pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
+    getStore: function() {
+        return pimcore.globalmanager.get('importdefinitions_interpreters');
+    },
+
+    getClassItem: function() {
+        return pimcore.plugin.importdefinitions.interpreters;
+    },
+
+    getInterpreterIdentifier: function(interpreter) {
+        return interpreter.get('interpreter');
+    },
+
     getLayout: function (fromColumn, toColumn, record, config) {
         // init
         var _this = this;
         var addMenu = [];
 
-        pimcore.globalmanager.get('importdefinitions_interpreters').clearFilter();
+        this.getStore().clearFilter();
 
-        var records = pimcore.globalmanager.get('importdefinitions_interpreters').getRange().map(function(interpreter) {return interpreter.get('interpreter')});
+        var records = this.getStore().getRange().map(function(interpreter) {return _this.getInterpreterIdentifier(interpreter);});
 
         Ext.each(records, function (interpreter) {
             if (interpreter === 'abstract')
@@ -60,11 +72,13 @@ pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plug
     },
 
     getInterpreterClassItem: function (type) {
-        if (Object.keys(pimcore.plugin.importdefinitions.interpreters).indexOf(type) >= 0) {
-            return pimcore.plugin.importdefinitions.interpreters[type];
+        var items = this.getClassItem();
+
+        if (Object.keys(items).indexOf(type) >= 0) {
+            return items[type];
         }
 
-        return pimcore.plugin.importdefinitions.interpreters.empty;
+        return items.empty;
     },
 
     addInterpreter: function (type, fromColumn, toColumn, record, config) {

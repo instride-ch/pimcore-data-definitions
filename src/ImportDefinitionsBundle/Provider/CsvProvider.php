@@ -19,7 +19,7 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;
 
-class CsvProvider implements ProviderInterface
+class CsvProvider implements ProviderInterface, ExportProviderInterface
 {
     /**
      * {@inheritdoc}
@@ -117,5 +117,13 @@ class CsvProvider implements ProviderInterface
         $records = $stmt->process($csv);
 
         return iterator_to_array($records);
+    }
+
+    public function exportData(array $data, $configuration, $definition, $params)
+    {
+        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+
+        $writer = Writer::createFromPath($file, 'w+');
+        $writer->insertAll($data);
     }
 }

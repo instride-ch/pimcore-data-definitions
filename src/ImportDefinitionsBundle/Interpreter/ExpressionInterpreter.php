@@ -14,6 +14,7 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
+use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
@@ -22,7 +23,7 @@ use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterface
+class ExpressionInterpreter implements InterpreterInterface, ReverseInterpreterInterface, DataSetAwareInterface
 {
     use DataSetAwareTrait;
 
@@ -63,5 +64,13 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
             'configuration' => $configuration,
             'container' => $this->container
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reverseInterpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    {
+        return $this->interpret($object, $value, $map, $data, $definition, $params, $configuration);
     }
 }

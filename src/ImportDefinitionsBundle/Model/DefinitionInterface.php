@@ -39,6 +39,17 @@ interface DefinitionInterface extends ResourceInterface
     public function setProvider($provider);
 
     /**
+     * @return string
+     * @return string
+     */
+    public function getFetcher();
+
+    /**
+     * @param string $fetcher
+     */
+    public function setFetcher($fetcher);
+
+    /**
      * @return mixed
      */
     public function getLoader();

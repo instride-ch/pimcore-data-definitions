@@ -50,6 +50,9 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create(coreshop.resour
                 this.setters = [];
                 this.cleaners = [];
                 this.runners = [];
+                this.getters = [];
+                this.fetchers = [];
+                this.reverseInterpreters = [];
 
                 config.providers.forEach(function (provider) {
                     this.providers.push([provider]);
@@ -77,6 +80,18 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create(coreshop.resour
 
                 config.runner.forEach(function (runner) {
                     this.runners.push([runner]);
+                }.bind(this));
+
+                config.getters.forEach(function (getter) {
+                    this.getters.push([getter]);
+                }.bind(this));
+
+                config.fetchers.forEach(function (fetcher) {
+                    this.fetchers.push([fetcher]);
+                }.bind(this));
+
+                config.reverseInterpreters.forEach(function (reverseInterpreter) {
+                    this.reverseInterpreters.push([reverseInterpreter]);
                 }.bind(this));
 
                 var providerStore = new Ext.data.ArrayStore({
@@ -134,6 +149,30 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create(coreshop.resour
                 });
 
                 pimcore.globalmanager.add('importdefinitions_runners', runnersStore);
+
+                var gettersStore = new Ext.data.ArrayStore({
+                    data : this.getters,
+                    fields: ['getter'],
+                    idProperty : 'getter'
+                });
+
+                pimcore.globalmanager.add('importdefinitions_getters', gettersStore);
+
+                var fetchersStore = new Ext.data.ArrayStore({
+                    data : this.fetchers,
+                    fields: ['fetcher'],
+                    idProperty : 'fetcher'
+                });
+
+                pimcore.globalmanager.add('importdefinitions_fetchers', fetchersStore);
+
+                var reverseInterpretersStore = new Ext.data.ArrayStore({
+                    data : this.reverseInterpreters,
+                    fields: ['reverseInterpreter'],
+                    idProperty : 'reverseInterpreter'
+                });
+
+                pimcore.globalmanager.add('importdefinitions_reverse_interpreters', reverseInterpretersStore);
 
                 this.getLayout();
             }.bind(this)

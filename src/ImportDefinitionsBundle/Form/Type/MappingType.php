@@ -37,14 +37,32 @@ final class MappingType extends AbstractResourceType
     private $interpreterTypeRegistry;
 
     /**
+     * @var FormTypeRegistryInterface
+     */
+    private $getterTypeRegistry;
+
+    /**
+     * @var FormTypeRegistryInterface
+     */
+    private $reverseInterpreterTypeRegistry;
+
+    /**
      * {@inheritdoc}
      */
-    public function __construct(array $validationGroups = [], FormTypeRegistryInterface $setterTypeRegistry, FormTypeRegistryInterface $interpreterTypeRegistry)
+    public function __construct(
+        array $validationGroups,
+        FormTypeRegistryInterface $setterTypeRegistry,
+        FormTypeRegistryInterface $interpreterTypeRegistry,
+        FormTypeRegistryInterface $getterTypeRegistry,
+        FormTypeRegistryInterface $reverseInterpreterTypeRegistry
+    )
     {
         parent::__construct(Mapping::class, $validationGroups);
 
         $this->setterTypeRegistry = $setterTypeRegistry;
         $this->interpreterTypeRegistry = $interpreterTypeRegistry;
+        $this->getterTypeRegistry = $getterTypeRegistry;
+        $this->reverseInterpreterTypeRegistry = $reverseInterpreterTypeRegistry;
     }
 
     /**
@@ -57,7 +75,9 @@ final class MappingType extends AbstractResourceType
             ->add('toColumn', TextType::class)
             ->add('primaryIdentifier', CheckboxType::class)
             ->add('setter', TextType::class)
-            ->add('interpreter', TextType::class);
+            ->add('interpreter', TextType::class)
+            ->add('reverseInterpreter', TextType::class)
+        ;
 
         /** Setter Configurations */
         $builder
@@ -85,6 +105,32 @@ final class MappingType extends AbstractResourceType
                 $this->addSetterConfigurationFields($event->getForm(), $this->setterTypeRegistry->get($data['setter'], 'default'));
             });
 
+         /** Getter Configurations */
+        $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $type = $this->getGetterRegistryIdentifier($event->getForm(), $event->getData());
+                if (null === $type) {
+                    return;
+                }
+            })
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+                $type = $this->getGetterRegistryIdentifier($event->getForm(), $event->getData());
+                if (null === $type) {
+                    return;
+                }
+
+                $event->getForm()->get('getter')->setData($type);
+            })
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $data = $event->getData();
+
+                if (!isset($data['getter'])) {
+                    return;
+                }
+
+                $this->addGetterConfigurationFields($event->getForm(), $this->getterTypeRegistry->get($data['getter'], 'default'));
+            });
+
         /** Interpreter Configurations */
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -110,6 +156,32 @@ final class MappingType extends AbstractResourceType
 
                 $this->addInterpreterConfigurationFields($event->getForm(), $this->interpreterTypeRegistry->get($data['interpreter'], 'default'));
             });
+
+        /** Reverse Interpreter Configurations */
+        $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $type = $this->getReverseInterpreterRegistryIdentifier($event->getForm(), $event->getData());
+                if (null === $type) {
+                    return;
+                }
+            })
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+                $type = $this->getReverseInterpreterRegistryIdentifier($event->getForm(), $event->getData());
+                if (null === $type) {
+                    return;
+                }
+
+                $event->getForm()->get('reverseInterpreter')->setData($type);
+            })
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $data = $event->getData();
+
+                if (!isset($data['reverseInterpreter'])) {
+                    return;
+                }
+
+                $this->addReverseInterpreterConfigurationFields($event->getForm(), $this->reverseInterpreterTypeRegistry->get($data['reverseInterpreter'], 'default'));
+            });
     }
 
     /**
@@ -125,9 +197,27 @@ final class MappingType extends AbstractResourceType
      * @param FormInterface $form
      * @param string $configurationType
      */
+    protected function addGetterConfigurationFields(FormInterface $form, $configurationType)
+    {
+        $form->add('getterConfig', $configurationType);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param string $configurationType
+     */
     protected function addInterpreterConfigurationFields(FormInterface $form, $configurationType)
     {
         $form->add('interpreterConfig', $configurationType);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param string $configurationType
+     */
+    protected function addReverseInterpreterConfigurationFields(FormInterface $form, $configurationType)
+    {
+        $form->add('reverseInterpreterConfig', $configurationType);
     }
 
     /**
@@ -149,10 +239,38 @@ final class MappingType extends AbstractResourceType
      * @param mixed $data
      * @return string|null
      */
+    protected function getGetterRegistryIdentifier(FormInterface $form, $data = null)
+    {
+        if (null !== $data && null !== $data->getGetter()) {
+            return $data->getGetter();
+        }
+
+        return null;
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param mixed $data
+     * @return string|null
+     */
     protected function getInterpreterRegistryIdentifier(FormInterface $form, $data = null)
     {
         if (null !== $data && null !== $data->getInterpreter()) {
             return $data->getInterpreter();
+        }
+
+        return null;
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param mixed $data
+     * @return string|null
+     */
+    protected function getReverseInterpreterRegistryIdentifier(FormInterface $form, $data = null)
+    {
+        if (null !== $data && null !== $data->getReverseInterpreter()) {
+            return $data->getReverseInterpreter();
         }
 
         return null;

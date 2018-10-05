@@ -54,6 +54,26 @@ class ToColumn extends AbstractColumn
     /**
      * @var null|string
      */
+    public $getter;
+
+    /**
+     * @var null|array
+     */
+    public $getterConfig;
+
+    /**
+     * @var null|string
+     */
+    public $reverseInterpreter;
+
+    /**
+     * @var null|array
+     */
+    public $reverseInterpreterConfig;
+
+    /**
+     * @var null|string
+     */
     public $group;
 
     /**
@@ -166,6 +186,70 @@ class ToColumn extends AbstractColumn
     public function setInterpreter($interpreter)
     {
         $this->interpreter = $interpreter;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getGetterConfig()
+    {
+        return $this->getterConfig;
+    }
+
+    /**
+     * @param array $getterConfig
+     */
+    public function setGetterConfig($getterConfig)
+    {
+        $this->getterConfig = $getterConfig;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getReverseInterpreterConfig()
+    {
+        return $this->reverseInterpreterConfig;
+    }
+
+    /**
+     * @param array $reverseInterpreterConfig
+     */
+    public function setReverseInterpreterConfig($reverseInterpreterConfig)
+    {
+        $this->reverseIinterpreterConfig = $reverseInterpreterConfig;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getGetter()
+    {
+        return $this->getter;
+    }
+
+    /**
+     * @param string $setter
+     */
+    public function setGetter($getter)
+    {
+        $this->getter = $getter;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getReverseInterpreter()
+    {
+        return $this->reverseInterpreter;
+    }
+
+    /**
+     * @param string $reverseInterpreter
+     */
+    public function setReverseInterpreter($reverseInterpreter)
+    {
+        $this->reverseInterpreter = $reverseInterpreter;
     }
 
     /**

@@ -52,6 +52,16 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             }
         }
 
+        if (!record.data.getter) {
+            if (toColumn.data.type === 'objectbrick') {
+                record.data.getter = 'objectbrick';
+            } else if (toColumn.data.type === 'classificationstore') {
+                record.data.getter = 'classificationstore';
+            } else if (toColumn.data.type === 'fieldcollection') {
+                record.data.getter = 'fieldcollection';
+            }
+        }
+
         if (!record.data.interpreter) {
             if (toColumn.data.fieldtype === 'quantityValue') {
                 record.data.interpreter = 'quantity_value';
@@ -77,6 +87,24 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         }));
 
         fieldSetItems.push(new Ext.form.ComboBox({
+            fieldLabel : t('importdefinitions_reverse_interpreters'),
+            name : 'reverseInterpreter',
+            length : 255,
+            value : record.data.reverseInterpreter,
+            store : pimcore.globalmanager.get('importdefinitions_reverse_interpreters'),
+            valueField : 'reverseInterpreter',
+            displayField : 'reverseInterpreter',
+            queryMode : 'local',
+            listeners : {
+                change : function (combo, newValue) {
+                    this.getReverseInterpreterPanel().removeAll();
+
+                    this.getReverseInterpreterPanelLayout(newValue);
+                }.bind(this)
+            }
+        }));
+
+        fieldSetItems.push(new Ext.form.ComboBox({
             fieldLabel : t('importdefinitions_setters'),
             name : 'setter',
             length : 255,
@@ -90,6 +118,24 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
                     this.getSetterPanel().removeAll();
 
                     this.getSetterPanelLayout(newValue);
+                }.bind(this)
+            }
+        }));
+
+        fieldSetItems.push(new Ext.form.ComboBox({
+            fieldLabel : t('importdefinitions_getters'),
+            name : 'getter',
+            length : 255,
+            value : record.data.getter,
+            store : pimcore.globalmanager.get('importdefinitions_getters'),
+            valueField : 'getter',
+            displayField : 'getter',
+            queryMode : 'local',
+            listeners : {
+                change : function (combo, newValue) {
+                    this.getGetterPanel().removeAll();
+
+                    this.getGetterPanelLayout(newValue);
                 }.bind(this)
             }
         }));
@@ -108,7 +154,9 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
                 [
                     this.configForm,
                     this.getInterpreterPanel(),
-                    this.getSetterPanel()
+                    this.getReverseInterpreterPanel(),
+                    this.getSetterPanel(),
+                    this.getGetterPanel()
                 ],
             buttons: [{
                 text: t('apply'),
@@ -131,7 +179,9 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         });
 
         this.getInterpreterPanelLayout(record.data.interpreter);
+        this.getReverseInterpreterPanelLayout(record.data.reverseInterpreter);
         this.getSetterPanelLayout(record.data.setter);
+        this.getGetterPanelLayout(record.data.getter);
 
         this.window.show();
     },
@@ -167,6 +217,37 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         }
     },
 
+    getReverseInterpreterPanel : function () {
+        if (!this.reverseInterpreterPanel) {
+            this.reverseInterpreterPanel = new Ext.form.FormPanel({
+                defaults: { anchor: '90%' },
+                layout: 'form',
+                title : t('importdefinitions_reverse_interpreter_settings')
+            });
+        }
+
+        return this.reverseInterpreterPanel;
+    },
+
+    getReverseInterpreterPanelLayout : function (type) {
+        if (type) {
+            type = type.toLowerCase();
+
+            if (pimcore.plugin.importdefinitions.reverse_interpreters[type]) {
+                this.reverseInterpreter = new pimcore.plugin.importdefinitions.reverse_interpreters[type];
+
+                this.getReverseInterpreterPanel().add(this.reverseInterpreter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.reverseInterpreterConfig) ? this.record.data.reverseInterpreterConfig : {}, this.config));
+                this.getReverseInterpreterPanel().show();
+            } else {
+                this.getReverseInterpreterPanel().hide();
+
+                this.reverseInterpreter = null;
+            }
+        } else {
+            this.getReverseInterpreterPanel().hide();
+        }
+    },
+
     getSetterPanel : function () {
         if (!this.setterPanel) {
             this.setterPanel = new Ext.form.FormPanel({
@@ -198,10 +279,43 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
         }
     },
 
+    getGetterPanel : function () {
+        if (!this.getterPanel) {
+            this.getterPanel = new Ext.form.FormPanel({
+                defaults: { anchor: '100%' },
+                layout: 'form',
+                title : t('importdefinition_getter_settings')
+            });
+        }
+
+        return this.getterPanel;
+    },
+
+    getGetterPanelLayout : function (type) {
+        if (type) {
+            type = type.toLowerCase();
+
+            if (pimcore.plugin.importdefinitions.getters[type]) {
+                this.setter = new pimcore.plugin.importdefinitions.getters[type];
+
+                this.getGetterPanel().add(this.getter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.getterConfig) ? this.record.data.getterConfig : {}, this.config));
+                this.getGetterPanel().show();
+            } else {
+                this.getGetterPanel().hide();
+
+                this.getter = null;
+            }
+        } else {
+            this.getGetterPanel().hide();
+        }
+    },
+
     commitData: function () {
         var form = this.configForm.getForm();
         var interpreterForm = this.getInterpreterPanel().getForm();
+        var reverseInterpreterForm = this.getReverseInterpreterPanel().getForm();
         var setterForm = this.getSetterPanel().getForm();
+        var getterForm = this.getGetterPanel().getForm();
 
         if (form.isValid() && interpreterForm.isValid() && setterForm.isValid()) {
             Ext.Object.each(form.getFieldValues(), function (key, value) {
@@ -209,7 +323,9 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             }.bind(this));
 
             this.record.data.interpreterConfig = {};
+            this.record.data.reverseInterpreterConfig = {};
             this.record.data.setterConfig = {};
+            this.record.data.getterConfig = {};
 
             if (this.getInterpreterPanel().isVisible()) {
                 if (Ext.isFunction(this.interpreter.getInterpreterData)) {
@@ -222,6 +338,17 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
                 }
             }
 
+            if (this.getReverseInterpreterPanel().isVisible()) {
+                if (Ext.isFunction(this.reverseInterpreter.getInterpreterData)) {
+                    this.record.data.reverseInterpreterConfig = this.reverseInterpreter.getInterpreterData();
+                }
+                else {
+                    Ext.Object.each(reverseInterpreterForm.getFieldValues(), function (key, value) {
+                        this.record.data.reverseInterpreterConfig[key] = value;
+                    }.bind(this));
+                }
+            }
+
             if (this.getSetterPanel().isVisible()) {
                 if (Ext.isFunction(this.setter.getSetterData)) {
                     this.record.data.setterConfig = this.setter.getSetterData();
@@ -229,6 +356,18 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
                 else {
                     Ext.Object.each(setterForm.getFieldValues(), function (key, value) {
                         this.record.data.setterConfig[key] = value;
+                    }.bind(this));
+                }
+
+            }
+
+            if (this.getGetterPanel().isVisible()) {
+                if (Ext.isFunction(this.getter.getGetterData)) {
+                    this.record.data.getterConfig = this.getter.getGetterData();
+                }
+                else {
+                    Ext.Object.each(getterForm.getFieldValues(), function (key, value) {
+                        this.record.data.getterConfig[key] = value;
                     }.bind(this));
                 }
 

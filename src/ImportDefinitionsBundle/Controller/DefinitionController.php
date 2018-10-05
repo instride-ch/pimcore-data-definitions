@@ -38,6 +38,9 @@ class DefinitionController extends ResourceController
         $setters = $this->getConfigSetters();
         $filters = $this->getConfigFilters();
         $runners = $this->getConfigRunners();
+        $getters = $this->getConfigGetters();
+        $fetchers = $this->getConfigFetchers();
+        $reverseInterpreters = $this->getConfigReverseInterpreters();
 
         return $this->viewHandler->handle([
             'providers' => array_keys($providers),
@@ -46,7 +49,10 @@ class DefinitionController extends ResourceController
             'cleaner' => array_keys($cleaners),
             'setter' => array_keys($setters),
             'filters' => array_keys($filters),
-            'runner' => array_keys($runners)
+            'runner' => array_keys($runners),
+            'getters' => array_keys($getters),
+            'fetchers' => array_keys($fetchers),
+            'reverseInterpreters' => array_keys($reverseInterpreters)
         ]);
     }
 
@@ -122,19 +128,22 @@ class DefinitionController extends ResourceController
                 $found = false;
 
                 if (\is_array($mappings)) {
-                    foreach ($mappings as $index => $mapping) {
+                    foreach ($mappings as $mapping) {
                         if ($mapping->getToColumn() === $classToColumn->getIdentifier()) {
                             $found = true;
 
                             $mappingDefinition[] = [
-                                'identifier' => $index,
                                 'fromColumn' => $mapping->getFromColumn(),
                                 'toColumn' => $mapping->getToColumn(),
                                 'primaryIdentifier' => $mapping->getPrimaryIdentifier(),
                                 'setter' => $mapping->getSetter(),
                                 'setterConfig' => $mapping->getSetterConfig(),
+                                'getter' => $mapping->getGetter(),
+                                'getterConfig' => $mapping->getGetterConfig(),
                                 'interpreter' => $mapping->getInterpreter(),
-                                'interpreterConfig' => $mapping->getInterpreterConfig()
+                                'interpreterConfig' => $mapping->getInterpreterConfig(),
+                                'reverseInterpreter' => $mapping->getReverseInterpreter(),
+                                'reverseInterpreterConfig' => $mapping->getReverseInterpreterConfig()
                             ];
 
                             break;
@@ -152,7 +161,11 @@ class DefinitionController extends ResourceController
                         'setter' => $classToColumn->getSetter(),
                         'setterConfig' => $classToColumn->getSetterConfig(),
                         'interpreter' => $classToColumn->getInterpreter(),
-                        'interpreterConfig' => $classToColumn->getInterpreterConfig()
+                        'interpreterConfig' => $classToColumn->getInterpreterConfig(),
+                        'getter' => $classToColumn->getGetter(),
+                        'getterConfig' => $classToColumn->getGetterConfig(),
+                        'reverseInterpreter' => $classToColumn->getReverseInterpreter(),
+                        'reverseInterpreterConfig' => $classToColumn->getReverseInterpreterConfig()
                     ];
                 }
             }
@@ -279,6 +292,7 @@ class DefinitionController extends ResourceController
                         $localizedField->setSetter('localizedfield');
                         $localizedField->setConfig(['language' => $language]);
                         $localizedField->setSetterConfig(['language' => $language]);
+                        $localizedField->setGetterConfig(['language' => $language]);
                         $result[] = $localizedField;
                     }
                 }
@@ -455,5 +469,29 @@ class DefinitionController extends ResourceController
     protected function getConfigRunners(): array
     {
         return $this->getParameter('import_definition.runners');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConfigGetters(): array
+    {
+        return $this->getParameter('import_definition.getters');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConfigFetchers(): array
+    {
+        return $this->getParameter('import_definition.fetchers');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConfigReverseInterpreters(): array
+    {
+        return $this->getParameter('import_definition.reverse_interpreters');
     }
 }

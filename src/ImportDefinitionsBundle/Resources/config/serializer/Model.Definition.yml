@@ -87,3 +87,7 @@ ImportDefinitionsBundle\Model\Definition:
       expose: true
       type: boolean
       groups: [Detailed]
+    loader:
+      expose: true
+      type: string
+      groups: [Detailed]

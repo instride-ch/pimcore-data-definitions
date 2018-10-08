@@ -32,6 +32,7 @@ class DefinitionController extends ResourceController
     public function getConfigAction()
     {
         $providers = $this->getConfigProviders();
+        $loaders = $this->getConfigLoaders();
         $interpreters = $this->getConfigInterpreters();
         $cleaners = $this->getConfigCleaners();
         $setters = $this->getConfigSetters();
@@ -40,6 +41,7 @@ class DefinitionController extends ResourceController
 
         return $this->viewHandler->handle([
             'providers' => array_keys($providers),
+            'loaders' => array_keys($loaders),
             'interpreter' => array_keys($interpreters),
             'cleaner' => array_keys($cleaners),
             'setter' => array_keys($setters),
@@ -405,6 +407,14 @@ class DefinitionController extends ResourceController
     protected function getConfigProviders(): array
     {
         return $this->getParameter('import_definition.providers');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConfigLoaders(): array
+    {
+        return $this->getParameter('import_definition.loaders');
     }
 
     /**

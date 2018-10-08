@@ -44,6 +44,7 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create(coreshop.resour
                 var config = Ext.decode(result.responseText);
 
                 this.providers = [];
+                this.loaders = [];
                 this.filters = [];
                 this.interpreters = [];
                 this.setters = [];
@@ -52,6 +53,10 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create(coreshop.resour
 
                 config.providers.forEach(function (provider) {
                     this.providers.push([provider]);
+                }.bind(this));
+
+                config.loaders.forEach(function (loader) {
+                    this.loaders.push([loader]);
                 }.bind(this));
 
                 config.filters.forEach(function (filter) {
@@ -81,6 +86,14 @@ pimcore.plugin.importdefinitions.definition.panel = Class.create(coreshop.resour
                 });
 
                 pimcore.globalmanager.add('importdefinitions_providers', providerStore);
+
+                var loaderStore = new Ext.data.ArrayStore({
+                    data : this.loaders,
+                    fields: ['loader'],
+                    idProperty : 'loader'
+                });
+
+                pimcore.globalmanager.add('importdefinitions_loaders', loaderStore);
 
                 var filterStore = new Ext.data.ArrayStore({
                     data : this.filters,

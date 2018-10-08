@@ -41,6 +41,16 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return mixed
      */
+    public function getLoader();
+
+    /**
+     * @param string $loader
+     */
+    public function setLoader($loader);
+
+    /**
+     * @return mixed
+     */
     public function getConfiguration();
 
     /**

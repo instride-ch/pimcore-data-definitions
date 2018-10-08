@@ -15,6 +15,7 @@ services:
       - '@import_definition.registry.interpreter'
       - '@import_definition.registry.setter'
       - '@import_definition.registry.cleaner'
+      - '@import_definition.registry.loader'
       - '@event_dispatcher'
       - '@logger'
     tags:
@@ -29,6 +30,12 @@ services:
 
   import_definition.form.registry.provider:
     class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  import_definition.registry.loader:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - ImportDefinitionsBundle\Loader\LoaderInterface
+      - 'Import Definition Loaders'
 
   import_definition.registry.cleaner:
     class: CoreShop\Component\Registry\ServiceRegistry
@@ -234,3 +241,9 @@ services:
     class: ImportDefinitionsBundle\EventListener\ObjectDeleteListener
     tags:
       - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onDataObjectDelete }
+
+  ### LOADER
+  import_definition.loader.primary_key:
+    class: ImportDefinitionsBundle\Loader\PrimaryKeyLoader
+    tags:
+      - { name: import_definition.loader, type: primary_key }

@@ -20,6 +20,7 @@ use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
+use ImportDefinitionsBundle\DependencyInjection\Compiler\LoaderRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
@@ -62,6 +63,7 @@ class ImportDefinitionsBundle extends AbstractResourceBundle implements PimcoreB
         $builder->addCompilerPass(new ProviderRegistryCompilerPass());
         $builder->addCompilerPass(new RunnerRegistryCompilerPass());
         $builder->addCompilerPass(new SetterRegistryCompilerPass());
+        $builder->addCompilerPass(new LoaderRegistryCompilerPass());
     }
 
     public function getNiceName()

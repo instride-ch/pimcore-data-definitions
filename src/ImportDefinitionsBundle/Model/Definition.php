@@ -36,6 +36,11 @@ class Definition extends AbstractModel implements DefinitionInterface
     /**
      * @var string
      */
+    public $loader;
+
+    /**
+     * @var string
+     */
     public $objectPath;
 
     /**
@@ -129,6 +134,11 @@ class Definition extends AbstractModel implements DefinitionInterface
     public $successNotificationDocument;
 
     /**
+     * @var boolean
+     */
+    public $forceLoadObject = false;
+
+    /**
      * Get By Id
      *
      * @param int $id
@@ -137,7 +147,7 @@ class Definition extends AbstractModel implements DefinitionInterface
     public static function getById($id)
     {
         $definitionEntry = new self();
-        $definitionEntry->setId((int) $id);
+        $definitionEntry->setId((int)$id);
         $definitionEntry->getDao()->getById();
 
         return $definitionEntry;
@@ -173,6 +183,22 @@ class Definition extends AbstractModel implements DefinitionInterface
     public function setProvider($provider)
     {
         $this->provider = $provider;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLoader()
+    {
+        return $this->loader;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLoader($loader)
+    {
+        $this->loader = $loader;
     }
 
     /**
@@ -493,5 +519,21 @@ class Definition extends AbstractModel implements DefinitionInterface
     public function setSkipExistingObjects($skipExistingObjects)
     {
         $this->skipExistingObjects = $skipExistingObjects;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getForceLoadObject()
+    {
+        return $this->forceLoadObject;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setForceLoadObject($forceLoadObject)
+    {
+        $this->forceLoadObject = $forceLoadObject;
     }
 }

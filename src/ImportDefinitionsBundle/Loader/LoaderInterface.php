@@ -12,19 +12,20 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\DependencyInjection\Compiler;
+namespace ImportDefinitionsBundle\Loader;
 
-use CoreShop\Bundle\PimcoreBundle\DependencyInjection\Compiler\RegisterRegistryTypePass;
+use Pimcore\Model\DataObject\Concrete;
+use ImportDefinitionsBundle\Model\DefinitionInterface;
 
-final class SetterRegistryCompilerPass extends RegisterRegistryTypePass
+interface LoaderInterface
 {
-    public function __construct()
-    {
-        parent::__construct(
-            'import_definition.registry.setter',
-            'import_definition.form.registry.setter',
-            'import_definition.setters',
-            'import_definition.setter'
-        );
-    }
+    /**
+     * @param string              $class
+     * @param                     $data
+     * @param DefinitionInterface $definition
+     * @param                     $params
+     *
+     * @return null|Concrete
+     */
+    public function load(string $class, $data, DefinitionInterface $definition, $params): ?Concrete;
 }

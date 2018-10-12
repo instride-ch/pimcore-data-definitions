@@ -41,6 +41,16 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return mixed
      */
+    public function getLoader();
+
+    /**
+     * @param string $loader
+     */
+    public function setLoader($loader);
+
+    /**
+     * @return mixed
+     */
     public function getConfiguration();
 
     /**
@@ -237,4 +247,14 @@ interface DefinitionInterface extends ResourceInterface
      * @param bool $skipExistingObjects
      */
     public function setSkipExistingObjects($skipExistingObjects);
+
+    /**
+     * @return boolean
+     */
+    public function getForceLoadObject();
+
+    /**
+     * @param $forceLoadObject
+     */
+    public function setForceLoadObject($forceLoadObject);
 }

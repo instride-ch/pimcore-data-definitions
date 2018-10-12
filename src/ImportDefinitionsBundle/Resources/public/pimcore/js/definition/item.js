@@ -112,6 +112,16 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                 },
                 {
                     xtype: 'combo',
+                    fieldLabel: t('importdefinitions_loader'),
+                    name: 'loader',
+                    displayField: 'loader',
+                    valueField: 'loader',
+                    store: pimcore.globalmanager.get('importdefinitions_loaders'),
+                    value: this.data.loader,
+                    width: 500,
+                },
+                {
+                    xtype: 'combo',
                     fieldLabel: t('class'),
                     name: 'class',
                     displayField: 'text',
@@ -247,6 +257,12 @@ pimcore.plugin.importdefinitions.definition.item = Class.create(coreshop.resourc
                     xtype: 'checkbox',
                     name: 'omitMandatoryCheck',
                     checked: this.data.omitMandatoryCheck
+                },
+                {
+                    fieldLabel: t('importdefinitions_force_load_object'),
+                    xtype: 'checkbox',
+                    name: 'forceLoadObject',
+                    checked: this.data.forceLoadObject
                 },
                 {
                     fieldLabel: t('importdefinitions_failure_document'),

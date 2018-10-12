@@ -40,6 +40,12 @@ services:
     tags:
         - { name: form.type }
 
+  import_definition.form.loader_choice_type:
+      class: ImportDefinitionsBundle\Form\Type\LoaderChoiceType
+      arguments: ['%import_definition.loaders%']
+      tags:
+          - { name: form.type }
+
   import_definition.form.runner_choice_type:
     class: ImportDefinitionsBundle\Form\Type\RunnerChoiceType
     arguments: ['%import_definition.runners%']

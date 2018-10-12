@@ -22,10 +22,8 @@ use ImportDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\File;
 use Pimcore\Mail;
 use Pimcore\Model\Document;
-use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Concrete;
-use Pimcore\Model\DataObject\Listing;
 use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\Version;
 use Pimcore\Placeholder;
@@ -71,6 +69,11 @@ final class Importer implements ImporterInterface
     private $cleanerRegistry;
 
     /**
+     * @var ServiceRegistryInterface
+     */
+    private $loaderRegistry;
+
+    /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
@@ -98,6 +101,7 @@ final class Importer implements ImporterInterface
      * @param ServiceRegistryInterface $interpreterRegistry
      * @param ServiceRegistryInterface $setterRegistry
      * @param ServiceRegistryInterface $cleanerRegistry
+     * @param ServiceRegistryInterface $loaderRegistry
      * @param EventDispatcherInterface $eventDispatcher
      * @param LoggerInterface $logger
      */
@@ -108,6 +112,7 @@ final class Importer implements ImporterInterface
         ServiceRegistryInterface $interpreterRegistry,
         ServiceRegistryInterface $setterRegistry,
         ServiceRegistryInterface $cleanerRegistry,
+        ServiceRegistryInterface $loaderRegistry,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger
     )
@@ -118,6 +123,7 @@ final class Importer implements ImporterInterface
         $this->interpreterRegistry = $interpreterRegistry;
         $this->setterRegistry = $setterRegistry;
         $this->cleanerRegistry = $cleanerRegistry;
+        $this->loaderRegistry = $loaderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
     }
@@ -270,7 +276,7 @@ final class Importer implements ImporterInterface
     {
         $runner = null;
 
-        $object = $this->getObjectForPrimaryKey($definition, $data);
+        $object = $this->getObject($definition, $data, $params);
 
         if (null !== $object && !$object->getId()) {
             if ($definition->getSkipNewObjects()) {
@@ -410,9 +416,10 @@ final class Importer implements ImporterInterface
      * @return null|Concrete
      * @throws \Exception
      */
-    private function getObjectForPrimaryKey(DefinitionInterface $definition, $data)
+    private function getObject(DefinitionInterface $definition, $data, $params)
     {
         $class = $definition->getClass();
+        $classObject = '\Pimcore\Model\DataObject\\' . ucfirst($class);
         $classDefinition = ClassDefinition::getByName($class);
         $obj = null;
 
@@ -420,70 +427,40 @@ final class Importer implements ImporterInterface
             throw new \InvalidArgumentException(sprintf('Class not found %s', $class));
         }
 
-        $classObject = '\Pimcore\Model\DataObject\\' . ucfirst($class);
-        $classList = '\Pimcore\Model\DataObject\\' . ucfirst($class) . '\Listing';
+        if ($definition->getLoader()) {
+            $loader = $this->loaderRegistry->get($definition->getLoader());
+        }
+        else {
+            $loader = $this->loaderRegistry->get('primary_key');
+        }
 
-        $list = new $classList();
+        $obj = $loader->load($class, $data, $definition, $params);
 
-        if ($list instanceof Listing) {
-            $mapping = $definition->getMapping();
-            $condition = [];
-            $conditionValues = [];
-            foreach ($mapping as $map) {
-                if ($map->getPrimaryIdentifier()) {
-                    $condition[] = '`' . $map->getToColumn() . '` = ?';
-                    $conditionValues[] = $data[$map->getFromColumn()];
-                }
-            }
+        if (null === $obj) {
+            $obj = new $classObject();
+        }
 
-            if (\count($condition) === 0) {
-                throw new \InvalidArgumentException('No primary identifier defined!');
-            }
+        $key = Service::getValidKey($this->createKey($definition, $data), 'object');
 
-            $list->setUnpublished(true);
-            $list->setCondition(implode(' AND ', $condition), $conditionValues);
-            $list->setObjectTypes([Concrete::OBJECT_TYPE_VARIANT, Concrete::OBJECT_TYPE_OBJECT, Concrete::OBJECT_TYPE_FOLDER]);
-            $list->load();
-            $objectData = $list->getObjects();
+        if ($definition->getRelocateExistingObjects() || !$obj->getId()) {
+            $obj->setParent(Service::createFolderByPath($this->createPath($definition, $data)));
+        }
 
-            if (\count($objectData) === 1) {
-                $obj = $objectData[0];
-            }
-
-            if (null === $obj) {
-                $obj = new $classObject();
-            }
-
-            if ($obj instanceof AbstractObject) {
-                $key = Service::getValidKey($this->createKey($definition, $data), 'object');
-
-                if ($definition->getRelocateExistingObjects() || !$obj->getId()) {
-                    $obj->setParent(Service::createFolderByPath($this->createPath($definition, $data)));
-                }
-
-                if ($definition->getRenameExistingObjects() || !$obj->getId()) {
-                    if ($key && $definition->getKey()) {
-                        $obj->setKey($key);
-                    } else {
-                        $obj->setKey(File::getValidFilename(implode('-', $conditionValues)));
-                    }
-                }
-
-                if (!$obj->getKey()) {
-                    throw new \InvalidArgumentException('No key set, please check your import-data');
-                }
-
-                $obj->setKey(Service::getUniqueKey($obj));
-
-                return $obj;
-            }
-
-            if (\count($objectData) > 1) {
-                throw new \InvalidArgumentException('Object with the same primary key was found multiple times');
+        if ($definition->getRenameExistingObjects() || !$obj->getId()) {
+            if ($key && $definition->getKey()) {
+                $obj->setKey($key);
+            } else {
+                $obj->setKey(File::getValidFilename(uniqid()));
             }
         }
 
-        return null;
+        if (!$obj->getKey()) {
+            throw new \InvalidArgumentException('No key set, please check your import-data');
+        }
+
+        $obj->setKey(Service::getUniqueKey($obj));
+
+        return $obj;
     }
 
     /**

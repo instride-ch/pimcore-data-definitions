@@ -14,17 +14,14 @@
 
 namespace ImportDefinitionsBundle\DependencyInjection\Compiler;
 
-use CoreShop\Bundle\PimcoreBundle\DependencyInjection\Compiler\RegisterRegistryTypePass;
-
-final class ProviderRegistryCompilerPass extends RegisterRegistryTypePass
+final class LoaderRegistryCompilerPass extends AbstractServiceRegistryCompilerPass
 {
     public function __construct()
     {
         parent::__construct(
-            'import_definition.registry.provider',
-            'import_definition.form.registry.provider',
-            'import_definition.providers',
-            'import_definition.provider'
+            'import_definition.registry.loader',
+            'import_definition.loaders',
+            'import_definition.loader'
         );
     }
 }

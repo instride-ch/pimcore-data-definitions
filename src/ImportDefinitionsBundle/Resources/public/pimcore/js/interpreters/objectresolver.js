@@ -26,6 +26,8 @@ pimcore.plugin.importdefinitions.interpreters.object_resolver = Class.create(pim
         classesStore.load();
 
         var createMissingEnabled = Ext.isDefined(config.create_missing) ? config.create_missing : false;
+        var matchUnpublishedEnabled = Ext.isDefined(config.match_unpublished) ? config.match_unpublished : false;
+        
         var missingObjectPathTextfield = Ext.create({
             xtype: 'textfield',
             fieldLabel: t('importdefinitions_interpreter_object_resolver_object_path'),
@@ -80,6 +82,13 @@ pimcore.plugin.importdefinitions.interpreters.object_resolver = Class.create(pim
             value: config.additional_fields || null,
             disabled: createMissingEnabled === false            
         });
+        var createPublishedCheckbox = Ext.create({
+            xtype: 'checkbox',
+            fieldLabel: t('importdefinitions_interpreter_object_resolver_create_published'),
+            name: 'create_published',
+            value: Ext.isDefined(config.create_published) ? config.create_published : (Ext.isDefined(config.match_unpublished) ? config.match_unpublished : true),
+            disabled: matchUnpublishedEnabled === false
+        });
         
         return [{
                 xtype : 'combo',
@@ -102,14 +111,23 @@ pimcore.plugin.importdefinitions.interpreters.object_resolver = Class.create(pim
                 xtype : 'checkbox',
                 fieldLabel: t('importdefinitions_interpreter_object_resolver_match_unpublished'),
                 name: 'match_unpublished',
-                value : Ext.isDefined(config.match_unpublished) ? config.match_unpublished : true
+                value : Ext.isDefined(config.match_unpublished) ? config.match_unpublished : true,
+                listeners: {
+                    change: function (el, enabled) {
+                        var matchUnpublishedDisabled = (enabled === false);
+                        if (matchUnpublishedDisabled) {
+                            createPublishedCheckbox.setValue(true);
+                        }
+                        createPublishedCheckbox.setDisabled(matchUnpublishedDisabled);
+                    }
+                }
             },
             {
                 xtype: 'checkbox',
                 fieldLabel: t('importdefinitions_interpreter_object_resolver_create_missing'),
                 name: 'create_missing',
                 value: Ext.isDefined(config.create_missing) ? config.create_missing : false,
-                'listeners': {
+                listeners: {
                     change: function (el, enabled) {
                         var createMissingDisabled = (enabled === false);
 
@@ -118,6 +136,7 @@ pimcore.plugin.importdefinitions.interpreters.object_resolver = Class.create(pim
                     }
                 }
             },
+            createPublishedCheckbox,
             missingObjectPathTextfield,
             additionalFieldsTextfield
         ];

@@ -48,26 +48,31 @@ class ObjectResolver implements InterpreterInterface
         $found = $listing->count();
 
         if ($found < 1) {
-            $parent = \Pimcore\Model\DataObject::getByPath($configuration['object_path']);
-            $key = \Pimcore\Model\Element\Service::getValidKey($value, 'object');            
-            $object = new $class();
-            $setter = 'set' . ucfirst($configuration['field']);
-            $object->$setter($value);
-            $object->setPublished(true);
-            $object->setKey($key);
-            $object->setParentId($parent->getId());
-            foreach(explode(',',$configuration['additional_fields']) as $additionalField){
-                $additionalField = explode('.',$additionalField);
-                if(count($additionalField) > 1){
-                    $setter = 'set' . ucfirst(trim($additionalField[0]));
-                    $object->$setter($value, trim($additionalField[1]));
-                }else{
-                    $setter = 'set' . ucfirst(trim($additionalField[0]));
-                    $object->$setter($value);
+            // too few found
+            if (array_key_exists('create_missing',$configuration) && $configuration['create_missing']) {
+                $parent = \Pimcore\Model\DataObject::getByPath($configuration['object_path']);
+                $key = \Pimcore\Model\Element\Service::getValidKey($value, 'object');            
+                $object = new $class();
+                $setter = 'set' . ucfirst($configuration['field']);
+                $object->$setter($value);
+                $object->setPublished($configuration['create_published']);
+                $object->setKey($key);
+                $object->setParentId($parent->getId());
+                foreach(explode(',',$configuration['additional_fields']) as $additionalField){
+                    $additionalField = explode('.',$additionalField);
+                    if(count($additionalField) > 1){
+                        $setter = 'set' . ucfirst(trim($additionalField[0]));
+                        $object->$setter($value, trim($additionalField[1]));
+                    }else{
+                        $setter = 'set' . ucfirst(trim($additionalField[0]));
+                        $object->$setter($value);
+                    }
                 }
+                $object->save();
+                return $object;
+            } else {
+                return null;
             }
-            $object->save();
-            return $object;
         }
         else if($found > 1) {
             // too many found

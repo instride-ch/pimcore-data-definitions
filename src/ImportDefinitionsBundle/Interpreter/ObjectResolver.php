@@ -38,7 +38,7 @@ class ObjectResolver implements InterpreterInterface
         }
 
         $class = 'Pimcore\Model\DataObject\\' . $configuration['class'];
-        $lookup = 'getBy'. $configuration['field'];
+        $lookup = 'getBy' . ucfirst($configuration['field']);
 
         /**
          * @var Listing $listing
@@ -47,8 +47,25 @@ class ObjectResolver implements InterpreterInterface
         $listing->setUnpublished($configuration['match_unpublished']);
         $found = $listing->count();
 
-        if ($found < 1 || $found > 1) {
-            // too few or too many found
+        if ($found < 1) {
+            // too few found
+            if (array_key_exists('create_missing',$configuration) && $configuration['create_missing']) {
+                $parent = \Pimcore\Model\DataObject::getByPath($configuration['object_path']);
+                $key = \Pimcore\Model\Element\Service::getValidKey($value, 'object');            
+                $object = new $class();
+                $setter = 'set' . ucfirst($configuration['field']);
+                $object->$setter($value);
+                $object->setPublished($configuration['create_published']);
+                $object->setKey($key);
+                $object->setParentId($parent->getId());
+                $object->save();
+                return $object;
+            } else {
+                return null;
+            }
+        }
+        else if($found > 1) {
+            // too many found
             return null;
         }
 

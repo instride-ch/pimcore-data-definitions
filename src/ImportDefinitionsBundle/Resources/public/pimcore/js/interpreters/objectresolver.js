@@ -74,14 +74,6 @@ pimcore.plugin.importdefinitions.interpreters.object_resolver = Class.create(pim
                 }
             }
         });
-        var additionalFieldsTextfield = Ext.create({
-            xtype: 'textfield',
-            fieldLabel: t('importdefinitions_interpreter_object_resolver_additional_fields'),
-            name: 'additional_fields',
-            width: 500,
-            value: config.additional_fields || null,
-            disabled: createMissingEnabled === false            
-        });
         var createPublishedCheckbox = Ext.create({
             xtype: 'checkbox',
             fieldLabel: t('importdefinitions_interpreter_object_resolver_create_published'),
@@ -130,15 +122,13 @@ pimcore.plugin.importdefinitions.interpreters.object_resolver = Class.create(pim
                 listeners: {
                     change: function (el, enabled) {
                         var createMissingDisabled = (enabled === false);
-
                         missingObjectPathTextfield.setDisabled(createMissingDisabled);
-                        additionalFieldsTextfield.setDisabled(createMissingDisabled);
+                        createPublishedCheckbox.setDisabled(createMissingDisabled);
                     }
                 }
             },
             createPublishedCheckbox,
-            missingObjectPathTextfield,
-            additionalFieldsTextfield
+            missingObjectPathTextfield
         ];
     }
 });

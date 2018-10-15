@@ -34,7 +34,6 @@ class ObjectResolverType extends AbstractType
             ->add('create_missing', CheckboxType::class)
             ->add('create_published', CheckboxType::class)
             ->add('object_path', TextType::class)
-            ->add('additional_fields', TextType::class)
             ;
     }
 

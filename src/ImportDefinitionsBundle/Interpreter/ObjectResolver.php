@@ -58,16 +58,6 @@ class ObjectResolver implements InterpreterInterface
                 $object->setPublished($configuration['create_published']);
                 $object->setKey($key);
                 $object->setParentId($parent->getId());
-                foreach(explode(',',$configuration['additional_fields']) as $additionalField){
-                    $additionalField = explode('.',$additionalField);
-                    if(count($additionalField) > 1){
-                        $setter = 'set' . ucfirst(trim($additionalField[0]));
-                        $object->$setter($value, trim($additionalField[1]));
-                    }else{
-                        $setter = 'set' . ucfirst(trim($additionalField[0]));
-                        $object->$setter($value);
-                    }
-                }
                 $object->save();
                 return $object;
             } else {

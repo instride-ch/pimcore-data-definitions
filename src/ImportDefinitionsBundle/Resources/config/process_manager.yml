@@ -14,6 +14,7 @@ services:
             - { name: 'kernel.event_listener', event: 'export_definition.status', method: 'onStatusEvent' }
             - { name: 'kernel.event_listener', event: 'export_definition.finished', method: 'onFinishedEvent' }
             - { name: 'kernel.event_listener', event: 'export_definition.artifact', method: 'onArtifactEvent' }
+            - { name: 'kernel.event_listener', event: 'process_manager.process.log_event', method: 'onProcessLogEvent' }
 
     import_definition.process_manager.process:
         class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess

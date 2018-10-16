@@ -140,10 +140,6 @@ class ImportDefinitionsReport implements ReportInterface
      */
     protected function processLine($line, &$result)
     {
-        if ($this->checkForArtifact($line, $result)) {
-            return;
-        }
-
         if ($this->checkForProgress($line, $result)) {
             return;
         }
@@ -157,22 +153,6 @@ class ImportDefinitionsReport implements ReportInterface
         }
 
         $this->processChecks($line, $result);
-    }
-
-    /**
-     * @param $line
-     * @param $result
-     * @return bool
-     */
-    protected function checkForArtifact($line, &$result)
-    {
-        if (false !== strpos($line, self::EVENT_ARTIFACT)) {
-            $result['artifact'] = $line;
-
-            return true;
-        }
-
-        return false;
     }
 
     /**

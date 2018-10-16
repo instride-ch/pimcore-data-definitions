@@ -23,6 +23,7 @@ class ImportDefinitionsReport implements ReportInterface
     const EVENT_STATUS = 'import_definition.status: ';
     const EVENT_PROGRESS = 'import_definition.progress: ';
     const EVENT_FINISHED = 'import_definition.finished: ';
+    const EVENT_ARTIFACT = 'export_definition.artifact: ';
     const EVENT_STATUS_ERROR = self::EVENT_STATUS . 'Error: ';
     const EVENT_STATUS_IMPORT_NEW = self::EVENT_STATUS . 'Import Object new';
     const EVENT_STATUS_IMPORT_EXISTING = self::EVENT_STATUS . 'Import Object';
@@ -139,10 +140,13 @@ class ImportDefinitionsReport implements ReportInterface
      */
     protected function processLine($line, &$result)
     {
-        if ($this->checkForProgress($line, $result)) {
+        if ($this->checkForArtifact($line, $result)) {
             return;
         }
 
+        if ($this->checkForProgress($line, $result)) {
+            return;
+        }
 
         if ($this->checkForTotal($line, $result)) {
             return;
@@ -153,6 +157,22 @@ class ImportDefinitionsReport implements ReportInterface
         }
 
         $this->processChecks($line, $result);
+    }
+
+    /**
+     * @param $line
+     * @param $result
+     * @return bool
+     */
+    protected function checkForArtifact($line, &$result)
+    {
+        if (false !== strpos($line, self::EVENT_ARTIFACT)) {
+            $result['artifact'] = $line;
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

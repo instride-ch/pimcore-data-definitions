@@ -66,6 +66,11 @@ final class Exporter implements ExportInterface
     private $exceptions = [];
 
     /**
+     * @var string
+     */
+    private $artifact;
+
+    /**
      * Importer constructor.
      * @param ServiceRegistryInterface $fetcherRegistry
      * @param ServiceRegistryInterface $runnerRegistry
@@ -103,9 +108,11 @@ final class Exporter implements ExportInterface
         if ($total > 0) {
             $this->eventDispatcher->dispatch('export_definition.total', new ImportDefinitionEvent($definition, $total));
 
+            $this->artifact = tempnam(PIMCORE_TEMPORARY_DIRECTORY, 'export_definition_artifact');
             $this->runExport($definition, $params, $total, $fetcher);
         }
 
+        $this->eventDispatcher->dispatch('export_definition.artifact', new ImportDefinitionEvent($definition, $this->artifact));
         $this->eventDispatcher->dispatch('export_definition.finished', new ImportDefinitionEvent($definition));
     }
 
@@ -179,8 +186,6 @@ final class Exporter implements ExportInterface
                 );
             }
         }
-
-        print_r($entries);
     }
 
     /**

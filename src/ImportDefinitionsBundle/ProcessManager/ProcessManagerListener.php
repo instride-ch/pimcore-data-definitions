@@ -103,4 +103,12 @@ final class ProcessManagerListener
     {
         $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
     }
+
+    /**
+     * @param ImportDefinitionEvent $event
+     */
+    public function onArtifactEvent(ImportDefinitionEvent $event)
+    {
+        $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_ARTIFACT.$event->getSubject());
+    }
 }

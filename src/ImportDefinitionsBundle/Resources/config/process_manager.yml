@@ -9,6 +9,11 @@ services:
             - { name: 'kernel.event_listener', event: 'import_definition.progress', method: 'onProgressEvent' }
             - { name: 'kernel.event_listener', event: 'import_definition.status', method: 'onStatusEvent' }
             - { name: 'kernel.event_listener', event: 'import_definition.finished', method: 'onFinishedEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.total', method: 'onTotalEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.progress', method: 'onProgressEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.status', method: 'onStatusEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.finished', method: 'onFinishedEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.artifact', method: 'onArtifactEvent' }
 
     import_definition.process_manager.process:
         class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess

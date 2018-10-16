@@ -51,6 +51,11 @@ final class Exporter implements ExportInterface
     private $getterRegistry;
 
     /**
+     * @var ServiceRegistryInterface
+     */
+    private $setterRegistry;
+
+    /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
@@ -71,6 +76,7 @@ final class Exporter implements ExportInterface
      * @param ServiceRegistryInterface $runnerRegistry
      * @param ServiceRegistryInterface $reverseInterpreterRegistry
      * @param ServiceRegistryInterface $getterRegistry
+     * @param ServiceRegistryInterface $setterRegistry
      * @param EventDispatcherInterface $eventDispatcher
      * @param LoggerInterface $logger
      */
@@ -79,6 +85,7 @@ final class Exporter implements ExportInterface
         ServiceRegistryInterface $runnerRegistry,
         ServiceRegistryInterface $reverseInterpreterRegistry,
         ServiceRegistryInterface $getterRegistry,
+        ServiceRegistryInterface $setterRegistry,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger
     )
@@ -87,6 +94,7 @@ final class Exporter implements ExportInterface
         $this->runnerRegistry = $runnerRegistry;
         $this->reverseInterpreterRegistry = $reverseInterpreterRegistry;
         $this->getterRegistry = $getterRegistry;
+        $this->setterRegistry = $setterRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
     }
@@ -239,7 +247,13 @@ final class Exporter implements ExportInterface
         $value = null;
 
         if ($map->getGetter()) {
-            $setter = $this->getterRegistry->get($map->getSetter());
+            $getter = $this->getterRegistry->get($map->getGetter());
+
+            if ($getter instanceof GetterInterface) {
+                $value = $getter->get($object, $map, $data);
+            }
+        }else if ($map->getSetter()) {
+            $setter = $this->setterRegistry->get($map->getSetter());
 
             if ($setter instanceof GetterInterface) {
                 $value = $setter->get($object, $map, $data);

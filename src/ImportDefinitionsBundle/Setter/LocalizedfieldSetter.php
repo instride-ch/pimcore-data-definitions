@@ -39,12 +39,11 @@ class LocalizedfieldSetter implements SetterInterface, GetterInterface
     public function get(Concrete $object, Mapping $map, $data)
     {
         $config = $map->getSetterConfig();
-
         $getter = explode('~', $map->getToColumn());
         $getter = sprintf('get%s', ucfirst($getter[0]));
 
         if (method_exists($object, $getter)) {
-            $object->$getter($config['language']);
+            return $object->$getter($config['language']);
         }
 
         return null;

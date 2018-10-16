@@ -44,7 +44,7 @@ class LocalizedfieldSetter implements SetterInterface, GetterInterface
         $getter = sprintf('get%s', ucfirst($getter[0]));
 
         if (method_exists($object, $getter)) {
-            $object->$getter($config['language']);
+            return $object->$getter($config['language']);
         }
 
         return null;

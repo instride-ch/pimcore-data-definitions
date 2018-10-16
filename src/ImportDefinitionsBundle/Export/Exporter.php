@@ -239,10 +239,10 @@ final class Exporter implements ExportInterface
         $value = null;
 
         if ($map->getGetter()) {
-            $setter = $this->getterRegistry->get($map->getSetter());
+            $getter = $this->getterRegistry->get($map->getGetter());
 
-            if ($setter instanceof GetterInterface) {
-                $value = $setter->get($object, $map, $data);
+            if ($getter instanceof GetterInterface) {
+                $value = $getter->get($object, $map, $data);
             }
         } else {
             $getter = "get" . ucfirst($map->getToColumn());

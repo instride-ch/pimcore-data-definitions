@@ -35,6 +35,7 @@ use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\Provider\ProviderInterface;
 use ImportDefinitionsBundle\Runner\RunnerInterface;
+use ImportDefinitionsBundle\Runner\SaveRunnerInterface;
 
 final class Importer implements ImporterInterface
 {
@@ -329,13 +330,26 @@ final class Importer implements ImporterInterface
             $this->setObjectValue($object, $mapItem, $value, $data, $dataSet, $definition, $params, $runner);
         }
 
-        $object->setUserModification(0); //Set User to "system"
+        $shouldSave = true;
+        if ($runner instanceof SaveRunnerInterface) {
+            if ($runner instanceof DataSetAwareInterface) {
+                $runner->setDataSet($dataSet);
+            }
 
-        $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
+            $shouldSave = $runner->shouldSaveObject($object, $definition, $data, $dataSet, $params, $filter);
+        }
+        if ($shouldSave) {
+            $object->setUserModification(0); //Set User to "system"
 
-        $object->save();
+            $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
 
-        $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Imported Object %s', $object->getFullPath())));
+            $object->save();
+            
+            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Imported Object %s', $object->getFullPath())));
+        } else {
+            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Skipped Object %s', $object->getFullPath())));
+        }
+
         $this->eventDispatcher->dispatch('import_definition.object.finished', new ImportDefinitionEvent($definition, $object));
 
         if ($runner instanceof RunnerInterface) {

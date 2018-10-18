@@ -276,6 +276,27 @@ services:
         tags:
             - { name: import_definition.setter, type: object_type, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
+    ### GETTER
+    import_definition.getter.classificationstore:
+        class: ImportDefinitionsBundle\Setter\ClassificationStoreSetter
+        tags:
+            - { name: import_definition.getter, type: classificationstore, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
+
+    import_definition.getter.fieldcollection:
+        class: ImportDefinitionsBundle\Setter\FieldCollectionSetter
+        tags:
+            - { name: import_definition.getter, type: fieldcollection, form-type: ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
+
+    import_definition.getter.localizedfield:
+        class: ImportDefinitionsBundle\Setter\LocalizedfieldSetter
+        tags:
+            - { name: import_definition.getter, type: localizedfield, form-type: ImportDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
+
+    import_definition.setter.objectbrick:
+        class: ImportDefinitionsBundle\Setter\ObjectbrickSetter
+        tags:
+            - { name: import_definition.setter, type: objectbrick, form-type: ImportDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
+
     import_definition.listeners.object.delete:
         class: ImportDefinitionsBundle\EventListener\ObjectDeleteListener
         tags:
@@ -285,4 +306,4 @@ services:
         class: ImportDefinitionsBundle\Fetcher\ObjectsFetcher
         tags:
             - { name: import_definition.fetcher, type: objects }
->>>>>>> Introduce exports by using the same mapping, just with reverse interpreters and getters
+

@@ -75,6 +75,7 @@ final class MappingType extends AbstractResourceType
             ->add('toColumn', TextType::class)
             ->add('primaryIdentifier', CheckboxType::class)
             ->add('setter', TextType::class)
+            ->add('getter', TextType::class)
             ->add('interpreter', TextType::class)
             ->add('reverseInterpreter', TextType::class)
         ;

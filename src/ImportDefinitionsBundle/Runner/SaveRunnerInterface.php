@@ -14,7 +14,6 @@
 
 namespace ImportDefinitionsBundle\Runner;
 
-use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 
@@ -22,12 +21,10 @@ interface SaveRunnerInterface extends RunnerInterface
 {
     /**
      * @param Concrete $object
-     * @param DefinitionInterface $definition
      * @param $data
-     * @param $dataSet
+     * @param DefinitionInterface $definition
      * @param $params
-     * @param $filter
-     * @return mixed
+     * @return boolean
      */
-    public function shouldSaveObject(Concrete $object, DefinitionInterface $definition, $data, $dataSet, $params, $filter);
+    public function shouldSaveObject(Concrete $object, $data, DefinitionInterface $definition, $params);
 }

@@ -72,7 +72,7 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
 
         $condition = $configuration['condition'];
 
-        if ($this->expressionLanguage->evaluate($condition)) {
+        if ($this->expressionLanguage->evaluate($condition, $params)) {
             $interpreter = $configuration['true_interpreter'];
         }
         else {
@@ -82,7 +82,7 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
         $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
 
         if (!$interpreterObject instanceof InterpreterInterface) {
-            return null;
+            return $value;
         }
 
         if ($interpreterObject instanceof DataSetAwareInterface) {

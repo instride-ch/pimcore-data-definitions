@@ -30,13 +30,20 @@ final class ImportDefinitionEvent extends Event
     protected $subject;
 
     /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * @param DefinitionInterface $definition
      * @param mixed $subject
+     * @param array $options
      */
-    public function __construct(DefinitionInterface $definition, $subject = null)
+    public function __construct(DefinitionInterface $definition, $subject = null, $options = [])
     {
         $this->definition = $definition;
         $this->subject = $subject;
+        $this->options = $options;
     }
 
     /**
@@ -53,5 +60,13 @@ final class ImportDefinitionEvent extends Event
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 }

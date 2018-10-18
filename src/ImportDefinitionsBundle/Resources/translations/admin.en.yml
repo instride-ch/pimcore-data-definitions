@@ -59,4 +59,7 @@ importdefinitions_interpreter_object_resolver_create_missing: 'Create new object
 importdefinitions_interpreter_object_resolver_object_path: 'Parent path for created objects'
 importdefinitions_interpreter_object_resolver_create_published: 'Publish new object'
 importdefinitions_force_load_object: 'Force Load Object'
-
+importdefinitions_interpreter_definition_single: 'Single Entry only'
+importdefinitions_interpreter_conditional_condition: 'Condition Expression'
+importdefinitions_interpreter_conditional_true: 'True Interpreter'
+importdefinitions_interpreter_conditional_false: 'False Interpreter'

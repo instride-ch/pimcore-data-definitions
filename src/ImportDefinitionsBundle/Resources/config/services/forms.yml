@@ -22,6 +22,12 @@ services:
     tags:
         - { name: form.type }
 
+  import_definition.form.definition_choice_type:
+      class: ImportDefinitionsBundle\Form\Type\DefinitionChoiceType
+      arguments: ['@import_definitions.repository.definition']
+      tags:
+          - { name: form.type }
+
   import_definition.form.filter_choice_type:
     class: ImportDefinitionsBundle\Form\Type\FilterChoiceType
     arguments: ['%import_definition.filters%']

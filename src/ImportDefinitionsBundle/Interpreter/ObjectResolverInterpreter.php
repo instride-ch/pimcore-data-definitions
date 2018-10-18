@@ -19,7 +19,7 @@ use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
 
-class ObjectResolver implements InterpreterInterface
+class ObjectResolverInterpreter implements InterpreterInterface
 {
     /**
      * {@inheritdoc}
@@ -37,38 +37,19 @@ class ObjectResolver implements InterpreterInterface
             return $value;
         }
 
-        $class = 'Pimcore\Model\DataObject\\' . $configuration['class'];
-        $lookup = 'getBy' . ucfirst($configuration['field']);
+        $class = 'Pimcore\Model\DataObject\\'.$configuration['class'];
+        $lookup = 'getBy'.ucfirst($configuration['field']);
 
         /**
          * @var Listing $listing
          */
         $listing = $class::$lookup($value);
         $listing->setUnpublished($configuration['match_unpublished']);
-        $found = $listing->count();
 
-        if ($found < 1) {
-            // too few found
-            if (array_key_exists('create_missing',$configuration) && $configuration['create_missing']) {
-                $parent = \Pimcore\Model\DataObject::getByPath($configuration['object_path']);
-                $key = \Pimcore\Model\Element\Service::getValidKey($value, 'object');            
-                $object = new $class();
-                $setter = 'set' . ucfirst($configuration['field']);
-                $object->$setter($value);
-                $object->setPublished($configuration['create_published']);
-                $object->setKey($key);
-                $object->setParentId($parent->getId());
-                $object->save();
-                return $object;
-            } else {
-                return null;
-            }
-        }
-        else if($found > 1) {
-            // too many found
-            return null;
+        if ($listing->count() === 1) {
+            return $listing->current();
         }
 
-        return $listing->current();
+        return null;
     }
 }

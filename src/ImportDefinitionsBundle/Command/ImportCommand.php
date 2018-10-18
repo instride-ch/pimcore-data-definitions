@@ -95,6 +95,7 @@ EOT
         };
 
         $eventDispatcher->addListener('import_definition.status', $imStatus);
+        $eventDispatcher->addListener('import_definition.status.child', $imStatus);
         $eventDispatcher->addListener('import_definition.total', $imTotal);
         $eventDispatcher->addListener('import_definition.progress', $imProgress);
         $eventDispatcher->addListener('import_definition.finished', $imFinished);
@@ -102,6 +103,7 @@ EOT
         $this->getContainer()->get('import_definition.importer')->doImport($definition, json_decode($params, true));
 
         $eventDispatcher->removeListener('import_definition.status', $imStatus);
+        $eventDispatcher->removeListener('import_definition.status.child', $imStatus);
         $eventDispatcher->removeListener('import_definition.total', $imTotal);
         $eventDispatcher->removeListener('import_definition.progress', $imProgress);
         $eventDispatcher->removeListener('import_definition.finished', $imFinished);

@@ -296,7 +296,7 @@ pimcore.plugin.importdefinitions.definition.configDialog = Class.create({
             type = type.toLowerCase();
 
             if (pimcore.plugin.importdefinitions.getters[type]) {
-                this.setter = new pimcore.plugin.importdefinitions.getters[type];
+                this.getter = new pimcore.plugin.importdefinitions.getters[type];
 
                 this.getGetterPanel().add(this.getter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.getterConfig) ? this.record.data.getterConfig : {}, this.config));
                 this.getGetterPanel().show();

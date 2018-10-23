@@ -131,6 +131,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('reverse_interpreter_empty')->defaultValue('/bundles/importdefinitions/pimcore/js/reverse_interpreters/empty.js')->end()
                             ->scalarNode('reverse_interpreter_nested')->defaultValue('/bundles/importdefinitions/pimcore/js/reverse_interpreters/nested.js')->end()
                             ->scalarNode('reverse_interpreter_expression')->defaultValue('/bundles/importdefinitions/pimcore/js/reverse_interpreters/expression.js')->end()
+                            ->scalarNode('reverse_interpreter_iterator')->defaultValue('/bundles/importdefinitions/pimcore/js/reverse_interpreters/iterator.js')->end()
                         ->end()
                     ->end()
                     ->arrayNode('css')

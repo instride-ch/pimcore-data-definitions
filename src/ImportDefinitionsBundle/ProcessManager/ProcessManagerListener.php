@@ -20,7 +20,6 @@ use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
 use ProcessManagerBundle\Model\ProcessInterface;
-use ProcessManagerBundle\Monolog\ProcessLogEvent;
 
 final class ProcessManagerListener
 {
@@ -114,27 +113,5 @@ final class ProcessManagerListener
         $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_ARTIFACT.$event->getSubject(), [
             'artifact' => $event->getSubject(),
         ]);
-    }
-
-    /**
-     * @param ImportDefinitionEvent $event
-     */
-    public function onProcessLogEvent(ProcessLogEvent $event)
-    {
-        // receives it via the logger from self::onArtifactEvent()
-        $record = $event->getRecord();
-
-        if (false === array_key_exists('artifact', $record['context'])) {
-            return;
-        }
-
-        /** @var ProcessInterface $process */
-        $process = $record['extra']['process'];
-
-        $artifact = $record['context']['artifact'];
-
-        // TODO: do something better here
-        $process->setMessage($artifact);
-        $process->save();
     }
 }

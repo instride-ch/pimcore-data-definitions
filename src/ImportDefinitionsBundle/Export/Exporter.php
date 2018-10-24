@@ -27,6 +27,7 @@ use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\Runner\RunnerInterface;
+use ImportDefinitionsBundle\Provider\ExportProviderInterface;
 
 final class Exporter implements ExportInterface
 {
@@ -49,6 +50,11 @@ final class Exporter implements ExportInterface
      * @var ServiceRegistryInterface
      */
     private $getterRegistry;
+
+    /**
+     * @var ServiceRegistryInterface
+     */
+    private $providerRegistry;
 
     /**
      * @var EventDispatcherInterface
@@ -84,6 +90,7 @@ final class Exporter implements ExportInterface
         ServiceRegistryInterface $runnerRegistry,
         ServiceRegistryInterface $reverseInterpreterRegistry,
         ServiceRegistryInterface $getterRegistry,
+        ServiceRegistryInterface $providerRegistry,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger
     )
@@ -92,6 +99,7 @@ final class Exporter implements ExportInterface
         $this->runnerRegistry = $runnerRegistry;
         $this->reverseInterpreterRegistry = $reverseInterpreterRegistry;
         $this->getterRegistry = $getterRegistry;
+        $this->providerRegistry = $providerRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
     }
@@ -103,13 +111,14 @@ final class Exporter implements ExportInterface
     public function doExport(DefinitionInterface $definition, $params)
     {
         $fetcher = $this->getFetcher($definition);
+        $provider = $this->getProvider($definition);
         $total = $fetcher->count($definition, $params);
 
         if ($total > 0) {
             $this->eventDispatcher->dispatch('export_definition.total', new ImportDefinitionEvent($definition, $total));
 
             $this->artifact = tempnam(PIMCORE_TEMPORARY_DIRECTORY, 'export_definition_artifact');
-            $this->runExport($definition, $params, $total, $fetcher);
+            $this->runExport($definition, $params, $total, $fetcher, $provider);
         }
 
         $this->eventDispatcher->dispatch('export_definition.artifact', new ImportDefinitionEvent($definition, $this->artifact));
@@ -134,12 +143,33 @@ final class Exporter implements ExportInterface
 
     /**
      * @param DefinitionInterface $definition
+     * @return ExportProviderInterface
+     */
+    private function getProvider(DefinitionInterface $definition)
+    {
+        if (!$this->providerRegistry->has($definition->getProvider())) {
+            throw new \InvalidArgumentException(sprintf('Definition %s has no valid export provider configured', $definition->getName()));
+        }
+
+        /** @var ExportProviderInterface $fetcher */
+        $provider = $this->providerRegistry->get($definition->getProvider());
+
+        if (!($provider instanceof ExportProviderInterface)) {
+            throw new \InvalidArgumentException(sprintf('Definition %s has no valid export provider configured', $definition->getName()));
+        }
+
+        return $provider;
+    }
+
+    /**
+     * @param DefinitionInterface $definition
      * @param                     $params
      * @param int                 $total
      * @param FetcherInterface    $fetcher
+     * @param ExportProviderInterface $provider
      * @throws \Exception
      */
-    private function runExport(DefinitionInterface $definition, $params, int $total, FetcherInterface $fetcher)
+    private function runExport(DefinitionInterface $definition, $params, int $total, FetcherInterface $fetcher, ExportProviderInterface $provider)
     {
         $count = 0;
         $countToClean = 1000;
@@ -153,7 +183,7 @@ final class Exporter implements ExportInterface
 
             foreach ($objects as $object) {
                 try {
-                    $entries[] = $this->exportRow($definition, $object, $params);
+                    $this->exportRow($definition, $object, $params, $provider);
 
                     if (($count + 1) % $countToClean === 0) {
                         \Pimcore::collectGarbage();
@@ -186,16 +216,19 @@ final class Exporter implements ExportInterface
                 );
             }
         }
+
+        $provider->exportData($configuration, $definition, $params);
     }
 
     /**
      * @param DefinitionInterface $definition
      * @param Concrete $object
      * @param $params
+     * @param ExportProviderInterface $provider
      * @return null|Concrete
      * @throws \Exception
      */
-    private function exportRow(DefinitionInterface $definition, Concrete $object, $params): array
+    private function exportRow(DefinitionInterface $definition, Concrete $object, $params, ExportProviderInterface $provider): array
     {
         $data = [];
 
@@ -218,6 +251,8 @@ final class Exporter implements ExportInterface
         {
             $data[$mapItem->getFromColumn()] = $this->getObjectValue($object, $mapItem, $data, $definition, $params, $runner);
         }
+
+        $provider->addExportData($data, $configuration, $definition, $params);
 
         $this->eventDispatcher->dispatch('export_definition.status', new ImportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath())));
         $this->eventDispatcher->dispatch('export_definition.object.finished', new ImportDefinitionEvent($definition, $object));

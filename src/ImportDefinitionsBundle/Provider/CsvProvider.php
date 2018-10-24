@@ -129,7 +129,7 @@ class CsvProvider implements ProviderInterface, ExportProviderInterface
      */
     public function exportData($configuration, $definition, $params)
     {
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $params['file'];
 
         $writer = Writer::createFromPath($file, 'w+');
         $writer->insertAll($this->exportData);

@@ -117,7 +117,10 @@ final class Exporter implements ExportInterface
         if ($total > 0) {
             $this->eventDispatcher->dispatch('export_definition.total', new ImportDefinitionEvent($definition, $total));
 
-            $this->artifact = tempnam(PIMCORE_TEMPORARY_DIRECTORY, 'export_definition_artifact');
+            if (!isset($params['file'])) {
+                $params['file'] = tempnam(PIMCORE_TEMPORARY_DIRECTORY, 'export_definition_artifact');
+            }
+            $this->artifact = $params['file'];
             $this->runExport($definition, $params, $total, $fetcher, $provider);
         }
 
@@ -175,8 +178,15 @@ final class Exporter implements ExportInterface
         $countToClean = 1000;
         $perLoop = 50;
 
-        $entries = [];
+        // header
+        $data = [];
+        foreach ($definition->getMapping() as $mapItem)
+        {
+            $data[] = $mapItem->getFromColumn();
+        }
+        $provider->addExportData($data, $configuration, $definition, $params);
 
+        $entries = [];
         for ($i = 0; $i < (ceil($total / $perLoop)); $i++) {
 
             $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop);

@@ -20,6 +20,11 @@ services:
         tags:
             - { name: 'process_manager.process', type: 'importdefinition', form-type: ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }
 
+    export_definition.process_manager.process:
+        class: ImportDefinitionsBundle\ProcessManager\ExportDefinitionProcess
+        tags:
+            - { name: 'process_manager.process', type: 'exportdefinition', form-type: ImportDefinitionsBundle\Form\Type\ProcessManager\ExportDefinitionsType }
+
     import_definitions.process_manager.report:
         class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport
         tags:

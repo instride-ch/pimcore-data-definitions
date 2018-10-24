@@ -28,6 +28,7 @@ services:
             - '@import_definition.registry.runner'
             - '@import_definition.registry.reverse_interpreter'
             - '@import_definition.registry.getter'
+            - '@import_definition.registry.provider'
             - '@event_dispatcher'
             - '@logger'
         tags:

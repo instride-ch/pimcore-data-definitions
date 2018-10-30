@@ -303,6 +303,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onDataObjectDelete }
 
+    import_definition.loader.primary_key:
+        class: ImportDefinitionsBundle\Loader\PrimaryKeyLoader
+        tags:
+        - { name: import_definition.loader, type: primary_key }
+
     import_definition.fetcher.objects:
         class: ImportDefinitionsBundle\Fetcher\ObjectsFetcher
         tags:

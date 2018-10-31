@@ -135,6 +135,8 @@ class CsvProvider implements ProviderInterface, ExportProviderInterface
         $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
 
         $writer = Writer::createFromPath($file, 'w+');
+        $writer->setDelimiter($configuration['delimiter']);
+        $writer->setEnclosure($configuration['enclosure']);
         $writer->insertOne($headers);
         $writer->insertAll($this->exportData);
     }

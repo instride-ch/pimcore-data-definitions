@@ -129,6 +129,8 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('import_provider_external_sql')->defaultValue('/bundles/importdefinitions/pimcore/js/import_provider/externalSql.js')->end()
                             ->scalarNode('import_provider_json')->defaultValue('/bundles/importdefinitions/pimcore/js/import_provider/json.js')->end()
                             ->scalarNode('import_provider_xml')->defaultValue('/bundles/importdefinitions/pimcore/js/import_provider/xml.js')->end()
+                            ->scalarNode('export_provider_ab    stract')->defaultValue('/bundles/importdefinitions/pimcore/js/export_provider/abstractprovider.js')->end()
+                            ->scalarNode('export_provider_csv')->defaultValue('/bundles/importdefinitions/pimcore/js/export_provider/csv.js')->end()
                             ->scalarNode('interpreter_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/abstract.js')->end()
                             ->scalarNode('interpreter_href')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/href.js')->end()
                             ->scalarNode('interpreter_multihref')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/multihref.js')->end()

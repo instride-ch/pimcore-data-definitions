@@ -1,7 +1,7 @@
 importdefinitions_admin_import_definitions:
   type: coreshop.resources
   resource: |
-    alias: import_definitions.import_definition
+    alias: import_definitions.definition
     additional_routes:
       config:
         path: get-config

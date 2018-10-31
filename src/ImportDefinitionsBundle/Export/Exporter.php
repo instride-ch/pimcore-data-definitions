@@ -143,14 +143,7 @@ final class Exporter implements ExportInterface
             throw new \InvalidArgumentException(sprintf('Definition %s has no valid export provider configured', $definition->getName()));
         }
 
-        /** @var ExportProviderInterface $provider */
-        $provider = $this->exportProviderRegistry->get($definition->getProvider());
-
-        if (!($provider instanceof ExportProviderInterface)) {
-            throw new \InvalidArgumentException(sprintf('Export Definition %s has no valid export provider configured', $definition->getName()));
-        }
-
-        return $provider;
+        return $this->exportProviderRegistry->get($definition->getProvider());
     }
 
     /**

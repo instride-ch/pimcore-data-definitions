@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use ImportDefinitionsBundle\Model\ImportMapping;
+use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 
@@ -24,7 +24,7 @@ class KeySetter implements SetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $setter = explode('~', $map->getToColumn());
         $setter = sprintf('set%s', ucfirst($setter[0]));

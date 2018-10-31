@@ -15,7 +15,7 @@
 namespace ImportDefinitionsBundle\Interpreter;
 
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\MappingInterface;
+use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 
@@ -24,15 +24,7 @@ class SpecificObjectInterpreter implements InterpreterInterface
     /**
      *{@inheritdoc}
      */
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        $data,
-        DefinitionInterface $definition,
-        $params,
-        $configuration
-    ) {
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration) {
         $objectId = $configuration['objectId'];
 
         return DataObject::getById($objectId);

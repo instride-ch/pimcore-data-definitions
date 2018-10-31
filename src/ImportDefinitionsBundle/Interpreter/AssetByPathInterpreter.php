@@ -15,6 +15,7 @@
 namespace ImportDefinitionsBundle\Interpreter;
 
 use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Service\Placeholder;
@@ -40,7 +41,7 @@ class AssetByPathInterpreter implements InterpreterInterface
     public function interpret(
         Concrete $object,
         $value,
-        MappingInterface $map,
+        Mapping $map,
         $data,
         DefinitionInterface $definition,
         $params,

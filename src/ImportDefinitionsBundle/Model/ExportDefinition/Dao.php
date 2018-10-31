@@ -130,7 +130,7 @@ class Dao extends Model\Dao\PhpArrayTable
                 'stopOnException',
                 'failureNotificationDocument',
                 'successNotificationDocument',
-                'loader',
+                'fetcher',
             ];
 
             foreach ($dataRaw as $key => $value) {

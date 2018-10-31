@@ -14,7 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-class Mapping extends ImportMapping
-{
+if (interface_exists(MappingInterface::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Model\Mapping is deprecated since version 2.1.0 and will be removed in 3.0.0. Use ImportDefinitionsBundle\Model\MappingInterface class instead.', E_USER_DEPRECATED);
+} else {
+    /**
+     * @deprecated Class ImportDefinitionsBundle\Model\Mapping is deprecated since version 2.0.0 and will be removed in 3.0. Use ImportDefinitionsBundle\Model\MappingInterface class instead.
+     */
+    interface Mapping
+    {
 
+    }
 }

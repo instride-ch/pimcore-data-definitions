@@ -48,6 +48,7 @@ final class ExportDefinitionType extends AbstractResourceType
     {
         $builder
             ->add('provider', ProviderChoiceType::class)
+            ->add('fetcher', FetcherChoiceType::class)
             ->add('class', ClassChoiceType::class)
             ->add('runner', RunnerChoiceType::class)
             ->add('name', TextType::class)

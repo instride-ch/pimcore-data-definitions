@@ -16,7 +16,7 @@ namespace ImportDefinitionsBundle\Setter;
 
 use ImportDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\ImportMapping;
+use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\Model\ExportMapping;
 
 class ClassificationStoreSetter implements SetterInterface, GetterInterface
@@ -24,7 +24,7 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $mapConfig = $map->getSetterConfig();
         $fieldName = $mapConfig['field'];

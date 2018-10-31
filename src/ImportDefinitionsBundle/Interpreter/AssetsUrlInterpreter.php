@@ -16,14 +16,14 @@ namespace ImportDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\MappingInterface;
+use ImportDefinitionsBundle\Model\Mapping;
 
 class AssetsUrlInterpreter extends AssetUrlInterpreter
 {
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, MappingInterface $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         $assets = [];
         foreach ((array) $value as $item) {

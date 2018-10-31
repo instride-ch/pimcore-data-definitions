@@ -17,6 +17,7 @@ namespace ImportDefinitionsBundle\Importer;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
+use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
 use ImportDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\File;
@@ -35,6 +36,7 @@ use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 use ImportDefinitionsBundle\Model\MappingInterface;
 use ImportDefinitionsBundle\Provider\ProviderInterface;
 use ImportDefinitionsBundle\Runner\RunnerInterface;
+use Webmozart\Assert\Assert;
 
 final class Importer implements ImporterInterface
 {
@@ -132,8 +134,13 @@ final class Importer implements ImporterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function doImport(ImportDefinitionInterface $definition, $params)
+    public function doImport(DefinitionInterface $definition, $params)
     {
+        /**
+         * @var $definition ImportDefinitionInterface
+         */
+        Assert::isInstanceOf($definition, ImportDefinitionInterface::class);
+
         $filter = null;
 
         if ($definition->getCreateVersion()) {

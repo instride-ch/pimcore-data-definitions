@@ -30,7 +30,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ImportDefinitionsBundle\\": "src/"
+      "ImportDefinitionsBundle\\": "src/ImportDefinitionsBundle"
     }
   },
   "extra": {

@@ -17,7 +17,7 @@ namespace ImportDefinitionsBundle\Setter;
 use ImportDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\ExportMapping;
-use ImportDefinitionsBundle\Model\ImportMapping;
+use ImportDefinitionsBundle\Model\Mapping;
 
 class LocalizedfieldSetter implements SetterInterface, GetterInterface
 {
@@ -25,7 +25,7 @@ class LocalizedfieldSetter implements SetterInterface, GetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $config = $map->getSetterConfig();
 

@@ -60,7 +60,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->arrayNode('import_definition')
+                        ->arrayNode('definition') //TODO: 3.0.0, rename to import_definition
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->variableNode('options')->end()

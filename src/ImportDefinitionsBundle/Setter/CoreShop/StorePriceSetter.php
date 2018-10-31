@@ -16,7 +16,7 @@ namespace ImportDefinitionsBundle\Setter\CoreShop;
 
 use CoreShop\Component\Core\Model\StoreInterface;
 use CoreShop\Component\Store\Repository\StoreRepositoryInterface;
-use ImportDefinitionsBundle\Model\ImportMapping;
+use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 
@@ -39,7 +39,7 @@ class StorePriceSetter implements SetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $config = $map->getSetterConfig();
 

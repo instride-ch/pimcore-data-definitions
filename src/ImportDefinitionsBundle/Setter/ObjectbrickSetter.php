@@ -17,7 +17,7 @@ namespace ImportDefinitionsBundle\Setter;
 use ImportDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Objectbrick\Data\AbstractData;
-use ImportDefinitionsBundle\Model\ImportMapping;
+use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\Model\ExportMapping;
 
 class ObjectbrickSetter implements SetterInterface, GetterInterface
@@ -25,7 +25,7 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $keyParts = explode('~', $map->getToColumn());
 

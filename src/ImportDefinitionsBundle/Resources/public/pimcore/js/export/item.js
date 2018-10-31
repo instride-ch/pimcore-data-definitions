@@ -110,12 +110,12 @@ pimcore.plugin.importdefinitions.export.item = Class.create(coreshop.resource.it
                 },
                 {
                     xtype: 'combo',
-                    fieldLabel: t('importdefinitions_loader'),
-                    name: 'loader',
-                    displayField: 'loader',
-                    valueField: 'loader',
-                    store: pimcore.globalmanager.get('importdefinitions_loaders'),
-                    value: this.data.loader,
+                    fieldLabel: t('importdefinitions_fetcher'),
+                    name: 'fetcher',
+                    displayField: 'fetcher',
+                    valueField: 'fetcher',
+                    store: pimcore.globalmanager.get('importdefinitions_fetchers'),
+                    value: this.data.fetcher,
                     width: 500
                 },
                 {

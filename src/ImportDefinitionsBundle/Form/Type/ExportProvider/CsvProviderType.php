@@ -12,16 +12,19 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Importer;
+namespace ImportDefinitionsBundle\Form\Type\ExportProvider;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 
-interface ImporterInterface
+final class CsvProviderType extends AbstractType
 {
-    /**
-     * @param DefinitionInterface $definition
-     * @param $params
-     * @return mixed
-     */
-    public function doImport(DefinitionInterface $definition, $params);
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('delimiter', TextType::class)
+            ->add('enclosure', TextType::class)
+        ;
+    }
 }

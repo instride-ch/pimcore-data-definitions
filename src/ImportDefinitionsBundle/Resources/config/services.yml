@@ -28,6 +28,7 @@ services:
             - '@import_definition.registry.runner'
             - '@import_definition.registry.interpreter'
             - '@import_definition.registry.getter'
+            - '@import_definition.registry.export_provider'
             - '@event_dispatcher'
             - '@logger'
         tags:
@@ -41,6 +42,15 @@ services:
             - 'Import Definition Providers'
 
     import_definition.form.registry.provider:
+        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+    import_definition.registry.export_provider:
+        class: CoreShop\Component\Registry\ServiceRegistry
+        arguments:
+            - ImportDefinitionsBundle\Provider\ExportProviderInterface
+            - 'Import Definition Export Providers'
+
+    import_definition.form.registry.export_provider:
         class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
 
     import_definition.registry.loader:
@@ -211,11 +221,13 @@ services:
         class: ImportDefinitionsBundle\Provider\CsvProvider
         tags:
             - { name: import_definition.provider, type: csv, form-type: ImportDefinitionsBundle\Form\Type\Provider\CsvProviderType }
+            - { name: import_definition.export_provider, type: csv, form-type: ImportDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType }
 
     import_definition.provider.json:
         class: ImportDefinitionsBundle\Provider\JsonProvider
         tags:
             - { name: import_definition.provider, type: json, form-type: ImportDefinitionsBundle\Form\Type\Provider\JsonProviderType }
+            - { name: import_definition.export_provider, type: json, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.provider.external_sql:
         class: ImportDefinitionsBundle\Provider\ExternalSqlProvider
@@ -249,7 +261,6 @@ services:
         class: ImportDefinitionsBundle\Setter\KeySetter
         tags:
             - { name: import_definition.setter, type: key, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
-            - { name: import_definition.getter, type: key, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.setter.localizedfield:
         class: ImportDefinitionsBundle\Setter\LocalizedfieldSetter
@@ -261,7 +272,6 @@ services:
         class: ImportDefinitionsBundle\Setter\ObjectbrickSetter
         tags:
             - { name: import_definition.setter, type: objectbrick, form-type: ImportDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
-            - { name: import_definition.getter, type: objectbrick, form-type: ImportDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
 
     import_definition.setter.object_type:
         class: ImportDefinitionsBundle\Setter\ObjectTypeSetter

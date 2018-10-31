@@ -14,12 +14,12 @@
 
 namespace ImportDefinitionsBundle\Command;
 
+use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class ExportCommand extends AbstractCommand
@@ -57,7 +57,7 @@ EOT
         $eventDispatcher = $this->getContainer()->get('event_dispatcher');
 
         $params = $input->getOption('params');
-        $definition = $this->getContainer()->get('import_definitions.repository.definition')->find($input->getOption('definition'));
+        $definition = $this->getContainer()->get('import_definitions.repository.export_definition')->find($input->getOption('definition'));
         $progress = null;
         $process = null;
 
@@ -65,26 +65,26 @@ EOT
             throw new \Exception('Export Definition not found');
         }
 
-        $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process)  {
+        $imStatus = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process)  {
             if ($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getSubject());
                 $progress->display();
             }
         };
 
-        $imTotal = function (ImportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
+        $imTotal = function (ExportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
             $progress = new ProgressBar($output, $e->getSubject());
             $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%');
             $progress->start();
         };
 
-        $imProgress = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imProgress = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process) {
             if ($progress instanceof ProgressBar) {
                 $progress->advance();
             }
         };
 
-        $imFinished = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imFinished = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process) {
             if ($progress instanceof ProgressBar) {
                 $progress->finish();
                 $output->writeln('');

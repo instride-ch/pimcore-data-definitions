@@ -55,3 +55,5 @@ interface MappingInterface
      */
     public function setInterpreterConfig($interpreterConfig);
 }
+
+class_alias(MappingInterface::class, 'ImportDefinitionsBundle\Model\Mapping');

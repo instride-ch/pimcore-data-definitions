@@ -14,23 +14,25 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
+
 interface ExportProviderInterface
 {
     /**
      * @param array $data
      * @param array $configuration
-     * @param $definition
+     * @param ExportDefinitionInterface $definition
      * @param $params
      * @return array
      */
-    public function addExportData(array $data, $configuration, $definition, $params);
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params);
 
     /**
      * @param array $configuration
-     * @param $definition
+     * @param ExportDefinitionInterface $definition
      * @param $params
      * @return array
      */
-    public function exportData($configuration, $definition, $params);
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params);
 
 }

@@ -14,6 +14,7 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
 use League\Csv\Reader;
 use League\Csv\Statement;
@@ -127,20 +128,22 @@ class CsvProvider implements ProviderInterface, ExportProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function exportData($configuration, $definition, $params)
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
     {
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
 
+        $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
+
         $writer = Writer::createFromPath($file, 'w+');
+        $writer->insertOne($headers);
         $writer->insertAll($this->exportData);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addExportData(array $data, $configuration, $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
     {
         $this->exportData[] = $data;
     }
-
 }

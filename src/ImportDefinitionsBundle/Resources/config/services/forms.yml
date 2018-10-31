@@ -1,6 +1,6 @@
 parameters:
-    import_definition.form.type.import_definition.validation_groups: [import_definition]
-    import_definition.form.type.import_mapping.validation_groups: [import_definition]
+    import_definition.form.type.definition.validation_groups: [import_definition]
+    import_definition.form.type.mapping.validation_groups: [import_definition]
     import_definition.form.type.export_definition.validation_groups: [import_definition]
     import_definition.form.type.export_mapping.validation_groups: [import_definition]
 
@@ -63,8 +63,8 @@ services:
     import_definition.form.import_definition_type:
         class: ImportDefinitionsBundle\Form\Type\ImportDefinitionType
         arguments:
-            - '%import_definitions.model.import_definition.class%'
-            - '%import_definition.form.type.import_definition.validation_groups%'
+            - '%import_definitions.model.definition.class%'
+            - '%import_definition.form.type.definition.validation_groups%'
             - '@import_definition.form.registry.provider'
         tags:
             - { name: form.type }
@@ -79,7 +79,7 @@ services:
     import_definition.form.import_mapping_type:
         class: ImportDefinitionsBundle\Form\Type\ImportMappingType
         arguments:
-            - '%import_definition.form.type.import_mapping.validation_groups%'
+            - '%import_definition.form.type.mapping.validation_groups%'
             - '@import_definition.form.registry.setter'
             - '@import_definition.form.registry.interpreter'
             - '@import_definition.form.registry.getter'

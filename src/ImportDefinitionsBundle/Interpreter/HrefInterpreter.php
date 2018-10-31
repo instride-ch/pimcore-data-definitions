@@ -17,7 +17,7 @@ namespace ImportDefinitionsBundle\Interpreter;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\MappingInterface;
+use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Tool;
 
@@ -28,7 +28,7 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, MappingInterface $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         $objectClass = $configuration['class'];
 

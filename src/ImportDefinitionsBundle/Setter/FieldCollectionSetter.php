@@ -18,7 +18,7 @@ use ImportDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Fieldcollection\Data\AbstractData as AbstractFieldCollection;
 use ImportDefinitionsBundle\Model\ExportMapping;
-use ImportDefinitionsBundle\Model\ImportMapping;
+use ImportDefinitionsBundle\Model\Mapping;
 
 class FieldCollectionSetter implements SetterInterface, GetterInterface
 {
@@ -26,7 +26,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, Mapping $map, $data)
     {
         $keyParts = explode('~', $map->getToColumn());
 

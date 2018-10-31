@@ -17,7 +17,7 @@ namespace ImportDefinitionsBundle\Interpreter;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\MappingInterface;
+use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\PlaceholderContext;
 use Pimcore\File;
 use Pimcore\Model\Asset;
@@ -47,7 +47,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function interpret(Concrete $object, $value, MappingInterface $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         $path = $configuration['path'];
 

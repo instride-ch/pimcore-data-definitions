@@ -39,7 +39,7 @@ class LocalizedfieldSetter implements SetterInterface, GetterInterface
 
     public function get(Concrete $object, ExportMapping $map, $data)
     {
-        $config = $map->getSetterConfig();
+        $config = $map->getGetterConfig();
 
         $getter = explode('~', $map->getToColumn());
         $getter = sprintf('get%s', ucfirst($getter[0]));

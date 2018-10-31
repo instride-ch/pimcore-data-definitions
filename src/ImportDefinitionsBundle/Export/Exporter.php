@@ -20,6 +20,7 @@ use ImportDefinitionsBundle\Getter\GetterInterface;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Interpreter\InterpreterInterface;
 use ImportDefinitionsBundle\Model\ExportMapping;
+use ImportDefinitionsBundle\Provider\ExportProviderInterface;
 use ImportDefinitionsBundle\Runner\ExportRunnerInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
@@ -50,6 +51,11 @@ final class Exporter implements ExportInterface
     private $getterRegistry;
 
     /**
+     * @var ServiceRegistryInterface
+     */
+    private $exportProviderRegistry;
+
+    /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
@@ -65,19 +71,20 @@ final class Exporter implements ExportInterface
     private $exceptions = [];
 
     /**
-     * Importer constructor.
      * @param ServiceRegistryInterface $fetcherRegistry
      * @param ServiceRegistryInterface $runnerRegistry
      * @param ServiceRegistryInterface $interpreterRegistry
      * @param ServiceRegistryInterface $getterRegistry
+     * @param ServiceRegistryInterface $exportProviderRegistry
      * @param EventDispatcherInterface $eventDispatcher
-     * @param LoggerInterface $logger
+     * @param LoggerInterface          $logger
      */
     public function __construct(
         ServiceRegistryInterface $fetcherRegistry,
         ServiceRegistryInterface $runnerRegistry,
         ServiceRegistryInterface $interpreterRegistry,
         ServiceRegistryInterface $getterRegistry,
+        ServiceRegistryInterface $exportProviderRegistry,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger
     )
@@ -86,6 +93,7 @@ final class Exporter implements ExportInterface
         $this->runnerRegistry = $runnerRegistry;
         $this->interpreterRegistry = $interpreterRegistry;
         $this->getterRegistry = $getterRegistry;
+        $this->exportProviderRegistry = $exportProviderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
     }
@@ -97,12 +105,13 @@ final class Exporter implements ExportInterface
     public function doExport(ExportDefinitionInterface $definition, $params)
     {
         $fetcher = $this->getFetcher($definition);
+        $provider = $this->getProvider($definition);
         $total = $fetcher->count($definition, $params);
 
         if ($total > 0) {
             $this->eventDispatcher->dispatch('export_definition.total', new ExportDefinitionEvent($definition, $total));
 
-            $this->runExport($definition, $params, $total, $fetcher);
+            $this->runExport($definition, $params, $total, $fetcher, $provider);
         }
 
         $this->eventDispatcher->dispatch('export_definition.finished', new ExportDefinitionEvent($definition));
@@ -126,18 +135,37 @@ final class Exporter implements ExportInterface
 
     /**
      * @param ExportDefinitionInterface $definition
+     * @return ExportProviderInterface
+     */
+    private function getProvider(ExportDefinitionInterface $definition)
+    {
+        if (!$this->exportProviderRegistry->has($definition->getProvider())) {
+            throw new \InvalidArgumentException(sprintf('Definition %s has no valid export provider configured', $definition->getName()));
+        }
+
+        /** @var ExportProviderInterface $provider */
+        $provider = $this->exportProviderRegistry->get($definition->getProvider());
+
+        if (!($provider instanceof ExportProviderInterface)) {
+            throw new \InvalidArgumentException(sprintf('Export Definition %s has no valid export provider configured', $definition->getName()));
+        }
+
+        return $provider;
+    }
+
+    /**
+     * @param ExportDefinitionInterface $definition
      * @param                     $params
      * @param int                 $total
      * @param FetcherInterface    $fetcher
+     * @param ExportProviderInterface $provider
      * @throws \Exception
      */
-    private function runExport(ExportDefinitionInterface $definition, $params, int $total, FetcherInterface $fetcher)
+    private function runExport(ExportDefinitionInterface $definition, $params, int $total, FetcherInterface $fetcher, ExportProviderInterface $provider)
     {
         $count = 0;
         $countToClean = 1000;
         $perLoop = 50;
-
-        $entries = [];
 
         for ($i = 0; $i < (ceil($total / $perLoop)); $i++) {
 
@@ -145,8 +173,8 @@ final class Exporter implements ExportInterface
 
             foreach ($objects as $object) {
                 try {
-                    $entries[] = $this->exportRow($definition, $object, $params);
-
+                    $this->exportRow($definition, $object, $params, $provider);
+                    
                     if (($count + 1) % $countToClean === 0) {
                         \Pimcore::collectGarbage();
                         $this->logger->info('Clean Garbage');
@@ -179,17 +207,18 @@ final class Exporter implements ExportInterface
             }
         }
 
-        print_r($entries);
+        $provider->exportData($definition->getConfiguration(), $definition, $params);
     }
 
     /**
      * @param ExportDefinitionInterface $definition
      * @param Concrete $object
      * @param $params
+     * @param ExportProviderInterface $provider
      * @return array
      * @throws \Exception
      */
-    private function exportRow(ExportDefinitionInterface $definition, Concrete $object, $params): array
+    private function exportRow(ExportDefinitionInterface $definition, Concrete $object, $params, ExportProviderInterface $provider): array
     {
         $data = [];
 
@@ -215,6 +244,8 @@ final class Exporter implements ExportInterface
         {
             $data[$mapItem->getFromColumn()] = $this->getObjectValue($object, $mapItem, $data, $definition, $params);
         }
+        
+        $provider->addExportData($data, $definition->getConfiguration(), $definition, $params);
 
         $this->eventDispatcher->dispatch('export_definition.status', new ExportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath())));
         $this->eventDispatcher->dispatch('export_definition.object.finished', new ExportDefinitionEvent($definition, $object));

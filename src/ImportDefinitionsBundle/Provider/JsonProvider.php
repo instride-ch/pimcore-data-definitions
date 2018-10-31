@@ -16,8 +16,13 @@ namespace ImportDefinitionsBundle\Provider;
 
 use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
 
-class JsonProvider implements ProviderInterface
+class JsonProvider implements ProviderInterface, ExportProviderInterface
 {
+    /**
+     * @var array
+     */
+    private $exportData = [];
+
     /**
      * Calculate depth
      *
@@ -85,4 +90,23 @@ class JsonProvider implements ProviderInterface
 
         return [];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exportData($configuration, $definition, $params)
+    {
+        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+
+        file_put_contents($file, json_encode($this->exportData));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addExportData(array $data, $configuration, $definition, $params)
+    {
+        $this->exportData[] = $data;
+    }
+
 }

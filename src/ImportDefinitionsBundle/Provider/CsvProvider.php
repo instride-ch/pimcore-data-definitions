@@ -22,6 +22,11 @@ use League\Csv\Writer;
 class CsvProvider implements ProviderInterface, ExportProviderInterface
 {
     /**
+     * @var array
+     */
+    private $exportData = [];
+
+    /**
      * {@inheritdoc}
      */
     public function testData($configuration)
@@ -119,11 +124,23 @@ class CsvProvider implements ProviderInterface, ExportProviderInterface
         return iterator_to_array($records);
     }
 
-    public function exportData(array $data, $configuration, $definition, $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function exportData($configuration, $definition, $params)
     {
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
 
         $writer = Writer::createFromPath($file, 'w+');
-        $writer->insertAll($data);
+        $writer->insertAll($this->exportData);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addExportData(array $data, $configuration, $definition, $params)
+    {
+        $this->exportData[] = $data;
+    }
+
 }

@@ -23,5 +23,14 @@ interface ExportProviderInterface
      * @param $params
      * @return array
      */
-    public function exportData(array $data, $configuration, $definition, $params);
+    public function addExportData(array $data, $configuration, $definition, $params);
+
+    /**
+     * @param array $configuration
+     * @param $definition
+     * @param $params
+     * @return array
+     */
+    public function exportData($configuration, $definition, $params);
+
 }

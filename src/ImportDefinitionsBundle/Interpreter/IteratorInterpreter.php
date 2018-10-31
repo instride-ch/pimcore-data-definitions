@@ -18,11 +18,11 @@ use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Webmozart\Assert\Assert;
 
-final class IteratorInterpreter implements InterpreterInterface, ReverseInterpreterInterface, DataSetAwareInterface
+final class IteratorInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
     use DataSetAwareTrait;
 
@@ -42,7 +42,7 @@ final class IteratorInterpreter implements InterpreterInterface, ReverseInterpre
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, MappingInterface $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         Assert::isArray($value, 'IteratorInterpreter can only be used with array values');
 
@@ -55,27 +55,6 @@ final class IteratorInterpreter implements InterpreterInterface, ReverseInterpre
 
         foreach ($value as &$val) {
             $val = $interpreterObject->interpret($object, $val, $map, $data, $definition, $params, $interpreter['interpreterConfig']);
-        }
-
-        return $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function reverseInterpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
-    {
-        Assert::isArray($value, 'IteratorInterpreter can only be used with array values');
-
-        $interpreter = $configuration['interpreter'];
-        $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
-
-        if ($interpreterObject instanceof DataSetAwareInterface) {
-            $interpreterObject->setDataSet($this->getDataSet());
-        }
-
-        foreach ($value as &$val) {
-            $val = $interpreterObject->reverseInterpret($object, $val, $map, $data, $definition, $params, $interpreter['interpreterConfig']);
         }
 
         return $value;

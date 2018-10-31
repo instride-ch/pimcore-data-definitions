@@ -14,23 +14,23 @@
 
 namespace ImportDefinitionsBundle\Fetcher;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 
 interface FetcherInterface
 {
     /**
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                     $params
      * @param int                 $limit
      * @param int                 $offset
      * @return mixed
      */
-    public function fetch(DefinitionInterface $definition, $params, int $limit, int $offset);
+    public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset);
 
     /**+
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                     $params
      * @return int
      */
-    public function count(DefinitionInterface $definition, $params): int;
+    public function count(ExportDefinitionInterface $definition, $params): int;
 }

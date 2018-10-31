@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Cleaner;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 class Deleter extends AbstractCleaner
 {
@@ -22,7 +22,7 @@ class Deleter extends AbstractCleaner
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function cleanup(DefinitionInterface $definition, $objects)
+    public function cleanup(ImportDefinitionInterface $definition, $objects)
     {
         $notFoundObjects = $this->getObjectsToClean($definition, $objects);
 

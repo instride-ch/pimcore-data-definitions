@@ -15,14 +15,14 @@
 namespace ImportDefinitionsBundle\Setter;
 
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\ImportMapping;
 
 class ObjectTypeSetter implements SetterInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function set(Concrete $object, $value, Mapping $map, $data)
+    public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         if ($value === Concrete::OBJECT_TYPE_FOLDER) {
             $object->setType(Concrete::OBJECT_TYPE_FOLDER);

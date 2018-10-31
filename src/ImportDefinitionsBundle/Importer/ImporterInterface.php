@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Importer;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 interface ImporterInterface
 {
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param $params
      * @return mixed
      */
-    public function doImport(DefinitionInterface $definition, $params);
+    public function doImport(ImportDefinitionInterface $definition, $params);
 }

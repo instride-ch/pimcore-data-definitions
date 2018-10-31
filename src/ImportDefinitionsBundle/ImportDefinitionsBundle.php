@@ -24,7 +24,6 @@ use ImportDefinitionsBundle\DependencyInjection\Compiler\GetterRegistryCompilerP
 use ImportDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\LoaderRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
-use ImportDefinitionsBundle\DependencyInjection\Compiler\ReverseInterpreterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
 use Pimcore\Extension\Bundle\PimcoreBundleInterface;
@@ -69,7 +68,6 @@ class ImportDefinitionsBundle extends AbstractResourceBundle implements PimcoreB
         $builder->addCompilerPass(new LoaderRegistryCompilerPass());
         $builder->addCompilerPass(new GetterRegistryCompilerPass());
         $builder->addCompilerPass(new FetcherRegistryCompilerPass());
-        $builder->addCompilerPass(new ReverseInterpreterRegistryCompilerPass());
     }
 
     /**

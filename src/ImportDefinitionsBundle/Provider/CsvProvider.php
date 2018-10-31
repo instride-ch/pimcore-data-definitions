@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use ImportDefinitionsBundle\Model\Mapping\FromColumn;
+use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;

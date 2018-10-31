@@ -26,7 +26,7 @@ services:
         arguments:
             - '@import_definition.registry.fetcher'
             - '@import_definition.registry.runner'
-            - '@import_definition.registry.reverse_interpreter'
+            - '@import_definition.registry.interpreter'
             - '@import_definition.registry.getter'
             - '@event_dispatcher'
             - '@logger'
@@ -99,16 +99,6 @@ services:
         arguments:
             - ImportDefinitionsBundle\Runner\RunnerInterface
             - 'Import Definition Runners'
-
-    import_definition.registry.reverse_interpreter:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - ImportDefinitionsBundle\Interpreter\ReverseInterpreterInterface
-            - 'Import Definition Reverse Interpreters'
-
-    import_definition.form.registry.reverse_interpreter:
-        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
-
 
     ### CLEANER
     import_definition.cleaner.deleter:
@@ -186,7 +176,6 @@ services:
             - '@import_definition.registry.interpreter'
         tags:
             - { name: import_definition.interpreter, type: nested, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType }
-            - { name: import_definition.reverse_interpreter, type: nested, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType }
 
     import_definition.interpreter.expression:
         class: ImportDefinitionsBundle\Interpreter\ExpressionInterpreter
@@ -195,7 +184,6 @@ services:
             - '@service_container'
         tags:
             - { name: import_definition.interpreter, type: expression, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }
-            - { name: import_definition.reverse_interpreter, type: expression, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }
 
     import_definition.interpreter.object_resolver:
         class: ImportDefinitionsBundle\Interpreter\ObjectResolver
@@ -217,7 +205,6 @@ services:
             - '@import_definition.registry.interpreter'
         tags:
             - { name: import_definition.interpreter, type: iterator, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
-            - { name: import_definition.reverse_interpreter, type: iterator, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
 
     ### PROVIDER
     import_definition.provider.csv:
@@ -245,31 +232,36 @@ services:
         tags:
             - { name: import_definition.provider, type: xml, form-type: ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType }
 
-    ### SETTER
+    ### SETTER AND GETTER
     import_definition.setter.classificationstore:
         class: ImportDefinitionsBundle\Setter\ClassificationStoreSetter
         tags:
             - { name: import_definition.setter, type: classificationstore, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
+            - { name: import_definition.getter, type: classificationstore, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
 
     import_definition.setter.fieldcollection:
         class: ImportDefinitionsBundle\Setter\FieldCollectionSetter
         tags:
             - { name: import_definition.setter, type: fieldcollection, form-type: ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
+            - { name: import_definition.getter, type: fieldcollection, form-type: ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
 
     import_definition.setter.key:
         class: ImportDefinitionsBundle\Setter\KeySetter
         tags:
             - { name: import_definition.setter, type: key, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: import_definition.getter, type: key, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.setter.localizedfield:
         class: ImportDefinitionsBundle\Setter\LocalizedfieldSetter
         tags:
             - { name: import_definition.setter, type: localizedfield, form-type: ImportDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
+            - { name: import_definition.getter, type: localizedfield, form-type: ImportDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
 
     import_definition.setter.objectbrick:
         class: ImportDefinitionsBundle\Setter\ObjectbrickSetter
         tags:
             - { name: import_definition.setter, type: objectbrick, form-type: ImportDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
+            - { name: import_definition.getter, type: objectbrick, form-type: ImportDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
 
     import_definition.setter.object_type:
         class: ImportDefinitionsBundle\Setter\ObjectTypeSetter
@@ -285,4 +277,3 @@ services:
         class: ImportDefinitionsBundle\Fetcher\ObjectsFetcher
         tags:
             - { name: import_definition.fetcher, type: objects }
->>>>>>> Introduce exports by using the same mapping, just with reverse interpreters and getters

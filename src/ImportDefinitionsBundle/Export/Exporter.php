@@ -17,16 +17,15 @@ namespace ImportDefinitionsBundle\Export;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Fetcher\FetcherInterface;
 use ImportDefinitionsBundle\Getter\GetterInterface;
-use ImportDefinitionsBundle\Interpreter\ReverseInterpreterInterface;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
+use ImportDefinitionsBundle\Interpreter\InterpreterInterface;
+use ImportDefinitionsBundle\Model\ExportMapping;
 use ImportDefinitionsBundle\Runner\ExportRunnerInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
-use ImportDefinitionsBundle\Runner\RunnerInterface;
+use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class Exporter implements ExportInterface
 {
@@ -43,7 +42,7 @@ final class Exporter implements ExportInterface
     /**
      * @var ServiceRegistryInterface
      */
-    private $reverseInterpreterRegistry;
+    private $interpreterRegistry;
 
     /**
      * @var ServiceRegistryInterface
@@ -69,7 +68,7 @@ final class Exporter implements ExportInterface
      * Importer constructor.
      * @param ServiceRegistryInterface $fetcherRegistry
      * @param ServiceRegistryInterface $runnerRegistry
-     * @param ServiceRegistryInterface $reverseInterpreterRegistry
+     * @param ServiceRegistryInterface $interpreterRegistry
      * @param ServiceRegistryInterface $getterRegistry
      * @param EventDispatcherInterface $eventDispatcher
      * @param LoggerInterface $logger
@@ -77,7 +76,7 @@ final class Exporter implements ExportInterface
     public function __construct(
         ServiceRegistryInterface $fetcherRegistry,
         ServiceRegistryInterface $runnerRegistry,
-        ServiceRegistryInterface $reverseInterpreterRegistry,
+        ServiceRegistryInterface $interpreterRegistry,
         ServiceRegistryInterface $getterRegistry,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger
@@ -85,7 +84,7 @@ final class Exporter implements ExportInterface
     {
         $this->fetcherRegistry = $fetcherRegistry;
         $this->runnerRegistry = $runnerRegistry;
-        $this->reverseInterpreterRegistry = $reverseInterpreterRegistry;
+        $this->interpreterRegistry = $interpreterRegistry;
         $this->getterRegistry = $getterRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
@@ -95,28 +94,28 @@ final class Exporter implements ExportInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function doExport(DefinitionInterface $definition, $params)
+    public function doExport(ExportDefinitionInterface $definition, $params)
     {
         $fetcher = $this->getFetcher($definition);
         $total = $fetcher->count($definition, $params);
 
         if ($total > 0) {
-            $this->eventDispatcher->dispatch('export_definition.total', new ImportDefinitionEvent($definition, $total));
+            $this->eventDispatcher->dispatch('export_definition.total', new ExportDefinitionEvent($definition, $total));
 
             $this->runExport($definition, $params, $total, $fetcher);
         }
 
-        $this->eventDispatcher->dispatch('export_definition.finished', new ImportDefinitionEvent($definition));
+        $this->eventDispatcher->dispatch('export_definition.finished', new ExportDefinitionEvent($definition));
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @return FetcherInterface
      */
-    private function getFetcher(DefinitionInterface $definition)
+    private function getFetcher(ExportDefinitionInterface $definition)
     {
         if (!$this->fetcherRegistry->has($definition->getFetcher())) {
-            throw new \InvalidArgumentException(sprintf('Definition %s has no valid fetcher configured', $definition->getName()));
+            throw new \InvalidArgumentException(sprintf('Export Definition %s has no valid fetcher configured', $definition->getName()));
         }
 
         /** @var FetcherInterface $fetcher */
@@ -126,13 +125,13 @@ final class Exporter implements ExportInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                     $params
      * @param int                 $total
      * @param FetcherInterface    $fetcher
      * @throws \Exception
      */
-    private function runExport(DefinitionInterface $definition, $params, int $total, FetcherInterface $fetcher)
+    private function runExport(ExportDefinitionInterface $definition, $params, int $total, FetcherInterface $fetcher)
     {
         $count = 0;
         $countToClean = 1000;
@@ -153,7 +152,7 @@ final class Exporter implements ExportInterface
                         $this->logger->info('Clean Garbage');
                         $this->eventDispatcher->dispatch(
                             'export_definition.status',
-                            new ImportDefinitionEvent($definition, 'Collect Garbage')
+                            new ExportDefinitionEvent($definition, 'Collect Garbage')
                         );
                     }
 
@@ -165,7 +164,7 @@ final class Exporter implements ExportInterface
 
                     $this->eventDispatcher->dispatch(
                         'export_definition.status',
-                        new ImportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()))
+                        new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()))
                     );
 
                     if ($definition->getStopOnException()) {
@@ -175,7 +174,7 @@ final class Exporter implements ExportInterface
 
                 $this->eventDispatcher->dispatch(
                     'export_definition.progress',
-                    new ImportDefinitionEvent($definition)
+                    new ExportDefinitionEvent($definition)
                 );
             }
         }
@@ -184,20 +183,20 @@ final class Exporter implements ExportInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param Concrete $object
      * @param $params
-     * @return null|Concrete
+     * @return array
      * @throws \Exception
      */
-    private function exportRow(DefinitionInterface $definition, Concrete $object, $params): array
+    private function exportRow(ExportDefinitionInterface $definition, Concrete $object, $params): array
     {
         $data = [];
 
         $runner = null;
 
-        $this->eventDispatcher->dispatch('export_definition.status', new ImportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId())));
-        $this->eventDispatcher->dispatch('export_definition.object.start', new ImportDefinitionEvent($definition, $object));
+        $this->eventDispatcher->dispatch('export_definition.status', new ExportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId())));
+        $this->eventDispatcher->dispatch('export_definition.object.start', new ExportDefinitionEvent($definition, $object));
 
         if ($definition->getRunner()) {
             $runner = $this->runnerRegistry->get($definition->getRunner());
@@ -209,13 +208,16 @@ final class Exporter implements ExportInterface
 
         $this->logger->info(sprintf('Export Object: %s', $object->getRealFullPath()));
 
+        /**
+         * @var $mapItem ExportMapping
+         */
         foreach ($definition->getMapping() as $mapItem)
         {
-            $data[$mapItem->getFromColumn()] = $this->getObjectValue($object, $mapItem, $data, $definition, $params, $runner);
+            $data[$mapItem->getFromColumn()] = $this->getObjectValue($object, $mapItem, $data, $definition, $params);
         }
 
-        $this->eventDispatcher->dispatch('export_definition.status', new ImportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath())));
-        $this->eventDispatcher->dispatch('export_definition.object.finished', new ImportDefinitionEvent($definition, $object));
+        $this->eventDispatcher->dispatch('export_definition.status', new ExportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath())));
+        $this->eventDispatcher->dispatch('export_definition.object.finished', new ExportDefinitionEvent($definition, $object));
 
         if ($runner instanceof ExportRunnerInterface) {
             $data = $runner->exportPostRun($object, $data, $definition, $params);
@@ -226,15 +228,14 @@ final class Exporter implements ExportInterface
 
     /**
      * @param Concrete             $object
-     * @param Mapping              $map
+     * @param ExportMapping        $map
      * @param                      $data
-     * @param DefinitionInterface  $definition
+     * @param ExportDefinitionInterface  $definition
      * @param                      $params
-     * @param RunnerInterface|null $runner
      * @return mixed|null
      * @throws DoNotSetException
      */
-    private function getObjectValue(Concrete $object, Mapping $map, $data, DefinitionInterface $definition, $params, RunnerInterface $runner = null)
+    private function getObjectValue(Concrete $object, ExportMapping $map, $data, ExportDefinitionInterface $definition, $params)
     {
         $value = null;
 
@@ -252,11 +253,11 @@ final class Exporter implements ExportInterface
             }
         }
 
-        if ($map->getReverseInterpreter()) {
-            $interpreter = $this->reverseInterpreterRegistry->get($map->getReverseInterpreter());
+        if ($map->getInterpreter()) {
+            $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
 
-            if ($interpreter instanceof ReverseInterpreterInterface) {
-                $value = $interpreter->reverseInterpret($object, $value, $map, $data, $definition, $params, $map->getReverseInterpreterConfig());
+            if ($interpreter instanceof InterpreterInterface) {
+                $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params, $map->getInterpreterConfig());
             }
 
         }

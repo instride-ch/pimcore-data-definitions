@@ -15,14 +15,14 @@
 namespace ImportDefinitionsBundle\Getter;
 
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\ExportMapping;
 
 interface GetterInterface
 {
     /**
      * @param Concrete $object
-     * @param Mapping $map
+     * @param ExportMapping $map
      * @param array $data
      */
-    public function get(Concrete $object, Mapping $map, $data);
+    public function get(Concrete $object, ExportMapping $map, $data);
 }

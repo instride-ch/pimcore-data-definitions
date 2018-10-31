@@ -15,23 +15,23 @@
 namespace ImportDefinitionsBundle\Runner;
 
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 
 interface ExportRunnerInterface
 {
     /**
      * @param Concrete $object
      * @param array $data
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param array $params
      */
-    public function exportPreRun(Concrete $object, $data, DefinitionInterface $definition, $params);
+    public function exportPreRun(Concrete $object, $data, ExportDefinitionInterface $definition, $params);
 
     /**
      * @param Concrete $object
      * @param array $data
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param array $params
      */
-    public function exportPostRun(Concrete $object, $data, DefinitionInterface $definition, $params);
+    public function exportPostRun(Concrete $object, $data, ExportDefinitionInterface $definition, $params);
 }

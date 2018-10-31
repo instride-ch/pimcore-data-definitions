@@ -17,7 +17,7 @@ namespace ImportDefinitionsBundle\Interpreter\CoreShop;
 use CoreShop\Component\Currency\Repository\CurrencyRepositoryInterface;
 use ImportDefinitionsBundle\Interpreter\InterpreterInterface;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
 
 final class CurrencyInterpreter implements InterpreterInterface
@@ -38,7 +38,7 @@ final class CurrencyInterpreter implements InterpreterInterface
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, MappingInterface $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         return $this->currencyRepository->getByCode($value);
     }

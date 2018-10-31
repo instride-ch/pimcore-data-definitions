@@ -1,6 +1,8 @@
 parameters:
-    import_definition.form.type.definition.validation_groups: [import_definition]
-    import_definition.form.type.mapping.validation_groups: [import_definition]
+    import_definition.form.type.import_definition.validation_groups: [import_definition]
+    import_definition.form.type.import_mapping.validation_groups: [import_definition]
+    import_definition.form.type.export_definition.validation_groups: [import_definition]
+    import_definition.form.type.export_mapping.validation_groups: [import_definition]
 
 services:
     import_definition.form.definition.data_mapper:
@@ -58,30 +60,54 @@ services:
         tags:
             - { name: form.type }
 
-    import_definition.form.mapping_collection_type:
-        class: ImportDefinitionsBundle\Form\Type\MappingCollectionType
+    import_definition.form.import_definition_type:
+        class: ImportDefinitionsBundle\Form\Type\ImportDefinitionType
+        arguments:
+            - '%import_definitions.model.import_definition.class%'
+            - '%import_definition.form.type.import_definition.validation_groups%'
+            - '@import_definition.form.registry.provider'
+        tags:
+            - { name: form.type }
+
+    import_definition.form.import_mapping_collection_type:
+        class: ImportDefinitionsBundle\Form\Type\ImportMappingCollectionType
         arguments:
             - '@import_definition.form.definition.data_mapper'
         tags:
             - { name: form.type }
 
-    import_definition.form.definition_type:
-        class: ImportDefinitionsBundle\Form\Type\DefinitionType
+    import_definition.form.import_mapping_type:
+        class: ImportDefinitionsBundle\Form\Type\ImportMappingType
         arguments:
-            - '%import_definitions.model.definition.class%'
-            - '%import_definition.form.type.definition.validation_groups%'
+            - '%import_definition.form.type.import_mapping.validation_groups%'
+            - '@import_definition.form.registry.setter'
+            - '@import_definition.form.registry.interpreter'
+            - '@import_definition.form.registry.getter'
+        tags:
+            - { name: form.type }
+
+    import_definition.form.export_definition_type:
+        class: ImportDefinitionsBundle\Form\Type\ExportDefinitionType
+        arguments:
+            - '%import_definitions.model.export_definition.class%'
+            - '%import_definition.form.type.export_definition.validation_groups%'
             - '@import_definition.form.registry.provider'
         tags:
             - { name: form.type }
 
-    import_definition.form.mapping_type:
-        class: ImportDefinitionsBundle\Form\Type\MappingType
+    import_definition.form.export_mapping_collection_type:
+        class: ImportDefinitionsBundle\Form\Type\ExportMappingCollectionType
         arguments:
-            - '%import_definition.form.type.mapping.validation_groups%'
-            - '@import_definition.form.registry.setter'
-            - '@import_definition.form.registry.interpreter'
+            - '@import_definition.form.definition.data_mapper'
+        tags:
+            - { name: form.type }
+
+    import_definition.form.export_mapping_type:
+        class: ImportDefinitionsBundle\Form\Type\ExportMappingType
+        arguments:
+            - '%import_definition.form.type.export_mapping.validation_groups%'
             - '@import_definition.form.registry.getter'
-            - '@import_definition.form.registry.reverse_interpreter'
+            - '@import_definition.form.registry.interpreter'
         tags:
             - { name: form.type }
 

@@ -39,27 +39,6 @@ interface DefinitionInterface extends ResourceInterface
     public function setProvider($provider);
 
     /**
-     * @return string
-     * @return string
-     */
-    public function getFetcher();
-
-    /**
-     * @param string $fetcher
-     */
-    public function setFetcher($fetcher);
-
-    /**
-     * @return mixed
-     */
-    public function getLoader();
-
-    /**
-     * @param string $loader
-     */
-    public function setLoader($loader);
-
-    /**
      * @return mixed
      */
     public function getConfiguration();
@@ -122,66 +101,6 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return mixed
      */
-    public function getObjectPath();
-
-    /**
-     * @param string $objectPath
-     */
-    public function setObjectPath($objectPath);
-
-    /**
-     * @return mixed
-     */
-    public function getCleaner();
-
-    /**
-     * @param string $cleaner
-     */
-    public function setCleaner($cleaner);
-
-    /**
-     * @return mixed
-     */
-    public function getKey();
-
-    /**
-     * @param string $key
-     */
-    public function setKey($key);
-
-    /**
-     * @return mixed
-     */
-    public function getFilter();
-
-    /**
-     * @param string $filter
-     */
-    public function setFilter($filter);
-
-    /**
-     * @return mixed
-     */
-    public function getRenameExistingObjects();
-
-    /**
-     * @param boolean $renameExistingObjects
-     */
-    public function setRenameExistingObjects($renameExistingObjects);
-
-    /**
-     * @return mixed
-     */
-    public function getRelocateExistingObjects();
-
-    /**
-     * @param boolean $relocateExistingObjects
-     */
-    public function setRelocateExistingObjects($relocateExistingObjects);
-
-    /**
-     * @return mixed
-     */
     public function getRunner();
 
     /**
@@ -192,32 +111,12 @@ interface DefinitionInterface extends ResourceInterface
     /**
      * @return mixed
      */
-    public function getCreateVersion();
-
-    /**
-     * @param boolean $createVersion
-     */
-    public function setCreateVersion($createVersion);
-
-    /**
-     * @return mixed
-     */
     public function getStopOnException();
 
     /**
      * @param boolean $stopOnException
      */
     public function setStopOnException($stopOnException);
-
-    /**
-     * @return bool
-     */
-    public function getOmitMandatoryCheck();
-
-    /**
-     * @param bool $omitMandatoryCheck
-     */
-    public function setOmitMandatoryCheck($omitMandatoryCheck);
 
     /**
      * @return mixed
@@ -238,34 +137,4 @@ interface DefinitionInterface extends ResourceInterface
      * @param int $successNotificationDocument
      */
     public function setSuccessNotificationDocument($successNotificationDocument);
-
-    /**
-     * @return mixed
-     */
-    public function getSkipNewObjects();
-
-    /**
-     * @param bool $skipNewObjects
-     */
-    public function setSkipNewObjects($skipNewObjects);
-
-    /**
-     * @return mixed
-     */
-    public function getSkipExistingObjects();
-
-    /**
-     * @param bool $skipExistingObjects
-     */
-    public function setSkipExistingObjects($skipExistingObjects);
-
-    /**
-     * @return boolean
-     */
-    public function getForceLoadObject();
-
-    /**
-     * @param $forceLoadObject
-     */
-    public function setForceLoadObject($forceLoadObject);
 }

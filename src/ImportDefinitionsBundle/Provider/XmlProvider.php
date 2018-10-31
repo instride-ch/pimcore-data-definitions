@@ -15,7 +15,7 @@
 namespace ImportDefinitionsBundle\Provider;
 
 use Pimcore\Model\Asset;
-use ImportDefinitionsBundle\Model\Mapping\FromColumn;
+use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
 
 class XmlProvider implements ProviderInterface
 {

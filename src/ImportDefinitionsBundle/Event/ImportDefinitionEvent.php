@@ -15,12 +15,12 @@
 namespace ImportDefinitionsBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ImportDefinitionEvent extends Event
 {
     /**
-     * @var DefinitionInterface
+     * @var ImportDefinitionInterface
      */
     protected $definition;
 
@@ -30,17 +30,17 @@ final class ImportDefinitionEvent extends Event
     protected $subject;
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param mixed $subject
      */
-    public function __construct(DefinitionInterface $definition, $subject = null)
+    public function __construct(ImportDefinitionInterface $definition, $subject = null)
     {
         $this->definition = $definition;
         $this->subject = $subject;
     }
 
     /**
-     * @return DefinitionInterface
+     * @return ImportDefinitionInterface
      */
     public function getDefinition()
     {

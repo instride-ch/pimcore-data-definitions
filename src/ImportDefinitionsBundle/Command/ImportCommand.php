@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ImportCommand extends AbstractCommand
 {
@@ -61,8 +61,8 @@ EOT
         $progress = null;
         $process = null;
 
-        if (!$definition instanceof DefinitionInterface) {
-            throw new \Exception('Definition not found');
+        if (!$definition instanceof ImportDefinitionInterface) {
+            throw new \Exception('Import Definition not found');
         }
 
         $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process)  {

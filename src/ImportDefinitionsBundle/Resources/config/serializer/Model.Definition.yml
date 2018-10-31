@@ -15,14 +15,6 @@ ImportDefinitionsBundle\Model\Definition:
       expose: true
       type: string
       groups: [Detailed]
-    fetcher:
-      expose: true
-      type: string
-      groups: [Detailed]
-    objectPath:
-      expose: true
-      type: string
-      groups: [Detailed]
     class:
       expose: true
       type: string
@@ -35,47 +27,11 @@ ImportDefinitionsBundle\Model\Definition:
       expose: true
       type: array
       groups: [Detailed]
-    cleaner:
-      expose: true
-      type: string
-      groups: [Detailed]
-    key:
-      expose: true
-      type: string
-      groups: [Detailed]
-    filter:
-      expose: true
-      type: string
-      groups: [Detailed]
-    renameExistingObjects:
-      expose: true
-      type: boolean
-      groups: [Detailed]
-    relocateExistingObjects:
-      expose: true
-      type: boolean
-      groups: [Detailed]
-    skipNewObjects:
-      expose: true
-      type: string
-      groups: [Detailed]
-    skipExistingObjects:
-      expose: true
-      type: string
-      groups: [Detailed]
     runner:
       expose: true
       type: string
       groups: [Detailed]
-    createVersion:
-      expose: true
-      type: boolean
-      groups: [Detailed]
     stopOnException:
-      expose: true
-      type: boolean
-      groups: [Detailed]
-    omitMandatoryCheck:
       expose: true
       type: boolean
       groups: [Detailed]
@@ -86,12 +42,4 @@ ImportDefinitionsBundle\Model\Definition:
     successNotificationDocument:
       expose: true
       type: integer
-      groups: [Detailed]
-    forceLoadObject:
-      expose: true
-      type: boolean
-      groups: [Detailed]
-    loader:
-      expose: true
-      type: string
       groups: [Detailed]

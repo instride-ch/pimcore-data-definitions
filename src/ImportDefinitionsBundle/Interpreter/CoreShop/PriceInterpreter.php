@@ -16,7 +16,7 @@ namespace ImportDefinitionsBundle\Interpreter\CoreShop;
 
 use ImportDefinitionsBundle\Interpreter\InterpreterInterface;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
 
 final class PriceInterpreter implements InterpreterInterface
@@ -24,7 +24,7 @@ final class PriceInterpreter implements InterpreterInterface
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, MappingInterface $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         $inputIsFloat = $configuration['isFloat'];
 

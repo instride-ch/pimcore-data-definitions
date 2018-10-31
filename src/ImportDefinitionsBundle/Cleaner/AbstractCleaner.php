@@ -16,24 +16,24 @@ namespace ImportDefinitionsBundle\Cleaner;
 
 use ImportDefinitionsBundle\Model\Log;
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 abstract class AbstractCleaner implements CleanerInterface
 {
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param int[] $objectIds
      * @return mixed
      */
-    abstract public function cleanup(DefinitionInterface $definition, $objectIds);
+    abstract public function cleanup(ImportDefinitionInterface $definition, $objectIds);
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param array $foundObjectIds
      * @return Concrete[]
      * @throws \Exception
      */
-    protected function getObjectsToClean(DefinitionInterface $definition, array $foundObjectIds)
+    protected function getObjectsToClean(ImportDefinitionInterface $definition, array $foundObjectIds)
     {
         $logs = new Log\Listing();
         $logs->setCondition('definition = ?', [$definition->getId()]);
@@ -85,11 +85,11 @@ abstract class AbstractCleaner implements CleanerInterface
     /**
      * Save new Log
      *
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param array $objectIds
      * @throws \Exception
      */
-    protected function writeNewLogs(DefinitionInterface $definition, $objectIds)
+    protected function writeNewLogs(ImportDefinitionInterface $definition, $objectIds)
     {
         foreach ($objectIds as $objId) {
             $log = new Log();

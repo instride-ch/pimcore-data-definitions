@@ -15,7 +15,7 @@
 namespace ImportDefinitionsBundle\Cleaner;
 
 use Pimcore\Model\Dependency;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 class ReferenceCleaner extends AbstractCleaner
 {
@@ -23,7 +23,7 @@ class ReferenceCleaner extends AbstractCleaner
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function cleanup(DefinitionInterface $definition, $objects)
+    public function cleanup(ImportDefinitionInterface $definition, $objects)
     {
         $notFoundObjects = $this->getObjectsToClean($definition, $objects);
 

@@ -29,24 +29,43 @@ pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
         if (user.isAllowed('plugins')) {
 
             var importMenu = new Ext.Action({
-                text: t('importdefinitions_definitions'),
-                iconCls: 'importdefinitions_icon_definition',
-                handler:this.openDefinitions
+                text: t('importdefinitions_import_definitions'),
+                iconCls: 'importdefinitions_icon_import_definition',
+                handler:this.openImportDefinitions
             });
 
             layoutToolbar.settingsMenu.add(importMenu);
 
-            coreshop.global.addStore('importdefinitions_definitions', 'import_definitions/definitions');
+            var exportMenu = new Ext.Action({
+                text: t('importdefinitions_export_definitions'),
+                iconCls: 'importdefinitions_icon_export_definition',
+                handler:this.openExportDefinitions
+            });
+
+            layoutToolbar.settingsMenu.add(exportMenu);
+
+            coreshop.global.addStore('importdefinitions_import_definitions', 'import_definitions/import_definitions');
+            coreshop.global.addStore('importdefinitions_export_definitions', 'import_definitions/export_definitions');
         }
     },
 
-    openDefinitions : function ()
+    openImportDefinitions : function ()
     {
         try {
-            pimcore.globalmanager.get('importdefinitions_definition_panel').activate();
+            pimcore.globalmanager.get('importdefinitions_import_definition_panel').activate();
         }
         catch (e) {
-            pimcore.globalmanager.add('importdefinitions_definition_panel', new pimcore.plugin.importdefinitions.definition.panel());
+            pimcore.globalmanager.add('importdefinitions_import_definition_panel', new pimcore.plugin.importdefinitions.import.panel());
+        }
+    },
+
+    openExportDefinitions : function ()
+    {
+        try {
+            pimcore.globalmanager.get('importdefinitions_export_definition_panel').activate();
+        }
+        catch (e) {
+            pimcore.globalmanager.add('importdefinitions_export_definition_panel', new pimcore.plugin.importdefinitions.export.panel());
         }
     }
 });

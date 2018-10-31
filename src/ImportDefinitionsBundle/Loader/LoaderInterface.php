@@ -15,17 +15,17 @@
 namespace ImportDefinitionsBundle\Loader;
 
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 interface LoaderInterface
 {
     /**
      * @param string              $class
      * @param                     $data
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param                     $params
      *
      * @return null|Concrete
      */
-    public function load(string $class, $data, DefinitionInterface $definition, $params): ?Concrete;
+    public function load(string $class, $data, ImportDefinitionInterface $definition, $params): ?Concrete;
 }

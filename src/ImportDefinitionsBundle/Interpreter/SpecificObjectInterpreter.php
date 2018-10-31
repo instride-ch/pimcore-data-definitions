@@ -15,7 +15,7 @@
 namespace ImportDefinitionsBundle\Interpreter;
 
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 
@@ -27,7 +27,7 @@ class SpecificObjectInterpreter implements InterpreterInterface
     public function interpret(
         Concrete $object,
         $value,
-        Mapping $map,
+        MappingInterface $map,
         $data,
         DefinitionInterface $definition,
         $params,

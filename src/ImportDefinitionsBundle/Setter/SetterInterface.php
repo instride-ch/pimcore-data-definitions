@@ -14,16 +14,17 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
+use ImportDefinitionsBundle\Model\ImportMapping;
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 
 interface SetterInterface
 {
     /**
      * @param Concrete $object
      * @param $value
-     * @param Mapping $map
+     * @param ImportMapping $map
      * @param array $data
      */
-    public function set(Concrete $object, $value, Mapping $map, $data);
+    public function set(Concrete $object, $value, ImportMapping $map, $data);
 }

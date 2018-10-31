@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Cleaner;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 interface CleanerInterface
 {
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param int[] $objectIds
      * @return mixed
      */
-    public function cleanup(DefinitionInterface $definition, $objectIds);
+    public function cleanup(ImportDefinitionInterface $definition, $objectIds);
 }

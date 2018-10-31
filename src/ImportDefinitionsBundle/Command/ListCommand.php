@@ -18,7 +18,7 @@ use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ListCommand extends AbstractCommand
 {
@@ -46,7 +46,7 @@ EOT
 
         $data = [];
 
-        /** @var DefinitionInterface $definition */
+        /** @var ImportDefinitionInterface $definition */
         foreach ($importDefinitions as $definition) {
             $data[] = [
                 $definition->getId(),

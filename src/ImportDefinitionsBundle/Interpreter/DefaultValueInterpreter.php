@@ -17,7 +17,7 @@ namespace ImportDefinitionsBundle\Interpreter;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
 
 class DefaultValueInterpreter implements InterpreterInterface, DataSetAwareInterface
@@ -27,7 +27,7 @@ class DefaultValueInterpreter implements InterpreterInterface, DataSetAwareInter
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    public function interpret(Concrete $object, $value, MappingInterface $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         return $configuration['value'];
     }

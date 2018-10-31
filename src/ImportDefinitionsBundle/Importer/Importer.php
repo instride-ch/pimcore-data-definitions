@@ -31,8 +31,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use ImportDefinitionsBundle\Filter\FilterInterface;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use ImportDefinitionsBundle\Provider\ProviderInterface;
 use ImportDefinitionsBundle\Runner\RunnerInterface;
 
@@ -132,7 +132,7 @@ final class Importer implements ImporterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function doImport(DefinitionInterface $definition, $params)
+    public function doImport(ImportDefinitionInterface $definition, $params)
     {
         $filter = null;
 
@@ -178,11 +178,11 @@ final class Importer implements ImporterInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param $document
      * @throws \Exception
      */
-    private function sendDocument(DefinitionInterface $definition, $document)
+    private function sendDocument(ImportDefinitionInterface $definition, $document)
     {
         if ($document instanceof Document) {
             $params = [
@@ -208,11 +208,11 @@ final class Importer implements ImporterInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param $params
      * @return array
      */
-    private function getData(DefinitionInterface $definition, $params)
+    private function getData(ImportDefinitionInterface $definition, $params)
     {
         /** @var ProviderInterface $provider */
         $provider = $this->providerRegistry->get($definition->getProvider());
@@ -221,13 +221,13 @@ final class Importer implements ImporterInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param $params
      * @param null $filter
      * @param array $dataSet
      * @throws \Exception
      */
-    private function runImport(DefinitionInterface $definition, $params, $filter = null, array $dataSet = [])
+    private function runImport(ImportDefinitionInterface $definition, $params, $filter = null, array $dataSet = [])
     {
         $count = 0;
         $countToClean = 1000;
@@ -264,7 +264,7 @@ final class Importer implements ImporterInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param array $data
      * @param array $dataSet
      * @param $params
@@ -272,7 +272,7 @@ final class Importer implements ImporterInterface
      * @return null|Concrete
      * @throws \Exception
      */
-    private function importRow(DefinitionInterface $definition, $data, $dataSet, $params, $filter = null)
+    private function importRow(ImportDefinitionInterface $definition, $data, $dataSet, $params, $filter = null)
     {
         $runner = null;
 
@@ -351,15 +351,15 @@ final class Importer implements ImporterInterface
 
     /**
      * @param Concrete $object
-     * @param Mapping $map
+     * @param MappingInterface $map
      * @param $value
      * @param array $data
      * @param array $dataSet
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param $params
      * @param RunnerInterface $runner
      */
-    private function setObjectValue(Concrete $object, Mapping $map, $value, $data, $dataSet, DefinitionInterface $definition, $params, RunnerInterface $runner = null)
+    private function setObjectValue(Concrete $object, MappingInterface $map, $value, $data, $dataSet, ImportDefinitionInterface $definition, $params, RunnerInterface $runner = null)
     {
         if ($map->getInterpreter()) {
             try {
@@ -411,12 +411,12 @@ final class Importer implements ImporterInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param array $data
      * @return null|Concrete
      * @throws \Exception
      */
-    private function getObject(DefinitionInterface $definition, $data, $params)
+    private function getObject(ImportDefinitionInterface $definition, $data, $params)
     {
         $class = $definition->getClass();
         $classObject = '\Pimcore\Model\DataObject\\' . ucfirst($class);
@@ -464,22 +464,22 @@ final class Importer implements ImporterInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param array $data
      * @return string
      */
-    private function createPath(DefinitionInterface $definition, $data)
+    private function createPath(ImportDefinitionInterface $definition, $data)
     {
         $placeholderHelper = new Placeholder();
         return $placeholderHelper->replacePlaceholders($definition->getObjectPath(), $data);
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param array $data
      * @return string
      */
-    private function createKey(DefinitionInterface $definition, $data)
+    private function createKey(ImportDefinitionInterface $definition, $data)
     {
         $placeholderHelper = new Placeholder();
         return $placeholderHelper->replacePlaceholders($definition->getKey(), $data);

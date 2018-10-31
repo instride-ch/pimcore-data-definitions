@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Fetcher;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Listing;
 
@@ -23,7 +23,7 @@ class ObjectsFetcher implements FetcherInterface
     /**
      * {@inheritdoc}
      */
-    public function fetch(DefinitionInterface $definition, $params, int $limit, int $offset)
+    public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset)
     {
         $list = $this->getClassListing($definition);
         $list->setLimit($limit);
@@ -35,16 +35,16 @@ class ObjectsFetcher implements FetcherInterface
     /**
      * {@inheritdoc}
      */
-    public function count(DefinitionInterface $definition, $params): int
+    public function count(ExportDefinitionInterface $definition, $params): int
     {
         return $this->getClassListing($definition)->getTotalCount();
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @return Listing
      */
-    private function getClassListing(DefinitionInterface $definition)
+    private function getClassListing(ExportDefinitionInterface $definition)
     {
         $class = $definition->getClass();
         $classDefinition = ClassDefinition::getByName($class);

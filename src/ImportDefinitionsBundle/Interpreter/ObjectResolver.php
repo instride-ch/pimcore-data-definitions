@@ -15,7 +15,7 @@
 namespace ImportDefinitionsBundle\Interpreter;
 
 use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
 
@@ -27,7 +27,7 @@ class ObjectResolver implements InterpreterInterface
     public function interpret(
         Concrete $object,
         $value,
-        Mapping $map,
+        MappingInterface $map,
         $data,
         DefinitionInterface $definition,
         $params,

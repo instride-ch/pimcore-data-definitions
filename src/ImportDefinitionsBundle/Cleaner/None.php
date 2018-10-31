@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Cleaner;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 class None extends AbstractCleaner
 {
     /**
      * {@inheritdoc}
      */
-    public function cleanup(DefinitionInterface $definition, $objects)
+    public function cleanup(ImportDefinitionInterface $definition, $objects)
     {
         // Nothing to do here
     }

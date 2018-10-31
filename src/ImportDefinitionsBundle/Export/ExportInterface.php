@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Export;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 
 interface ExportInterface
 {
     /**
-     * @param DefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param $params
      * @return mixed
      */
-    public function doExport(DefinitionInterface $definition, $params);
+    public function doExport(ExportDefinitionInterface $definition, $params);
 }

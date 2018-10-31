@@ -3,6 +3,11 @@ imports:
     - { resource: "services/installer.yml" }
 
 services:
+  import_definition.event_dispatcher:
+    class: ImportDefinitionsBundle\Event\EventDispatcher
+    arguments:
+      - '@event_dispatcher'
+
   import_definition.service.placeholder:
     class: ImportDefinitionsBundle\Service\Placeholder
 
@@ -16,7 +21,7 @@ services:
       - '@import_definition.registry.setter'
       - '@import_definition.registry.cleaner'
       - '@import_definition.registry.loader'
-      - '@event_dispatcher'
+      - '@import_definition.event_dispatcher'
       - '@logger'
     tags:
       - { name: monolog.logger, channel: import_definition }
@@ -160,9 +165,7 @@ services:
       - { name: import_definition.interpreter, type: expression, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }
 
   import_definition.interpreter.object_resolver:
-    class: ImportDefinitionsBundle\Interpreter\ObjectResolver
-    arguments:
-        - '@service_container'
+    class: ImportDefinitionsBundle\Interpreter\ObjectResolverInterpreter
     tags:
       - { name: import_definition.interpreter, type: object_resolver, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType }
 
@@ -179,6 +182,24 @@ services:
       - '@import_definition.registry.interpreter'
     tags:
       - { name: import_definition.interpreter, type: iterator, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
+
+  import_definition.interpreter.definition:
+    class: ImportDefinitionsBundle\Interpreter\DefinitionInterpreter
+    arguments:
+      - '@import_definitions.repository.definition'
+      - '@import_definition.importer'
+    tags:
+      - { name: import_definition.interpreter, type: definition, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefinitionType }
+
+  import_definition.interpreter.conditional:
+    class: ImportDefinitionsBundle\Interpreter\ConditionalInterpreter
+    arguments:
+      - '@import_definition.registry.interpreter'
+      - '@coreshop.expression_language'
+      - '@service_container'
+    tags:
+      - { name: import_definition.interpreter, type: conditional, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType }
+
 
   ### PROVIDER
   import_definition.provider.csv:
@@ -205,6 +226,11 @@ services:
     class: ImportDefinitionsBundle\Provider\XmlProvider
     tags:
       - { name: import_definition.provider, type: xml, form-type: ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType }
+
+  import_definition.provider.raw:
+    class: ImportDefinitionsBundle\Provider\RawProvider
+    tags:
+      - { name: import_definition.provider, type: raw, form-type: ImportDefinitionsBundle\Form\Type\Provider\RawProviderType }
 
   ### SETTER
   import_definition.setter.classificationstore:
@@ -247,3 +273,4 @@ services:
     class: ImportDefinitionsBundle\Loader\PrimaryKeyLoader
     tags:
       - { name: import_definition.loader, type: primary_key }
+

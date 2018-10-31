@@ -12,26 +12,18 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Form\Type\Interpreter;
+namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use ImportDefinitionsBundle\Form\Type\ClassChoiceType;
-use ImportDefinitionsBundle\Form\Type\DefinitionChoiceType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ObjectResolverType extends AbstractType
+final class RawProviderType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('class', ClassChoiceType::class)
-            ->add('field', TextType::class)
-            ->add('match_unpublished', CheckboxType::class)
+            ->add('headers', TextType::class)
         ;
     }
 
@@ -40,6 +32,6 @@ class ObjectResolverType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'import_definitions_interpreter_object_resolver';
+        return 'import_definitions_provider_raw';
     }
 }

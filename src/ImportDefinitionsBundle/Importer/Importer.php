@@ -15,27 +15,28 @@
 namespace ImportDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
-use ImportDefinitionsBundle\Model\DataSetAwareInterface;
-use ImportDefinitionsBundle\Exception\DoNotSetException;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
-use ImportDefinitionsBundle\Setter\SetterInterface;
-use Pimcore\File;
-use Pimcore\Mail;
-use Pimcore\Model\Document;
-use Pimcore\Model\DataObject\ClassDefinition;
-use Pimcore\Model\DataObject\Concrete;
-use Pimcore\Model\DataObject\Service;
-use Pimcore\Model\Version;
-use Pimcore\Placeholder;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
+use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Filter\FilterInterface;
+use ImportDefinitionsBundle\Model\DataSetAwareInterface;
+use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 use ImportDefinitionsBundle\Model\MappingInterface;
 use ImportDefinitionsBundle\Provider\ProviderInterface;
 use ImportDefinitionsBundle\Runner\RunnerInterface;
+use ImportDefinitionsBundle\Runner\SaveRunnerInterface;
+use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
+use ImportDefinitionsBundle\Setter\SetterInterface;
+use Pimcore\File;
+use Pimcore\Mail;
+use Pimcore\Model\DataObject\ClassDefinition;
+use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Service;
+use Pimcore\Model\Document;
+use Pimcore\Model\Version;
+use Pimcore\Placeholder;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Webmozart\Assert\Assert;
 
 final class Importer implements ImporterInterface
@@ -336,13 +337,26 @@ final class Importer implements ImporterInterface
             $this->setObjectValue($object, $mapItem, $value, $data, $dataSet, $definition, $params, $runner);
         }
 
-        $object->setUserModification(0); //Set User to "system"
+        $shouldSave = true;
+        if ($runner instanceof SaveRunnerInterface) {
+            if ($runner instanceof DataSetAwareInterface) {
+                $runner->setDataSet($dataSet);
+            }
 
-        $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
+            $shouldSave = $runner->shouldSaveObject($object, $definition, $data, $dataSet, $params, $filter);
+        }
+        if ($shouldSave) {
+            $object->setUserModification(0); //Set User to "system"
 
-        $object->save();
+            $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
 
-        $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Imported Object %s', $object->getFullPath())));
+            $object->save();
+            
+            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Imported Object %s', $object->getFullPath())));
+        } else {
+            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Skipped Object %s', $object->getFullPath())));
+        }
+
         $this->eventDispatcher->dispatch('import_definition.object.finished', new ImportDefinitionEvent($definition, $object));
 
         if ($runner instanceof RunnerInterface) {

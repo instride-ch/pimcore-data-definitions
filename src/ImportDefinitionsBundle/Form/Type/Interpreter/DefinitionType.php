@@ -21,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ObjectResolverType extends AbstractType
+class DefinitionType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -29,9 +29,7 @@ class ObjectResolverType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('class', ClassChoiceType::class)
-            ->add('field', TextType::class)
-            ->add('match_unpublished', CheckboxType::class)
+            ->add('definition', DefinitionChoiceType::class)
         ;
     }
 
@@ -40,6 +38,6 @@ class ObjectResolverType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'import_definitions_interpreter_object_resolver';
+        return 'import_definitions_interpreter_definition';
     }
 }

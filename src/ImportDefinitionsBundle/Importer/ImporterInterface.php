@@ -21,7 +21,7 @@ interface ImporterInterface
     /**
      * @param DefinitionInterface $definition
      * @param $params
-     * @return mixed
+     * @return array of object ids
      */
     public function doImport(DefinitionInterface $definition, $params);
 }

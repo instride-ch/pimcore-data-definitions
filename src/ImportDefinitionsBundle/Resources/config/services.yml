@@ -3,6 +3,11 @@ imports:
     - { resource: "services/installer.yml" }
 
 services:
+    import_definition.event_dispatcher:
+        class: ImportDefinitionsBundle\Event\EventDispatcher
+        arguments:
+            - '@event_dispatcher'
+
     import_definition.service.placeholder:
         class: ImportDefinitionsBundle\Service\Placeholder
 
@@ -16,7 +21,7 @@ services:
             - '@import_definition.registry.setter'
             - '@import_definition.registry.cleaner'
             - '@import_definition.registry.loader'
-            - '@event_dispatcher'
+            - '@import_definition.event_dispatcher'
             - '@logger'
         tags:
             - { name: monolog.logger, channel: import_definition }
@@ -287,3 +292,9 @@ services:
         class: ImportDefinitionsBundle\Fetcher\ObjectsFetcher
         tags:
             - { name: import_definition.fetcher, type: objects }
+
+    ### LOADER
+    import_definition.loader.primary_key:
+        class: ImportDefinitionsBundle\Loader\PrimaryKeyLoader
+        tags:
+            - { name: import_definition.loader, type: primary_key }

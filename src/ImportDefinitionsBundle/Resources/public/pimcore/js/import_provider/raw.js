@@ -13,7 +13,7 @@
 
 pimcore.registerNS('pimcore.plugin.importdefinitions.provider.dataObject');
 
-pimcore.plugin.importdefinitions.provider.raw = Class.create(pimcore.plugin.importdefinitions.provider.abstractprovider, {
+pimcore.plugin.importdefinitions.import_provider.raw = Class.create(pimcore.plugin.importdefinitions.import_provider.abstractprovider, {
     getItems : function () {
         return [{
             xtype : 'textarea',

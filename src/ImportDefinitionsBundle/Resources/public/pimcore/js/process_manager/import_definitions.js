@@ -14,7 +14,7 @@
 $(document).on('processmanager.ready', function() {
     processmanager.executable.types.importdefinition = Class.create(pimcore.plugin.processmanager.executable.abstractType, {
         getItems: function () {
-            pimcore.globalmanager.get('importdefinitions_import_definitions').load();
+            pimcore.globalmanager.get('importdefinitions_definitions').load();
 
             return [{
                 xtype: 'combo',
@@ -22,7 +22,7 @@ $(document).on('processmanager.ready', function() {
                 name: 'definition',
                 displayField: 'name',
                 valueField: 'id',
-                store: pimcore.globalmanager.get('importdefinitions_import_definitions'),
+                store: pimcore.globalmanager.get('importdefinitions_definitions'),
                 value: this.data.settings.definition,
                 allowBlank: false
             }, {

@@ -16,10 +16,10 @@ pimcore.registerNS('pimcore.plugin.importdefinitions.import.item');
 pimcore.plugin.importdefinitions.import.item = Class.create(coreshop.resource.item, {
     iconCls: 'importdefinitions_icon_import_definition',
     url: {
-        save: '/admin/import_definitions/import_definitions/save',
-        upload : '/admin/import_definitions/import_definitions/import',
-        export : '/admin/import_definitions/import_definitions/export',
-        test: '/admin/import_definitions/import_definitions/test-data'
+        save: '/admin/import_definitions/definitions/save',
+        upload : '/admin/import_definitions/definitions/import',
+        export : '/admin/import_definitions/definitions/export',
+        test: '/admin/import_definitions/definitions/test-data'
     },
 
     providers: [],
@@ -438,7 +438,7 @@ pimcore.plugin.importdefinitions.import.item = Class.create(coreshop.resource.it
                 this.mappingSettings.enable();
 
                 Ext.Ajax.request({
-                    url: '/admin/import_definitions/import_definitions/get-columns',
+                    url: '/admin/import_definitions/definitions/get-columns',
                     params: {
                         id: this.data.id
                     },

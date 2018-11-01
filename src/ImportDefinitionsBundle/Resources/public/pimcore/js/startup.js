@@ -44,7 +44,7 @@ pimcore.plugin.importdefinitions = Class.create(pimcore.plugin.admin, {
 
             layoutToolbar.settingsMenu.add(exportMenu);
 
-            coreshop.global.addStore('importdefinitions_import_definitions', 'import_definitions/import_definitions');
+            coreshop.global.addStore('importdefinitions_definitions', 'import_definitions/definitions');
             coreshop.global.addStore('importdefinitions_export_definitions', 'import_definitions/export_definitions');
         }
     },

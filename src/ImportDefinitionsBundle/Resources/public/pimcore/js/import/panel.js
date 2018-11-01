@@ -15,14 +15,14 @@ pimcore.registerNS('pimcore.plugin.importdefinitions.import.panel');
 
 pimcore.plugin.importdefinitions.import.panel = Class.create(coreshop.resource.panel, {
     layoutId: 'importdefinitions_import_definition_panel',
-    storeId : 'importdefinitions_import_definitions',
+    storeId : 'importdefinitions_definitions',
     iconCls : 'importdefinitions_icon_import_definition',
     type : 'definition',
 
     url : {
-        add : '/admin/import_definitions/import_definitions/add',
-        delete : '/admin/import_definitions/import_definitions/delete',
-        get : '/admin/import_definitions/import_definitions/get'
+        add : '/admin/import_definitions/definitions/add',
+        delete : '/admin/import_definitions/definitions/delete',
+        get : '/admin/import_definitions/definitions/get'
     },
 
     providers : [],
@@ -38,7 +38,7 @@ pimcore.plugin.importdefinitions.import.panel = Class.create(coreshop.resource.p
 
     initialize: function () {
         Ext.Ajax.request({
-            url: '/admin/import_definitions/import_definitions/get-config',
+            url: '/admin/import_definitions/definitions/get-config',
             method: 'GET',
             success: function (result) {
                 var config = Ext.decode(result.responseText);

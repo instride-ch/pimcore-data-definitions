@@ -201,11 +201,28 @@ services:
             - { name: import_definition.interpreter, type: expression, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }
 
     import_definition.interpreter.object_resolver:
-        class: ImportDefinitionsBundle\Interpreter\ObjectResolver
+        class: ImportDefinitionsBundle\Interpreter\ObjectResolverInterpreter
         arguments:
             - '@service_container'
         tags:
             - { name: import_definition.interpreter, type: object_resolver, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType }
+
+    import_definition.interpreter.definition:
+        class: ImportDefinitionsBundle\Interpreter\DefinitionInterpreter
+        arguments:
+            - '@import_definitions.repository.definition'
+            - '@import_definition.importer'
+        tags:
+            - { name: import_definition.interpreter, type: definition, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefinitionType }
+
+    import_definition.interpreter.conditional:
+        class: ImportDefinitionsBundle\Interpreter\ConditionalInterpreter
+        arguments:
+            - '@import_definition.registry.interpreter'
+            - '@coreshop.expression_language'
+            - '@service_container'
+        tags:
+            - { name: import_definition.interpreter, type: conditional, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType }
 
     import_definition.interpreter.mapping:
         class: ImportDefinitionsBundle\Interpreter\MappingInterpreter
@@ -248,6 +265,11 @@ services:
         class: ImportDefinitionsBundle\Provider\XmlProvider
         tags:
             - { name: import_definition.provider, type: xml, form-type: ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType }
+
+    import_definition.provider.raw:
+        class: ImportDefinitionsBundle\Provider\RawProvider
+        tags:
+            - { name: import_definition.provider, type: raw, form-type: ImportDefinitionsBundle\Form\Type\Provider\RawProviderType }
 
     ### SETTER AND GETTER
     import_definition.setter.classificationstore:

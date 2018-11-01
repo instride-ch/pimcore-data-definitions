@@ -21,7 +21,7 @@ use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
 use ProcessManagerBundle\Model\ProcessInterface;
 
-final class ProcessManagerListener
+final class ProcessManagerImportListener
 {
     /**
      * @var ProcessInterface

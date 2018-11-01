@@ -16,12 +16,16 @@ namespace ImportDefinitionsBundle\Provider;
 
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
+use ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
+use ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;
 
-class CsvProvider implements ProviderInterface, ExportProviderInterface
+class CsvProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
+    use ArtifactProviderTrait;
+
     /**
      * @var array
      */
@@ -130,6 +134,10 @@ class CsvProvider implements ProviderInterface, ExportProviderInterface
      */
     public function exportData($configuration, ExportDefinitionInterface $definition, $params)
     {
+        if (!array_key_exists('file', $params)) {
+            return;
+        }
+
         $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
 
         $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
@@ -147,5 +155,23 @@ class CsvProvider implements ProviderInterface, ExportProviderInterface
     public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
     {
         $this->exportData[] = $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
+
+        $stream = fopen('php://memory','rw+');
+
+        $writer = Writer::createFromStream($stream);
+        $writer->setDelimiter($configuration['delimiter']);
+        $writer->setEnclosure($configuration['enclosure']);
+        $writer->insertOne($headers);
+        $writer->insertAll($this->exportData);
+
+        return $stream;
     }
 }

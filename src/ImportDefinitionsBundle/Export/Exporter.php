@@ -109,12 +109,12 @@ final class Exporter implements ExportInterface
         $total = $fetcher->count($definition, $params);
 
         if ($total > 0) {
-            $this->eventDispatcher->dispatch('export_definition.total', new ExportDefinitionEvent($definition, $total));
+            $this->eventDispatcher->dispatch('export_definition.total', new ExportDefinitionEvent($definition, $total, $params));
 
             $this->runExport($definition, $params, $total, $fetcher, $provider);
         }
 
-        $this->eventDispatcher->dispatch('export_definition.finished', new ExportDefinitionEvent($definition));
+        $this->eventDispatcher->dispatch('export_definition.finished', new ExportDefinitionEvent($definition, null, $params));
     }
 
     /**
@@ -173,7 +173,7 @@ final class Exporter implements ExportInterface
                         $this->logger->info('Clean Garbage');
                         $this->eventDispatcher->dispatch(
                             'export_definition.status',
-                            new ExportDefinitionEvent($definition, 'Collect Garbage')
+                            new ExportDefinitionEvent($definition, 'Collect Garbage', $params)
                         );
                     }
 
@@ -185,7 +185,7 @@ final class Exporter implements ExportInterface
 
                     $this->eventDispatcher->dispatch(
                         'export_definition.status',
-                        new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()))
+                        new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()), $params)
                     );
 
                     if ($definition->getStopOnException()) {
@@ -195,7 +195,7 @@ final class Exporter implements ExportInterface
 
                 $this->eventDispatcher->dispatch(
                     'export_definition.progress',
-                    new ExportDefinitionEvent($definition)
+                    new ExportDefinitionEvent($definition, null, $params)
                 );
             }
         }
@@ -217,8 +217,8 @@ final class Exporter implements ExportInterface
 
         $runner = null;
 
-        $this->eventDispatcher->dispatch('export_definition.status', new ExportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId())));
-        $this->eventDispatcher->dispatch('export_definition.object.start', new ExportDefinitionEvent($definition, $object));
+        $this->eventDispatcher->dispatch('export_definition.status', new ExportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId()), $params));
+        $this->eventDispatcher->dispatch('export_definition.object.start', new ExportDefinitionEvent($definition, $object, $params));
 
         if ($definition->getRunner()) {
             $runner = $this->runnerRegistry->get($definition->getRunner());
@@ -240,8 +240,8 @@ final class Exporter implements ExportInterface
         
         $provider->addExportData($data, $definition->getConfiguration(), $definition, $params);
 
-        $this->eventDispatcher->dispatch('export_definition.status', new ExportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath())));
-        $this->eventDispatcher->dispatch('export_definition.object.finished', new ExportDefinitionEvent($definition, $object));
+        $this->eventDispatcher->dispatch('export_definition.status', new ExportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath()), $params));
+        $this->eventDispatcher->dispatch('export_definition.object.finished', new ExportDefinitionEvent($definition, $object, $params));
 
         if ($runner instanceof ExportRunnerInterface) {
             $data = $runner->exportPostRun($object, $data, $definition, $params);

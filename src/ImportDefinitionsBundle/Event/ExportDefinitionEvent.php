@@ -16,7 +16,6 @@ namespace ImportDefinitionsBundle\Event;
 
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use Symfony\Component\EventDispatcher\Event;
-use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ExportDefinitionEvent extends Event
 {
@@ -30,14 +29,18 @@ final class ExportDefinitionEvent extends Event
      */
     protected $subject;
 
+    protected $params = [];
+
     /**
      * @param ExportDefinitionInterface $definition
-     * @param mixed $subject
+     * @param null                      $subject
+     * @param array                     $params
      */
-    public function __construct(ExportDefinitionInterface $definition, $subject = null)
+    public function __construct(ExportDefinitionInterface $definition, $subject = null, $params = [])
     {
         $this->definition = $definition;
         $this->subject = $subject;
+        $this->params = $params;
     }
 
     /**
@@ -54,5 +57,13 @@ final class ExportDefinitionEvent extends Event
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
     }
 }

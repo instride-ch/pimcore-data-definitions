@@ -1,6 +1,6 @@
 services:
-    import_definition.process_manager.listener:
-        class: ImportDefinitionsBundle\ProcessManager\ProcessManagerListener
+    import_definition.process_manager.import.listener:
+        class: ImportDefinitionsBundle\ProcessManager\ProcessManagerImportListener
         arguments:
             - '@process_manager.factory.process'
             - '@process_manager.logger'
@@ -10,10 +10,27 @@ services:
             - { name: 'kernel.event_listener', event: 'import_definition.status', method: 'onStatusEvent' }
             - { name: 'kernel.event_listener', event: 'import_definition.finished', method: 'onFinishedEvent' }
 
+    import_definition.process_manager.export.listener:
+        class: ImportDefinitionsBundle\ProcessManager\ProcessManagerExportListener
+        arguments:
+            - '@process_manager.factory.process'
+            - '@process_manager.logger'
+            - '@import_definition.registry.export_provider'
+        tags:
+            - { name: 'kernel.event_listener', event: 'export_definition.total', method: 'onTotalEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.progress', method: 'onProgressEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.status', method: 'onStatusEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.finished', method: 'onFinishedEvent' }
+
     import_definition.process_manager.process:
         class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess
         tags:
             - { name: 'process_manager.process', type: 'importdefinition', form-type: ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }
+
+    import_definition.process_manager.export.process:
+        class: ImportDefinitionsBundle\ProcessManager\ExportDefinitionProcess
+        tags:
+            - { name: 'process_manager.process', type: 'exportdefinition', form-type: ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }
 
     import_definitions.process_manager.report:
         class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport

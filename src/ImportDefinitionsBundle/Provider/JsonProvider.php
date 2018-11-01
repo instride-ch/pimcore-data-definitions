@@ -16,9 +16,13 @@ namespace ImportDefinitionsBundle\Provider;
 
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
+use ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
+use ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 
-class JsonProvider implements ProviderInterface, ExportProviderInterface
+class JsonProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
+    use ArtifactProviderTrait;
+
     /**
      * @var array
      */
@@ -110,4 +114,14 @@ class JsonProvider implements ProviderInterface, ExportProviderInterface
         $this->exportData[] = $data;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $stream = fopen('php://memory', 'rw+');
+        fwrite($stream, json_encode($this->exportData));
+
+        return $stream;
+    }
 }

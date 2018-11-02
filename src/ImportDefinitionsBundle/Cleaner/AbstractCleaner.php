@@ -85,11 +85,11 @@ abstract class AbstractCleaner implements CleanerInterface
     /**
      * Save new Log
      *
-     * @param ImportDefinitionInterface $definition
+     * @param DefinitionInterface $definition
      * @param array $objectIds
      * @throws \Exception
      */
-    protected function writeNewLogs(ImportDefinitionInterface $definition, $objectIds)
+    protected function writeNewLogs(DefinitionInterface $definition, $objectIds)
     {
         foreach ($objectIds as $objId) {
             $log = new Log();

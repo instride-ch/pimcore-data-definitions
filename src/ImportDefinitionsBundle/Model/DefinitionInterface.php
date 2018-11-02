@@ -14,127 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use CoreShop\Component\Resource\Model\ResourceInterface;
-
-interface DefinitionInterface extends ResourceInterface
-{
+if (interface_exists(ImportDefinitionInterface::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Model\DefinitionInterface is deprecated since version 2.1.0 and will be removed in 3.0.0. Use ImportDefinitionsBundle\Model\ImportDefinitionInterface class instead.', E_USER_DEPRECATED);
+} else {
     /**
-     * @return mixed
+     * @deprecated Class ImportDefinitionsBundle\Model\Definition is deprecated since version 2.0.0 and will be removed in 3.0. Use ImportDefinitionsBundle\Model\ImportDefinitionInterface class instead.
      */
-    public function getId();
+    interface DefinitionInterface
+    {
 
-    /**
-     * @param int $id
-     */
-    public function setId($id);
-
-    /**
-     * @return mixed
-     */
-    public function getProvider();
-
-    /**
-     * @param string $provider
-     */
-    public function setProvider($provider);
-
-    /**
-     * @return mixed
-     */
-    public function getConfiguration();
-
-    /**
-     * @param array $configuration
-     */
-    public function setConfiguration($configuration);
-
-    /**
-     * @return mixed
-     */
-    public function getClass();
-
-    /**
-     * @param int $class
-     */
-    public function setClass($class);
-
-    /**
-     * @return mixed
-     */
-    public function getName();
-
-    /**
-     * @param string $name
-     */
-    public function setName($name);
-
-    /**
-     * @return Mapping[]
-     */
-    public function getMapping();
-
-    /**
-     * @param Mapping[] $mapping
-     */
-    public function setMapping($mapping);
-
-    /**
-     * @return mixed
-     */
-    public function getCreationDate();
-
-    /**
-     * @param int $creationDate
-     */
-    public function setCreationDate($creationDate);
-
-    /**
-     * @return mixed
-     */
-    public function getModificationDate();
-
-    /**
-     * @param int $modificationDate
-     */
-    public function setModificationDate($modificationDate);
-
-    /**
-     * @return mixed
-     */
-    public function getRunner();
-
-    /**
-     * @param string $runner
-     */
-    public function setRunner($runner);
-
-    /**
-     * @return mixed
-     */
-    public function getStopOnException();
-
-    /**
-     * @param boolean $stopOnException
-     */
-    public function setStopOnException($stopOnException);
-
-    /**
-     * @return mixed
-     */
-    public function getFailureNotificationDocument();
-
-    /**
-     * @param int $failureNotificationDocument
-     */
-    public function setFailureNotificationDocument($failureNotificationDocument);
-
-    /**
-     * @return mixed
-     */
-    public function getSuccessNotificationDocument();
-
-    /**
-     * @param int $successNotificationDocument
-     */
-    public function setSuccessNotificationDocument($successNotificationDocument);
+    }
 }

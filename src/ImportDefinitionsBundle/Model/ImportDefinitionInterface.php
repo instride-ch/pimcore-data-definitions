@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-interface ImportDefinitionInterface extends DefinitionInterface
+interface ImportDefinitionInterface extends DataDefinitionInterface
 {
     /**
      * @return mixed
@@ -126,3 +126,5 @@ interface ImportDefinitionInterface extends DefinitionInterface
      */
     public function setForceLoadObject($forceLoadObject);
 }
+
+class_alias(ImportDefinitionInterface::class, 'ImportDefinitionsBundle\Model\DefinitionInterface');

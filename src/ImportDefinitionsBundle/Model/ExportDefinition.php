@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-class ExportDefinition extends AbstractDefinition implements ExportDefinitionInterface
+class ExportDefinition extends AbstractDataDefinition implements ExportDefinitionInterface
 {
     /**
      * @var string

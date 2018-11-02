@@ -11,18 +11,18 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-pimcore.registerNS('pimcore.plugin.importdefinitions.import_provider.sql');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.json');
 
-pimcore.plugin.importdefinitions.import_provider.sql = Class.create(pimcore.plugin.importdefinitions.import_provider.abstractprovider, {
+pimcore.plugin.importdefinitions.provider.json = Class.create(pimcore.plugin.importdefinitions.provider.abstractprovider, {
     getItems : function () {
         return [{
             xtype : 'textarea',
-            fieldLabel : t('importdefinitions_sql_query'),
-            name : 'query',
+            fieldLabel : t('importdefinitions_json_example'),
+            name : 'jsonExample',
             grow : true,
             anchor : '100%',
             minHeight : 300,
-            value : this.data['query'] ? this.data.query : ''
+            value : this.data['jsonExample'] ? this.data.jsonExample : ''
         }];
     }
 });

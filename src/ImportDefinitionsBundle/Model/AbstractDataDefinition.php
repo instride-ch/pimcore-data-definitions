@@ -16,7 +16,7 @@ namespace ImportDefinitionsBundle\Model;
 
 use Pimcore\Model\AbstractModel;
 
-abstract class AbstractDefinition extends AbstractModel implements DefinitionInterface
+abstract class AbstractDataDefinition extends AbstractModel implements DataDefinitionInterface
 {
     /**
      * @var int

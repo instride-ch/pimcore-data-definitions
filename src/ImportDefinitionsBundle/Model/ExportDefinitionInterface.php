@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-interface ExportDefinitionInterface extends DefinitionInterface
+interface ExportDefinitionInterface extends DataDefinitionInterface
 {
     /**
      * @return mixed

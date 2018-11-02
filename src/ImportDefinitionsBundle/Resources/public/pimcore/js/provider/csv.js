@@ -11,9 +11,9 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-pimcore.registerNS('pimcore.plugin.importdefinitions.import_provider.csv');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.csv');
 
-pimcore.plugin.importdefinitions.import_provider.csv = Class.create(pimcore.plugin.importdefinitions.import_provider.abstractprovider, {
+pimcore.plugin.importdefinitions.provider.csv = Class.create(pimcore.plugin.importdefinitions.provider.abstractprovider, {
     getItems : function () {
         return [{
             xtype: 'textfield',

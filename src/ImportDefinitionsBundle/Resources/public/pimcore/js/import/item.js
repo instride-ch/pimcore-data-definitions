@@ -372,7 +372,7 @@ pimcore.plugin.importdefinitions.import.item = Class.create(coreshop.resource.it
         if (this.providerSettings) {
             this.providerSettings.removeAll();
 
-            if (pimcore.plugin.importdefinitions.import_provider[provider] !== undefined) {
+            if (pimcore.plugin.importdefinitions.provider[provider] !== undefined) {
                 if (this.data.provider === null) {
                     this.data.provider = provider;
                     this.save(function () {
@@ -408,7 +408,7 @@ pimcore.plugin.importdefinitions.import.item = Class.create(coreshop.resource.it
     },
 
     updateProviderMapViews: function () {
-        this.providerSettings.add(new pimcore.plugin.importdefinitions.import_provider[this.data.provider](this.data.configuration ? this.data.configuration : {}, this).getForm());
+        this.providerSettings.add(new pimcore.plugin.importdefinitions.provider[this.data.provider](this.data.configuration ? this.data.configuration : {}, this).getForm());
         this.providerSettings.enable();
     },
 

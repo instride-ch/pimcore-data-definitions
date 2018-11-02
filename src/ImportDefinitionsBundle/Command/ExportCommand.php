@@ -90,7 +90,7 @@ EOT
                 $output->writeln('');
             }
 
-            $output->writeln('Import finished!');
+            $output->writeln('Export finished!');
             $output->writeln('');
         };
 

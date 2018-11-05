@@ -12,7 +12,7 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Export;
+namespace ImportDefinitionsBundle\Exporter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Fetcher\FetcherInterface;
@@ -28,7 +28,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 
-final class Exporter implements ExportInterface
+final class Exporter implements ExporterInterface
 {
     /**
      * @var ServiceRegistryInterface

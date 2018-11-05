@@ -14,23 +14,53 @@
 
 namespace ImportDefinitionsBundle\Command;
 
+use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
+use ImportDefinitionsBundle\Exporter\ExporterInterface;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ExportCommand extends AbstractCommand
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
+     * @var RepositoryInterface
+     */
+    protected $repository;
+
+    /**
+     * @var ExporterInterface
+     */
+    protected $exporter;
+
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        RepositoryInterface $repository,
+        ExporterInterface $exporter
+    ) {
+        $this->eventDispatcher = $eventDispatcher;
+        $this->repository = $repository;
+        $this->exporter = $exporter;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
         $this
-            ->setName('import-definitions:export')
+            ->setName('export-definitions:export')
             ->setDescription('Run a Export Definition.')
             ->setHelp(<<<EOT
 The <info>%command.name%</info> runs a Export Definitions and imports Objects.
@@ -54,10 +84,10 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $eventDispatcher = $this->getContainer()->get('event_dispatcher');
+        $eventDispatcher = $this->eventDispatcher;
 
         $params = $input->getOption('params');
-        $definition = $this->getContainer()->get('import_definitions.repository.export_definition')->find($input->getOption('definition'));
+        $definition = $this->repository->find($input->getOption('definition'));
         $progress = null;
         $process = null;
 
@@ -99,7 +129,7 @@ EOT
         $eventDispatcher->addListener('export_definition.progress', $imProgress);
         $eventDispatcher->addListener('export_definition.finished', $imFinished);
 
-        $this->getContainer()->get('import_definition.exporter')->doExport($definition, json_decode($params, true));
+        $this->exporter->doExport($definition, json_decode($params, true));
 
         $eventDispatcher->removeListener('export_definition.status', $imStatus);
         $eventDispatcher->removeListener('export_definition.total', $imTotal);

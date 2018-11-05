@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
-final class ListCommand extends AbstractCommand
+final class ListImportDefinitionsCommand extends AbstractCommand
 {
     /**
      * {@inheritdoc}

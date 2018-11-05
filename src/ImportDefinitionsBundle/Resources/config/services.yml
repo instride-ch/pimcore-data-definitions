@@ -1,6 +1,7 @@
 imports:
     - { resource: "services/forms.yml" }
     - { resource: "services/installer.yml" }
+    - { resource: "services/commands.yml" }
 
 services:
     import_definition.event_dispatcher:

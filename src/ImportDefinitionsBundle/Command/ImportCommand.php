@@ -14,16 +14,46 @@
 
 namespace ImportDefinitionsBundle\Command;
 
+use CoreShop\Component\Resource\Repository\RepositoryInterface;
+use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
+use ImportDefinitionsBundle\Importer\ImporterInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
-use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ImportCommand extends AbstractCommand
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
+     * @var RepositoryInterface
+     */
+    protected $repository;
+
+    /**
+     * @var ImporterInterface
+     */
+    protected $importer;
+
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        RepositoryInterface $repository,
+        ImporterInterface $importer
+    ) {
+        $this->eventDispatcher = $eventDispatcher;
+        $this->repository = $repository;
+        $this->importer = $importer;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -32,17 +62,20 @@ final class ImportCommand extends AbstractCommand
         $this
             ->setName('import-definitions:import')
             ->setDescription('Run a Import Definition.')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>%command.name%</info> runs a Import Definitions and imports Objects.
 EOT
             )
             ->addOption(
-                'definition', 'd',
+                'definition',
+                'd',
                 InputOption::VALUE_REQUIRED,
                 'Import Definition ID'
             )
             ->addOption(
-                'params', 'p',
+                'params',
+                'p',
                 InputOption::VALUE_REQUIRED,
                 'JSON Encoded Params'
             );
@@ -54,10 +87,10 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $eventDispatcher = $this->getContainer()->get('event_dispatcher');
+        $eventDispatcher = $this->eventDispatcher;
 
         $params = $input->getOption('params');
-        $definition = $this->getContainer()->get('import_definitions.repository.definition')->find($input->getOption('definition'));
+        $definition = $this->repository->find($input->getOption('definition'));
         $progress = null;
         $process = null;
 
@@ -65,7 +98,7 @@ EOT
             throw new \Exception('Import Definition not found');
         }
 
-        $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process)  {
+        $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
             if ($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getSubject());
                 $progress->display();
@@ -74,7 +107,9 @@ EOT
 
         $imTotal = function (ImportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
             $progress = new ProgressBar($output, $e->getSubject());
-            $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%');
+            $progress->setFormat(
+                ' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%'
+            );
             $progress->start();
         };
 
@@ -100,7 +135,7 @@ EOT
         $eventDispatcher->addListener('import_definition.progress', $imProgress);
         $eventDispatcher->addListener('import_definition.finished', $imFinished);
 
-        $this->getContainer()->get('import_definition.importer')->doImport($definition, json_decode($params, true));
+        $this->importer->doImport($definition, json_decode($params, true));
 
         $eventDispatcher->removeListener('import_definition.status', $imStatus);
         $eventDispatcher->removeListener('import_definition.status.child', $imStatus);

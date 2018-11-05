@@ -30,7 +30,13 @@ trait ArtifactProviderTrait
 
         $artifactPath = dirname($params['artifact']);
         $artifactName = basename($params['artifact']);
-        $artifactPath = Asset\Service::createFolderByPath($artifactPath);
+
+        if ($artifactPath === '.') {
+            $artifactPath = Asset::getById(1);
+        }
+        else {
+            $artifactPath = Asset\Service::createFolderByPath($artifactPath);
+        }
 
         $stream = $this->provideArtifactStream($configuration, $definition, $params);
 

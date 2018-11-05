@@ -307,6 +307,11 @@ class ExportDefinitionController extends ResourceController
                 'fieldtype' => 'datetime',
                 'title' => 'Modification Date',
             ],
+            [
+                'name' => 'custom',
+                'fieldtype' => 'input',
+                'title' => 'Custom',
+            ],
         ];
 
         $result = [];

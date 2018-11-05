@@ -235,7 +235,7 @@ final class Exporter implements ExporterInterface
              * @var $mapItem ExportMapping
              */
             foreach ($definition->getMapping() as $mapItem) {
-                $data[$mapItem->getFromColumn()] = $this->getObjectValue(
+                $data[$mapItem->getToColumn()] = $this->getObjectValue(
                     $object,
                     $mapItem,
                     $data,

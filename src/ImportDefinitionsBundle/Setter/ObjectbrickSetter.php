@@ -70,7 +70,7 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
 
     public function get(Concrete $object, ExportMapping $map, $data)
     {
-        $keyParts = explode('~', $map->getToColumn());
+        $keyParts = explode('~', $map->getFromColumn());
 
         $config = $map->getGetterConfig();
         $fieldName = $config['brickField'];

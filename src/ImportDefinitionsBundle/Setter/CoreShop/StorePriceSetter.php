@@ -16,11 +16,13 @@ namespace ImportDefinitionsBundle\Setter\CoreShop;
 
 use CoreShop\Component\Core\Model\StoreInterface;
 use CoreShop\Component\Store\Repository\StoreRepositoryInterface;
+use ImportDefinitionsBundle\Getter\GetterInterface;
+use ImportDefinitionsBundle\Model\ExportMapping;
 use ImportDefinitionsBundle\Model\Mapping;
 use ImportDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 
-class StorePriceSetter implements SetterInterface
+class StorePriceSetter implements SetterInterface, GetterInterface
 {
     /**
      * @var StoreRepositoryInterface
@@ -37,7 +39,6 @@ class StorePriceSetter implements SetterInterface
 
     /**
      * {@inheritdoc}
-     * @throws \Exception
      */
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
@@ -62,5 +63,37 @@ class StorePriceSetter implements SetterInterface
 
             $object->$setter($value, $store);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get(Concrete $object, ExportMapping $map, $data)
+    {
+        $config = $map->getGetterConfig();
+
+        if (!array_key_exists('stores', $config) || !\is_array($config['stores'])) {
+            return [];
+        }
+
+        $values = [];
+
+        foreach ($config['stores'] as $store) {
+            $store = $this->storeRepository->find($store);
+
+            if (!$store instanceof StoreInterface) {
+                throw new \InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
+            }
+
+            $getter = sprintf('get%s', ucfirst($map->getFromColumn()));
+
+            if (!method_exists($object, $getter)) {
+                throw new \InvalidArgumentException(sprintf('Expected a %s function but can not find it', $getter));
+            }
+
+            $values[$store->getId()] = $object->$getter($store);
+        }
+
+        return $values;
     }
 }

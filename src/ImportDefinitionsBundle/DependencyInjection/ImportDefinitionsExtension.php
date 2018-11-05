@@ -45,6 +45,7 @@ class ImportDefinitionsExtension extends AbstractModelExtension
             $config['pimcore_admin']['js']['coreshop_interpreter_price'] = '/bundles/importdefinitions/pimcore/js/coreshop/interpreter/price.js';
             $config['pimcore_admin']['js']['coreshop_interpreter_stores'] = '/bundles/importdefinitions/pimcore/js/coreshop/interpreter/stores.js';
             $config['pimcore_admin']['js']['coreshop_setter_storePrice'] = '/bundles/importdefinitions/pimcore/js/coreshop/setter/storePrice.js';
+            $config['pimcore_admin']['js']['coreshop_getter_storePrice'] = '/bundles/importdefinitions/pimcore/js/coreshop/getter/storePrice.js';
 
             $loader->load('coreshop.yml');
         }

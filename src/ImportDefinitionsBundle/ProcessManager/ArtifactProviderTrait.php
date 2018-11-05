@@ -44,9 +44,7 @@ trait ArtifactProviderTrait
         $artifact->setFilename($artifactName);
         $artifact->setStream($stream);
         $artifact->setParent($artifactPath);
-
-        Asset\Service::getUniqueKey($artifact);
-
+        $artifact->setFilename(Asset\Service::getUniqueKey($artifact));
         $artifact->save();
 
         fclose($stream);

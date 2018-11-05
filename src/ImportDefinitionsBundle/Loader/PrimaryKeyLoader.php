@@ -14,9 +14,9 @@
 
 namespace ImportDefinitionsBundle\Loader;
 
+use ImportDefinitionsBundle\Model\DefinitionInterface;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 use Pimcore\Model\DataObject\Listing;
 
 class PrimaryKeyLoader implements LoaderInterface
@@ -24,7 +24,7 @@ class PrimaryKeyLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load(string $class, $data, ImportDefinitionInterface $definition, $params): ?Concrete {
+    public function load(string $class, $data, DefinitionInterface $definition, $params): ?Concrete {
         $classObject = '\Pimcore\Model\DataObject\\' . ucfirst($class);
         $classList = '\Pimcore\Model\DataObject\\' . ucfirst($class) . '\Listing';
 

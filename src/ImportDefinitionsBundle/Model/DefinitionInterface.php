@@ -14,11 +14,11 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-if (interface_exists(ImportDefinitionInterface::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\DefinitionInterface is deprecated since version 2.1.0 and will be removed in 3.0.0. Use ImportDefinitionsBundle\Model\ImportDefinitionInterface class instead.', E_USER_DEPRECATED);
+if (interface_exists(DataDefinitionInterface::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Model\DefinitionInterface is deprecated since version 2.1.0 and will be removed in 3.0.0. Use ImportDefinitionsBundle\Model\DataDefinitionInterface class instead.', E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\Definition is deprecated since version 2.0.0 and will be removed in 3.0. Use ImportDefinitionsBundle\Model\ImportDefinitionInterface class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\Definition is deprecated since version 2.0.0 and will be removed in 3.0. Use ImportDefinitionsBundle\Model\DataDefinitionInterface interface instead.
      */
     interface DefinitionInterface
     {

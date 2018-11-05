@@ -126,5 +126,3 @@ interface ImportDefinitionInterface extends DataDefinitionInterface
      */
     public function setForceLoadObject($forceLoadObject);
 }
-
-class_alias(ImportDefinitionInterface::class, 'ImportDefinitionsBundle\Model\DefinitionInterface');

@@ -138,3 +138,5 @@ interface DataDefinitionInterface extends ResourceInterface
      */
     public function setSuccessNotificationDocument($successNotificationDocument);
 }
+
+class_alias(DataDefinitionInterface::class, 'ImportDefinitionsBundle\Model\DefinitionInterface');

@@ -102,7 +102,7 @@ final class Exporter implements ExporterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function doExport(ExportDefinitionInterface $definition, $params)
+    public function doExport(ExportDefinitionInterface $definition, array $params)
     {
         $fetcher = $this->getFetcher($definition);
         $provider = $this->getProvider($definition);

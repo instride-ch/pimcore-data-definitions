@@ -86,10 +86,14 @@ EOT
     {
         $eventDispatcher = $this->eventDispatcher;
 
-        $params = $input->getOption('params');
+        $params = json_decode($input->getOption('params'), true);
         $definition = $this->repository->find($input->getOption('definition'));
         $progress = null;
         $process = null;
+
+        if (!is_array($params)) {
+            $params = [];
+        }
 
         if (!$definition instanceof ExportDefinitionInterface) {
             throw new \Exception('Export Definition not found');
@@ -129,7 +133,7 @@ EOT
         $eventDispatcher->addListener('export_definition.progress', $imProgress);
         $eventDispatcher->addListener('export_definition.finished', $imFinished);
 
-        $this->exporter->doExport($definition, json_decode($params, true));
+        $this->exporter->doExport($definition, $params);
 
         $eventDispatcher->removeListener('export_definition.status', $imStatus);
         $eventDispatcher->removeListener('export_definition.total', $imTotal);

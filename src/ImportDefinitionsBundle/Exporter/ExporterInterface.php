@@ -23,5 +23,5 @@ interface ExporterInterface
      * @param $params
      * @return mixed
      */
-    public function doExport(ExportDefinitionInterface $definition, $params);
+    public function doExport(ExportDefinitionInterface $definition, array $params);
 }

@@ -277,7 +277,7 @@ final class Exporter implements ExporterInterface
                 $value = $getter->get($object, $map, $data);
             }
         } else {
-            $getter = "get" . ucfirst($map->getToColumn());
+            $getter = "get" . ucfirst($map->getFromColumn());
 
             if (method_exists($object, $getter)) {
                 $value = $object->$getter();

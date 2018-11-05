@@ -15,18 +15,18 @@
 namespace ImportDefinitionsBundle\Exporter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
+use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Fetcher\FetcherInterface;
 use ImportDefinitionsBundle\Getter\GetterInterface;
-use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Interpreter\InterpreterInterface;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ExportMapping;
 use ImportDefinitionsBundle\Provider\ExportProviderInterface;
 use ImportDefinitionsBundle\Runner\ExportRunnerInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
-use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class Exporter implements ExporterInterface
 {
@@ -106,7 +106,7 @@ final class Exporter implements ExporterInterface
     {
         $fetcher = $this->getFetcher($definition);
         $provider = $this->getProvider($definition);
-        $total = $fetcher->count($definition, $params);
+        $total = $fetcher->count($definition, $params, is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
 
         if ($total > 0) {
             $this->eventDispatcher->dispatch('export_definition.total', new ExportDefinitionEvent($definition, $total, $params));
@@ -162,7 +162,7 @@ final class Exporter implements ExporterInterface
 
         for ($i = 0; $i < (ceil($total / $perLoop)); $i++) {
 
-            $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop, $definition->getFetcherConfig());
+            $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop, is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
 
             foreach ($objects as $object) {
                 try {
@@ -230,12 +230,19 @@ final class Exporter implements ExporterInterface
 
         $this->logger->info(sprintf('Export Object: %s', $object->getRealFullPath()));
 
-        /**
-         * @var $mapItem ExportMapping
-         */
-        foreach ($definition->getMapping() as $mapItem)
-        {
-            $data[$mapItem->getFromColumn()] = $this->getObjectValue($object, $mapItem, $data, $definition, $params);
+        if (is_array($definition->getMapping())) {
+            /**
+             * @var $mapItem ExportMapping
+             */
+            foreach ($definition->getMapping() as $mapItem) {
+                $data[$mapItem->getFromColumn()] = $this->getObjectValue(
+                    $object,
+                    $mapItem,
+                    $data,
+                    $definition,
+                    $params
+                );
+            }
         }
         
         $provider->addExportData($data, $definition->getConfiguration(), $definition, $params);

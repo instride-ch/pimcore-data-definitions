@@ -14,12 +14,15 @@
 
 namespace ImportDefinitionsBundle\DependencyInjection\Compiler;
 
-final class FetcherRegistryCompilerPass extends AbstractServiceRegistryCompilerPass
+use CoreShop\Bundle\PimcoreBundle\DependencyInjection\Compiler\RegisterRegistryTypePass;
+
+final class FetcherRegistryCompilerPass extends RegisterRegistryTypePass
 {
     public function __construct()
     {
         parent::__construct(
             'import_definition.registry.fetcher',
+            'import_definition.form.registry.fetcher',
             'import_definition.fetchers',
             'import_definition.fetcher'
         );

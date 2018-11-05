@@ -92,6 +92,7 @@ services:
             - '%import_definitions.model.export_definition.class%'
             - '%import_definition.form.type.export_definition.validation_groups%'
             - '@import_definition.form.registry.provider'
+            - '@import_definition.form.registry.fetcher'
         tags:
             - { name: form.type }
 

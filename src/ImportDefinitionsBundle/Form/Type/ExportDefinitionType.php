@@ -32,13 +32,23 @@ final class ExportDefinitionType extends AbstractResourceType
     private $formTypeRegistry;
 
     /**
+     * @var FormTypeRegistryInterface
+     */
+    private $fetcherFormTypeRegistry;
+
+    /**
      * {@inheritdoc}
      */
-    public function __construct($dataClass, array $validationGroups, FormTypeRegistryInterface $formTypeRegistry)
-    {
+    public function __construct(
+        $dataClass,
+        array $validationGroups,
+        FormTypeRegistryInterface $formTypeRegistry,
+        FormTypeRegistryInterface $fetcherFormTypeRegistry
+    ) {
         parent::__construct($dataClass, $validationGroups);
 
         $this->formTypeRegistry = $formTypeRegistry;
+        $this->fetcherFormTypeRegistry = $fetcherFormTypeRegistry;
     }
 
     /**
@@ -87,6 +97,36 @@ final class ExportDefinitionType extends AbstractResourceType
                 $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($data['provider'], 'default'));
             })
         ;
+
+        $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $type = $this->getFetcherRegistryIdentifier($event->getForm(), $event->getData());
+
+                if (null === $type) {
+                    return;
+                }
+
+                $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($type, 'default'));
+            })
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+                $type = $this->getFetcherRegistryIdentifier($event->getForm(), $event->getData());
+
+                if (null === $type) {
+                    return;
+                }
+
+                $event->getForm()->get('fetcher')->setData($type);
+            })
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $data = $event->getData();
+
+                if (!isset($data['fetcher'])) {
+                    return;
+                }
+
+                $this->addFetcherConfigurationFields($event->getForm(), $this->formTypeRegistry->get($data['fetcher'], 'default'));
+            })
+        ;
     }
 
     /**
@@ -111,6 +151,29 @@ final class ExportDefinitionType extends AbstractResourceType
 
         if (null !== $form->getConfig()->hasOption('configuration_type')) {
             return $form->getConfig()->getOption('configuration_type');
+        }
+
+        return null;
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param string        $configurationType
+     */
+    protected function addFetcherConfigurationFields(FormInterface $form, $configurationType)
+    {
+        $form->add('fetcherConfig', $configurationType);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param mixed         $data
+     * @return string|null
+     */
+    protected function getFetcherRegistryIdentifier(FormInterface $form, $data = null)
+    {
+        if (null !== $data && null !== $data->getFetcher()) {
+            return $data->getFetcher();
         }
 
         return null;

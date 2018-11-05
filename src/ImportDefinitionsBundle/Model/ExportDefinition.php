@@ -22,6 +22,11 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
     public $fetcher;
 
     /**
+     * @var array
+     */
+    public $fetcherConfig;
+
+    /**
      * {@inheritdoc}
      */
     public function getFetcher()
@@ -35,5 +40,21 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
     public function setFetcher($fetcher)
     {
         $this->fetcher = $fetcher;
+    }
+
+     /**
+     * {@inheritdoc}
+     */
+    public function getFetcherConfig()
+    {
+        return $this->fetcherConfig;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFetcherConfig($fetcherConfig)
+    {
+        $this->fetcherConfig = $fetcherConfig;
     }
 }

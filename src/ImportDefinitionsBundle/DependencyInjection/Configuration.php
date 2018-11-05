@@ -163,6 +163,8 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('getter_objectbrick')->defaultValue('/bundles/importdefinitions/pimcore/js/getters/objectbrick.js')->end()
                             ->scalarNode('getter_classificationstore')->defaultValue('/bundles/importdefinitions/pimcore/js/getters/classificationstore.js')->end()
                             ->scalarNode('getter_localizedfield')->defaultValue('/bundles/importdefinitions/pimcore/js/getters/localizedfield.js')->end()
+                            ->scalarNode('fetcher_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/fetchers/abstract.js')->end()
+                            ->scalarNode('fetcher_objects')->defaultValue('/bundles/importdefinitions/pimcore/js/fetchers/objects.js')->end()
                         ->end()
                     ->end()
                     ->arrayNode('css')

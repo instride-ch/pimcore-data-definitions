@@ -1,4 +1,3 @@
-<?php
 /**
  * Import Definitions.
  *
@@ -12,27 +11,11 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Model;
+pimcore.registerNS('pimcore.plugin.importdefinitions.fetchers');
+pimcore.registerNS('pimcore.plugin.importdefinitions.fetchers.abstract');
 
-interface ExportDefinitionInterface extends DataDefinitionInterface
-{
-    /**
-     * @return mixed
-     */
-    public function getFetcher();
-
-    /**
-     * @param string $fetcher
-     */
-    public function setFetcher($fetcher);
-
-    /**
-     * @return array
-     */
-    public function getFetcherConfig();
-
-    /**
-     * @param array $fetcherConfig
-     */
-    public function setFetcherConfig($fetcherConfig);
-}
+pimcore.plugin.importdefinitions.fetchers.abstract = Class.create({
+    getLayout : function () {
+        return [];
+    }
+});

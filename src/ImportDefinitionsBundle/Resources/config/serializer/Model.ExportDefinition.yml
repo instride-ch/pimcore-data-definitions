@@ -6,3 +6,7 @@ ImportDefinitionsBundle\Model\ExportDefinition:
       expose: true
       type: string
       groups: [Detailed]
+    fetcherConfig:
+      expose: true
+      type: array
+      groups: [Detailed]

@@ -110,6 +110,9 @@ services:
             - ImportDefinitionsBundle\Fetcher\FetcherInterface
             - 'Import Definition Fetchers'
 
+    import_definition.form.registry.fetcher:
+        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
     import_definition.registry.runner:
         class: CoreShop\Component\Registry\ServiceRegistry
         arguments:
@@ -314,7 +317,7 @@ services:
     import_definition.fetcher.objects:
         class: ImportDefinitionsBundle\Fetcher\ObjectsFetcher
         tags:
-            - { name: import_definition.fetcher, type: objects }
+            - { name: import_definition.fetcher, type: objects, form-type: ImportDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType }
 
     ### LOADER
     import_definition.loader.primary_key:

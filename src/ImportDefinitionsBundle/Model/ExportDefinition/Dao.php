@@ -131,6 +131,7 @@ class Dao extends Model\Dao\PhpArrayTable
                 'failureNotificationDocument',
                 'successNotificationDocument',
                 'fetcher',
+                'fetcherConfig'
             ];
 
             foreach ($dataRaw as $key => $value) {

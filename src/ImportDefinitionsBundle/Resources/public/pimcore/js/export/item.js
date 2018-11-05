@@ -116,7 +116,14 @@ pimcore.plugin.importdefinitions.export.item = Class.create(coreshop.resource.it
                     valueField: 'fetcher',
                     store: pimcore.globalmanager.get('importdefinitions_fetchers'),
                     value: this.data.fetcher,
-                    width: 500
+                    width: 500,
+                    listeners: {
+                        change : function (combo, newValue) {
+                            this.getFetcherPanel().removeAll();
+
+                            this.getFetcherPanelLayout(newValue);
+                        }.bind(this)
+                    }
                 },
                 {
                     xtype: 'combo',
@@ -233,9 +240,12 @@ pimcore.plugin.importdefinitions.export.item = Class.create(coreshop.resource.it
                             });
                         }
                     }
-                }
+                },
+                this.getFetcherPanel(),
             ]
         });
+
+        this.getFetcherPanelLayout(this.data.fetcher);
 
         return this.configForm;
     },
@@ -309,6 +319,39 @@ pimcore.plugin.importdefinitions.export.item = Class.create(coreshop.resource.it
         return this.mappingSettings;
     },
 
+    getFetcherPanel : function () {
+        if (!this.fetcherPanel) {
+            this.fetcherPanel = new Ext.form.FormPanel({
+                defaults: { anchor: '100%' },
+                layout: 'form',
+                border: 1,
+                padding: '0 0 10px 0',
+                title : t('importdefinition_fetcher_settings')
+            });
+        }
+
+        return this.fetcherPanel;
+    },
+
+    getFetcherPanelLayout : function (type) {
+        if (type) {
+            type = type.toLowerCase();
+
+            if (pimcore.plugin.importdefinitions.fetchers[type]) {
+                this.fetcher = new pimcore.plugin.importdefinitions.fetchers[type];
+
+                this.getFetcherPanel().add(this.fetcher.getLayout(Ext.isObject(this.data.fetcherConfig) ? this.data.fetcherConfig : {}, this.data));
+                this.getFetcherPanel().show();
+            } else {
+                this.getFetcherPanel().hide();
+
+                this.fetcher = null;
+            }
+        } else {
+            this.getFetcherPanel().hide();
+        }
+    },
+
     reloadColumnMapping: function () {
         if (this.mappingSettings) {
             this.mappingSettings.removeAll();
@@ -322,6 +365,7 @@ pimcore.plugin.importdefinitions.export.item = Class.create(coreshop.resource.it
     getSaveData: function () {
         var data = {
             configuration: {},
+            fetcherConfig: {},
             mapping: this.mappingSettingsFieldsPanel.getData()
         };
 
@@ -329,6 +373,17 @@ pimcore.plugin.importdefinitions.export.item = Class.create(coreshop.resource.it
 
         if (this.providerSettings.down('form')) {
             Ext.apply(data.configuration, this.providerSettings.down('form').getForm().getFieldValues());
+        }
+
+        if (this.getFetcherPanel().isVisible()) {
+            if (Ext.isFunction(this.fetcher.getFetcherData)) {
+                data.fetcherConfig = this.fetcher.getFetcherData();
+            }
+            else {
+                Ext.Object.each(this.getFetcherPanel().getForm().getFieldValues(), function (key, value) {
+                    data.fetcherConfig[key] = value;
+                }.bind(this));
+            }
         }
 
         return data;

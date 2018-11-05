@@ -23,14 +23,16 @@ interface FetcherInterface
      * @param                     $params
      * @param int                 $limit
      * @param int                 $offset
-     * @return mixed
+     * @param                     $configuration
+     * @return array
      */
-    public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset);
+    public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset, array $configuration);
 
     /**+
      * @param ExportDefinitionInterface $definition
      * @param                     $params
+     * @param                     $configuration
      * @return int
      */
-    public function count(ExportDefinitionInterface $definition, $params): int;
+    public function count(ExportDefinitionInterface $definition, $params, array $configuration): int;
 }

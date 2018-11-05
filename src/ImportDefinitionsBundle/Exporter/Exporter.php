@@ -162,7 +162,7 @@ final class Exporter implements ExporterInterface
 
         for ($i = 0; $i < (ceil($total / $perLoop)); $i++) {
 
-            $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop);
+            $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop, $definition->getFetcherConfig());
 
             foreach ($objects as $object) {
                 try {

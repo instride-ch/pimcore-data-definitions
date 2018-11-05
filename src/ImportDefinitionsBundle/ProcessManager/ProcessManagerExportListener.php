@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
 use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
+use Pimcore\Model\Asset;
 use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
 use ProcessManagerBundle\Model\ProcessInterface;
@@ -123,8 +124,10 @@ final class ProcessManagerExportListener
                     $event->getParams()
                 );
 
-                $this->process->setArtifact($artifact);
-                $this->process->save();
+                if ($artifact instanceof Asset) {
+                    $this->process->setArtifact($artifact);
+                    $this->process->save();
+                }
             }
         }
     }

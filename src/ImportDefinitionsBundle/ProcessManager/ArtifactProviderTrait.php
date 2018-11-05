@@ -22,7 +22,7 @@ trait ArtifactProviderTrait
     /**
      * {@inheritdoc}
      */
-    public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): Asset
+    public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset
     {
         if (!$params['artifact']) {
             return null;

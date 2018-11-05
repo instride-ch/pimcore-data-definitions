@@ -28,7 +28,7 @@ services:
             - { name: monolog.logger, channel: import_definition }
 
     import_definition.exporter:
-        class: ImportDefinitionsBundle\Export\Exporter
+        class: ImportDefinitionsBundle\Exporter\Exporter
         arguments:
             - '@import_definition.registry.fetcher'
             - '@import_definition.registry.runner'

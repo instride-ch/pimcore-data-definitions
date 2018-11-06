@@ -16,6 +16,7 @@ namespace ImportDefinitionsBundle\Fetcher;
 
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use Pimcore\Model\DataObject\ClassDefinition;
+use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
 
 class ObjectsFetcher implements FetcherInterface
@@ -25,7 +26,7 @@ class ObjectsFetcher implements FetcherInterface
      */
     public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset, array $configuration)
     {
-        $list = $this->getClassListing($definition);
+        $list = $this->getClassListing($definition, $params);
         $list->setLimit($limit);
         $list->setOffset($offset);
         $list->setUnpublished(false === $definition->isFetchUnpublished());
@@ -38,14 +39,14 @@ class ObjectsFetcher implements FetcherInterface
      */
     public function count(ExportDefinitionInterface $definition, $params, array $configuration): int
     {
-        return $this->getClassListing($definition)->getTotalCount();
+        return $this->getClassListing($definition, $params)->getTotalCount();
     }
 
     /**
      * @param ExportDefinitionInterface $definition
      * @return Listing
      */
-    private function getClassListing(ExportDefinitionInterface $definition)
+    private function getClassListing(ExportDefinitionInterface $definition, $params)
     {
         $class = $definition->getClass();
         $classDefinition = ClassDefinition::getByName($class);
@@ -56,7 +57,16 @@ class ObjectsFetcher implements FetcherInterface
         }
 
         $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';
+        $list = new $classList;
 
-        return new $classList;
+        if (isset($params['root'])) {
+            $rootNode = Concrete::getById($params['root']);
+
+            if (null !== $rootNode) {
+                $list->addConditionParam('o_path LIKE :path', ['path' => $rootNode->getFullPath().'%']);
+            }
+        }
+
+        return $list;
     }
 }

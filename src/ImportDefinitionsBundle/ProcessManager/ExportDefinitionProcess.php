@@ -25,12 +25,16 @@ final class ExportDefinitionProcess extends Pimcore
     public function run(ExecutableInterface $executable, array $params = null)
     {
         $settings = $executable->getSettings();
-        $settings['params'] = array_replace($settings['params'], (array) $params);
+        if (isset($settings['params'])) {
+            $settings['params'] = array_replace(json_decode($settings['params'], true), (array) $params);
+        } else {
+            $settings['params'] = (array) $params;
+        }
 
-        $settings['command'] = sprintf('export-definitions:export -d %s -p "%s"', $settings['definition'], addslashes($settings['params']));
+        $settings['command'] = sprintf('export-definitions:export -d %s -p "%s"', $settings['definition'], addslashes(json_encode($settings['params'])));
 
         $executable->setSettings($settings);
 
-        return parent::run($executable);
+        return parent::run($executable, $params);
     }
 }

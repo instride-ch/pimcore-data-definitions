@@ -14,10 +14,20 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use ImportDefinitionsBundle\Model\Mapping\FromColumn;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
+use ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
+use ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 
-class JsonProvider implements ProviderInterface
+class JsonProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
+    use ArtifactProviderTrait;
+
+    /**
+     * @var array
+     */
+    private $exportData = [];
+
     /**
      * Calculate depth
      *
@@ -84,5 +94,34 @@ class JsonProvider implements ProviderInterface
         }
 
         return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+
+        file_put_contents($file, json_encode($this->exportData));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $this->exportData[] = $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $stream = fopen('php://memory', 'rw+');
+        fwrite($stream, json_encode($this->exportData));
+
+        return $stream;
     }
 }

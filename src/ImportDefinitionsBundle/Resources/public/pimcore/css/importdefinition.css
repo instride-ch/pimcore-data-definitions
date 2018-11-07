@@ -1,5 +1,9 @@
-.importdefinitions_icon_definition, .processmanager_icon_executable_type_importdefinition {
-    background: url(../img/definition.svg) center center no-repeat !important;
+.importdefinitions_icon_import_definition, .processmanager_icon_executable_type_importdefinition {
+    background: url(../img/import_definition.svg) center center no-repeat !important;
+}
+
+.importdefinitions_icon_export_definition, .processmanager_icon_executable_type_exportdefinition {
+    background: url(../img/export_definition.svg) center center no-repeat !important;
 }
 
 .importdefinitions_icon_settings {

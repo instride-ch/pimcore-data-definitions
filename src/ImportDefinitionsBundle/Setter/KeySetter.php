@@ -14,9 +14,9 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
+use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\Mapping;
 
 class KeySetter implements SetterInterface
 {

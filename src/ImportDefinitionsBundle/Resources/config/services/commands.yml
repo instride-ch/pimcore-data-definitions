@@ -1,0 +1,24 @@
+services:
+    ImportDefinitionsBundle\Command\ListImportDefinitionsCommand:
+        tags:
+            - { name: 'console.command', command: 'import-definitions:list' }
+
+    ImportDefinitionsBundle\Command\ListExportDefinitionsCommand:
+        tags:
+            - { name: 'console.command', command: 'export-definitions:list' }
+
+    ImportDefinitionsBundle\Command\ImportCommand:
+        arguments:
+            - '@event_dispatcher'
+            - '@import_definitions.repository.definition'
+            - '@import_definition.importer'
+        tags:
+            - { name: 'console.command', command: 'import-definitions:import' }
+
+    ImportDefinitionsBundle\Command\ExportCommand:
+        arguments:
+            - '@event_dispatcher'
+            - '@import_definitions.repository.export_definition'
+            - '@import_definition.exporter'
+        tags:
+            - { name: 'console.command', command: 'export-definitions:export' }

@@ -14,8 +14,8 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\Mapping;
+use Pimcore\Model\DataObject\Concrete;
 
 interface SetterInterface
 {

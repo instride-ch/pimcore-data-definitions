@@ -14,9 +14,9 @@
 
 namespace ImportDefinitionsBundle\Loader;
 
+use ImportDefinitionsBundle\Model\DefinitionInterface;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
 use Pimcore\Model\DataObject\Listing;
 
 class PrimaryKeyLoader implements LoaderInterface

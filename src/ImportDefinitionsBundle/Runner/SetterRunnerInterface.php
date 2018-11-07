@@ -14,9 +14,9 @@
 
 namespace ImportDefinitionsBundle\Runner;
 
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 
 interface SetterRunnerInterface extends RunnerInterface
 {
@@ -25,9 +25,9 @@ interface SetterRunnerInterface extends RunnerInterface
      * @param Mapping $map
      * @param $value
      * @param $data
-     * @param DefinitionInterface $definition
+     * @param ImportDefinitionInterface $definition
      * @param $params
      * @return mixed
      */
-    public function shouldSetField(Concrete $object, Mapping $map, $value, $data, DefinitionInterface $definition, $params);
+    public function shouldSetField(Concrete $object, MappingInterface $map, $value, $data, ImportDefinitionInterface $definition, $params);
 }

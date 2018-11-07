@@ -18,7 +18,10 @@ use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\ComposerPackageBundleInterface;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
+use ImportDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
+use ImportDefinitionsBundle\DependencyInjection\Compiler\FetcherRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
+use ImportDefinitionsBundle\DependencyInjection\Compiler\GetterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\LoaderRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
@@ -64,13 +67,22 @@ class ImportDefinitionsBundle extends AbstractResourceBundle implements PimcoreB
         $builder->addCompilerPass(new RunnerRegistryCompilerPass());
         $builder->addCompilerPass(new SetterRegistryCompilerPass());
         $builder->addCompilerPass(new LoaderRegistryCompilerPass());
+        $builder->addCompilerPass(new GetterRegistryCompilerPass());
+        $builder->addCompilerPass(new FetcherRegistryCompilerPass());
+        $builder->addCompilerPass(new ExportProviderRegistryCompilerPass());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getNiceName()
     {
         return 'Import Definitions';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDescription()
     {
         return 'Import Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.';

@@ -19,7 +19,6 @@ use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
-use Pimcore\Tool;
 
 class MappingInterpreter implements InterpreterInterface, DataSetAwareInterface
 {

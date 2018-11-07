@@ -14,15 +14,16 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
+use ImportDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Objectbrick\Data\AbstractData;
 use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\ExportMapping;
 
-class ObjectbrickSetter implements SetterInterface
+class ObjectbrickSetter implements SetterInterface, GetterInterface
 {
     /**
      * {@inheritdoc}
-     * @throws \Exception
      */
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
@@ -65,5 +66,48 @@ class ObjectbrickSetter implements SetterInterface
                 }
             }
         }
+    }
+
+    public function get(Concrete $object, ExportMapping $map, $data)
+    {
+        $keyParts = explode('~', $map->getFromColumn());
+
+        $config = $map->getGetterConfig();
+        $fieldName = $config['brickField'];
+        $class = $config['class'];
+        $brickField = $keyParts[3];
+
+        $brickGetter = sprintf('get%s', ucfirst($fieldName));
+
+        if (method_exists($object, $brickGetter)) {
+            $brick = $object->$brickGetter();
+
+            if (!$brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
+                return;
+            }
+
+            if ($brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
+                $brickClassGetter = sprintf('get%s', ucfirst($class));
+                $brickClassSetter = sprintf('set%s', ucfirst($class));
+
+                $brickFieldObject = $brick->$brickClassGetter();
+
+                if (!$brickFieldObject instanceof AbstractData) {
+                    $brickFieldObjectClass = 'Pimcore\Model\DataObject\Objectbrick\Data\\' . $class;
+
+                    $brickFieldObject = new $brickFieldObjectClass($object);
+
+                    $brick->$brickClassSetter($brickFieldObject);
+                }
+
+                $getter = sprintf('get%s', ucfirst($brickField));
+
+                if (method_exists($brickFieldObject, $getter)) {
+                    return $brickFieldObject->$getter();
+                }
+            }
+        }
+
+        return null;
     }
 }

@@ -14,11 +14,13 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
+use ImportDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Fieldcollection\Data\AbstractData as AbstractFieldCollection;
+use ImportDefinitionsBundle\Model\ExportMapping;
 use ImportDefinitionsBundle\Model\Mapping;
 
-class FieldCollectionSetter implements SetterInterface
+class FieldCollectionSetter implements SetterInterface, GetterInterface
 {
     /**
      * {@inheritdoc}
@@ -86,6 +88,55 @@ class FieldCollectionSetter implements SetterInterface
 
             $object->$setter($fieldCollection);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get(Concrete $object, ExportMapping $map, $data)
+    {
+        $keyParts = explode('~', $map->getFromColumn());
+
+        $config = $map->getSetterConfig();
+        $keys = $config['fieldcollectionKeys'];
+        $fieldName = $config['fieldcollectionField'];
+        $class = $config['class'];
+        $keys = explode(',', $keys);
+        $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\' . ucfirst($class);
+        $field = $keyParts[3];
+        $mappedKeys = [];
+
+        foreach ($keys as $key) {
+            $tmp = explode(':', $key);
+
+            $mappedKeys[] = [
+                'from' => $tmp[0],
+                'to' => $tmp[1]
+            ];
+        }
+
+        $getter = sprintf('get%s', ucfirst($fieldName));
+
+        if (method_exists($object, $getter)) {
+            $fieldCollection = $object->$getter();
+
+            if (!$fieldCollection instanceof \Pimcore\Model\DataObject\Fieldcollection) {
+                $fieldCollection = new \Pimcore\Model\DataObject\Fieldcollection();
+            }
+
+            $items = $fieldCollection->getItems();
+
+            foreach ($items as $item) {
+                if (is_a($item, $fieldCollectionClass) && $this->isValidKey($mappedKeys, $item, $data)) {
+                    if ($item instanceof AbstractFieldCollection) {
+                        return $item->get($field);
+                    }
+
+                }
+            }
+        }
+
+        return null;
     }
 
     /**

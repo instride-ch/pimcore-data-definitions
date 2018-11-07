@@ -14,14 +14,15 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
+use ImportDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\ExportMapping;
 
-class ClassificationStoreSetter implements SetterInterface
+class ClassificationStoreSetter implements SetterInterface, GetterInterface
 {
     /**
      * {@inheritdoc}
-     * @throws \Exception
      */
     public function set(Concrete $object, $value, Mapping $map, $data)
     {
@@ -46,5 +47,35 @@ class ClassificationStoreSetter implements SetterInterface
                 $classificationStore->setLocalizedKeyValue($groupConfig, $keyConfig, $value);
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get(Concrete $object, ExportMapping $map, $data)
+    {
+        $mapConfig = $map->getSetterConfig();
+        $fieldName = $mapConfig['field'];
+        $keyConfig = (int) $mapConfig['keyConfig'];
+        $groupConfig = (int) $mapConfig['groupConfig'];
+
+        $classificationStoreGetter = sprintf('get%s', ucfirst($fieldName));
+
+        if (method_exists($object, $classificationStoreGetter)) {
+            $classificationStore = $object->$classificationStoreGetter();
+
+            if ($classificationStore instanceof \Pimcore\Model\DataObject\Classificationstore) {
+                $groups = $classificationStore->getActiveGroups();
+
+                if (!$groups[$groupConfig]) {
+                    $groups[$groupConfig] = true;
+                    $classificationStore->setActiveGroups($groups);
+                }
+
+                return $classificationStore->getLocalizedKeyValue($groupConfig, $keyConfig);
+            }
+        }
+
+        return null;
     }
 }

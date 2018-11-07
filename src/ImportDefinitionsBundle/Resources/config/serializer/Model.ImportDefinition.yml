@@ -1,0 +1,48 @@
+ImportDefinitionsBundle\Model\ImportDefinition:
+  exclusion_policy: ALL
+  xml_root_name: import_definition
+  properties:
+    loader:
+      expose: true
+      type: string
+      groups: [Detailed]
+    objectPath:
+      expose: true
+      type: string
+      groups: [Detailed]
+    cleaner:
+      expose: true
+      type: string
+      groups: [Detailed]
+    key:
+      expose: true
+      type: string
+      groups: [Detailed]
+    filter:
+      expose: true
+      type: string
+      groups: [Detailed]
+    renameExistingObjects:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    relocateExistingObjects:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    omitMandatoryCheck:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    skipNewObjects:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    skipExistingObjects:
+      expose: true
+      type: boolean
+      groups: [Detailed]
+    forceLoadObject:
+      expose: true
+      type: boolean
+      groups: [Detailed]

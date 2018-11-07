@@ -14,7 +14,7 @@
 
 namespace ImportDefinitionsBundle\Form\DataMapper;
 
-use ImportDefinitionsBundle\Model\Mapping;
+use ImportDefinitionsBundle\Model\MappingInterface;
 use Symfony\Component\Form\DataMapperInterface;
 
 class DefinitionMappingDataMapper implements DataMapperInterface
@@ -50,7 +50,7 @@ class DefinitionMappingDataMapper implements DataMapperInterface
         foreach ($forms as $key => $form) {
             $formData = $form->getData();
             
-            if (!$formData instanceof Mapping) {
+            if (!$formData instanceof MappingInterface) {
                 continue;
             }
 

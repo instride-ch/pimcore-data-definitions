@@ -14,23 +14,39 @@
 pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.iterator');
 
 pimcore.plugin.importdefinitions.interpreters.iterator = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
+    getStore: function() {
+        return pimcore.globalmanager.get('importdefinitions_interpreters');
+    },
+
+    getTitle: function() {
+        return t('importdefinitions_interpreter_settings');
+    },
+
+    getStoreIdentifier: function() {
+        return 'interpreter';
+    },
+
+    getClassItem: function() {
+        return pimcore.plugin.importdefinitions.interpreters;
+    },
+
     getLayout: function (fromColumn, toColumn, record, config) {
         this.interpreterPanel = new Ext.form.FormPanel({
             defaults: { anchor: '90%' },
             layout: 'form',
-            title : t('importdefinitions_interpreter_settings'),
+            title : this.getTitle(),
             border: true,
             hidden: true
         });
 
         this.interpreterTypeCombo = new Ext.form.ComboBox({
             fieldLabel : t('importdefinitions_interpreters'),
-            name : 'interpreter',
+            name : this.getStoreIdentifier(),
             length : 255,
             value : config.interpreter ? config.interpreter.type : null,
-            store : pimcore.globalmanager.get('importdefinitions_interpreters'),
-            valueField : 'interpreter',
-            displayField : 'interpreter',
+            store : this.getStore(),
+            valueField : this.getStoreIdentifier(),
+            displayField : this.getStoreIdentifier(),
             queryMode : 'local',
             listeners : {
                 change : function (combo, newValue) {
@@ -68,8 +84,10 @@ pimcore.plugin.importdefinitions.interpreters.iterator = Class.create(pimcore.pl
         if (type) {
             type = type.toLowerCase();
 
-            if (pimcore.plugin.importdefinitions.interpreters[type]) {
-                this.interpreter = new pimcore.plugin.importdefinitions.interpreters[type];
+            var classItem = this.getClassItem();
+
+            if (classItem[type]) {
+                this.interpreter = new classItem[type];
 
                 this.interpreterPanel.add(this.interpreter.getLayout(fromColumn, toColumn, record, Ext.isObject(config) ? config : {}, parentConfig));
                 this.interpreterPanel.show();

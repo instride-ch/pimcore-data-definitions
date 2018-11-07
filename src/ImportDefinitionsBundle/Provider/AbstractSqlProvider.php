@@ -15,7 +15,7 @@
 namespace ImportDefinitionsBundle\Provider;
 
 use Doctrine\DBAL\Connection;
-use ImportDefinitionsBundle\Model\Mapping\FromColumn;
+use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
 
 abstract class AbstractSqlProvider implements ProviderInterface
 {

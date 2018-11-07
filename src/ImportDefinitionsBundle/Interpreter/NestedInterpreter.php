@@ -47,7 +47,7 @@ final class NestedInterpreter implements InterpreterInterface, DataSetAwareInter
         Assert::keyExists($configuration, 'interpreters');
         Assert::isArray($configuration['interpreters'], 'Interpreter Config needs to be array');
 
-        foreach ($map->getInterpreterConfig()['interpreters'] as $interpreter) {
+        foreach ($configuration['interpreters'] as $interpreter) {
             $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
 
             if ($interpreterObject instanceof DataSetAwareInterface) {

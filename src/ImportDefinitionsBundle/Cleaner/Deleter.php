@@ -20,7 +20,6 @@ class Deleter extends AbstractCleaner
 {
     /**
      * {@inheritdoc}
-     * @throws \Exception
      */
     public function cleanup(DefinitionInterface $definition, $objects)
     {

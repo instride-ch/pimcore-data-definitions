@@ -10,6 +10,7 @@ services:
             - '@coreshop.repository.store'
         tags:
             - { name: import_definition.setter, type: coreshop_store_price, form-type: ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType }
+            - { name: import_definition.getter, type: coreshop_store_price, form-type: ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType }
 
     importdefinitions.coreshop.interpreter.stores:
         class: ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter

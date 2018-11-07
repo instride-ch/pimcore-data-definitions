@@ -274,11 +274,23 @@ pimcore.plugin.importdefinitions.export.fields = Class.create({
         tree.addListener('itemdblclick', function (tree, record, item, index, e, eOpts) {
             if (!record.data.root && record.datatype !== 'layout'
                 && record.data.dataType !== 'localizedfields') {
-                var copy = Ext.apply({}, record.data);
+                var copy = record.createNode(Ext.apply({}, {
+                    fromColumn: record.get('fromColumn').identifier,
+                    toColumn: record.get('fromColumn').identifier,
+                    leaf: true,
+                    iconCls: record.get('iconCls'),
+                    text: record.get('text'),
+                    getter: record.get('getter'),
+                    getterConfig: record.get('getterConfig'),
+                    interpreter: record.get('interpreter'),
+                    interpreterConfig: record.get('interpreterConfig'),
+                    _fromColumn: record.get('fromColumn')
+                }));
 
-                if (this.selectionPanel && !this.selectionPanel.getRootNode().findChild('name', record.data.name)) {
-                    this.selectionPanel.getRootNode().appendChild(copy);
-                }
+                this.selectionPanel.getRootNode().appendChild(copy);
+
+                var dialog = new pimcore.plugin.importdefinitions.export.configDialog();
+                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.config);
             }
         }.bind(this));
 

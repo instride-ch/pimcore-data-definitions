@@ -28,6 +28,12 @@
     "coreshop/resource-bundle": "^2.0",
     "league/csv": "^9.0"
   },
+  "conflict": {
+    "dpfaffenbauer/process-manager": "<2.4"
+  },
+  "suggest": {
+    "dpfaffenbauer/process-manager": "Allows to start Imports/Exports from within Pimcore UI and also tracks Status of current processes."
+  },
   "autoload": {
     "psr-4": {
       "ImportDefinitionsBundle\\": "src/ImportDefinitionsBundle"

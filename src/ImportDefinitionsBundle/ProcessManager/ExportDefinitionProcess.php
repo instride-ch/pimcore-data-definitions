@@ -26,7 +26,7 @@ final class ExportDefinitionProcess extends Pimcore
     {
         $settings = $executable->getSettings();
 
-        $settings['command'] = sprintf('import-definitions:export -d %s -p "%s"', $settings['definition'], addslashes($settings['params']));
+        $settings['command'] = sprintf('export-definitions:export -d %s -p "%s"', $settings['definition'], addslashes($settings['params']));
 
         $executable->setSettings($settings);
 

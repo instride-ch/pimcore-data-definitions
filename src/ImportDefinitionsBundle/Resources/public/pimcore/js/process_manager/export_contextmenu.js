@@ -12,8 +12,9 @@ pimcore.plugin.importdefinitions.export.context_menu = Class.create(pimcore.plug
     prepareObjectTreeContextMenu: function (tree, treeClass, menuItem) {
         // TODO: replace with data store
         var objectTypes = [
-            {id: 4, label: 'Cat'}
+            {id: 1, label: 'Cat'}
         ];
+
 
         var $this = this,
             exportMenu = [];
@@ -43,7 +44,10 @@ pimcore.plugin.importdefinitions.export.context_menu = Class.create(pimcore.plug
             url: '/admin/process_manager/executables/run',
             params: {
                 id: executable.id,
-                root: menuItem.get('id')
+                startupConfig: Ext.encode({
+                    root: menuItem.get('id'),
+                }),
+                csrfToken: pimcore.settings['csrfToken']
             },
             method: 'POST',
             success: function (result) {

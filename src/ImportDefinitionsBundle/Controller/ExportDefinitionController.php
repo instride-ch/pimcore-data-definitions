@@ -353,7 +353,7 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getConfigProviders(): array
     {
-        return $this->getParameter('import_definition.providers');
+        return $this->getParameter('import_definition.export_providers');
     }
 
     /**

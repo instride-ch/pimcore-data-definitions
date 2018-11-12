@@ -75,7 +75,7 @@ pimcore.plugin.importdefinitions.export.panel = Class.create(coreshop.resource.p
                     idProperty : 'provider'
                 });
 
-                pimcore.globalmanager.add('importdefinitions_providers', providerStore);
+                pimcore.globalmanager.add('importdefinitions_export_providers', providerStore);
 
                 var interpretersStore = new Ext.data.ArrayStore({
                     data : this.interpreters,

@@ -99,7 +99,7 @@ pimcore.plugin.importdefinitions.export.item = Class.create(coreshop.resource.it
                     name: 'provider',
                     displayField: 'provider',
                     valueField: 'provider',
-                    store: pimcore.globalmanager.get('importdefinitions_providers'),
+                    store: pimcore.globalmanager.get('importdefinitions_export_providers'),
                     value: this.data.provider,
                     width: 500,
                     listeners: {

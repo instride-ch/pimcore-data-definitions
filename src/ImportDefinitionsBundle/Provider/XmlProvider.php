@@ -15,10 +15,25 @@
 namespace ImportDefinitionsBundle\Provider;
 
 use Pimcore\Model\Asset;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
+use ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
+use ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use Symfony\Component\Inflector\Inflector;
 
-class XmlProvider implements ProviderInterface
+class XmlProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
+    use ArtifactProviderTrait;
+
+    /** @var \XMLWriter */
+    private $writer;
+
+    /** @var string */
+    private $exportPath;
+
+    /** @var int */
+    private $exportCounter = 0;
+
     /**
      * @param $xml
      * @param $xpath
@@ -86,5 +101,113 @@ class XmlProvider implements ProviderInterface
         $xml = file_get_contents($file);
 
         return $this->convertXmlToArray($xml, $configuration['xPath']);
+    }
+
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $writer = $this->getXMLWriter();
+        
+        $this->serializeContainer($writer, 'object', $data);
+
+        $this->exportCounter++;
+        if ($this->exportCounter >= 50) {
+            $this->flush($writer);
+            $this->exportCounter = 0;
+        }
+    }
+
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $writer = $this->getXMLWriter();
+
+        // </root>
+        $writer->endElement();
+        $this->flush($writer);
+
+        if (!array_key_exists('file', $params)) {
+            return;
+        }
+
+        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        rename($this->getExportPath(), $file);
+    }
+
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    {
+        return fopen($this->getExportPath(), 'rb');
+    }
+
+    private function getXMLWriter(): \XMLWriter
+    {
+        if (null === $this->writer) {
+            $this->writer = new \XMLWriter();
+            $this->writer->openMemory();
+            $this->writer->setIndent(true);
+            $this->writer->startDocument('1.0', 'UTF-8');
+
+            // <root>
+            $this->writer->startElement('export');
+        }
+
+        return $this->writer;
+    }
+
+    private function getExportPath(): string
+    {
+        if (null === $this->exportPath) {
+            $this->exportPath = tempnam(sys_get_temp_dir(), 'xml_export_provider');
+        }
+
+        return $this->exportPath;
+    }
+
+    private function flush(\XMLWriter $writer): void
+    {
+        file_put_contents($this->getExportPath(), $writer->flush(true), FILE_APPEND);
+    }
+
+    private function serialize(\XMLWriter $writer, string $name, $data, ?int $key = null): void
+    {
+        if (is_scalar($data)) {
+            $writer->startElement($name);
+            if (null !== $key) {
+                $writer->writeAttribute('key', $key);
+            }
+            $writer->writeCdata($data);
+            $writer->endElement();
+        } else if (is_array($data)) {
+            $this->serializeContainer($writer, $name, $data);
+        } else {
+            if ((string) $data) {
+                $writer->startElement($name);
+                if (null !== $key) {
+                    $writer->writeAttribute('key', $key);
+                }
+                $writer->writeCdata((string) $data);
+                $writer->endElement();
+            }
+        }
+    }
+
+    private function serializeContainer(\XMLWriter $writer, string $name, array $data): void
+    {
+        static $singularNames = [];
+
+        $writer->startElement($name);
+        foreach ($data as $key => $value) {
+            if (is_numeric($key)) {
+                if (!isset($singularNames[$name])) {
+                    $name = Inflector::singularize($name);
+                    if (is_array($name)) {
+                        $name = end($name);
+                    }
+                    $singularNames[$name] = $name;
+                }
+                $this->serialize($writer, $singularNames[$name], $value, $key);
+            } else {
+                $this->serialize($writer, $key, $value);
+            }
+        }
+        $writer->endElement();
     }
 }

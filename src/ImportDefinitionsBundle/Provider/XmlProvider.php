@@ -15,10 +15,25 @@
 namespace ImportDefinitionsBundle\Provider;
 
 use Pimcore\Model\Asset;
+use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
+use ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
+use ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use Symfony\Component\Inflector\Inflector;
 
-class XmlProvider implements ProviderInterface
+class XmlProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
+    use ArtifactProviderTrait;
+
+    /** @var \XMLWriter */
+    private $writer;
+
+    /** @var string */
+    private $exportPath;
+
+    /** @var int */
+    private $exportCounter = 0;
+
     /**
      * @param $xml
      * @param $xpath
@@ -86,5 +101,122 @@ class XmlProvider implements ProviderInterface
         $xml = file_get_contents($file);
 
         return $this->convertXmlToArray($xml, $configuration['xPath']);
+    }
+
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $writer = $this->getXMLWriter();
+
+        $writer->startElement('object');
+        $this->serializeCollection($writer, 'object', $data);
+        $writer->endElement();
+
+        $this->exportCounter++;
+        if ($this->exportCounter >= 50) {
+            $this->flush($writer);
+            $this->exportCounter = 0;
+        }
+    }
+
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    {
+        $writer = $this->getXMLWriter();
+
+        // </root>
+        $writer->endElement();
+        $this->flush($writer);
+
+        if (!array_key_exists('file', $params)) {
+            return;
+        }
+
+        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        rename($this->getExportPath(), $file);
+    }
+
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    {
+        return fopen($this->getExportPath(), 'rb');
+    }
+
+    private function getXMLWriter(): \XMLWriter
+    {
+        if (null === $this->writer) {
+            $this->writer = new \XMLWriter();
+            $this->writer->openMemory();
+            $this->writer->setIndent(true);
+            $this->writer->startDocument('1.0', 'UTF-8');
+
+            // <root>
+            $this->writer->startElement('export');
+        }
+
+        return $this->writer;
+    }
+
+    private function getExportPath(): string
+    {
+        if (null === $this->exportPath) {
+            $this->exportPath = tempnam(sys_get_temp_dir(), 'xml_export_provider');
+        }
+
+        return $this->exportPath;
+    }
+
+    private function flush(\XMLWriter $writer): void
+    {
+        file_put_contents($this->getExportPath(), $writer->flush(true), FILE_APPEND);
+    }
+
+    private function serialize(\XMLWriter $writer, ?string $name, $data, ?int $key = null): void
+    {
+        if (is_scalar($data)) {
+            $writer->startElement('property');
+            if (null !== $name) {
+                $writer->writeAttribute('name', $name);
+            }
+            if (null !== $key) {
+                $writer->writeAttribute('key', $key);
+            }
+            if (is_string($data)) {
+                $writer->writeCdata($data);
+            } else {
+                $writer->text($data);
+            }
+            $writer->endElement();
+        } else if (is_array($data)) {
+            $writer->startElement('collection');
+            if (null !== $name) {
+                $writer->writeAttribute('name', $name);
+            }
+            if (null !== $key) {
+                $writer->writeAttribute('key', $key);
+            }
+            $this->serializeCollection($writer, $name, $data);
+            $writer->endElement();
+        } else {
+            if ((string) $data) {
+                $writer->startElement('property');
+                if (null !== $name) {
+                    $writer->writeAttribute('name', $name);
+                }
+                if (null !== $key) {
+                    $writer->writeAttribute('key', $key);
+                }
+                $writer->writeCdata((string) $data);
+                $writer->endElement();
+            }
+        }
+    }
+
+    private function serializeCollection(\XMLWriter $writer, string $name, array $data): void
+    {
+        foreach ($data as $key => $value) {
+            if (is_numeric($key)) {
+                $this->serialize($writer, null, $value, $key);
+            } else {
+                $this->serialize($writer, $key, $value);
+            }
+        }
     }
 }

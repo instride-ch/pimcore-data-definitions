@@ -269,6 +269,7 @@ services:
         class: ImportDefinitionsBundle\Provider\XmlProvider
         tags:
             - { name: import_definition.provider, type: xml, form-type: ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType }
+            - { name: import_definition.export_provider, type: xml, form-type: ImportDefinitionsBundle\Form\Type\Provider\NoConfigurationType }
 
     import_definition.provider.raw:
         class: ImportDefinitionsBundle\Provider\RawProvider

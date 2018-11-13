@@ -106,8 +106,10 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
     public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
     {
         $writer = $this->getXMLWriter();
-        
-        $this->serializeContainer($writer, 'object', $data);
+
+        $writer->startElement('object');
+        $this->serializeCollection($writer, 'object', $data);
+        $writer->endElement();
 
         $this->exportCounter++;
         if ($this->exportCounter >= 50) {
@@ -166,11 +168,13 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
         file_put_contents($this->getExportPath(), $writer->flush(true), FILE_APPEND);
     }
 
-    private function serialize(\XMLWriter $writer, string $name, $data, ?int $key = null): void
+    private function serialize(\XMLWriter $writer, ?string $name, $data, ?int $key = null): void
     {
         if (is_scalar($data)) {
             $writer->startElement('property');
-            $writer->writeAttribute('name', $name);
+            if (null !== $name) {
+                $writer->writeAttribute('name', $name);
+            }
             if (null !== $key) {
                 $writer->writeAttribute('key', $key);
             }
@@ -181,11 +185,21 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
             }
             $writer->endElement();
         } else if (is_array($data)) {
-            $this->serializeContainer($writer, $name, $data);
+            $writer->startElement('collection');
+            if (null !== $name) {
+                $writer->writeAttribute('name', $name);
+            }
+            if (null !== $key) {
+                $writer->writeAttribute('key', $key);
+            }
+            $this->serializeCollection($writer, $name, $data);
+            $writer->endElement();
         } else {
             if ((string) $data) {
                 $writer->startElement('property');
-                $writer->writeAttribute('name', $name);
+                if (null !== $name) {
+                    $writer->writeAttribute('name', $name);
+                }
                 if (null !== $key) {
                     $writer->writeAttribute('key', $key);
                 }
@@ -195,25 +209,14 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
         }
     }
 
-    private function serializeContainer(\XMLWriter $writer, string $name, array $data): void
+    private function serializeCollection(\XMLWriter $writer, string $name, array $data): void
     {
-        static $singularNames = [];
-
-        $writer->startElement($name);
         foreach ($data as $key => $value) {
             if (is_numeric($key)) {
-                if (!isset($singularNames[$name])) {
-                    $name = Inflector::singularize($name);
-                    if (is_array($name)) {
-                        $name = end($name);
-                    }
-                    $singularNames[$name] = $name;
-                }
-                $this->serialize($writer, $singularNames[$name], $value, $key);
+                $this->serialize($writer, null, $value, $key);
             } else {
                 $this->serialize($writer, $key, $value);
             }
         }
-        $writer->endElement();
     }
 }

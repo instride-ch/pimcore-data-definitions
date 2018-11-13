@@ -169,17 +169,23 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
     private function serialize(\XMLWriter $writer, string $name, $data, ?int $key = null): void
     {
         if (is_scalar($data)) {
-            $writer->startElement($name);
+            $writer->startElement('property');
+            $writer->writeAttribute('name', $name);
             if (null !== $key) {
                 $writer->writeAttribute('key', $key);
             }
-            $writer->writeCdata($data);
+            if (is_string($data)) {
+                $writer->writeCdata($data);
+            } else {
+                $writer->text($data);
+            }
             $writer->endElement();
         } else if (is_array($data)) {
             $this->serializeContainer($writer, $name, $data);
         } else {
             if ((string) $data) {
-                $writer->startElement($name);
+                $writer->startElement('property');
+                $writer->writeAttribute('name', $name);
                 if (null !== $key) {
                     $writer->writeAttribute('key', $key);
                 }

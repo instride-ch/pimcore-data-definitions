@@ -174,7 +174,7 @@ class Csv extends AbstractProvider
 
         $row = 0;
         if (($handle = fopen($file, "r")) !== false) {
-            while (($csvData = fgetcsv($handle, 1000, $this->getDelimiter(), $this->getEnclosure() ? $this->getEnclosure() : chr(8))) !== false) {
+            while (($csvData = fgetcsv($handle, 0, $this->getDelimiter(), $this->getEnclosure() ? $this->getEnclosure() : chr(8))) !== false) {
                 $num = count($csvData);
 
                 //Make Column Mapping

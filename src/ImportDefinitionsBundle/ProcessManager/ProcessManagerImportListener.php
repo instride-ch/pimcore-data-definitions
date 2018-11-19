@@ -101,6 +101,8 @@ final class ProcessManagerImportListener
      */
     public function onFinishedEvent(ImportDefinitionEvent $event)
     {
-        $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
+        if ($this->process) {
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
+        }
     }
 }

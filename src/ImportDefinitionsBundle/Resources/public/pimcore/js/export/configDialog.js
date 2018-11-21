@@ -17,6 +17,7 @@ pimcore.plugin.importdefinitions.export.configDialog = Class.create({
     getConfigDialog : function (fromColumn, record, config) {
         var fieldSetItems = [];
 
+        this.fromColumn = fromColumn;
         this.record = record;
         this.config = config;
 

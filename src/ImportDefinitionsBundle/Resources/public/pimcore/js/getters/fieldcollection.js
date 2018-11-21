@@ -14,5 +14,47 @@
 pimcore.registerNS('pimcore.plugin.importdefinitions.getters.fieldcollection');
 
 pimcore.plugin.importdefinitions.getters.fieldcollection = Class.create(pimcore.plugin.importdefinitions.setters.fieldcollection, {
+    getLayout: function (fromColumn, toColumn, record, config, definitionConfig) {
+        this.fromColumn = fromColumn;
 
+        var possibleFields = [];
+        var fieldClass = toColumn.data.config.class;
+
+        Ext.Object.each(definitionConfig.fieldcollections, function (key, value) {
+            if (value.indexOf(fieldClass) >= 0) {
+                possibleFields.push(key);
+            }
+        });
+
+        this.fieldCombo = Ext.create({
+            xtype: 'combo',
+            fieldLabel: t('field'),
+            name: 'field',
+            value: config.field ? config.field : null,
+            store: possibleFields,
+            triggerAction: 'all',
+            typeAhead: false,
+            editable: false,
+            forceSelection: true,
+            queryMode: 'local'
+        });
+
+        this.keysField = Ext.create({
+            xtype: 'textfield',
+            fieldLabel: t('importdefinitions_keys'),
+            name: 'keys',
+            length: 255,
+            value: config.keys ? config.keys : null
+        });
+
+        return [this.fieldCombo, this.keysField];
+    },
+
+    getGetterData: function () {
+        return {
+            'class': this.fromColumn.config.class,
+            'field': this.fieldCombo.getValue(),
+            'keys': this.keysField.getValue()
+        };
+    }
 });

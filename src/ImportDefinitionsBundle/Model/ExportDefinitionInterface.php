@@ -35,4 +35,14 @@ interface ExportDefinitionInterface extends DataDefinitionInterface
      * @param array $fetcherConfig
      */
     public function setFetcherConfig($fetcherConfig);
+
+    /**
+     * @param bool $fetchUnpublushed
+     */
+    public function setFetchUnpublished(bool $fetchUnpublushed): void;
+
+    /**
+     * @return bool
+     */
+    public function isFetchUnpublished(): bool;
 }

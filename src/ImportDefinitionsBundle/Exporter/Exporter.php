@@ -24,6 +24,7 @@ use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ExportMapping;
 use ImportDefinitionsBundle\Provider\ExportProviderInterface;
 use ImportDefinitionsBundle\Runner\ExportRunnerInterface;
+use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -160,9 +161,17 @@ final class Exporter implements ExporterInterface
         $countToClean = 1000;
         $perLoop = 50;
 
+        $fetcherConfig = is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : [];
+        $fetcherConfig['unpublished'] = $definition->isFetchUnpublished();
+
+        // fetch unpublished = true === hide unpublished = false (and vice-versa)
+        $hideUnpublished = false === $fetcherConfig['unpublished'];
+
+        $previousHideUnpublished = AbstractObject::getHideUnpublished();
+        AbstractObject::setHideUnpublished($hideUnpublished);
         for ($i = 0; $i < (ceil($total / $perLoop)); $i++) {
 
-            $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop, is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
+            $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop, $fetcherConfig);
 
             foreach ($objects as $object) {
                 try {
@@ -199,6 +208,7 @@ final class Exporter implements ExporterInterface
                 );
             }
         }
+        AbstractObject::setHideUnpublished($previousHideUnpublished);
 
         $provider->exportData($definition->getConfiguration(), $definition, $params);
     }

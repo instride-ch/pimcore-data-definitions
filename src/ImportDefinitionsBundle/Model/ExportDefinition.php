@@ -27,6 +27,11 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
     public $fetcherConfig;
 
     /**
+     * @var bool
+     */
+    public $fetchUnpublished = false;
+
+    /**
      * {@inheritdoc}
      */
     public function getFetcher()
@@ -56,5 +61,21 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
     public function setFetcherConfig($fetcherConfig)
     {
         $this->fetcherConfig = $fetcherConfig;
+    }
+
+    /**
+     * @param bool $fetchUnpublushed
+     */
+    public function setFetchUnpublished(bool $fetchUnpublushed): void
+    {
+        $this->fetchUnpublished = $fetchUnpublushed;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFetchUnpublished(): bool
+    {
+        return $this->fetchUnpublished;
     }
 }

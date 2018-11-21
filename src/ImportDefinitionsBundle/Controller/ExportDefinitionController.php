@@ -254,7 +254,7 @@ class ExportDefinitionController extends ResourceController
                                     'groupId' => $config->getId(),
                                 ]);
                                 $toColumn->setLabel($keyConfig->getName());
-                                $toColumn->setType('classificationStore');
+                                $toColumn->setType('classificationstore');
 
                                 $result[] = $toColumn;
                             }

@@ -54,7 +54,7 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
      */
     public function get(Concrete $object, ExportMapping $map, $data)
     {
-        $mapConfig = $map->getSetterConfig();
+        $mapConfig = $map->getGetterConfig();
         $fieldName = $mapConfig['field'];
         $keyConfig = (int) $mapConfig['keyConfig'];
         $groupConfig = (int) $mapConfig['groupConfig'];

@@ -28,7 +28,7 @@ class ObjectsFetcher implements FetcherInterface
         $list = $this->getClassListing($definition);
         $list->setLimit($limit);
         $list->setOffset($offset);
-        $list->setUnpublished($configuration['unpublished']);
+        $list->setUnpublished(false === $definition->isFetchUnpublished());
 
         return $list->load();
     }

@@ -14,6 +14,7 @@
 
 namespace ImportDefinitionsBundle\Exporter;
 
+use CoreShop\Component\Pimcore\DataObject\UnpublishedHelper;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
@@ -24,7 +25,6 @@ use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ExportMapping;
 use ImportDefinitionsBundle\Provider\ExportProviderInterface;
 use ImportDefinitionsBundle\Runner\ExportRunnerInterface;
-use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -157,60 +157,61 @@ final class Exporter implements ExporterInterface
      */
     private function runExport(ExportDefinitionInterface $definition, $params, int $total, FetcherInterface $fetcher, ExportProviderInterface $provider)
     {
-        $count = 0;
-        $countToClean = 1000;
-        $perLoop = 50;
+        UnpublishedHelper::hideUnpublished(
+            function () use ($definition, $params, $total, $fetcher, $provider) {
+                $count = 0;
+                $countToClean = 1000;
+                $perLoop = 50;
+                $perRun = ceil($total / $perLoop);
 
-        $fetcherConfig = is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : [];
-        $fetcherConfig['unpublished'] = $definition->isFetchUnpublished();
-
-        // fetch unpublished = true === hide unpublished = false (and vice-versa)
-        $hideUnpublished = false === $fetcherConfig['unpublished'];
-
-        $previousHideUnpublished = AbstractObject::getHideUnpublished();
-        AbstractObject::setHideUnpublished($hideUnpublished);
-        for ($i = 0; $i < (ceil($total / $perLoop)); $i++) {
-
-            $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop, $fetcherConfig);
-
-            foreach ($objects as $object) {
-                try {
-                    $this->exportRow($definition, $object, $params, $provider);
-                    
-                    if (($count + 1) % $countToClean === 0) {
-                        \Pimcore::collectGarbage();
-                        $this->logger->info('Clean Garbage');
-                        $this->eventDispatcher->dispatch(
-                            'export_definition.status',
-                            new ExportDefinitionEvent($definition, 'Collect Garbage', $params)
-                        );
-                    }
-
-                    $count++;
-                } catch (\Exception $ex) {
-                    $this->logger->error($ex);
-
-                    $this->exceptions[] = $ex;
-
-                    $this->eventDispatcher->dispatch(
-                        'export_definition.status',
-                        new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()), $params)
+                for ($i = 0; $i < $perRun; $i++) {
+                    $objects = $fetcher->fetch(
+                        $definition,
+                        $params,
+                        $perLoop,
+                        $i * $perLoop,
+                        \is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []
                     );
 
-                    if ($definition->getStopOnException()) {
-                        throw $ex;
+                    foreach ($objects as $object) {
+                        try {
+                            $this->exportRow($definition, $object, $params, $provider);
+
+                            if (($count + 1) % $countToClean === 0) {
+                                \Pimcore::collectGarbage();
+                                $this->logger->info('Clean Garbage');
+                                $this->eventDispatcher->dispatch(
+                                    'export_definition.status',
+                                    new ExportDefinitionEvent($definition, 'Collect Garbage', $params)
+                                );
+                            }
+
+                            $count++;
+                        } catch (\Exception $ex) {
+                            $this->logger->error($ex);
+
+                            $this->exceptions[] = $ex;
+
+                            $this->eventDispatcher->dispatch(
+                                'export_definition.status',
+                                new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()), $params)
+                            );
+
+                            if ($definition->getStopOnException()) {
+                                throw $ex;
+                            }
+                        }
+
+                        $this->eventDispatcher->dispatch(
+                            'export_definition.progress',
+                            new ExportDefinitionEvent($definition, null, $params)
+                        );
                     }
                 }
-
-                $this->eventDispatcher->dispatch(
-                    'export_definition.progress',
-                    new ExportDefinitionEvent($definition, null, $params)
-                );
-            }
-        }
-        AbstractObject::setHideUnpublished($previousHideUnpublished);
-
-        $provider->exportData($definition->getConfiguration(), $definition, $params);
+                $provider->exportData($definition->getConfiguration(), $definition, $params);
+            },
+            false === $definition->isFetchUnpublished()
+        );
     }
 
     /**

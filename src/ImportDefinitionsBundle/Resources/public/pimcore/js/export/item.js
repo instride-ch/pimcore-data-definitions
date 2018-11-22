@@ -162,6 +162,12 @@ pimcore.plugin.importdefinitions.export.item = Class.create(coreshop.resource.it
                     checked: this.data.stopOnException
                 },
                 {
+                    fieldLabel: t('importdefinitions_fetcher_objects_unpublished'),
+                    xtype: 'checkbox',
+                    name: 'fetchUnpublished',
+                    checked: this.data.fetchUnpublished
+                },
+                {
                     fieldLabel: t('importdefinitions_failure_document'),
                     labelWidth: 350,
                     name: 'failureNotificationDocument',

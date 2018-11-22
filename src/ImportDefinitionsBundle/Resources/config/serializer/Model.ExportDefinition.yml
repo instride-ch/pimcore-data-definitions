@@ -10,3 +10,7 @@ ImportDefinitionsBundle\Model\ExportDefinition:
       expose: true
       type: array
       groups: [Detailed]
+    fetchUnpublished:
+      expose: true
+      type: boolean
+      groups: [Detailed]

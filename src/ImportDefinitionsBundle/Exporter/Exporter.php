@@ -14,6 +14,7 @@
 
 namespace ImportDefinitionsBundle\Exporter;
 
+use CoreShop\Component\Pimcore\DataObject\UnpublishedHelper;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
@@ -156,51 +157,61 @@ final class Exporter implements ExporterInterface
      */
     private function runExport(ExportDefinitionInterface $definition, $params, int $total, FetcherInterface $fetcher, ExportProviderInterface $provider)
     {
-        $count = 0;
-        $countToClean = 1000;
-        $perLoop = 50;
+        UnpublishedHelper::hideUnpublished(
+            function () use ($definition, $params, $total, $fetcher, $provider) {
+                $count = 0;
+                $countToClean = 1000;
+                $perLoop = 50;
+                $perRun = ceil($total / $perLoop);
 
-        for ($i = 0; $i < (ceil($total / $perLoop)); $i++) {
-
-            $objects = $fetcher->fetch($definition, $params, $perLoop, $i * $perLoop, is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
-
-            foreach ($objects as $object) {
-                try {
-                    $this->exportRow($definition, $object, $params, $provider);
-                    
-                    if (($count + 1) % $countToClean === 0) {
-                        \Pimcore::collectGarbage();
-                        $this->logger->info('Clean Garbage');
-                        $this->eventDispatcher->dispatch(
-                            'export_definition.status',
-                            new ExportDefinitionEvent($definition, 'Collect Garbage', $params)
-                        );
-                    }
-
-                    $count++;
-                } catch (\Exception $ex) {
-                    $this->logger->error($ex);
-
-                    $this->exceptions[] = $ex;
-
-                    $this->eventDispatcher->dispatch(
-                        'export_definition.status',
-                        new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()), $params)
+                for ($i = 0; $i < $perRun; $i++) {
+                    $objects = $fetcher->fetch(
+                        $definition,
+                        $params,
+                        $perLoop,
+                        $i * $perLoop,
+                        \is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []
                     );
 
-                    if ($definition->getStopOnException()) {
-                        throw $ex;
+                    foreach ($objects as $object) {
+                        try {
+                            $this->exportRow($definition, $object, $params, $provider);
+
+                            if (($count + 1) % $countToClean === 0) {
+                                \Pimcore::collectGarbage();
+                                $this->logger->info('Clean Garbage');
+                                $this->eventDispatcher->dispatch(
+                                    'export_definition.status',
+                                    new ExportDefinitionEvent($definition, 'Collect Garbage', $params)
+                                );
+                            }
+
+                            $count++;
+                        } catch (\Exception $ex) {
+                            $this->logger->error($ex);
+
+                            $this->exceptions[] = $ex;
+
+                            $this->eventDispatcher->dispatch(
+                                'export_definition.status',
+                                new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()), $params)
+                            );
+
+                            if ($definition->getStopOnException()) {
+                                throw $ex;
+                            }
+                        }
+
+                        $this->eventDispatcher->dispatch(
+                            'export_definition.progress',
+                            new ExportDefinitionEvent($definition, null, $params)
+                        );
                     }
                 }
-
-                $this->eventDispatcher->dispatch(
-                    'export_definition.progress',
-                    new ExportDefinitionEvent($definition, null, $params)
-                );
-            }
-        }
-
-        $provider->exportData($definition->getConfiguration(), $definition, $params);
+                $provider->exportData($definition->getConfiguration(), $definition, $params);
+            },
+            false === $definition->isFetchUnpublished()
+        );
     }
 
     /**

@@ -10,33 +10,56 @@ pimcore.plugin.importdefinitions.export.context_menu = Class.create(pimcore.plug
     },
 
     prepareObjectTreeContextMenu: function (tree, treeClass, menuItem) {
-        // TODO: replace with data store
-        var objectTypes = [
-            {id: 1, label: 'Cat'}
-        ];
-
-
-        var $this = this,
-            exportMenu = [];
-
-        objectTypes.forEach(function (executable) {
-            exportMenu.push({
-                text: executable.label,
-                iconCls: "pimcore_icon_object pimcore_icon_overlay_add",
-                handler: $this.exportObjects.bind($this, executable, menuItem)
-            });
+        Ext.define('Executable', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'name', type: 'string'},
+            ]
         });
 
-        if (objectTypes) {
-            tree.add([
-                { xtype: 'menuseparator' },
-                {
-                    text: t("importdefinitions_processmanager_export_from_here"),
-                    iconCls: "pimcore_icon_object pimcore_icon_overlay_download",
-                    menu: exportMenu
+        var $this = this;
+        Ext.create('Ext.data.Store', {
+            model: 'Executable',
+            proxy: {
+                type: 'ajax',
+                url: '/admin/process_manager/executables/list-by-type',
+                extraParams: {
+                    type: 'exportdefinition'
+                },
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data'
                 }
-            ]);
-        }
+            },
+            autoLoad: true,
+            listeners: {
+                load: function(store, executables, successful) {
+                    if (!successful) {
+                        return;
+                    }
+
+                    var exportMenu = [];
+                    executables.forEach(function (executable) {
+                        exportMenu.push({
+                            text: executable.get('name'),
+                            iconCls: "pimcore_icon_object pimcore_icon_overlay_add",
+                            handler: $this.exportObjects.bind($this, executable, menuItem)
+                        });
+                    });
+
+                    if (exportMenu) {
+                        tree.add([
+                            { xtype: 'menuseparator' },
+                            {
+                                text: t("importdefinitions_processmanager_export_from_here"),
+                                iconCls: "pimcore_icon_object pimcore_icon_overlay_download",
+                                menu: exportMenu
+                            }
+                        ]);
+                    }
+                }
+            }
+        });
     },
 
     exportObjects: function (executable, menuItem) {

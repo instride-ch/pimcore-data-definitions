@@ -32,6 +32,13 @@ services:
         tags:
             - { name: 'process_manager.process', type: 'exportdefinition', form-type: ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }
 
+    import_definition.process_manager.export.startup_form_resolver:
+        class: ImportDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver
+        arguments:
+            - '@import_definitions.repository.export_definition'
+        tags:
+            - { name: 'process_manager.startup_form_resolver', type: 'exportdefinition' }
+
     import_definitions.process_manager.report:
         class: ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport
         tags:

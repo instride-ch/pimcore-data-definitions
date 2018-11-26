@@ -22,7 +22,7 @@ final class ImportDefinitionProcess extends Pimcore
     /**
      * {@inheritdoc}
      */
-    public function run(ExecutableInterface $executable)
+    public function run(ExecutableInterface $executable, array $params = null)
     {
         $settings = $executable->getSettings();
 

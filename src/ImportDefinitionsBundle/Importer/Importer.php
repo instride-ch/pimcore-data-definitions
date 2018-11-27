@@ -16,7 +16,6 @@ namespace ImportDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Event\EventDispatcherInterface;
-use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Runner\SetterRunnerInterface;
@@ -354,10 +353,10 @@ final class Importer implements ImporterInterface
             $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
 
             $object->save();
-            
-            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Imported Object %s', $object->getFullPath())));
+
+            $this->eventDispatcher->dispatch($definition, 'import_definition.status',  sprintf('Imported Object %s', $object->getFullPath()));
         } else {
-            $this->eventDispatcher->dispatch('import_definition.status', new ImportDefinitionEvent($definition, sprintf('Skipped Object %s', $object->getFullPath())));
+            $this->eventDispatcher->dispatch($definition, 'import_definition.status', sprintf('Skipped Object %s', $object->getFullPath()));
         }
 
         $this->eventDispatcher->dispatch($definition, 'import_definition.status', sprintf('Imported Object %s', $object->getFullPath()), $params);

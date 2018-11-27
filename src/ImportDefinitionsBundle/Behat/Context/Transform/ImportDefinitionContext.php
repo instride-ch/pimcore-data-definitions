@@ -17,7 +17,7 @@ namespace ImportDefinitionsBundle\Behat\Context\Transform;
 use Behat\Behat\Context\Context;
 use CoreShop\Component\Resource\Repository\PimcoreRepositoryInterface;
 use ImportDefinitionsBundle\Behat\Service\SharedStorageInterface;
-use ImportDefinitionsBundle\Model\DataDefinitionInterface;
+use ImportDefinitionsBundle\Model\DefinitionInterface;
 
 final class ImportDefinitionContext implements Context
 {
@@ -51,7 +51,7 @@ final class ImportDefinitionContext implements Context
         $all = $this->definitionRepository->findAll();
 
         /**
-         * @var DataDefinitionInterface $definition
+         * @var DefinitionInterface $definition
          */
         foreach ($all as $definition) {
             if ($definition->getName() === $name) {

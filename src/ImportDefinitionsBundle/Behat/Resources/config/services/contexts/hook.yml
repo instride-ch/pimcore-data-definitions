@@ -1,13 +1,8 @@
 services:
-    import_definitions.behat.context.hook.doctrine_orm:
-        class: ImportDefinitionsBundle\Behat\Context\Hook\DoctrineORMContext
-        arguments:
-            - '@__symfony_shared__.doctrine.orm.entity_manager'
-        tags:
-            - { name: fob.context_service }
-
     import_definitions.behat.context.hook.pimcore_dao:
         class: ImportDefinitionsBundle\Behat\Context\Hook\PimcoreDaoContext
+        arguments:
+            - '@__symfony_shared__.doctrine.dbal.default_connection'
         tags:
             - { name: fob.context_service }
 

@@ -15,10 +15,11 @@
 namespace ImportDefinitionsBundle\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
+use CoreShop\Component\Pimcore\DataObject\ClassLoader;
 use ImportDefinitionsBundle\Behat\Service\ClassStorageInterface;
 use ImportDefinitionsBundle\Behat\Service\SharedStorageInterface;
-use CoreShop\Component\Pimcore\DataObject\ClassLoader;
 use Pimcore\Cache\Runtime;
+use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Fieldcollection\Definition;
@@ -99,7 +100,27 @@ final class PimcoreClassContext implements Context
      */
     public function objectInstanceWithKey($key)
     {
-        return Concrete::getByPath('/' . $key);
+        return Concrete::getByPath('/'.$key);
+    }
+
+    /**
+     * @Transform /^object of the definition$/
+     */
+    public function objectOfTheDefinition()
+    {
+        $definition = $this->definition();
+
+        $fqcn = 'Pimcore\Model\DataObject\\'.ucfirst($definition->getName());
+
+        /**
+         * @var DataObject\Listing $list
+         */
+        $list = $fqcn::getList();
+        $list->setUnpublished(true);
+
+        Assert::eq(1, $list->getTotalCount(), sprintf('Can only find one object, but the list contains more or none'));
+
+        return $list->getObjects()[0];
     }
 
     /**

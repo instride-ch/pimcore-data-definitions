@@ -14,3 +14,10 @@ services:
             - '@__symfony__.import_definitions.repository.definition'
         tags:
             - { name: fob.context_service }
+
+    import_definitions.behat.context.transform.pimcore_asset:
+        class: ImportDefinitionsBundle\Behat\Context\Transform\PimcoreAssetContext
+        arguments:
+            - '@import_definitions.behat.shared_storage'
+        tags:
+            - { name: fob.context_service }

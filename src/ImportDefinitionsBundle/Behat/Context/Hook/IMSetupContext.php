@@ -27,7 +27,7 @@ final class IMSetupContext implements Context
     /**
      * @BeforeSuite
      */
-    public static function setupPimcore()
+    public static function setupImportDefinitions()
     {
         if (getenv('IM_SKIP_DB_SETUP')) {
             return;

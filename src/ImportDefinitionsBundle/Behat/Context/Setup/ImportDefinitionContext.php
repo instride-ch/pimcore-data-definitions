@@ -60,12 +60,24 @@ final class ImportDefinitionContext implements Context
     private $providerFormRegistry;
 
     /**
+     * @var FormTypeRegistryInterface
+     */
+    private $interpreterFormRegistry;
+
+    /**
+     * @var FormTypeRegistryInterface
+     */
+    private $setterFormRegistry;
+
+    /**
      * @param SharedStorageInterface    $sharedStorage
      * @param FactoryInterface          $factory
      * @param ObjectManager             $manager
      * @param ImporterInterface         $importer
      * @param FormFactoryInterface      $formFactory
      * @param FormTypeRegistryInterface $providerFormRegistry
+     * @param FormTypeRegistryInterface $interpreterFormRegistry
+     * @param FormTypeRegistryInterface $setterFormRegistry
      */
     public function __construct(
         SharedStorageInterface $sharedStorage,
@@ -73,7 +85,9 @@ final class ImportDefinitionContext implements Context
         ObjectManager $manager,
         ImporterInterface $importer,
         FormFactoryInterface $formFactory,
-        FormTypeRegistryInterface $providerFormRegistry
+        FormTypeRegistryInterface $providerFormRegistry,
+        FormTypeRegistryInterface $interpreterFormRegistry,
+        FormTypeRegistryInterface $setterFormRegistry
     ) {
         $this->sharedStorage = $sharedStorage;
         $this->factory = $factory;
@@ -81,6 +95,8 @@ final class ImportDefinitionContext implements Context
         $this->importer = $importer;
         $this->formFactory = $formFactory;
         $this->providerFormRegistry = $providerFormRegistry;
+        $this->interpreterFormRegistry = $interpreterFormRegistry;
+        $this->setterFormRegistry = $setterFormRegistry;
     }
 
     /**
@@ -309,18 +325,36 @@ final class ImportDefinitionContext implements Context
             $column->setFromColumn($row['fromColumn']);
             $column->setToColumn($row['toColumn']);
 
-            if (array_key_exists('primary', $row)) {
+            if (array_key_exists('primary', $row) && $row['primary'] === 'true') {
                 $column->setPrimaryIdentifier(true);
             }
 
-            if (array_key_exists('interpreter', $row)) {
+            if (isset($row['interpreter']) && $row['interpreter']) {
                 $column->setInterpreter($row['interpreter']);
-                $column->setInterpreterConfig(json_decode($row['interpreterConfig'], true));
+
+                $data = json_decode($row['interpreterConfig'], true);
+
+                $column->setInterpreterConfig(
+                    $this->processArrayConfiguration(
+                        $this->interpreterFormRegistry,
+                        $row['interpreter'],
+                        $data
+                    )
+                );
             }
 
-            if (array_key_exists('setter', $row)) {
+            if (isset($row['setter']) && $row['setter']) {
                 $column->setSetter($row['setter']);
-                $column->setSetterConfig(json_decode($row['setterConfig'], true));
+
+                $data = json_decode($row['setterConfig'], true);
+
+                $column->setSetterConfig(
+                    $this->processArrayConfiguration(
+                        $this->setterFormRegistry,
+                        $row['setter'],
+                        $data
+                    )
+                );
             }
 
             $columns[] = $column;
@@ -367,10 +401,21 @@ final class ImportDefinitionContext implements Context
             $config[$row['key']] = $row['value'];
         }
 
+        return $this->processArrayConfiguration($formRegistry, $type, $config);
+    }
+
+    /**
+     * @param FormTypeRegistryInterface $formRegistry
+     * @param                           $type
+     * @param array                     $data
+     * @return array
+     */
+    private function processArrayConfiguration(FormTypeRegistryInterface $formRegistry, $type, array $data)
+    {
         $formType = $formRegistry->get($type, 'default');
 
         $form = $this->formFactory->createNamed('', $formType, null, ['csrf_protection' => false]);
-        $form = $form->submit($config);
+        $form = $form->submit($data);
 
         if (!$form->isValid()) {
             throw new \InvalidArgumentException('Provided Configuration is invalid');

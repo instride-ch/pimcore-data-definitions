@@ -322,6 +322,40 @@ final class PimcoreClassContext implements Context
     }
 
     /**
+     * @Given /^the (definition) has a image field "([^"]+)"$/
+     */
+    public function definitionHasImageField($definition, $name)
+    {
+        $jsonDefinition = sprintf('
+            {
+                "fieldtype":"image",
+                "width":350,
+                "height":350,
+                "uploadPath":"",
+                "queryColumnType":"int(11)",
+                "columnType":"int(11)",
+                "phpdocType":"\\Pimcore\\Model\\Asset\\Image",
+                "name": "%s",
+                "title": "%s",
+                "tooltip":"",
+                "mandatory":false,
+                "noteditable":false,
+                "index":false,
+                "locked":false,
+                "style":"",
+                "permissions":null,
+                "datatype":"data",
+                "relationType":false,
+                "invisible":false,
+                "visibleGridView":false,
+                "visibleSearch":false
+            }
+        ', $name, $name);
+
+        $this->addFieldDefinitionToDefinition($definition, $jsonDefinition);
+    }
+
+    /**
      * @Given /^the (definition) has a href field "([^"]+)"$/
      */
     public function definitionHasHrefField($definition, $name)

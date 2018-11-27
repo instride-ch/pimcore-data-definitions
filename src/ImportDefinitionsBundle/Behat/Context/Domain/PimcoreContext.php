@@ -38,9 +38,8 @@ final class PimcoreContext implements Context
 
     /**
      * @Given /^there should be "([^"]+)" data-objects for (definition)$/
-     * @Given /^there is a import-definition "([^"]+)" for (definition "[^"]+")$/
      */
-    public function thereIsAImportDefinition(int $count, ClassDefinition $definition)
+    public function thereAreDataObjects(int $count, ClassDefinition $definition)
     {
         $fqcn = 'Pimcore\Model\DataObject\\'.ucfirst($definition->getName());
 
@@ -56,6 +55,74 @@ final class PimcoreContext implements Context
                 $definition->getName(),
                 $list->getTotalCount()
             )
+        );
+    }
+
+    /**
+     * @Given /^there should be "([^"]+)" unpublished data-objects for (definition)$/
+     */
+    public function thereAreUnpublishedDataObjects(int $count, ClassDefinition $definition)
+    {
+        $fqcn = 'Pimcore\Model\DataObject\\'.ucfirst($definition->getName());
+
+        /**
+         * @var DataObject\Listing $list
+         */
+        $list = $fqcn::getList();
+        $list->setCondition('o_published=0');
+
+        Assert::eq($count, $list->getTotalCount(),
+            sprintf(
+                'Expected to have only %s DataObjects of type %s, but got %s instead',
+                $count,
+                $definition->getName(),
+                $list->getTotalCount()
+            )
+        );
+    }
+
+    /**
+     * @Given /^there should be "([^"]+)" published data-objects for (definition)$/
+     */
+    public function thereArePublishedDataObjects(int $count, ClassDefinition $definition)
+    {
+        $fqcn = 'Pimcore\Model\DataObject\\'.ucfirst($definition->getName());
+
+        /**
+         * @var DataObject\Listing $list
+         */
+        $list = $fqcn::getList();
+        $list->setCondition('o_published=1');
+
+        Assert::eq($count, $list->getTotalCount(),
+            sprintf(
+                'Expected to have only %s DataObjects of type %s, but got %s instead',
+                $count,
+                $definition->getName(),
+                $list->getTotalCount()
+            )
+        );
+    }
+
+    /**
+     * @Given /^the field "([^"]+)" for (object of the definition) should have the value of (asset "([^"]+)")$/
+     * @Given /^the field "([^"]+)" for (object of the definition) should have the value "([^"]+)"$/
+     * @Given /^the field "([^"]+)" for (object of the definition) should have the value null$/
+     */
+    public function theFieldForObjectOfDefinitionShouldHaveTheValueOf($field, DataObject\Concrete $object, $value = null)
+    {
+        $actualValue = $object->getValueForFieldName($field);
+
+        if ($value === 'false') {
+            $value = false;
+        }
+        else if ($value === 'true') {
+            $value = true;
+        }
+
+        Assert::true(
+            $actualValue === $value,
+            sprintf('Expected value %s but is %s', $value, $actualValue)
         );
     }
 }

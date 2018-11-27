@@ -16,5 +16,15 @@ services:
             - '@__symfony__.import_definition.importer'
             - '@__symfony__.form.factory'
             - '@__symfony__.import_definition.form.registry.provider'
+            - '@__symfony__.import_definition.form.registry.interpreter'
+            - '@__symfony__.import_definition.form.registry.setter'
+        tags:
+            - { name: fob.context_service }
+
+    import_definitions.behat.context.setup.pimcore_asset:
+        class: ImportDefinitionsBundle\Behat\Context\Setup\PimcoreAssetContext
+        arguments:
+            - '@import_definitions.behat.shared_storage'
+            - '@__symfony__.kernel'
         tags:
             - { name: fob.context_service }

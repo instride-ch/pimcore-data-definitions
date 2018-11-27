@@ -15,7 +15,9 @@
 namespace ImportDefinitionsBundle\Behat\Context\Hook;
 
 use Behat\Behat\Context\Context;
+use Doctrine\DBAL\Connection;
 use Pimcore\Cache;
+use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Fieldcollection;
@@ -24,6 +26,19 @@ use Pimcore\Model\DataObject\Objectbrick;
 
 final class PimcoreDaoContext implements Context
 {
+    /**
+     * @var Connection
+     */
+    private $connection;
+
+    /**
+     * @param Connection $connection
+     */
+    public function __construct(Connection $connection)
+    {
+        $this->connection = $connection;
+    }
+
     /**
      * @BeforeScenario
      */
@@ -43,6 +58,34 @@ final class PimcoreDaoContext implements Context
         foreach ($list->getObjects() as $obj) {
             $obj->delete();
         }
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function purgeAssets()
+    {
+        Cache::clearAll();
+        Cache\Runtime::clear();
+
+        /**
+         * @var Asset\Listing $list
+         */
+        $list = new Asset\Listing();
+        $list->setCondition('id <> 1');
+        $list->load();
+
+        foreach ($list->getAssets() as $asset) {
+            $asset->delete();
+        }
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function purgeIMLog()
+    {
+        $this->connection->executeQuery('TRUNCATE TABLE import_definitions_log');
     }
 
     /**

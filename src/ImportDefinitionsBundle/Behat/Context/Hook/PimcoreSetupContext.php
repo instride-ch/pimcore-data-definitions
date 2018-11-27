@@ -26,7 +26,7 @@ final class PimcoreSetupContext implements Context
      */
     public static function setupPimcore()
     {
-        if (getenv('CORESHOP_SKIP_DB_SETUP')) {
+        if (getenv('IM_SKIP_DB_SETUP')) {
             return;
         }
 

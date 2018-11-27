@@ -1,4 +1,4 @@
-@import
+@import @import_create
 Feature: Adding a new simple import
 
   Background:
@@ -14,7 +14,7 @@ Feature: Adding a new simple import
       | enclosure   | "     |
     And  the import-definitions mapping is:
       | fromColumn | toColumn | primary |
-      | name       | name     | x       |
+      | name       | name     | true    |
     And there is a file test.csv with content:
       """
       name,

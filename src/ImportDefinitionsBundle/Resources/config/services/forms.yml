@@ -1,106 +1,101 @@
 parameters:
-  import_definition.form.type.definition.validation_groups: [import_definition]
-  import_definition.form.type.mapping.validation_groups: [import_definition]
+    import_definition.form.type.definition.validation_groups: [import_definition]
+    import_definition.form.type.mapping.validation_groups: [import_definition]
 
 services:
-  import_definition.form.definition.data_mapper:
-      class: ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper
-      arguments:
-          - !service
-              class: Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper
-              arguments:
-                  - '@property_accessor'
+    import_definition.form.definition.data_mapper:
+        class: ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper
+      
+    import_definition.form.class_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\ClassChoiceType
+        tags:
+            - { name: form.type }
 
-  import_definition.form.class_choice_type:
-    class: ImportDefinitionsBundle\Form\Type\ClassChoiceType
-    tags:
-        - { name: form.type }
+    import_definition.form.cleaner_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\CleanerChoiceType
+        arguments: ['%import_definition.cleaners%']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.cleaner_choice_type:
-    class: ImportDefinitionsBundle\Form\Type\CleanerChoiceType
-    arguments: ['%import_definition.cleaners%']
-    tags:
-        - { name: form.type }
+    import_definition.form.definition_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\DefinitionChoiceType
+        arguments: ['@import_definitions.repository.definition']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.definition_choice_type:
-      class: ImportDefinitionsBundle\Form\Type\DefinitionChoiceType
-      arguments: ['@import_definitions.repository.definition']
-      tags:
-          - { name: form.type }
+    import_definition.form.filter_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\FilterChoiceType
+        arguments: ['%import_definition.filters%']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.filter_choice_type:
-    class: ImportDefinitionsBundle\Form\Type\FilterChoiceType
-    arguments: ['%import_definition.filters%']
-    tags:
-        - { name: form.type }
+    import_definition.form.interpreter_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\InterpreterChoiceType
+        arguments: ['%import_definition.interpreters%']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.interpreter_choice_type:
-    class: ImportDefinitionsBundle\Form\Type\InterpreterChoiceType
-    arguments: ['%import_definition.interpreters%']
-    tags:
-        - { name: form.type }
+    import_definition.form.provider_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\ProviderChoiceType
+        arguments: ['%import_definition.providers%']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.provider_choice_type:
-    class: ImportDefinitionsBundle\Form\Type\ProviderChoiceType
-    arguments: ['%import_definition.providers%']
-    tags:
-        - { name: form.type }
+    import_definition.form.loader_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\LoaderChoiceType
+        arguments: ['%import_definition.loaders%']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.loader_choice_type:
-      class: ImportDefinitionsBundle\Form\Type\LoaderChoiceType
-      arguments: ['%import_definition.loaders%']
-      tags:
-          - { name: form.type }
+    import_definition.form.runner_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\RunnerChoiceType
+        arguments: ['%import_definition.runners%']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.runner_choice_type:
-    class: ImportDefinitionsBundle\Form\Type\RunnerChoiceType
-    arguments: ['%import_definition.runners%']
-    tags:
-        - { name: form.type }
+    import_definition.form.setter_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\SetterChoiceType
+        arguments: ['%import_definition.setters%']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.setter_choice_type:
-    class: ImportDefinitionsBundle\Form\Type\SetterChoiceType
-    arguments: ['%import_definition.setters%']
-    tags:
-        - { name: form.type }
+    import_definition.form.mapping_collection_type:
+        class: ImportDefinitionsBundle\Form\Type\MappingCollectionType
+        arguments:
+            - '@import_definition.form.definition.data_mapper'
+        tags:
+            - { name: form.type }
 
-  import_definition.form.mapping_collection_type:
-    class: ImportDefinitionsBundle\Form\Type\MappingCollectionType
-    arguments:
-        - '@import_definition.form.definition.data_mapper'
-    tags:
-        - { name: form.type }
+    import_definition.form.definition_type:
+        class: ImportDefinitionsBundle\Form\Type\DefinitionType
+        arguments: ['%import_definitions.model.definition.class%', '%import_definition.form.type.definition.validation_groups%', '@import_definition.form.registry.provider']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.definition_type:
-    class: ImportDefinitionsBundle\Form\Type\DefinitionType
-    arguments: ['%import_definitions.model.definition.class%', '%import_definition.form.type.definition.validation_groups%', '@import_definition.form.registry.provider']
-    tags:
-        - { name: form.type }
+    import_definition.form.mapping_type:
+        class: ImportDefinitionsBundle\Form\Type\MappingType
+        arguments: ['%import_definition.form.type.mapping.validation_groups%', '@import_definition.form.registry.setter', '@import_definition.form.registry.interpreter']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.mapping_type:
-    class: ImportDefinitionsBundle\Form\Type\MappingType
-    arguments: ['%import_definition.form.type.mapping.validation_groups%', '@import_definition.form.registry.setter', '@import_definition.form.registry.interpreter']
-    tags:
-        - { name: form.type }
+    import_definition.form.interpreter_type:
+        class: ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterType
+        arguments: ['@import_definition.form.registry.interpreter']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.interpreter_type:
-    class: ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterType
-    arguments: ['@import_definition.form.registry.interpreter']
-    tags:
-        - { name: form.type }
+    import_definition.form.interpreter_collection:
+        class: ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterCollectionType
+        arguments: ['@import_definition.registry.interpreter']
+        tags:
+            - { name: form.type }
 
-  import_definition.form.interpreter_collection:
-    class: ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterCollectionType
-    arguments: ['@import_definition.registry.interpreter']
-    tags:
-        - { name: form.type }
+    import_definition.form.interpreter_nested:
+        class: ImportDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType
+        tags:
+            - { name: form.type }
 
-  import_definition.form.interpreter_nested:
-    class: ImportDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType
-    tags:
-        - { name: form.type }
-
-  import_definition.form.interpreter_object_resolver:
-    class: ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType
-    tags:
-        - { name: form.type }
+    import_definition.form.interpreter_object_resolver:
+        class: ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType
+        tags:
+            - { name: form.type }

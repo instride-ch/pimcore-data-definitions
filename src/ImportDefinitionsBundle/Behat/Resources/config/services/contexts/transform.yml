@@ -1,0 +1,8 @@
+services:
+    import_definitions.behat.context.transform.pimcore_class:
+        class: ImportDefinitionsBundle\Behat\Context\Transform\PimcoreClassContext
+        arguments:
+            - '@import_definitions.behat.shared_storage'
+            - '@import_definitions.behat.class_storage'
+        tags:
+            - { name: fob.context_service }

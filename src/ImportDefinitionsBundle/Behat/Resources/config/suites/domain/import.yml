@@ -1,0 +1,15 @@
+default:
+    suites:
+        domain_import:
+            contexts_services:
+                - import_definitions.behat.context.hook.pimcore_setup
+                - import_definitions.behat.context.hook.im_setup
+                - import_definitions.behat.context.hook.doctrine_orm
+                - import_definitions.behat.context.hook.pimcore_dao
+
+                - import_definitions.behat.context.transform.pimcore_class
+
+                - import_definitions.behat.context.setup.pimcore_class
+
+            filters:
+                tags: "@import"

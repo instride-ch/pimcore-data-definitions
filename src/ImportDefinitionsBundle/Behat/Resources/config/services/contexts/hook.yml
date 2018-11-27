@@ -1,0 +1,22 @@
+services:
+    import_definitions.behat.context.hook.doctrine_orm:
+        class: ImportDefinitionsBundle\Behat\Context\Hook\DoctrineORMContext
+        arguments:
+            - '@__symfony_shared__.doctrine.orm.entity_manager'
+        tags:
+            - { name: fob.context_service }
+
+    import_definitions.behat.context.hook.pimcore_dao:
+        class: ImportDefinitionsBundle\Behat\Context\Hook\PimcoreDaoContext
+        tags:
+            - { name: fob.context_service }
+
+    import_definitions.behat.context.hook.pimcore_setup:
+        class: ImportDefinitionsBundle\Behat\Context\Hook\PimcoreSetupContext
+        tags:
+            - { name: fob.context_service }
+
+    import_definitions.behat.context.hook.im_setup:
+        class: ImportDefinitionsBundle\Behat\Context\Hook\IMSetupContext
+        tags:
+            - { name: fob.context_service }

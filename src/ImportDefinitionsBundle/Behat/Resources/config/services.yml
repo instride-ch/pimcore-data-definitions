@@ -1,0 +1,10 @@
+imports:
+    - { resource: "services/contexts.yml" }
+
+
+services:
+    import_definitions.behat.shared_storage:
+        class: ImportDefinitionsBundle\Behat\Service\SharedStorage
+
+    import_definitions.behat.class_storage:
+        class: ImportDefinitionsBundle\Behat\Service\ClassStorage

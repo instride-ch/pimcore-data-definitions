@@ -1,0 +1,2 @@
+imports:
+    - suites/domain/import.yml

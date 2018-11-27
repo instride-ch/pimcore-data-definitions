@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-echo "BEHAT TESTS"
+echo "TEST TWIG"
+
 bin/console lint:twig src --no-debug

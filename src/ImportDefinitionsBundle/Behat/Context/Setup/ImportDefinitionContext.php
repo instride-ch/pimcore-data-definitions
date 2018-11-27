@@ -22,8 +22,8 @@ use CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
 use ImportDefinitionsBundle\Behat\Service\SharedStorageInterface;
 use ImportDefinitionsBundle\Importer\ImporterInterface;
-use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
-use ImportDefinitionsBundle\Model\ImportMapping;
+use ImportDefinitionsBundle\Model\DefinitionInterface;
+use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -90,7 +90,7 @@ final class ImportDefinitionContext implements Context
     public function thereIsAImportDefinition($name, ClassDefinition $definition = null)
     {
         /**
-         * @var ImportDefinitionInterface $importDefinition
+         * @var DefinitionInterface $importDefinition
          */
         $importDefinition = $this->factory->createNew();
         $importDefinition->setName($name);
@@ -108,7 +108,7 @@ final class ImportDefinitionContext implements Context
      * @Given /^the (import-definitions) provider is "([^"]+)" with the configuration:/
      */
     public function theImportDefinitionsProviderIs(
-        ImportDefinitionInterface $importDefinition,
+        DefinitionInterface $importDefinition,
         $provider,
         TableNode $tableNode = null
     ) {
@@ -125,7 +125,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) loader is "([^"]+)"$/
      */
-    public function theImportDefinitionsLoaderIs(ImportDefinitionInterface $importDefinition, $loader)
+    public function theImportDefinitionsLoaderIs(DefinitionInterface $importDefinition, $loader)
     {
         $importDefinition->setLoader($loader);
 
@@ -135,7 +135,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) object-path is "([^"]+)"$/
      */
-    public function theImportDefinitionsObjectPathIs(ImportDefinitionInterface $importDefinition, $objectPath)
+    public function theImportDefinitionsObjectPathIs(DefinitionInterface $importDefinition, $objectPath)
     {
         $importDefinition->setObjectPath($objectPath);
 
@@ -145,7 +145,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) cleaner is "([^"]+)"$/
      */
-    public function theImportDefinitionsCleanerIs(ImportDefinitionInterface $importDefinition, $cleaner)
+    public function theImportDefinitionsCleanerIs(DefinitionInterface $importDefinition, $cleaner)
     {
         $importDefinition->setCleaner($cleaner);
 
@@ -155,7 +155,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) key is "([^"]+)"$/
      */
-    public function theImportDefinitionsKeyIs(ImportDefinitionInterface $importDefinition, $key)
+    public function theImportDefinitionsKeyIs(DefinitionInterface $importDefinition, $key)
     {
         $importDefinition->setKey($key);
 
@@ -165,7 +165,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) filter is "([^"]+)"$/
      */
-    public function theImportDefinitionsFilterIs(ImportDefinitionInterface $importDefinition, $filter)
+    public function theImportDefinitionsFilterIs(DefinitionInterface $importDefinition, $filter)
     {
         $importDefinition->setFilter($filter);
 
@@ -175,7 +175,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) renames existing objects$/
      */
-    public function theImportDefinitionsRenamesExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsRenamesExistingObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setRenameExistingObjects(true);
 
@@ -185,7 +185,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not rename existing objects$/
      */
-    public function theImportDefinitionsDoesNotRenameExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotRenameExistingObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setRenameExistingObjects(false);
 
@@ -195,7 +195,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) relocates existing objects$/
      */
-    public function theImportDefinitionsRelocatesExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsRelocatesExistingObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setRelocateExistingObjects(true);
 
@@ -205,7 +205,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not relocate existing objects$/
      */
-    public function theImportDefinitionsDoesNotRelocateExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotRelocateExistingObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setRelocateExistingObjects(false);
 
@@ -215,7 +215,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) omits the mandatory check$/
      */
-    public function theImportDefinitionsOmitsTheMandatoryCheck(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsOmitsTheMandatoryCheck(DefinitionInterface $importDefinition)
     {
         $importDefinition->setOmitMandatoryCheck(true);
 
@@ -225,7 +225,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not omit the mandatory check$/
      */
-    public function theImportDefinitionsDosNotOmitTheMandatoryCheck(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDosNotOmitTheMandatoryCheck(DefinitionInterface $importDefinition)
     {
         $importDefinition->setOmitMandatoryCheck(false);
 
@@ -235,7 +235,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) skips new objects$/
      */
-    public function theImportDefinitionsSkipsNewObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsSkipsNewObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setSkipNewObjects(true);
 
@@ -245,7 +245,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not skip new objects$/
      */
-    public function theImportDefinitionsDoesNotSkipNewObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotSkipNewObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setSkipNewObjects(false);
 
@@ -255,7 +255,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) skips existing objects$/
      */
-    public function theImportDefinitionsSkipsExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsSkipsExistingObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setSkipExistingObjects(true);
 
@@ -265,7 +265,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not skip existing objects$/
      */
-    public function theImportDefinitionsDoesNotSkipExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotSkipExistingObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setSkipExistingObjects(false);
 
@@ -275,7 +275,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) force loads objects$/
      */
-    public function theImportDefinitionsForceLoadsObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsForceLoadsObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setForceLoadObject(true);
 
@@ -285,7 +285,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not force load objects$/
      */
-    public function theImportDefinitionsDoesNotForceLoadObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotForceLoadObjects(DefinitionInterface $importDefinition)
     {
         $importDefinition->setForceLoadObject(false);
 
@@ -295,7 +295,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /the (import-definitions) mapping is:/
      */
-    public function theIndexHasFollowingFields(ImportDefinitionInterface $definition, TableNode $table)
+    public function theIndexHasFollowingFields(DefinitionInterface $definition, TableNode $table)
     {
         $hash = $table->getHash();
 
@@ -303,9 +303,9 @@ final class ImportDefinitionContext implements Context
 
         foreach ($hash as $row) {
             /**
-             * @var ImportMapping $mapping
+             * @var Mapping $mapping
              */
-            $column = new ImportMapping();
+            $column = new Mapping();
             $column->setFromColumn($row['fromColumn']);
             $column->setToColumn($row['toColumn']);
 
@@ -342,7 +342,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /I run the (import-definitions) with params:/
      */
-    public function IRunTheImportDefinition(ImportDefinitionInterface $importDefinition, TableNode $tableNode)
+    public function IRunTheImportDefinition(DefinitionInterface $importDefinition, TableNode $tableNode)
     {
         $config = [];
 
@@ -380,9 +380,9 @@ final class ImportDefinitionContext implements Context
     }
 
     /**
-     * @param ImportDefinitionInterface $importDefinition
+     * @param DefinitionInterface $importDefinition
      */
-    private function persist(ImportDefinitionInterface $importDefinition)
+    private function persist(DefinitionInterface $importDefinition)
     {
         $this->sharedStorage->set('import-definition', $importDefinition);
 

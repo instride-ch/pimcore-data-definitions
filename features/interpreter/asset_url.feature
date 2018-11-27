@@ -1,5 +1,5 @@
 @interpreter @interpreter_asset_url
-Feature: Adding a import with a cleaner
+Feature: Adding a import with a interpreter
   The Interpreter will check for an image to download and assign it if found
 
   Background:

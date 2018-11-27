@@ -1,5 +1,5 @@
 @interpreter @interpreter_asset_by_path
-Feature: Adding a import with a cleaner
+Feature: Adding a import with a interpreter
   The Interpreter will check for an image in Pimcore and assign it if found
 
   Background:

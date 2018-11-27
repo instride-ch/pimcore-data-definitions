@@ -16,6 +16,7 @@ namespace ImportDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Event\EventDispatcherInterface;
+use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Runner\SetterRunnerInterface;

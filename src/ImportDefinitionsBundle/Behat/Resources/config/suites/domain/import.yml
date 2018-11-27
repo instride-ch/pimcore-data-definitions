@@ -8,8 +8,11 @@ default:
                 - import_definitions.behat.context.hook.pimcore_dao
 
                 - import_definitions.behat.context.transform.pimcore_class
+                - import_definitions.behat.context.transform.import_definition
 
                 - import_definitions.behat.context.setup.pimcore_class
+                - import_definitions.behat.context.setup.import_definition
 
+                - import_definitions.behat.context.domain.pimcore
             filters:
                 tags: "@import"

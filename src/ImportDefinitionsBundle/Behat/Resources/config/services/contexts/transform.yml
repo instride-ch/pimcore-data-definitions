@@ -6,3 +6,11 @@ services:
             - '@import_definitions.behat.class_storage'
         tags:
             - { name: fob.context_service }
+
+    import_definitions.behat.context.transform.import_definition:
+        class: ImportDefinitionsBundle\Behat\Context\Transform\ImportDefinitionContext
+        arguments:
+            - '@import_definitions.behat.shared_storage'
+            - '@__symfony__.import_definitions.repository.definition'
+        tags:
+            - { name: fob.context_service }

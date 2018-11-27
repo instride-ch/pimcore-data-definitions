@@ -10,7 +10,7 @@ default:
             kernel:
                 class: AppKernel
                 path: app/AppKernel.php
-                bootstrap: tests/behat-bootstrap.php
+                bootstrap: behat-bootstrap.php
 
         FriendsOfBehat\ContextServiceExtension:
             imports:

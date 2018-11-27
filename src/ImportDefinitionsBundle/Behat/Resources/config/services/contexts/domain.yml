@@ -1,1 +1,7 @@
 services:
+    import_definitions.behat.context.domain.pimcore:
+        class: ImportDefinitionsBundle\Behat\Context\Domain\PimcoreContext
+        arguments:
+            - '@import_definitions.behat.shared_storage'
+        tags:
+            - { name: fob.context_service }

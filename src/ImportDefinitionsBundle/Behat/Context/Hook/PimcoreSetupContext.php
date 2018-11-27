@@ -15,18 +15,75 @@
 namespace ImportDefinitionsBundle\Behat\Context\Hook;
 
 use Behat\Behat\Context\Context;
+use Doctrine\DBAL\DriverManager;
 
 final class PimcoreSetupContext implements Context
 {
+    private static $pimcoreSetupDone = false;
+
     /**
      * @BeforeSuite
      */
     public static function setupPimcore()
     {
-        if (getenv('IM_SKIP_DB_SETUP')) {
+        if (getenv('CORESHOP_SKIP_DB_SETUP')) {
             return;
         }
 
-        \CoreShop\Test\Setup::setupPimcore();
+        if (static::$pimcoreSetupDone) {
+            return;
+        }
+
+        $connection = \Pimcore::getContainer()->get('database_connection');
+
+        $dbName = $connection->getParams()['dbname'];
+        $params = $connection->getParams();
+        $config = $connection->getConfiguration();
+
+        unset($params['url']);
+        unset($params['dbname']);
+
+        // use a dedicated setup connection as the framework connection is bound to the DB and will
+        // fail if the DB doesn't exist
+        $setupConnection = DriverManager::getConnection($params, $config);
+        $schemaManager = $setupConnection->getSchemaManager();
+
+        $databases = $schemaManager->listDatabases();
+        if (in_array($dbName, $databases)) {
+            $schemaManager->dropDatabase($connection->quoteIdentifier($dbName));
+        }
+
+        $schemaManager->createDatabase($connection->quoteIdentifier($dbName));
+
+
+        if (!$connection->isConnected()) {
+            $connection->connect();
+        }
+
+        //Prior 5.5
+        if (@class_exists('\Pimcore\Model\Tool\Setup')) {
+            $setup = new \Pimcore\Model\Tool\Setup();
+            $setup->database();
+
+            $setup->contents(
+                [
+                    'username' => 'admin',
+                    'password' => microtime(),
+                ]
+            );
+        }
+        else {
+            $installer = new \Pimcore\Bundle\InstallBundle\Installer(
+                \Pimcore::getContainer()->get('monolog.logger.pimcore'),
+                \Pimcore::getContainer()->get('event_dispatcher')
+            );
+
+            $installer->setupDatabase([
+                'username' => 'admin',
+                'password' => microtime(),
+            ]);
+        }
+
+        static::$pimcoreSetupDone = true;
     }
 }

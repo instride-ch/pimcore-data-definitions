@@ -31,6 +31,50 @@ pimcore.plugin.importdefinitions.export.panel = Class.create(coreshop.resource.p
     setters : [],
     filters : [],
     runners : [],
+	
+	getDefaultGridConfiguration: function () {
+        return {
+            region: 'west',
+            store: pimcore.globalmanager.get(this.storeId),
+            columns: [
+                {
+                    text: 'ID',
+                    dataIndex: 'id',
+                    flex: 1,
+                    renderer: this.getGridDisplayColumnRenderer
+                },
+                {
+                    text: 'Name',
+                    dataIndex: this.getDefaultGridDisplayColumnName(),
+                    flex: 4,
+                    renderer: this.getGridDisplayColumnRenderer
+                }
+                
+            ],
+            listeners: this.getTreeNodeListeners(),
+            useArrows: true,
+            autoScroll: true,
+            animate: true,
+            containerScroll: true,
+            width: 200,
+            split: true,
+            tbar: this.getTopBar(),
+            bbar: {
+                items: [{
+                    xtype: 'label',
+                    text: '',
+                    itemId: 'totalLabel'
+                }, '->', {
+                    iconCls: 'pimcore_icon_reload',
+                    scale: 'small',
+                    handler: function () {
+                        this.grid.getStore().load();
+                    }.bind(this)
+                }]
+            },
+            hideHeaders: false
+        };
+    },
 
     getTitle: function () {
         return t('importdefinitions_export_definitions');

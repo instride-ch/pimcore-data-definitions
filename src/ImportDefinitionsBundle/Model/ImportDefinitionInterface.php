@@ -85,6 +85,16 @@ interface ImportDefinitionInterface extends DataDefinitionInterface
      * @param boolean $relocateExistingObjects
      */
     public function setRelocateExistingObjects($relocateExistingObjects);
+	
+	/**
+     * @return mixed
+     */
+    public function getCreateVersion();
+
+    /**
+     * @param boolean $createVersion
+     */
+    public function setCreateVersion($createVersion);
 
     /**
      * @return bool

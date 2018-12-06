@@ -30,6 +30,10 @@ ImportDefinitionsBundle\Model\ImportDefinition:
       expose: true
       type: boolean
       groups: [Detailed]
+    createVersion:
+      expose: true
+      type: boolean
+      groups: [Detailed]  
     omitMandatoryCheck:
       expose: true
       type: boolean

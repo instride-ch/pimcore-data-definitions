@@ -15,16 +15,16 @@
 namespace ImportDefinitionsBundle\Filter;
 
 use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
+use ImportDefinitionsBundle\Model\DefinitionInterface;
 
 interface FilterInterface
 {
     /**
-     * @param ImportDefinitionInterface $definition
+     * @param DefinitionInterface $definition
      * @param array $data
      * @param Concrete $object
      *
      * @return boolean
      */
-    public function filter(ImportDefinitionInterface $definition, $data, $object);
+    public function filter(DefinitionInterface $definition, $data, $object);
 }

@@ -39,3 +39,5 @@ class FromColumn extends AbstractColumn
         $this->label = $label;
     }
 }
+
+class_alias(FromColumn::class, 'ImportDefinitionsBundle\Model\Mapping\FromColumn');

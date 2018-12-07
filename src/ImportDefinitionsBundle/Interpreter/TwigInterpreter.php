@@ -45,7 +45,7 @@ class TwigInterpreter implements InterpreterInterface
         $params,
         $configuration
     ) {
-        return $this->twig->render($this->twig->createTemplate($configuration['template']), [
+        return $this->twig->createTemplate($configuration['template'])->render([
             'value' => $value,
             'object' => $object,
             'map' => $map,

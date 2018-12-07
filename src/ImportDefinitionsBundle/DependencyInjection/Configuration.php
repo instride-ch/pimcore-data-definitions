@@ -154,6 +154,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('interpreter_iterator')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/iterator.js')->end()
                             ->scalarNode('interpreter_definition')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/definition.js')->end()
                             ->scalarNode('interpreter_conditional')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/conditional.js')->end()
+                            ->scalarNode('interpreter_twig')->defaultValue('/bundles/importdefinitions/pimcore/js/interpreters/twig.js')->end()
                             ->scalarNode('setter_abstract')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/abstract.js')->end()
                             ->scalarNode('setter_fieldcollection')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/fieldcollection.js')->end()
                             ->scalarNode('setter_objectbrick')->defaultValue('/bundles/importdefinitions/pimcore/js/setters/objectbrick.js')->end()

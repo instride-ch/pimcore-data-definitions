@@ -242,6 +242,13 @@ services:
         tags:
             - { name: import_definition.interpreter, type: iterator, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
 
+    import_definition.interpreter.twig:
+        class: ImportDefinitionsBundle\Interpreter\TwigInterpreter
+        arguments:
+            - '@twig'
+        tags:
+            - { name: import_definition.interpreter, type: twig, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\TwigInterpreterType }
+
     ### PROVIDER
     import_definition.provider.csv:
         class: ImportDefinitionsBundle\Provider\CsvProvider

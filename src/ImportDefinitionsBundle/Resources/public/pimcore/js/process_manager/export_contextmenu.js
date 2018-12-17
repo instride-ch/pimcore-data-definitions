@@ -10,12 +10,14 @@ pimcore.plugin.importdefinitions.export.context_menu = Class.create(pimcore.plug
     },
 
     prepareObjectTreeContextMenu: function (tree, treeClass, menuItem) {
-        Ext.define('Executable', {
-            extend: 'Ext.data.Model',
-            fields: [
-                {name: 'name', type: 'string'},
-            ]
-        });
+        if (!Ext.ClassManager.get('Executable')) {
+            Ext.define('Executable', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    {name: 'name', type: 'string'},
+                ]
+            });
+        }
 
         var $this = this;
         Ext.create('Ext.data.Store', {

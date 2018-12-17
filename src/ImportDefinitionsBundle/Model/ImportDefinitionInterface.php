@@ -125,4 +125,14 @@ interface ImportDefinitionInterface extends DataDefinitionInterface
      * @param $forceLoadObject
      */
     public function setForceLoadObject($forceLoadObject);
+
+    /**
+     * @return mixed
+     */
+    public function getCreateVersion();
+
+    /**
+     * @param boolean $createVersion
+     */
+    public function setCreateVersion($createVersion);
 }

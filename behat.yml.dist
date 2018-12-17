@@ -1,0 +1,3 @@
+imports:
+    - tests/ImportDefinitionsBundle/Behat/Resources/config/profiles.yml
+    - tests/ImportDefinitionsBundle/Behat/Resources/config/suites.yml

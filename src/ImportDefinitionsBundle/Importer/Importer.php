@@ -255,7 +255,7 @@ final class Importer implements ImporterInterface
                 }
 
                 $count++;
-            } catch (\Exception $ex) {
+            } catch (\Throwable $ex) {
                 $this->logger->error($ex);
 
                 $exceptions[] = $ex;

@@ -22,6 +22,7 @@ pimcore.plugin.importdefinitions.setters.classificationstore = Class.create(pimc
             fieldLabel : t('field'),
             name : 'field',
             length : 255,
+            allowBlank: false,
             value : config.field ? config.field : null
         });
 

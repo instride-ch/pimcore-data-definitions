@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e
+
+echo "TEST TWIG"
+
+bin/console lint:twig src --no-debug

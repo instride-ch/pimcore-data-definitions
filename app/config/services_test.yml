@@ -1,0 +1,5 @@
+services:
+    import_definitions.behat.filter.simple:
+        class: ImportDefinitionsBundle\Behat\Service\Filter\SimpleFilter
+        tags:
+            - { name: import_definition.filter, type: simple }

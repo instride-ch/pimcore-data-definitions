@@ -28,6 +28,22 @@
     "coreshop/resource-bundle": "^2.0",
     "league/csv": "^9.0"
   },
+  "require-dev": {
+    "behat/behat": "^3.3",
+    "doctrine/data-fixtures": "^1.0",
+    "friends-of-behat/context-service-extension": "^1.1",
+    "friends-of-behat/cross-container-extension": "^1.1",
+    "friends-of-behat/service-container-extension": "^1.0",
+    "friends-of-behat/symfony-extension": "^1.2",
+    "friends-of-behat/variadic-extension": "^1.1",
+    "symplify/easy-coding-standard": "^4.3.0",
+    "leanphp/behat-code-coverage": "^3.2",
+    "phpstan/phpstan": "^0.10.5",
+    "phpstan/phpstan-doctrine": "^0.10",
+    "phpstan/phpstan-shim": "^0.10",
+    "phpstan/phpstan-symfony": "^0.10",
+    "phpstan/phpstan-webmozart-assert": "^0.10"
+  },
   "conflict": {
     "dpfaffenbauer/process-manager": "<2.4"
   },
@@ -38,6 +54,14 @@
     "psr-4": {
       "ImportDefinitionsBundle\\": "src/ImportDefinitionsBundle"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ImportDefinitionsBundle\\Behat\\": "tests/ImportDefinitionsBundle/Behat"
+    },
+    "classmap": [
+      "app/AppKernel.php"
+    ]
   },
   "extra": {
     "pimcore": {

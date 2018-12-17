@@ -50,6 +50,11 @@
   "autoload": {
     "psr-4": {
       "ImportDefinitionsBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ImportDefinitionsBundle\\Behat\\": "tests/ImportDefinitionsBundle/Behat"
     },
     "classmap": [
       "app/AppKernel.php"

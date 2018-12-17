@@ -42,4 +42,18 @@ final class IMSetupContext implements Context
 
         static::$setupDone = true;
     }
+
+    /**
+     * @BeforeScenario
+     */
+    public function purgeDefinitions()
+    {
+        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY . '/importdefinitions.php')) {
+            unlink(PIMCORE_CONFIGURATION_DIRECTORY.'/importdefinitions.php');
+        }
+
+        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY . '/exportdefinitions.php')) {
+            unlink(PIMCORE_CONFIGURATION_DIRECTORY.'/exportdefinitions.php');
+        }
+    }
 }

@@ -56,6 +56,8 @@ final class PimcoreClassContext implements Context
     {
         Runtime::clear();
 
+        $name = $this->classStorage->get($name);
+
         ClassLoader::forceLoadDataObjectClass($name);
 
         $classDefinition = ClassDefinition::getByName($name);
@@ -63,14 +65,6 @@ final class PimcoreClassContext implements Context
         Assert::notNull($classDefinition, sprintf('Class Definition for class with name %s not found', $name));
 
         return $classDefinition;
-    }
-
-    /**
-     * @Transform /^behat-class "([^"]+)"$/
-     */
-    public function behatClass($name)
-    {
-        return $this->class($this->classStorage->get($name));
     }
 
     /**
@@ -109,6 +103,26 @@ final class PimcoreClassContext implements Context
     public function objectOfTheDefinition()
     {
         $definition = $this->definition();
+
+        $fqcn = 'Pimcore\Model\DataObject\\'.ucfirst($definition->getName());
+
+        /**
+         * @var DataObject\Listing $list
+         */
+        $list = $fqcn::getList();
+        $list->setUnpublished(true);
+
+        Assert::eq(1, $list->getTotalCount(), sprintf('Can only find one object, but the list contains more or none'));
+
+        return $list->getObjects()[0];
+    }
+
+    /**
+     * @Transform /^object of class "([^"]+)"$/
+     */
+    public function objectOfTheClass($name)
+    {
+        $definition = $this->class($name);
 
         $fqcn = 'Pimcore\Model\DataObject\\'.ucfirst($definition->getName());
 

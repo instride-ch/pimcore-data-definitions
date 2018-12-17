@@ -14,7 +14,7 @@ default:
 
         FriendsOfBehat\ContextServiceExtension:
             imports:
-                - "src/ImportDefinitionsBundle/Behat/Resources/config/services.yml"
+                - "tests/ImportDefinitionsBundle/Behat/Resources/config/services.yml"
 
         FriendsOfBehat\CrossContainerExtension: ~
 

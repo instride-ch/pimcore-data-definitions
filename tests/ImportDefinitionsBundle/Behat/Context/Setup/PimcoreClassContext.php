@@ -322,6 +322,40 @@ final class PimcoreClassContext implements Context
     }
 
     /**
+     * @Given /^the (definition) has a wysiwyg field "([^"]+)"$/
+     */
+    public function definitionHasWysiwygField($definition, $name)
+    {
+        $jsonDefinition = sprintf('
+            {
+                "fieldtype": "wsysiwyg",
+                "width": null,
+                "queryColumnType": "varchar",
+                "columnType": "varchar",
+                "columnLength": 190,
+                "phpdocType": "string",
+                "regex": "",
+                "name": "%s",
+                "title": "%s",
+                "tooltip": "",
+                "mandatory": false,
+                "noteditable": false,
+                "index": false,
+                "locked": false,
+                "style": "",
+                "permissions": null,
+                "datatype": "data",
+                "relationType": false,
+                "invisible": false,
+                "visibleGridView": true,
+                "visibleSearch": true
+            }
+        ', $name, $name);
+
+        $this->addFieldDefinitionToDefinition($definition, $jsonDefinition);
+    }
+
+    /**
      * @Given /^the (definition) has a image field "([^"]+)"$/
      */
     public function definitionHasImageField($definition, $name)

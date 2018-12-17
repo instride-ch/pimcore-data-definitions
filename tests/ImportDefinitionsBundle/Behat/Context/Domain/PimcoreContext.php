@@ -38,6 +38,7 @@ final class PimcoreContext implements Context
 
     /**
      * @Given /^there should be "([^"]+)" data-objects for (definition)$/
+     * @Given /^there should be "([^"]+)" data-objects for (class "[^"]+")$/
      */
     public function thereAreDataObjects(int $count, ClassDefinition $definition)
     {
@@ -60,6 +61,7 @@ final class PimcoreContext implements Context
 
     /**
      * @Given /^there should be "([^"]+)" unpublished data-objects for (definition)$/
+     * @Given /^there should be "([^"]+)" unpublished data-objects for (class "[^"]+")$/
      */
     public function thereAreUnpublishedDataObjects(int $count, ClassDefinition $definition)
     {
@@ -83,6 +85,7 @@ final class PimcoreContext implements Context
 
     /**
      * @Given /^there should be "([^"]+)" published data-objects for (definition)$/
+     * @Given /^there should be "([^"]+)" published data-objects for (class "[^"]+")$/
      */
     public function thereArePublishedDataObjects(int $count, ClassDefinition $definition)
     {
@@ -108,6 +111,10 @@ final class PimcoreContext implements Context
      * @Given /^the field "([^"]+)" for (object of the definition) should have the value of (asset "([^"]+)")$/
      * @Given /^the field "([^"]+)" for (object of the definition) should have the value "([^"]+)"$/
      * @Given /^the field "([^"]+)" for (object of the definition) should have the value null$/
+     *
+     * @Given /^the field "([^"]+)" for (object of class "[^"]+") should have the value of (asset "([^"]+)")$/
+     * @Given /^the field "([^"]+)" for (object of class "[^"]+") should have the value "([^"]+)"$/
+     * @Given /^the field "([^"]+)" for (object of class "[^"]+") should have the value null$/
      */
     public function theFieldForObjectOfDefinitionShouldHaveTheValueOf($field, DataObject\Concrete $object, $value = null)
     {

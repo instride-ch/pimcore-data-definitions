@@ -102,6 +102,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^there is a import-definition "([^"]+)"$/
      * @Given /^there is a import-definition "([^"]+)" for (definition)$/
+     * @Given /^there is a import-definition "([^"]+)" for (class "[^"]+")$/
      */
     public function thereIsAImportDefinition($name, ClassDefinition $definition = null)
     {
@@ -110,6 +111,7 @@ final class ImportDefinitionContext implements Context
          */
         $importDefinition = $this->factory->createNew();
         $importDefinition->setName($name);
+        $importDefinition->setStopOnException(true);
 
 
         if (null !== $definition) {
@@ -122,6 +124,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) provider is "([^"]+)"$/
      * @Given /^the (import-definitions) provider is "([^"]+)" with the configuration:/
+     * @Given /^the (import-definition "[^"]+") provider is "([^"]+)" with the configuration:/
      */
     public function theImportDefinitionsProviderIs(
         DefinitionInterface $importDefinition,
@@ -311,7 +314,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /the (import-definitions) mapping is:/
      */
-    public function theIndexHasFollowingFields(DefinitionInterface $definition, TableNode $table)
+    public function theImportDefinitionsMappingIs(DefinitionInterface $definition, TableNode $table)
     {
         $hash = $table->getHash();
 
@@ -338,7 +341,7 @@ final class ImportDefinitionContext implements Context
                     $this->processArrayConfiguration(
                         $this->interpreterFormRegistry,
                         $row['interpreter'],
-                        $data
+                        $data ?? []
                     )
                 );
             }
@@ -352,7 +355,7 @@ final class ImportDefinitionContext implements Context
                     $this->processArrayConfiguration(
                         $this->setterFormRegistry,
                         $row['setter'],
-                        $data
+                        $data ?? []
                     )
                 );
             }
@@ -361,6 +364,73 @@ final class ImportDefinitionContext implements Context
         }
 
         $definition->setMapping($columns);
+
+        $this->persist($definition);
+    }
+
+    /**
+     * @Given /the (import-definitions) mapping for column "([^"]+)" uses interpreter "([^"]+)" with config:/
+     * @Given /the (import-definition "[^"]+") mapping for column "([^"]+)" uses interpreter "([^"]+)" with config:/
+     */
+    public function theImportDefinitionsHasAMapping(DefinitionInterface $definition, $toColumn, $interpreter, PyStringNode $config)
+    {
+        $column = null;
+
+        foreach ($definition->getMapping() as $mapping) {
+            if ($mapping->getToColumn() === $toColumn) {
+                $column = $mapping;
+                break;
+            }
+        }
+
+        if (null === $column) {
+            throw new \InvalidArgumentException(sprintf('Mapping for Column %s not found', $toColumn));
+        }
+
+        $column->setInterpreter($interpreter);
+        $data = json_decode($config->getRaw(), true);
+
+        $column->setInterpreterConfig(
+            $this->processArrayConfiguration(
+                $this->interpreterFormRegistry,
+                $interpreter,
+                $data ?? []
+            )
+        );
+
+        $this->persist($definition);
+    }
+
+    /**
+     * @Given /the (import-definitions) mapping for column "([^"]+)" uses interpreter "definition" for (import-definition "([^"]+)")$/
+     * @Given /the (import-definition "[^"]+") mapping for column "([^"]+)" uses interpreter "definition" for (import-definition "([^"]+)")$/
+     */
+    public function theImportDefinitionsHasAMappingForInterpreterDefinition(DefinitionInterface $definition, $toColumn, DefinitionInterface $subDefinition)
+    {
+        $column = null;
+
+        foreach ($definition->getMapping() as $mapping) {
+            if ($mapping->getToColumn() === $toColumn) {
+                $column = $mapping;
+                break;
+            }
+        }
+
+        if (null === $column) {
+            throw new \InvalidArgumentException(sprintf('Mapping for Column %s not found', $toColumn));
+        }
+
+        $column->setInterpreter('definition');
+
+        $column->setInterpreterConfig(
+            $this->processArrayConfiguration(
+                $this->interpreterFormRegistry,
+                'definition',
+                [
+                    'definition' => $subDefinition->getId()
+                ]
+            )
+        );
 
         $this->persist($definition);
     }
@@ -375,6 +445,7 @@ final class ImportDefinitionContext implements Context
 
     /**
      * @Given /I run the (import-definitions) with params:/
+     * @Given /I run the (import-definition "[^"]+") with params:/
      */
     public function IRunTheImportDefinition(DefinitionInterface $importDefinition, TableNode $tableNode)
     {

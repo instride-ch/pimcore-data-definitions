@@ -16,6 +16,7 @@ namespace ImportDefinitionsBundle\Behat\Context\Hook;
 
 use Behat\Behat\Context\Context;
 use ImportDefinitionsBundle\Installer;
+use Pimcore\Db\PhpArrayFileTable;
 
 final class IMSetupContext implements Context
 {
@@ -48,12 +49,18 @@ final class IMSetupContext implements Context
      */
     public function purgeDefinitions()
     {
-        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY . '/importdefinitions.php')) {
+        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY.'/importdefinitions.php')) {
             unlink(PIMCORE_CONFIGURATION_DIRECTORY.'/importdefinitions.php');
         }
 
-        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY . '/exportdefinitions.php')) {
+        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY.'/exportdefinitions.php')) {
             unlink(PIMCORE_CONFIGURATION_DIRECTORY.'/exportdefinitions.php');
         }
+
+        $obj = new PhpArrayFileTable();
+        $refObject = new \ReflectionObject($obj);
+        $refProperty = $refObject->getProperty('tables');
+        $refProperty->setAccessible(true);
+        $refProperty->setValue(null, []);
     }
 }

@@ -27,7 +27,7 @@ Feature: Adding a import with a interpreter
       | catname    | category | false   |
     And the import-definition "Product" mapping for column "category" uses interpreter "definition" for import-definition "Category"
 
-  Scenario: When I run the import, there should be a default value set
+  Scenario: When I run the import, it should run the second import and create a category as well
     Given there is a file test.csv with content:
       """
       name,catname

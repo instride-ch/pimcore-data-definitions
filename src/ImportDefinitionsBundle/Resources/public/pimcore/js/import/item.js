@@ -13,60 +13,19 @@
 
 pimcore.registerNS('pimcore.plugin.importdefinitions.import.item');
 
-pimcore.plugin.importdefinitions.import.item = Class.create(coreshop.resource.item, {
+pimcore.plugin.importdefinitions.import.item = Class.create(pimcore.plugin.importdefinitions.definition.abstractItem, {
     iconCls: 'importdefinitions_icon_import_definition',
     url: {
         save: '/admin/import_definitions/definitions/save',
         upload : '/admin/import_definitions/definitions/import',
         export : '/admin/import_definitions/definitions/export',
+        duplicate : '/admin/import_definitions/definitions/duplicate',
         test: '/admin/import_definitions/definitions/test-data'
     },
 
     providers: [],
 
-    getPanel: function () {
-        var panel = new Ext.TabPanel({
-            activeTab: 0,
-            title: this.data.name + ' (' + this.data.id + ')',
-            closable: true,
-            deferredRender: false,
-            forceLayout: true,
-            iconCls: this.iconCls,
-            buttons: [
-                {
-                    text: t('importdefinitions_import_definition'),
-                    iconCls: 'pimcore_icon_import',
-                    handler: this.upload.bind(this)
-                },
-                {
-                    text: t('importdefinitions_export_definition'),
-                    iconCls: 'pimcore_icon_export',
-                    handler: function () {
-                        var id = this.data.id;
-                        pimcore.helpers.download(this.url.export + '?id=' + id);
-                    }.bind(this)
-                },
-                {
-                    text: t('save'),
-                    iconCls: 'pimcore_icon_apply',
-                    handler: this.save.bind(this)
-                }],
-            items: this.getItems()
-        });
-
-        return panel;
-    },
-
-    getItems: function () {
-        return [
-            this.getSettings(),
-            this.getProviderSettings(),
-            this.getMappingSettings()
-        ];
-    },
-
     getSettings: function () {
-
         var classesStore = new Ext.data.JsonStore({
             autoDestroy: true,
             proxy: {
@@ -348,24 +307,6 @@ pimcore.plugin.importdefinitions.import.item = Class.create(coreshop.resource.it
         });
 
         return this.configForm;
-    },
-
-    getProviderSettings: function () {
-        if (!this.providerSettings) {
-            this.providerSettings = Ext.create({
-                xtype: 'panel',
-                layout: 'border',
-                title: t('importdefinitions_provider_settings'),
-                iconCls: 'importdefinitions_icon_provider',
-                disabled: true
-            });
-        }
-
-        if (this.data.provider) {
-            this.reloadProviderSettings(this.data.provider);
-        }
-
-        return this.providerSettings;
     },
 
     reloadProviderSettings: function (provider) {
@@ -675,15 +616,5 @@ pimcore.plugin.importdefinitions.import.item = Class.create(coreshop.resource.it
         }
 
         return data;
-    },
-
-    upload: function (callback) {
-        pimcore.helpers.uploadDialog(this.url.upload + '?id=' + this.data.id, 'Filedata', function () {
-            this.panel.destroy();
-            this.parentPanel.openItem(this.data);
-        }.bind(this), function () {
-            Ext.MessageBox.alert(t('error'), t('error'));
-        });
-
     }
 });

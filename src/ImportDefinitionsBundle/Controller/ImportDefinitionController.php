@@ -235,6 +235,30 @@ class ImportDefinitionController extends ResourceController
     }
 
     /**
+     * @param Request $request
+     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function duplicateAction(Request $request)
+    {
+        $id = (int) $request->get('id');
+        $definition = $this->repository->find($id);
+        $name = (string) $request->get('name');
+
+        if ($definition instanceof ImportDefinitionInterface && $name) {
+            $newDefinition = clone $definition;
+            $newDefinition->setId(null);
+            $newDefinition->setName($name);
+
+            $this->manager->persist($newDefinition);
+            $this->manager->flush();
+
+            return $this->viewHandler->handle(['success' => true, 'data' => $newDefinition]);
+        }
+
+        return $this->viewHandler->handle(['success' => false]);
+    }
+
+    /**
      * @param DataObject\ClassDefinition $class
      * @return array
      * @throws \Exception

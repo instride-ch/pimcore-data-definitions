@@ -23,6 +23,10 @@ importdefinitions_admin_import_definitions:
         path: export
         action: export
         methods: [GET]
+      duplicate:
+        path: duplicate
+        action: duplicate
+        methods: [POST]
 
 importdefinitions_admin_export_definitions:
   type: coreshop.resources
@@ -49,3 +53,7 @@ importdefinitions_admin_export_definitions:
         path: export
         action: export
         methods: [GET]
+      duplicate:
+        path: duplicate
+        action: duplicate
+        methods: [POST]

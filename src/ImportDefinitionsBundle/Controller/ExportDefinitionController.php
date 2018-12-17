@@ -116,6 +116,30 @@ class ExportDefinitionController extends ResourceController
     }
 
     /**
+     * @param Request $request
+     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function duplicateAction(Request $request)
+    {
+        $id = (int) $request->get('id');
+        $definition = $this->repository->find($id);
+        $name = (string) $request->get('name');
+
+        if ($definition instanceof ExportDefinitionInterface && $name) {
+            $newDefinition = clone $definition;
+            $newDefinition->setId(null);
+            $newDefinition->setName($name);
+
+            $this->manager->persist($newDefinition);
+            $this->manager->flush();
+
+            return $this->viewHandler->handle(['success' => true, 'data' => $newDefinition]);
+        }
+
+        return $this->viewHandler->handle(['success' => false]);
+    }
+
+    /**
      * Get Pimcore Class Definition.
      *
      * @param Request $request

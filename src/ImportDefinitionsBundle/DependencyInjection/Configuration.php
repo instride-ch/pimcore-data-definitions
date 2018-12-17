@@ -120,6 +120,8 @@ class Configuration implements ConfigurationInterface
                         ->prototype('scalar')->end()
                     ->end()
                     ->arrayNode('install')
+                        ->addDefaultsIfNotSet()
+                        ->ignoreExtraKeys(false)
                         ->children()
                             ->scalarNode('sql')->defaultValue(['@ImportDefinitionsBundle/Resources/install/pimcore/sql/data.sql'])->end()
                         ->end()

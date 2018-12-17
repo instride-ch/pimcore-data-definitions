@@ -17,21 +17,8 @@ namespace ImportDefinitionsBundle\Form\DataMapper;
 use ImportDefinitionsBundle\Model\Mapping;
 use Symfony\Component\Form\DataMapperInterface;
 
-class DefinitionMappingDataMapper implements DataMapperInterface
+final class DefinitionMappingDataMapper implements DataMapperInterface
 {
-    /**
-     * @var DataMapperInterface
-     */
-    private $propertyPathDataMapper;
-
-    /**
-     * @param DataMapperInterface $propertyPathDataMapper
-     */
-    public function __construct(DataMapperInterface $propertyPathDataMapper)
-    {
-        $this->propertyPathDataMapper = $propertyPathDataMapper;
-    }
-
     /**
      * {@inheritdoc}
      */

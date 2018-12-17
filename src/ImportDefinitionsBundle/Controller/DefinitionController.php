@@ -349,10 +349,6 @@ class DefinitionController extends ResourceController
                  * @var DataObject\Classificationstore\GroupConfig $config
                  */
                 foreach ($groupConfigList as $config) {
-                    if (in_array($config->getId(), $csLoadedGroupIds)) {
-                        continue;
-                    }
-
                     foreach ($config->getRelations() as $relation) {
                         if ($relation instanceof DataObject\Classificationstore\KeyGroupRelation) {
                             $keyId = $relation->getKeyId();
@@ -366,6 +362,7 @@ class DefinitionController extends ResourceController
                             $toColumn->setFieldtype($keyConfig->getType());
                             $toColumn->setSetter('classificationstore');
                             $toColumn->setConfig([
+                                'field' => $field->getName(),
                                 'keyId' => $keyConfig->getId(),
                                 'groupId' => $config->getId(),
                             ]);
@@ -374,8 +371,6 @@ class DefinitionController extends ResourceController
                             $result[] = $toColumn;
                         }
                     }
-
-                    $csLoadedGroupIds[] = $config->getId();
                 }
             } else {
                 $result[] = $this->getFieldConfiguration($field);

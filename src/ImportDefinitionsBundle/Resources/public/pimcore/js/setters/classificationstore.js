@@ -17,22 +17,14 @@ pimcore.plugin.importdefinitions.setters.classificationstore = Class.create(pimc
     getLayout : function (fromColumn, toColumn, record, config) {
         this.toColumn = toColumn;
 
-        this.classificationStoreField = Ext.create({
-            xtype : 'textfield',
-            fieldLabel : t('field'),
-            name : 'field',
-            length : 255,
-            value : config.field ? config.field : null
-        });
-
-        return [this.classificationStoreField];
+        return [];
     },
 
     getSetterData: function () {
         return {
             'keyConfig': this.toColumn.data.config.keyId,
             'groupConfig': this.toColumn.data.config.groupId,
-            'field': this.classificationStoreField.getValue()
+            'field': this.toColumn.data.config.field
         };
     }
 });

@@ -263,10 +263,6 @@ class ExportDefinitionController extends ResourceController
                      * @var DataObject\Classificationstore\GroupConfig $config
                      */
                     foreach ($groupConfigList as $config) {
-                        if (in_array($config->getId(), $csLoadedGroupIds)) {
-                            continue;
-                        }
-
                         foreach ($config->getRelations() as $relation) {
                             if ($relation instanceof DataObject\Classificationstore\KeyGroupRelation) {
                                 $keyId = $relation->getKeyId();
@@ -280,6 +276,7 @@ class ExportDefinitionController extends ResourceController
                                 $toColumn->setFieldtype($keyConfig->getType());
                                 $toColumn->setGetter('classificationstore');
                                 $toColumn->setConfig([
+                                    'field' => $field->getName(),
                                     'keyId' => $keyConfig->getId(),
                                     'groupId' => $config->getId(),
                                 ]);
@@ -289,8 +286,6 @@ class ExportDefinitionController extends ResourceController
                                 $result[] = $toColumn;
                             }
                         }
-
-                        $csLoadedGroupIds[] = $config->getId();
                     }
                     break;
 

@@ -290,6 +290,11 @@ services:
             - { name: import_definition.setter, type: classificationstore, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
             - { name: import_definition.getter, type: classificationstore, form-type: ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
 
+    import_definition.setter.classificationstore_field:
+        class: ImportDefinitionsBundle\Setter\ClassificationStoreFieldGetter
+        tags:
+            - { name: import_definition.getter, type: classificationstore_field, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+
     import_definition.setter.fieldcollection:
         class: ImportDefinitionsBundle\Setter\FieldCollectionSetter
         tags:

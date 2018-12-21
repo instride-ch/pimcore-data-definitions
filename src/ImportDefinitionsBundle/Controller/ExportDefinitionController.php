@@ -239,6 +239,12 @@ class ExportDefinitionController extends ResourceController
                     break;
 
                 case DataObject\ClassDefinition\Data\Classificationstore::class:
+                    $resultField = $this->getFieldConfiguration($field);
+                    $resultField->setType('object');
+                    $resultField->setGetter('classificationstore_field');
+
+                    $result[] = $resultField;
+
                     $list = new DataObject\Classificationstore\GroupConfig\Listing();
                     $allowedGroupIds = $field->getAllowedGroupIds();
 

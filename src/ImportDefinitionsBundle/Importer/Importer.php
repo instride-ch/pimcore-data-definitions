@@ -25,6 +25,7 @@ use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportMapping;
 use ImportDefinitionsBundle\Model\MappingInterface;
+use ImportDefinitionsBundle\Model\ParamsAwareInterface;
 use ImportDefinitionsBundle\Provider\ProviderInterface;
 use ImportDefinitionsBundle\Runner\RunnerInterface;
 use ImportDefinitionsBundle\Runner\SaveRunnerInterface;
@@ -161,16 +162,20 @@ final class Importer implements ImporterInterface
             $cleaner = $this->cleanerRegistry->get($cleanerType);
 
             $this->logger->info(sprintf('Running Cleaner "%s"', $cleanerType));
-            $this->eventDispatcher->dispatch($definition, 'import_definition.status', sprintf('Running Cleaner "%s"', $cleanerType, $params));
+            $this->eventDispatcher->dispatch($definition, 'import_definition.status', sprintf('Running Cleaner "%s"', $cleanerType));
 
             if ($cleaner instanceof DataSetAwareInterface) {
                 $cleaner->setDataSet($data);
             }
 
+            if ($cleaner instanceof ParamsAwareInterface) {
+                $cleaner->setParams($params);
+            }
+
             $cleaner->cleanup($definition, $objectIds);
 
             $this->logger->info(sprintf('Finished Cleaner "%s"', $cleanerType));
-            $this->eventDispatcher->dispatch($definition, 'import_definition.status', sprintf('Finished Cleaner "%s"', $cleanerType, $params));
+            $this->eventDispatcher->dispatch($definition, 'import_definition.status', sprintf('Finished Cleaner "%s"', $cleanerType));
         }
 
         if (\count($exceptions) > 0) {

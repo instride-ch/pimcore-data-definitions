@@ -15,8 +15,8 @@
 namespace ImportDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use ImportDefinitionsBundle\Cleaner\ExtendedCleanerInterface;
 use ImportDefinitionsBundle\Event\EventDispatcherInterface;
-use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Filter\FilterInterface;
 use ImportDefinitionsBundle\Loader\LoaderInterface;
@@ -162,6 +162,10 @@ final class Importer implements ImporterInterface
 
             $this->logger->info(sprintf('Running Cleaner "%s"', $cleanerType));
             $this->eventDispatcher->dispatch($definition, 'import_definition.status', sprintf('Running Cleaner "%s"', $cleanerType, $params));
+
+            if ($cleaner instanceof DataSetAwareInterface) {
+                $cleaner->setDataSet($data);
+            }
 
             $cleaner->cleanup($definition, $objectIds);
 

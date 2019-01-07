@@ -97,23 +97,11 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
     {
         $keyParts = explode('~', $map->getFromColumn());
 
-        $config = $map->getSetterConfig();
-        $keys = $config['fieldcollectionKeys'];
-        $fieldName = $config['fieldcollectionField'];
+        $config = $map->getGetterConfig();
+        $fieldName = $config['field'];
         $class = $config['class'];
-        $keys = explode(',', $keys);
         $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\' . ucfirst($class);
         $field = $keyParts[3];
-        $mappedKeys = [];
-
-        foreach ($keys as $key) {
-            $tmp = explode(':', $key);
-
-            $mappedKeys[] = [
-                'from' => $tmp[0],
-                'to' => $tmp[1]
-            ];
-        }
 
         $getter = sprintf('get%s', ucfirst($fieldName));
 
@@ -121,19 +109,29 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
             $fieldCollection = $object->$getter();
 
             if (!$fieldCollection instanceof \Pimcore\Model\DataObject\Fieldcollection) {
-                $fieldCollection = new \Pimcore\Model\DataObject\Fieldcollection();
+                return null;
             }
 
             $items = $fieldCollection->getItems();
+            $values = [];
 
             foreach ($items as $item) {
-                if (is_a($item, $fieldCollectionClass) && $this->isValidKey($mappedKeys, $item, $data)) {
-                    if ($item instanceof AbstractFieldCollection) {
-                        return $item->get($field);
-                    }
+                if (!$item instanceof AbstractFieldCollection) {
+                    continue;
+                }
 
+                 if (!is_a($item, $fieldCollectionClass)) {
+                     continue;
+                 }
+
+                $getter = sprintf('get%s', ucfirst($field));
+
+                if (method_exists($item, $getter)) {
+                    $values[$item->getIndex()] = $item->$getter();
                 }
             }
+
+            return $values;
         }
 
         return null;

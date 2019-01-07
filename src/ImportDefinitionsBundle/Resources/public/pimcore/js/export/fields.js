@@ -183,7 +183,7 @@ pimcore.plugin.importdefinitions.export.fields = Class.create({
                                 }));
 
                                 var dialog = new pimcore.plugin.importdefinitions.export.configDialog();
-                                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.config);
+                                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.mapping);
 
                                 data.records = [copy]; // assign the copy as the new dropNode
                             }
@@ -290,7 +290,7 @@ pimcore.plugin.importdefinitions.export.fields = Class.create({
                 this.selectionPanel.getRootNode().appendChild(copy);
 
                 var dialog = new pimcore.plugin.importdefinitions.export.configDialog();
-                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.config);
+                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.mapping);
             }
         }.bind(this));
 

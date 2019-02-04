@@ -18,10 +18,6 @@ use ImportDefinitionsBundle\Model\ImportMapping\ToColumn;
 use Pimcore\Model\DataObject;
 use Pimcore\Tool;
 
-/**
- * Class FieldSelection
- * @package ImportDefinitionsBundle\Service
- */
 class FieldSelection
 {
     /**

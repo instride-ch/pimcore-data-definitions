@@ -341,10 +341,3 @@ services:
         class: ImportDefinitionsBundle\Loader\PrimaryKeyLoader
         tags:
             - { name: import_definition.loader, type: primary_key }
-#
-#    ImportDefinitionsBundle\Controller\ImportDefinitionController:
-#            public: true
-#            parent: '@coreshop.admin_controller.resource_settings'
-#            calls:
-#              - [setFieldSelection, ['@import_definition.service.fieldselection']]
-#            tags: ['controller.service_arguments']

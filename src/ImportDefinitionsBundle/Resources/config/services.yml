@@ -12,6 +12,10 @@ services:
     import_definition.service.placeholder:
         class: ImportDefinitionsBundle\Service\Placeholder
 
+    import_definition.service.fieldselection:
+        class: ImportDefinitionsBundle\Service\FieldSelection
+        public: true
+
     import_definition.importer:
         class: ImportDefinitionsBundle\Importer\Importer
         arguments:

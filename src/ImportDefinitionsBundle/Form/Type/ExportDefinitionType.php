@@ -107,7 +107,7 @@ final class ExportDefinitionType extends AbstractResourceType
                     return;
                 }
 
-                $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($type, 'default'));
+                $this->addConfigurationFields($event->getForm(), $this->fetcherFormTypeRegistry->get($type, 'default'));
             })
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $type = $this->getFetcherRegistryIdentifier($event->getForm(), $event->getData());
@@ -125,7 +125,7 @@ final class ExportDefinitionType extends AbstractResourceType
                     return;
                 }
 
-                $this->addFetcherConfigurationFields($event->getForm(), $this->formTypeRegistry->get($data['fetcher'], 'default'));
+                $this->addFetcherConfigurationFields($event->getForm(), $this->fetcherFormTypeRegistry->get($data['fetcher'], 'default'));
             })
         ;
     }

@@ -19,7 +19,9 @@ use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
 use ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Inflector\Inflector;
+use Symfony\Component\Process\Process;
 
 class XmlProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
@@ -125,6 +127,29 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
         // </root>
         $writer->endElement();
         $this->flush($writer);
+
+        // XSLT transformation support
+        if (array_key_exists('xsltPath', $configuration) && $configuration['xsltPath']) {
+            $dataPath = $this->getExportPath();
+            $xstlPath = $file = sprintf('%s/%s', PIMCORE_ASSET_DIRECTORY, ltrim($configuration['xsltPath'], '/'));
+
+            if (!file_exists($xstlPath)) {
+                throw new RuntimeException(sprintf('Passed XSLT file "%1$s" not found', $configuration['xsltPath']));
+            }
+
+            if (!is_readable($xstlPath)) {
+                throw new RuntimeException(sprintf('Passed XSLT file "%1$s" not readable', $configuration['xsltPath']));
+            }
+
+            $this->exportPath = tempnam(sys_get_temp_dir(), 'xml_export_xslt_transformation');
+            $cmd = sprintf('xsltproc %1$s %2$s > %3$s', $xstlPath, $dataPath, $this->getExportPath());
+            $process = new Process($cmd);
+            $process->run();
+
+            if (false === $process->isSuccessful()) {
+                throw new RuntimeException($process->getErrorOutput());
+            }
+        }
 
         if (!array_key_exists('file', $params)) {
             return;

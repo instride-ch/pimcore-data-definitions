@@ -26,6 +26,7 @@ import_definitions:
             import_provider_raw: '/bundles/importdefinitions/pimcore/js/provider/raw.js'
             export_provider_abstract: '/bundles/importdefinitions/pimcore/js/export_provider/abstractprovider.js'
             export_provider_csv: '/bundles/importdefinitions/pimcore/js/export_provider/csv.js'
+            export_provider_xml: '/bundles/importdefinitions/pimcore/js/export_provider/xml.js'
             resource_definition: '/bundles/importdefinitions/pimcore/js/resource/definition.js'
             definition_panel: '/bundles/importdefinitions/pimcore/js/import/panel.js'
             definition_item: '/bundles/importdefinitions/pimcore/js/import/item.js'

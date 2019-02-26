@@ -91,7 +91,7 @@ services:
         arguments:
             - '%import_definitions.model.export_definition.class%'
             - '%import_definition.form.type.export_definition.validation_groups%'
-            - '@import_definition.form.registry.provider'
+            - '@import_definition.form.registry.export_provider'
             - '@import_definition.form.registry.fetcher'
         tags:
             - { name: form.type }
@@ -146,8 +146,10 @@ services:
         tags:
             - { name: form.type }
 
+
     import_definition.form.export_runner_choice_type:
         class: ImportDefinitionsBundle\Form\Type\ExportRunnerChoiceType
         arguments: ['%import_definition.export_runners%']
         tags:
             - { name: form.type }
+

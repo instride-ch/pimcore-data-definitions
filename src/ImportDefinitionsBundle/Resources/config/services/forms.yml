@@ -145,3 +145,11 @@ services:
         arguments: ['@import_definitions.repository.definition']
         tags:
             - { name: form.type }
+
+
+    import_definition.form.export_runner_choice_type:
+        class: ImportDefinitionsBundle\Form\Type\ExportRunnerChoiceType
+        arguments: ['%import_definition.export_runners%']
+        tags:
+            - { name: form.type }
+

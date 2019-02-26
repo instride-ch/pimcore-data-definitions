@@ -60,7 +60,7 @@ final class ExportDefinitionType extends AbstractResourceType
             ->add('provider', ProviderChoiceType::class)
             ->add('fetcher', FetcherChoiceType::class)
             ->add('class', ClassChoiceType::class)
-            ->add('runner', RunnerChoiceType::class)
+            ->add('runner', ExportRunnerChoiceType::class)
             ->add('name', TextType::class)
             ->add('stopOnException', CheckboxType::class)
             ->add('fetchUnpublished', CheckboxType::class)

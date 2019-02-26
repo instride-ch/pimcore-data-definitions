@@ -399,7 +399,7 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getConfigRunners(): array
     {
-        return $this->getParameter('import_definition.runners');
+        return $this->getParameter('import_definition.export_runners');
     }
 
     /**

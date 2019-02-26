@@ -35,7 +35,7 @@ services:
         class: ImportDefinitionsBundle\Exporter\Exporter
         arguments:
             - '@import_definition.registry.fetcher'
-            - '@import_definition.registry.runner'
+            - '@import_definition.registry.export_runner'
             - '@import_definition.registry.interpreter'
             - '@import_definition.registry.getter'
             - '@import_definition.registry.export_provider'
@@ -122,6 +122,12 @@ services:
         arguments:
             - ImportDefinitionsBundle\Runner\RunnerInterface
             - 'Import Definition Runners'
+
+    import_definition.registry.export_runner:
+        class: CoreShop\Component\Registry\ServiceRegistry
+        arguments:
+            - ImportDefinitionsBundle\Runner\ExportRunnerInterface
+            - 'Export Definition Runners'
 
     ### CLEANER
     import_definition.cleaner.deleter:

@@ -19,6 +19,7 @@ use CoreShop\Bundle\ResourceBundle\ComposerPackageBundleInterface;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
+use ImportDefinitionsBundle\DependencyInjection\Compiler\ExportRunnerRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\FetcherRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
 use ImportDefinitionsBundle\DependencyInjection\Compiler\GetterRegistryCompilerPass;
@@ -70,6 +71,7 @@ class ImportDefinitionsBundle extends AbstractResourceBundle implements PimcoreB
         $builder->addCompilerPass(new GetterRegistryCompilerPass());
         $builder->addCompilerPass(new FetcherRegistryCompilerPass());
         $builder->addCompilerPass(new ExportProviderRegistryCompilerPass());
+        $builder->addCompilerPass(new ExportRunnerRegistryCompilerPass());
     }
 
     /**

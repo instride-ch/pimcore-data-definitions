@@ -26,6 +26,7 @@ use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ImportMapping;
 use ImportDefinitionsBundle\Model\MappingInterface;
 use ImportDefinitionsBundle\Model\ParamsAwareInterface;
+use ImportDefinitionsBundle\Provider\ImportDataSetInterface;
 use ImportDefinitionsBundle\Provider\ProviderInterface;
 use ImportDefinitionsBundle\Runner\RunnerInterface;
 use ImportDefinitionsBundle\Runner\SaveRunnerInterface;
@@ -149,6 +150,7 @@ final class Importer implements ImporterInterface
             $filter = $this->filterRegistry->get($filterType);
         }
 
+        /** @var ImportDataSetInterface|array $data */
         $data = $this->getData($definition, $params);
 
         if (\count($data) > 0) {
@@ -224,7 +226,7 @@ final class Importer implements ImporterInterface
     /**
      * @param ImportDefinitionInterface $definition
      * @param $params
-     * @return array
+     * @return ImportDataSetInterface|array
      */
     private function getData(ImportDefinitionInterface $definition, $params)
     {
@@ -238,12 +240,16 @@ final class Importer implements ImporterInterface
      * @param ImportDefinitionInterface $definition
      * @param $params
      * @param null $filter
-     * @param array $dataSet
+     * @param ImportDataSetInterface|array $dataSet
      * @throws \Exception
      * @return array
      */
-    private function runImport(ImportDefinitionInterface $definition, $params, $filter = null, array $dataSet = [])
+    private function runImport(ImportDefinitionInterface $definition, $params, $filter = null, $dataSet = null)
     {
+        if (null === $dataSet) {
+            $dataSet = [];
+        }
+
         $count = 0;
         $countToClean = 1000;
         $objectIds = [];
@@ -285,7 +291,7 @@ final class Importer implements ImporterInterface
     /**
      * @param ImportDefinitionInterface $definition
      * @param array $data
-     * @param array $dataSet
+     * @param ImportDataSetInterface|array $dataSet
      * @param $params
      * @param null $filter
      * @return null|Concrete
@@ -389,7 +395,7 @@ final class Importer implements ImporterInterface
      * @param MappingInterface $map
      * @param $value
      * @param array $data
-     * @param array $dataSet
+     * @param ImportDataSetInterface|array $dataSet
      * @param ImportDefinitionInterface $definition
      * @param $params
      * @param RunnerInterface $runner

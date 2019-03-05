@@ -12,19 +12,8 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Model;
+namespace ImportDefinitionsBundle\Provider;
 
-use ImportDefinitionsBundle\Provider\ImportDataSetInterface;
-
-interface DataSetAwareInterface
+interface ImportDataSetInterface extends \Countable, \Iterator
 {
-    /**
-     * @return ImportDataSetInterface|array
-     */
-    public function getDataSet();
-
-    /**
-     * @param ImportDataSetInterface|array $dataSet
-     */
-    public function setDataSet($dataSet);
 }

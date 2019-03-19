@@ -44,6 +44,9 @@ final class IteratorInterpreter implements InterpreterInterface, DataSetAwareInt
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
+        if (null === $value) {
+            return [];
+        }
         Assert::isArray($value, 'IteratorInterpreter can only be used with array values');
 
         $interpreter = $configuration['interpreter'];

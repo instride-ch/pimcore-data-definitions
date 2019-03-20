@@ -12,6 +12,15 @@ services:
             - { name: import_definition.setter, type: coreshop_store_price, form-type: ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType }
             - { name: import_definition.getter, type: coreshop_store_price, form-type: ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType }
 
+    importdefinitions.coreshop.setter.store_values:
+        class: ImportDefinitionsBundle\Setter\CoreShop\StoreValuesSetter
+        arguments:
+            - '@coreshop.repository.store'
+        tags:
+            - { name: import_definition.setter, type: coreshop_store_values, form-type: ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType }
+            - { name: import_definition.getter, type: coreshop_store_values, form-type: ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType }
+
+
     importdefinitions.coreshop.interpreter.stores:
         class: ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter
         tags:

@@ -34,7 +34,7 @@ class ExternalSqlProvider extends AbstractSqlProvider
             'password' => $configuration['password'],
             'host' => $configuration['host'],
             'port' => $configuration['port'],
-            'driver' => 'pdo_mysql',
+            'driver' => $configuration['adapter'],
         ];
 
         return DriverManager::getConnection($connectionParams, $config);

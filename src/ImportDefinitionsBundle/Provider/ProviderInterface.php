@@ -40,7 +40,7 @@ interface ProviderInterface
      * @param $definition
      * @param $params
      * @param null $filter
-     * @return array
+     * @return ImportDataSetInterface|array
      */
     public function getData($configuration, $definition, $params, $filter = null);
 }

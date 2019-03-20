@@ -110,7 +110,7 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
         $writer = $this->getXMLWriter();
 
         $writer->startElement('object');
-        $this->serializeCollection($writer, 'object', $data);
+        $this->serializeCollection($writer, $data);
         $writer->endElement();
 
         $this->exportCounter++;
@@ -217,7 +217,7 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
             if (null !== $key) {
                 $writer->writeAttribute('key', $key);
             }
-            $this->serializeCollection($writer, $name, $data);
+            $this->serializeCollection($writer, $data);
             $writer->endElement();
         } else {
             if ((string) $data) {
@@ -234,7 +234,7 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
         }
     }
 
-    private function serializeCollection(\XMLWriter $writer, string $name, array $data): void
+    private function serializeCollection(\XMLWriter $writer, array $data): void
     {
         foreach ($data as $key => $value) {
             if (is_numeric($key)) {

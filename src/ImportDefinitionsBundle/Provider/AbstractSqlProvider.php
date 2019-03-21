@@ -41,13 +41,13 @@ abstract class AbstractSqlProvider implements ProviderInterface
     {
         $db = $this->getDb($configuration);
         $query = $db->query($configuration['query']);
-        $data = $query->fetchAll();
+        $data = $query->fetch();
         $columns = [];
         $returnColumns = [];
 
-        if (isset($data[0])) {
+        if (isset($data)) {
             // there is at least one row - we can grab columns from it
-            $columns = array_keys((array)$data[0]);
+            $columns = array_keys((array)$data);
         }
 
         foreach ($columns as $col) {

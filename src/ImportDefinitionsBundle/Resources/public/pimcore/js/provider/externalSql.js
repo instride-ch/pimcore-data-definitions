@@ -50,7 +50,7 @@ pimcore.plugin.importdefinitions.provider.external_sql = Class.create(pimcore.pl
             name: 'adapter',
             fieldLabel: t('importdefinitions_sql_adapter'),
             anchor : '100%',
-            value: this.data['adapter'] ? this.data.adapter : 'Pdo_Mysql'
+            value: this.data['adapter'] ? this.data.adapter : 'pdo_mysql'
         }, {
             xtype : 'textarea',
             fieldLabel : t('importdefinitions_sql_query'),

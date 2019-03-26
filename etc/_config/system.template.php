@@ -27,7 +27,7 @@ return [
         "show_cookie_notice"       => false
     ],
     "database"       => [
-        "adapter" => "Pdo_Mysql",
+        "adapter" => "pdo_mysql",
         "params"  => [
             "host"     => "localhost",
             "username" => "root",

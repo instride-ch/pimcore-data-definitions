@@ -19,6 +19,7 @@ import_definitions:
             export_definition_fields: '/bundles/importdefinitions/pimcore/js/export/fields.js'
             import_provider_abstract: '/bundles/importdefinitions/pimcore/js/provider/abstractprovider.js'
             import_provider_csv: '/bundles/importdefinitions/pimcore/js/provider/csv.js'
+            import_provider_excel: '/bundles/importdefinitions/pimcore/js/provider/excel.js'
             import_provider_sql: '/bundles/importdefinitions/pimcore/js/provider/sql.js'
             import_provider_external_sql: '/bundles/importdefinitions/pimcore/js/provider/externalSql.js'
             import_provider_json: '/bundles/importdefinitions/pimcore/js/provider/json.js'

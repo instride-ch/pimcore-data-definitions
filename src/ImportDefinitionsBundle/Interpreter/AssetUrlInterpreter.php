@@ -23,6 +23,7 @@ use Pimcore\File;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 use ImportDefinitionsBundle\Service\Placeholder;
+use Pimcore\Tool as PimcoreTool;
 
 class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
@@ -52,14 +53,14 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         $path = $configuration['path'];
 
         if (filter_var($value, FILTER_VALIDATE_URL)) {
-            $filename = File::getValidFilename(basename($value));
-
-            // Convert placeholder path
-            $context = new PlaceholderContext($data, $object);
-            $assetPath = $this->placeholderService->replace($path, $context);
-            $assetFullPath = sprintf('%s/%s', $assetPath, $filename);
+            $assetsUrlPrefix = PimcoreTool::getHostUrl() . str_replace(PIMCORE_WEB_ROOT, '', PIMCORE_ASSET_DIRECTORY);
             
-            if ($configuration['deduplicate_by_url']) {
+            // check if URL seems to be pointing to our own asset URL
+            $assetFullPath = str_replace($assetsUrlPrefix, '', $value);
+            if (0 === strpos($value, $assetsUrlPrefix) && null !== $asset = Asset::getByPath($assetFullPath)) {
+                $filename = $asset->getFilename();
+                $assetPath = dirname($assetFullPath);
+            } elseif ($configuration['deduplicate_by_url']) {
                 $listing = new Asset\Listing();
                 $listing->onCreateQuery(function (\Pimcore\Db\ZendCompatibility\QueryBuilder $select){
                     $select->join('assets_metadata AS am', 'id = am.cid', ['cid']);
@@ -71,6 +72,13 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 
                 $asset = $listing->current();
             } else {
+                $filename = File::getValidFilename(basename($value));
+
+                // Convert placeholder path
+                $context = new PlaceholderContext($data, $object);
+                $assetPath = $this->placeholderService->replace($path, $context);
+                $assetFullPath = sprintf('%s/%s', $assetPath, $filename);
+
                 $asset = Asset::getByPath($assetFullPath);
             }
 

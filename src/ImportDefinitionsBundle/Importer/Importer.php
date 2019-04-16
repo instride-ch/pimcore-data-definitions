@@ -153,11 +153,11 @@ final class Importer implements ImporterInterface
         /** @var ImportDataSetInterface|array $data */
         $data = $this->getData($definition, $params);
 
-        if (\count($data) > 0) {
+        if ((is_array($data) || $data instanceof \Countable) && \count($data) > 0) {
             $this->eventDispatcher->dispatch($definition, 'import_definition.total', \count($data), $params);
-
-            list($objectIds, $exceptions) = $this->runImport($definition, $params, $filter, $data);
         }
+
+        list($objectIds, $exceptions) = $this->runImport($definition, $params, $filter, $data);
 
         $cleanerType = $definition->getCleaner();
         if ($cleanerType) {

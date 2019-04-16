@@ -299,6 +299,9 @@ final class Importer implements ImporterInterface
      */
     private function importRow(ImportDefinitionInterface $definition, $data, $dataSet, $params, $filter = null)
     {
+        if (null === $data) {
+            return null;
+        }
         $runner = null;
 
         $object = $this->getObject($definition, $data, $params);

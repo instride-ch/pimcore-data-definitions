@@ -26,10 +26,18 @@ class ImportDataSet implements ImportDataSetInterface
      */
     private $countAll;
 
-    public function __construct(\Iterator $iterator)
+    /**
+     * @var null|\Closure
+     */
+    private $processor;
+
+    public function __construct(\Iterator $iterator, \Closure $processor = null)
     {
         $this->iterator = $iterator;
         $this->countAll = false;
+        $this->processor = $processor ?? function($current) {
+            return $current;
+        };
     }
 
     /**
@@ -40,7 +48,7 @@ class ImportDataSet implements ImportDataSetInterface
      */
     public function current()
     {
-        return $this->iterator->current();
+        return ($this->processor)($this->iterator->current());
     }
 
     /**

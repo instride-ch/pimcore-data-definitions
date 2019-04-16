@@ -53,6 +53,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         $path = $configuration['path'];
 
         if (filter_var($value, FILTER_VALIDATE_URL)) {
+            $filename = File::getValidFilename(basename($value));
             $assetsUrlPrefix = PimcoreTool::getHostUrl() . str_replace(PIMCORE_WEB_ROOT, '', PIMCORE_ASSET_DIRECTORY);
             
             // check if URL seems to be pointing to our own asset URL
@@ -71,9 +72,11 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                 $listing->setOrder(['creationDate', 'desc']);
 
                 $asset = $listing->current();
+                if ($asset) {
+                    $filename = $asset->getFilename();
+                    $assetPath = $asset->getPath();
+                }
             } else {
-                $filename = File::getValidFilename(basename($value));
-
                 // Convert placeholder path
                 $context = new PlaceholderContext($data, $object);
                 $assetPath = $this->placeholderService->replace($path, $context);

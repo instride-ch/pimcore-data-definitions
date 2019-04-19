@@ -25,6 +25,24 @@ pimcore.plugin.importdefinitions.definition.abstractItem = Class.create(coreshop
             iconCls: this.iconCls,
             buttons: [
                 {
+                    text: t('importdefinitions_automap'),
+                    xtype:'splitbutton',
+                    iconCls: 'pimcore_icon_manyToOneRelation',
+                    hidden: !me.panelKey.startsWith("importdefinitions_import_definition"),                   
+                    menu: [
+                        {
+                            text: t('importdefinitions_automap_exact'),
+                            iconCls: "pimcore_icon_manyToOneRelation",
+                            handler: this.automapExact.bind(this)
+                        },
+                        {
+                            text: t('importdefinitions_automap_fuzzy'),
+                            iconCls: "pimcore_icon_manyToOneRelation",
+                            handler:  this.automapFuzzy.bind(this)
+                        }
+                    ]
+                },
+                {
                     text: t('importdefinitions_import_definition'),
                     iconCls: 'pimcore_icon_import',
                     handler: this.upload.bind(this)
@@ -111,5 +129,44 @@ pimcore.plugin.importdefinitions.definition.abstractItem = Class.create(coreshop
         }.bind(this), function () {
             Ext.MessageBox.alert(t('error'), t('error'));
         });
+    },
+    
+    getAutomapItems: function() {        
+        var grid = this.mappingSettings.down('grid');
+        var mapping = grid.getStore().getRange();
+        var fromColumnItems = [];        
+        grid.config.columns.items[1].editor.store.data.items.forEach( function (item) {
+                fromColumnItems.push(item.data.identifier);
+        });
+        return {
+            grid: grid,
+            mapping: mapping,
+            fromColumnItems: fromColumnItems,
+        };
+    },
+    
+    automapExact: function (callback) {        
+        var automap = this.getAutomapItems();
+        automap.mapping.forEach(function (map) {
+            if (automap.fromColumnItems.indexOf(map.data.toColumn) > -1) {
+                map.data.fromColumn = map.data.toColumn;
+            }
+        });
+        automap.grid.getView().refresh();
+    },
+    
+    automapFuzzy: function (callback) {        
+        var automap = this.getAutomapItems();        
+        var options = { shouldSort: true, findAllMatches: true, includeScore: true, threshold: 0.7, location: 0, distance: 100, maxPatternLength: 32, minMatchCharLength: 1 };
+        var fuse = new Fuse(automap.fromColumnItems, options);        
+        automap.mapping.forEach(function (map) {            
+                result = fuse.search(map.data.toColumn)[0];                
+                if (result !== undefined ) {
+                    if (!(['o_published', 'o_key', 'o_parentId', 'o_parent', 'o_type'].indexOf(map.data.toColumn) > -1 && result.score > 0.5)) {
+                        map.data.fromColumn = automap.fromColumnItems[result.item];
+                    }
+                }
+        });
+        automap.grid.getView().refresh();
     }
 });

@@ -116,7 +116,9 @@ class ImportDefinitionsBundle extends AbstractResourceBundle implements PimcoreB
      */
     public function getJsPaths()
     {
-        return [];
+        return [
+            "/bundles/importdefinitions/pimcore/js/automap/fuse.min.js"
+        ];
     }
 
     /**

@@ -323,6 +323,11 @@ class ExportDefinitionController extends ResourceController
                 'title' => 'Path',
             ],
             [
+                'name' => 'published',
+                'fieldtype' => 'input',
+                'title' => 'Published',
+            ],
+            [
                 'name' => 'creationDate',
                 'fieldtype' => 'datetime',
                 'title' => 'Creation Date',

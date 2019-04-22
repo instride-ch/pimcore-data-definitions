@@ -26,7 +26,8 @@
   ],
   "require": {
     "coreshop/resource-bundle": "^2.0",
-    "league/csv": "^9.0"
+    "league/csv": "^9.0",
+    "box/spout": "^2.7"
   },
   "require-dev": {
     "behat/behat": "^3.3",

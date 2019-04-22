@@ -266,6 +266,12 @@ services:
             - { name: import_definition.provider, type: csv, form-type: ImportDefinitionsBundle\Form\Type\Provider\CsvProviderType }
             - { name: import_definition.export_provider, type: csv, form-type: ImportDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType }
 
+    import_definition.provider.excel:
+        class: ImportDefinitionsBundle\Provider\ExcelProvider
+        tags:
+            - { name: import_definition.provider, type: excel, form-type: ImportDefinitionsBundle\Form\Type\Provider\ExcelProviderType }
+            - { name: import_definition.export_provider, type: excel, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+
     import_definition.provider.json:
         class: ImportDefinitionsBundle\Provider\JsonProvider
         tags:

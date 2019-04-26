@@ -169,6 +169,11 @@ services:
         tags:
             - { name: import_definition.interpreter, type: asset_by_path, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType }
 
+    import_definition.interpreter.carbon:
+        class: ImportDefinitionsBundle\Interpreter\CarbonInterpreter
+        tags:
+            - { name: import_definition.interpreter, type: carbon, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+
     import_definition.interpreter.checkbox:
         class: ImportDefinitionsBundle\Interpreter\CheckboxInterpreter
         tags:

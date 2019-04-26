@@ -326,14 +326,12 @@ pimcore.plugin.importdefinitions.export.fields = Class.create({
                         baseNode.appendChild(node);
                     }
 
-                    if (this.tree[keys[i]].nodeType === 'object') {
-                        baseNode.expand();
-                    } else {
-                        baseNode.collapse();
-                    }
+                    baseNode.collapse();
                 }
             }
         }
+
+        tree.getRootNode().expand();
 
         return tree;
     },

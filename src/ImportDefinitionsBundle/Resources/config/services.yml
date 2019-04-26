@@ -179,6 +179,11 @@ services:
         tags:
             - { name: import_definition.interpreter, type: default_value, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\DefaultValueInterpreterType }
 
+    import_definition.interpreter.element:
+        class: ImportDefinitionsBundle\Interpreter\ElementInterpreter
+        tags:
+            - { name: import_definition.interpreter, type: element, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\ElementInterpreterType }
+
     import_definition.interpreter.specific_object:
         class: ImportDefinitionsBundle\Interpreter\SpecificObjectInterpreter
         tags:

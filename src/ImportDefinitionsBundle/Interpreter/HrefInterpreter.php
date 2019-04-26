@@ -19,6 +19,7 @@ use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\Element\Service;
 use Pimcore\Tool;
 
 class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
@@ -30,6 +31,12 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
+        $type = $configuration['type'];
+
+        if ($type && $value) {
+            return Service::getElementById($type, $value);
+        }
+
         $objectClass = $configuration['class'];
 
         $class = 'Pimcore\Model\DataObject\\' . $objectClass;
@@ -37,7 +44,7 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
         if (!Tool::classExists($class)) {
             $class = 'Pimcore\Model\DataObject\\' . ucfirst($objectClass);
         }
-        
+
         if (Tool::classExists($class)) {
             $class = new $class();
 

@@ -14,6 +14,7 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
+use Carbon\Carbon;
 use ImportDefinitionsBundle\Model\DataSetAwareInterface;
 use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
@@ -30,7 +31,7 @@ class CarbonInterpreter implements InterpreterInterface, DataSetAwareInterface
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         if ($value) {
-            return new \Carbon\Carbon($value);
+            return new Carbon($value);
         }
 
         return null;

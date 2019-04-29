@@ -31,32 +31,35 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
-        $type = $configuration['type'];
+        $type = $configuration['type'] ?: 'object';
+        $objectClass = $configuration['class'];
 
-        if ($type && $value) {
+        if (!$value) {
+            return null;
+        }
+
+        if ($type === 'object' && $objectClass) {
+            $class = 'Pimcore\Model\DataObject\\' . $objectClass;
+
+            if (!Tool::classExists($class)) {
+                $class = 'Pimcore\Model\DataObject\\' . ucfirst($objectClass);
+            }
+
+            if (Tool::classExists($class)) {
+                $class = new $class();
+
+                if ($class instanceof Concrete) {
+                    $ret = $class::getById($value);
+
+                    if ($ret instanceof Concrete) {
+                        return $ret;
+                    }
+                }
+            }
+        } else {
             return Service::getElementById($type, $value);
         }
 
-        $objectClass = $configuration['class'];
-
-        $class = 'Pimcore\Model\DataObject\\' . $objectClass;
-
-        if (!Tool::classExists($class)) {
-            $class = 'Pimcore\Model\DataObject\\' . ucfirst($objectClass);
-        }
-
-        if (Tool::classExists($class)) {
-            $class = new $class();
-
-            if ($class instanceof Concrete) {
-                $ret = $class::getById($value);
-
-                if ($ret instanceof Concrete) {
-                    return $ret;
-                }
-            }
-        }
-
-        return $value;
+        return null;
     }
 }

@@ -42,7 +42,7 @@ pimcore.plugin.importdefinitions.interpreters.href = Class.create(pimcore.plugin
                 valueField: 'key',
                 store: typeStore,
                 width: 500,
-                value: config.type ? config.type : null
+                value: config.type ? config.type : 'object'
             },
             {
                 xtype: 'combo',

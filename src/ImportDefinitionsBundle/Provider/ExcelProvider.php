@@ -104,7 +104,12 @@ class ExcelProvider implements ProviderInterface, ExportProviderInterface, Artif
         }
         $writer = $this->getWriter();
         $this->addHeaders($headers, $writer);
-
+        
+        foreach ($data as $key => $item) {
+            if (is_object($item)) {
+                $data[$key] = (string) $item;
+            }
+        }
         $writer->addRow(array_values($data));
     }
 

@@ -20,6 +20,7 @@ use ImportDefinitionsBundle\Controller\ExportDefinitionController;
 use ImportDefinitionsBundle\Form\Type\ExportDefinitionType;
 use ImportDefinitionsBundle\Model\ExportDefinition;
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
+use ImportDefinitionsBundle\Repository;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -72,7 +73,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('interface')->defaultValue(ImportDefinitionInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('admin_controller')->defaultValue(ImportDefinitionController::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('repository')->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(Repository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('form')->defaultValue(ImportDefinitionType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
@@ -90,7 +91,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('interface')->defaultValue(ExportDefinitionInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('admin_controller')->defaultValue(ExportDefinitionController::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('repository')->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(Repository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('form')->defaultValue(ExportDefinitionType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()

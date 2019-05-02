@@ -22,3 +22,21 @@ services:
             - '@import_definition.exporter'
         tags:
             - { name: 'console.command', command: 'export-definitions:export' }
+
+    ImportDefinitionsBundle\Command\CreateImportCommand:
+        arguments:
+            - '@import_definitions.metadata.import'
+            - '@import_definitions.repository.definition'
+            - '@pimcore.dao.object_manager'
+            - '@coreshop.resource_controller.form_factory'
+        tags:
+            - { name: 'console.command', command: 'import-definitions:create' }
+
+    ImportDefinitionsBundle\Command\CreateExportCommand:
+        arguments:
+            - '@import_definitions.metadata.export'
+            - '@import_definitions.repository.export_definition'
+            - '@pimcore.dao.object_manager'
+            - '@coreshop.resource_controller.form_factory'
+        tags:
+            - { name: 'console.command', command: 'export-definitions:create' }

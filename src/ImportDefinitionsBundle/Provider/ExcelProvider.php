@@ -26,7 +26,7 @@ use ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 use Pimcore\Model\Asset;
 
-class ExcelProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
+class ExcelProvider extends AbstractFileProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 
@@ -75,7 +75,7 @@ class ExcelProvider implements ProviderInterface, ExportProviderInterface, Artif
      */
     public function getData($configuration, $definition, $params, $filter = null)
     {
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $this->getFile($params['file']);
 
         $reader = $this->createReader($file);
         $sheetIterator = $reader->getSheetIterator();
@@ -104,7 +104,7 @@ class ExcelProvider implements ProviderInterface, ExportProviderInterface, Artif
         }
         $writer = $this->getWriter();
         $this->addHeaders($headers, $writer);
-        
+
         foreach ($data as $key => $item) {
             if (is_object($item)) {
                 $data[$key] = (string) $item;
@@ -125,7 +125,7 @@ class ExcelProvider implements ProviderInterface, ExportProviderInterface, Artif
             return;
         }
 
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $this->getFile($params['file']);
         rename($this->getExportPath(), $file);
     }
 

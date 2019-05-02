@@ -22,7 +22,7 @@ class Repository extends PimcoreRepository
      * @param string $name
      * @return object|null
      */
-    public function getByName($name)
+    public function findByName($name)
     {
         $class = $this->metadata->getClass('model');
 

@@ -91,7 +91,7 @@ EOT
         try {
             $definition = $this->repository->find($input->getOption('definition'));
         } catch (\InvalidArgumentException $e) {
-            $definition = $this->repository->getByName($input->getOption('definition'));
+            $definition = $this->repository->findByName($input->getOption('definition'));
         }
         $progress = null;
         $process = null;

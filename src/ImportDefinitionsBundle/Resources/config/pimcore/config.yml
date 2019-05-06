@@ -4,7 +4,7 @@ jms_serializer:
             import-definitions:
                 namespace_prefix: "ImportDefinitionsBundle"
                 path: "@ImportDefinitionsBundle/Resources/config/serializer"
-                
+
 import_definitions:
     pimcore_admin:
         js:

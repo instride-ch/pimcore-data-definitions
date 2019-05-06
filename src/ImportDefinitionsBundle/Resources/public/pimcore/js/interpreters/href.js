@@ -15,6 +15,14 @@ pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.href');
 
 pimcore.plugin.importdefinitions.interpreters.href = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
+        var typeStore = new Ext.data.ArrayStore({
+            fields: ['key', 'value'],
+            data: [
+                ['asset', t('asset')],
+                ['object', t('object')],
+                ['document', t('document')]
+            ]
+        });
         var classesStore = new Ext.data.JsonStore({
             autoDestroy: true,
             proxy: {
@@ -25,15 +33,27 @@ pimcore.plugin.importdefinitions.interpreters.href = Class.create(pimcore.plugin
         });
         classesStore.load();
 
-        return [{
-            xtype : 'combo',
-            fieldLabel: t('class'),
-            name: 'class',
-            displayField: 'text',
-            valueField: 'text',
-            store: classesStore,
-            width: 500,
-            value : config.class ? config.class : null
-        }];
+        return [
+            {
+                xtype: 'combo',
+                fieldLabel: t('element'),
+                name: 'type',
+                displayField: 'value',
+                valueField: 'key',
+                store: typeStore,
+                width: 500,
+                value: config.type ? config.type : 'object'
+            },
+            {
+                xtype: 'combo',
+                fieldLabel: t('class'),
+                name: 'class',
+                displayField: 'text',
+                valueField: 'text',
+                store: classesStore,
+                width: 500,
+                value: config.class ? config.class : null
+            }
+        ];
     }
 });

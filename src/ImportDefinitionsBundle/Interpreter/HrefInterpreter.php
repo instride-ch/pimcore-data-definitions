@@ -19,6 +19,7 @@ use ImportDefinitionsBundle\Model\DataSetAwareTrait;
 use ImportDefinitionsBundle\Model\DefinitionInterface;
 use ImportDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\Element\Service;
 use Pimcore\Tool;
 
 class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
@@ -30,26 +31,35 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
      */
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
+        $type = $configuration['type'] ?: 'object';
         $objectClass = $configuration['class'];
 
-        $class = 'Pimcore\Model\DataObject\\' . $objectClass;
-
-        if (!Tool::classExists($class)) {
-            $class = 'Pimcore\Model\DataObject\\' . ucfirst($objectClass);
+        if (!$value) {
+            return null;
         }
-        
-        if (Tool::classExists($class)) {
-            $class = new $class();
 
-            if ($class instanceof Concrete) {
-                $ret = $class::getById($value);
+        if ($type === 'object' && $objectClass) {
+            $class = 'Pimcore\Model\DataObject\\' . $objectClass;
 
-                if ($ret instanceof Concrete) {
-                    return $ret;
+            if (!Tool::classExists($class)) {
+                $class = 'Pimcore\Model\DataObject\\' . ucfirst($objectClass);
+            }
+
+            if (Tool::classExists($class)) {
+                $class = new $class();
+
+                if ($class instanceof Concrete) {
+                    $ret = $class::getById($value);
+
+                    if ($ret instanceof Concrete) {
+                        return $ret;
+                    }
                 }
             }
+        } else {
+            return Service::getElementById($type, $value);
         }
 
-        return $value;
+        return null;
     }
 }

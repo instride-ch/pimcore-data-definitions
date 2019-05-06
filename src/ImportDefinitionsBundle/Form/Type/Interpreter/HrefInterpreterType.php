@@ -15,6 +15,7 @@
 namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -26,6 +27,13 @@ final class HrefInterpreterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Asset' => 'asset',
+                    'DataObject' => 'object',
+                    'Document' => 'document',
+                ],
+            ])
             ->add('class', TextType::class)
         ;
     }

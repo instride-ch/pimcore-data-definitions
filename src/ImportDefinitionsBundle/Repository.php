@@ -25,16 +25,9 @@ class Repository extends PimcoreRepository
     public function findByName($name)
     {
         $class = $this->metadata->getClass('model');
+        $definitionEntry = new $class();
+        $definitionEntry->getDao()->getByName($name);
 
-        if (!method_exists($class, 'getByName')) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Class %s has no getByName function',
-                    $class
-                )
-            );
-        }
-
-        return $class::getByName($name);
+        return $definitionEntry;
     }
 }

@@ -23,20 +23,20 @@ services:
         tags:
             - { name: 'console.command', command: 'export-definitions:export' }
 
-    ImportDefinitionsBundle\Command\CreateImportCommand:
+    ImportDefinitionsBundle\Command\ImportImportDefinitionCommand:
         arguments:
             - '@import_definitions.metadata.import'
             - '@import_definitions.repository.definition'
             - '@pimcore.dao.object_manager'
             - '@coreshop.resource_controller.form_factory'
         tags:
-            - { name: 'console.command', command: 'import-definitions:create' }
+            - { name: 'console.command', command: 'import-definitions:import-definition' }
 
-    ImportDefinitionsBundle\Command\CreateExportCommand:
+    ImportDefinitionsBundle\Command\ImportExportDefinitionCommand:
         arguments:
             - '@import_definitions.metadata.export'
             - '@import_definitions.repository.export_definition'
             - '@pimcore.dao.object_manager'
             - '@coreshop.resource_controller.form_factory'
         tags:
-            - { name: 'console.command', command: 'export-definitions:create' }
+            - { name: 'console.command', command: 'export-definitions:import-definition' }

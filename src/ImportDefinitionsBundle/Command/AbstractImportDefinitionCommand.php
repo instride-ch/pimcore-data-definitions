@@ -18,13 +18,12 @@ use CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use CoreShop\Component\Resource\Metadata\MetadataInterface;
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use ImportDefinitionsBundle\Model\ImportDefinition;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class CreateImportCommand extends AbstractCommand
+abstract class AbstractImportDefinitionCommand extends AbstractCommand
 {
     /**
      * @var MetadataInterface
@@ -65,17 +64,15 @@ final class CreateImportCommand extends AbstractCommand
      */
     protected function configure()
     {
+        $type = $this->getType();
+
         $this
-            ->setName('import-definitions:create')
-            ->setDescription('Create a Import Definition.')
-            ->setHelp(<<<EOT
-The <info>%command.name%</info> creates a Import Definition.
-EOT
-            )
+            ->setName(sprintf('%s-definitions:import-definition', strtolower($type)))
+            ->setDescription(sprintf('Create a %s Definition.', $type))
             ->addArgument(
                 'path',
                 InputArgument::REQUIRED,
-                'Path to Import Definition JSON export file'
+                sprintf('Path to %s Definition JSON export file', $type)
             );
     }
 
@@ -91,9 +88,10 @@ EOT
         $data = json_decode($jsonContent, true);
 
         try {
-            $definition = ImportDefinition::getByName($data['name']);
+            $definition = $this->repository->findByName($data['name']);
         } catch (\InvalidArgumentException $e) {
-            $definition = new ImportDefinition();
+            $class = $this->repository->getClassName();
+            $definition = new $class();
         }
 
         $form = $this->resourceFormFactory->create($this->metadata, $definition);
@@ -116,6 +114,8 @@ EOT
     /**
      * Validate and return path to JSON file
      *
+     * @throws \InvalidArgumentException
+     *
      * @return string
      */
     protected function getPath()
@@ -127,4 +127,11 @@ EOT
 
         return $path;
     }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    abstract protected function getType();
 }

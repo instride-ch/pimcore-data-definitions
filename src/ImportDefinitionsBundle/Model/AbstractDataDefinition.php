@@ -94,20 +94,6 @@ abstract class AbstractDataDefinition extends AbstractModel implements DataDefin
     }
 
     /**
-     * Get By Name
-     *
-     * @param string $name
-     * @return Definition
-     */
-    public static function getByName($name)
-    {
-        $definitionEntry = new static();
-        $definitionEntry->getDao()->getByName($name);
-
-        return $definitionEntry;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getId()

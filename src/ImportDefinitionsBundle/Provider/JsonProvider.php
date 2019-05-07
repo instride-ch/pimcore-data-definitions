@@ -19,7 +19,7 @@ use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
 use ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 
-class JsonProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
+class JsonProvider extends AbstractFileProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 
@@ -85,7 +85,7 @@ class JsonProvider implements ProviderInterface, ExportProviderInterface, Artifa
      */
     public function getData($configuration, $definition, $params, $filter = null)
     {
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $this->getFile($params['file']);
 
         if (file_exists($file)) {
             $json = file_get_contents($file);
@@ -101,7 +101,7 @@ class JsonProvider implements ProviderInterface, ExportProviderInterface, Artifa
      */
     public function exportData($configuration, ExportDefinitionInterface $definition, $params)
     {
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $this->getFile($params['file']);
 
         file_put_contents($file, json_encode($this->exportData));
     }

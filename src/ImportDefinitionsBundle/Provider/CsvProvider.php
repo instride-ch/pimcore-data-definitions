@@ -22,7 +22,7 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;
 
-class CsvProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
+class CsvProvider extends AbstractFileProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 
@@ -88,7 +88,7 @@ class CsvProvider implements ProviderInterface, ExportProviderInterface, Artifac
         $offset = $params['offset'];
         $limit = $params['limit'];
 
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $this->getFile($params['file']);
 
         $csv = Reader::createFromPath($file, 'r');
         $csv->setDelimiter($delimiter);
@@ -138,7 +138,7 @@ class CsvProvider implements ProviderInterface, ExportProviderInterface, Artifac
             return;
         }
 
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $this->getFile($params['file']);
 
         $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
 

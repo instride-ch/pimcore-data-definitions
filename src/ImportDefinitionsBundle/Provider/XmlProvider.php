@@ -23,7 +23,7 @@ use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Inflector\Inflector;
 use Symfony\Component\Process\Process;
 
-class XmlProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
+class XmlProvider extends AbstractFileProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 
@@ -99,7 +99,7 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
      */
     public function getData($configuration, $definition, $params, $filter = null)
     {
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $this->getFile($params['file']);
         $xml = file_get_contents($file);
 
         return $this->convertXmlToArray($xml, $configuration['xPath']);
@@ -155,7 +155,7 @@ class XmlProvider implements ProviderInterface, ExportProviderInterface, Artifac
             return;
         }
 
-        $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $params['file']);
+        $file = $this->getFile($params['file']);
         rename($this->getExportPath(), $file);
     }
 

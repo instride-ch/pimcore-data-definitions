@@ -17,6 +17,7 @@ namespace ImportDefinitionsBundle\Command;
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
 use ImportDefinitionsBundle\Importer\ImporterInterface;
+use ImportDefinitionsBundle\Model\ImportDefinition;
 use ImportDefinitionsBundle\Model\ImportDefinitionInterface;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -71,7 +72,7 @@ EOT
                 'definition',
                 'd',
                 InputOption::VALUE_REQUIRED,
-                'Import Definition ID'
+                'Import Definition ID or Name'
             )
             ->addOption(
                 'params',
@@ -90,7 +91,11 @@ EOT
         $eventDispatcher = $this->eventDispatcher;
 
         $params = $input->getOption('params');
-        $definition = $this->repository->find($input->getOption('definition'));
+        try {
+            $definition = $this->repository->find($input->getOption('definition'));
+        } catch (\InvalidArgumentException $e) {
+            $definition = $this->repository->findByName($input->getOption('definition'));
+        }
         $progress = null;
         $process = null;
 

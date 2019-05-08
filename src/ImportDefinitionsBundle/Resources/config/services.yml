@@ -358,13 +358,3 @@ services:
         class: ImportDefinitionsBundle\Loader\PrimaryKeyLoader
         tags:
             - { name: import_definition.loader, type: primary_key }
-
-    ### METADATA
-    import_definitions.metadata.import:
-        class: CoreShop\Component\Resource\Metadata\MetadataInterface
-        factory: 'coreshop.resource_registry:get'
-        arguments: ['import_definitions.definition']
-    import_definitions.metadata.export:
-        class: CoreShop\Component\Resource\Metadata\MetadataInterface
-        factory: 'coreshop.resource_registry:get'
-        arguments: ['import_definitions.export_definition']

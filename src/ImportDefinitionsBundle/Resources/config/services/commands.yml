@@ -25,7 +25,7 @@ services:
 
     ImportDefinitionsBundle\Command\ImportImportDefinitionCommand:
         arguments:
-            - '@import_definitions.metadata.import'
+            - "@=service('coreshop.resource_registry').get('import_definitions.definition')"
             - '@import_definitions.repository.definition'
             - '@pimcore.dao.object_manager'
             - '@coreshop.resource_controller.form_factory'
@@ -34,7 +34,7 @@ services:
 
     ImportDefinitionsBundle\Command\ImportExportDefinitionCommand:
         arguments:
-            - '@import_definitions.metadata.export'
+            - "@=service('coreshop.resource_registry').get('import_definitions.export_definition')"
             - '@import_definitions.repository.export_definition'
             - '@pimcore.dao.object_manager'
             - '@coreshop.resource_controller.form_factory'

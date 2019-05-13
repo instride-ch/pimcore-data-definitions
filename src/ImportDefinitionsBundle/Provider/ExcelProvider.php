@@ -83,10 +83,21 @@ class ExcelProvider extends AbstractFileProvider implements ProviderInterface, E
         $rowIterator = $sheetIterator->current()->getRowIterator();
 
         $headers = null;
-        return new ImportDataSet($rowIterator, function (array $row) use (&$headers) {
+        $headersCount = null;
+        return new ImportDataSet($rowIterator, function (array $row) use (&$headers, &$headersCount) {
             if (null === $headers) {
                 $headers = $row;
+                $headersCount = count($headers);
                 return null;
+            }
+
+            $rowCount = count($row);
+            if ($rowCount < $headersCount) {
+                // append missing values
+                $row = array_pad($row, $headersCount, null);
+            } elseif ($rowCount >= $headersCount) {
+                // remove overflow
+                $row = array_slice($row, 0, $headersCount);
             }
 
             return array_combine($headers, $row);

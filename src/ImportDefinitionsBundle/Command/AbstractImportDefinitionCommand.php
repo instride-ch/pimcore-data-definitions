@@ -67,7 +67,7 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
         $type = $this->getType();
 
         $this
-            ->setName(sprintf('%s-definitions:import-definition', strtolower($type)))
+            ->setName(sprintf('%s-definitions:definition:import', strtolower($type)))
             ->setDescription(sprintf('Create a %s Definition.', $type))
             ->addArgument(
                 'path',

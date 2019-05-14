@@ -30,7 +30,7 @@ services:
             - '@pimcore.dao.object_manager'
             - '@coreshop.resource_controller.form_factory'
         tags:
-            - { name: 'console.command', command: 'import-definitions:import-definition' }
+            - { name: 'console.command', command: 'import-definitions:definition:import' }
 
     ImportDefinitionsBundle\Command\ImportExportDefinitionCommand:
         arguments:
@@ -39,4 +39,4 @@ services:
             - '@pimcore.dao.object_manager'
             - '@coreshop.resource_controller.form_factory'
         tags:
-            - { name: 'console.command', command: 'export-definitions:import-definition' }
+            - { name: 'console.command', command: 'export-definitions:definition:import' }

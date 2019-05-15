@@ -58,6 +58,7 @@ class ObjectsFetcher implements FetcherInterface
 
         $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';
         $list = new $classList;
+        $list->setUnpublished($definition->isFetchUnpublished());
 
         if (isset($params['root'])) {
             $rootNode = Concrete::getById($params['root']);

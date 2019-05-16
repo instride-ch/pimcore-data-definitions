@@ -104,6 +104,8 @@ class FieldSelection
                     }
                 }
             } elseif ($field instanceof DataObject\ClassDefinition\Data\Fieldcollections) {
+                $result[] = $this->getFieldConfiguration($field);
+
                 foreach ($field->getAllowedTypes() as $type) {
                     $definition = DataObject\Fieldcollection\Definition::getByKey($type);
 

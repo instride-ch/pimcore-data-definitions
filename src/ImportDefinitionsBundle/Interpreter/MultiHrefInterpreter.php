@@ -32,7 +32,7 @@ class MultiHrefInterpreter implements InterpreterInterface, DataSetAwareInterfac
     {
         $objectClass = $configuration['class'];
 
-        $class = 'Pimcore\Model\DataObject\\' . $objectClass;
+        $class = 'Pimcore\Model\DataObject\\' . ucfirst($objectClass);
 
         if (Tool::classExists($class)) {
             $class = new $class();

@@ -29,8 +29,8 @@ class ObjectResolverInterpreter implements InterpreterInterface
             return $value;
         }
 
-        $class = 'Pimcore\Model\DataObject\\'.$configuration['class'];
-        $lookup = 'getBy'.ucfirst($configuration['field']);
+        $class = 'Pimcore\Model\DataObject\\' . ucfirst($configuration['class']);
+        $lookup = 'getBy' . ucfirst($configuration['field']);
 
         /**
          * @var Listing $listing

@@ -26,6 +26,7 @@ use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
 use ImportDefinitionsBundle\Model\ExportMapping;
 use ImportDefinitionsBundle\Provider\ExportProviderInterface;
 use ImportDefinitionsBundle\Runner\ExportRunnerInterface;
+use ImportDefinitionsBundle\Runner\ChangeDataRunnerInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -264,7 +265,11 @@ final class Exporter implements ExporterInterface
                 }
             }
         }
-        
+
+        if ($runner instanceof ChangeDataRunnerInterface) {
+            $data = $runner->changeData($object, $data, $definition, $params);
+        }
+
         $provider->addExportData($data, $definition->getConfiguration(), $definition, $params);
 
         $this->eventDispatcher->dispatch('export_definition.status', new ExportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath()), $params));

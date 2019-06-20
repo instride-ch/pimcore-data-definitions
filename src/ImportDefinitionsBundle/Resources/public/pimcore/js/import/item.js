@@ -470,6 +470,8 @@ pimcore.plugin.importdefinitions.import.item = Class.create(pimcore.plugin.impor
 
                                                 if (rec)
                                                     return rec.get('label');
+                                                else
+                                                    return '<b style="color: red;">' + t('importdefinitions_invalid_mapping') + '</b>';
                                             }
 
                                             return null;
@@ -556,7 +558,7 @@ pimcore.plugin.importdefinitions.import.item = Class.create(pimcore.plugin.impor
                                             var fromColumn = fromColumnStore.findRecord('identifier', record.get('fromColumn'));
                                             var toColumn = toColumnStore.findRecord('identifier', record.get('toColumn'));
 
-                                            if (fromColumn && toColumn) {
+                                            if (value) {
                                                 var id = Ext.id();
 
                                                 Ext.defer(function () {

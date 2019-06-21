@@ -355,9 +355,8 @@ final class Importer implements ImporterInterface
 
             if (array_key_exists($mapItem->getFromColumn(), $data)) {
                 $value = $data[$mapItem->getFromColumn()];
+                $this->setObjectValue($object, $mapItem, $value, $data, $dataSet, $definition, $params, $runner);
             }
-
-            $this->setObjectValue($object, $mapItem, $value, $data, $dataSet, $definition, $params, $runner);
         }
 
         $shouldSave = true;

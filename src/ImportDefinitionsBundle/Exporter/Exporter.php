@@ -19,6 +19,7 @@ use CoreShop\Component\Registry\ServiceRegistryInterface;
 use ImportDefinitionsBundle\Event\ExportDefinitionEvent;
 use ImportDefinitionsBundle\Exception\DoNotSetException;
 use ImportDefinitionsBundle\Fetcher\FetcherInterface;
+use ImportDefinitionsBundle\Getter\DynamicColumnGetterInterface;
 use ImportDefinitionsBundle\Getter\GetterInterface;
 use ImportDefinitionsBundle\Interpreter\InterpreterInterface;
 use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
@@ -246,13 +247,21 @@ final class Exporter implements ExporterInterface
              * @var $mapItem ExportMapping
              */
             foreach ($definition->getMapping() as $mapItem) {
-                $data[$mapItem->getToColumn()] = $this->getObjectValue(
+                $getter = $this->fetchGetter($mapItem);
+                $value = $this->getObjectValue(
                     $object,
                     $mapItem,
                     $data,
                     $definition,
-                    $params
+                    $params,
+                    $getter
                 );
+
+                if ($getter instanceof DynamicColumnGetterInterface) {
+                    $data = array_merge($data, $value);
+                } else {
+                    $data[$mapItem->getToColumn()] = $value;
+                }
             }
         }
         
@@ -274,19 +283,16 @@ final class Exporter implements ExporterInterface
      * @param                      $data
      * @param ExportDefinitionInterface  $definition
      * @param                      $params
+     * @param null|GetterInterface $getter
      * @return mixed|null
      * @throws DoNotSetException
      */
-    private function getObjectValue(Concrete $object, ExportMapping $map, $data, ExportDefinitionInterface $definition, $params)
+    private function getObjectValue(Concrete $object, ExportMapping $map, $data, ExportDefinitionInterface $definition, $params, ?GetterInterface $getter)
     {
         $value = null;
 
-        if ($map->getGetter()) {
-            $getter = $this->getterRegistry->get($map->getGetter());
-
-            if ($getter instanceof GetterInterface) {
-                $value = $getter->get($object, $map, $data);
-            }
+        if (null !== $getter) {
+            $value = $getter->get($object, $map, $data);
         } else {
             $getter = "get" . ucfirst($map->getFromColumn());
 
@@ -305,5 +311,17 @@ final class Exporter implements ExporterInterface
         }
 
         return $value;
+    }
+
+    private function fetchGetter(ExportMapping $map): ?GetterInterface
+    {
+        if ($name = $map->getGetter()) {
+            $getter = $this->getterRegistry->get($name);
+            if ($getter instanceof GetterInterface) {
+                return $getter;
+            }
+        }
+        
+        return null;
     }
 }

@@ -20,6 +20,7 @@ class AppKernel extends Kernel
     public function registerBundlesToCollection(\Pimcore\HttpKernel\BundleCollection\BundleCollection $collection)
     {
         $collection->addBundle(new \ImportDefinitionsBundle\ImportDefinitionsBundle());
+        $collection->addBundle(new \FriendsOfBehat\SymfonyExtension\Bundle\FriendsOfBehatSymfonyExtensionBundle());
     }
 
     public function boot()

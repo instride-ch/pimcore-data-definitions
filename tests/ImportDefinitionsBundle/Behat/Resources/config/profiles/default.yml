@@ -7,15 +7,8 @@ default:
 
     extensions:
         FriendsOfBehat\SymfonyExtension:
+            bootstrap: behat-bootstrap.php
             kernel:
-                class: AppKernel
                 path: app/AppKernel.php
-                bootstrap: behat-bootstrap.php
-
-        FriendsOfBehat\ContextServiceExtension:
-            imports:
-                - "tests/ImportDefinitionsBundle/Behat/Resources/config/services.yml"
-
-        FriendsOfBehat\CrossContainerExtension: ~
-
-        FriendsOfBehat\VariadicExtension: ~
+                class: AppKernel
+                environment: test

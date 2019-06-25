@@ -26,6 +26,7 @@
   ],
   "require": {
     "coreshop/resource-bundle": "^2.0",
+    "pimcore/pimcore": "^5.4.0 | ^6.0.0",
     "league/csv": "^9.0",
     "box/spout": "^2.7"
   },
@@ -71,7 +72,7 @@
       ]
     },
     "branch-alias": {
-      "dev-master": "2.2-dev"
+      "dev-master": "2.3-dev"
     }
   }
 }

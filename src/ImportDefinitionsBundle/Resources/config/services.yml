@@ -47,6 +47,7 @@ services:
     ### Registries
     import_definition.registry.provider:
         class: CoreShop\Component\Registry\ServiceRegistry
+        public: true
         arguments:
             - ImportDefinitionsBundle\Provider\ProviderInterface
             - 'Import Definition Providers'

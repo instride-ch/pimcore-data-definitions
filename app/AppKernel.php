@@ -19,8 +19,7 @@ class AppKernel extends Kernel
      */
     public function registerBundlesToCollection(\Pimcore\HttpKernel\BundleCollection\BundleCollection $collection)
     {
-        $collection->addBundle(new \CoreShop\Bundle\CoreBundle\CoreShopCoreBundle());
-        $collection->addBundle(new \FriendsOfBehat\SymfonyExtension\Bundle\FriendsOfBehatSymfonyExtensionBundle());
+        $collection->addBundle(new \ImportDefinitionsBundle\ImportDefinitionsBundle());
     }
 
     public function boot()
@@ -28,19 +27,5 @@ class AppKernel extends Kernel
         \Pimcore::setKernel($this);
 
         parent::boot();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function registerContainerConfiguration(\Symfony\Component\Config\Loader\LoaderInterface $loader)
-    {
-        parent::registerContainerConfiguration($loader);
-
-        $loader->load(function (\Symfony\Component\DependencyInjection\ContainerBuilder $container) use ($loader) {
-            $container->addCompilerPass(new \CoreShop\Test\DependencyInjection\MakeServicesPublicPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
-            $container->addCompilerPass(new \CoreShop\Test\DependencyInjection\MakePimcoreServicesPublicPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
-            $container->addCompilerPass(new \CoreShop\Test\DependencyInjection\MonologChannelLoggerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
-        });
     }
 }

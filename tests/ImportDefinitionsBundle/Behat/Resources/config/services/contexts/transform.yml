@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: true
+
     import_definitions.behat.context.transform.pimcore_class:
         class: ImportDefinitionsBundle\Behat\Context\Transform\PimcoreClassContext
         arguments:
@@ -11,7 +14,7 @@ services:
         class: ImportDefinitionsBundle\Behat\Context\Transform\ImportDefinitionContext
         arguments:
             - '@import_definitions.behat.shared_storage'
-            - '@__symfony__.import_definitions.repository.definition'
+            - '@import_definitions.repository.definition'
         tags:
             - { name: fob.context_service }
 

@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: true
+
     import_definitions.behat.context.setup.pimcore_class:
         class: ImportDefinitionsBundle\Behat\Context\Setup\PimcoreClassContext
         arguments:
@@ -11,13 +14,13 @@ services:
         class: ImportDefinitionsBundle\Behat\Context\Setup\ImportDefinitionContext
         arguments:
             - '@import_definitions.behat.shared_storage'
-            - '@__symfony__.import_definitions.factory.definition'
-            - '@__symfony__.import_definitions.manager.definition'
-            - '@__symfony__.import_definition.importer'
-            - '@__symfony__.form.factory'
-            - '@__symfony__.import_definition.form.registry.provider'
-            - '@__symfony__.import_definition.form.registry.interpreter'
-            - '@__symfony__.import_definition.form.registry.setter'
+            - '@import_definitions.factory.definition'
+            - '@import_definitions.manager.definition'
+            - '@import_definition.importer'
+            - '@form.factory'
+            - '@import_definition.form.registry.provider'
+            - '@import_definition.form.registry.interpreter'
+            - '@import_definition.form.registry.setter'
         tags:
             - { name: fob.context_service }
 
@@ -25,6 +28,6 @@ services:
         class: ImportDefinitionsBundle\Behat\Context\Setup\PimcoreAssetContext
         arguments:
             - '@import_definitions.behat.shared_storage'
-            - '@__symfony__.kernel'
+            - '@kernel'
         tags:
             - { name: fob.context_service }

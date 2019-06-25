@@ -1,7 +1,7 @@
 default:
     suites:
         domain_import:
-            contexts_services:
+            contexts:
                 - import_definitions.behat.context.hook.pimcore_setup
                 - import_definitions.behat.context.hook.im_setup
                 - import_definitions.behat.context.hook.pimcore_dao

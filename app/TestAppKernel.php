@@ -12,7 +12,7 @@
 
 use Pimcore\Kernel;
 
-class AppKernel extends Kernel
+class TestAppKernel extends Kernel
 {
     /**
      * {@inheritdoc}
@@ -20,14 +20,6 @@ class AppKernel extends Kernel
     public function registerBundlesToCollection(\Pimcore\HttpKernel\BundleCollection\BundleCollection $collection)
     {
         $collection->addBundle(new \CoreShop\Bundle\CoreBundle\CoreShopCoreBundle());
-        $collection->addBundle(new \FriendsOfBehat\SymfonyExtension\Bundle\FriendsOfBehatSymfonyExtensionBundle());
-    }
-
-    public function boot()
-    {
-        \Pimcore::setKernel($this);
-
-        parent::boot();
     }
 
     /**

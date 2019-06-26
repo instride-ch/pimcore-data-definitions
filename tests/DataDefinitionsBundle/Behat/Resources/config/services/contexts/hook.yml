@@ -1,0 +1,20 @@
+services:
+    _defaults:
+        public: true
+
+    import_definitions.behat.context.hook.pimcore_dao:
+        class: WVision\Bundle\DataDefinitionsBundle\Behat\Context\Hook\PimcoreDaoContext
+        arguments:
+            - '@doctrine.dbal.default_connection'
+        tags:
+            - { name: fob.context_service }
+
+    import_definitions.behat.context.hook.pimcore_setup:
+        class: WVision\Bundle\DataDefinitionsBundle\Behat\Context\Hook\PimcoreSetupContext
+        tags:
+            - { name: fob.context_service }
+
+    import_definitions.behat.context.hook.im_setup:
+        class: WVision\Bundle\DataDefinitionsBundle\Behat\Context\Hook\IMSetupContext
+        tags:
+            - { name: fob.context_service }

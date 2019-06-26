@@ -8,58 +8,23 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use CoreShop\Component\Registry\ServiceRegistryInterface;
-use ImportDefinitionsBundle\Model\DataSetAwareInterface;
-use ImportDefinitionsBundle\Model\DataSetAwareTrait;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
-use Pimcore\Model\DataObject\Concrete;
-use Webmozart\Assert\Assert;
+use WVision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter as NewIteratorInterpreter;
 
-final class IteratorInterpreter implements InterpreterInterface, DataSetAwareInterface
-{
-    use DataSetAwareTrait;
-
+if (class_exists(NewIteratorInterpreter::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\IteratorInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @var ServiceRegistryInterface
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\IteratorInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter class instead.
      */
-    private $interpreterRegistry;
-
-    /**
-     * @param ServiceRegistryInterface $interpreterRegistry
-     */
-    public function __construct(ServiceRegistryInterface $interpreterRegistry)
+    class IteratorInterpreter
     {
-        $this->interpreterRegistry = $interpreterRegistry;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
-    {
-        if (null === $value) {
-            return [];
-        }
-        Assert::isArray($value, 'IteratorInterpreter can only be used with array values');
-
-        $interpreter = $configuration['interpreter'];
-        $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
-
-        if ($interpreterObject instanceof DataSetAwareInterface) {
-            $interpreterObject->setDataSet($this->getDataSet());
-        }
-
-        foreach ($value as &$val) {
-            $val = $interpreterObject->interpret($object, $val, $map, $data, $definition, $params, $interpreter['interpreterConfig']);
-        }
-
-        return $value;
     }
 }
+

@@ -8,47 +8,22 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
-use ImportDefinitionsBundle\Model\MappingInterface;
-use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Service\Placeholder;
+use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter as NewAssetByPathInterpreter;
 
-class AssetByPathInterpreter implements InterpreterInterface
-{
+if (class_exists(NewAssetByPathInterpreter::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @var Placeholder
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter class instead.
      */
-    protected $placeholderService;
-
-    /**
-     * @param Placeholder $placeholderService
-     */
-    public function __construct(Placeholder $placeholderService)
+    class AssetByPathInterpreter
     {
-        $this->placeholderService = $placeholderService;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function interpret(
-        Concrete $object,
-        $value,
-        Mapping $map,
-        $data,
-        DefinitionInterface $definition,
-        $params,
-        $configuration
-    ) {
-        $assetFullPath = $configuration['path'] . "/" . $value;
-
-        return \Pimcore\Model\Asset::getByPath($assetFullPath);
     }
 }

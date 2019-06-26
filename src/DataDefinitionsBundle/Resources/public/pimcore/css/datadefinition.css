@@ -1,0 +1,49 @@
+.data_definitions_icon_import_definition, .processmanager_icon_executable_type_importdefinition {
+    background: url(../img/import_definition.svg) center center no-repeat !important;
+}
+
+.data_definitions_nav_icon_import_definition {
+    background: url(../img/import_definition.svg) center center no-repeat !important;
+}
+
+body.pimcore_version_6 .data_definitions_nav_icon_import_definition {
+    background: url(../img/import_definition_white.svg) center center no-repeat !important;
+}
+
+.data_definitions_icon_export_definition, .processmanager_icon_executable_type_exportdefinition {
+    background: url(../img/export_definition.svg) center center no-repeat !important;
+}
+
+.data_definitions_nav_icon_export_definition {
+    background: url(../img/export_definition.svg) center center no-repeat !important;
+}
+
+body.pimcore_version_6 .data_definitions_nav_icon_export_definition {
+    background: url(../img/export_definition_white.svg) center center no-repeat !important;
+}
+
+.data_definitions_icon_settings {
+    background: url(../img/settings.svg) center center no-repeat !important;
+}
+
+.data_definitions_icon_provider {
+    background: url(../img/provider.svg) center center no-repeat !important;
+}
+
+.data_definitions_icon_mapping {
+    background: url(../img/mapping.svg) center center no-repeat !important;
+}
+
+.td-icon[class*="pimcore_icon"] {
+    background-position: left center!important;
+}
+
+.td-icon .x-grid-cell-inner {
+    padding-left:25px;
+}
+
+.data_definitions_edit_button {
+    padding: 0px!important;
+    background: none!important;
+    border: none!important;
+}

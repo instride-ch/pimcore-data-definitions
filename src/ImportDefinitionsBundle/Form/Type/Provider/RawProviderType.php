@@ -8,30 +8,23 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
+use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType as NewRawProviderType;
 
-final class RawProviderType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('headers', TextType::class)
-        ;
-    }
-
+if (class_exists(NewRawProviderType::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\RawProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * {@inheritdoc}
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\RawProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType class instead.
      */
-    public function getBlockPrefix()
+    final class RawProviderType
     {
-        return 'import_definitions_provider_raw';
     }
 }
+

@@ -1,0 +1,45 @@
+services:
+    import_definition.process_manager.import.listener: '@WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener'
+    WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener:
+        arguments:
+            - '@process_manager.factory.process'
+            - '@process_manager.logger'
+        tags:
+            - { name: 'kernel.event_listener', event: 'import_definition.total', method: 'onTotalEvent' }
+            - { name: 'kernel.event_listener', event: 'import_definition.progress', method: 'onProgressEvent' }
+            - { name: 'kernel.event_listener', event: 'import_definition.status', method: 'onStatusEvent' }
+            - { name: 'kernel.event_listener', event: 'import_definition.finished', method: 'onFinishedEvent' }
+
+    import_definition.process_manager.export.listener: '@WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener'
+    WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener:
+        arguments:
+            - '@process_manager.factory.process'
+            - '@process_manager.logger'
+            - '@import_definition.registry.export_provider'
+        tags:
+            - { name: 'kernel.event_listener', event: 'export_definition.total', method: 'onTotalEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.progress', method: 'onProgressEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.status', method: 'onStatusEvent' }
+            - { name: 'kernel.event_listener', event: 'export_definition.finished', method: 'onFinishedEvent' }
+
+    import_definition.process_manager.process: '@WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess'
+    WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess:
+        tags:
+            - { name: 'process_manager.process', type: 'importdefinition', form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }
+
+    import_definition.process_manager.export.process: '@WVision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionProcess'
+    WVision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionProcess:
+        tags:
+            - { name: 'process_manager.process', type: 'exportdefinition', form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType }
+
+    import_definition.process_manager.export.startup_form_resolver: '@WVision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver'
+    WVision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver:
+        arguments:
+            - '@import_definitions.repository.export_definition'
+        tags:
+            - { name: 'process_manager.startup_form_resolver', type: 'exportdefinition' }
+
+    import_definitions.process_manager.report: '@WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport'
+    WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport:
+        tags:
+            - { name: process_manager.process_report, type: import_definitions }

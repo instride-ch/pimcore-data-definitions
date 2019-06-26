@@ -1,67 +1,30 @@
 <?php
 /**
- * Import Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
+     * Import Definitions.
+     *
+     * LICENSE
+     *
+     * This source file is subject to the GNU General Public License version 3 (GPLv3)
+     * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+     * files that are distributed with this source code.
+     *
+     * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
+     * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+     */
 
 namespace ImportDefinitionsBundle\Command;
 
-use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
-use Pimcore\Console\AbstractCommand;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use WVision\Bundle\DataDefinitionsBundle\Command\ListExportDefinitionsCommand as NewListExportDefinitionsCommand;
 
-final class ListExportDefinitionsCommand extends AbstractCommand
-{
+if (class_exists(NewListExportDefinitionsCommand::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Command\ListExportDefinitionsCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Command\ListExportDefinitionsCommand class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * {@inheritdoc}
+     * @deprecated Class ImportDefinitionsBundle\Command\ListExportDefinitionsCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Command\ListExportDefinitionsCommand class instead.
      */
-    protected function configure()
+    class ListExportDefinitionsCommand
     {
-        $this
-            ->setName('export-definitions:list')
-            ->setDescription('List all Export Definitions.')
-            ->setHelp(<<<EOT
-The <info>%command.name%</info> lists all Export Definitions.
-EOT
-            )
-        ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $exportDefinitions = $this->getContainer()->get('import_definitions.repository.export_definition')->findAll();
-
-        $data = [];
-
-        /** @var ExportDefinitionInterface $definition */
-        foreach ($exportDefinitions as $definition) {
-            $data[] = [
-                $definition->getId(),
-                $definition->getName(),
-                $definition->getProvider()
-            ];
-        }
-
-        $table = new Table($output);
-        $table
-            ->setHeaders(['ID', 'Name', 'Provider'])
-            ->setRows($data)
-        ;
-        $table->render();
-
-        return 0;
     }
 }
+

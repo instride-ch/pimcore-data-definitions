@@ -1,32 +1,29 @@
 <?php
 /**
- * CoreShop.
+ * Import Definitions.
+ *
+ * LICENSE
  *
  * This source file is subject to the GNU General Public License version 3 (GPLv3)
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2015-2017 Dominik Pfaffenbauer (https://www.pfaffenbauer.at)
- * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Event;
 
-use CoreShop\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use CoreShop\Component\Resource\Metadata\MetadataInterface;
-use CoreShop\Component\Resource\Model\ResourceInterface;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
+use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface as NewEventDispatcherInterface;
 
-interface EventDispatcherInterface
-{
+if (interface_exists(NewEventDispatcherInterface::class)) {
+    @trigger_error('Interface ImportDefinitionsBundle\Event\EventDispatcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @param DefinitionInterface $definition
-     * @param                     $eventName
-     * @param string              $subject
-     * @param array               $params
-     * @return mixed
+     * @deprecated Interface ImportDefinitionsBundle\Event\EventDispatcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface class instead.
      */
-    public function dispatch(DefinitionInterface $definition, $eventName, $subject = '', $params = []);
+    interface EventDispatcherInterface
+    {
+    }
 }

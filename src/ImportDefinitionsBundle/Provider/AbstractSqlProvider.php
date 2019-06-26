@@ -8,66 +8,25 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Provider;
 
-use Doctrine\DBAL\Connection;
-use ImportDefinitionsBundle\Model\ImportMapping\FromColumn;
+use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider as NewAbstractSqlProvider;
 
-abstract class AbstractSqlProvider implements ProviderInterface
-{
+if (class_exists(NewAbstractSqlProvider::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Provider\AbstractSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @param $configuration
-     * @return Connection
+     * @deprecated Class ImportDefinitionsBundle\Provider\AbstractSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider class instead.
      */
-    abstract protected function getDb($configuration);
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function testData($configuration)
+    abstract class AbstractSqlProvider
     {
-        return \is_object($this->getDb($configuration));
-    }
-
-    /**
-     * {@inheritdoc}
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function getColumns($configuration)
-    {
-        $db = $this->getDb($configuration);
-        $query = $db->query($configuration['query']);
-        $data = $query->fetch();
-        $columns = [];
-        $returnColumns = [];
-
-        if (isset($data)) {
-            // there is at least one row - we can grab columns from it
-            $columns = array_keys((array)$data);
-        }
-
-        foreach ($columns as $col) {
-            $returnCol = new FromColumn();
-            $returnCol->setIdentifier($col);
-            $returnCol->setLabel($col);
-
-            $returnColumns[] = $returnCol;
-        }
-
-        return $returnColumns;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getData($configuration, $definition, $params, $filter = null)
-    {
-        $db = $this->getDb($configuration);
-
-        return $db->fetchAll($configuration['query']);
     }
 }
+
+
+

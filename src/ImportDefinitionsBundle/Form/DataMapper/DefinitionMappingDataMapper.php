@@ -8,42 +8,22 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Form\DataMapper;
 
-use ImportDefinitionsBundle\Model\MappingInterface;
-use Symfony\Component\Form\DataMapperInterface;
+use WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper as NewDefinitionMappingDataMapper;
 
-final class DefinitionMappingDataMapper implements DataMapperInterface
-{
+if (class_exists(NewDefinitionMappingDataMapper::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * {@inheritdoc}
+     * @deprecated Class ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper class instead.
      */
-    public function mapDataToForms($data, $forms): void
+    final class DefinitionMappingDataMapper
     {
-
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function mapFormsToData($forms, &$data): void
-    {
-        $actualData = [];
-
-        foreach ($forms as $key => $form) {
-            $formData = $form->getData();
-            
-            if (!$formData instanceof MappingInterface) {
-                continue;
-            }
-
-            $actualData[] = $formData;
-        }
-
-        $data = $actualData;
     }
 }

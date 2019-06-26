@@ -8,62 +8,22 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Event;
 
-use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
-use Symfony\Component\EventDispatcher\Event;
+use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent as NewExportDefinitionEvent;
 
-final class ExportDefinitionEvent extends Event
-{
+if (class_exists(NewExportDefinitionEvent::class)) {
+    @trigger_error('Interface ImportDefinitionsBundle\Event\ExportDefinitionEvent is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @var ExportDefinitionInterface
+     * @deprecated Interface ImportDefinitionsBundle\Event\ExportDefinitionEvent is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent class instead.
      */
-    protected $definition;
-
-    /**
-     * @var mixed
-     */
-    protected $subject;
-
-    protected $params = [];
-
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @param null                      $subject
-     * @param array                     $params
-     */
-    public function __construct(ExportDefinitionInterface $definition, $subject = null, $params = [])
+    class ExportDefinitionEvent
     {
-        $this->definition = $definition;
-        $this->subject = $subject;
-        $this->params = $params;
-    }
-
-    /**
-     * @return ExportDefinitionInterface
-     */
-    public function getDefinition()
-    {
-        return $this->definition;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParams()
-    {
-        return $this->params;
     }
 }

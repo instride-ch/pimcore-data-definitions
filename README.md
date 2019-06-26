@@ -19,7 +19,7 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
  * Enable via command-line (or inside the pimcore extension manager): ```bin/console pimcore:bundle:enable ImportDefinitionsBundle```
  * Install via command-line (or inside the pimcore extension manager): ```bin/console pimcore:bundle:install ImportDefinitionsBundle```
  * Reload Pimcore
- * Open Settings -> Import Definitions
+ * Open Settings -> Import Definitions or Export Definitions
 
 ## Providers
 Currently, only 4 types of providers are available:
@@ -30,7 +30,7 @@ Currently, only 4 types of providers are available:
  - SQL
 
 Because, the data needs to be non-hierarchial, XML and JSON are very limited. You can write your own provider to prepare the data for the plugin. To do that, you simply
-need to create a new class and implement ```ImportDefinitionsBundle\Provider\ProviderInterface``` namespace and add a new service:
+need to create a new class and implement ```WVision\Bundle\DataDefinitionsBundle\ImportProvider\ProviderInterface``` namespace and add a new service:
 
 ```yml
 acme_bundle.import_definition.provider.my_provider:
@@ -49,7 +49,7 @@ A cleaner takes care about the clean-up process. It basically deletes or unpubli
  - Reference Cleaner: Deletes only when no references exists, otherwise the object will be unpublished
  - None: does basically nothing
 
-To create your own cleaner you need to implement ```ImportDefinitionsBundle\Cleaner\CleanerInterface``` and add a new service
+To create your own cleaner you need to implement ```WVision\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface``` and add a new service
 
 ```yml
 acme_bundle.import_definition.my_cleaner:
@@ -74,21 +74,21 @@ To prepare data before it goes to the Objects-Setter Method, there are these "In
  - SpecificObject -> Saves predefined object (in the UI) to the field
 
 This probably doesn't satisfy your needs. But you can also write your own Interpreters.
-Todo that, you need to implement the interface ```ImportDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
+Todo that, you need to implement the interface ```WVision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
 
 ```yml
 acme_bundle.import_definition.my_interpter:
     class: AcmeBundle\ImportDefinitions\MyInterpreter
     tags:
-      - { name: import_definition.interpreter, type: myinterpreter, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\NoConfigurationType }
+      - { name: import_definition.interpreter, type: myinterpreter, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\NoConfigurationType }
 ```
 
 If your Interpter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
 
 ```javascript
-pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.myinterpreter');
+pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.myinterpreter');
 
-pimcore.plugin.importdefinitions.interpreters.myinterpreter = Class.create(pimcore.plugin.importdefinitions.interpreters.abstract, {
+pimcore.plugin.datadefinitions.interpreters.myinterpreter = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
 
 });
 
@@ -115,21 +115,21 @@ A Setter sets the data to the object as it would be needed.
 
 Of course, you can also implement your own Setters. Its basically the same as with Interpreters.
 
-Todo that, you need to implement the interface ```ImportDefinitionsBundle\Setter\SetterInterface``` and create a service
+Todo that, you need to implement the interface ```WVision\Bundle\DataDefinitionsBundle\Setter\SetterInterface``` and create a service
 
 ```yml
 acme_bundle.import_definition.my_interpter:
     class: AcmeBundle\ImportDefinitions\MySetter
     tags:
-      - { name: import_definition.setter, type: mysetter, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+      - { name: import_definition.setter, type: mysetter, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 ```
 
 If your Setter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:
 
 ```javascript
-pimcore.registerNS('pimcore.plugin.importdefinitions.setters.mysetter');
+pimcore.registerNS('pimcore.plugin.datadefinitions.setters.mysetter');
 
-pimcore.plugin.importdefinitions.setters.mysetter = Class.create(pimcore.plugin.importdefinitions.setters.abstract, {
+pimcore.plugin.datadefinitions.setters.mysetter = Class.create(pimcore.plugin.datadefinitions.setters.abstract, {
 
 });
 
@@ -148,7 +148,7 @@ import_definitions:
 ## Filter
 A Filter, as the name says, filters your data on runtime. Your method gets called on every "row" and you get to decide if you want to import it, or not.
 
-To implement a new filter, you need to implement the interface ```ImportDefinitionsBundle\Filter\FilterInterface``` and add a new service
+To implement a new filter, you need to implement the interface ```WVision\Bundle\DataDefinitionsBundle\Filter\FilterInterface``` and add a new service
 
 ```yml
 acme_bundle.import_definition.my_filter:
@@ -176,7 +176,7 @@ class MyFilter implements FilterInterface
 ## Runner
 A runner gets called before and after every line is imported from your data-source. This can help you do clean-up or similar stuff.
 
-To implement a new Runner, you need to implement the interface ```ImportDefinitionsBundle\Runner\RunnerInterface``` and add a new service
+To implement a new Runner, you need to implement the interface ```WVision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface``` and add a new service
 
 ```yml
 acme_bundle.import_definition.my_runner:

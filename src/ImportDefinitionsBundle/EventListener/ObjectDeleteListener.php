@@ -8,32 +8,22 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\EventListener;
 
-use ImportDefinitionsBundle\Model\Log;
-use Pimcore\Event\Model\DataObjectEvent;
+use WVision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener as NewObjectDeleteListener;
 
-final class ObjectDeleteListener
-{
+if (class_exists(NewObjectDeleteListener::class)) {
+    @trigger_error('Interface ImportDefinitionsBundle\EventListener\ObjectDeleteListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @param DataObjectEvent $event
-     * @throws \Exception
+     * @deprecated Interface ImportDefinitionsBundle\EventListener\ObjectDeleteListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener class instead.
      */
-    public function onDataObjectDelete(DataObjectEvent $event)
+    class ObjectDeleteListener
     {
-        $resource = $event->getObject();
-
-        $list = new Log\Listing();
-        $list->setCondition('o_id = ?', $resource->getId());
-        $logEntries = $list->load();
-
-        /** @var Log $entry */
-        foreach ($logEntries as $entry) {
-            $entry->delete();
-        }
     }
 }

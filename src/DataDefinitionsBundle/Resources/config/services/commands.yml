@@ -1,0 +1,42 @@
+services:
+    WVision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand:
+        tags:
+            - { name: 'console.command', command: 'import-definitions:list' }
+
+    WVision\Bundle\DataDefinitionsBundle\Command\ListExportDefinitionsCommand:
+        tags:
+            - { name: 'console.command', command: 'export-definitions:list' }
+
+    WVision\Bundle\DataDefinitionsBundle\Command\ImportCommand:
+        arguments:
+            - '@event_dispatcher'
+            - '@data_definitions.repository.import_definition'
+            - '@WVision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+        tags:
+            - { name: 'console.command', command: 'import-definitions:import' }
+
+    WVision\Bundle\DataDefinitionsBundle\Command\ExportCommand:
+        arguments:
+            - '@event_dispatcher'
+            - '@data_definitions.repository.export_definition'
+            - '@WVision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface'
+        tags:
+            - { name: 'console.command', command: 'export-definitions:export' }
+
+    WVision\Bundle\DataDefinitionsBundle\Command\ImportImportDefinitionCommand:
+        arguments:
+            - "@=service('coreshop.resource_registry').get('data_definitions.import_definition')"
+            - '@data_definitions.repository.import_definition'
+            - '@pimcore.dao.object_manager'
+            - '@coreshop.resource_controller.form_factory'
+        tags:
+            - { name: 'console.command', command: 'import-definitions:definition:import' }
+
+    WVision\Bundle\DataDefinitionsBundle\Command\ImportExportDefinitionCommand:
+        arguments:
+            - "@=service('coreshop.resource_registry').get('data_definitions.export_definition')"
+            - '@data_definitions.repository.export_definition'
+            - '@pimcore.dao.object_manager'
+            - '@coreshop.resource_controller.form_factory'
+        tags:
+            - { name: 'console.command', command: 'export-definitions:definition:import' }

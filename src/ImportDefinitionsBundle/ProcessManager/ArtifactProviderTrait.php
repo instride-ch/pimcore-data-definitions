@@ -8,54 +8,23 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use ImportDefinitionsBundle\Model\ExportDefinitionInterface;
-use Pimcore\Model\Asset;
+use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait as NewArtifactProviderTrait;
 
-trait ArtifactProviderTrait
-{
+if (class_exists(NewArtifactProviderTrait::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * {@inheritdoc}
+     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait class instead.
      */
-    public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset
+    trait ArtifactProviderTrait
     {
-        if (!$params['artifact']) {
-            return null;
-        }
-
-        $artifactPath = dirname($params['artifact']);
-        $artifactName = basename($params['artifact']);
-
-        if ($artifactPath === '.') {
-            $artifactPath = Asset::getById(1);
-        }
-        else {
-            $artifactPath = Asset\Service::createFolderByPath($artifactPath);
-        }
-
-        $stream = $this->provideArtifactStream($configuration, $definition, $params);
-
-        $artifact = new Asset\Document();
-        $artifact->setFilename($artifactName);
-        $artifact->setStream($stream);
-        $artifact->setParent($artifactPath);
-        $artifact->setFilename(Asset\Service::getUniqueKey($artifact));
-        $artifact->save();
-
-        fclose($stream);
-
-        return $artifact;
     }
-
-    /**
-     * @param                           $configuration
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     */
-    public abstract function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params);
 }
+

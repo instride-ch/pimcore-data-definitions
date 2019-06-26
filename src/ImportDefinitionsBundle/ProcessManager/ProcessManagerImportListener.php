@@ -8,101 +8,24 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use Carbon\Carbon;
-use CoreShop\Component\Resource\Factory\FactoryInterface;
-use ImportDefinitionsBundle\Event\ImportDefinitionEvent;
-use ProcessManagerBundle\Factory\ProcessFactoryInterface;
-use ProcessManagerBundle\Logger\ProcessLogger;
-use ProcessManagerBundle\Model\ProcessInterface;
+use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener as NewProcessManagerImportListener;
 
-final class ProcessManagerImportListener
-{
+if (class_exists(NewProcessManagerImportListener::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ProcessManagerImportListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @var ProcessInterface
+     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ProcessManagerImportListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener class instead.
      */
-    private $process;
-
-    /**
-     * @var ProcessFactoryInterface
-     */
-    private $processFactory;
-
-    /**
-     * @var ProcessLogger
-     */
-    private $processLogger;
-
-    /**
-     * @param FactoryInterface $processFactory
-     * @param ProcessLogger    $processLogger
-     */
-    public function __construct(FactoryInterface $processFactory, ProcessLogger $processLogger)
+    final class ProcessManagerImportListener
     {
-        $this->processFactory = $processFactory;
-        $this->processLogger = $processLogger;
-    }
-
-    /**
-     * @param ImportDefinitionEvent $event
-     */
-    public function onTotalEvent(ImportDefinitionEvent $event)
-    {
-        if (null === $this->process) {
-            $date = Carbon::now();
-
-            $this->process = $this->processFactory->createProcess(
-                sprintf(
-                    'ImportDefinitions (%s): %s',
-                    $date->formatLocalized('%A %d %B %Y'),
-                    $event->getDefinition()->getName()
-                ),
-                'import_definitions',
-                'Loading',
-                $event->getSubject(),
-                0
-            );
-            $this->process->save();
-
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_TOTAL.$event->getSubject());
-        }
-    }
-
-    public function onProgressEvent()
-    {
-        if ($this->process) {
-            $this->process->progress();
-            $this->process->save();
-
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_PROGRESS);
-        }
-    }
-
-    /**
-     * @param ImportDefinitionEvent $event
-     */
-    public function onStatusEvent(ImportDefinitionEvent $event)
-    {
-        if ($this->process) {
-            $this->process->setMessage($event->getSubject());
-            $this->process->save();
-
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS.$event->getSubject());
-        }
-    }
-
-    /**
-     * @param ImportDefinitionEvent $event
-     */
-    public function onFinishedEvent(ImportDefinitionEvent $event)
-    {
-        if ($this->process) {
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
-        }
     }
 }
+
+

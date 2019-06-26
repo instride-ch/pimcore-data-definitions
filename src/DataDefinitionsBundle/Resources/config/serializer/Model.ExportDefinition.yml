@@ -1,0 +1,16 @@
+WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinition:
+  exclusion_policy: ALL
+  xml_root_name: export_definition
+  properties:
+    fetcher:
+      expose: true
+      type: string
+      groups: [Detailed]
+    fetcherConfig:
+      expose: true
+      type: array
+      groups: [Detailed]
+    fetchUnpublished:
+      expose: true
+      type: boolean
+      groups: [Detailed]

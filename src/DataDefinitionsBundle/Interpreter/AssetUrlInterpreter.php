@@ -18,12 +18,12 @@ use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
 use WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
 use WVision\Bundle\DataDefinitionsBundle\Model\Mapping;
-use WVision\Bundle\DataDefinitionsBundle\PlaceholderContext;
 use Pimcore\File;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 use WVision\Bundle\DataDefinitionsBundle\Service\Placeholder;
 use Pimcore\Tool as PimcoreTool;
+use WVision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext;
 
 class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 {

@@ -14,7 +14,6 @@
 
 namespace WVision\Bundle\DataDefinitionsBundle\Service;
 
-use WVision\Bundle\DataDefinitionsBundle\PlaceholderContext;
 use Pimcore\File;
 
 final class Placeholder

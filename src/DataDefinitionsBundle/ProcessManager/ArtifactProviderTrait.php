@@ -12,9 +12,9 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\ProcessManager;
+namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Pimcore\Model\Asset;
 
 trait ArtifactProviderTrait

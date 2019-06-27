@@ -12,13 +12,13 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Interpreter;
+namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\Mapping;
-use WVision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
-use WVision\Bundle\DataDefinitionsBundle\Service\Placeholder;
+use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
 
 class AssetByPathInterpreter implements InterpreterInterface
 {

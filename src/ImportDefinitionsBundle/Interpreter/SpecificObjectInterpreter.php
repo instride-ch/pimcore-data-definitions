@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter as NewSpecificObjectInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter as NewSpecificObjectInterpreter;
 
 if (class_exists(NewSpecificObjectInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\SpecificObjectInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\SpecificObjectInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\SpecificObjectInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\SpecificObjectInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter class instead.
      */
     class SpecificObjectInterpreter
     {

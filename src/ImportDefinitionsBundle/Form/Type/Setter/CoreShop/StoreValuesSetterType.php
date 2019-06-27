@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType as NewStoreValuesSetterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType as NewStoreValuesSetterType;
 
 if (class_exists(NewStoreValuesSetterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType class instead.
      */
     final class StoreValuesSetterType
     {

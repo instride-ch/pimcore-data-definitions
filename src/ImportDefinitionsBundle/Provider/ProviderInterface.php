@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface as NewProviderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface as NewProviderInterface;
 
 if (interface_exists(NewProviderInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Provider\ProviderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Provider\ProviderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Provider\ProviderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Provider\ProviderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface Interface instead.
      */
     interface ProviderInterface
     {

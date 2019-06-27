@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Command;
 
-use WVision\Bundle\DataDefinitionsBundle\Command\ExportCommand as NewExportCommand;
+use Wvision\Bundle\DataDefinitionsBundle\Command\ExportCommand as NewExportCommand;
 
 if (class_exists(NewExportCommand::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Command\ExportCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Command\ExportCommand class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Command\ExportCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Command\ExportCommand class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Command\ExportCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Command\ExportCommand class instead.
+     * @deprecated Class ImportDefinitionsBundle\Command\ExportCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Command\ExportCommand class instead.
      */
     class ExportCommand
     {

@@ -12,20 +12,20 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Exporter;
+namespace Wvision\Bundle\DataDefinitionsBundle\Exporter;
 
 use CoreShop\Component\Pimcore\DataObject\UnpublishedHelper;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
-use WVision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
-use WVision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface;
-use WVision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use WVision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface;
-use WVision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
+use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
+use Wvision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

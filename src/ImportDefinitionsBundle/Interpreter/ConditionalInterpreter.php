@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter as NewConditionalInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter as NewConditionalInterpreter;
 
 if (class_exists(NewConditionalInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\ConditionalInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\ConditionalInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\ConditionalInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\ConditionalInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter class instead.
      */
     class ConditionalInterpreter
     {

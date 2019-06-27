@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use WVision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter as NewObjectTypeSetter;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter as NewObjectTypeSetter;
 
 if (class_exists(NewObjectTypeSetter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Setter\ObjectTypeSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Setter\ObjectTypeSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Setter\ObjectTypeSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Setter\ObjectTypeSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter class instead.
      */
     class ObjectTypeSetter
     {

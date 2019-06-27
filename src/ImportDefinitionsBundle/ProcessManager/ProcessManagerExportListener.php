@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener as NewProcessManagerExportListener;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener as NewProcessManagerExportListener;
 
 if (class_exists(NewProcessManagerExportListener::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ProcessManagerExportListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ProcessManagerExportListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ProcessManagerExportListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener class instead.
+     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ProcessManagerExportListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener class instead.
      */
     final class ProcessManagerExportListener
     {

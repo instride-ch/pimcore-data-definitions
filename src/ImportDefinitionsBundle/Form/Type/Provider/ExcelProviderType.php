@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType as NewExcelProviderType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType as NewExcelProviderType;
 
 if (class_exists(NewExcelProviderType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\ExcelProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\ExcelProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\ExcelProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\ExcelProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType class instead.
      */
     final class ExcelProviderType
     {

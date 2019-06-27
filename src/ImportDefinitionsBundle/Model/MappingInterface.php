@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\MappingInterface as NewMappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface as NewMappingInterface;
 
 if (interface_exists(NewMappingInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Model\MappingInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\MappingInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Model\MappingInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Model\MappingInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\MappingInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Model\MappingInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface Interface instead.
      */
     interface MappingInterface
     {

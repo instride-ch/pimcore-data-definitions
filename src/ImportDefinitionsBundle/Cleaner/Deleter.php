@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Cleaner;
 
-use WVision\Bundle\DataDefinitionsBundle\Cleaner\Deleter as NewDeleter;
+use Wvision\Bundle\DataDefinitionsBundle\Cleaner\Deleter as NewDeleter;
 
 if (class_exists(NewDeleter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Cleaner\Deleter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\Deleter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Cleaner\Deleter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\Deleter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Cleaner\Deleter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\Deleter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Cleaner\Deleter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\Deleter class instead.
      */
     class Deleter
     {

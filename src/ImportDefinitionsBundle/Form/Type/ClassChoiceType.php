@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType as NewClassChoiceType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType as NewClassChoiceType;
 
 if (class_exists(NewClassChoiceType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ClassChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ClassChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\ClassChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\ClassChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType class instead.
      */
     final class ClassChoiceType
     {

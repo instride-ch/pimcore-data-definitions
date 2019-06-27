@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Cleaner;
 
-use WVision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher as NewUnpublisher;
+use Wvision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher as NewUnpublisher;
 
 if (class_exists(NewUnpublisher::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Cleaner\Unpublisher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Cleaner\Unpublisher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Cleaner\Unpublisher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher class instead.
+     * @deprecated Class ImportDefinitionsBundle\Cleaner\Unpublisher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher class instead.
      */
     class Unpublisher
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Cleaner;
 
-use WVision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner as NewReferenceCleaner;
+use Wvision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner as NewReferenceCleaner;
 
 if (class_exists(NewReferenceCleaner::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Cleaner\ReferenceCleaner is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Cleaner\ReferenceCleaner is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Cleaner\ReferenceCleaner is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner class instead.
+     * @deprecated Class ImportDefinitionsBundle\Cleaner\ReferenceCleaner is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner class instead.
      */
     class ReferenceCleaner
     {

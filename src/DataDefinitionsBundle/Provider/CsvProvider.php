@@ -12,12 +12,12 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Provider;
+namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;

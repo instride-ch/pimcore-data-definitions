@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType as NewSqlProviderType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType as NewSqlProviderType;
 
 if (class_exists(NewSqlProviderType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\SqlProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\SqlProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\SqlProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\SqlProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType class instead.
      */
     final class SqlProviderType
     {

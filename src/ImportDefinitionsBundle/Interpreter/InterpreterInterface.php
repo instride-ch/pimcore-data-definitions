@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface as NewInterpreterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface as NewInterpreterInterface;
 
 if (interface_exists(NewInterpreterInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Interpreter\InterpreterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Interpreter\InterpreterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Interpreter\InterpreterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Interpreter\InterpreterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface Interface instead.
      */
     interface InterpreterInterface
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter\CoreShop;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter as NewStoresInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter as NewStoresInterpreter;
 
 if (class_exists(NewStoresInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter class instead.
      */
     class StoresInterpreter
     {

@@ -12,12 +12,12 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Interpreter;
+namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\Mapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;

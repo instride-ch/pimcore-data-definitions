@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface as NewExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface as NewExportDefinitionInterface;
 
 if (interface_exists(NewExportDefinitionInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Model\ExportDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Model\ExportDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Model\ExportDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Model\ExportDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface Interface instead.
      */
     interface ExportDefinitionInterface
     {

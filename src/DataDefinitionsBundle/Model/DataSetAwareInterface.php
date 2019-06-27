@@ -12,9 +12,9 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
 interface DataSetAwareInterface
 {

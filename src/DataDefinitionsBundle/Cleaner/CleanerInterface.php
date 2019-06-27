@@ -12,9 +12,9 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Cleaner;
+namespace Wvision\Bundle\DataDefinitionsBundle\Cleaner;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
 
 interface CleanerInterface
 {

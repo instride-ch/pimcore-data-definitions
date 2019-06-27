@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\DataMapper;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper as NewDefinitionMappingDataMapper;
+use Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper as NewDefinitionMappingDataMapper;
 
 if (class_exists(NewDefinitionMappingDataMapper::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper class instead.
      */
     final class DefinitionMappingDataMapper
     {

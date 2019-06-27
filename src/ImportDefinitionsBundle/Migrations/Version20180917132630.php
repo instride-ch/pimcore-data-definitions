@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Migrations;
 
-use WVision\Bundle\DataDefinitionsBundle\Migrations\Version20180917132630 as NewVersion20180917132630;
+use Wvision\Bundle\DataDefinitionsBundle\Migrations\Version20180917132630 as NewVersion20180917132630;
 
 if (class_exists(NewVersion20180917132630::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Migrations\Version20180917132630 is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Migrations\Version20180917132630 class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Migrations\Version20180917132630 is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Migrations\Version20180917132630 class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Migrations\Version20180917132630 is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Migrations\Version20180917132630 class instead.
+     * @deprecated Class ImportDefinitionsBundle\Migrations\Version20180917132630 is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Migrations\Version20180917132630 class instead.
      */
     class Version20180917132630
     {

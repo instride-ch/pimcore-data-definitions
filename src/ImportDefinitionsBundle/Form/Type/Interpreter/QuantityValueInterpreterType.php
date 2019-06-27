@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType as NewQuantityValueInterpreterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType as NewQuantityValueInterpreterType;
 
 if (class_exists(NewQuantityValueInterpreterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType class instead.
      */
     final class QuantityValueInterpreterType
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use WVision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter as NewClassificationStoreSetter;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter as NewClassificationStoreSetter;
 
 if (class_exists(NewClassificationStoreSetter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Setter\ClassificationStoreSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Setter\ClassificationStoreSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Setter\ClassificationStoreSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Setter\ClassificationStoreSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter class instead.
      */
     class ClassificationStoreSetter
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\FilterChoiceType as NewFilterChoiceType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\FilterChoiceType as NewFilterChoiceType;
 
 if (class_exists(NewFilterChoiceType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\FilterChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\FilterChoiceType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\FilterChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\FilterChoiceType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\FilterChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\FilterChoiceType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\FilterChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\FilterChoiceType class instead.
      */
     final class FilterChoiceType
     {

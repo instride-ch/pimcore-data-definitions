@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\RawProvider as NewRawProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider as NewRawProvider;
 
 if (class_exists(NewRawProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\RawProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\RawProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\RawProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\RawProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\RawProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\RawProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider class instead.
      */
     class RawProvider
     {

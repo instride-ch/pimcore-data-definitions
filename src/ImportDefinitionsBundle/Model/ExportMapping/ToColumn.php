@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model\ExportMapping;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping\ToColumn as NewToColumn;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\ToColumn as NewToColumn;
 
 if (class_exists(NewToColumn::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\ExportMapping\ToColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping\ToColumn class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\ExportMapping\ToColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\ToColumn class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\ExportMapping\ToColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping\ToColumn class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\ExportMapping\ToColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\ToColumn class instead.
      */
     class ToColumn
     {

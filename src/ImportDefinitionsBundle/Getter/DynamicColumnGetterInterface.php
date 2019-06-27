@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Getter;
 
-use WVision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface as NewDynamicColumnGetterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface as NewDynamicColumnGetterInterface;
 
 if (interface_exists(NewDynamicColumnGetterInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Getter\DynamicColumnGetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Getter\DynamicColumnGetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Getter\DynamicColumnGetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Getter\DynamicColumnGetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface class instead.
      */
     interface DynamicColumnGetterInterface
     {

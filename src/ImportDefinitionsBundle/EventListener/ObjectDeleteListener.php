@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\EventListener;
 
-use WVision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener as NewObjectDeleteListener;
+use Wvision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener as NewObjectDeleteListener;
 
 if (class_exists(NewObjectDeleteListener::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\EventListener\ObjectDeleteListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\EventListener\ObjectDeleteListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\EventListener\ObjectDeleteListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener class instead.
+     * @deprecated Interface ImportDefinitionsBundle\EventListener\ObjectDeleteListener is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener class instead.
      */
     class ObjectDeleteListener
     {

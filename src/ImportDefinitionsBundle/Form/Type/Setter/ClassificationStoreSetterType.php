@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType as NewClassificationStoreSetterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType as NewClassificationStoreSetterType;
 
 if (class_exists(NewClassificationStoreSetterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType class instead.
      */
     final class ClassificationStoreSetterType
     {

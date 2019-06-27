@@ -12,9 +12,9 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\EventListener;
+namespace Wvision\Bundle\DataDefinitionsBundle\EventListener;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\Log;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 use Pimcore\Event\Model\DataObjectEvent;
 
 final class ObjectDeleteListener

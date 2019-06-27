@@ -1,4 +1,4 @@
-WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition:
+Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition:
   exclusion_policy: ALL
   xml_root_name: import_definition
   properties:

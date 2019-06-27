@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType as NewStorePriceSetterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType as NewStorePriceSetterType;
 
 if (class_exists(NewStorePriceSetterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType class instead.
      */
     final class StorePriceSetterType
     {

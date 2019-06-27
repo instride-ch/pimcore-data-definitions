@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet as NewImportDataSet;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet as NewImportDataSet;
 
 if (class_exists(NewImportDataSet::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\ImportDataSet is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\ImportDataSet is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\ImportDataSet is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\ImportDataSet is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet class instead.
      */
     class ImportDataSet
     {

@@ -12,7 +12,7 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop;
+namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop;
 
 use CoreShop\Bundle\StoreBundle\Form\Type\StoreChoiceType;
 use CoreShop\Component\Store\Model\StoreInterface;

@@ -12,13 +12,13 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 if (class_exists(ImportDefinition::class)) {
-    @trigger_error('Class WVision\Bundle\DataDefinitionsBundle\Model\Definition is deprecated since version 2.1.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition class instead.', E_USER_DEPRECATED);
+    @trigger_error('Class Wvision\Bundle\DataDefinitionsBundle\Model\Definition is deprecated since version 2.1.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition class instead.', E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class WVision\Bundle\DataDefinitionsBundle\Model\Definition is deprecated since version 2.0.0 and will be removed in 3.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition class instead.
+     * @deprecated Class Wvision\Bundle\DataDefinitionsBundle\Model\Definition is deprecated since version 2.0.0 and will be removed in 3.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition class instead.
      */
     class Definition extends ImportDefinition
     {

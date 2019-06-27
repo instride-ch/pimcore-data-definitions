@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractFileProvider as NewAbstractFileProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\AbstractFileProvider as NewAbstractFileProvider;
 
 if (class_exists(NewAbstractFileProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\AbstractFileProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractFileProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\AbstractFileProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\AbstractFileProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\AbstractFileProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractFileProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\AbstractFileProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\AbstractFileProvider class instead.
      */
     abstract class AbstractFileProvider
     {

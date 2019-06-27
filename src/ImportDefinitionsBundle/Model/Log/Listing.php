@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model\Log;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\Log\Listing as NewListing;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Log\Listing as NewListing;
 
 if (class_exists(NewListing::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\Log\Listing is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\Log\Listing class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\Log\Listing is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\Log\Listing class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\Log\Listing is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\Log\Listing class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\Log\Listing is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\Log\Listing class instead.
      */
     class Listing
     {

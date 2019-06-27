@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter as NewObjectResolverInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter as NewObjectResolverInterpreter;
 
 if (class_exists(NewObjectResolverInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\ObjectResolverInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\ObjectResolverInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\ObjectResolverInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\ObjectResolverInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter class instead.
      */
     class ObjectResolverInterpreter
     {

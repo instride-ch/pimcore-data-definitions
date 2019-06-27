@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Interpreter\CoreShop;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType as NewStoresInterpreterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType as NewStoresInterpreterType;
 
 if (class_exists(NewStoresInterpreterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType class instead.
      */
     final class StoresInterpreterType
     {

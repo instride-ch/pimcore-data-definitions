@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\CleanerChoiceType as NewCleanerChoiceType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\CleanerChoiceType as NewCleanerChoiceType;
 
 if (class_exists(NewCleanerChoiceType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\CleanerChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\CleanerChoiceType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\CleanerChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\CleanerChoiceType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\CleanerChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\CleanerChoiceType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\CleanerChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\CleanerChoiceType class instead.
      */
     final class CleanerChoiceType
     {

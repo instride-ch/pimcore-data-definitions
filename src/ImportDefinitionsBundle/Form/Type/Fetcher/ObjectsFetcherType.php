@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Fetcher;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType as NewObjectsFetcherType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType as NewObjectsFetcherType;
 
 if (class_exists(NewObjectsFetcherType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType class instead.
      */
     final class ObjectsFetcherType
     {

@@ -29,14 +29,14 @@ namespace ImportDefinitionsBundle\Cleaner;
 
 namespace ImportDefinitionsBundle\Cleaner;
 
-use WVision\Bundle\DataDefinitionsBundle\Cleaner\AbstractCleaner as NewAbstractCleaner;
+use Wvision\Bundle\DataDefinitionsBundle\Cleaner\AbstractCleaner as NewAbstractCleaner;
 
 if (class_exists(NewAbstractCleaner::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Cleaner\AbstractCleaner is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\AbstractCleaner class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Cleaner\AbstractCleaner is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\AbstractCleaner class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Cleaner\AbstractCleaner is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\AbstractCleaner class instead.
+     * @deprecated Class ImportDefinitionsBundle\Cleaner\AbstractCleaner is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\AbstractCleaner class instead.
      */
     abstract class AbstractCleaner
     {

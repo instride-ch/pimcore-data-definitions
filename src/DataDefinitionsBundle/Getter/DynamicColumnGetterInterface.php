@@ -12,9 +12,9 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Getter;
+namespace Wvision\Bundle\DataDefinitionsBundle\Getter;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 use Pimcore\Model\DataObject\Concrete;
 
 interface DynamicColumnGetterInterface extends GetterInterface

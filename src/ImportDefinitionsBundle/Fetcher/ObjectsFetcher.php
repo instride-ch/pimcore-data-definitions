@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Fetcher;
 
-use WVision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher as NewObjectsFetcher;
+use Wvision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher as NewObjectsFetcher;
 
 if (class_exists(NewObjectsFetcher::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Fetcher\ObjectsFetcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Fetcher\ObjectsFetcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Fetcher\ObjectsFetcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Fetcher\ObjectsFetcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher class instead.
      */
     class ObjectsFetcher
     {

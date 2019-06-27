@@ -12,12 +12,12 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Interpreter;
+namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\Mapping;
+use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 

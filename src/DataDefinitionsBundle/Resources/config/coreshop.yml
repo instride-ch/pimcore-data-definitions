@@ -1,34 +1,34 @@
 services:
-    importdefinitions.coreshop.interpreter.price: '@WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter'
-    WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter:
+    importdefinitions.coreshop.interpreter.price: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter'
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: coreshop_price, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\PriceInterpreterType }
+            - { name: import_definition.interpreter, type: coreshop_price, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\PriceInterpreterType }
 
-    importdefinitions.coreshop.setter.store_price: '@WVision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter'
-    WVision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter:
+    importdefinitions.coreshop.setter.store_price: '@Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter'
+    Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter:
         arguments:
             - '@coreshop.repository.store'
         tags:
-            - { name: import_definition.setter, type: coreshop_store_price, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType }
-            - { name: import_definition.getter, type: coreshop_store_price, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType }
+            - { name: import_definition.setter, type: coreshop_store_price, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType }
+            - { name: import_definition.getter, type: coreshop_store_price, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StorePriceSetterType }
 
-    importdefinitions.coreshop.setter.store_values: '@WVision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StoreValuesSetter'
-    WVision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StoreValuesSetter:
+    importdefinitions.coreshop.setter.store_values: '@Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StoreValuesSetter'
+    Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StoreValuesSetter:
         arguments:
             - '@coreshop.repository.store'
         tags:
-            - { name: import_definition.setter, type: coreshop_store_values, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType }
-            - { name: import_definition.getter, type: coreshop_store_values, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType }
+            - { name: import_definition.setter, type: coreshop_store_values, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType }
+            - { name: import_definition.getter, type: coreshop_store_values, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\CoreShop\StoreValuesSetterType }
 
 
-    importdefinitions.coreshop.interpreter.stores: '@WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter'
-    WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter:
+    importdefinitions.coreshop.interpreter.stores: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter'
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: coreshop_stores, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType }
+            - { name: import_definition.interpreter, type: coreshop_stores, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\StoresInterpreterType }
 
-    importdefinitions.coreshop.interpreter.currency: '@WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter'
-    WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter:
+    importdefinitions.coreshop.interpreter.currency: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter'
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter:
         arguments:
             - '@coreshop.repository.currency'
         tags:
-            - { name: import_definition.interpreter, type: coreshop_currency, form-type: WVision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: import_definition.interpreter, type: coreshop_currency, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }

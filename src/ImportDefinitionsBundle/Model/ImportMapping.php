@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping as NewImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping as NewImportMapping;
 
 if (class_exists(NewImportMapping::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\ImportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\ImportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\ImportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\ImportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping class instead.
      */
     class ImportMapping
     {

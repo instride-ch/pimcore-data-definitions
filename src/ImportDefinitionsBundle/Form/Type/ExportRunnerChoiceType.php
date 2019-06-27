@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportRunnerChoiceType as NewExportRunnerChoiceType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportRunnerChoiceType as NewExportRunnerChoiceType;
 
 if (class_exists(NewExportRunnerChoiceType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ExportRunnerChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportRunnerChoiceType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ExportRunnerChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportRunnerChoiceType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\ExportRunnerChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportRunnerChoiceType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\ExportRunnerChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportRunnerChoiceType class instead.
      */
     final class ExportRunnerChoiceType
     {

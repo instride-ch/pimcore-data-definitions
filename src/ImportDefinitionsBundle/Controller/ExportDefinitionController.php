@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Controller;
 
-use WVision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController as NewExportDefinitionController;
+use Wvision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController as NewExportDefinitionController;
 
 if (class_exists(NewExportDefinitionController::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Controller\ExportDefinitionController is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Controller\ExportDefinitionController is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Controller\ExportDefinitionController is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController class instead.
+     * @deprecated Class ImportDefinitionsBundle\Controller\ExportDefinitionController is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController class instead.
      */
     class ExportDefinitionController
     {

@@ -12,12 +12,12 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\ProcessManager;
+namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
 use Carbon\Carbon;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
+use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
 use Pimcore\Model\Asset;
 use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;

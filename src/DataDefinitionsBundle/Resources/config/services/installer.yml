@@ -4,7 +4,7 @@ services:
         autoconfigure: true
         public: false
 
-    WVision\Bundle\DataDefinitionsBundle\Installer:
+    Wvision\Bundle\DataDefinitionsBundle\Installer:
         public: true
         arguments:
             $bundle: "@=service('kernel').getBundle('DataDefinitionsBundle')"

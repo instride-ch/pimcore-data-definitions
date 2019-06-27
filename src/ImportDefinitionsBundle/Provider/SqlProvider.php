@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\SqlProvider as NewSqlProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider as NewSqlProvider;
 
 if (class_exists(NewSqlProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\SqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\SqlProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\SqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\SqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\SqlProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\SqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider class instead.
      */
     class SqlProvider
     {

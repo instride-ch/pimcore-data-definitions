@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle;
 
-use WVision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext as NewPlaceholderContext;
+use Wvision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext as NewPlaceholderContext;
 
 if (class_exists(NewPlaceholderContext::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\PlaceholderContext is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\PlaceholderContext is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\PlaceholderContext is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext class instead.
+     * @deprecated Class ImportDefinitionsBundle\PlaceholderContext is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext class instead.
      */
     class PlaceholderContext
     {

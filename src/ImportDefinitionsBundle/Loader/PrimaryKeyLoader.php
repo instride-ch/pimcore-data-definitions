@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Loader;
 
-use WVision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader as NewPrimaryKeyLoader;
+use Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader as NewPrimaryKeyLoader;
 
 if (class_exists(NewPrimaryKeyLoader::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Loader\PrimaryKeyLoader is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Loader\PrimaryKeyLoader is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Loader\PrimaryKeyLoader is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader class instead.
+     * @deprecated Class ImportDefinitionsBundle\Loader\PrimaryKeyLoader is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader class instead.
      */
     class PrimaryKeyLoader
     {

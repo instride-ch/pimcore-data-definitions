@@ -12,14 +12,14 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Setter\CoreShop;
+namespace Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop;
 
 use CoreShop\Component\Core\Model\StoreInterface;
 use CoreShop\Component\Store\Repository\StoreRepositoryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use WVision\Bundle\DataDefinitionsBundle\Model\Mapping;
-use WVision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 
 class StorePriceSetter implements SetterInterface, GetterInterface

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter as NewAssetUrlInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter as NewAssetUrlInterpreter;
 
 if (class_exists(NewAssetUrlInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\AssetUrlInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\AssetUrlInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\AssetUrlInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\AssetUrlInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter class instead.
      */
     class AssetUrlInterpreter
     {

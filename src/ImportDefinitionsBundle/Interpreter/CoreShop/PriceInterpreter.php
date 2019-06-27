@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter\CoreShop;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter as NewPriceInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter as NewPriceInterpreter;
 
 if (class_exists(NewPriceInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter class instead.
      */
     class PriceInterpreter
     {

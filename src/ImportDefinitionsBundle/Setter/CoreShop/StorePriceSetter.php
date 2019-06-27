@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Setter\CoreShop;
 
-use WVision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter as NewStorePriceSetter;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter as NewStorePriceSetter;
 
 if (class_exists(NewStorePriceSetter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Setter\CoreShop\StorePriceSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Setter\CoreShop\StorePriceSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Setter\CoreShop\StorePriceSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Setter\CoreShop\StorePriceSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop\StorePriceSetter class instead.
      */
     class StorePriceSetter
     {

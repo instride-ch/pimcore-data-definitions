@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter as NewCheckboxInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter as NewCheckboxInterpreter;
 
 if (class_exists(NewCheckboxInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CheckboxInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CheckboxInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\CheckboxInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\CheckboxInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter class instead.
      */
     class CheckboxInterpreter
     {

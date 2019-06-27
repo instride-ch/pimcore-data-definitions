@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess as NewImportDefinitionProcess;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess as NewImportDefinitionProcess;
 
 if (class_exists(NewImportDefinitionProcess::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess class instead.
+     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ImportDefinitionProcess is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess class instead.
      */
     final class ImportDefinitionProcess
     {

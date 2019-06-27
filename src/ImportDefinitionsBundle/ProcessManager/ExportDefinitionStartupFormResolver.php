@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver as NewExportDefinitionStartupFormResolver;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver as NewExportDefinitionStartupFormResolver;
 
 if (class_exists(NewExportDefinitionStartupFormResolver::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver class instead.
+     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver class instead.
      */
     final class ExportDefinitionStartupFormResolver
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Loader;
 
-use WVision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface as NewLoaderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface as NewLoaderInterface;
 
 if (interface_exists(NewLoaderInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Loader\LoaderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Loader\LoaderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Loader\LoaderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Loader\LoaderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface Interface instead.
      */
     interface LoaderInterface
     {

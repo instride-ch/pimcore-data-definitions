@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider as NewExcelProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider as NewExcelProvider;
 
 if (class_exists(NewExcelProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\ExcelProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\ExcelProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\ExcelProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\ExcelProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider class instead.
      */
     class ExcelProvider
     {

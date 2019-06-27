@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use WVision\Bundle\DataDefinitionsBundle\Setter\KeySetter as NewKeySetter;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\KeySetter as NewKeySetter;
 
 if (class_exists(NewKeySetter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Setter\KeySetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\KeySetter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Setter\KeySetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\KeySetter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Setter\KeySetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\KeySetter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Setter\KeySetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\KeySetter class instead.
      */
     class KeySetter
     {

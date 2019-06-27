@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Command;
 
-use WVision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand as NewListImportDefinitionsCommand;
+use Wvision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand as NewListImportDefinitionsCommand;
 
 if (class_exists(NewListImportDefinitionsCommand::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Command\ListImportDefinitionsCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Command\ListImportDefinitionsCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Command\ListImportDefinitionsCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand class instead.
+     * @deprecated Class ImportDefinitionsBundle\Command\ListImportDefinitionsCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand class instead.
      */
     class ListImportDefinitionsCommand
     {

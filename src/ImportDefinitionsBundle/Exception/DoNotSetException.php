@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Exception;
 
-use WVision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException as NewDoNotSetException;
+use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException as NewDoNotSetException;
 
 if (class_exists(NewDoNotSetException::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Exception\DoNotSetException is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Exception\DoNotSetException is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Exception\DoNotSetException is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Exception\DoNotSetException is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException class instead.
      */
     class DoNotSetException
     {

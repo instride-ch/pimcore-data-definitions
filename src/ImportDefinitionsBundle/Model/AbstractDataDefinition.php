@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\AbstractDataDefinition as NewAbstractDataDefinition;
+use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractDataDefinition as NewAbstractDataDefinition;
 
 if (class_exists(NewAbstractDataDefinition::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\AbstractDataDefinition is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\AbstractDataDefinition class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\AbstractDataDefinition is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractDataDefinition class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\AbstractDataDefinition is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\AbstractDataDefinition class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\AbstractDataDefinition is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractDataDefinition class instead.
      */
     class AbstractDataDefinition
     {

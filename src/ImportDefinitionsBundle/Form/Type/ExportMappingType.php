@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingType as NewExportMappingType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingType as NewExportMappingType;
 
 if (class_exists(NewExportMappingType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ExportMappingType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ExportMappingType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\ExportMappingType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\ExportMappingType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingType class instead.
      */
     final class ExportMappingType
     {

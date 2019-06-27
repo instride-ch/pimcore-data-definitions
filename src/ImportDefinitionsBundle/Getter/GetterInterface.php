@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Getter;
 
-use WVision\Bundle\DataDefinitionsBundle\Getter\GetterInterface as NewGetterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface as NewGetterInterface;
 
 if (interface_exists(NewGetterInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Getter\GetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Getter\GetterInterface class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Getter\GetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Getter\GetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Getter\GetterInterface class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Getter\GetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface class instead.
      */
     interface GetterInterface
     {

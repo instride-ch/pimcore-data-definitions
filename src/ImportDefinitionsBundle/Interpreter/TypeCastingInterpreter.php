@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\TypeCastingInterpreter as NewTypeCastingInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\TypeCastingInterpreter as NewTypeCastingInterpreter;
 
 if (class_exists(NewTypeCastingInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\TypeCastingInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\TypeCastingInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\TypeCastingInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\TypeCastingInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\TypeCastingInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\TypeCastingInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\TypeCastingInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\TypeCastingInterpreter class instead.
      */
     class TypeCastingInterpreter
     {

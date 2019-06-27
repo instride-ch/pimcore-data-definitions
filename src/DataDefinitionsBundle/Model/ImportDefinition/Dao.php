@@ -12,9 +12,9 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
+namespace Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Pimcore\Model;
 
 class Dao extends Model\Dao\PhpArrayTable

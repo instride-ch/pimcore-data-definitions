@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Runner;
 
-use WVision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface as NewSetterRunnerInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface as NewSetterRunnerInterface;
 
 if (interface_exists(NewSetterRunnerInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Runner\SetterRunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Runner\SetterRunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Runner\SetterRunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Runner\SetterRunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface Interface instead.
      */
     interface SetterRunnerInterface
     {

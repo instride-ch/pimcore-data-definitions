@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use WVision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter as NewFieldCollectionSetter;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter as NewFieldCollectionSetter;
 
 if (class_exists(NewFieldCollectionSetter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Setter\FieldCollectionSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Setter\FieldCollectionSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Setter\FieldCollectionSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Setter\FieldCollectionSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter class instead.
      */
     class FieldCollectionSetter
     {

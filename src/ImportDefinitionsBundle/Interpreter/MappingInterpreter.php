@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter as NewMappingInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter as NewMappingInterpreter;
 
 if (class_exists(NewMappingInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\MappingInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\MappingInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\MappingInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\MappingInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter class instead.
      */
     class MappingInterpreter
     {

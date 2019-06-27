@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Service;
 
-use WVision\Bundle\DataDefinitionsBundle\Service\Placeholder as NewPlaceholder;
+use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder as NewPlaceholder;
 
 if (class_exists(NewPlaceholder::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Service\Placeholder is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Service\Placeholder class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Service\Placeholder is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Service\Placeholder is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Service\Placeholder class instead.
+     * @deprecated Class ImportDefinitionsBundle\Service\Placeholder is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder class instead.
      */
     class Placeholder
     {

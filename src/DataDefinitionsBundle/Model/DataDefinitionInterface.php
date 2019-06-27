@@ -12,7 +12,7 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 use CoreShop\Component\Resource\Model\ResourceInterface;
 
@@ -139,4 +139,4 @@ interface DataDefinitionInterface extends ResourceInterface
     public function setSuccessNotificationDocument($successNotificationDocument);
 }
 
-class_alias(DataDefinitionInterface::class, 'WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface');
+class_alias(DataDefinitionInterface::class, 'Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface');

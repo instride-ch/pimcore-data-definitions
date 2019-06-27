@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use WVision\Bundle\DataDefinitionsBundle\Setter\SetterInterface as NewSetterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface as NewSetterInterface;
 
 if (interface_exists(NewSetterInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Setter\SetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\SetterInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Setter\SetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Setter\SetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\SetterInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Setter\SetterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface Interface instead.
      */
     interface SetterInterface
     {

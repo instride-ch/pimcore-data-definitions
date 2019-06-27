@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\AbstractColumn as NewAbstractColumn;
+use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractColumn as NewAbstractColumn;
 
 if (class_exists(NewAbstractColumn::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\AbstractColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\AbstractColumn class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\AbstractColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractColumn class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\AbstractColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\AbstractColumn class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\AbstractColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractColumn class instead.
      */
     class AbstractColumn
     {

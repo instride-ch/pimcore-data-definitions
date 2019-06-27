@@ -14,11 +14,11 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-if (class_exists(\WVision\Bundle\DataDefinitionsBundle\Model\Definition::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\Definition is deprecated since version 2.1.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition class instead.', E_USER_DEPRECATED);
+if (class_exists(\Wvision\Bundle\DataDefinitionsBundle\Model\Definition::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Model\Definition is deprecated since version 2.1.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition class instead.', E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\Definition is deprecated since version 2.0.0 and will be removed in 3.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\Definition is deprecated since version 2.0.0 and will be removed in 3.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition class instead.
      */
     class Definition
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WVision\Bundle\DataDefinitionsBundle\Migrations;
+namespace Wvision\Bundle\DataDefinitionsBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Pimcore\Migrations\Migration\AbstractPimcoreMigration;

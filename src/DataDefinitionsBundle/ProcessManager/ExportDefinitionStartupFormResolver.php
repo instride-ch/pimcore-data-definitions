@@ -12,11 +12,11 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\ProcessManager;
+namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ExportDefinitionObjectStartupForm;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ExportDefinitionObjectStartupForm;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use ProcessManagerBundle\Model\ExecutableInterface;
 use ProcessManagerBundle\Process\ProcessStartupFormResolverInterface;
 

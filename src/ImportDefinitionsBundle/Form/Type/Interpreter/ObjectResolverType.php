@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType as NewObjectResolverType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType as NewObjectResolverType;
 
 if (class_exists(NewObjectResolverType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType class instead.
      */
     final class ObjectResolverType
     {

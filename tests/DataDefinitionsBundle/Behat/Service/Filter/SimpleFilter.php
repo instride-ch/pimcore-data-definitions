@@ -1,9 +1,9 @@
 <?php
 
-namespace WVision\Bundle\DataDefinitionsBundle\Behat\Service\Filter;
+namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Service\Filter;
 
-use WVision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
 
 class SimpleFilter implements FilterInterface
 {

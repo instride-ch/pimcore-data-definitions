@@ -12,7 +12,7 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Provider;
+namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\ReaderFactory;
@@ -20,10 +20,10 @@ use Box\Spout\Reader\ReaderInterface;
 use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Writer\WriterInterface;
 use Box\Spout\Writer\XLSX\Writer;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 use Pimcore\Model\Asset;
 
 class ExcelProvider extends AbstractFileProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface

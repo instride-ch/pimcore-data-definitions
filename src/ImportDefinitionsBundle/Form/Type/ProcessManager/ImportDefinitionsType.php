@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\ProcessManager;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType as NewImportDefinitionsType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType as NewImportDefinitionsType;
 
 if (class_exists(NewImportDefinitionsType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ImportDefinitionsType class instead.
      */
     final class ImportDefinitionsType
     {

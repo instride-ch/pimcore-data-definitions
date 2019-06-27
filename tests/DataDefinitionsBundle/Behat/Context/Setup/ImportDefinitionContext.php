@@ -12,7 +12,7 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Behat\Context\Setup;
+namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
@@ -20,10 +20,10 @@ use Behat\Gherkin\Node\TableNode;
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
-use WVision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Symfony\Component\Form\FormFactoryInterface;
 

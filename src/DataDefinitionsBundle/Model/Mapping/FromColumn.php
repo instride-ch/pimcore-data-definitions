@@ -12,15 +12,15 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn as NewFromColumn;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn as NewFromColumn;
 
 if (class_exists(NewFromColumn::class)) {
-    @trigger_error('Class WVision\Bundle\DataDefinitionsBundle\Model\Mapping\FromColumn is deprecated since version 2.1.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn class instead.', E_USER_DEPRECATED);
+    @trigger_error('Class Wvision\Bundle\DataDefinitionsBundle\Model\Mapping\FromColumn is deprecated since version 2.1.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn class instead.', E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class WVision\Bundle\DataDefinitionsBundle\Model\Mapping\FromColumn is deprecated since version 2.1.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn class instead.
+     * @deprecated Class Wvision\Bundle\DataDefinitionsBundle\Model\Mapping\FromColumn is deprecated since version 2.1.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn class instead.
      */
     class FromColumn extends NewFromColumn
     {

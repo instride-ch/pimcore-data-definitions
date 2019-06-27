@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter as NewMultiHrefInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter as NewMultiHrefInterpreter;
 
 if (class_exists(NewMultiHrefInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\MultiHrefInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\MultiHrefInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\MultiHrefInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\MultiHrefInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter class instead.
      */
     class MultiHrefInterpreter
     {

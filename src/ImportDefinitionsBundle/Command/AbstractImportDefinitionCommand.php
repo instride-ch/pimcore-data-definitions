@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Command;
 
-use WVision\Bundle\DataDefinitionsBundle\Command\AbstractImportDefinitionCommand as NewAbstractImportDefinitionCommand;
+use Wvision\Bundle\DataDefinitionsBundle\Command\AbstractImportDefinitionCommand as NewAbstractImportDefinitionCommand;
 
 if (class_exists(NewAbstractImportDefinitionCommand::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Command\AbstractImportDefinitionCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Command\AbstractImportDefinitionCommand class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Command\AbstractImportDefinitionCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Command\AbstractImportDefinitionCommand class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Command\AbstractImportDefinitionCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Command\AbstractImportDefinitionCommand class instead.
+     * @deprecated Class ImportDefinitionsBundle\Command\AbstractImportDefinitionCommand is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Command\AbstractImportDefinitionCommand class instead.
      */
     abstract class AbstractImportDefinitionCommand
     {

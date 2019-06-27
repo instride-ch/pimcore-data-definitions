@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle;
 
-use WVision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
+use Wvision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 if (class_exists(DefinitionRepository::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Repository is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Repository is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Repository is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository class instead.
+     * @deprecated Class ImportDefinitionsBundle\Repository is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository class instead.
      */
     class Repository
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType as NewExportDefinitionType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType as NewExportDefinitionType;
 
 if (class_exists(NewExportDefinitionType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ExportDefinitionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ExportDefinitionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\ExportDefinitionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\ExportDefinitionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType class instead.
      */
     final class ExportDefinitionType
     {

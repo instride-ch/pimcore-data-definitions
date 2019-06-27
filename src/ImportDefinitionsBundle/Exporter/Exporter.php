@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Exporter;
 
-use WVision\Bundle\DataDefinitionsBundle\Exporter\Exporter as NewExporter;
+use Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter as NewExporter;
 
 if (class_exists(NewExporter::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Exporter\Exporter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Exporter\Exporter class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Exporter\Exporter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Exporter\Exporter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Exporter\Exporter class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Exporter\Exporter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter class instead.
      */
     class Exporter
     {

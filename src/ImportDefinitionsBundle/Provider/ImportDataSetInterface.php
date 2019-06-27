@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface as NewImportDataSetInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface as NewImportDataSetInterface;
 
 if (interface_exists(NewImportDataSetInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Provider\ImportDataSetInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Provider\ImportDataSetInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Provider\ImportDataSetInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Provider\ImportDataSetInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface Interface instead.
      */
     interface ImportDataSetInterface
     {

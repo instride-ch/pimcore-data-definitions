@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\XmlProvider as NewXmlProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider as NewXmlProvider;
 
 if (class_exists(NewXmlProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\XmlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\XmlProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\XmlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\XmlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\XmlProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\XmlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider class instead.
      */
     class XmlProvider
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType as NewDefinitionChoiceType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType as NewDefinitionChoiceType;
 
 if (class_exists(NewDefinitionChoiceType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\DefinitionChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\DefinitionChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\DefinitionChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\DefinitionChoiceType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType class instead.
      */
     final class DefinitionChoiceType
     {

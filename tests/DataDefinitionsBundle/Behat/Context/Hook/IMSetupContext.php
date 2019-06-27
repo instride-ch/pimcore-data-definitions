@@ -12,10 +12,10 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Behat\Context\Hook;
+namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Hook;
 
 use Behat\Behat\Context\Context;
-use WVision\Bundle\DataDefinitionsBundle\Installer;
+use Wvision\Bundle\DataDefinitionsBundle\Installer;
 use Pimcore\Db\PhpArrayFileTable;
 
 final class IMSetupContext implements Context

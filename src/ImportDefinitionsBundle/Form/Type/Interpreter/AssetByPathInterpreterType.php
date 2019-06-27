@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType as NewAssetByPathInterpreterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType as NewAssetByPathInterpreterType;
 
 if (class_exists(NewAssetByPathInterpreterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType class instead.
      */
     final class AssetByPathInterpreterType
     {

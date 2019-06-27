@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Runner;
 
-use WVision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface as NewSaveRunnerInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface as NewSaveRunnerInterface;
 
 if (interface_exists(NewSaveRunnerInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Runner\SaveRunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Runner\SaveRunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Runner\SaveRunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Runner\SaveRunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface Interface instead.
      */
     interface SaveRunnerInterface
     {

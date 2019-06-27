@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Runner;
 
-use WVision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface as NewExportRunnerInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface as NewExportRunnerInterface;
 
 if (interface_exists(NewExportRunnerInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Runner\RunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Runner\RunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Runner\RunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Runner\RunnerInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface Interface instead.
      */
     interface ExportRunnerInterface
     {

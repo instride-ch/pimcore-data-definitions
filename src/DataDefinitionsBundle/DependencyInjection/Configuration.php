@@ -12,22 +12,22 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\DependencyInjection;
+namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Component\Resource\Factory\Factory;
-use WVision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController;
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Repository;
+use Wvision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Repository;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use WVision\Bundle\DataDefinitionsBundle\Controller\ImportDefinitionController;
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Controller\ImportDefinitionController;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 class Configuration implements ConfigurationInterface
 {

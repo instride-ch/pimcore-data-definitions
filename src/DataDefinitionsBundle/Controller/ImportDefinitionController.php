@@ -12,17 +12,17 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Controller;
+namespace Wvision\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Pimcore\Model\DataObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use WVision\Bundle\DataDefinitionsBundle\Service\FieldSelection;
+use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection;
 
 class ImportDefinitionController extends ResourceController
 {

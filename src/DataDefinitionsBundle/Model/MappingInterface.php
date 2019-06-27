@@ -12,7 +12,7 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 interface MappingInterface
 {
@@ -56,4 +56,4 @@ interface MappingInterface
     public function setInterpreterConfig($interpreterConfig);
 }
 
-class_alias(MappingInterface::class, 'WVision\Bundle\DataDefinitionsBundle\Model\Mapping');
+class_alias(MappingInterface::class, 'Wvision\Bundle\DataDefinitionsBundle\Model\Mapping');

@@ -1,4 +1,4 @@
-WVision\Bundle\DataDefinitionsBundle\Model\Definition:
+Wvision\Bundle\DataDefinitionsBundle\Model\Definition:
   exclusion_policy: ALL
   xml_root_name: definition
   properties:

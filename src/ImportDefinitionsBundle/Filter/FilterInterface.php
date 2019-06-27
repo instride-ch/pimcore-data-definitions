@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Filter;
 
-use WVision\Bundle\DataDefinitionsBundle\Filter\FilterInterface as NewFilterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface as NewFilterInterface;
 
 if (interface_exists(NewFilterInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Filter\FilterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Filter\FilterInterface class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Filter\FilterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Filter\FilterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Filter\FilterInterface class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Filter\FilterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface class instead.
      */
     interface FilterInterface
     {

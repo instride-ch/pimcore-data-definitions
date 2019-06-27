@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle;
 
-use WVision\Bundle\DataDefinitionsBundle\DataDefinitionsBundle;
+use Wvision\Bundle\DataDefinitionsBundle\DataDefinitionsBundle;
 
 if (class_exists(DataDefinitionsBundle::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\ImportDefinitionsBundle is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\DataDefinitionsBundle class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\ImportDefinitionsBundle is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\DataDefinitionsBundle class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\ImportDefinitionsBundle is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\DataDefinitionsBundle class instead.
+     * @deprecated Class ImportDefinitionsBundle\ImportDefinitionsBundle is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\DataDefinitionsBundle class instead.
      */
     class ImportDefinitionsBundle
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter as NewQuantityValueInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter as NewQuantityValueInterpreter;
 
 if (class_exists(NewQuantityValueInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\QuantityValueInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\QuantityValueInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\QuantityValueInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\QuantityValueInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter class instead.
      */
     class QuantityValueInterpreter
     {

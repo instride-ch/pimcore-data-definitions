@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType as NewNoConfigurationType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType as NewNoConfigurationType;
 
 if (class_exists(NewNoConfigurationType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\NoConfigurationType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\NoConfigurationType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\NoConfigurationType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\NoConfigurationType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType class instead.
      */
     final class NoConfigurationType
     {

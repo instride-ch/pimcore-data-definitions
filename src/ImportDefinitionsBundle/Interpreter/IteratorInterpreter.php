@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter as NewIteratorInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter as NewIteratorInterpreter;
 
 if (class_exists(NewIteratorInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\IteratorInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\IteratorInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\IteratorInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\IteratorInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter class instead.
      */
     class IteratorInterpreter
     {

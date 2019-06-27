@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterType as NewInterpreterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterType as NewInterpreterType;
 
 if (class_exists(NewInterpreterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterType class instead.
      */
     final class InterpreterType
     {

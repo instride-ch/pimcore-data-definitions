@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter\CoreShop;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter as NewCurrencyInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter as NewCurrencyInterpreter;
 
 if (class_exists(NewCurrencyInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\CurrencyInterpreter class instead.
      */
     class CurrencyInterpreter
     {

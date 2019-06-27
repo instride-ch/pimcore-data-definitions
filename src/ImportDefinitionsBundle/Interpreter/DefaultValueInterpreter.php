@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter as NewDefaultValueInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter as NewDefaultValueInterpreter;
 
 if (class_exists(NewDefaultValueInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\DefaultValueInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\DefaultValueInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\DefaultValueInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\DefaultValueInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter class instead.
      */
     class DefaultValueInterpreter
     {

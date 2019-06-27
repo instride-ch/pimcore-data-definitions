@@ -12,10 +12,10 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
+namespace Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
 
 use Pimcore\Model;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class Listing extends Model\Listing\JsonListing
 {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider as NewAbstractSqlProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider as NewAbstractSqlProvider;
 
 if (class_exists(NewAbstractSqlProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\AbstractSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\AbstractSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\AbstractSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\AbstractSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\AbstractSqlProvider class instead.
      */
     abstract class AbstractSqlProvider
     {

@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\Log as NewLog;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Log as NewLog;
 
 if (class_exists(NewLog::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\Log is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\Log class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\Log is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\Log class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\Log is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\Log class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\Log is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\Log class instead.
      */
     class Log
     {

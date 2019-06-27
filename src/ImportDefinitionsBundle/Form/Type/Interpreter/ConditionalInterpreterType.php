@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType as NewConditionalInterpreterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType as NewConditionalInterpreterType;
 
 if (class_exists(NewConditionalInterpreterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType class instead.
      */
     final class ConditionalInterpreterType
     {

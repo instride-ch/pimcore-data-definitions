@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\AbstractMapping as NewAbstractMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractMapping as NewAbstractMapping;
 
 if (class_exists(NewAbstractMapping::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\AbstractMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\AbstractMapping class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\AbstractMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractMapping class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\AbstractMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\AbstractMapping class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\AbstractMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractMapping class instead.
      */
     class AbstractMapping
     {

@@ -12,7 +12,7 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Model\Log;
+namespace Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
 use Pimcore\Model\Dao\AbstractDao;
 

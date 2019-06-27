@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter as NewNestedInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter as NewNestedInterpreter;
 
 if (class_exists(NewNestedInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\NestedInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\NestedInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\NestedInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\NestedInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter class instead.
      */
     class NestedInterpreter
     {

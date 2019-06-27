@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingType as NewImportMappingType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingType as NewImportMappingType;
 
 if (class_exists(NewImportMappingType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ImportMappingType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ImportMappingType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\ImportMappingType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\ImportMappingType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingType class instead.
      */
     final class ImportMappingType
     {

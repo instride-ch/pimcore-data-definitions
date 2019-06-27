@@ -12,13 +12,13 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Command;
+namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
-use WVision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
+use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;

@@ -10,54 +10,54 @@ parameters:
     data_definitions.form.type.export_mapping.validation_groups: [import_definition]
 
 services:
-    import_definition.form.definition.data_mapper: '@WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper'
-    WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper:
+    import_definition.form.definition.data_mapper: '@Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper'
+    Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper:
         arguments:
             - !service
                 class: Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper
                 arguments:
                     - '@property_accessor'
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType:
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\CleanerChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\CleanerChoiceType:
         arguments: ['%data_definitions.cleaners%']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\FilterChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\FilterChoiceType:
         arguments: ['%data_definitions.filters%']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\InterpreterChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\InterpreterChoiceType:
         arguments: ['%data_definitions.interpreters%']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ProviderChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ProviderChoiceType:
         arguments: ['%data_definitions.providers%']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\LoaderChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\LoaderChoiceType:
         arguments: ['%data_definitions.loaders%']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\RunnerChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\RunnerChoiceType:
         arguments: ['%data_definitions.runners%']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\SetterChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\SetterChoiceType:
         arguments: ['%data_definitions.setters%']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType:
         arguments:
             - '%data_definitions.model.import_definition.class%'
             - '%data_definitions.form.type.definition.validation_groups%'
@@ -65,13 +65,13 @@ services:
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingCollectionType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingCollectionType:
         arguments:
-            - '@WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper'
+            - '@Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper'
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingType:
         arguments:
             - '%data_definitions.form.type.mapping.validation_groups%'
             - '@data_definitions.form.registry.setter'
@@ -80,7 +80,7 @@ services:
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType:
         arguments:
             - '%data_definitions.model.export_definition.class%'
             - '%data_definitions.form.type.export_definition.validation_groups%'
@@ -89,13 +89,13 @@ services:
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingCollectionType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingCollectionType:
         arguments:
-            - '@WVision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper'
+            - '@Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper'
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingType:
         arguments:
             - '%data_definitions.form.type.export_mapping.validation_groups%'
             - '@data_definitions.form.registry.getter'
@@ -103,35 +103,35 @@ services:
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterType:
         arguments: ['@data_definitions.form.registry.interpreter']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterCollectionType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\InterpreterCollectionType:
         arguments: ['@data_definitions.registry.interpreter']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType:
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType:
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\FetcherChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\FetcherChoiceType:
         arguments: ['%data_definitions.fetchers%']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType:
         arguments: ['@data_definitions.repository.import_definition']
         tags:
             - { name: form.type }
 
-    WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportRunnerChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportRunnerChoiceType:
         arguments: ['%data_definitions.export_runners%']
         tags:
             - { name: form.type }

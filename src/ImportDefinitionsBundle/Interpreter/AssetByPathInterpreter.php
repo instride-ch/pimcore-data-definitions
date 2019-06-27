@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter as NewAssetByPathInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter as NewAssetByPathInterpreter;
 
 if (class_exists(NewAssetByPathInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter class instead.
      */
     class AssetByPathInterpreter
     {

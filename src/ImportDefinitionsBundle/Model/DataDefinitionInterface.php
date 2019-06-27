@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface as NewDataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface as NewDataDefinitionInterface;
 
 if (interface_exists(NewDataDefinitionInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Model\DataDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Model\DataDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Model\DataDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Model\DataDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface Interface instead.
      */
     interface DataDefinitionInterface
     {

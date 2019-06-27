@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait as NewDataSetAwareTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait as NewDataSetAwareTrait;
 
 if (class_exists(NewDataSetAwareTrait::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\DataSetAwareTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\DataSetAwareTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\DataSetAwareTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\DataSetAwareTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait class instead.
      */
     trait DataSetAwareTrait
     {

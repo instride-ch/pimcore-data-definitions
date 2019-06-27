@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface as NewDataSetAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface as NewDataSetAwareInterface;
 
 if (interface_exists(NewDataSetAwareInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Model\DataSetAwareInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Model\DataSetAwareInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Model\DataSetAwareInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\Model\DataSetAwareInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface Interface instead.
      */
     interface DataSetAwareInterface
     {

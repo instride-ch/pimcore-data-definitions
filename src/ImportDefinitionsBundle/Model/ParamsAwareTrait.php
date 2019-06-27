@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ParamsAwareTrait as NewParamsAwareTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareTrait as NewParamsAwareTrait;
 
 if (class_exists(NewParamsAwareTrait::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\ParamsAwareTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ParamsAwareTrait class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\ParamsAwareTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareTrait class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\ParamsAwareTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ParamsAwareTrait class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\ParamsAwareTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareTrait class instead.
      */
     trait ParamsAwareTrait
     {

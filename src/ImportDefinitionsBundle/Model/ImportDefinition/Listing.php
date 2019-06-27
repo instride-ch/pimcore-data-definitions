@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model\ImportDefinition;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Listing as NewListing;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Listing as NewListing;
 
 if (class_exists(NewListing::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\ImportDefinition\Listing is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Listing class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\ImportDefinition\Listing is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Listing class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\ImportDefinition\Listing is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Listing class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\ImportDefinition\Listing is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Listing class instead.
      */
     class Listing
     {

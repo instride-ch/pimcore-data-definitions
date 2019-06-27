@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Fetcher;
 
-use WVision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface as NewFetcherInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface as NewFetcherInterface;
 
 if (interface_exists(NewFetcherInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Fetcher\FetcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Fetcher\FetcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Fetcher\FetcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Fetcher\FetcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface class instead.
      */
     interface FetcherInterface
     {

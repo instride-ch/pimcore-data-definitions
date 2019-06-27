@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle;
 
-use WVision\Bundle\DataDefinitionsBundle\Installer as NewInstaller;
+use Wvision\Bundle\DataDefinitionsBundle\Installer as NewInstaller;
 
 if (class_exists(NewInstaller::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Installer is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Installer class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Installer is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Installer class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Installer is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Installer class instead.
+     * @deprecated Class ImportDefinitionsBundle\Installer is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Installer class instead.
      */
     class Installer
     {

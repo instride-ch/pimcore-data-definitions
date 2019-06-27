@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use WVision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter as NewClassificationStoreFieldGetter;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter as NewClassificationStoreFieldGetter;
 
 if (class_exists(NewClassificationStoreFieldGetter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Setter\ClassificationStoreFieldGetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Setter\ClassificationStoreFieldGetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Setter\ClassificationStoreFieldGetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Setter\ClassificationStoreFieldGetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter class instead.
      */
     class ClassificationStoreFieldGetter
     {

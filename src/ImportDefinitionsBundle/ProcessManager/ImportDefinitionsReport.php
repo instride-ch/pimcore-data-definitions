@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport as NewImportDefinitionsReport;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport as NewImportDefinitionsReport;
 
 if (class_exists(NewImportDefinitionsReport::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport class instead.
+     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport class instead.
      */
     class ImportDefinitionsReport
     {

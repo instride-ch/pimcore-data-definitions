@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface as NewArtifactGenerationProviderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface as NewArtifactGenerationProviderInterface;
 
 if (interface_exists(NewArtifactGenerationProviderInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface Interface instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface Interface instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface Interface instead.
+     * @deprecated Interface ImportDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface Interface instead.
      */
     interface ArtifactGenerationProviderInterface
     {

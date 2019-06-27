@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Service;
 
-use WVision\Bundle\DataDefinitionsBundle\Service\FieldSelection as NewFieldSelection;
+use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection as NewFieldSelection;
 
 if (class_exists(NewFieldSelection::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Service\FieldSelection is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Service\FieldSelection class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Service\FieldSelection is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Service\FieldSelection is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Service\FieldSelection class instead.
+     * @deprecated Class ImportDefinitionsBundle\Service\FieldSelection is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection class instead.
      */
     class FieldSelection
     {

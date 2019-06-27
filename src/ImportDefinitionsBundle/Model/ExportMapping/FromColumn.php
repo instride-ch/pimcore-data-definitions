@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model\ExportMapping;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn as NewFromColumn;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn as NewFromColumn;
 
 if (class_exists(NewFromColumn::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\ExportMapping\FromColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\ExportMapping\FromColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\ExportMapping\FromColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\ExportMapping\FromColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn class instead.
      */
     class FromColumn
     {

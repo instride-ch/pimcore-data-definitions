@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Cleaner;
 
-use WVision\Bundle\DataDefinitionsBundle\Cleaner\None as NewNone;
+use Wvision\Bundle\DataDefinitionsBundle\Cleaner\None as NewNone;
 
 if (class_exists(NewNone::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Cleaner\None is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\None class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Cleaner\None is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\None class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Cleaner\None is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Cleaner\None class instead.
+     * @deprecated Class ImportDefinitionsBundle\Cleaner\None is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Cleaner\None class instead.
      */
     class None
     {

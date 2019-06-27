@@ -12,18 +12,18 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Command;
+namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
-use WVision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
+use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
+use Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ExportCommand extends AbstractCommand

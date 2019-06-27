@@ -12,12 +12,12 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Behat\Context\Transform;
+namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
 use CoreShop\Component\Pimcore\DataObject\ClassLoader;
-use WVision\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorageInterface;
-use WVision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorageInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
 use Pimcore\Cache\Runtime;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\ClassDefinition;

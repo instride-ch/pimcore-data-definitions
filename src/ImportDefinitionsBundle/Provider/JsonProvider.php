@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\JsonProvider as NewJsonProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\JsonProvider as NewJsonProvider;
 
 if (class_exists(NewJsonProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\JsonProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\JsonProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\JsonProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\JsonProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\JsonProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\JsonProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\JsonProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\JsonProvider class instead.
      */
     class JsonProvider
     {

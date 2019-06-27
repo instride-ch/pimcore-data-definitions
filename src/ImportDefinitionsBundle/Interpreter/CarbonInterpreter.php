@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Interpreter;
 
-use WVision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter as NewCarbonInterpreter;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter as NewCarbonInterpreter;
 
 if (class_exists(NewCarbonInterpreter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CarbonInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CarbonInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Interpreter\CarbonInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\CarbonInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter class instead.
      */
     class CarbonInterpreter
     {

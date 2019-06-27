@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\ExportProvider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType as NewCsvProviderType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType as NewCsvProviderType;
 
 if (class_exists(NewCsvProviderType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\CsvProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\CsvProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\CsvProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\CsvProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType class instead.
      */
     final class CsvProviderType
     {

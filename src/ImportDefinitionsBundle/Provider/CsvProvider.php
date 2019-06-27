@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\CsvProvider as NewCsvProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider as NewCsvProvider;
 
 if (class_exists(NewCsvProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\CsvProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\CsvProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\CsvProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\CsvProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\CsvProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\CsvProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider class instead.
      */
     class CsvProvider
     {

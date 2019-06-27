@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType as NewFieldCollectionSetterType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType as NewFieldCollectionSetterType;
 
 if (class_exists(NewFieldCollectionSetterType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType class instead.
      */
     final class FieldCollectionSetterType
     {

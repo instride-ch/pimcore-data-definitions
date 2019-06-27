@@ -12,12 +12,12 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Behat\Context\Transform;
+namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
 use CoreShop\Component\Resource\Repository\PimcoreRepositoryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
 
 final class ImportDefinitionContext implements Context
 {

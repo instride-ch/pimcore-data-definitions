@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingCollectionType as NewImportMappingCollectionType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingCollectionType as NewImportMappingCollectionType;
 
 if (class_exists(NewImportMappingCollectionType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ImportMappingCollectionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingCollectionType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ImportMappingCollectionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingCollectionType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\ImportMappingCollectionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingCollectionType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\ImportMappingCollectionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportMappingCollectionType class instead.
      */
     final class ImportMappingCollectionType
     {

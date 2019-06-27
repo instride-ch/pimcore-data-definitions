@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Event;
 
-use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent as NewExportDefinitionEvent;
+use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent as NewExportDefinitionEvent;
 
 if (class_exists(NewExportDefinitionEvent::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Event\ExportDefinitionEvent is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Event\ExportDefinitionEvent is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Event\ExportDefinitionEvent is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Event\ExportDefinitionEvent is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent class instead.
      */
     class ExportDefinitionEvent
     {

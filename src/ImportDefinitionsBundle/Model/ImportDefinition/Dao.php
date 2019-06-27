@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model\ImportDefinition;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao as NewDao;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao as NewDao;
 
 if (class_exists(NewDao::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\ImportDefinition\Dao is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\ImportDefinition\Dao is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\ImportDefinition\Dao is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\ImportDefinition\Dao is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao class instead.
      */
     class Dao
     {

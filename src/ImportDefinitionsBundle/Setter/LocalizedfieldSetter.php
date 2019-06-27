@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Setter;
 
-use WVision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter as NewLocalizedfieldSetter;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter as NewLocalizedfieldSetter;
 
 if (class_exists(NewLocalizedfieldSetter::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Setter\LocalizedfieldSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Setter\LocalizedfieldSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Setter\LocalizedfieldSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter class instead.
+     * @deprecated Class ImportDefinitionsBundle\Setter\LocalizedfieldSetter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter class instead.
      */
     class LocalizedfieldSetter
     {

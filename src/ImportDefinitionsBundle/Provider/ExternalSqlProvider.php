@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider as NewExternalSqlProvider;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider as NewExternalSqlProvider;
 
 if (class_exists(NewExternalSqlProvider::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Provider\ExternalSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Provider\ExternalSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Provider\ExternalSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider class instead.
+     * @deprecated Class ImportDefinitionsBundle\Provider\ExternalSqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider class instead.
      */
     class ExternalSqlProvider
     {

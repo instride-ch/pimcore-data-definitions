@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait as NewArtifactProviderTrait;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait as NewArtifactProviderTrait;
 
 if (class_exists(NewArtifactProviderTrait::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait class instead.
+     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait class instead.
      */
     trait ArtifactProviderTrait
     {

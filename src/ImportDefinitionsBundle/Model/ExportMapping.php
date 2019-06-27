@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Model;
 
-use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping as NewExportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping as NewExportMapping;
 
 if (class_exists(NewExportMapping::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Model\ExportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Model\ExportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Model\ExportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Model\ExportMapping class instead.
+     * @deprecated Class ImportDefinitionsBundle\Model\ExportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping class instead.
      */
     class ExportMapping
     {

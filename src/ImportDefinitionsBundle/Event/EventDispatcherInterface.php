@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Event;
 
-use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface as NewEventDispatcherInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface as NewEventDispatcherInterface;
 
 if (interface_exists(NewEventDispatcherInterface::class)) {
-    @trigger_error('Interface ImportDefinitionsBundle\Event\EventDispatcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface class instead.',
+    @trigger_error('Interface ImportDefinitionsBundle\Event\EventDispatcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Interface ImportDefinitionsBundle\Event\EventDispatcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface class instead.
+     * @deprecated Interface ImportDefinitionsBundle\Event\EventDispatcherInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface class instead.
      */
     interface EventDispatcherInterface
     {

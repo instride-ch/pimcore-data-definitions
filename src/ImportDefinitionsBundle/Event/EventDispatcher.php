@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Event;
 
-use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcher as NewEventDispatcher;
+use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher as NewEventDispatcher;
 
 if (class_exists(NewEventDispatcher::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Event\EventDispatcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcher class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Event\EventDispatcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Event\EventDispatcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcher class instead.
+     * @deprecated Class ImportDefinitionsBundle\Event\EventDispatcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher class instead.
      */
     class EventDispatcher
     {

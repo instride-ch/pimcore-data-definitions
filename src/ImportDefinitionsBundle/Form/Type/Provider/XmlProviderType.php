@@ -14,14 +14,14 @@
 
 namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType as NewXmlProviderType;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType as NewXmlProviderType;
 
 if (class_exists(NewXmlProviderType::class)) {
-    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType class instead.',
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType class instead.',
         E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use WVision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType class instead.
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\Provider\XmlProviderType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType class instead.
      */
     final class XmlProviderType
     {

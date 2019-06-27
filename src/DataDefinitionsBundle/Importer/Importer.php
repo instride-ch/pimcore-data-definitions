@@ -12,25 +12,25 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Importer;
+namespace Wvision\Bundle\DataDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
-use WVision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
-use WVision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
-use WVision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
-use WVision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use WVision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
-use WVision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
-use WVision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
-use WVision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface;
-use WVision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
-use WVision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
-use WVision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
-use WVision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 use Pimcore\File;
 use Pimcore\Mail;
 use Pimcore\Model\DataObject\ClassDefinition;

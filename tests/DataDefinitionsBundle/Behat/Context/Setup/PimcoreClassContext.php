@@ -12,12 +12,12 @@
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace WVision\Bundle\DataDefinitionsBundle\Behat\Context\Setup;
+namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
-use WVision\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorageInterface;
-use WVision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorageInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
 use CoreShop\Component\Pimcore\DataObject\BrickDefinitionUpdate;
 use CoreShop\Component\Pimcore\DataObject\ClassUpdate;
 use CoreShop\Component\Pimcore\DataObject\ClassUpdateInterface;

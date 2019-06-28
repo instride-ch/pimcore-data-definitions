@@ -16,14 +16,17 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class LoaderRegistryCompilerPass extends AbstractRegisterSimpleRegistryBCPass
 {
+    public const LOADER_TAG = 'data_definitions.loader';
+    public const LOADER_BC_TAG = 'import_definition.loader';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.loader',
             'data_definitions.loaders',
-            'data_definitions.loader',
+            self::LOADER_TAG,
             'import_definition.loaders',
-            'import_definition.loader'
+            self::LOADER_BC_TAG
         );
     }
 }

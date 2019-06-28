@@ -16,15 +16,18 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class FetcherRegistryCompilerPass extends AbstractRegisterRegistryBCTypePass
 {
+    public const FETCHER_TAG = 'data_definitions.fetcher';
+    public const FETCHER_BC_TAG = 'import_definition.fetcher';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.fetcher',
             'data_definitions.form.registry.fetcher',
             'data_definitions.fetchers',
-            'data_definitions.fetcher',
+            self::FETCHER_TAG,
             'import_definition.fetchers',
-            'import_definition.fetcher'
+            self::FETCHER_BC_TAG
         );
     }
 }

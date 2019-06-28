@@ -16,7 +16,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
-class RawProvider implements ProviderInterface
+class RawProvider implements ImportProviderInterface
 {
     /**
      * {@inheritdoc}

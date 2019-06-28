@@ -16,15 +16,18 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class ProviderRegistryCompilerPass extends AbstractRegisterRegistryBCTypePass
 {
+    public const IMPORT_PROVIDER_TAG = 'data_definitions.import_provider';
+    public const IMPORT_PROVIDER_BC_TAG = 'import_definition.provider';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.provider',
             'data_definitions.form.registry.provider',
-            'data_definitions.providers',
-            'data_definitions.provider',
+            'data_definitions.import_providers',
+            self::IMPORT_PROVIDER_TAG,
             'import_definition.providers',
-            'import_definition.provider'
+            self::IMPORT_PROVIDER_BC_TAG
         );
     }
 }

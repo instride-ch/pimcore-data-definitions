@@ -38,7 +38,7 @@ services:
             - { name: form.type }
 
     Wvision\Bundle\DataDefinitionsBundle\Form\Type\ProviderChoiceType:
-        arguments: ['%data_definitions.providers%']
+        arguments: ['%data_definitions.import_providers%']
         tags:
             - { name: form.type }
 

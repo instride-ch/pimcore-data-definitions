@@ -16,14 +16,17 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class FilterRegistryCompilerPass extends AbstractRegisterSimpleRegistryBCPass
 {
+    public const FILTER_TAG = 'data_definitions.filter';
+    public const FILTER_BC_TAG = 'import_definition.filter';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.filter',
             'data_definitions.filters',
-            'data_definitions.filter',
+            self::FILTER_TAG,
             'import_definition.filters',
-            'import_definition.filter'
+            self::FILTER_BC_TAG
         );
     }
 }

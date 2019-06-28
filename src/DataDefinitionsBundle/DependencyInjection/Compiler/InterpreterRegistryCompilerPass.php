@@ -16,15 +16,18 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class InterpreterRegistryCompilerPass extends AbstractRegisterRegistryBCTypePass
 {
+    public const INTERPRETER_TAG = 'data_definitions.interpreter';
+    public const INTERPRETER_BC_TAG = 'import_definition.interpreter';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.interpreter',
             'data_definitions.form.registry.interpreter',
             'data_definitions.interpreters',
-            'data_definitions.interpreter',
+            self::INTERPRETER_TAG,
             'import_definition.interpreters',
-            'import_definition.interpreter'
+            self::INTERPRETER_BC_TAG
         );
     }
 }

@@ -16,14 +16,17 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class CleanerRegistryCompilerPass extends AbstractRegisterSimpleRegistryBCPass
 {
+    public const CLEANER_TAG = 'data_definitions.cleaner';
+    public const CLEANER_BC_TAG = 'import_definition.cleaner';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.cleaner',
             'data_definitions.cleaners',
-            'data_definitions.cleaner',
+            static::CLEANER_TAG,
             'import_definition.cleaners',
-            'import_definition.cleaner'
+            static::CLEANER_BC_TAG
         );
     }
 }

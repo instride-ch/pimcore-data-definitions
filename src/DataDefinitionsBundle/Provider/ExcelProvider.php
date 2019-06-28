@@ -26,7 +26,7 @@ use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProvid
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 use Pimcore\Model\Asset;
 
-class ExcelProvider extends AbstractFileProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
+class ExcelProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 

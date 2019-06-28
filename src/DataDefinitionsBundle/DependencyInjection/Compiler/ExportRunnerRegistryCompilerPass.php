@@ -16,14 +16,17 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class ExportRunnerRegistryCompilerPass extends AbstractRegisterSimpleRegistryBCPass
 {
+    public const EXPORT_RUNNER_TAG = 'data_definitions.export_runner';
+    public const EXPORT_RUNNER_BC_TAG = 'import_definition.export_runner';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.export_runner',
             'data_definitions.export_runners',
-            'data_definitions.export_runner',
+            self::EXPORT_RUNNER_TAG,
             'import_definition.export_runners',
-            'import_definition.export_runner'
+            self::EXPORT_RUNNER_BC_TAG
         );
     }
 }

@@ -16,15 +16,18 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class GetterRegistryCompilerPass extends AbstractRegisterRegistryBCTypePass
 {
+    public const GETTER_TAG = 'data_definitions.getter';
+    public const GETTER_BC_TAG = 'import_definition.getter';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.getter',
             'data_definitions.form.registry.getter',
             'data_definitions.getters',
-            'data_definitions.getter',
+            self::GETTER_TAG,
             'import_definition.getters',
-            'import_definition.getter'
+            self::GETTER_BC_TAG
         );
     }
 }

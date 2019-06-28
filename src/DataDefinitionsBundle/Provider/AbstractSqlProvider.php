@@ -17,7 +17,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 use Doctrine\DBAL\Connection;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
-abstract class AbstractSqlProvider implements ProviderInterface
+abstract class AbstractSqlProvider implements ImportProviderInterface
 {
     /**
      * @param $configuration

@@ -153,22 +153,22 @@ services:
     import_definition.cleaner.deleter: '@Wvision\Bundle\DataDefinitionsBundle\Cleaner\Deleter'
     Wvision\Bundle\DataDefinitionsBundle\Cleaner\Deleter:
         tags:
-            - { name: import_definition.cleaner, type: deleter }
+            - { name: data_definitions.cleaner, type: deleter }
 
     import_definition.cleaner.none: '@Wvision\Bundle\DataDefinitionsBundle\Cleaner\None'
     Wvision\Bundle\DataDefinitionsBundle\Cleaner\None:
         tags:
-            - { name: import_definition.cleaner, type: none }
+            - { name: data_definitions.cleaner, type: none }
 
     import_definition.cleaner.reference_cleaner: '@Wvision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner'
     Wvision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner:
         tags:
-            - { name: import_definition.cleaner, type: reference_cleaner }
+            - { name: data_definitions.cleaner, type: reference_cleaner }
 
     import_definition.cleaner.unpuplisher: '@Wvision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher'
     Wvision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher:
         tags:
-            - { name: import_definition.cleaner, type: unpublisher }
+            - { name: data_definitions.cleaner, type: unpublisher }
 
     ### INTERPRETER
     import_definition.interpreter.assets_url: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetsUrlInterpreter'
@@ -176,63 +176,63 @@ services:
         arguments:
             - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
         tags:
-            - { name: import_definition.interpreter, type: assets_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
+            - { name: data_definitions.interpreter, type: assets_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
 
     import_definition.interpreter.asset_url: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter:
         arguments:
             - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
         tags:
-            - { name: import_definition.interpreter, type: asset_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
+            - { name: data_definitions.interpreter, type: asset_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
 
     import_definition.interpreter.asset_by_path: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter:
         arguments:
             - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
         tags:
-            - { name: import_definition.interpreter, type: asset_by_path, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType }
+            - { name: data_definitions.interpreter, type: asset_by_path, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType }
 
     import_definition.interpreter.carbon: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: carbon, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: data_definitions.interpreter, type: carbon, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.interpreter.checkbox: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: checkbox, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: data_definitions.interpreter, type: checkbox, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.interpreter.default_value: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: default_value, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\DefaultValueInterpreterType }
+            - { name: data_definitions.interpreter, type: default_value, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\DefaultValueInterpreterType }
 
     import_definition.interpreter.specific_object: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: specific_object, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\SpecificObjectInterpreterType }
+            - { name: data_definitions.interpreter, type: specific_object, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\SpecificObjectInterpreterType }
 
     import_definition.interpreter.href: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\HrefInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\HrefInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: href, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\HrefInterpreterType }
+            - { name: data_definitions.interpreter, type: href, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\HrefInterpreterType }
 
     import_definition.interpreter.multi_href: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: multi_href, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MultiHrefInterpreterType }
+            - { name: data_definitions.interpreter, type: multi_href, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MultiHrefInterpreterType }
 
     import_definition.interpreter.quantity_value: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter:
         tags:
-            - { name: import_definition.interpreter, type: quantity_value, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType }
+            - { name: data_definitions.interpreter, type: quantity_value, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType }
 
     import_definition.interpreter.nested: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter:
         arguments:
             - '@data_definitions.registry.interpreter'
         tags:
-            - { name: import_definition.interpreter, type: nested, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType }
+            - { name: data_definitions.interpreter, type: nested, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType }
 
     import_definition.interpreter.expression: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\ExpressionInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\ExpressionInterpreter:
@@ -240,14 +240,14 @@ services:
             - '@coreshop.expression_language'
             - '@service_container'
         tags:
-            - { name: import_definition.interpreter, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }
+            - { name: data_definitions.interpreter, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }
 
     import_definition.interpreter.object_resolver: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter:
         arguments:
             - '@service_container'
         tags:
-            - { name: import_definition.interpreter, type: object_resolver, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType }
+            - { name: data_definitions.interpreter, type: object_resolver, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType }
 
     import_definition.interpreter.definition: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefinitionInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefinitionInterpreter:
@@ -255,7 +255,7 @@ services:
             - '@data_definitions.repository.import_definition'
             - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
         tags:
-            - { name: import_definition.interpreter, type: definition, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\DefinitionType }
+            - { name: data_definitions.interpreter, type: definition, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\DefinitionType }
 
     import_definition.interpreter.conditional: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter:
@@ -264,107 +264,107 @@ services:
             - '@coreshop.expression_language'
             - '@service_container'
         tags:
-            - { name: import_definition.interpreter, type: conditional, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType }
+            - { name: data_definitions.interpreter, type: conditional, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType }
 
     import_definition.interpreter.mapping: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter:
         arguments:
             - '@service_container'
         tags:
-            - { name: import_definition.interpreter, type: mapping, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MappingInterpreterType }
+            - { name: data_definitions.interpreter, type: mapping, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MappingInterpreterType }
 
     import_definition.interpreter.iterator: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter:
         arguments:
             - '@data_definitions.registry.interpreter'
         tags:
-            - { name: import_definition.interpreter, type: iterator, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
+            - { name: data_definitions.interpreter, type: iterator, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
 
     import_definition.interpreter.twig: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\TwigInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\TwigInterpreter:
         arguments:
             - '@twig'
         tags:
-            - { name: import_definition.interpreter, type: twig, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\TwigInterpreterType }
+            - { name: data_definitions.interpreter, type: twig, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\TwigInterpreterType }
 
     ### PROVIDER
     import_definition.provider.csv: '@Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:
         tags:
-            - { name: import_definition.provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\CsvProviderType }
-            - { name: import_definition.export_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType }
+            - { name: data_definitions.import_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\CsvProviderType }
+            - { name: data_definitions.export_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType }
 
     import_definition.provider.excel: '@Wvision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider:
         tags:
-            - { name: import_definition.provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType }
-            - { name: import_definition.export_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: data_definitions.import_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType }
+            - { name: data_definitions.export_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.provider.json: '@Wvision\Bundle\DataDefinitionsBundle\Provider\JsonProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\JsonProvider:
         tags:
-            - { name: import_definition.provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\JsonProviderType }
-            - { name: import_definition.export_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: data_definitions.import_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\JsonProviderType }
+            - { name: data_definitions.export_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.provider.external_sql: '@Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider:
         tags:
-            - { name: import_definition.provider, type: external_sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExternalSqlProviderType }
+            - { name: data_definitions.provider, type: external_sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExternalSqlProviderType }
 
     import_definition.provider.sql: '@Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider:
         tags:
-            - { name: import_definition.provider, type: sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType }
+            - { name: data_definitions.provider, type: sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType }
 
     import_definition.provider.xml: '@Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider:
         tags:
-            - { name: import_definition.provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType }
-            - { name: import_definition.export_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\XmlProviderType }
+            - { name: data_definitions.provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType }
+            - { name: data_definitions.export_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\XmlProviderType }
 
     import_definition.provider.raw: '@Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider:
         tags:
-            - { name: import_definition.provider, type: raw, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType }
+            - { name: data_definitions.provider, type: raw, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType }
 
     ### SETTER AND GETTER
     import_definition.setter.classificationstore: '@Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter'
     Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter:
         tags:
-            - { name: import_definition.setter, type: classificationstore, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
-            - { name: import_definition.getter, type: classificationstore, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
+            - { name: data_definitions.setter, type: classificationstore, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
+            - { name: data_definitions.getter, type: classificationstore, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
 
     import_definition.setter.classificationstore_field: '@Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter'
     Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter:
         tags:
-            - { name: import_definition.getter, type: classificationstore_field, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: data_definitions.getter, type: classificationstore_field, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.setter.fieldcollection: '@Wvision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter'
     Wvision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter:
         tags:
-            - { name: import_definition.setter, type: fieldcollection, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
-            - { name: import_definition.getter, type: fieldcollection, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
+            - { name: data_definitions.setter, type: fieldcollection, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
+            - { name: data_definitions.getter, type: fieldcollection, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
 
     import_definition.setter.key: '@Wvision\Bundle\DataDefinitionsBundle\Setter\KeySetter'
     Wvision\Bundle\DataDefinitionsBundle\Setter\KeySetter:
         tags:
-            - { name: import_definition.setter, type: key, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: data_definitions.setter, type: key, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.setter.localizedfield: '@Wvision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter'
     Wvision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter:
         tags:
-            - { name: import_definition.setter, type: localizedfield, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
-            - { name: import_definition.getter, type: localizedfield, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
+            - { name: data_definitions.setter, type: localizedfield, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
+            - { name: data_definitions.getter, type: localizedfield, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
 
     import_definition.setter.objectbrick: '@Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectbrickSetter'
     Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectbrickSetter:
         tags:
-            - { name: import_definition.setter, type: objectbrick, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
+            - { name: data_definitions.setter, type: objectbrick, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
 
     import_definition.setter.object_type: '@Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter'
     Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter:
         tags:
-            - { name: import_definition.setter, type: object_type, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: data_definitions.setter, type: object_type, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     import_definition.listeners.object.delete: '@Wvision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener'
     Wvision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener:
@@ -374,10 +374,10 @@ services:
     import_definition.fetcher.objects: '@Wvision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher'
     Wvision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher:
         tags:
-            - { name: import_definition.fetcher, type: objects, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType }
+            - { name: data_definitions.fetcher, type: objects, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType }
 
     ### LOADER
     import_definition.loader.primary_key: '@Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader'
     Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader:
         tags:
-            - { name: import_definition.loader, type: primary_key }
+            - { name: data_definitions.loader, type: primary_key }

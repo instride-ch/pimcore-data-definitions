@@ -23,7 +23,7 @@ use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Inflector\Inflector;
 use Symfony\Component\Process\Process;
 
-class XmlProvider extends AbstractFileProvider implements ProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
+class XmlProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 

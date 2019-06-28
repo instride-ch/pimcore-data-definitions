@@ -16,15 +16,18 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 final class SetterRegistryCompilerPass extends AbstractRegisterRegistryBCTypePass
 {
+    public const SETTER_TAG = 'data_definitions.setter';
+    public const SETTER_BC_TAG = 'import_definition.setter';
+
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.setter',
             'data_definitions.form.registry.setter',
             'data_definitions.setters',
-            'data_definitions.setter',
+            self::SETTER_TAG,
             'import_definition.setters',
-            'import_definition.setter'
+            self::SETTER_BC_TAG
         );
     }
 }

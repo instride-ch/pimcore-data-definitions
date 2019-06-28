@@ -16,7 +16,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
-interface ProviderInterface
+interface ImportProviderInterface
 {
     /**
      * Test Data provided for this Provider
@@ -45,4 +45,4 @@ interface ProviderInterface
     public function getData($configuration, $definition, $params, $filter = null);
 }
 
-class_alias(ProviderInterface::class, 'ImportDefinitionsBundle\Provider\ProviderInterface');
+class_alias(ImportProviderInterface::class, 'ImportDefinitionsBundle\Provider\ProviderInterface');

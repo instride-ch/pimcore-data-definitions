@@ -50,12 +50,12 @@
   "autoload": {
     "psr-4": {
       "ImportDefinitionsBundle\\": "src/ImportDefinitionsBundle",
-      "WVision\\Bundle\\DataDefinitionsBundle\\": "src/DataDefinitionsBundle"
+      "Wvision\\Bundle\\DataDefinitionsBundle\\": "src/DataDefinitionsBundle"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "WVision\\Bundle\\DataDefinitionsBundle\\Behat\\": "tests/DataDefinitionsBundle/Behat"
+      "Wvision\\Bundle\\DataDefinitionsBundle\\Behat\\": "tests/DataDefinitionsBundle/Behat"
     },
     "classmap": [
       "app/AppKernel.php"
@@ -64,7 +64,7 @@
   "extra": {
     "pimcore": {
       "bundles": [
-        "WVision\\Bundle\\DataDefinitionsBundle\\DataDefinitionsBundle"
+        "Wvision\\Bundle\\DataDefinitionsBundle\\DataDefinitionsBundle"
       ]
     },
     "branch-alias": {

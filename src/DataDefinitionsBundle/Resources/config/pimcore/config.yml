@@ -62,5 +62,6 @@ import_definitions:
             getter_localizedfield: '/bundles/datadefinitions/pimcore/js/getters/localizedfield.js'
             fetcher_abstract: '/bundles/datadefinitions/pimcore/js/fetchers/abstract.js'
             fetcher_objects: '/bundles/datadefinitions/pimcore/js/fetchers/objects.js'
+            fuse: '/bundles/datadefinitions/pimcore/js/automap/fuse.min.js'
         css:
             data_definition: '/bundles/datadefinitions/pimcore/css/datadefinition.css'

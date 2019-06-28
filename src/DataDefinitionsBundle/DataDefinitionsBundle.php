@@ -138,9 +138,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
      */
     public function getJsPaths()
     {
-        return [
-            "/bundles/importdefinitions/pimcore/js/automap/fuse.min.js"
-        ];
+        return [];
     }
 
     /**

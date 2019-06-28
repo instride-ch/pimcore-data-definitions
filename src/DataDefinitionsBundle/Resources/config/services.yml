@@ -314,18 +314,18 @@ services:
     import_definition.provider.sql: '@Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider:
         tags:
-            - { name: data_definitions.provider, type: sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType }
+            - { name: data_definitions.import_provider, type: sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType }
 
     import_definition.provider.xml: '@Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider:
         tags:
-            - { name: data_definitions.provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType }
+            - { name: data_definitions.import_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType }
             - { name: data_definitions.export_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\XmlProviderType }
 
     import_definition.provider.raw: '@Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider:
         tags:
-            - { name: data_definitions.provider, type: raw, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType }
+            - { name: data_definitions.import_provider, type: raw, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType }
 
     ### SETTER AND GETTER
     import_definition.setter.classificationstore: '@Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter'

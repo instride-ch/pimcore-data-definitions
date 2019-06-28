@@ -26,7 +26,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
@@ -229,7 +229,7 @@ final class Importer implements ImporterInterface
      */
     private function getData(ImportDefinitionInterface $definition, $params)
     {
-        /** @var ProviderInterface $provider */
+        /** @var ImportProviderInterface $provider */
         $provider = $this->providerRegistry->get($definition->getProvider());
 
         return $provider->getData($definition->getConfiguration(), $definition, $params);

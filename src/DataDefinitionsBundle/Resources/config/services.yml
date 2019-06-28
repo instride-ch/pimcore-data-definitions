@@ -52,7 +52,7 @@ services:
         class: CoreShop\Component\Registry\ServiceRegistry
         public: true
         arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Provider\ProviderInterface
+            - Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface
             - 'Import Definition Providers'
 
     import_definition.form.registry.provider: '@data_definitions.form.registry.provider'

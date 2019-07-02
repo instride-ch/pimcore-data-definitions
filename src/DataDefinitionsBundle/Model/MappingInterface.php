@@ -56,4 +56,4 @@ interface MappingInterface
     public function setInterpreterConfig($interpreterConfig);
 }
 
-class_alias(MappingInterface::class, 'Wvision\Bundle\DataDefinitionsBundle\Model\Mapping');
+class_alias(MappingInterface::class, 'ImportDefinitionsBundle\Model\Mapping');

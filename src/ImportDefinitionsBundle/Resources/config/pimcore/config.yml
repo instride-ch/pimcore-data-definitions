@@ -51,6 +51,7 @@ import_definitions:
             interpreter_definition: '/bundles/importdefinitions/pimcore/js/interpreters/definition.js'
             interpreter_conditional: '/bundles/importdefinitions/pimcore/js/interpreters/conditional.js'
             interpreter_twig: '/bundles/importdefinitions/pimcore/js/interpreters/twig.js'
+            interpreter_carbon: '/bundles/importdefinitions/pimcore/js/interpreters/carbon.js'
             setter_abstract: '/bundles/importdefinitions/pimcore/js/setters/abstract.js'
             setter_fieldcollection: '/bundles/importdefinitions/pimcore/js/setters/fieldcollection.js'
             setter_objectbrick: '/bundles/importdefinitions/pimcore/js/setters/objectbrick.js'

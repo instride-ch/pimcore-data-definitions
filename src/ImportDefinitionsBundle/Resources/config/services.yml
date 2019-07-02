@@ -173,7 +173,7 @@ services:
     import_definition.interpreter.carbon:
         class: ImportDefinitionsBundle\Interpreter\CarbonInterpreter
         tags:
-            - { name: import_definition.interpreter, type: carbon, form-type: ImportDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: import_definition.interpreter, type: carbon, form-type: ImportDefinitionsBundle\Form\Type\Interpreter\CarbonInterpreterType }
 
     import_definition.interpreter.checkbox:
         class: ImportDefinitionsBundle\Interpreter\CheckboxInterpreter

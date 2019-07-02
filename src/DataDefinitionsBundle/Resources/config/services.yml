@@ -309,7 +309,7 @@ services:
     import_definition.provider.external_sql: '@Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider:
         tags:
-            - { name: data_definitions.provider, type: external_sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExternalSqlProviderType }
+            - { name: data_definitions.import_provider, type: external_sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExternalSqlProviderType }
 
     import_definition.provider.sql: '@Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider'
     Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider:

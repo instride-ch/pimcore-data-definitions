@@ -268,7 +268,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getConfigProviders(): array
     {
-        return $this->getParameter('data_definitions.providers');
+        return $this->getParameter('data_definitions.import_providers');
     }
 
     /**

@@ -95,6 +95,10 @@ final class ImportDefinitionType extends AbstractResourceType
                     return;
                 }
 
+                if (!$this->formTypeRegistry->get($data['provider'], 'default')) {
+                    return;
+                }
+
                 $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($data['provider'], 'default'));
             })
         ;

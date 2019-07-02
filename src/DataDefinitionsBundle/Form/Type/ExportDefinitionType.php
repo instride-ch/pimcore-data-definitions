@@ -95,6 +95,10 @@ final class ExportDefinitionType extends AbstractResourceType
                     return;
                 }
 
+                if (!$this->formTypeRegistry->get($data['provider'], 'default')) {
+                    return;
+                }
+
                 $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($data['provider'], 'default'));
             })
         ;
@@ -122,6 +126,10 @@ final class ExportDefinitionType extends AbstractResourceType
                 $data = $event->getData();
 
                 if (!isset($data['fetcher'])) {
+                    return;
+                }
+
+                if (!$this->fetcherFormTypeRegistry->get($data['fetcher'], 'default')) {
                     return;
                 }
 

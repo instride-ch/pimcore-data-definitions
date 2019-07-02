@@ -73,6 +73,10 @@ final class InterpreterType extends AbstractType
                     return;
                 }
 
+                if (!$this->formTypeRegistry->get($data['type'], 'default')) {
+                    return;
+                }
+
                 $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($data['type'], 'default'));
             })
         ;

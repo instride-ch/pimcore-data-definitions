@@ -85,6 +85,10 @@ final class ExportMappingType extends AbstractResourceType
                     return;
                 }
 
+                if (!$this->getterTypeRegistry->get($data['getter'], 'default')) {
+                    return;
+                }
+
                 $this->addGetterConfigurationFields($event->getForm(), $this->getterTypeRegistry->get($data['getter'], 'default'));
             });
 
@@ -108,6 +112,10 @@ final class ExportMappingType extends AbstractResourceType
                 $data = $event->getData();
 
                 if (!isset($data['interpreter'])) {
+                    return;
+                }
+
+                if (!$this->interpreterTypeRegistry->get($data['interpreter'], 'default')) {
                     return;
                 }
 

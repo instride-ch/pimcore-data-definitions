@@ -87,6 +87,10 @@ final class ImportMappingType extends AbstractResourceType
                     return;
                 }
 
+                if (!$this->setterTypeRegistry->get($data['setter'], 'default')) {
+                    return;
+                }
+
                 $this->addSetterConfigurationFields($event->getForm(), $this->setterTypeRegistry->get($data['setter'], 'default'));
             });
 
@@ -110,6 +114,10 @@ final class ImportMappingType extends AbstractResourceType
                 $data = $event->getData();
 
                 if (!isset($data['interpreter'])) {
+                    return;
+                }
+
+                if (!$this->interpreterTypeRegistry->get($data['interpreter'], 'default')) {
                     return;
                 }
 

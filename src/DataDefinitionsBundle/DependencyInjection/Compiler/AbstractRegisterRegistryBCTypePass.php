@@ -87,10 +87,14 @@ abstract class AbstractRegisterRegistryBCTypePass implements CompilerPassInterfa
 
         $registry = $container->getDefinition($this->registry);
         $formRegistry = $container->getDefinition($this->formRegistry);
-
+        $doneIds = [];
         $map = [];
         foreach ([$this->tag, $this->bcTag] as $tag) {
             foreach ($container->findTaggedServiceIds($tag) as $id => $attributes) {
+                if ($tag === $this->bcTag && in_array($id, $doneIds, true)) {
+                    continue;
+                }
+
                 $definition = $container->findDefinition($id);
 
                 if (!isset($attributes[0]['type'])) {
@@ -116,6 +120,8 @@ abstract class AbstractRegisterRegistryBCTypePass implements CompilerPassInterfa
                     $formRegistry->addMethodCall('add',
                         [$attributes[0]['type'], 'default', $attributes[0]['form-type']]);
                 }
+
+                $doneIds[] = $id;
             }
         }
 

@@ -75,8 +75,14 @@ abstract class AbstractRegisterSimpleRegistryBCPass implements CompilerPassInter
         $registry = $container->getDefinition($this->registry);
 
         $map = [];
+        $doneIds = [];
+
         foreach ([$this->tag, $this->bcTag] as $tag) {
             foreach ($container->findTaggedServiceIds($tag) as $id => $attributes) {
+                if ($tag === $this->bcTag && in_array($id, $doneIds, true)) {
+                    continue;
+                }
+
                 $definition = $container->findDefinition($id);
 
                 if (!isset($attributes[0]['type'])) {
@@ -97,6 +103,8 @@ abstract class AbstractRegisterSimpleRegistryBCPass implements CompilerPassInter
                 $map[$attributes[0]['type']] = $attributes[0]['type'];
 
                 $registry->addMethodCall('register', [$attributes[0]['type'], new Reference($id)]);
+
+                $doneIds[] = $id;
             }
         }
 

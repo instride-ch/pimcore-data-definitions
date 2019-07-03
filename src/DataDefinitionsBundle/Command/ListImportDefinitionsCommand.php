@@ -28,10 +28,10 @@ final class ListImportDefinitionsCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('import-definitions:list')
-            ->setDescription('List all Import Definition.')
+            ->setName('data-definitions:list:imports')
+            ->setDescription('List all Import Definitions.')
             ->setHelp(<<<EOT
-The <info>%command.name%</info> lists all Data Definitions.
+The <info>%command.name%</info> lists all Data Definitions for Imports.
 EOT
             )
         ;

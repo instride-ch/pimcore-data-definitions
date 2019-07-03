@@ -61,11 +61,11 @@ final class ImportCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('import-definitions:import')
-            ->setDescription('Run a Import Definition.')
+            ->setName('data-definitions:import')
+            ->setDescription('Run a Data Definition Import.')
             ->setHelp(
                 <<<EOT
-The <info>%command.name%</info> runs a Data Definitions and imports Objects.
+The <info>%command.name%</info> runs a Data Definition Import.
 EOT
             )
             ->addOption(

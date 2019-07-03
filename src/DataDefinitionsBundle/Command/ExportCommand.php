@@ -29,6 +29,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 final class ExportCommand extends AbstractCommand
 {
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
@@ -44,15 +49,17 @@ final class ExportCommand extends AbstractCommand
     protected $exporter;
 
     public function __construct(
+        string $name,
         EventDispatcherInterface $eventDispatcher,
         RepositoryInterface $repository,
         ExporterInterface $exporter
     ) {
+        parent::__construct($name);
+
+        $this->name = $name;
         $this->eventDispatcher = $eventDispatcher;
         $this->repository = $repository;
         $this->exporter = $exporter;
-
-        parent::__construct();
     }
 
     /**
@@ -61,10 +68,10 @@ final class ExportCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('export-definitions:export')
-            ->setDescription('Run a Export Definition.')
+            ->setName($this->name)
+            ->setDescription('Run a Data Definition Export.')
             ->setHelp(<<<EOT
-The <info>%command.name%</info> runs a Export Definitions and imports Objects.
+The <info>%command.name%</info> runs a Data Definition Export.
 EOT
             )
             ->addOption(

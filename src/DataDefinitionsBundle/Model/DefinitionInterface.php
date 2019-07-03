@@ -18,12 +18,10 @@ if (interface_exists(DataDefinitionInterface::class)) {
     @trigger_error('Class Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface is deprecated since version 2.1.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface class instead.', E_USER_DEPRECATED);
 } else {
     /**
-     * @deprecated Class Wvision\Bundle\DataDefinitionsBundle\Model\Definition is deprecated since version 2.0.0 and will be removed in 3.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface interface instead.
+     * @deprecated Class Wvision\Bundle\DataDefinitionsBundle\Model\Definition is deprecated since version 2.1.0 and will be removed in 3.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface interface instead.
      */
     interface DefinitionInterface
     {
 
     }
 }
-
-class_alias(DefinitionInterface::class, 'ImportDefinitionsBundle\Model\DefinitionInterface');

@@ -221,11 +221,11 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
 
             var klass;
 
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.export_provider[type]) {
-                klass = pimcore.plugin.importdefinitions.export_provider[type];
+            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.export_provider[provider]) {
+                klass = pimcore.plugin.importdefinitions.export_provider[provider];
             }
-            else if (pimcore.plugin.datadefinitions.export_provider[type]) {
-                klass = pimcore.plugin.datadefinitions.export_provider[type];
+            else if (pimcore.plugin.datadefinitions.export_provider[provider]) {
+                klass = pimcore.plugin.datadefinitions.export_provider[provider];
             }
 
             if (klass !== undefined) {
@@ -256,7 +256,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
             klass = pimcore.plugin.datadefinitions.export_provider[this.data.provider];
         }
 
-        this.providerSettings.add(new klass[this.data.provider](this.data.configuration ? this.data.configuration : {}, this).getForm());
+        this.providerSettings.add(new klass(this.data.configuration ? this.data.configuration : {}, this).getForm());
         this.providerSettings.enable();
     },
 
@@ -312,7 +312,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
             }
 
             if (klass) {
-                this.fetcher = klass;
+                this.fetcher = new klass;
 
                 this.getFetcherPanel().add(this.fetcher.getLayout(Ext.isObject(this.data.fetcherConfig) ? this.data.fetcherConfig : {}, this.data));
                 this.getFetcherPanel().show();

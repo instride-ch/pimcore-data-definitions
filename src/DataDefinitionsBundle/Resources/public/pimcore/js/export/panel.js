@@ -120,6 +120,7 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
                 });
 
                 pimcore.globalmanager.add('importdefinitions_export_providers', providerStore);
+                pimcore.globalmanager.add('data_definitions_export_providers', providerStore);
 
                 var interpretersStore = new Ext.data.ArrayStore({
                     data : this.interpreters,
@@ -128,6 +129,7 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
                 });
 
                 pimcore.globalmanager.add('importdefinitions_interpreters', interpretersStore);
+                pimcore.globalmanager.add('data_definitions_interpreters', interpretersStore);
 
                 var runnersStore = new Ext.data.ArrayStore({
                     data : this.runners,
@@ -136,6 +138,7 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
                 });
 
                 pimcore.globalmanager.add('importdefinitions_runners', runnersStore);
+                pimcore.globalmanager.add('data_definitions_runners', runnersStore);
 
                 var gettersStore = new Ext.data.ArrayStore({
                     data : this.getters,
@@ -144,6 +147,7 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
                 });
 
                 pimcore.globalmanager.add('importdefinitions_getters', gettersStore);
+                pimcore.globalmanager.add('data_definitions_getters', gettersStore);
 
                 var fetchersStore = new Ext.data.ArrayStore({
                     data : this.fetchers,
@@ -152,6 +156,7 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
                 });
 
                 pimcore.globalmanager.add('importdefinitions_fetchers', fetchersStore);
+                pimcore.globalmanager.add('data_definitions_fetchers', fetchersStore);
 
                 this.getLayout();
             }.bind(this)

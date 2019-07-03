@@ -140,3 +140,4 @@ interface DataDefinitionInterface extends ResourceInterface
 }
 
 class_alias(DataDefinitionInterface::class, 'Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface');
+class_alias(DataDefinitionInterface::class, 'ImportDefinitionsBundle\Model\DefinitionInterface');

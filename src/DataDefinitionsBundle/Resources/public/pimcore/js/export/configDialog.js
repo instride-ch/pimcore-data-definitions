@@ -156,7 +156,7 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
             }
 
             if (pimcore.plugin.datadefinitions.interpreters[type]) {
-                this.interpreter = klass;
+                this.interpreter = new klass;
 
                 this.getInterpreterPanel().add(this.interpreter.getLayout(this.fromColumn, {}, this.record, Ext.isObject(this.record.data.interpreterConfig) ? this.record.data.interpreterConfig : {}, this.config));
                 this.getInterpreterPanel().show();

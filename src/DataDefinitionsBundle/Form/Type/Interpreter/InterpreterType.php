@@ -22,6 +22,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType;
 
 final class InterpreterType extends AbstractType
 {
@@ -56,7 +57,11 @@ final class InterpreterType extends AbstractType
                     return;
                 }
 
-                $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($type, 'default'));
+                if (!$formType = $this->formTypeRegistry->get($type, 'default')) {
+                    $formType = NoConfigurationType::class;
+                }
+
+                $this->addConfigurationFields($event->getForm(), $formType);
             })
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
                 $type = $this->getRegistryIdentifier($event->getForm(), $event->getData());
@@ -73,11 +78,11 @@ final class InterpreterType extends AbstractType
                     return;
                 }
 
-                if (!$this->formTypeRegistry->get($data['type'], 'default')) {
-                    return;
+                if (!$formType = $this->formTypeRegistry->get($data['type'], 'default')) {
+                    $formType = NoConfigurationType::class;
                 }
 
-                $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($data['type'], 'default'));
+                $this->addConfigurationFields($event->getForm(), $formType);
             })
         ;
     }

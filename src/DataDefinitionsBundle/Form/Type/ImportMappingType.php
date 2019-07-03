@@ -87,11 +87,11 @@ final class ImportMappingType extends AbstractResourceType
                     return;
                 }
 
-                if (!$this->setterTypeRegistry->get($data['setter'], 'default')) {
-                    return;
+                if (!$formType = $this->setterTypeRegistry->get($data['setter'], 'default')) {
+                    $formType = NoConfigurationType::class;
                 }
 
-                $this->addSetterConfigurationFields($event->getForm(), $this->setterTypeRegistry->get($data['setter'], 'default'));
+                $this->addSetterConfigurationFields($event->getForm(), $formType);
             });
 
         /** Interpreter Configurations */
@@ -117,11 +117,11 @@ final class ImportMappingType extends AbstractResourceType
                     return;
                 }
 
-                if (!$this->interpreterTypeRegistry->get($data['interpreter'], 'default')) {
-                    return;
+                if (!$formType = $this->interpreterTypeRegistry->get($data['interpreter'], 'default')) {
+                    $formType = NoConfigurationType::class;
                 }
 
-                $this->addInterpreterConfigurationFields($event->getForm(), $this->interpreterTypeRegistry->get($data['interpreter'], 'default'));
+                $this->addInterpreterConfigurationFields($event->getForm(), $formType);
             });
     }
 

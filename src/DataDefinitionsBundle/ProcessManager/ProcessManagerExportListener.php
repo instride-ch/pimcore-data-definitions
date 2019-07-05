@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
@@ -17,11 +17,11 @@ namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 use Carbon\Carbon;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
 use Pimcore\Model\Asset;
 use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
 use ProcessManagerBundle\Model\ProcessInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
 
 final class ProcessManagerExportListener
 {
@@ -46,12 +46,15 @@ final class ProcessManagerExportListener
     private $providerRegistry;
 
     /**
-     * @param FactoryInterface         $processFactory
-     * @param ProcessLogger            $processLogger
+     * @param FactoryInterface $processFactory
+     * @param ProcessLogger $processLogger
      * @param ServiceRegistryInterface $providerRegistry
      */
-    public function __construct(FactoryInterface $processFactory, ProcessLogger $processLogger, ServiceRegistryInterface $providerRegistry)
-    {
+    public function __construct(
+        FactoryInterface $processFactory,
+        ProcessLogger $processLogger,
+        ServiceRegistryInterface $providerRegistry
+    ) {
         $this->processFactory = $processFactory;
         $this->processLogger = $processLogger;
         $this->providerRegistry = $providerRegistry;
@@ -133,4 +136,4 @@ final class ProcessManagerExportListener
     }
 }
 
-class_alias(ProcessManagerExportListener::class, 'ImportDefinitionsBundle\ProcessManager\ProcessManagerExportListener');
+

@@ -9,18 +9,18 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Element\Service;
 use Pimcore\Tool;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
@@ -29,8 +29,15 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
-    {
+    public function interpret(
+        Concrete $object,
+        $value,
+        MappingInterface $map,
+        $data,
+        DataDefinitionInterface $definition,
+        $params,
+        $configuration
+    ) {
         $type = $configuration['type'] ?: 'object';
         $objectClass = $configuration['class'];
 
@@ -39,10 +46,10 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
         }
 
         if ($type === 'object' && $objectClass) {
-            $class = 'Pimcore\Model\DataObject\\' . $objectClass;
+            $class = 'Pimcore\Model\DataObject\\'.$objectClass;
 
             if (!Tool::classExists($class)) {
-                $class = 'Pimcore\Model\DataObject\\' . ucfirst($objectClass);
+                $class = 'Pimcore\Model\DataObject\\'.ucfirst($objectClass);
             }
 
             if (Tool::classExists($class)) {
@@ -64,4 +71,4 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
     }
 }
 
-class_alias(HrefInterpreter::class, 'ImportDefinitionsBundle\Interpreter\HrefInterpreter');
+

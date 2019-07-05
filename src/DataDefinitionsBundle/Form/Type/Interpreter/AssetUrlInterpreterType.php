@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter;
@@ -30,8 +30,7 @@ final class AssetUrlInterpreterType extends AbstractType
             ->add('path', TextType::class)
             ->add('deduplicate_by_url', CheckboxType::class)
             ->add('relocate_existing_objects', CheckboxType::class)
-            ->add('rename_existing_objects', CheckboxType::class)
-        ;
+            ->add('rename_existing_objects', CheckboxType::class);
     }
 
     /**
@@ -43,4 +42,4 @@ final class AssetUrlInterpreterType extends AbstractType
     }
 }
 
-class_alias(AssetUrlInterpreterType::class, 'ImportDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType');
+

@@ -8,25 +8,25 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.provider.abstractprovider');
 
 pimcore.plugin.datadefinitions.provider.abstractprovider = Class.create({
-    data : {},
-    parentItemPanel : null,
+    data: {},
+    parentItemPanel: null,
 
     initialize: function (data, parentItemPanel) {
         this.data = data;
         this.parentItemPanel = parentItemPanel;
     },
 
-    getForm : function () {
+    getForm: function () {
         if (!this.form) {
             this.form = new Ext.form.Panel({
                 bodyStyle: 'padding:10px;',
-                region : 'center',
+                region: 'center',
                 autoScroll: true,
                 defaults: {
                     labelWidth: 200
@@ -44,17 +44,17 @@ pimcore.plugin.datadefinitions.provider.abstractprovider = Class.create({
         return this.form;
     },
 
-    getItems : function () {
+    getItems: function () {
         return [];
     },
 
-    test : function () {
+    test: function () {
         this.parentItemPanel.save(function () {
             Ext.Ajax.request({
                 url: this.parentItemPanel.url.test,
                 method: 'get',
                 params: {
-                    id : this.parentItemPanel.data.id
+                    id: this.parentItemPanel.data.id
                 },
                 success: function (response) {
                     try {

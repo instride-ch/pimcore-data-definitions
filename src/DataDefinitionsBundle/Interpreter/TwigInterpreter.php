@@ -9,15 +9,15 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2017 Divante (http://www.divante.co)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Twig\Environment;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class TwigInterpreter implements InterpreterInterface
 {
@@ -40,9 +40,9 @@ class TwigInterpreter implements InterpreterInterface
     public function interpret(
         Concrete $object,
         $value,
-        Mapping $map,
+        MappingInterface $map,
         $data,
-        DefinitionInterface $definition,
+        DataDefinitionInterface $definition,
         $params,
         $configuration
     ) {
@@ -58,4 +58,4 @@ class TwigInterpreter implements InterpreterInterface
     }
 }
 
-class_alias(TwigInterpreter::class, 'ImportDefinitionsBundle\Interpreter\TwigInterpreter');
+

@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
@@ -19,12 +19,11 @@ use Box\Spout\Reader\ReaderFactory;
 use Box\Spout\Reader\ReaderInterface;
 use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Writer\WriterInterface;
-use Box\Spout\Writer\XLSX\Writer;
+use Pimcore\Model\Asset;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
-use Pimcore\Model\Asset;
 
 class ExcelProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
@@ -52,7 +51,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         if ($configuration['exampleFile']) {
             $exampleFile = Asset::getById($configuration['exampleFile']);
             if (null !== $exampleFile) {
-                $reader = $this->createReader(PIMCORE_ASSET_DIRECTORY . $exampleFile->getFullPath());
+                $reader = $this->createReader(PIMCORE_ASSET_DIRECTORY.$exampleFile->getFullPath());
 
                 $sheetIterator = $reader->getSheetIterator();
                 $sheetIterator->rewind();
@@ -84,10 +83,12 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
         $headers = null;
         $headersCount = null;
+
         return new ImportDataSet($rowIterator, function (array $row) use (&$headers, &$headersCount) {
             if (null === $headers) {
                 $headers = $row;
                 $headersCount = count($headers);
+
                 return null;
             }
 
@@ -107,7 +108,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     /**
      * {@inheritdoc}
      */
-    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $headers = null;
         if (null === $this->writer) {
@@ -118,7 +119,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
         foreach ($data as $key => $item) {
             if (is_object($item)) {
-                $data[$key] = (string) $item;
+                $data[$key] = (string)$item;
             }
         }
         $writer->addRow(array_values($data));
@@ -127,7 +128,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     /**
      * {@inheritdoc}
      */
-    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $writer = $this->getWriter();
         $writer->close();
@@ -143,7 +144,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     /**
      * {@inheritdoc}
      */
-    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params)
     {
         return fopen($this->getExportPath(), 'rb');
     }
@@ -198,7 +199,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         }
 
         return $headers;
-}
+    }
 
     /**
      * @param array|null      $headers
@@ -212,4 +213,4 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     }
 }
 
-class_alias(ExcelProvider::class, 'ImportDefinitionsBundle\Provider\ExcelProvider');
+

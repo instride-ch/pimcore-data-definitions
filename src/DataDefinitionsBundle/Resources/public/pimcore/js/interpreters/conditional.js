@@ -8,7 +8,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.conditional');
@@ -16,31 +16,31 @@ pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.conditional');
 pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout: function (fromColumn, toColumn, record, config) {
         this.condition = Ext.create({
-            xtype : 'textfield',
+            xtype: 'textfield',
             fieldLabel: t('data_definitions_interpreter_conditional_condition'),
             name: 'expression',
             width: 500,
-            value : config.condition ? config.condition : null
+            value: config.condition ? config.condition : null
         });
 
         this.trueInterpreterPanel = new Ext.form.FormPanel({
             layout: 'form',
-            title : t('data_definitions_interpreter_conditional_settings_true'),
+            title: t('data_definitions_interpreter_conditional_settings_true'),
             border: true,
             hidden: true
         });
 
         this.trueInterpreterTypeCombo = new Ext.form.ComboBox({
-            fieldLabel : t('data_definitions_interpreter_conditional_true'),
-            name : 'interpreter',
-            length : 255,
-            value : config.true_interpreter ? config.true_interpreter .type : null,
-            store : pimcore.globalmanager.get('data_definitions_interpreters'),
-            valueField : 'interpreter',
-            displayField : 'interpreter',
-            queryMode : 'local',
-            listeners : {
-                change : function (combo, newValue) {
+            fieldLabel: t('data_definitions_interpreter_conditional_true'),
+            name: 'interpreter',
+            length: 255,
+            value: config.true_interpreter ? config.true_interpreter.type : null,
+            store: pimcore.globalmanager.get('data_definitions_interpreters'),
+            valueField: 'interpreter',
+            displayField: 'interpreter',
+            queryMode: 'local',
+            listeners: {
+                change: function (combo, newValue) {
                     this.trueInterpreterPanel.removeAll();
 
                     this.getTrueInterpreterPanelLayout(newValue, fromColumn, toColumn, record, config, {});
@@ -60,22 +60,22 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
 
         this.falseInterpreterPanel = new Ext.form.FormPanel({
             layout: 'form',
-            title : t('data_definitions_interpreter_conditional_settings_false'),
+            title: t('data_definitions_interpreter_conditional_settings_false'),
             border: true,
             hidden: true
         });
 
         this.falseInterpreterTypeCombo = new Ext.form.ComboBox({
-            fieldLabel : t('data_definitions_interpreter_conditional_false'),
-            name : 'interpreter',
-            length : 255,
-            value : config.false_interpreter ? config.false_interpreter.type : null,
-            store : pimcore.globalmanager.get('data_definitions_interpreters'),
-            valueField : 'interpreter',
-            displayField : 'interpreter',
-            queryMode : 'local',
-            listeners : {
-                change : function (combo, newValue) {
+            fieldLabel: t('data_definitions_interpreter_conditional_false'),
+            name: 'interpreter',
+            length: 255,
+            value: config.false_interpreter ? config.false_interpreter.type : null,
+            store: pimcore.globalmanager.get('data_definitions_interpreters'),
+            valueField: 'interpreter',
+            displayField: 'interpreter',
+            queryMode: 'local',
+            listeners: {
+                change: function (combo, newValue) {
                     this.falseInterpreterPanel.removeAll();
 
                     this.getFalseInterpreterPanelLayout(newValue, fromColumn, toColumn, record, config, {});
@@ -120,7 +120,7 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
         }
     },
 
-    getTrueInterpreterPanelLayout : function (type, fromColumn, toColumn, record, parentConfig, config) {
+    getTrueInterpreterPanelLayout: function (type, fromColumn, toColumn, record, parentConfig, config) {
         if (type) {
             type = type.toLowerCase();
 
@@ -128,8 +128,7 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
 
             if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.interpreters[type]) {
                 klass = pimcore.plugin.importdefinitions.interpreters[type];
-            }
-            else if (pimcore.plugin.datadefinitions.interpreters[type]) {
+            } else if (pimcore.plugin.datadefinitions.interpreters[type]) {
                 klass = pimcore.plugin.datadefinitions.interpreters[type];
             }
 
@@ -148,7 +147,7 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
         }
     },
 
-    getFalseInterpreterPanelLayout : function (type, fromColumn, toColumn, record, parentConfig, config) {
+    getFalseInterpreterPanelLayout: function (type, fromColumn, toColumn, record, parentConfig, config) {
         if (type) {
             type = type.toLowerCase();
 
@@ -156,8 +155,7 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
 
             if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.interpreters[type]) {
                 klass = pimcore.plugin.importdefinitions.interpreters[type];
-            }
-            else if (pimcore.plugin.datadefinitions.interpreters[type]) {
+            } else if (pimcore.plugin.datadefinitions.interpreters[type]) {
                 klass = pimcore.plugin.datadefinitions.interpreters[type];
             }
 
@@ -177,16 +175,15 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
     },
 
     getInterpreterData: function () {
-        var trueInterpreterConfig  = {};
+        var trueInterpreterConfig = {};
         var trueInterpreterForm = this.trueInterpreterPanel.getForm();
 
-        var falseInterpreterConfig  = {};
+        var falseInterpreterConfig = {};
         var falseInterpreterForm = this.falseInterpreterPanel.getForm();
 
         if (Ext.isFunction(this.trueInterpreter.getInterpreterData)) {
             trueInterpreterConfig = this.trueInterpreter.getInterpreterData();
-        }
-        else {
+        } else {
             Ext.Object.each(trueInterpreterForm.getFieldValues(), function (key, value) {
                 trueInterpreterConfig[key] = value;
             }.bind(this));
@@ -194,8 +191,7 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
 
         if (Ext.isFunction(this.falseInterpreter.getInterpreterData)) {
             falseInterpreterConfig = this.falseInterpreter.getInterpreterData();
-        }
-        else {
+        } else {
             Ext.Object.each(falseInterpreterForm.getFieldValues(), function (key, value) {
                 falseInterpreterConfig[key] = value;
             }.bind(this));

@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
@@ -23,12 +23,12 @@ class ImportDefinitionsReport implements ReportInterface
     const EVENT_STATUS = 'import_definition.status: ';
     const EVENT_PROGRESS = 'import_definition.progress: ';
     const EVENT_FINISHED = 'import_definition.finished: ';
-    const EVENT_STATUS_ERROR = self::EVENT_STATUS . 'Error: ';
-    const EVENT_STATUS_IMPORT_NEW = self::EVENT_STATUS . 'Import Object new';
-    const EVENT_STATUS_IMPORT_EXISTING = self::EVENT_STATUS . 'Import Object';
-    const EVENT_STATUS_IGNORE_NEW = self::EVENT_STATUS . 'Ignoring new Object';
-    const EVENT_STATUS_IGNORE_EXISTING = self::EVENT_STATUS . 'Ignoring existing Object';
-    const EVENT_STATUS_IGNORE_FILTERED = self::EVENT_STATUS . 'Filtered Object';
+    const EVENT_STATUS_ERROR = self::EVENT_STATUS.'Error: ';
+    const EVENT_STATUS_IMPORT_NEW = self::EVENT_STATUS.'Import Object new';
+    const EVENT_STATUS_IMPORT_EXISTING = self::EVENT_STATUS.'Import Object';
+    const EVENT_STATUS_IGNORE_NEW = self::EVENT_STATUS.'Ignoring new Object';
+    const EVENT_STATUS_IGNORE_EXISTING = self::EVENT_STATUS.'Ignoring existing Object';
+    const EVENT_STATUS_IGNORE_FILTERED = self::EVENT_STATUS.'Filtered Object';
 
     const CHECKS = [
         [
@@ -221,4 +221,4 @@ class ImportDefinitionsReport implements ReportInterface
     }
 }
 
-class_alias(ImportDefinitionsReport::class, 'ImportDefinitionsBundle\ProcessManager\ImportDefinitionsReport');
+

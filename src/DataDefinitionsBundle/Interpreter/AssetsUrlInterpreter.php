@@ -9,24 +9,31 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class AssetsUrlInterpreter extends AssetUrlInterpreter
 {
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
-    {
+    public function interpret(
+        Concrete $object,
+        $value,
+        MappingInterface $map,
+        $data,
+        DataDefinitionInterface $definition,
+        $params,
+        $configuration
+    ) {
         $assets = [];
-        foreach ((array) $value as $item) {
+        foreach ((array)$value as $item) {
             $asset = parent::interpret($object, $item, $map, $data, $definition, $params, $configuration);
 
             if ($asset) {
@@ -38,4 +45,4 @@ class AssetsUrlInterpreter extends AssetUrlInterpreter
     }
 }
 
-class_alias(AssetsUrlInterpreter::class, 'ImportDefinitionsBundle\Interpreter\AssetsUrlInterpreter');
+

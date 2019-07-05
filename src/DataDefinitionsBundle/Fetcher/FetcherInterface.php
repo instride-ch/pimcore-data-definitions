@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Fetcher;
@@ -19,22 +19,27 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 interface FetcherInterface
 {
     /**
-     * @param ExportDefinitionInterface $definition
-     * @param                     $params
-     * @param int                 $limit
-     * @param int                 $offset
-     * @param                     $configuration
+     * @param ExportDataDefinitionInterface $definition
+     * @param                           $params
+     * @param int                       $limit
+     * @param int                       $offset
+     * @param                           $configuration
      * @return array
      */
-    public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset, array $configuration);
+    public function fetch(
+        ExportDataDefinitionInterface $definition,
+        $params,
+        int $limit,
+        int $offset,
+        array $configuration
+    );
 
     /**+
-     * @param ExportDefinitionInterface $definition
-     * @param                     $params
-     * @param                     $configuration
+     * @param ExportDataDefinitionInterface $definition
+     * @param                           $params
+     * @param                           $configuration
      * @return int
      */
-    public function count(ExportDefinitionInterface $definition, $params, array $configuration): int;
+    public function count(ExportDataDefinitionInterface $definition, $params, array $configuration): int;
 }
 
-class_alias(FetcherInterface::class, 'ImportDefinitionsBundle\Fetcher\FetcherInterface');

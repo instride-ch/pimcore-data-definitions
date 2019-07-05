@@ -8,7 +8,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.mapping');
@@ -87,10 +87,10 @@ pimcore.plugin.datadefinitions.interpreters.mapping = Class.create(pimcore.plugi
         });
 
         me.checkbox = Ext.create({
-            xtype : 'checkbox',
+            xtype: 'checkbox',
             fieldLabel: t('data_definitions_interpreter_mapping_null_when_not_found'),
             name: 'return_null_when_not_found',
-            value : Ext.isDefined(config.return_null_when_not_found) ? config.return_null_when_not_found : true
+            value: Ext.isDefined(config.return_null_when_not_found) ? config.return_null_when_not_found : true
         });
 
         return new Ext.Panel({
@@ -106,7 +106,7 @@ pimcore.plugin.datadefinitions.interpreters.mapping = Class.create(pimcore.plugi
 
     getInterpreterData: function () {
         return {
-            mapping: this.store.getRange().map(function(rec) {
+            mapping: this.store.getRange().map(function (rec) {
                 return {
                     from: rec.data.from,
                     to: rec.data.to

@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Listing;
@@ -62,4 +62,4 @@ class Dao extends Pimcore\Model\Dao\PhpArrayTable
     }
 }
 
-class_alias(Dao::class, 'ImportDefinitionsBundle\Model\ExportDefinition\Listing\Dao');
+

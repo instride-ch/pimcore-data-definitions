@@ -8,18 +8,18 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.coreshop_price');
 
 pimcore.plugin.datadefinitions.interpreters.coreshop_price = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
-    getLayout : function (fromColumn, toColumn, record, config) {
+    getLayout: function (fromColumn, toColumn, record, config) {
         return [{
-            xtype : 'checkbox',
+            xtype: 'checkbox',
             fieldLabel: t('data_definitions_interpreter_coreshop_is_float'),
             name: 'isFloat',
-            value : config.isFloat ? config.isFloat : false
+            value: config.isFloat ? config.isFloat : false
         }];
     }
 });

@@ -8,21 +8,21 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.provider.excel');
 
 pimcore.plugin.datadefinitions.provider.excel = Class.create(pimcore.plugin.datadefinitions.provider.abstractprovider, {
-    getItems : function () {
+    getItems: function () {
         return [{
-            xtype : 'textarea',
-            fieldLabel : t('data_definitions_excel_headers'),
-            name : 'excelHeaders',
-            grow : true,
-            anchor : '100%',
-            minHeight : 300,
-            value : this.data['excelHeaders'] ? this.data.excelHeaders : ''
+            xtype: 'textarea',
+            fieldLabel: t('data_definitions_excel_headers'),
+            name: 'excelHeaders',
+            grow: true,
+            anchor: '100%',
+            minHeight: 300,
+            value: this.data['excelHeaders'] ? this.data.excelHeaders : ''
         }, {
             fieldLabel: t('data_definitions_excel_file'),
             name: 'exampleFile',

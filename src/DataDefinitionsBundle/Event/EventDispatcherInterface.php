@@ -12,23 +12,17 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
-use CoreShop\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use CoreShop\Component\Resource\Metadata\MetadataInterface;
-use CoreShop\Component\Resource\Model\ResourceInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface EventDispatcherInterface
 {
     /**
-     * @param DefinitionInterface $definition
+     * @param DataDefinitionInterface $definition
      * @param                     $eventName
      * @param string              $subject
      * @param array               $params
      * @return mixed
      */
-    public function dispatch(DefinitionInterface $definition, $eventName, $subject = '', $params = []);
+    public function dispatch(DataDefinitionInterface $definition, $eventName, $subject = '', $params = []);
 }
 
-class_alias(EventDispatcherInterface::class, 'ImportDefinitionsBundle\Event\EventDispatcherInterface');

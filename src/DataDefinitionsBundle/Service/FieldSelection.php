@@ -9,14 +9,14 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Service;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\ToColumn;
 use Pimcore\Model\DataObject;
 use Pimcore\Tool;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\ToColumn;
 
 class FieldSelection
 {
@@ -30,7 +30,11 @@ class FieldSelection
         $fields = $class->getFieldDefinitions();
 
         $systemColumns = [
-            'o_published', 'o_key', 'o_parentId', 'o_parent', 'o_type'
+            'o_published',
+            'o_key',
+            'o_parentId',
+            'o_parent',
+            'o_type',
         ];
 
         $result = [];
@@ -57,8 +61,8 @@ class FieldSelection
                     foreach ($localizedFields as $localizedField) {
                         $localizedField = $this->getFieldConfiguration($localizedField);
 
-                        $localizedField->setGroup('localizedfield.' . strtolower($language));
-                        $localizedField->setType('localizedfield.' . $language);
+                        $localizedField->setGroup('localizedfield.'.strtolower($language));
+                        $localizedField->setType('localizedfield.'.$language);
                         $localizedField->setIdentifier(sprintf('%s~%s', $localizedField->getIdentifier(), $language));
                         $localizedField->setSetter('localizedfield');
                         $localizedField->setConfig(['language' => $language]);
@@ -83,7 +87,7 @@ class FieldSelection
                                 foreach ($fields as $brickField) {
                                     $resultField = $this->getFieldConfiguration($brickField);
 
-                                    $resultField->setGroup('objectbrick.' . $key);
+                                    $resultField->setGroup('objectbrick.'.$key);
                                     $resultField->setType('objectbrick');
                                     $resultField->setIdentifier(
                                         sprintf(
@@ -114,7 +118,7 @@ class FieldSelection
                     foreach ($fieldDefinition as $fieldcollectionField) {
                         $resultField = $this->getFieldConfiguration($fieldcollectionField);
 
-                        $resultField->setGroup('fieldcollection.' . $type);
+                        $resultField->setGroup('fieldcollection.'.$type);
                         $resultField->setType('fieldcollection');
                         $resultField->setIdentifier(
                             sprintf(
@@ -136,9 +140,9 @@ class FieldSelection
                 $allowedGroupIds = $field->getAllowedGroupIds();
 
                 if ($allowedGroupIds) {
-                    $list->setCondition('ID in (' . implode(',', $allowedGroupIds) . ') AND storeId = ?', [$field->getStoreId()]);
-                }
-                else {
+                    $list->setCondition('ID in ('.implode(',', $allowedGroupIds).') AND storeId = ?',
+                        [$field->getStoreId()]);
+                } else {
                     $list->setCondition('storeId = ?', [$field->getStoreId()]);
                 }
 
@@ -207,4 +211,4 @@ class FieldSelection
     }
 }
 
-class_alias(FieldSelection::class, 'ImportDefinitionsBundle\Service\FieldSelection');
+

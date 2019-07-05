@@ -9,15 +9,16 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
-final class GetterRegistryCompilerPass extends AbstractRegisterRegistryBCTypePass
+use CoreShop\Bundle\PimcoreBundle\DependencyInjection\Compiler\RegisterRegistryTypePass;
+
+final class GetterRegistryCompilerPass extends RegisterRegistryTypePass
 {
     public const GETTER_TAG = 'data_definitions.getter';
-    public const GETTER_BC_TAG = 'import_definition.getter';
 
     public function __construct()
     {
@@ -25,9 +26,7 @@ final class GetterRegistryCompilerPass extends AbstractRegisterRegistryBCTypePas
             'data_definitions.registry.getter',
             'data_definitions.form.registry.getter',
             'data_definitions.getters',
-            self::GETTER_TAG,
-            'import_definition.getters',
-            self::GETTER_BC_TAG
+            self::GETTER_TAG
         );
     }
 }

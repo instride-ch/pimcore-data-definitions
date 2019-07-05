@@ -9,22 +9,21 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
-use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
+use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ImportCommand extends AbstractCommand
 {
@@ -152,4 +151,3 @@ EOT
     }
 }
 
-class_alias(ImportCommand::class, 'ImportDefinitionsBundle\Command\ImportCommand');

@@ -9,17 +9,18 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class DefinitionInterpreter implements InterpreterInterface
 {
@@ -49,15 +50,15 @@ class DefinitionInterpreter implements InterpreterInterface
     public function interpret(
         Concrete $object,
         $value,
-        Mapping $map,
+        MappingInterface $map,
         $data,
-        DefinitionInterface $definition,
+        DataDefinitionInterface $definition,
         $params,
         $configuration
     ) {
         $subDefinition = $this->definitionRepository->find($configuration['definition']);
 
-        if (!$subDefinition instanceof DefinitionInterface) {
+        if (!$subDefinition instanceof ImportDefinitionInterface) {
             return null;
         }
 
@@ -67,10 +68,10 @@ class DefinitionInterpreter implements InterpreterInterface
             return DataObject::getById($imported[0]);
         }
 
-        return array_map(function($id) {
+        return array_map(function ($id) {
             return DataObject::getById($id);
         }, $imported);
     }
 }
 
-class_alias(DefinitionInterpreter::class, 'ImportDefinitionsBundle\Interpreter\DefinitionInterpreter');
+

@@ -1,1 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><circle cx="15.833" cy="16.25" r="1.667" fill="#00bcd4"/><path fill="#b0bec5" d="M12.5 14.583v3.393l1.696-1.696z"/><path d="M5 10c0 4.167 2.917 6.25 7.5 6.25" fill="none" stroke="#b0bec5" stroke-width="2" stroke-miterlimit="10"/><circle cx="15.833" cy="12.083" r="1.667" fill="#00bcd4"/><path fill="#b0bec5" d="M12.5 10.417v3.393l1.696-1.697z"/><path d="M12.5 12.083S7.917 12.083 5 10" fill="none" stroke="#b0bec5" stroke-width="2" stroke-miterlimit="10"/><circle cx="15.833" cy="7.917" r="1.667" fill="#00bcd4"/><path fill="#b0bec5" d="M12.5 6.25v3.393l1.696-1.697z"/><path d="M12.5 7.917S7.917 7.917 5 10" fill="none" stroke="#b0bec5" stroke-width="2" stroke-miterlimit="10"/><circle cx="15.833" cy="3.75" r="1.667" fill="#00bcd4"/><path fill="#b0bec5" d="M12.5 2.024v3.393l1.696-1.697z"/><path d="M5 10c0-4.167 2.917-6.25 7.5-6.25" fill="none" stroke="#b0bec5" stroke-width="2" stroke-miterlimit="10"/><circle cx="5" cy="10" r="2.5" fill="#0097a7"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <circle cx="15.833" cy="16.25" r="1.667" fill="#00bcd4"/>
+    <path fill="#b0bec5" d="M12.5 14.583v3.393l1.696-1.696z"/>
+    <path d="M5 10c0 4.167 2.917 6.25 7.5 6.25" fill="none" stroke="#b0bec5" stroke-width="2" stroke-miterlimit="10"/>
+    <circle cx="15.833" cy="12.083" r="1.667" fill="#00bcd4"/>
+    <path fill="#b0bec5" d="M12.5 10.417v3.393l1.696-1.697z"/>
+    <path d="M12.5 12.083S7.917 12.083 5 10" fill="none" stroke="#b0bec5" stroke-width="2" stroke-miterlimit="10"/>
+    <circle cx="15.833" cy="7.917" r="1.667" fill="#00bcd4"/>
+    <path fill="#b0bec5" d="M12.5 6.25v3.393l1.696-1.697z"/>
+    <path d="M12.5 7.917S7.917 7.917 5 10" fill="none" stroke="#b0bec5" stroke-width="2" stroke-miterlimit="10"/>
+    <circle cx="15.833" cy="3.75" r="1.667" fill="#00bcd4"/>
+    <path fill="#b0bec5" d="M12.5 2.024v3.393l1.696-1.697z"/>
+    <path d="M5 10c0-4.167 2.917-6.25 7.5-6.25" fill="none" stroke="#b0bec5" stroke-width="2" stroke-miterlimit="10"/>
+    <circle cx="5" cy="10" r="2.5" fill="#0097a7"/>
+</svg>

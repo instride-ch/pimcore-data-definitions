@@ -9,24 +9,24 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface SaveRunnerInterface extends RunnerInterface
 {
     /**
-     * @param Concrete $object
-     * @param $data
-     * @param DefinitionInterface $definition
-     * @param $params
+     * @param Concrete            $object
+     * @param                     $data
+     * @param DataDefinitionInterface $definition
+     * @param                     $params
      * @return boolean
      */
-    public function shouldSaveObject(Concrete $object, $data, DefinitionInterface $definition, $params);
+    public function shouldSaveObject(Concrete $object, $data, DataDefinitionInterface $definition, $params);
 }
 
-class_alias(SaveRunnerInterface::class, 'ImportDefinitionsBundle\Runner\SaveRunnerInterface');
+

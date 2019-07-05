@@ -8,43 +8,42 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.asset_url');
 
 pimcore.plugin.datadefinitions.interpreters.asset_url = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
-    getLayout : function (fromColumn, toColumn, record, config) {
+    getLayout: function (fromColumn, toColumn, record, config) {
         var deduplicateByUrlEnabled = Ext.isDefined(config.deduplicate_by_url) ? config.deduplicate_by_url : false
         var relocateExistingCheckbox = Ext.create({
-            xtype : 'checkbox',
+            xtype: 'checkbox',
             fieldLabel: t('data_definitions_relocate_existing_objects'),
             name: 'relocate_existing_objects',
-            value : config.deduplicate_by_url && Ext.isDefined(config.relocate_existing_objects) ? config.relocate_existing_objects : false,
+            value: config.deduplicate_by_url && Ext.isDefined(config.relocate_existing_objects) ? config.relocate_existing_objects : false,
             disabled: deduplicateByUrlEnabled === false
         });
 
         var renameExistingCheckbox = Ext.create({
-            xtype : 'checkbox',
+            xtype: 'checkbox',
             fieldLabel: t('data_definitions_rename_existing_objects'),
             name: 'rename_existing_objects',
-            value : config.deduplicate_by_url && Ext.isDefined(config.rename_existing_objects) ? config.rename_existing_objects : false,
+            value: config.deduplicate_by_url && Ext.isDefined(config.rename_existing_objects) ? config.rename_existing_objects : false,
             disabled: deduplicateByUrlEnabled === false
         });
 
         return [{
-            xtype : 'textfield',
+            xtype: 'textfield',
             fieldLabel: t('data_definitions_asset_save_path'),
             name: 'path',
             width: 500,
-            value : config.path || null,
+            value: config.path || null,
             cls: 'input_drop_target',
             ddValidator: {
                 elementType: 'asset'
             },
-            canDrop: function(data)
-            {
-                if(!data.records[0] || !data.records[0].data) {
+            canDrop: function (data) {
+                if (!data.records[0] || !data.records[0].data) {
                     return false;
                 }
                 var recordData = data.records[0].data;
@@ -78,27 +77,27 @@ pimcore.plugin.datadefinitions.interpreters.asset_url = Class.create(pimcore.plu
                 }
             }
         },
-        {
-            xtype : 'checkbox',
-            fieldLabel: t('data_definitions_interpreter_asset_url_deduplicate_by_url'),
-            name: 'deduplicate_by_url',
-            value : deduplicateByUrlEnabled,
-            listeners: {
-                change: function (el, enabled) {
-                    var isDeduplicateByUrlDisabled = (enabled === false);
+            {
+                xtype: 'checkbox',
+                fieldLabel: t('data_definitions_interpreter_asset_url_deduplicate_by_url'),
+                name: 'deduplicate_by_url',
+                value: deduplicateByUrlEnabled,
+                listeners: {
+                    change: function (el, enabled) {
+                        var isDeduplicateByUrlDisabled = (enabled === false);
 
-                    relocateExistingCheckbox
+                        relocateExistingCheckbox
                         .setValue(false)
                         .setDisabled(isDeduplicateByUrlDisabled);
 
-                    renameExistingCheckbox
+                        renameExistingCheckbox
                         .setValue(false)
                         .setDisabled(isDeduplicateByUrlDisabled);
+                    }
                 }
-            }
-        },
-        relocateExistingCheckbox,
-        renameExistingCheckbox
+            },
+            relocateExistingCheckbox,
+            renameExistingCheckbox
         ];
     }
 });

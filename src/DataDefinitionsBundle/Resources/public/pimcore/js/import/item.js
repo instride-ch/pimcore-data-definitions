@@ -8,7 +8,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.import.item');
@@ -17,9 +17,9 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
     iconCls: 'data_definitions_icon_import_definition',
     url: {
         save: '/admin/data_definitions/import_definitions/save',
-        upload : '/admin/data_definitions/import_definitions/import',
-        export : '/admin/data_definitions/import_definitions/export',
-        duplicate : '/admin/data_definitions/import_definitions/duplicate',
+        upload: '/admin/data_definitions/import_definitions/import',
+        export: '/admin/data_definitions/import_definitions/export',
+        duplicate: '/admin/data_definitions/import_definitions/duplicate',
         test: '/admin/data_definitions/import_definitions/test-data'
     },
 
@@ -317,8 +317,7 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
 
             if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.provider[provider]) {
                 klass = pimcore.plugin.importdefinitions.provider[provider];
-            }
-            else if (pimcore.plugin.datadefinitions.provider[provider]) {
+            } else if (pimcore.plugin.datadefinitions.provider[provider]) {
                 klass = pimcore.plugin.datadefinitions.provider[provider];
             }
 
@@ -362,8 +361,7 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
 
         if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.provider[this.data.provider]) {
             klass = pimcore.plugin.importdefinitions.provider[this.data.provider];
-        }
-        else if (pimcore.plugin.datadefinitions.provider[this.data.provider]) {
+        } else if (pimcore.plugin.datadefinitions.provider[this.data.provider]) {
             klass = pimcore.plugin.datadefinitions.provider[this.data.provider];
         }
 

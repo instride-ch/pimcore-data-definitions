@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
@@ -66,8 +66,7 @@ final class ImportDefinitionType extends AbstractResourceType
             ->add('failureNotificationDocument', IntegerType::class)
             ->add('successNotificationDocument', IntegerType::class)
             ->add('mapping', ImportMappingCollectionType::class)
-            ->add('forceLoadObject', CheckboxType::class)
-        ;
+            ->add('forceLoadObject', CheckboxType::class);
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -104,8 +103,7 @@ final class ImportDefinitionType extends AbstractResourceType
                 }
 
                 $this->addConfigurationFields($event->getForm(), $formType);
-            })
-        ;
+            });
     }
 
     /**
@@ -136,4 +134,3 @@ final class ImportDefinitionType extends AbstractResourceType
     }
 }
 
-class_alias(ImportDefinitionType::class, 'ImportDefinitionsBundle\Form\Type\ImportDefinitionType');

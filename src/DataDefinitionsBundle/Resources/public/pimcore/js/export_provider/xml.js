@@ -8,13 +8,13 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.export_provider.xml');
 
 pimcore.plugin.datadefinitions.export_provider.xml = Class.create(pimcore.plugin.datadefinitions.export_provider.abstractprovider, {
-    getItems : function () {
+    getItems: function () {
         return [{
             xtype: 'textfield',
             name: 'xsltPath',
@@ -25,9 +25,8 @@ pimcore.plugin.datadefinitions.export_provider.xml = Class.create(pimcore.plugin
             ddValidator: {
                 elementType: 'asset'
             },
-            canDrop: function(data)
-            {
-                if(!data.records[0] || !data.records[0].data) {
+            canDrop: function (data) {
+                if (!data.records[0] || !data.records[0].data) {
                     return false;
                 }
                 var recordData = data.records[0].data;

@@ -9,14 +9,14 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractModelExtension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Wvision\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
@@ -96,91 +96,36 @@ class DataDefinitionsExtension extends AbstractModelExtension
 
         $container
             ->registerForAutoconfiguration(CleanerInterface::class)
-            ->addTag(CleanerRegistryCompilerPass::CLEANER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Cleaner\CleanerInterface::class)
-            ->addTag(CleanerRegistryCompilerPass::CLEANER_BC_TAG)
-        ;
+            ->addTag(CleanerRegistryCompilerPass::CLEANER_TAG);
         $container
             ->registerForAutoconfiguration(ExportProviderInterface::class)
-            ->addTag(ExportProviderRegistryCompilerPass::EXPORT_PROVIDER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Provider\ExportProviderInterface::class)
-            ->addTag(ExportProviderRegistryCompilerPass::EXPORT_PROVIDER_BC_TAG)
-        ;
+            ->addTag(ExportProviderRegistryCompilerPass::EXPORT_PROVIDER_TAG);
         $container
             ->registerForAutoconfiguration(ExportRunnerInterface::class)
-            ->addTag(ExportRunnerRegistryCompilerPass::EXPORT_RUNNER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Runner\ExportRunnerInterface::class)
-            ->addTag(ExportRunnerRegistryCompilerPass::EXPORT_RUNNER_BC_TAG)
-        ;
+            ->addTag(ExportRunnerRegistryCompilerPass::EXPORT_RUNNER_TAG);
         $container
             ->registerForAutoconfiguration(FetcherInterface::class)
-            ->addTag(FetcherRegistryCompilerPass::FETCHER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Fetcher\FetcherInterface::class)
-            ->addTag(FetcherRegistryCompilerPass::FETCHER_BC_TAG)
-        ;
+            ->addTag(FetcherRegistryCompilerPass::FETCHER_TAG);
         $container
             ->registerForAutoconfiguration(FilterInterface::class)
-            ->addTag(FilterRegistryCompilerPass::FILTER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Filter\FilterInterface::class)
-            ->addTag(FilterRegistryCompilerPass::FILTER_BC_TAG)
-        ;
+            ->addTag(FilterRegistryCompilerPass::FILTER_TAG);
         $container
             ->registerForAutoconfiguration(GetterInterface::class)
-            ->addTag(GetterRegistryCompilerPass::GETTER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Getter\GetterInterface::class)
-            ->addTag(GetterRegistryCompilerPass::GETTER_BC_TAG)
-        ;
+            ->addTag(GetterRegistryCompilerPass::GETTER_TAG);
         $container
             ->registerForAutoconfiguration(InterpreterInterface::class)
-            ->addTag(InterpreterRegistryCompilerPass::INTERPRETER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Interpreter\InterpreterInterface::class)
-            ->addTag(InterpreterRegistryCompilerPass::INTERPRETER_BC_TAG)
-        ;
+            ->addTag(InterpreterRegistryCompilerPass::INTERPRETER_TAG);
         $container
             ->registerForAutoconfiguration(LoaderInterface::class)
-            ->addTag(LoaderRegistryCompilerPass::LOADER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Loader\LoaderInterface::class)
-            ->addTag(LoaderRegistryCompilerPass::LOADER_BC_TAG)
-        ;
+            ->addTag(LoaderRegistryCompilerPass::LOADER_TAG);
         $container
             ->registerForAutoconfiguration(ImportProviderInterface::class)
-            ->addTag(ProviderRegistryCompilerPass::IMPORT_PROVIDER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Provider\ProviderInterface::class)
-            ->addTag(ProviderRegistryCompilerPass::IMPORT_PROVIDER_BC_TAG)
-        ;
+            ->addTag(ProviderRegistryCompilerPass::IMPORT_PROVIDER_TAG);
         $container
             ->registerForAutoconfiguration(RunnerInterface::class)
-            ->addTag(RunnerRegistryCompilerPass::RUNNER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Runner\RunnerInterface::class)
-            ->addTag(RunnerRegistryCompilerPass::RUNNER_BC_TAG)
-        ;
+            ->addTag(RunnerRegistryCompilerPass::RUNNER_TAG);
         $container
             ->registerForAutoconfiguration(SetterInterface::class)
-            ->addTag(SetterRegistryCompilerPass::SETTER_TAG)
-        ;
-        $container
-            ->registerForAutoconfiguration(\ImportDefinitionsBundle\Setter\SetterInterface::class)
-            ->addTag(SetterRegistryCompilerPass::SETTER_BC_TAG)
-        ;
+            ->addTag(SetterRegistryCompilerPass::SETTER_TAG);
     }
 }

@@ -9,18 +9,18 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
@@ -49,8 +49,15 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
-    {
+    public function interpret(
+        Concrete $object,
+        $value,
+        MappingInterface $map,
+        $data,
+        DataDefinitionInterface $definition,
+        $params,
+        $configuration
+    ) {
         $expression = $configuration['expression'];
 
         return $this->expressionLanguage->evaluate($expression, [
@@ -61,9 +68,9 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
             'definition' => $definition,
             'params' => $params,
             'configuration' => $configuration,
-            'container' => $this->container
+            'container' => $this->container,
         ]);
     }
 }
 
-class_alias(ExpressionInterpreter::class, 'ImportDefinitionsBundle\Interpreter\ExpressionInterpreter');
+

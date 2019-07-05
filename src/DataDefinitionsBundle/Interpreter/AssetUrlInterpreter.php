@@ -9,20 +9,20 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\File;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
 use Pimcore\Tool as PimcoreTool;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
 use Wvision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext;
 
 class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
@@ -48,13 +48,20 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
-    {
+    public function interpret(
+        Concrete $object,
+        $value,
+        MappingInterface $map,
+        $data,
+        DataDefinitionInterface $definition,
+        $params,
+        $configuration
+    ) {
         $path = $configuration['path'];
 
         if (filter_var($value, FILTER_VALIDATE_URL)) {
             $filename = File::getValidFilename(basename($value));
-            $assetsUrlPrefix = PimcoreTool::getHostUrl() . str_replace(PIMCORE_WEB_ROOT, '', PIMCORE_ASSET_DIRECTORY);
+            $assetsUrlPrefix = PimcoreTool::getHostUrl().str_replace(PIMCORE_WEB_ROOT, '', PIMCORE_ASSET_DIRECTORY);
 
             // check if URL seems to be pointing to our own asset URL
             $assetFullPath = str_replace($assetsUrlPrefix, '', $value);
@@ -63,7 +70,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                 $assetPath = dirname($assetFullPath);
             } elseif ($configuration['deduplicate_by_url']) {
                 $listing = new Asset\Listing();
-                $listing->onCreateQuery(function (\Pimcore\Db\ZendCompatibility\QueryBuilder $select){
+                $listing->onCreateQuery(function (\Pimcore\Db\ZendCompatibility\QueryBuilder $select) {
                     $select->join('assets_metadata AS am', 'id = am.cid', ['cid']);
                 });
                 $listing->addConditionParam('am.name = ?', self::METADATA_ORIGIN_URL);
@@ -124,4 +131,4 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
     }
 }
 
-class_alias(AssetUrlInterpreter::class, 'ImportDefinitionsBundle\Interpreter\AssetUrlInterpreter');
+

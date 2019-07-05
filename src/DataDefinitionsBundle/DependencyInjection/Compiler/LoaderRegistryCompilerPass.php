@@ -9,24 +9,23 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
-final class LoaderRegistryCompilerPass extends AbstractRegisterSimpleRegistryBCPass
+use CoreShop\Bundle\PimcoreBundle\DependencyInjection\Compiler\RegisterSimpleRegistryTypePass;
+
+final class LoaderRegistryCompilerPass extends RegisterSimpleRegistryTypePass
 {
     public const LOADER_TAG = 'data_definitions.loader';
-    public const LOADER_BC_TAG = 'import_definition.loader';
 
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.loader',
             'data_definitions.loaders',
-            self::LOADER_TAG,
-            'import_definition.loaders',
-            self::LOADER_BC_TAG
+            self::LOADER_TAG
         );
     }
 }

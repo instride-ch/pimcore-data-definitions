@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
@@ -26,12 +26,13 @@ final class ExportDefinitionProcess extends Pimcore
     {
         $settings = $executable->getSettings();
         if (isset($settings['params'])) {
-            $settings['params'] = array_replace(json_decode($settings['params'], true), (array) $params);
+            $settings['params'] = array_replace(json_decode($settings['params'], true), (array)$params);
         } else {
-            $settings['params'] = (array) $params;
+            $settings['params'] = (array)$params;
         }
 
-        $settings['command'] = sprintf('export-definitions:export -d %s -p "%s"', $settings['definition'], addslashes(json_encode($settings['params'])));
+        $settings['command'] = sprintf('export-definitions:export -d %s -p "%s"', $settings['definition'],
+            addslashes(json_encode($settings['params'])));
 
         $executable->setSettings($settings);
 
@@ -39,4 +40,4 @@ final class ExportDefinitionProcess extends Pimcore
     }
 }
 
-class_alias(ExportDefinitionProcess::class, 'ImportDefinitionsBundle\ProcessManager\ExportDefinitionProcess');
+

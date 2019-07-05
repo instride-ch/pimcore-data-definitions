@@ -9,19 +9,18 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Pimcore\Model\Asset;
+use Symfony\Component\Console\Exception\RuntimeException;
+use Symfony\Component\Process\Process;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
-use Symfony\Component\Console\Exception\RuntimeException;
-use Symfony\Component\Inflector\Inflector;
-use Symfony\Component\Process\Process;
 
 class XmlProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
@@ -52,7 +51,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         foreach ($array as &$arrayEntry) {
             if (array_key_exists('@attributes', $arrayEntry)) {
                 foreach ($arrayEntry['@attributes'] as $key => $value) {
-                    $arrayEntry['attr_' . $key] = $value;
+                    $arrayEntry['attr_'.$key] = $value;
                 }
             }
         }
@@ -105,7 +104,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $this->convertXmlToArray($xml, $configuration['xPath']);
     }
 
-    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $writer = $this->getXMLWriter();
 
@@ -120,7 +119,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         }
     }
 
-    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $writer = $this->getXMLWriter();
 
@@ -159,7 +158,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         rename($this->getExportPath(), $file);
     }
 
-    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params)
     {
         return fopen($this->getExportPath(), 'rb');
     }
@@ -209,27 +208,29 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                 $writer->text($data);
             }
             $writer->endElement();
-        } else if (is_array($data)) {
-            $writer->startElement('collection');
-            if (null !== $name) {
-                $writer->writeAttribute('name', $name);
-            }
-            if (null !== $key) {
-                $writer->writeAttribute('key', $key);
-            }
-            $this->serializeCollection($writer, $data);
-            $writer->endElement();
         } else {
-            if ((string) $data) {
-                $writer->startElement('property');
+            if (is_array($data)) {
+                $writer->startElement('collection');
                 if (null !== $name) {
                     $writer->writeAttribute('name', $name);
                 }
                 if (null !== $key) {
                     $writer->writeAttribute('key', $key);
                 }
-                $writer->writeCdata((string) $data);
+                $this->serializeCollection($writer, $data);
                 $writer->endElement();
+            } else {
+                if ((string)$data) {
+                    $writer->startElement('property');
+                    if (null !== $name) {
+                        $writer->writeAttribute('name', $name);
+                    }
+                    if (null !== $key) {
+                        $writer->writeAttribute('key', $key);
+                    }
+                    $writer->writeCdata((string)$data);
+                    $writer->endElement();
+                }
             }
         }
     }
@@ -246,4 +247,4 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
     }
 }
 
-class_alias(XmlProvider::class, 'ImportDefinitionsBundle\Provider\XmlProvider');
+

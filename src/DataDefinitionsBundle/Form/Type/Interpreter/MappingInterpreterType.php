@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter;
@@ -27,13 +27,12 @@ final class MappingInterpreterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('mapping', CollectionType::class, [
-               'entry_type' => MappingType::class,
-               'allow_add' => true,
-               'allow_delete' => true,
-           ])
-            ->add('return_null_when_not_found', CheckboxType::class)
-        ;
+            ->add('mapping', CollectionType::class, [
+                'entry_type' => MappingType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
+            ->add('return_null_when_not_found', CheckboxType::class);
     }
 
     /**
@@ -45,4 +44,4 @@ final class MappingInterpreterType extends AbstractType
     }
 }
 
-class_alias(MappingInterpreterType::class, 'ImportDefinitionsBundle\Form\Type\Interpreter\MappingInterpreterType');
+

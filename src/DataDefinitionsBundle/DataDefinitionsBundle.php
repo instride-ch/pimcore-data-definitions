@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle;
@@ -17,6 +17,9 @@ namespace Wvision\Bundle\DataDefinitionsBundle;
 use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\ComposerPackageBundleInterface;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
+use Pimcore\Extension\Bundle\PimcoreBundleInterface;
+use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
@@ -29,9 +32,6 @@ use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\LoaderRegi
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
-use Pimcore\Extension\Bundle\PimcoreBundleInterface;
-use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBundleInterface, ComposerPackageBundleInterface
 {
@@ -44,7 +44,8 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
 
             if (null !== $extension) {
                 if (!$extension instanceof ExtensionInterface) {
-                    throw new \LogicException(sprintf('Extension %s must implement Symfony\Component\DependencyInjection\Extension\ExtensionInterface.', get_class($extension)));
+                    throw new \LogicException(sprintf('Extension %s must implement Symfony\Component\DependencyInjection\Extension\ExtensionInterface.',
+                        get_class($extension)));
                 }
 
                 $this->extension = $extension;
@@ -166,4 +167,3 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
     }
 }
 
-class_alias(DataDefinitionsBundle::class, 'ImportDefinitionsBundle\ImportDefinitionsBundle');

@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
@@ -66,8 +66,7 @@ final class ExportDefinitionType extends AbstractResourceType
             ->add('fetchUnpublished', CheckboxType::class)
             ->add('failureNotificationDocument', IntegerType::class)
             ->add('successNotificationDocument', IntegerType::class)
-            ->add('mapping', ExportMappingCollectionType::class)
-        ;
+            ->add('mapping', ExportMappingCollectionType::class);
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -104,8 +103,7 @@ final class ExportDefinitionType extends AbstractResourceType
                 }
 
                 $this->addConfigurationFields($event->getForm(), $formType);
-            })
-        ;
+            });
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -142,8 +140,7 @@ final class ExportDefinitionType extends AbstractResourceType
                 }
 
                 $this->addFetcherConfigurationFields($event->getForm(), $formType);
-            })
-        ;
+            });
     }
 
     /**
@@ -197,4 +194,3 @@ final class ExportDefinitionType extends AbstractResourceType
     }
 }
 
-class_alias(ExportDefinitionType::class, 'ImportDefinitionsBundle\Form\Type\ExportDefinitionType');

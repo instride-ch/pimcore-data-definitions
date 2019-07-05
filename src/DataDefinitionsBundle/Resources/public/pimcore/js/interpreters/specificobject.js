@@ -2,7 +2,7 @@ pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.specific_object'
 
 pimcore.plugin.datadefinitions.interpreters.specific_object = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
 
-    getLayout : function (fromColumn, toColumn, record, config) {
+    getLayout: function (fromColumn, toColumn, record, config) {
         this.defaultObjectField = new Ext.form.TextField({
             name: "objectId",
             value: config.path,
@@ -24,7 +24,7 @@ pimcore.plugin.datadefinitions.interpreters.specific_object = Class.create(pimco
         ];
     },
 
-    searchForObject: function(objectIndex) {
+    searchForObject: function (objectIndex) {
         pimcore.helpers.itemselector(false, this.addDataFromSelector.bind(this, objectIndex), {
             type: ["object"]
         });

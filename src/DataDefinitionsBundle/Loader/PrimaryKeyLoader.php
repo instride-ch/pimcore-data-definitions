@@ -9,24 +9,25 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Loader;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class PrimaryKeyLoader implements LoaderInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function load(string $class, $data, DefinitionInterface $definition, $params): ?Concrete {
-        $classObject = '\Pimcore\Model\DataObject\\' . ucfirst($class);
-        $classList = '\Pimcore\Model\DataObject\\' . ucfirst($class) . '\Listing';
+    public function load(string $class, $data, DataDefinitionInterface $definition, $params): ?Concrete
+    {
+        $classObject = '\Pimcore\Model\DataObject\\'.ucfirst($class);
+        $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';
 
         $list = new $classList();
 
@@ -36,7 +37,7 @@ class PrimaryKeyLoader implements LoaderInterface
             $conditionValues = [];
             foreach ($mapping as $map) {
                 if ($map->getPrimaryIdentifier()) {
-                    $condition[] = '`' . $map->getToColumn() . '` = ?';
+                    $condition[] = '`'.$map->getToColumn().'` = ?';
                     $conditionValues[] = $data[$map->getFromColumn()];
                 }
             }
@@ -47,7 +48,11 @@ class PrimaryKeyLoader implements LoaderInterface
 
             $list->setUnpublished(true);
             $list->setCondition(implode(' AND ', $condition), $conditionValues);
-            $list->setObjectTypes([Concrete::OBJECT_TYPE_VARIANT, Concrete::OBJECT_TYPE_OBJECT, Concrete::OBJECT_TYPE_FOLDER]);
+            $list->setObjectTypes([
+                Concrete::OBJECT_TYPE_VARIANT,
+                Concrete::OBJECT_TYPE_OBJECT,
+                Concrete::OBJECT_TYPE_FOLDER,
+            ]);
             $list->load();
             $objectData = $list->getObjects();
 
@@ -74,4 +79,4 @@ class PrimaryKeyLoader implements LoaderInterface
     }
 }
 
-class_alias(PrimaryKeyLoader::class, 'ImportDefinitionsBundle\Loader\PrimaryKeyLoader');
+

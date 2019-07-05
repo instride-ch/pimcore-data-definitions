@@ -8,7 +8,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.export.item');
@@ -17,9 +17,9 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
     iconCls: 'data_definitions_icon_export_definition',
     url: {
         save: '/admin/data_definitions/export_definitions/save',
-        upload : '/admin/data_definitions/export_definitions/import',
-        export : '/admin/data_definitions/export_definitions/export',
-        duplicate : '/admin/data_definitions/export_definitions/duplicate'
+        upload: '/admin/data_definitions/export_definitions/import',
+        export: '/admin/data_definitions/export_definitions/export',
+        duplicate: '/admin/data_definitions/export_definitions/duplicate'
     },
 
     providers: [],
@@ -77,7 +77,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
                     value: this.data.fetcher,
                     width: 500,
                     listeners: {
-                        change : function (combo, newValue) {
+                        change: function (combo, newValue) {
                             this.getFetcherPanel().removeAll();
 
                             this.getFetcherPanelLayout(newValue);
@@ -223,8 +223,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
 
             if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.export_provider[provider]) {
                 klass = pimcore.plugin.importdefinitions.export_provider[provider];
-            }
-            else if (pimcore.plugin.datadefinitions.export_provider[provider]) {
+            } else if (pimcore.plugin.datadefinitions.export_provider[provider]) {
                 klass = pimcore.plugin.datadefinitions.export_provider[provider];
             }
 
@@ -251,8 +250,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
 
         if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.export_provider[this.data.provider]) {
             klass = pimcore.plugin.importdefinitions.export_provider[this.data.provider];
-        }
-        else if (pimcore.plugin.datadefinitions.export_provider[this.data.provider]) {
+        } else if (pimcore.plugin.datadefinitions.export_provider[this.data.provider]) {
             klass = pimcore.plugin.datadefinitions.export_provider[this.data.provider];
         }
 
@@ -284,21 +282,21 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
         return this.mappingSettings;
     },
 
-    getFetcherPanel : function () {
+    getFetcherPanel: function () {
         if (!this.fetcherPanel) {
             this.fetcherPanel = new Ext.form.FormPanel({
-                defaults: { anchor: '100%' },
+                defaults: {anchor: '100%'},
                 layout: 'form',
                 border: 1,
                 padding: '0 0 10px 0',
-                title : t('data_definitions_fetcher_settings')
+                title: t('data_definitions_fetcher_settings')
             });
         }
 
         return this.fetcherPanel;
     },
 
-    getFetcherPanelLayout : function (type) {
+    getFetcherPanelLayout: function (type) {
         if (type) {
             type = type.toLowerCase();
 
@@ -306,8 +304,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
 
             if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.fetchers[type]) {
                 klass = pimcore.plugin.importdefinitions.fetchers[type];
-            }
-            else if (pimcore.plugin.datadefinitions.fetchers[type]) {
+            } else if (pimcore.plugin.datadefinitions.fetchers[type]) {
                 klass = pimcore.plugin.datadefinitions.fetchers[type];
             }
 
@@ -352,8 +349,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
         if (this.getFetcherPanel().isVisible()) {
             if (Ext.isFunction(this.fetcher.getFetcherData)) {
                 data.fetcherConfig = this.fetcher.getFetcherData();
-            }
-            else {
+            } else {
                 Ext.Object.each(this.getFetcherPanel().getForm().getFieldValues(), function (key, value) {
                     data.fetcherConfig[key] = value;
                 }.bind(this));

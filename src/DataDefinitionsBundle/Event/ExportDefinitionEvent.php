@@ -9,13 +9,13 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Symfony\Component\EventDispatcher\Event;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class ExportDefinitionEvent extends Event
 {
@@ -32,11 +32,11 @@ final class ExportDefinitionEvent extends Event
     protected $params = [];
 
     /**
-     * @param ExportDefinitionInterface $definition
+     * @param ExportDataDefinitionInterface $definition
      * @param null                      $subject
      * @param array                     $params
      */
-    public function __construct(ExportDefinitionInterface $definition, $subject = null, $params = [])
+    public function __construct(ExportDataDefinitionInterface $definition, $subject = null, $params = [])
     {
         $this->definition = $definition;
         $this->subject = $subject;
@@ -68,4 +68,3 @@ final class ExportDefinitionEvent extends Event
     }
 }
 
-class_alias(ExportDefinitionEvent::class, 'ImportDefinitionsBundle\Event\ExportDefinitionEvent');

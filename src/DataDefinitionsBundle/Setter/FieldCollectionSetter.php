@@ -9,16 +9,17 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
-use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Fieldcollection\Data\AbstractData as AbstractFieldCollection;
+use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class FieldCollectionSetter implements SetterInterface, GetterInterface
 {
@@ -26,7 +27,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function set(Concrete $object, $value, Mapping $map, $data)
+    public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $keyParts = explode('~', $map->getToColumn());
 
@@ -35,7 +36,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         $fieldName = $config['fieldcollectionField'];
         $class = $config['class'];
         $keys = explode(',', $keys);
-        $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\' . ucfirst($class);
+        $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\'.ucfirst($class);
         $field = $keyParts[3];
         $mappedKeys = [];
 
@@ -44,7 +45,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
 
             $mappedKeys[] = [
                 'from' => $tmp[0],
-                'to' => $tmp[1]
+                'to' => $tmp[1],
             ];
         }
 
@@ -100,7 +101,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         $config = $map->getGetterConfig();
         $fieldName = $config['field'];
         $class = $config['class'];
-        $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\' . ucfirst($class);
+        $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\'.ucfirst($class);
         $field = $keyParts[3];
 
         $getter = sprintf('get%s', ucfirst($fieldName));
@@ -120,9 +121,9 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
                     continue;
                 }
 
-                 if (!is_a($item, $fieldCollectionClass)) {
-                     continue;
-                 }
+                if (!is_a($item, $fieldCollectionClass)) {
+                    continue;
+                }
 
                 $getter = sprintf('get%s', ucfirst($field));
 
@@ -139,8 +140,8 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
 
     /**
      * @param array $keys
-     * @param $fieldcollection
-     * @param $data
+     * @param       $fieldcollection
+     * @param       $data
      * @return boolean
      * @throws \Exception
      */
@@ -164,4 +165,4 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
     }
 }
 
-class_alias(FieldCollectionSetter::class, 'ImportDefinitionsBundle\Setter\FieldCollectionSetter');
+

@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
@@ -33,8 +33,7 @@ final class ListImportDefinitionsCommand extends AbstractCommand
             ->setHelp(<<<EOT
 The <info>%command.name%</info> lists all Data Definitions for Imports.
 EOT
-            )
-        ;
+            );
     }
 
     /**
@@ -51,19 +50,17 @@ EOT
             $data[] = [
                 $definition->getId(),
                 $definition->getName(),
-                $definition->getProvider()
+                $definition->getProvider(),
             ];
         }
 
         $table = new Table($output);
         $table
             ->setHeaders(['ID', 'Name', 'Provider'])
-            ->setRows($data)
-        ;
+            ->setRows($data);
         $table->render();
 
         return 0;
     }
 }
 
-class_alias(ListImportDefinitionsCommand::class, 'ImportDefinitionsBundle\Command\ListImportDefinitionsCommand');

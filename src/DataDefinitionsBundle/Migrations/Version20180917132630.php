@@ -32,4 +32,4 @@ final class Version20180917132630 extends AbstractPimcoreMigration implements Co
     }
 }
 
-class_alias(Version20180917132630::class, 'ImportDefinitionsBundle\Migrations\Version20180917132630');
+

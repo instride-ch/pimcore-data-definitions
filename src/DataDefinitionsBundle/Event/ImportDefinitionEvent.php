@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
@@ -37,8 +37,8 @@ final class ImportDefinitionEvent extends Event
 
     /**
      * @param ImportDefinitionInterface $definition
-     * @param mixed $subject
-     * @param array $options
+     * @param mixed                     $subject
+     * @param array                     $options
      */
     public function __construct(ImportDefinitionInterface $definition, $subject = null, $options = [])
     {
@@ -72,4 +72,3 @@ final class ImportDefinitionEvent extends Event
     }
 }
 
-class_alias(ImportDefinitionEvent::class, 'ImportDefinitionsBundle\Event\ImportDefinitionEvent');

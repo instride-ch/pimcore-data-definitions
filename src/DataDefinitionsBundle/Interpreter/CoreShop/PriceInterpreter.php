@@ -9,36 +9,43 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
 
-use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 final class PriceInterpreter implements InterpreterInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
-    {
+    public function interpret(
+        Concrete $object,
+        $value,
+        MappingInterface $map,
+        $data,
+        DataDefinitionInterface $definition,
+        $params,
+        $configuration
+    ) {
         $inputIsFloat = $configuration['isFloat'];
 
         if (\is_string($value)) {
             $value = str_replace(',', '.', $value);
-            $value = (float) $value;
+            $value = (float)$value;
         }
 
         if ($inputIsFloat) {
-            $value = (int) round(round($value, 2) * 100, 0);
+            $value = (int)round(round($value, 2) * 100, 0);
         }
 
-        return (int) $value;
+        return (int)$value;
     }
 }
 
-class_alias(PriceInterpreter::class, 'ImportDefinitionsBundle\Interpreter\CoreShop\PriceInterpreter');
+

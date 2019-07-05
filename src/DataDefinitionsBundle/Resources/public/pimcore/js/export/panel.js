@@ -8,31 +8,31 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.export.panel');
 
 pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.panel, {
     layoutId: 'data_definitions_export_definition_panel',
-    storeId : 'data_definitions_export_definitions',
-    iconCls : 'data_definitions_icon_export_definition',
-    type : 'definition',
+    storeId: 'data_definitions_export_definitions',
+    iconCls: 'data_definitions_icon_export_definition',
+    type: 'definition',
 
-    url : {
-        add : '/admin/data_definitions/export_definitions/add',
-        delete : '/admin/data_definitions/export_definitions/delete',
-        get : '/admin/data_definitions/export_definitions/get'
+    url: {
+        add: '/admin/data_definitions/export_definitions/add',
+        delete: '/admin/data_definitions/export_definitions/delete',
+        get: '/admin/data_definitions/export_definitions/get'
     },
 
-    providers : [],
-    cleaners : [],
-    interpreters : [],
-    setters : [],
-    filters : [],
-    runners : [],
+    providers: [],
+    cleaners: [],
+    interpreters: [],
+    setters: [],
+    filters: [],
+    runners: [],
 
-	getDefaultGridConfiguration: function () {
+    getDefaultGridConfiguration: function () {
         return {
             region: 'west',
             store: pimcore.globalmanager.get(this.storeId),
@@ -114,45 +114,45 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
                 }.bind(this));
 
                 var providerStore = new Ext.data.ArrayStore({
-                    data : this.providers,
+                    data: this.providers,
                     fields: ['provider'],
-                    idProperty : 'provider'
+                    idProperty: 'provider'
                 });
 
                 pimcore.globalmanager.add('importdefinitions_export_providers', providerStore);
                 pimcore.globalmanager.add('data_definitions_export_providers', providerStore);
 
                 var interpretersStore = new Ext.data.ArrayStore({
-                    data : this.interpreters,
+                    data: this.interpreters,
                     fields: ['interpreter'],
-                    idProperty : 'interpreter'
+                    idProperty: 'interpreter'
                 });
 
                 pimcore.globalmanager.add('importdefinitions_interpreters', interpretersStore);
                 pimcore.globalmanager.add('data_definitions_interpreters', interpretersStore);
 
                 var runnersStore = new Ext.data.ArrayStore({
-                    data : this.runners,
+                    data: this.runners,
                     fields: ['runner'],
-                    idProperty : 'runner'
+                    idProperty: 'runner'
                 });
 
                 pimcore.globalmanager.add('importdefinitions_runners', runnersStore);
                 pimcore.globalmanager.add('data_definitions_runners', runnersStore);
 
                 var gettersStore = new Ext.data.ArrayStore({
-                    data : this.getters,
+                    data: this.getters,
                     fields: ['getter'],
-                    idProperty : 'getter'
+                    idProperty: 'getter'
                 });
 
                 pimcore.globalmanager.add('importdefinitions_getters', gettersStore);
                 pimcore.globalmanager.add('data_definitions_getters', gettersStore);
 
                 var fetchersStore = new Ext.data.ArrayStore({
-                    data : this.fetchers,
+                    data: this.fetchers,
                     fields: ['fetcher'],
-                    idProperty : 'fetcher'
+                    idProperty: 'fetcher'
                 });
 
                 pimcore.globalmanager.add('importdefinitions_fetchers', fetchersStore);

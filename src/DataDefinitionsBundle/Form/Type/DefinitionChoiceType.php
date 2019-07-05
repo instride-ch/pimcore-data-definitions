@@ -9,19 +9,19 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class DefinitionChoiceType extends AbstractType
 {
@@ -57,11 +57,11 @@ final class DefinitionChoiceType extends AbstractType
             ->setDefaults(
                 [
                     'choices' => function (Options $options) {
-                        return array_map(function(DefinitionInterface $def) {
+                        return array_map(function (DataDefinitionInterface $def) {
                             return $def->getId();
                         }, $this->definitionRepository->findAll());
                     },
-                    'choice_label' => function($val) {
+                    'choice_label' => function ($val) {
                         $def = $this->definitionRepository->find($val);
 
                         return $def->getName();
@@ -89,4 +89,3 @@ final class DefinitionChoiceType extends AbstractType
     }
 }
 
-class_alias(DefinitionChoiceType::class, 'ImportDefinitionsBundle\Form\Type\DefinitionChoiceType');

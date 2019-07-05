@@ -8,7 +8,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.data_definitions');
@@ -31,7 +31,7 @@ pimcore.plugin.data_definitions = Class.create(pimcore.plugin.admin, {
             var importMenu = new Ext.Action({
                 text: t('data_definitions_import_definitions'),
                 iconCls: 'data_definitions_nav_icon_import_definition',
-                handler:this.openImportDefinitions
+                handler: this.openImportDefinitions
             });
 
             layoutToolbar.settingsMenu.add(importMenu);
@@ -39,7 +39,7 @@ pimcore.plugin.data_definitions = Class.create(pimcore.plugin.admin, {
             var exportMenu = new Ext.Action({
                 text: t('data_definitions_export_definitions'),
                 iconCls: 'data_definitions_nav_icon_export_definition',
-                handler:this.openExportDefinitions
+                handler: this.openExportDefinitions
             });
 
             layoutToolbar.settingsMenu.add(exportMenu);
@@ -52,22 +52,18 @@ pimcore.plugin.data_definitions = Class.create(pimcore.plugin.admin, {
         }
     },
 
-    openImportDefinitions : function ()
-    {
+    openImportDefinitions: function () {
         try {
             pimcore.globalmanager.get('data_definitions_import_definition_panel').activate();
-        }
-        catch (e) {
+        } catch (e) {
             pimcore.globalmanager.add('data_definitions_import_definition_panel', new pimcore.plugin.datadefinitions.import.panel());
         }
     },
 
-    openExportDefinitions : function ()
-    {
+    openExportDefinitions: function () {
         try {
             pimcore.globalmanager.get('data_definitions_export_definition_panel').activate();
-        }
-        catch (e) {
+        } catch (e) {
             pimcore.globalmanager.add('data_definitions_export_definition_panel', new pimcore.plugin.datadefinitions.export.panel());
         }
     }

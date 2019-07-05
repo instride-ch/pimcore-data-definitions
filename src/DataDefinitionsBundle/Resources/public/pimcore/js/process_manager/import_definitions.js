@@ -8,10 +8,10 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-$(document).on('processmanager.ready', function() {
+$(document).on('processmanager.ready', function () {
     processmanager.executable.types.importdefinition = Class.create(pimcore.plugin.processmanager.executable.abstractType, {
         getItems: function () {
             pimcore.globalmanager.get('data_definitions_definitions').load();
@@ -45,16 +45,16 @@ $(document).on('processmanager.ready', function() {
                     style: "margin-left: 5px",
                     handler: this.openSearchEditor.bind(this)
                 },
-                {
-                    xtype: "button",
-                    text: t('upload'),
-                    cls: "pimcore_inline_upload",
-                    iconCls: "pimcore_icon_upload",
-                    style: "margin-left: 5px",
-                    handler: function (item) {
-                        this.uploadDialog();
-                    }.bind(this)
-                }]
+                    {
+                        xtype: "button",
+                        text: t('upload'),
+                        cls: "pimcore_inline_upload",
+                        iconCls: "pimcore_icon_upload",
+                        style: "margin-left: 5px",
+                        handler: function (item) {
+                            this.uploadDialog();
+                        }.bind(this)
+                    }]
             }];
         },
 

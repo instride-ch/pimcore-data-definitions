@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
@@ -99,7 +99,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
     /**
      * {@inheritdoc}
      */
-    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $file = $this->getFile($params['file']);
 
@@ -109,7 +109,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
     /**
      * {@inheritdoc}
      */
-    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $this->exportData[] = $data;
     }
@@ -117,7 +117,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
     /**
      * {@inheritdoc}
      */
-    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $stream = fopen('php://memory', 'rw+');
         fwrite($stream, json_encode($this->exportData));
@@ -126,4 +126,4 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
     }
 }
 
-class_alias(JsonProvider::class, 'ImportDefinitionsBundle\Provider\JsonProvider');
+

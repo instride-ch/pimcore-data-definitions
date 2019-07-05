@@ -9,15 +9,14 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
 
 class AssetByPathInterpreter implements InterpreterInterface
@@ -41,16 +40,16 @@ class AssetByPathInterpreter implements InterpreterInterface
     public function interpret(
         Concrete $object,
         $value,
-        Mapping $map,
+        MappingInterface $map,
         $data,
-        DefinitionInterface $definition,
+        DataDefinitionInterface $definition,
         $params,
         $configuration
     ) {
-        $assetFullPath = $configuration['path'] . "/" . $value;
+        $assetFullPath = $configuration['path']."/".$value;
 
         return \Pimcore\Model\Asset::getByPath($assetFullPath);
     }
 }
 
-class_alias(AssetByPathInterpreter::class, 'ImportDefinitionsBundle\Interpreter\AssetByPathInterpreter');
+

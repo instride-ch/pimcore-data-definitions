@@ -9,24 +9,23 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
-final class CleanerRegistryCompilerPass extends AbstractRegisterSimpleRegistryBCPass
+use CoreShop\Bundle\PimcoreBundle\DependencyInjection\Compiler\RegisterSimpleRegistryTypePass;
+
+final class CleanerRegistryCompilerPass extends RegisterSimpleRegistryTypePass
 {
     public const CLEANER_TAG = 'data_definitions.cleaner';
-    public const CLEANER_BC_TAG = 'import_definition.cleaner';
 
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.cleaner',
             'data_definitions.cleaners',
-            static::CLEANER_TAG,
-            'import_definition.cleaners',
-            static::CLEANER_BC_TAG
+            static::CLEANER_TAG
         );
     }
 }

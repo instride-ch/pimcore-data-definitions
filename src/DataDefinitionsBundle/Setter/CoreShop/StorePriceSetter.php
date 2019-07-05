@@ -9,18 +9,19 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop;
 
 use CoreShop\Component\Core\Model\StoreInterface;
 use CoreShop\Component\Store\Repository\StoreRepositoryInterface;
+use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
-use Pimcore\Model\DataObject\Concrete;
 
 class StorePriceSetter implements SetterInterface, GetterInterface
 {
@@ -40,7 +41,7 @@ class StorePriceSetter implements SetterInterface, GetterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(Concrete $object, $value, Mapping $map, $data)
+    public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $config = $map->getSetterConfig();
 
@@ -98,4 +99,4 @@ class StorePriceSetter implements SetterInterface, GetterInterface
     }
 }
 
-class_alias(StorePriceSetter::class, 'ImportDefinitionsBundle\Setter\CoreShop\StorePriceSetter');
+

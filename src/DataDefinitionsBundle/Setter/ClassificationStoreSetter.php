@@ -9,27 +9,28 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
-use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
+use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ClassificationStoreSetter implements SetterInterface, GetterInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function set(Concrete $object, $value, Mapping $map, $data)
+    public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $mapConfig = $map->getSetterConfig();
         $fieldName = $mapConfig['field'];
-        $keyConfig = (int) $mapConfig['keyConfig'];
-        $groupConfig = (int) $mapConfig['groupConfig'];
+        $keyConfig = (int)$mapConfig['keyConfig'];
+        $groupConfig = (int)$mapConfig['groupConfig'];
 
         $classificationStoreGetter = sprintf('get%s', ucfirst($fieldName));
 
@@ -56,8 +57,8 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
     {
         $mapConfig = $map->getGetterConfig();
         $fieldName = $mapConfig['field'];
-        $keyConfig = (int) $mapConfig['keyConfig'];
-        $groupConfig = (int) $mapConfig['groupConfig'];
+        $keyConfig = (int)$mapConfig['keyConfig'];
+        $groupConfig = (int)$mapConfig['groupConfig'];
 
         $classificationStoreGetter = sprintf('get%s', ucfirst($fieldName));
 
@@ -80,4 +81,4 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
     }
 }
 
-class_alias(ClassificationStoreSetter::class, 'ImportDefinitionsBundle\Setter\ClassificationStoreSetter');
+

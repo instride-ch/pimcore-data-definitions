@@ -9,13 +9,12 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -28,8 +27,7 @@ final class MappingType extends AbstractType
     {
         $builder
             ->add('from', TextType::class)
-            ->add('to', TextType::class)
-        ;
+            ->add('to', TextType::class);
     }
 
     /**
@@ -41,4 +39,4 @@ final class MappingType extends AbstractType
     }
 }
 
-class_alias(MappingType::class, 'ImportDefinitionsBundle\Form\Type\Interpreter\MappingType');
+

@@ -9,13 +9,13 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Getter;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 
 interface DynamicColumnGetterInterface extends GetterInterface
 {
@@ -29,7 +29,7 @@ interface DynamicColumnGetterInterface extends GetterInterface
      *               with other columns from the definition and to always return
      *               exactly the same keys in exactly the same order for each object.
      */
-    public function get(Concrete $object, ExportMapping $map, $data): array;
+    public function get(Concrete $object, ExportMappingInterface $map, $data): array;
 }
 
-class_alias(DynamicColumnGetterInterface::class, 'ImportDefinitionsBundle\Getter\DynamicColumnGetterInterface');
+

@@ -9,18 +9,18 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use League\Csv\Reader;
+use League\Csv\Statement;
+use League\Csv\Writer;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
-use League\Csv\Reader;
-use League\Csv\Statement;
-use League\Csv\Writer;
 
 class CsvProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
@@ -95,7 +95,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $csv->setEnclosure($enclosure);
 
         if ($csvHeaders) {
-            $headers = array_map(function(FromColumn $column) {
+            $headers = array_map(function (FromColumn $column) {
                 return $column->getIdentifier();
             }, $this->getColumns($configuration));
 
@@ -109,8 +109,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
 
             $csv = Reader::createFromString($writer->getContent());
             $csv->setHeaderOffset(0);
-        }
-        else {
+        } else {
             $csv->setHeaderOffset(0);
         }
 
@@ -132,7 +131,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params)
     {
         if (!array_key_exists('file', $params)) {
             return;
@@ -152,7 +151,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $this->exportData[] = $data;
     }
@@ -160,11 +159,11 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params)
     {
         $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
 
-        $stream = fopen('php://memory','rw+');
+        $stream = fopen('php://memory', 'rw+');
 
         $writer = Writer::createFromStream($stream);
         $writer->setDelimiter($configuration['delimiter']);
@@ -176,4 +175,4 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
     }
 }
 
-class_alias(CsvProvider::class, 'ImportDefinitionsBundle\Provider\CsvProvider');
+

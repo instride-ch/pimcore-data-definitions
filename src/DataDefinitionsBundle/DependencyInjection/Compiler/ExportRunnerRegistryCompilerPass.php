@@ -9,24 +9,23 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
-final class ExportRunnerRegistryCompilerPass extends AbstractRegisterSimpleRegistryBCPass
+use CoreShop\Bundle\PimcoreBundle\DependencyInjection\Compiler\RegisterSimpleRegistryTypePass;
+
+final class ExportRunnerRegistryCompilerPass extends RegisterSimpleRegistryTypePass
 {
     public const EXPORT_RUNNER_TAG = 'data_definitions.export_runner';
-    public const EXPORT_RUNNER_BC_TAG = 'import_definition.export_runner';
 
     public function __construct()
     {
         parent::__construct(
             'data_definitions.registry.export_runner',
             'data_definitions.export_runners',
-            self::EXPORT_RUNNER_TAG,
-            'import_definition.export_runners',
-            self::EXPORT_RUNNER_BC_TAG
+            self::EXPORT_RUNNER_TAG
         );
     }
 }

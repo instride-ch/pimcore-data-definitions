@@ -9,22 +9,21 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
-use Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
+use Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class ExportCommand extends AbstractCommand
 {
@@ -109,7 +108,7 @@ EOT
             throw new \Exception('Export Definition not found');
         }
 
-        $imStatus = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process)  {
+        $imStatus = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process) {
             if ($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getSubject());
                 $progress->display();
@@ -154,4 +153,3 @@ EOT
     }
 }
 
-class_alias(ExportCommand::class, 'ImportDefinitionsBundle\Command\ExportCommand');

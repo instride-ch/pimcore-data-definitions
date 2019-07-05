@@ -1,11 +1,11 @@
 pimcore.registerNS("pimcore.plugin.datadefinitions.export.context_menu");
 
 pimcore.plugin.datadefinitions.export.context_menu = Class.create(pimcore.plugin.admin, {
-    getClassName: function() {
+    getClassName: function () {
         return "pimcore.plugin.datadefinitions.export.context_menu";
     },
 
-    initialize: function() {
+    initialize: function () {
         pimcore.plugin.broker.registerPlugin(this);
     },
 
@@ -35,7 +35,7 @@ pimcore.plugin.datadefinitions.export.context_menu = Class.create(pimcore.plugin
             },
             autoLoad: true,
             listeners: {
-                load: function(store, executables, successful) {
+                load: function (store, executables, successful) {
                     if (!successful) {
                         return;
                     }
@@ -51,7 +51,7 @@ pimcore.plugin.datadefinitions.export.context_menu = Class.create(pimcore.plugin
 
                     if (exportMenu) {
                         tree.add([
-                            { xtype: 'menuseparator' },
+                            {xtype: 'menuseparator'},
                             {
                                 text: t("importdefinitions_processmanager_export_from_here"),
                                 iconCls: "pimcore_icon_object pimcore_icon_overlay_download",

@@ -8,13 +8,13 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.export.configDialog');
 
 pimcore.plugin.datadefinitions.export.configDialog = Class.create({
-    getConfigDialog : function (fromColumn, record, config) {
+    getConfigDialog: function (fromColumn, record, config) {
         var fieldSetItems = [];
 
         this.fromColumn = fromColumn;
@@ -22,17 +22,17 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
         this.config = config;
 
         fieldSetItems.push(new Ext.form.TextField({
-            fieldLabel : t('data_definitions_fromColumn'),
-            length : 255,
-            value : fromColumn.identifier,
-            disabled : true
+            fieldLabel: t('data_definitions_fromColumn'),
+            length: 255,
+            value: fromColumn.identifier,
+            disabled: true
         }));
 
         fieldSetItems.push(new Ext.form.TextField({
-            fieldLabel : t('data_definitions_toColumn'),
-            name : 'toColumn',
-            length : 255,
-            value : record.get('toColumn'),
+            fieldLabel: t('data_definitions_toColumn'),
+            name: 'toColumn',
+            length: 255,
+            value: record.get('toColumn'),
             allowBlank: false
         }));
 
@@ -53,16 +53,16 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
         }
 
         fieldSetItems.push(new Ext.form.ComboBox({
-            fieldLabel : t('data_definitions_getters'),
-            name : 'getter',
-            length : 255,
-            value : record.data.getter,
-            store : pimcore.globalmanager.get('data_definitions_getters'),
-            valueField : 'getter',
-            displayField : 'getter',
-            queryMode : 'local',
-            listeners : {
-                change : function (combo, newValue) {
+            fieldLabel: t('data_definitions_getters'),
+            name: 'getter',
+            length: 255,
+            value: record.data.getter,
+            store: pimcore.globalmanager.get('data_definitions_getters'),
+            valueField: 'getter',
+            displayField: 'getter',
+            queryMode: 'local',
+            listeners: {
+                change: function (combo, newValue) {
                     this.getGetterPanel().removeAll();
 
                     this.getGetterPanelLayout(newValue);
@@ -71,16 +71,16 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
         }));
 
         fieldSetItems.push(new Ext.form.ComboBox({
-            fieldLabel : t('data_definitions_interpreters'),
-            name : 'interpreter',
-            length : 255,
-            value : record.data.interpreter,
-            store : pimcore.globalmanager.get('data_definitions_interpreters'),
-            valueField : 'interpreter',
-            displayField : 'interpreter',
-            queryMode : 'local',
-            listeners : {
-                change : function (combo, newValue) {
+            fieldLabel: t('data_definitions_interpreters'),
+            name: 'interpreter',
+            length: 255,
+            value: record.data.interpreter,
+            store: pimcore.globalmanager.get('data_definitions_interpreters'),
+            valueField: 'interpreter',
+            displayField: 'interpreter',
+            queryMode: 'local',
+            listeners: {
+                change: function (combo, newValue) {
                     this.getInterpreterPanel().removeAll();
 
                     this.getInterpreterPanelLayout(newValue);
@@ -89,15 +89,15 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
         }));
 
         this.configForm = new Ext.form.FormPanel({
-            items : fieldSetItems,
+            items: fieldSetItems,
             layout: 'form',
-            defaults: { anchor: '100%' },
-            title : t('settings')
+            defaults: {anchor: '100%'},
+            title: t('settings')
         });
 
         this.configPanel = new Ext.panel.Panel({
             layout: 'form',
-            scrollable : true,
+            scrollable: true,
             items:
                 [
                     this.configForm,
@@ -117,7 +117,7 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
             renderTo: 'pimcore_body',
             width: 800,
             height: 600,
-            resizeable : true,
+            resizeable: true,
             modal: false,
             title: t('data_definitions_config') + ' ' + fromColumn.label + ' => ' + record.get('toColumn'),
             layout: 'fit',
@@ -130,19 +130,19 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
         this.window.show();
     },
 
-    getInterpreterPanel : function () {
+    getInterpreterPanel: function () {
         if (!this.interpreterPanel) {
             this.interpreterPanel = new Ext.form.FormPanel({
-                defaults: { anchor: '90%' },
+                defaults: {anchor: '90%'},
                 layout: 'form',
-                title : t('data_definitions_interpreter_settings')
+                title: t('data_definitions_interpreter_settings')
             });
         }
 
         return this.interpreterPanel;
     },
 
-    getInterpreterPanelLayout : function (type) {
+    getInterpreterPanelLayout: function (type) {
         if (type) {
             type = type.toLowerCase();
 
@@ -150,8 +150,7 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
 
             if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.interpreters[type]) {
                 klass = pimcore.plugin.importdefinitions.interpreters[type];
-            }
-            else if (pimcore.plugin.datadefinitions.interpreters[type]) {
+            } else if (pimcore.plugin.datadefinitions.interpreters[type]) {
                 klass = pimcore.plugin.datadefinitions.interpreters[type];
             }
 
@@ -170,19 +169,19 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
         }
     },
 
-    getGetterPanel : function () {
+    getGetterPanel: function () {
         if (!this.getterPanel) {
             this.getterPanel = new Ext.form.FormPanel({
-                defaults: { anchor: '100%' },
+                defaults: {anchor: '100%'},
                 layout: 'form',
-                title : t('data_definitions_getter_settings')
+                title: t('data_definitions_getter_settings')
             });
         }
 
         return this.getterPanel;
     },
 
-    getGetterPanelLayout : function (type) {
+    getGetterPanelLayout: function (type) {
         if (type) {
             var klass = null;
 
@@ -191,8 +190,7 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
             //TODO: Remove in 3.0
             if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.getters[type]) {
                 klass = pimcore.plugin.importdefinitions.getters[type];
-            }
-            else if (pimcore.plugin.datadefinitions.getters[type]) {
+            } else if (pimcore.plugin.datadefinitions.getters[type]) {
                 klass = pimcore.plugin.datadefinitions.getters[type];
             }
 
@@ -231,8 +229,7 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
             if (this.getInterpreterPanel().isVisible()) {
                 if (Ext.isFunction(this.interpreter.getInterpreterData)) {
                     this.record.data.interpreterConfig = this.interpreter.getInterpreterData();
-                }
-                else {
+                } else {
                     Ext.Object.each(interpreterForm.getFieldValues(), function (key, value) {
                         this.record.data.interpreterConfig[key] = value;
                     }.bind(this));
@@ -242,8 +239,7 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
             if (this.getGetterPanel().isVisible()) {
                 if (Ext.isFunction(this.getter.getGetterData)) {
                     this.record.data.getterConfig = this.getter.getGetterData();
-                }
-                else {
+                } else {
                     Ext.Object.each(getterForm.getFieldValues(), function (key, value) {
                         this.record.data.getterConfig[key] = value;
                     }.bind(this));

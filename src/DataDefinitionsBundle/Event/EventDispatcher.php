@@ -12,12 +12,8 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
-use CoreShop\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use CoreShop\Component\Resource\Metadata\MetadataInterface;
-use CoreShop\Component\Resource\Model\ResourceInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
@@ -37,7 +33,7 @@ final class EventDispatcher implements EventDispatcherInterface
     /**
      * {@inheritdoc}
      */
-    public function dispatch(DefinitionInterface $definition, $eventName, $subject = '', $params = [])
+    public function dispatch(DataDefinitionInterface $definition, $eventName, $subject = '', $params = [])
     {
         $event = $this->getEvent($definition, $subject, $params);
 
@@ -48,15 +44,14 @@ final class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param DataDefinitionInterface $definition
      * @param string              $subject
      * @param array               $params
      * @return ImportDefinitionEvent
      */
-    private function getEvent(DefinitionInterface $definition, $subject = '', $params = [])
+    private function getEvent(DataDefinitionInterface $definition, $subject = '', $params = [])
     {
         return new ImportDefinitionEvent($definition, $subject, $params);
     }
 }
 
-class_alias(EventDispatcher::class, 'ImportDefinitionsBundle\Event\EventDispatcher');

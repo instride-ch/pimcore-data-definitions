@@ -8,48 +8,48 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.iterator');
 
 pimcore.plugin.datadefinitions.interpreters.iterator = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
-    getStore: function() {
+    getStore: function () {
         return pimcore.globalmanager.get('data_definitions_interpreters');
     },
 
-    getTitle: function() {
+    getTitle: function () {
         return t('data_definitions_interpreter_settings');
     },
 
-    getStoreIdentifier: function() {
+    getStoreIdentifier: function () {
         return 'interpreter';
     },
 
-    getClassItem: function() {
+    getClassItem: function () {
         return pimcore.plugin.datadefinitions.interpreters;
     },
 
     getLayout: function (fromColumn, toColumn, record, config) {
         this.interpreterPanel = new Ext.form.FormPanel({
-            defaults: { anchor: '90%' },
+            defaults: {anchor: '90%'},
             layout: 'form',
-            title : this.getTitle(),
+            title: this.getTitle(),
             border: true,
             hidden: true
         });
 
         this.interpreterTypeCombo = new Ext.form.ComboBox({
-            fieldLabel : t('data_definitions_interpreters'),
-            name : this.getStoreIdentifier(),
-            length : 255,
-            value : config.interpreter ? config.interpreter.type : null,
-            store : this.getStore(),
-            valueField : this.getStoreIdentifier(),
-            displayField : this.getStoreIdentifier(),
-            queryMode : 'local',
-            listeners : {
-                change : function (combo, newValue) {
+            fieldLabel: t('data_definitions_interpreters'),
+            name: this.getStoreIdentifier(),
+            length: 255,
+            value: config.interpreter ? config.interpreter.type : null,
+            store: this.getStore(),
+            valueField: this.getStoreIdentifier(),
+            displayField: this.getStoreIdentifier(),
+            queryMode: 'local',
+            listeners: {
+                change: function (combo, newValue) {
                     this.interpreterPanel.removeAll();
 
                     this.getInterpreterPanelLayout(newValue, fromColumn, toColumn, record, config, {});
@@ -80,7 +80,7 @@ pimcore.plugin.datadefinitions.interpreters.iterator = Class.create(pimcore.plug
         }
     },
 
-    getInterpreterPanelLayout : function (type, fromColumn, toColumn, record, parentConfig, config) {
+    getInterpreterPanelLayout: function (type, fromColumn, toColumn, record, parentConfig, config) {
         if (type) {
             type = type.toLowerCase();
 
@@ -104,13 +104,12 @@ pimcore.plugin.datadefinitions.interpreters.iterator = Class.create(pimcore.plug
     getInterpreterData: function () {
         // get defined conditions
         if (this.interpreter) {
-            var interpreterConfig  = {};
+            var interpreterConfig = {};
             var interpreterForm = this.interpreterPanel.getForm();
 
             if (Ext.isFunction(this.interpreter.getInterpreterData)) {
                 interpreterConfig = this.interpreter.getInterpreterData();
-            }
-            else {
+            } else {
                 Ext.Object.each(interpreterForm.getFieldValues(), function (key, value) {
                     interpreterConfig[key] = value;
                 }.bind(this));

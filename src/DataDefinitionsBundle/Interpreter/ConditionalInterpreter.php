@@ -9,19 +9,19 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Mapping;
 use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
@@ -47,8 +47,11 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
      * @param ExpressionLanguage       $expressionLanguage
      * @param ContainerInterface       $container
      */
-    public function __construct(ServiceRegistryInterface $interpreterRegistry, ExpressionLanguage $expressionLanguage, ContainerInterface $container)
-    {
+    public function __construct(
+        ServiceRegistryInterface $interpreterRegistry,
+        ExpressionLanguage $expressionLanguage,
+        ContainerInterface $container
+    ) {
         $this->interpreterRegistry = $interpreterRegistry;
         $this->expressionLanguage = $expressionLanguage;
         $this->container = $container;
@@ -57,8 +60,15 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
     /**
      * {@inheritdoc}
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
-    {
+    public function interpret(
+        Concrete $object,
+        $value,
+        MappingInterface $map,
+        $data,
+        DataDefinitionInterface $definition,
+        $params,
+        $configuration
+    ) {
         $params = [
             'value' => $value,
             'object' => $object,
@@ -67,15 +77,14 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
             'definition' => $definition,
             'params' => $params,
             'configuration' => $configuration,
-            'container' => $this->container
+            'container' => $this->container,
         ];
 
         $condition = $configuration['condition'];
 
         if ($this->expressionLanguage->evaluate($condition, $params)) {
             $interpreter = $configuration['true_interpreter'];
-        }
-        else {
+        } else {
             $interpreter = $configuration['false_interpreter'];
         }
 
@@ -89,8 +98,9 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
             $interpreterObject->setDataSet($this->getDataSet());
         }
 
-        return $interpreterObject->interpret($object, $value, $map, $data, $definition, $params, $interpreter['interpreterConfig']);
+        return $interpreterObject->interpret($object, $value, $map, $data, $definition, $params,
+            $interpreter['interpreterConfig']);
     }
 }
 
-class_alias(ConditionalInterpreter::class, 'ImportDefinitionsBundle\Interpreter\ConditionalInterpreter');
+

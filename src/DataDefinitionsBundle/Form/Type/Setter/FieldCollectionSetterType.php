@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter;
@@ -25,8 +25,7 @@ final class FieldCollectionSetterType extends AbstractType
         $builder
             ->add('field', TextType::class)
             ->add('class', TextType::class)
-            ->add('keys', TextType::class)
-        ;
+            ->add('keys', TextType::class);
     }
 
     /**
@@ -38,4 +37,4 @@ final class FieldCollectionSetterType extends AbstractType
     }
 }
 
-class_alias(FieldCollectionSetterType::class, 'ImportDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType');
+

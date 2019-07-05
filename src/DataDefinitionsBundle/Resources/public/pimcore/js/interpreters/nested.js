@@ -8,21 +8,21 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.nested');
 
 pimcore.plugin.datadefinitions.interpreters.nested = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
-    getStore: function() {
+    getStore: function () {
         return pimcore.globalmanager.get('data_definitions_interpreters');
     },
 
-    getClassItem: function() {
+    getClassItem: function () {
         return pimcore.plugin.datadefinitions.interpreters;
     },
 
-    getInterpreterIdentifier: function(interpreter) {
+    getInterpreterIdentifier: function (interpreter) {
         return interpreter.get('interpreter');
     },
 
@@ -33,7 +33,9 @@ pimcore.plugin.datadefinitions.interpreters.nested = Class.create(pimcore.plugin
 
         this.getStore().clearFilter();
 
-        var records = this.getStore().getRange().map(function(interpreter) {return _this.getInterpreterIdentifier(interpreter);});
+        var records = this.getStore().getRange().map(function (interpreter) {
+            return _this.getInterpreterIdentifier(interpreter);
+        });
 
         Ext.each(records, function (interpreter) {
             if (interpreter === 'abstract')

@@ -9,14 +9,13 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class ObjectsFetcherType extends AbstractType
@@ -27,9 +26,8 @@ final class ObjectsFetcherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('unpublished', CheckboxType::class)
-        ;
+            ->add('unpublished', CheckboxType::class);
     }
 }
 
-class_alias(ObjectsFetcherType::class, 'ImportDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType');
+

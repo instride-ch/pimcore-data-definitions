@@ -9,19 +9,19 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter;
 
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Form\Type\InterpreterChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\InterpreterChoiceType;
 use Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType;
 
 final class InterpreterType extends AbstractType
@@ -46,9 +46,8 @@ final class InterpreterType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-         $builder
-            ->add('type', InterpreterChoiceType::class)
-        ;
+        $builder
+            ->add('type', InterpreterChoiceType::class);
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -83,8 +82,7 @@ final class InterpreterType extends AbstractType
                 }
 
                 $this->addConfigurationFields($event->getForm(), $formType);
-            })
-        ;
+            });
     }
 
     /**
@@ -96,8 +94,7 @@ final class InterpreterType extends AbstractType
 
         $resolver
             ->setDefault('configuration_type', null)
-            ->setAllowedTypes('configuration_type', ['string', 'null'])
-        ;
+            ->setAllowedTypes('configuration_type', ['string', 'null']);
     }
 
     /**
@@ -125,4 +122,4 @@ final class InterpreterType extends AbstractType
     }
 }
 
-class_alias(InterpreterType::class, 'ImportDefinitionsBundle\Form\Type\Interpreter\InterpreterType');
+

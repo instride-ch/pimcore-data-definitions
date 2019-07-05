@@ -9,19 +9,19 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Pimcore\Model\DataObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection;
 
 class ImportDefinitionController extends ResourceController
@@ -46,7 +46,7 @@ class ImportDefinitionController extends ResourceController
             'cleaner' => array_keys($cleaners),
             'setter' => array_keys($setters),
             'filters' => array_keys($filters),
-            'runner' => array_keys($runners)
+            'runner' => array_keys($runners),
         ]);
     }
 
@@ -138,7 +138,7 @@ class ImportDefinitionController extends ResourceController
                                 'setter' => $mapping->getSetter(),
                                 'setterConfig' => $mapping->getSetterConfig(),
                                 'interpreter' => $mapping->getInterpreter(),
-                                'interpreterConfig' => $mapping->getInterpreterConfig()
+                                'interpreterConfig' => $mapping->getInterpreterConfig(),
                             ];
 
                             break;
@@ -156,7 +156,7 @@ class ImportDefinitionController extends ResourceController
                         'setter' => $classToColumn->getSetter(),
                         'setterConfig' => $classToColumn->getSetterConfig(),
                         'interpreter' => $classToColumn->getInterpreter(),
-                        'interpreterConfig' => $classToColumn->getInterpreterConfig()
+                        'interpreterConfig' => $classToColumn->getInterpreterConfig(),
                     ];
                 }
             }
@@ -167,7 +167,7 @@ class ImportDefinitionController extends ResourceController
                 'fromColumns' => $fromColumnsResult,
                 'toColumns' => $toColumns,
                 'bricks' => $bricks,
-                'fieldcollections' => $collections
+                'fieldcollections' => $collections,
             ]);
         }
 
@@ -180,7 +180,7 @@ class ImportDefinitionController extends ResourceController
      */
     public function exportAction(Request $request): Response
     {
-        $id = (int) $request->get('id');
+        $id = (int)$request->get('id');
 
         if ($id) {
             $definition = $this->repository->find($id);
@@ -192,7 +192,8 @@ class ImportDefinitionController extends ResourceController
 
                 $response = new Response();
                 $response->headers->set('Content-Type', 'application/json');
-                $response->headers->set('Content-Disposition', sprintf('attachment; filename="import-definition-%s.json"', $name));
+                $response->headers->set('Content-Disposition',
+                    sprintf('attachment; filename="import-definition-%s.json"', $name));
                 $response->headers->set('Pragma', 'no-cache');
                 $response->headers->set('Expires', '0');
                 $response->headers->set('Content-Transfer-Encoding', 'binary');
@@ -212,7 +213,7 @@ class ImportDefinitionController extends ResourceController
      */
     public function importAction(Request $request)
     {
-        $id = (int) $request->get('id');
+        $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
 
         if ($id && $definition instanceof ImportDefinitionInterface && $request->files->has('Filedata')) {
@@ -245,9 +246,9 @@ class ImportDefinitionController extends ResourceController
      */
     public function duplicateAction(Request $request)
     {
-        $id = (int) $request->get('id');
+        $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
-        $name = (string) $request->get('name');
+        $name = (string)$request->get('name');
 
         if ($definition instanceof ImportDefinitionInterface && $name) {
             $newDefinition = clone $definition;
@@ -320,4 +321,3 @@ class ImportDefinitionController extends ResourceController
     }
 }
 
-class_alias(ImportDefinitionController::class, 'ImportDefinitionsBundle\Controller\ImportDefinitionController');

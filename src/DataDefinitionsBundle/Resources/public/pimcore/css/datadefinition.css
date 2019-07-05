@@ -35,15 +35,15 @@ body.pimcore_version_6 .data_definitions_nav_icon_export_definition {
 }
 
 .td-icon[class*="pimcore_icon"] {
-    background-position: left center!important;
+    background-position: left center !important;
 }
 
 .td-icon .x-grid-cell-inner {
-    padding-left:25px;
+    padding-left: 25px;
 }
 
 .data_definitions_edit_button {
-    padding: 0px!important;
-    background: none!important;
-    border: none!important;
+    padding: 0px !important;
+    background: none !important;
+    border: none !important;
 }

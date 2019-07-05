@@ -9,7 +9,7 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\Log\Listing;
@@ -104,7 +104,7 @@ class Dao extends Listing\Dao\AbstractDao
         try {
             $query = $this->getQuery();
             $objectIds = $this->db->fetchCol($query, $this->model->getConditionVariables());
-            $this->totalCount = (int) $this->db->fetchOne('SELECT FOUND_ROWS()');
+            $this->totalCount = (int)$this->db->fetchOne('SELECT FOUND_ROWS()');
 
             return $objectIds;
         } catch (\Exception $e) {
@@ -120,7 +120,8 @@ class Dao extends Listing\Dao\AbstractDao
      */
     public function getCount()
     {
-        $amount = (int) $this->db->fetchOne('SELECT COUNT(*) as amount FROM ' . $this->getTableName() . $this->getCondition() . $this->getOffsetLimit(), $this->model->getConditionVariables());
+        $amount = (int)$this->db->fetchOne('SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition().$this->getOffsetLimit(),
+            $this->model->getConditionVariables());
 
         return $amount;
     }
@@ -133,10 +134,11 @@ class Dao extends Listing\Dao\AbstractDao
      */
     public function getTotalCount()
     {
-        $amount = (int) $this->db->fetchOne('SELECT COUNT(*) as amount FROM ' . $this->getTableName() . $this->getCondition(), $this->model->getConditionVariables());
+        $amount = (int)$this->db->fetchOne('SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition(),
+            $this->model->getConditionVariables());
 
         return $amount;
     }
 }
 
-class_alias(Dao::class, 'ImportDefinitionsBundle\Model\Log\Listing\Dao');
+

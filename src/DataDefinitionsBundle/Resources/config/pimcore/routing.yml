@@ -1,59 +1,59 @@
 data_definitions_admin_import_definitions:
-  type: coreshop.resources
-  resource: |
-    alias: data_definitions.import_definition
-    additional_routes:
-      config:
-        path: get-config
-        action: getConfig
-        methods: [GET]
-      columns:
-        path: get-columns
-        action: getColumns
-        methods: [GET]
-      testData:
-        path: test-data
-        action: testData
-        methods: [GET]
-      import:
-        path: import
-        action: import
-        methods: [GET,POST]
-      export:
-        path: export
-        action: export
-        methods: [GET]
-      duplicate:
-        path: duplicate
-        action: duplicate
-        methods: [POST]
+    type: coreshop.resources
+    resource: |
+        alias: data_definitions.import_definition
+        additional_routes:
+          config:
+            path: get-config
+            action: getConfig
+            methods: [GET]
+          columns:
+            path: get-columns
+            action: getColumns
+            methods: [GET]
+          testData:
+            path: test-data
+            action: testData
+            methods: [GET]
+          import:
+            path: import
+            action: import
+            methods: [GET,POST]
+          export:
+            path: export
+            action: export
+            methods: [GET]
+          duplicate:
+            path: duplicate
+            action: duplicate
+            methods: [POST]
 
 data_definitions_admin_export_definitions:
-  type: coreshop.resources
-  resource: |
-    alias: data_definitions.export_definition
-    additional_routes:
-      config:
-        path: get-config
-        action: getConfig
-        methods: [GET]
-      columns:
-        path: get-columns
-        action: getColumns
-        methods: [GET]
-      testData:
-        path: test-data
-        action: testData
-        methods: [GET]
-      import:
-        path: import
-        action: import
-        methods: [GET,POST]
-      export:
-        path: export
-        action: export
-        methods: [GET]
-      duplicate:
-        path: duplicate
-        action: duplicate
-        methods: [POST]
+    type: coreshop.resources
+    resource: |
+        alias: data_definitions.export_definition
+        additional_routes:
+          config:
+            path: get-config
+            action: getConfig
+            methods: [GET]
+          columns:
+            path: get-columns
+            action: getColumns
+            methods: [GET]
+          testData:
+            path: test-data
+            action: testData
+            methods: [GET]
+          import:
+            path: import
+            action: import
+            methods: [GET,POST]
+          export:
+            path: export
+            action: export
+            methods: [GET]
+          duplicate:
+            path: duplicate
+            action: duplicate
+            methods: [POST]

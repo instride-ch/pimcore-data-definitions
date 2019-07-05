@@ -9,20 +9,20 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Pimcore\Model\Asset;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 trait ArtifactProviderTrait
 {
     /**
      * {@inheritdoc}
      */
-    public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset
+    public function generateArtifact($configuration, ExportDataDefinitionInterface $definition, $params): ?Asset
     {
         if (!$params['artifact']) {
             return null;
@@ -33,8 +33,7 @@ trait ArtifactProviderTrait
 
         if ($artifactPath === '.') {
             $artifactPath = Asset::getById(1);
-        }
-        else {
+        } else {
             $artifactPath = Asset\Service::createFolderByPath($artifactPath);
         }
 
@@ -54,10 +53,10 @@ trait ArtifactProviderTrait
 
     /**
      * @param                           $configuration
-     * @param ExportDefinitionInterface $definition
+     * @param ExportDataDefinitionInterface $definition
      * @param                           $params
      */
-    public abstract function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params);
+    public abstract function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params);
 }
 
-class_alias(ArtifactProviderTrait::class, 'ImportDefinitionsBundle\ProcessManager\ArtifactProviderTrait');
+

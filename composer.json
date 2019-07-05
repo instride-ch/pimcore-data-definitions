@@ -26,7 +26,7 @@
   ],
   "require": {
     "coreshop/resource-bundle": "^2.1",
-    "pimcore/pimcore": "^6.0",
+    "pimcore/pimcore": "^5.8 | ^6.0",
     "league/csv": "^9.0",
     "box/spout": "^2.7"
   },

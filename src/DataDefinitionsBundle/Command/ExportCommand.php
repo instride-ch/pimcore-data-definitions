@@ -49,14 +49,12 @@ final class ExportCommand extends AbstractCommand
     protected $exporter;
 
     public function __construct(
-        string $name,
         EventDispatcherInterface $eventDispatcher,
         RepositoryInterface $repository,
         ExporterInterface $exporter
     ) {
-        parent::__construct($name);
+        parent::__construct();
 
-        $this->name = $name;
         $this->eventDispatcher = $eventDispatcher;
         $this->repository = $repository;
         $this->exporter = $exporter;
@@ -68,7 +66,7 @@ final class ExportCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName($this->name)
+            ->setName('data-definitions:export')
             ->setDescription('Run a Data Definition Export.')
             ->setHelp(<<<EOT
 The <info>%command.name%</info> runs a Data Definition Export.

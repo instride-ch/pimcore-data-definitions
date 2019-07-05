@@ -1,12 +1,10 @@
-![ImportDefinitions](docs/images/github_banner.png "Data Definitions")
-
-**Looking for the current stable [version 1](https://github.com/w-vision/ImportDefinitions/tree/1.2)?**
+![DataDefinitions](docs/images/github_banner.png "Data Definitions")
 
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Stable Version](https://img.shields.io/packagist/v/w-vision/import-definitions.svg?style=flat-square)](https://packagist.org/packages/w-vision/import-definitions)
 
 
-Data Definitions allows you to define your Object Import using a nice GUI and re-run the imports as often you like. Everything within Import Definitions is extendable.
+Data Definitions allows you to define your Object Import/Export using a nice GUI and re-run the definitions as often you like. Everything within Data Definitions is extendable.
 
 ![Interface](docs/images/mapping.png)
 
@@ -236,9 +234,9 @@ bin/console import-definitions:import -d 1 -p "{\"file\":\"test.json\"}"
 ```
 
 ## License
-[w-vision AG](https://www.w-vision.ch), Sandgruebestrasse 4, 6210 Sursee, Switzerland  
-https://www.w-vision.ch, support@w-vision.ch  
-Copyright © 2018 w-vision AG. All rights reserved.
+**w-vision AG**, Sandgruebestrasse 4, 6210 Sursee, Switzerland  
+[www.w-vision.ch](https://www.w-vision.ch), support@w-vision.ch  
+Copyright © 2019 w-vision AG. All rights reserved.
 
 For licensing details please visit [LICENSE.md](LICENSE.md) 
 

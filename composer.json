@@ -2,7 +2,7 @@
   "name": "w-vision/data-definitions",
   "type": "pimcore-bundle",
   "license": "GPL-3.0-or-later",
-  "description": "Import Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.",
+  "description": "Data Definitions allows you to define your DataObject Imports and Exports using a nice GUI and re-run the definitions as often you like.",
   "keywords": [
     "pimcore",
     "imports",

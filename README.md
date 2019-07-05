@@ -1,4 +1,4 @@
-![ImportDefinitions](docs/images/github_banner.png "ImportDefinitions")
+![ImportDefinitions](docs/images/github_banner.png "Data Definitions")
 
 **Looking for the current stable [version 1](https://github.com/w-vision/ImportDefinitions/tree/1.2)?**
 
@@ -6,7 +6,7 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/w-vision/import-definitions.svg?style=flat-square)](https://packagist.org/packages/w-vision/import-definitions)
 
 
-Import Definitions allows you to define your Object Import using a nice GUI and re-run the imports as often you like. Everything within Import Definitions is extendable.
+Data Definitions allows you to define your Object Import using a nice GUI and re-run the imports as often you like. Everything within Import Definitions is extendable.
 
 ![Interface](docs/images/mapping.png)
 

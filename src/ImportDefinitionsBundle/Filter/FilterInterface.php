@@ -8,23 +8,22 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Filter;
 
-use Pimcore\Model\DataObject\Concrete;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface as NewFilterInterface;
 
-interface FilterInterface
-{
+if (interface_exists(NewFilterInterface::class)) {
+    @trigger_error('Interface ImportDefinitionsBundle\Filter\FilterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @param DefinitionInterface $definition
-     * @param array $data
-     * @param Concrete $object
-     *
-     * @return boolean
+     * @deprecated Interface ImportDefinitionsBundle\Filter\FilterInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface class instead.
      */
-    public function filter(DefinitionInterface $definition, $data, $object);
+    interface FilterInterface
+    {
+    }
 }

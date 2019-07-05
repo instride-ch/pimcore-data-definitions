@@ -8,62 +8,26 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace ImportDefinitionsBundle\Form\Type;
+namespace ImportDefinitionsBundle\Form\Type\Provider;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataMapperInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingCollectionType as NewExportMappingCollectionType;
 
-final class ExportMappingCollectionType extends AbstractType
-{
+if (class_exists(NewExportMappingCollectionType::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Form\Type\ExportMappingCollectionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingCollectionType class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @var DataMapperInterface
+     * @deprecated Class ImportDefinitionsBundle\Form\Type\ExportMappingCollectionType is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportMappingCollectionType class instead.
      */
-    private $dataMapper;
-
-    /**
-     * @param DataMapperInterface $dataMapper
-     */
-    public function __construct(
-        DataMapperInterface $dataMapper
-    ) {
-        $this->dataMapper = $dataMapper;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    final class ExportMappingCollectionType
     {
-        return CollectionType::class;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->setDataMapper($this->dataMapper);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'entry_type' => ExportMappingType::class,
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => true,
-        ]);
     }
 }
+
+
+
+

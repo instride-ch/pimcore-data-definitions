@@ -8,53 +8,24 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Model;
 
-class ExportMapping extends AbstractMapping
-{
-    /**
-     * @var string
-     */
-    public $getter;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping as NewExportMapping;
 
+if (class_exists(NewExportMapping::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Model\ExportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @var array
+     * @deprecated Class ImportDefinitionsBundle\Model\ExportMapping is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping class instead.
      */
-    public $getterConfig;
-
-    /**
-     * @return null|string
-     */
-    public function getGetter()
+    class ExportMapping
     {
-        return $this->getter;
-    }
-
-    /**
-     * @param string $getter
-     */
-    public function setGetter($getter)
-    {
-        $this->getter = $getter;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getGetterConfig()
-    {
-        return $this->getterConfig;
-    }
-
-    /**
-     * @param array $getterConfig
-     */
-    public function setGetterConfig($getterConfig)
-    {
-        $this->getterConfig = $getterConfig;
     }
 }
+
+

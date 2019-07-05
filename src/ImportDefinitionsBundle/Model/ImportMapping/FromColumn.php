@@ -8,36 +8,23 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Model\ImportMapping;
 
-use ImportDefinitionsBundle\Model\AbstractColumn;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn as NewFromColumn;
 
-class FromColumn extends AbstractColumn
-{
+if (class_exists(NewFromColumn::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Model\ImportMapping\FromColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @var string
+     * @deprecated Class ImportDefinitionsBundle\Model\ImportMapping\FromColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn class instead.
      */
-    public $label;
-
-     /**
-     * @return string
-     */
-    public function getLabel()
+    class FromColumn
     {
-        return $this->label;
-    }
-
-    /**
-     * @param string $label
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
     }
 }
 
-class_alias(FromColumn::class, 'ImportDefinitionsBundle\Model\Mapping\FromColumn');

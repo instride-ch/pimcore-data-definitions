@@ -8,23 +8,26 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Provider;
 
-use Doctrine\DBAL\Connection;
-use Pimcore\Db;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider as NewSqlProvider;
 
-class SqlProvider extends AbstractSqlProvider
-{
+if (class_exists(NewSqlProvider::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Provider\SqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @param $configuration
-     * @return Connection
+     * @deprecated Class ImportDefinitionsBundle\Provider\SqlProvider is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider class instead.
      */
-    protected function getDb($configuration)
+    class SqlProvider
     {
-        return Db::get();
     }
 }
+
+
+
+

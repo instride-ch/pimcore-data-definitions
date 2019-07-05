@@ -8,44 +8,24 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle;
 
-use Doctrine\DBAL\Migrations\Version;
-use Doctrine\DBAL\Schema\Schema;
-use Pimcore\Extension\Bundle\Installer\MigrationInstaller;
-use Pimcore\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
+use Wvision\Bundle\DataDefinitionsBundle\Installer as NewInstaller;
 
-class Installer extends MigrationInstaller
-{
+if (class_exists(NewInstaller::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Installer is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Installer class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @throws \Exception
+     * @deprecated Class ImportDefinitionsBundle\Installer is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Installer class instead.
      */
-    protected function beforeInstallMigration()
-    {
-        $kernel = \Pimcore::getKernel();
-        $application = new Application($kernel);
-        $application->setAutoExit(false);
-        $options = ['command' => 'coreshop:resources:install'];
-        $options = array_merge($options, ['--no-interaction' => true, '--application-name import_definitions']);
-        $application->run(new ArrayInput($options));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function migrateInstall(Schema $schema, Version $version)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function migrateUninstall(Schema $schema, Version $version)
+    class Installer
     {
     }
 }
+
+

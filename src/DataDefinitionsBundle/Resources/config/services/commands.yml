@@ -1,0 +1,48 @@
+services:
+    Wvision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand:
+        tags:
+            - { name: 'console.command', command: 'data-definitions:list:imports' }
+            - { name: 'console.command', command: 'import-definitions:list' }
+
+    Wvision\Bundle\DataDefinitionsBundle\Command\ListExportDefinitionsCommand:
+        tags:
+            - { name: 'console.command', command: 'data-definitions:list:exports' }
+            - { name: 'console.command', command: 'export-definitions:list' }
+
+    Wvision\Bundle\DataDefinitionsBundle\Command\ImportCommand:
+        arguments:
+            - '@event_dispatcher'
+            - '@data_definitions.repository.import_definition'
+            - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+        tags:
+            - { name: 'console.command', command: 'data-definitions:import' }
+            - { name: 'console.command', command: 'import-definitions:import' }
+
+    Wvision\Bundle\DataDefinitionsBundle\Command\ExportCommand:
+        arguments:
+            - '@event_dispatcher'
+            - '@data_definitions.repository.export_definition'
+            - '@Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface'
+        tags:
+            - { name: 'console.command', command: 'data-definitions:export' }
+            - { name: 'console.command', command: 'export-definitions:export' }
+
+    Wvision\Bundle\DataDefinitionsBundle\Command\ImportImportDefinitionCommand:
+        arguments:
+            - "@=service('coreshop.resource_registry').get('data_definitions.import_definition')"
+            - '@data_definitions.repository.import_definition'
+            - '@pimcore.dao.object_manager'
+            - '@coreshop.resource_controller.form_factory'
+        tags:
+            - { name: 'console.command', command: 'data-definitions:definition:import:import' }
+            - { name: 'console.command', command: 'import-definitions:definition:import' }
+
+    Wvision\Bundle\DataDefinitionsBundle\Command\ImportExportDefinitionCommand:
+        arguments:
+            - "@=service('coreshop.resource_registry').get('data_definitions.export_definition')"
+            - '@data_definitions.repository.export_definition'
+            - '@pimcore.dao.object_manager'
+            - '@coreshop.resource_controller.form_factory'
+        tags:
+            - { name: 'console.command', command: 'data-definitions:definition:import:export' }
+            - { name: 'console.command', command: 'export-definitions:definition:import' }

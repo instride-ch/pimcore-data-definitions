@@ -8,52 +8,25 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Model;
 
-interface MappingInterface
-{
-    /**
-     * @return null|string
-     */
-    public function getToColumn();
-    /**
-     * @param string $toColumn
-     */
-    public function setToColumn($toColumn);
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface as NewMappingInterface;
 
+if (interface_exists(NewMappingInterface::class)) {
+    @trigger_error('Interface ImportDefinitionsBundle\Model\MappingInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface Interface instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @return null|string
+     * @deprecated Interface ImportDefinitionsBundle\Model\MappingInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface Interface instead.
      */
-    public function getFromColumn();
-
-    /**
-     * @param string $fromColumn
-     */
-    public function setFromColumn($fromColumn);
-
-    /**
-     * @return null|string
-     */
-    public function getInterpreter();
-
-    /**
-     * @param string $interpreter
-     */
-    public function setInterpreter($interpreter);
-
-    /**
-     * @return array|null
-     */
-    public function getInterpreterConfig();
-
-    /**
-     * @param array $interpreterConfig
-     */
-    public function setInterpreterConfig($interpreterConfig);
+    interface MappingInterface
+    {
+    }
 }
 
-class_alias(MappingInterface::class, 'ImportDefinitionsBundle\Model\Mapping');
+
+

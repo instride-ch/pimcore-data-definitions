@@ -8,135 +8,25 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Model;
 
-use CoreShop\Component\Resource\Model\ResourceInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface as NewDataDefinitionInterface;
 
-interface DataDefinitionInterface extends ResourceInterface
-{
+if (interface_exists(NewDataDefinitionInterface::class)) {
+    @trigger_error('Interface ImportDefinitionsBundle\Model\DataDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface Interface instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @return mixed
+     * @deprecated Interface ImportDefinitionsBundle\Model\DataDefinitionInterface is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface Interface instead.
      */
-    public function getId();
-
-    /**
-     * @param int $id
-     */
-    public function setId($id);
-
-    /**
-     * @return mixed
-     */
-    public function getProvider();
-
-    /**
-     * @param string $provider
-     */
-    public function setProvider($provider);
-
-    /**
-     * @return mixed
-     */
-    public function getConfiguration();
-
-    /**
-     * @param array $configuration
-     */
-    public function setConfiguration($configuration);
-
-    /**
-     * @return mixed
-     */
-    public function getClass();
-
-    /**
-     * @param int $class
-     */
-    public function setClass($class);
-
-    /**
-     * @return mixed
-     */
-    public function getName();
-
-    /**
-     * @param string $name
-     */
-    public function setName($name);
-
-    /**
-     * @return Mapping[]
-     */
-    public function getMapping();
-
-    /**
-     * @param Mapping[] $mapping
-     */
-    public function setMapping($mapping);
-
-    /**
-     * @return mixed
-     */
-    public function getCreationDate();
-
-    /**
-     * @param int $creationDate
-     */
-    public function setCreationDate($creationDate);
-
-    /**
-     * @return mixed
-     */
-    public function getModificationDate();
-
-    /**
-     * @param int $modificationDate
-     */
-    public function setModificationDate($modificationDate);
-
-    /**
-     * @return mixed
-     */
-    public function getRunner();
-
-    /**
-     * @param string $runner
-     */
-    public function setRunner($runner);
-
-    /**
-     * @return mixed
-     */
-    public function getStopOnException();
-
-    /**
-     * @param boolean $stopOnException
-     */
-    public function setStopOnException($stopOnException);
-
-    /**
-     * @return mixed
-     */
-    public function getFailureNotificationDocument();
-
-    /**
-     * @param int $failureNotificationDocument
-     */
-    public function setFailureNotificationDocument($failureNotificationDocument);
-
-    /**
-     * @return mixed
-     */
-    public function getSuccessNotificationDocument();
-
-    /**
-     * @param int $successNotificationDocument
-     */
-    public function setSuccessNotificationDocument($successNotificationDocument);
+    interface DataDefinitionInterface
+    {
+    }
 }
 
-class_alias(DataDefinitionInterface::class, 'ImportDefinitionsBundle\Model\DefinitionInterface');
+
+

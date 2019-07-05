@@ -8,33 +8,23 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\ProcessManager;
 
-use ProcessManagerBundle\Model\ExecutableInterface;
-use ProcessManagerBundle\Process\Pimcore;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionProcess as NewExportDefinitionProcess;
 
-final class ExportDefinitionProcess extends Pimcore
-{
+if (class_exists(NewExportDefinitionProcess::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\ProcessManager\ExportDefinitionProcess is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionProcess class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * {@inheritdoc}
+     * @deprecated Class ImportDefinitionsBundle\ProcessManager\ExportDefinitionProcess is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionProcess class instead.
      */
-    public function run(ExecutableInterface $executable, array $params = null)
+    final class ExportDefinitionProcess
     {
-        $settings = $executable->getSettings();
-        if (isset($settings['params'])) {
-            $settings['params'] = array_replace(json_decode($settings['params'], true), (array) $params);
-        } else {
-            $settings['params'] = (array) $params;
-        }
-
-        $settings['command'] = sprintf('export-definitions:export -d %s -p "%s"', $settings['definition'], addslashes(json_encode($settings['params'])));
-
-        $executable->setSettings($settings);
-
-        return parent::run($executable, $params);
     }
 }
+

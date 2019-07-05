@@ -1,60 +1,29 @@
 <?php
 /**
- * CoreShop.
+ * Import Definitions.
+ *
+ * LICENSE
  *
  * This source file is subject to the GNU General Public License version 3 (GPLv3)
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2015-2017 Dominik Pfaffenbauer (https://www.pfaffenbauer.at)
- * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
+ * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Event;
 
-use CoreShop\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use CoreShop\Component\Resource\Metadata\MetadataInterface;
-use CoreShop\Component\Resource\Model\ResourceInterface;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher as NewEventDispatcher;
 
-final class EventDispatcher implements EventDispatcherInterface
-{
+if (class_exists(NewEventDispatcher::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Event\EventDispatcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @var SymfonyEventDispatcherInterface
+     * @deprecated Class ImportDefinitionsBundle\Event\EventDispatcher is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher class instead.
      */
-    private $eventDispatcher;
-
-    /**
-     * @param SymfonyEventDispatcherInterface $eventDispatcher
-     */
-    public function __construct(SymfonyEventDispatcherInterface $eventDispatcher)
+    class EventDispatcher
     {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function dispatch(DefinitionInterface $definition, $eventName, $subject = '', $params = [])
-    {
-        $event = $this->getEvent($definition, $subject, $params);
-
-        $this->eventDispatcher->dispatch(
-            sprintf('%s%s', $eventName, isset($params['child']) && $params['child'] ? '.child' : ''),
-            $event
-        );
-    }
-
-    /**
-     * @param DefinitionInterface $definition
-     * @param string              $subject
-     * @param array               $params
-     * @return ImportDefinitionEvent
-     */
-    private function getEvent(DefinitionInterface $definition, $subject = '', $params = [])
-    {
-        return new ImportDefinitionEvent($definition, $subject, $params);
     }
 }

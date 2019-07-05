@@ -8,50 +8,23 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Model;
 
-abstract class AbstractColumn
-{
-    /**
-     * @var string
-     */
-    public $identifier;
+use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractColumn as NewAbstractColumn;
 
+if (class_exists(NewAbstractColumn::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Model\AbstractColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractColumn class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * @return string
+     * @deprecated Class ImportDefinitionsBundle\Model\AbstractColumn is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Model\AbstractColumn class instead.
      */
-    public function getIdentifier()
+    class AbstractColumn
     {
-        return $this->identifier;
-    }
-
-    /**
-     * @param string $identifier
-     */
-    public function setIdentifier($identifier)
-    {
-        $this->identifier = $identifier;
-    }
-    
-    /**
-     * @param array $values
-     */
-    public function setValues(array $values)
-    {
-        foreach ($values as $key => $value) {
-            if ($key === 'o_type') {
-                continue;
-            }
-
-            $setter = sprintf('set%s', ucfirst($key));
-
-            if (method_exists($this, $setter)) {
-                $this->$setter($value);
-            }
-        }
     }
 }
+

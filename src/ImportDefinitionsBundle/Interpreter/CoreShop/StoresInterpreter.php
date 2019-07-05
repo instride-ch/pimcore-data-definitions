@@ -8,24 +8,23 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/ImportDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace ImportDefinitionsBundle\Interpreter\CoreShop;
 
-use ImportDefinitionsBundle\Interpreter\InterpreterInterface;
-use ImportDefinitionsBundle\Model\DefinitionInterface;
-use ImportDefinitionsBundle\Model\Mapping;
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter as NewStoresInterpreter;
 
-final class StoresInterpreter implements InterpreterInterface
-{
+if (class_exists(NewStoresInterpreter::class)) {
+    @trigger_error('Class ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter class instead.',
+        E_USER_DEPRECATED);
+} else {
     /**
-     * {@inheritdoc}
+     * @deprecated Class ImportDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter is deprecated since version 2.3.0 and will be removed in 3.0.0. Use Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\StoresInterpreter class instead.
      */
-    public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
+    class StoresInterpreter
     {
-        return $configuration['stores'];
     }
 }
+

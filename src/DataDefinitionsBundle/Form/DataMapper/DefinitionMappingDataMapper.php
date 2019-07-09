@@ -15,7 +15,7 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper;
 
 use Symfony\Component\Form\DataMapperInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterfaceInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 final class DefinitionMappingDataMapper implements DataMapperInterface
 {

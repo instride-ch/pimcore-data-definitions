@@ -64,7 +64,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
      */
     public function getPackageName()
     {
-        return 'w-vision/import-definitions';
+        return 'w-vision/data-definitions';
     }
 
     /**
@@ -118,7 +118,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
      */
     protected function getComposerPackageName()
     {
-        return 'w-vision/import-definitions';
+        return 'w-vision/data-definitions';
     }
 
     public function getInstaller()

@@ -1,8 +1,8 @@
 jms_serializer:
     metadata:
         directories:
-            import-definitions:
-                namespace_prefix: "ImportDefinitionsBundle"
+            data-definitions:
+                namespace_prefix: "DataDefinitionsBundle"
                 path: "@DataDefinitionsBundle/Resources/config/serializer"
 
 import_definitions:

@@ -1,15 +1,15 @@
 {
-  "name": "w-vision/import-definitions",
+  "name": "w-vision/data-definitions",
   "type": "pimcore-bundle",
   "license": "GPL-3.0-or-later",
-  "description": "Import Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.",
+  "description": "Data Definitions allows you to define your DataObject Imports and Exports using a nice GUI and re-run the definitions as often you like.",
   "keywords": [
     "pimcore",
     "imports",
     "pimcore-plugin",
     "pimcore-bundle"
   ],
-  "homepage": "https://github.com/w-vision/ImportDefinitions",
+  "homepage": "https://github.com/w-vision/DataDefinitions",
   "authors": [
     {
       "name": "w-vision AG",
@@ -26,6 +26,8 @@
   ],
   "require": {
     "coreshop/resource-bundle": "^2.0",
+    "coreshop/pimcore-bundle": "^2.0",
+    "coreshop/pimcore": "^2.0",
     "pimcore/pimcore": "^5.8 | ^6.0",
     "league/csv": "^9.0",
     "box/spout": "^2.7"
@@ -49,12 +51,12 @@
   },
   "autoload": {
     "psr-4": {
-      "ImportDefinitionsBundle\\": "src/ImportDefinitionsBundle"
+      "Wvision\\Bundle\\DataDefinitionsBundle\\": "src/DataDefinitionsBundle"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ImportDefinitionsBundle\\Behat\\": "tests/ImportDefinitionsBundle/Behat"
+      "Wvision\\Bundle\\DataDefinitionsBundle\\Behat\\": "tests/DataDefinitionsBundle/Behat"
     },
     "classmap": [
       "app/AppKernel.php"
@@ -63,11 +65,11 @@
   "extra": {
     "pimcore": {
       "bundles": [
-        "ImportDefinitionsBundle\\ImportDefinitionsBundle"
+        "Wvision\\Bundle\\DataDefinitionsBundle\\DataDefinitionsBundle"
       ]
     },
     "branch-alias": {
-      "dev-master": "2.3-dev"
+      "dev-master": "3.0-dev"
     }
   },
   "minimum-stability": "dev",

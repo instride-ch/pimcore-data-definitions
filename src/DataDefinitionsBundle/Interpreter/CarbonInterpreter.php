@@ -31,6 +31,11 @@ class CarbonInterpreter implements InterpreterInterface, DataSetAwareInterface
     public function interpret(Concrete $object, $value, Mapping $map, $data, DefinitionInterface $definition, $params, $configuration)
     {
         if ($value) {
+            $format = $configuration['date_format'];
+            if (!empty($format)) {
+                return Carbon::createFromFormat($format, $value);
+            }
+
             return new Carbon($value);
         }
 

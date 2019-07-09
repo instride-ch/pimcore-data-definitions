@@ -195,7 +195,7 @@ services:
     import_definition.interpreter.carbon: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter:
         tags:
-            - { name: data_definitions.interpreter, type: carbon, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+            - { name: data_definitions.interpreter, type: carbon, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CarbonInterpreterType }
 
     import_definition.interpreter.checkbox: '@Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter'
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter:

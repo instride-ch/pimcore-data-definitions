@@ -1,6 +1,6 @@
-Ext.define('ImportDefinitions.resource.Definition', {
+Ext.define('DataDefinitions.resource.Definition', {
     extend: 'CoreShop.resource.ComboBox',
-    alias: 'widget.import_definition.definition',
+    alias: 'widget.data_definitions.import_definition',
 
     name: 'country',
     fieldLabel: t('data_definitions_definition'),

@@ -99,7 +99,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
     /**
      * {@inheritdoc}
      */
-    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params)
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
     {
         $file = $this->getFile($params['file']);
 
@@ -109,7 +109,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
     /**
      * {@inheritdoc}
      */
-    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
     {
         $this->exportData[] = $data;
     }
@@ -117,7 +117,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
     /**
      * {@inheritdoc}
      */
-    public function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
     {
         $stream = fopen('php://memory', 'rw+');
         fwrite($stream, json_encode($this->exportData));

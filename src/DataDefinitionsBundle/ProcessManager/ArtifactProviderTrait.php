@@ -22,7 +22,7 @@ trait ArtifactProviderTrait
     /**
      * {@inheritdoc}
      */
-    public function generateArtifact($configuration, ExportDataDefinitionInterface $definition, $params): ?Asset
+    public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset
     {
         if (!$params['artifact']) {
             return null;
@@ -53,10 +53,10 @@ trait ArtifactProviderTrait
 
     /**
      * @param                           $configuration
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                           $params
      */
-    public abstract function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params);
+    public abstract function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params);
 }
 
 

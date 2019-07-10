@@ -19,10 +19,10 @@ use ProcessManagerBundle\Report\ReportInterface;
 
 class ImportDefinitionsReport implements ReportInterface
 {
-    const EVENT_TOTAL = 'import_definition.total: ';
-    const EVENT_STATUS = 'import_definition.status: ';
-    const EVENT_PROGRESS = 'import_definition.progress: ';
-    const EVENT_FINISHED = 'import_definition.finished: ';
+    const EVENT_TOTAL = 'data_definitions.import.total: ';
+    const EVENT_STATUS = 'data_definitions.import.status: ';
+    const EVENT_PROGRESS = 'data_definitions.import.progress: ';
+    const EVENT_FINISHED = 'data_definitions.import.finished: ';
     const EVENT_STATUS_ERROR = self::EVENT_STATUS.'Error: ';
     const EVENT_STATUS_IMPORT_NEW = self::EVENT_STATUS.'Import Object new';
     const EVENT_STATUS_IMPORT_EXISTING = self::EVENT_STATUS.'Import Object';

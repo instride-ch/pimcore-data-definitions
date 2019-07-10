@@ -108,7 +108,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     /**
      * {@inheritdoc}
      */
-    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
     {
         $headers = null;
         if (null === $this->writer) {
@@ -128,7 +128,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     /**
      * {@inheritdoc}
      */
-    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params)
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
     {
         $writer = $this->getWriter();
         $writer->close();
@@ -144,7 +144,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     /**
      * {@inheritdoc}
      */
-    public function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
     {
         return fopen($this->getExportPath(), 'rb');
     }

@@ -22,18 +22,18 @@ interface ExportRunnerInterface
     /**
      * @param Concrete                  $object
      * @param array                     $data
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param array                     $params
      */
-    public function exportPreRun(Concrete $object, $data, ExportDataDefinitionInterface $definition, $params);
+    public function exportPreRun(Concrete $object, $data, ExportDefinitionInterface $definition, $params);
 
     /**
      * @param Concrete                  $object
      * @param array                     $data
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param array                     $params
      */
-    public function exportPostRun(Concrete $object, $data, ExportDataDefinitionInterface $definition, $params);
+    public function exportPostRun(Concrete $object, $data, ExportDefinitionInterface $definition, $params);
 }
 
 

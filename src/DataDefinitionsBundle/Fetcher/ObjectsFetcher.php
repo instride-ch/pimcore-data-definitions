@@ -24,7 +24,7 @@ class ObjectsFetcher implements FetcherInterface
     /**
      * {@inheritdoc}
      */
-    public function fetch(ExportDataDefinitionInterface $definition, $params, int $limit, int $offset, array $configuration)
+    public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset, array $configuration)
     {
         $list = $this->getClassListing($definition, $params);
         $list->setLimit($limit);
@@ -36,16 +36,16 @@ class ObjectsFetcher implements FetcherInterface
     /**
      * {@inheritdoc}
      */
-    public function count(ExportDataDefinitionInterface $definition, $params, array $configuration): int
+    public function count(ExportDefinitionInterface $definition, $params, array $configuration): int
     {
         return $this->getClassListing($definition, $params)->getTotalCount();
     }
 
     /**
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @return Listing
      */
-    private function getClassListing(ExportDataDefinitionInterface $definition, $params)
+    private function getClassListing(ExportDefinitionInterface $definition, $params)
     {
         $class = $definition->getClass();
         $classDefinition = ClassDefinition::getByName($class);

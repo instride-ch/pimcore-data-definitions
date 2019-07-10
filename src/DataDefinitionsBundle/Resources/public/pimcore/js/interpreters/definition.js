@@ -17,7 +17,7 @@ pimcore.plugin.datadefinitions.interpreters.definition = Class.create(pimcore.pl
     getLayout: function (fromColumn, toColumn, record, config) {
         return [
             {
-                xtype: 'import_definition.definition',
+                xtype: 'data_definitions.import_definition',
                 name: 'definition',
                 value: Ext.isDefined(config.definition) ? config.definition : null
             }

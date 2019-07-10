@@ -131,7 +131,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params)
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
     {
         if (!array_key_exists('file', $params)) {
             return;
@@ -151,7 +151,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
     {
         $this->exportData[] = $data;
     }
@@ -159,7 +159,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
     {
         $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
 

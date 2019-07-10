@@ -104,7 +104,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $this->convertXmlToArray($xml, $configuration['xPath']);
     }
 
-    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params)
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
     {
         $writer = $this->getXMLWriter();
 
@@ -119,7 +119,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         }
     }
 
-    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params)
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
     {
         $writer = $this->getXMLWriter();
 
@@ -158,7 +158,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         rename($this->getExportPath(), $file);
     }
 
-    public function provideArtifactStream($configuration, ExportDataDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
     {
         return fopen($this->getExportPath(), 'rb');
     }

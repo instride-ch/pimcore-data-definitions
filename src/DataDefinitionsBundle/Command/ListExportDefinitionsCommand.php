@@ -45,7 +45,7 @@ EOT
 
         $data = [];
 
-        /** @var ExportDataDefinitionInterface $definition */
+        /** @var ExportDefinitionInterface $definition */
         foreach ($exportDefinitions as $definition) {
             $data[] = [
                 $definition->getId(),

@@ -145,7 +145,7 @@ final class Importer implements ImporterInterface
         $data = $this->getData($definition, $params);
 
         if ((is_array($data) || $data instanceof \Countable) && \count($data) > 0) {
-            $this->eventDispatcher->dispatch($definition, 'import_definition.total', \count($data), $params);
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.total', \count($data), $params);
         }
 
         list($objectIds, $exceptions) = $this->runImport($definition, $params, $filter, $data);
@@ -155,7 +155,7 @@ final class Importer implements ImporterInterface
             $cleaner = $this->cleanerRegistry->get($cleanerType);
 
             $this->logger->info(sprintf('Running Cleaner "%s"', $cleanerType));
-            $this->eventDispatcher->dispatch($definition, 'import_definition.status',
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
                 sprintf('Running Cleaner "%s"', $cleanerType));
 
             if ($cleaner instanceof DataSetAwareInterface) {
@@ -169,7 +169,7 @@ final class Importer implements ImporterInterface
             $cleaner->cleanup($definition, $objectIds);
 
             $this->logger->info(sprintf('Finished Cleaner "%s"', $cleanerType));
-            $this->eventDispatcher->dispatch($definition, 'import_definition.status',
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
                 sprintf('Finished Cleaner "%s"', $cleanerType));
         }
 
@@ -181,7 +181,7 @@ final class Importer implements ImporterInterface
                 $objectIds, $exceptions);
         }
 
-        $this->eventDispatcher->dispatch($definition, 'import_definition.finished', '', $params);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.finished', '', $params);
 
         return $objectIds;
     }
@@ -261,7 +261,7 @@ final class Importer implements ImporterInterface
                 if (($count + 1) % $countToClean === 0) {
                     \Pimcore::collectGarbage();
                     $this->logger->info('Clean Garbage');
-                    $this->eventDispatcher->dispatch($definition, 'import_definition.status', 'Collect Garbage',
+                    $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status', 'Collect Garbage',
                         $params);
                 }
 
@@ -271,7 +271,7 @@ final class Importer implements ImporterInterface
 
                 $exceptions[] = $ex;
 
-                $this->eventDispatcher->dispatch($definition, 'import_definition.status',
+                $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
                     sprintf('Error: %s', $ex->getMessage()), $params);
 
                 if ($definition->getStopOnException()) {
@@ -279,7 +279,7 @@ final class Importer implements ImporterInterface
                 }
             }
 
-            $this->eventDispatcher->dispatch($definition, 'import_definition.progress', '', $params);
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.progress', '', $params);
         }
 
         return [$objectIds, $exceptions];
@@ -305,14 +305,14 @@ final class Importer implements ImporterInterface
 
         if (null !== $object && !$object->getId()) {
             if ($definition->getSkipNewObjects()) {
-                $this->eventDispatcher->dispatch($definition, 'import_definition.status', 'Ignoring new Object',
+                $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status', 'Ignoring new Object',
                     $params);
 
                 return null;
             }
         } else {
             if ($definition->getSkipExistingObjects()) {
-                $this->eventDispatcher->dispatch($definition, 'import_definition.status', 'Ignoring existing Object',
+                $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status', 'Ignoring existing Object',
                     $params);
 
                 return null;
@@ -325,15 +325,15 @@ final class Importer implements ImporterInterface
             }
 
             if (!$filter->filter($definition, $data, $object)) {
-                $this->eventDispatcher->dispatch($definition, 'import_definition.status', 'Filtered Object', $params);
+                $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status', 'Filtered Object', $params);
 
                 return null;
             }
         }
 
-        $this->eventDispatcher->dispatch($definition, 'import_definition.status',
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
             sprintf('Import Object %s', ($object->getId() ? $object->getFullPath() : 'new')), $params);
-        $this->eventDispatcher->dispatch($definition, 'import_definition.object.start', $object, $params);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.object.start', $object, $params);
 
         if ($definition->getRunner()) {
             $runner = $this->runnerRegistry->get($definition->getRunner());
@@ -376,16 +376,16 @@ final class Importer implements ImporterInterface
             $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
             $object->save();
 
-            $this->eventDispatcher->dispatch($definition, 'import_definition.status',
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
                 sprintf('Imported Object %s', $object->getFullPath()), $params);
         } else {
-            $this->eventDispatcher->dispatch($definition, 'import_definition.status',
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
                 sprintf('Skipped Object %s', $object->getFullPath()), $params);
         }
 
-        $this->eventDispatcher->dispatch($definition, 'import_definition.status',
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
             sprintf('Imported Object %s', $object->getFullPath()), $params);
-        $this->eventDispatcher->dispatch($definition, 'import_definition.object.finished', $object, $params);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.object.finished', $object, $params);
 
         if ($runner instanceof RunnerInterface) {
             if ($runner instanceof DataSetAwareInterface) {

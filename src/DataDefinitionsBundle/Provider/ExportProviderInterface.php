@@ -21,19 +21,19 @@ interface ExportProviderInterface
     /**
      * @param array                     $data
      * @param array                     $configuration
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                           $params
      * @return array
      */
-    public function addExportData(array $data, $configuration, ExportDataDefinitionInterface $definition, $params);
+    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params);
 
     /**
      * @param array                     $configuration
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                           $params
      * @return array
      */
-    public function exportData($configuration, ExportDataDefinitionInterface $definition, $params);
+    public function exportData($configuration, ExportDefinitionInterface $definition, $params);
 }
 
 

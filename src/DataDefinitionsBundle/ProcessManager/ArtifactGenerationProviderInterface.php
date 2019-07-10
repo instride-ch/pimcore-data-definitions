@@ -21,11 +21,11 @@ interface ArtifactGenerationProviderInterface
 {
     /**
      * @param array                     $configuration
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                           $params
      * @return Asset
      */
-    public function generateArtifact($configuration, ExportDataDefinitionInterface $definition, $params): ?Asset;
+    public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset;
 }
 
 

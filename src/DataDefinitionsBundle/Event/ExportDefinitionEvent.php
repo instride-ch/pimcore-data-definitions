@@ -32,11 +32,11 @@ final class ExportDefinitionEvent extends Event
     protected $params = [];
 
     /**
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param null                      $subject
      * @param array                     $params
      */
-    public function __construct(ExportDataDefinitionInterface $definition, $subject = null, $params = [])
+    public function __construct(ExportDefinitionInterface $definition, $subject = null, $params = [])
     {
         $this->definition = $definition;
         $this->subject = $subject;

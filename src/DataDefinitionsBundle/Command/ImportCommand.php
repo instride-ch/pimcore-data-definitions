@@ -133,19 +133,19 @@ EOT
             $output->writeln('');
         };
 
-        $eventDispatcher->addListener('import_definition.status', $imStatus);
-        $eventDispatcher->addListener('import_definition.status.child', $imStatus);
-        $eventDispatcher->addListener('import_definition.total', $imTotal);
-        $eventDispatcher->addListener('import_definition.progress', $imProgress);
-        $eventDispatcher->addListener('import_definition.finished', $imFinished);
+        $eventDispatcher->addListener('data_definitions.import.status', $imStatus);
+        $eventDispatcher->addListener('data_definitions.import.status.child', $imStatus);
+        $eventDispatcher->addListener('data_definitions.import.total', $imTotal);
+        $eventDispatcher->addListener('data_definitions.import.progress', $imProgress);
+        $eventDispatcher->addListener('data_definitions.import.finished', $imFinished);
 
         $this->importer->doImport($definition, json_decode($params, true));
 
-        $eventDispatcher->removeListener('import_definition.status', $imStatus);
-        $eventDispatcher->removeListener('import_definition.status.child', $imStatus);
-        $eventDispatcher->removeListener('import_definition.total', $imTotal);
-        $eventDispatcher->removeListener('import_definition.progress', $imProgress);
-        $eventDispatcher->removeListener('import_definition.finished', $imFinished);
+        $eventDispatcher->removeListener('data_definitions.import.status', $imStatus);
+        $eventDispatcher->removeListener('data_definitions.import.status.child', $imStatus);
+        $eventDispatcher->removeListener('data_definitions.import.total', $imTotal);
+        $eventDispatcher->removeListener('data_definitions.import.progress', $imProgress);
+        $eventDispatcher->removeListener('data_definitions.import.finished', $imFinished);
 
         return 0;
     }

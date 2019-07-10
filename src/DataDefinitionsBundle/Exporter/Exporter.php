@@ -103,7 +103,7 @@ final class Exporter implements ExporterInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function doExport(ExportDataDefinitionInterface $definition, array $params)
+    public function doExport(ExportDefinitionInterface $definition, array $params)
     {
         $fetcher = $this->getFetcher($definition);
         $provider = $this->getProvider($definition);
@@ -111,21 +111,21 @@ final class Exporter implements ExporterInterface
             is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
 
         if ($total > 0) {
-            $this->eventDispatcher->dispatch('export_definition.total',
+            $this->eventDispatcher->dispatch('data_definitions.export.total',
                 new ExportDefinitionEvent($definition, $total, $params));
 
             $this->runExport($definition, $params, $total, $fetcher, $provider);
         }
 
-        $this->eventDispatcher->dispatch('export_definition.finished',
+        $this->eventDispatcher->dispatch('data_definitions.export.finished',
             new ExportDefinitionEvent($definition, null, $params));
     }
 
     /**
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @return FetcherInterface
      */
-    private function getFetcher(ExportDataDefinitionInterface $definition)
+    private function getFetcher(ExportDefinitionInterface $definition)
     {
         if (!$this->fetcherRegistry->has($definition->getFetcher())) {
             throw new \InvalidArgumentException(sprintf('Export Definition %s has no valid fetcher configured',
@@ -139,10 +139,10 @@ final class Exporter implements ExporterInterface
     }
 
     /**
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @return ExportProviderInterface
      */
-    private function getProvider(ExportDataDefinitionInterface $definition)
+    private function getProvider(ExportDefinitionInterface $definition)
     {
         if (!$this->exportProviderRegistry->has($definition->getProvider())) {
             throw new \InvalidArgumentException(sprintf('Definition %s has no valid export provider configured',
@@ -153,7 +153,7 @@ final class Exporter implements ExporterInterface
     }
 
     /**
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                           $params
      * @param int                       $total
      * @param FetcherInterface          $fetcher
@@ -161,7 +161,7 @@ final class Exporter implements ExporterInterface
      * @throws \Exception
      */
     private function runExport(
-        ExportDataDefinitionInterface $definition,
+        ExportDefinitionInterface $definition,
         $params,
         int $total,
         FetcherInterface $fetcher,
@@ -191,7 +191,7 @@ final class Exporter implements ExporterInterface
                                 \Pimcore::collectGarbage();
                                 $this->logger->info('Clean Garbage');
                                 $this->eventDispatcher->dispatch(
-                                    'export_definition.status',
+                                    'data_definitions.export.status',
                                     new ExportDefinitionEvent($definition, 'Collect Garbage', $params)
                                 );
                             }
@@ -203,7 +203,7 @@ final class Exporter implements ExporterInterface
                             $this->exceptions[] = $ex;
 
                             $this->eventDispatcher->dispatch(
-                                'export_definition.status',
+                                'data_definitions.export.status',
                                 new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()), $params)
                             );
 
@@ -213,7 +213,7 @@ final class Exporter implements ExporterInterface
                         }
 
                         $this->eventDispatcher->dispatch(
-                            'export_definition.progress',
+                            'data_definitions.export.progress',
                             new ExportDefinitionEvent($definition, null, $params)
                         );
                     }
@@ -225,7 +225,7 @@ final class Exporter implements ExporterInterface
     }
 
     /**
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param Concrete                  $object
      * @param                           $params
      * @param ExportProviderInterface   $provider
@@ -233,7 +233,7 @@ final class Exporter implements ExporterInterface
      * @throws \Exception
      */
     private function exportRow(
-        ExportDataDefinitionInterface $definition,
+        ExportDefinitionInterface $definition,
         Concrete $object,
         $params,
         ExportProviderInterface $provider
@@ -242,9 +242,9 @@ final class Exporter implements ExporterInterface
 
         $runner = null;
 
-        $this->eventDispatcher->dispatch('export_definition.status',
+        $this->eventDispatcher->dispatch('data_definitions.export.status',
             new ExportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId()), $params));
-        $this->eventDispatcher->dispatch('export_definition.object.start',
+        $this->eventDispatcher->dispatch('data_definitions.export.object.start',
             new ExportDefinitionEvent($definition, $object, $params));
 
         if ($definition->getRunner()) {
@@ -282,9 +282,9 @@ final class Exporter implements ExporterInterface
 
         $provider->addExportData($data, $definition->getConfiguration(), $definition, $params);
 
-        $this->eventDispatcher->dispatch('export_definition.status',
+        $this->eventDispatcher->dispatch('data_definitions.export.status',
             new ExportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath()), $params));
-        $this->eventDispatcher->dispatch('export_definition.object.finished',
+        $this->eventDispatcher->dispatch('data_definitions.export.object.finished',
             new ExportDefinitionEvent($definition, $object, $params));
 
         if ($runner instanceof ExportRunnerInterface) {
@@ -298,7 +298,7 @@ final class Exporter implements ExporterInterface
      * @param Concrete                  $object
      * @param ExportMapping             $map
      * @param                           $data
-     * @param ExportDataDefinitionInterface $definition
+     * @param ExportDefinitionInterface $definition
      * @param                           $params
      * @param null|GetterInterface      $getter
      * @return mixed|null
@@ -306,9 +306,9 @@ final class Exporter implements ExporterInterface
      */
     private function getObjectValue(
         Concrete $object,
-        ExportMappingInterface $map,
+        ExportMapping $map,
         $data,
-        ExportDataDefinitionInterface $definition,
+        ExportDefinitionInterface $definition,
         $params,
         ?GetterInterface $getter
     ) {
@@ -337,7 +337,7 @@ final class Exporter implements ExporterInterface
         return $value;
     }
 
-    private function fetchGetter(ExportMappingInterface $map): ?GetterInterface
+    private function fetchGetter(ExportMapping $map): ?GetterInterface
     {
         if ($name = $map->getGetter()) {
             $getter = $this->getterRegistry->get($name);

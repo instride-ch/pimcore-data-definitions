@@ -29,7 +29,7 @@ interface DynamicColumnGetterInterface extends GetterInterface
      *               with other columns from the definition and to always return
      *               exactly the same keys in exactly the same order for each object.
      */
-    public function get(Concrete $object, ExportMappingInterface $map, $data): array;
+    public function get(Concrete $object, ExportMapping $map, $data): array;
 }
 
 

@@ -137,17 +137,17 @@ EOT
             $output->writeln('');
         };
 
-        $eventDispatcher->addListener('export_definition.status', $imStatus);
-        $eventDispatcher->addListener('export_definition.total', $imTotal);
-        $eventDispatcher->addListener('export_definition.progress', $imProgress);
-        $eventDispatcher->addListener('export_definition.finished', $imFinished);
+        $eventDispatcher->addListener('data_definitions.export.status', $imStatus);
+        $eventDispatcher->addListener('data_definitions.export.total', $imTotal);
+        $eventDispatcher->addListener('data_definitions.export.progress', $imProgress);
+        $eventDispatcher->addListener('data_definitions.export.finished', $imFinished);
 
         $this->exporter->doExport($definition, $params);
 
-        $eventDispatcher->removeListener('export_definition.status', $imStatus);
-        $eventDispatcher->removeListener('export_definition.total', $imTotal);
-        $eventDispatcher->removeListener('export_definition.progress', $imProgress);
-        $eventDispatcher->removeListener('export_definition.finished', $imFinished);
+        $eventDispatcher->removeListener('data_definitions.export.status', $imStatus);
+        $eventDispatcher->removeListener('data_definitions.export.total', $imTotal);
+        $eventDispatcher->removeListener('data_definitions.export.progress', $imProgress);
+        $eventDispatcher->removeListener('data_definitions.export.finished', $imFinished);
 
         return 0;
     }

@@ -38,6 +38,11 @@ class CarbonInterpreter implements InterpreterInterface, DataSetAwareInterface
         $configuration
     ) {
         if ($value) {
+            $format = $configuration['date_format'];
+            if (!empty($format)) {
+                return Carbon::createFromFormat($format, $value);
+            }
+
             return new Carbon($value);
         }
 

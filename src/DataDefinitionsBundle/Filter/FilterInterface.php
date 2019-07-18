@@ -24,9 +24,10 @@ interface FilterInterface
      * @param array $data
      * @param Concrete $object
      *
+     * @param array $configuration
      * @return boolean
      */
-    public function filter(DefinitionInterface $definition, $data, $object);
+    public function filter(DefinitionInterface $definition, $data, $object, array $configuration);
 }
 
 class_alias(FilterInterface::class, 'ImportDefinitionsBundle\Filter\FilterInterface');

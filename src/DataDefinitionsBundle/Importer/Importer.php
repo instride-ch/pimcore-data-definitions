@@ -145,9 +145,7 @@ final class Importer implements ImporterInterface
         }
 
         $filterType = $definition->getFilter();
-        if ($filterType instanceof FilterInterface) {
-            $filter = $filterType;
-        } else {
+        if ($filterType) {
             $filter = $this->filterRegistry->get($filterType);
         }
 

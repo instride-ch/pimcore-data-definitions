@@ -157,6 +157,11 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
                     listeners: {
                         change: function (combo, value) {
                             this.data.filter = value;
+
+                            this.getFilterPanel().removeAll();
+
+                            this.getFilterPanelLayout(value);
+                            //@todo load configuration form
                         }.bind(this)
                     }
                 },
@@ -636,5 +641,46 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
         }
 
         return data;
-    }
+    },
+
+    getFilterPanel : function () {
+        if (!this.filterPanel) {
+            this.filterPanel = new Ext.form.FormPanel({
+                defaults: { anchor: '90%' },
+                layout: 'form',
+                title : t('data_definitions_filter_settings')
+            });
+        }
+
+        return this.filterPanel;
+    },
+
+    getFilterPanelLayout : function (type) {
+        debugger;
+        if (type) {
+            type = type.toLowerCase();
+
+            var klass;
+
+            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.filters[type]) {
+                klass = pimcore.plugin.importdefinitions.filters[type];
+            }
+            else if (pimcore.plugin.datadefinitions.filters[type]) {
+                klass = pimcore.plugin.datadefinitions.filters[type];
+            }
+
+            if (klass) {
+                this.filter = new klass;
+
+                this.getFilterPanel().add(this.filter.getLayout(Ext.isObject(this.data.filterConfig) ? this.data.filterConfig : {}, this.config));
+                this.getFilterPanel().show();
+            } else {
+                this.getFilterPanel().hide();
+
+                this.filter = null;
+            }
+        } else {
+            this.getFilterPanel().hide();
+        }
+    },
 });

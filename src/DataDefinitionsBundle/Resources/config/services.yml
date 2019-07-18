@@ -381,3 +381,9 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader:
         tags:
             - { name: data_definitions.loader, type: primary_key }
+
+    ### FILTER
+    import_definition.filter.nested: '@Wvision\Bundle\DataDefinitionsBundle\Filter\NestedFilter'
+    Wvision\Bundle\DataDefinitionsBundle\Filter\NestedFilter:
+        tags:
+            - { name: data_definitions.filter, type: nested }

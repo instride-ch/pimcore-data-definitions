@@ -15,7 +15,7 @@ Import Definitions allows you to define your Object Import using a nice GUI and 
 
 ## Getting started/Installation
 
- * Install via composer ```composer require w-vision/import-definitions```
+ * Install via composer ```composer require w-vision/import-definitions:^2.2```
  * Enable via command-line (or inside the pimcore extension manager): ```bin/console pimcore:bundle:enable ImportDefinitionsBundle```
  * Install via command-line (or inside the pimcore extension manager): ```bin/console pimcore:bundle:install ImportDefinitionsBundle```
  * Reload Pimcore

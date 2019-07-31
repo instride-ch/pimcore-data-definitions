@@ -25,14 +25,6 @@ final class RawProviderType extends AbstractType
         $builder
             ->add('headers', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_provider_raw';
-    }
 }
 
 

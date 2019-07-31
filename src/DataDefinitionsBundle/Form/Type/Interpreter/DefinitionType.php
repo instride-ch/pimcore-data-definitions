@@ -28,14 +28,6 @@ class DefinitionType extends AbstractType
         $builder
             ->add('definition', DefinitionChoiceType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_definition';
-    }
 }
 
 

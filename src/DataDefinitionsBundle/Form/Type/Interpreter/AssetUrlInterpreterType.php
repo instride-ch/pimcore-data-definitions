@@ -32,14 +32,6 @@ final class AssetUrlInterpreterType extends AbstractType
             ->add('relocate_existing_objects', CheckboxType::class)
             ->add('rename_existing_objects', CheckboxType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_asset_url';
-    }
 }
 
 

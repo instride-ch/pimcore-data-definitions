@@ -48,7 +48,7 @@ class DataDefinitionsExtension extends AbstractModelExtension
      */
     public function getAlias()
     {
-        return 'import_definitions';
+        return 'data_definitions';
     }
 
 
@@ -63,12 +63,6 @@ class DataDefinitionsExtension extends AbstractModelExtension
         $config = $this->processConfiguration($configuration, $configs);
 
         $this->registerResources('data_definitions', $config['driver'], $config['resources'], $container);
-
-        $bcResources = $config['resources'];
-        $bcResources['definition'] = $bcResources['import_definition'];
-        unset($bcResources['import_definition']);
-
-        $this->registerResources('import_definitions', $config['driver'], $bcResources, $container);
 
         $bundles = $container->getParameter('kernel.bundles');
 

@@ -30,14 +30,6 @@ final class ConditionalInterpreterType extends AbstractType
             ->add('true_interpreter', InterpreterType::class)
             ->add('false_interpreter', InterpreterType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_conditional';
-    }
 }
 
 

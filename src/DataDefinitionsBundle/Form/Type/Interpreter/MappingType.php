@@ -29,14 +29,6 @@ final class MappingType extends AbstractType
             ->add('from', TextType::class)
             ->add('to', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_mapping';
-    }
 }
 
 

@@ -29,14 +29,6 @@ final class SpecificObjectInterpreterType extends AbstractType
         $builder
             ->add('objectId', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_specific_object';
-    }
 }
 
 

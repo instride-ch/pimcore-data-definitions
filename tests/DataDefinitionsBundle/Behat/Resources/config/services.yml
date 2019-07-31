@@ -2,13 +2,13 @@ imports:
     - { resource: "services/contexts.yml" }
 
 services:
-    import_definitions.behat.shared_storage:
+    data_definitions.behat.shared_storage:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorage
 
-    import_definitions.behat.class_storage:
+    data_definitions.behat.class_storage:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorage
 
-    import_definitions.behat.filter.simple:
+    data_definitions.behat.filter.simple:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Service\Filter\SimpleFilter
         tags:
             - { name: data_definitions.filter, type: simple }

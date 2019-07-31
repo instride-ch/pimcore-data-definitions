@@ -50,13 +50,5 @@ final class ProviderChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_provider_choice';
-    }
 }
 

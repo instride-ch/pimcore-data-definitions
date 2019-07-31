@@ -2,25 +2,25 @@ services:
     _defaults:
         public: true
 
-    import_definitions.behat.context.transform.pimcore_class:
+    data_definitions.behat.context.transform.pimcore_class:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform\PimcoreClassContext
         arguments:
-            - '@import_definitions.behat.shared_storage'
-            - '@import_definitions.behat.class_storage'
+            - '@data_definitions.behat.shared_storage'
+            - '@data_definitions.behat.class_storage'
         tags:
             - { name: fob.context_service }
 
-    import_definitions.behat.context.transform.import_definition:
+    data_definitions.behat.context.transform.import_definition:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform\ImportDefinitionContext
         arguments:
-            - '@import_definitions.behat.shared_storage'
-            - '@import_definitions.repository.definition'
+            - '@data_definitions.behat.shared_storage'
+            - '@data_definitions.repository.import_definition'
         tags:
             - { name: fob.context_service }
 
-    import_definitions.behat.context.transform.pimcore_asset:
+    data_definitions.behat.context.transform.pimcore_asset:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform\PimcoreAssetContext
         arguments:
-            - '@import_definitions.behat.shared_storage'
+            - '@data_definitions.behat.shared_storage'
         tags:
             - { name: fob.context_service }

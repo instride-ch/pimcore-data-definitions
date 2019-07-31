@@ -31,7 +31,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterfaceInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;

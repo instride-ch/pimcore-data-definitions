@@ -168,13 +168,5 @@ final class ImportMappingType extends AbstractResourceType
 
         return null;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_mapping';
-    }
 }
 

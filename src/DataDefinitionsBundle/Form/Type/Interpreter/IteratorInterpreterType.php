@@ -27,14 +27,6 @@ final class IteratorInterpreterType extends AbstractType
         $builder
             ->add('interpreter', InterpreterType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_iterator';
-    }
 }
 
 

@@ -29,14 +29,6 @@ final class ImportDefinitionsType extends AbstractType
             ->add('definition', TextType::class)
             ->add('params', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'process_manager_process_import_definitions';
-    }
 }
 
 

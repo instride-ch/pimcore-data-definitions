@@ -20,8 +20,8 @@ You can see the ID, the name and the Provider
 Import Definitions can only run using the Pimcore CLI. To run your definition, use following command
 
 ```cli
-bin/console import-definitions:import -d 1 -p "{\"file\":\"test.json\"}"
-bin/console import-definitions:import -d name-of-definition -p "{\"file\":\"test.json\"}"
+bin/console data-definitions:import -d 1 -p "{\"file\":\"test.json\"}"
+bin/console data-definitions:import -d name-of-definition -p "{\"file\":\"test.json\"}"
 ```
 
 ## Run your Export Definition

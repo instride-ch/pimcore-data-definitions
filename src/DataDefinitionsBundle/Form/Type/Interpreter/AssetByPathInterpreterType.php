@@ -29,14 +29,6 @@ final class AssetByPathInterpreterType extends AbstractType
         $builder
             ->add('path', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_asset_by_path';
-    }
 }
 
 

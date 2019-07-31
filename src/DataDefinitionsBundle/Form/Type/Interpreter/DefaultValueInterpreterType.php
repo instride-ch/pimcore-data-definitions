@@ -28,14 +28,6 @@ final class DefaultValueInterpreterType extends AbstractType
         $builder
             ->add('value', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_default_value';
-    }
 }
 
 

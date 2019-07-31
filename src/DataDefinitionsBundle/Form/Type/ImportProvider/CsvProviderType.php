@@ -28,14 +28,6 @@ final class CsvProviderType extends AbstractType
             ->add('enclosure', TextType::class)
             ->add('csvHeaders', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_provider_csv';
-    }
 }
 
 

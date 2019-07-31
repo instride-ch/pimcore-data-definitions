@@ -28,14 +28,6 @@ final class ExpressionInterpreterType extends AbstractType
         $builder
             ->add('expression', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_expression';
-    }
 }
 
 

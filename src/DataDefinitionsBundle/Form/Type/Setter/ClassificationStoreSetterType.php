@@ -28,14 +28,6 @@ final class ClassificationStoreSetterType extends AbstractType
             ->add('keyConfig', IntegerType::class)
             ->add('groupConfig', IntegerType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_setter_classification_store';
-    }
 }
 
 

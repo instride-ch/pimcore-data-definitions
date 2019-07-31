@@ -50,13 +50,5 @@ final class FetcherChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_fetcher_choice';
-    }
 }
 

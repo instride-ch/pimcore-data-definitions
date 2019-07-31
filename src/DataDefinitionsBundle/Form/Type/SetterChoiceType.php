@@ -50,13 +50,5 @@ final class SetterChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_setter_choice';
-    }
 }
 

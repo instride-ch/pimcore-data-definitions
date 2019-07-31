@@ -28,14 +28,6 @@ final class TwigInterpreterType extends AbstractType
         $builder
             ->add('template', TextareaType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_twig';
-    }
 }
 
 

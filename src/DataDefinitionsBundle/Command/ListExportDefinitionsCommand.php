@@ -41,7 +41,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $exportDefinitions = $this->getContainer()->get('import_definitions.repository.export_definition')->findAll();
+        $exportDefinitions = $this->getContainer()->get('data_definitions.repository.export_definition')->findAll();
 
         $data = [];
 

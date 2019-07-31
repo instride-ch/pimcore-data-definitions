@@ -50,12 +50,4 @@ final class ExportRunnerChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_export_runner_choice';
-    }
 }

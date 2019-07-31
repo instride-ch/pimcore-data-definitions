@@ -25,14 +25,6 @@ final class JsonProviderType extends AbstractType
         $builder
             ->add('jsonExample', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_provider_json';
-    }
 }
 
 

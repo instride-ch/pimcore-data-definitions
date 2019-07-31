@@ -16,7 +16,12 @@ final class Version20180917132630 extends AbstractPimcoreMigration implements Co
      */
     public function up(Schema $schema)
     {
-        $definitions = $this->container->get('import_definitions.repository.definition')->findAll();
+        if ($this->container->has('import_definitions.repository.definition')) {
+            $definitions = $this->container->get('import_definitions.repository.definition')->findAll();
+        }
+        else {
+            $definitions = $this->container->get('data_definitions.repository.import_definition')->findAll();
+        }
 
         foreach ($definitions as $definition) {
             $definition->save();

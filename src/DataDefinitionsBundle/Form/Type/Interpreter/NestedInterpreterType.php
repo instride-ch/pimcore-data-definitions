@@ -27,14 +27,6 @@ final class NestedInterpreterType extends AbstractType
         $builder
             ->add('interpreters', InterpreterCollectionType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_nested';
-    }
 }
 
 

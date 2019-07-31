@@ -32,14 +32,6 @@ final class ExternalSqlProviderType extends AbstractType
             ->add('port', NumberType::class)
             ->add('query', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_provider_external_sql';
-    }
 }
 
 

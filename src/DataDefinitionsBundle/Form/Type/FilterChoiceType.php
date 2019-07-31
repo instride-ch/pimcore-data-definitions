@@ -50,13 +50,5 @@ final class FilterChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_filter_choice';
-    }
 }
 

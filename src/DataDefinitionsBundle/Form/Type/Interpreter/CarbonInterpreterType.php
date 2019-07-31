@@ -29,11 +29,4 @@ final class CarbonInterpreterType extends AbstractType
             ->add('date_format', TextType::class)
         ;
     }
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_carbon';
-    }
 }

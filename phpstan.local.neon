@@ -2,4 +2,4 @@ includes:
     - ../../vendor/phpstan/phpstan-doctrine/extension.neon
     - ../../vendor/phpstan/phpstan-symfony/extension.neon
     - ../../vendor/phpstan/phpstan-webmozart-assert/extension.neon
-    - ../../vendor/w-vision/import-definitions/phpstan.neon
+    - ../../vendor/w-vision/data-definitions/phpstan.neon

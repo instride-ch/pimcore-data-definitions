@@ -85,7 +85,7 @@ final class PimcoreDaoContext implements Context
      */
     public function purgeIMLog()
     {
-        $this->connection->executeQuery('TRUNCATE TABLE import_definitions_log');
+        $this->connection->executeQuery('TRUNCATE TABLE data_definitions_import_log');
     }
 
     /**

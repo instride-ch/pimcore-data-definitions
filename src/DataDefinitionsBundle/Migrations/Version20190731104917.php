@@ -12,7 +12,9 @@ class Version20190731104917 extends AbstractPimcoreMigration
      */
     public function up(Schema $schema)
     {
-        $this->addSql('ALTER TABLE `import_definitions_log` RENAME TO `data_definitions_import_log`;');
+        if ($schema->hasTable('import_definitions_log')) {
+            $this->addSql('ALTER TABLE `import_definitions_log` RENAME TO `data_definitions_import_log`;');
+        }
     }
 
     /**

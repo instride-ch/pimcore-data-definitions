@@ -2,9 +2,13 @@ sudo: false
 language: php
 
 addons:
-    mariadb: '10.1'
+    mariadb: '10.2'
     hosts:
         - pimcore-test.dev
+
+services:
+    - mysql
+
 env:
     global:
         - PIMCORE_ENVIRONMENT=test
@@ -45,20 +49,9 @@ matrix:
           env:
             - PIMCORE_VERSION="^5"
 
-        - sudo: required
-          php: 7.1
-          env:
-            - PIMCORE_VERSION="dev-master"
-
-        - sudo: required
-          php: 7.2
-          env:
-            - PIMCORE_VERSION="dev-master"
     allow_failures:
         - env:
             - CORESHOP_SUITE=codestyle
-        - env:
-            - PIMCORE_VERSION="dev-master"
     fast_finish: true
 
 cache:

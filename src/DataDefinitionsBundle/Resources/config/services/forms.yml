@@ -1,8 +1,8 @@
 parameters:
-    data_definitions.form.type.definition.validation_groups: [import_definition]
-    data_definitions.form.type.mapping.validation_groups: [import_definition]
-    data_definitions.form.type.export_definition.validation_groups: [import_definition]
-    data_definitions.form.type.export_mapping.validation_groups: [import_definition]
+    data_definitions.form.type.definition.validation_groups: [data_definitions]
+    data_definitions.form.type.mapping.validation_groups: [data_definitions]
+    data_definitions.form.type.export_definition.validation_groups: [data_definitions]
+    data_definitions.form.type.export_mapping.validation_groups: [data_definitions]
 
 services:
     Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper:

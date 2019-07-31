@@ -36,14 +36,6 @@ final class HrefInterpreterType extends AbstractType
             ])
             ->add('class', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_href';
-    }
 }
 
 

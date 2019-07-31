@@ -27,14 +27,6 @@ final class XmlProviderType extends AbstractType
             ->add('xPath', TextType::class)
             ->add('exampleXPath', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_provider_xml';
-    }
 }
 
 

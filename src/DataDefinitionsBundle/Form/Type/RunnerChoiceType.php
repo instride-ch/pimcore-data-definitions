@@ -50,13 +50,5 @@ final class RunnerChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_runner_choice';
-    }
 }
 

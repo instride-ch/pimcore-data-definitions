@@ -2,16 +2,16 @@ default:
     suites:
         domain_import:
             contexts:
-                - import_definitions.behat.context.hook.pimcore_setup
-                - import_definitions.behat.context.hook.im_setup
-                - import_definitions.behat.context.hook.pimcore_dao
+                - data_definitions.behat.context.hook.pimcore_setup
+                - data_definitions.behat.context.hook.im_setup
+                - data_definitions.behat.context.hook.pimcore_dao
 
-                - import_definitions.behat.context.transform.pimcore_class
-                - import_definitions.behat.context.transform.pimcore_asset
-                - import_definitions.behat.context.transform.import_definition
+                - data_definitions.behat.context.transform.pimcore_class
+                - data_definitions.behat.context.transform.pimcore_asset
+                - data_definitions.behat.context.transform.import_definition
 
-                - import_definitions.behat.context.setup.pimcore_class
-                - import_definitions.behat.context.setup.pimcore_asset
-                - import_definitions.behat.context.setup.import_definition
+                - data_definitions.behat.context.setup.pimcore_class
+                - data_definitions.behat.context.setup.pimcore_asset
+                - data_definitions.behat.context.setup.import_definition
 
-                - import_definitions.behat.context.domain.pimcore
+                - data_definitions.behat.context.domain.pimcore

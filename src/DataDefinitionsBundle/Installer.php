@@ -31,7 +31,7 @@ class Installer extends MigrationInstaller
         $application = new Application($kernel);
         $application->setAutoExit(false);
         $options = ['command' => 'coreshop:resources:install'];
-        $options = array_merge($options, ['--no-interaction' => true, '--application-name import_definitions']);
+        $options = array_merge($options, ['--no-interaction' => true, '--application-name data_definitions']);
         $application->run(new ArrayInput($options));
     }
 

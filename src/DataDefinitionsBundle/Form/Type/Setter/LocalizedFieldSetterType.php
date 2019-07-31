@@ -25,14 +25,6 @@ final class LocalizedFieldSetterType extends AbstractType
         $builder
             ->add('language', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_setter_localized_field';
-    }
 }
 
 

@@ -28,14 +28,6 @@ final class QuantityValueInterpreterType extends AbstractType
         $builder
             ->add('unit', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_quantity_value';
-    }
 }
 
 

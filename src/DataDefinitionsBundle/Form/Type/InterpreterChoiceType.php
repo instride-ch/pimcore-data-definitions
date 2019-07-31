@@ -50,13 +50,5 @@ final class InterpreterChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_choice';
-    }
 }
 

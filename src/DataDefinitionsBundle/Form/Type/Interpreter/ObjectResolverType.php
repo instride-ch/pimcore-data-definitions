@@ -32,14 +32,6 @@ class ObjectResolverType extends AbstractType
             ->add('field', TextType::class)
             ->add('match_unpublished', CheckboxType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_object_resolver';
-    }
 }
 
 

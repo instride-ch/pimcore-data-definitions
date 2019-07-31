@@ -34,14 +34,6 @@ final class MappingInterpreterType extends AbstractType
             ])
             ->add('return_null_when_not_found', CheckboxType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_mapping';
-    }
 }
 
 

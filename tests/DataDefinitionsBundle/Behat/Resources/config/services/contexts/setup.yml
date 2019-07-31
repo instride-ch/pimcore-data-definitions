@@ -2,32 +2,32 @@ services:
     _defaults:
         public: true
 
-    import_definitions.behat.context.setup.pimcore_class:
+    data_definitions.behat.context.setup.pimcore_class:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Setup\PimcoreClassContext
         arguments:
-            - '@import_definitions.behat.shared_storage'
-            - '@import_definitions.behat.class_storage'
+            - '@data_definitions.behat.shared_storage'
+            - '@data_definitions.behat.class_storage'
         tags:
             - { name: fob.context_service }
 
-    import_definitions.behat.context.setup.import_definition:
+    data_definitions.behat.context.setup.import_definition:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Setup\ImportDefinitionContext
         arguments:
-            - '@import_definitions.behat.shared_storage'
-            - '@import_definitions.factory.definition'
-            - '@import_definitions.manager.definition'
-            - '@import_definition.importer'
+            - '@data_definitions.behat.shared_storage'
+            - '@data_definitions.factory.import_definition'
+            - '@data_definitions.manager.import_definition'
+            - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
             - '@form.factory'
-            - '@import_definition.form.registry.provider'
-            - '@import_definition.form.registry.interpreter'
-            - '@import_definition.form.registry.setter'
+            - '@data_definitions.form.registry.provider'
+            - '@data_definitions.form.registry.interpreter'
+            - '@data_definitions.form.registry.setter'
         tags:
             - { name: fob.context_service }
 
-    import_definitions.behat.context.setup.pimcore_asset:
+    data_definitions.behat.context.setup.pimcore_asset:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Setup\PimcoreAssetContext
         arguments:
-            - '@import_definitions.behat.shared_storage'
+            - '@data_definitions.behat.shared_storage'
             - '@kernel'
         tags:
             - { name: fob.context_service }

@@ -28,14 +28,6 @@ final class MultiHrefInterpreterType extends AbstractType
         $builder
             ->add('class', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_interpreter_multi_href';
-    }
 }
 
 

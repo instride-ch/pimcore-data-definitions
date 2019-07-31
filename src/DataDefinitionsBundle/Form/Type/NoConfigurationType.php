@@ -26,13 +26,5 @@ final class NoConfigurationType extends AbstractType
     {
         // Nothing to do here
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_no_configuration';
-    }
 }
 

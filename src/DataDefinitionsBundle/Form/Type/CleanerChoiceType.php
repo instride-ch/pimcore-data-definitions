@@ -50,13 +50,5 @@ final class CleanerChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_cleaner_choice';
-    }
 }
 

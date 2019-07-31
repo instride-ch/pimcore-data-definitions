@@ -79,13 +79,5 @@ final class DefinitionChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_definition_choice';
-    }
 }
 

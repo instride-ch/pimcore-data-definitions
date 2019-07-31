@@ -50,13 +50,5 @@ final class LoaderChoiceType extends AbstractType
     {
         return ChoiceType::class;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_loader_choice';
-    }
 }
 

@@ -27,14 +27,6 @@ final class FieldCollectionSetterType extends AbstractType
             ->add('class', TextType::class)
             ->add('keys', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_setter_classification_store';
-    }
 }
 
 

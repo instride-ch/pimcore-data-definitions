@@ -30,7 +30,7 @@ services:
 
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ExportDefinitionStartupFormResolver:
         arguments:
-            - '@import_definitions.repository.export_definition'
+            - '@data_definitions.repository.export_definition'
         tags:
             - { name: 'process_manager.startup_form_resolver', type: 'exportdefinition' }
 

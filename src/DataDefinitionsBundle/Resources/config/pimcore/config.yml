@@ -5,7 +5,7 @@ jms_serializer:
                 namespace_prefix: "DataDefinitionsBundle"
                 path: "@DataDefinitionsBundle/Resources/config/serializer"
 
-import_definitions:
+data_definitions:
     pimcore_admin:
         js:
             startup: '/bundles/datadefinitions/pimcore/js/startup.js'

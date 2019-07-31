@@ -26,14 +26,6 @@ final class ExcelProviderType extends AbstractType
             ->add('exampleFile', TextType::class)
             ->add('excelHeaders', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_provider_excel';
-    }
 }
 
 

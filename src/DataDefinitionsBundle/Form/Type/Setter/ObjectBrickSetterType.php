@@ -26,14 +26,6 @@ final class ObjectBrickSetterType extends AbstractType
             ->add('brickField', TextType::class)
             ->add('class', TextType::class);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'import_definitions_setter_object_brick';
-    }
 }
 
 

@@ -14,7 +14,7 @@ services:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform\ImportDefinitionContext
         arguments:
             - '@data_definitions.behat.shared_storage'
-            - '@data_definitions.repository.definition'
+            - '@data_definitions.repository.import_definition'
         tags:
             - { name: fob.context_service }
 

@@ -5,6 +5,10 @@ addons:
     mariadb: '10.1'
     hosts:
         - pimcore-test.dev
+
+services:
+    - mysql
+
 env:
     global:
         - PIMCORE_ENVIRONMENT=test

@@ -146,16 +146,8 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
         if (type) {
             type = type.toLowerCase();
 
-            var klass = null;
-
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.interpreters[type]) {
-                klass = pimcore.plugin.importdefinitions.interpreters[type];
-            } else if (pimcore.plugin.datadefinitions.interpreters[type]) {
-                klass = pimcore.plugin.datadefinitions.interpreters[type];
-            }
-
             if (pimcore.plugin.datadefinitions.interpreters[type]) {
-                this.interpreter = new klass;
+                this.interpreter = new pimcore.plugin.datadefinitions.interpreters[type]();
 
                 this.getInterpreterPanel().add(this.interpreter.getLayout(this.fromColumn, {}, this.record, Ext.isObject(this.record.data.interpreterConfig) ? this.record.data.interpreterConfig : {}, this.config));
                 this.getInterpreterPanel().show();
@@ -183,19 +175,10 @@ pimcore.plugin.datadefinitions.export.configDialog = Class.create({
 
     getGetterPanelLayout: function (type) {
         if (type) {
-            var klass = null;
-
             type = type.toLowerCase();
 
-            //TODO: Remove in 3.0
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.getters[type]) {
-                klass = pimcore.plugin.importdefinitions.getters[type];
-            } else if (pimcore.plugin.datadefinitions.getters[type]) {
-                klass = pimcore.plugin.datadefinitions.getters[type];
-            }
-
-            if (klass) {
-                this.getter = new klass;
+            if (pimcore.plugin.datadefinitions.getters[type]) {
+                this.getter = new pimcore.plugin.datadefinitions.getters[type]();
 
                 this.getGetterPanel().add(this.getter.getLayout(this.fromColumn, {}, this.record, Ext.isObject(this.record.data.getterConfig) ? this.record.data.getterConfig : {}, this.config));
                 this.getGetterPanel().show();

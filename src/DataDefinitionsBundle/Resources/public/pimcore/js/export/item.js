@@ -219,15 +219,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
         if (this.providerSettings) {
             this.providerSettings.removeAll();
 
-            var klass;
-
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.export_provider[provider]) {
-                klass = pimcore.plugin.importdefinitions.export_provider[provider];
-            } else if (pimcore.plugin.datadefinitions.export_provider[provider]) {
-                klass = pimcore.plugin.datadefinitions.export_provider[provider];
-            }
-
-            if (klass !== undefined) {
+            if (pimcore.plugin.datadefinitions.export_provider[provider] !== undefined) {
                 if (this.data.provider === null) {
                     this.data.provider = provider;
                     this.save(function () {
@@ -246,15 +238,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
     },
 
     updateProviderMapViews: function () {
-        var klass;
-
-        if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.export_provider[this.data.provider]) {
-            klass = pimcore.plugin.importdefinitions.export_provider[this.data.provider];
-        } else if (pimcore.plugin.datadefinitions.export_provider[this.data.provider]) {
-            klass = pimcore.plugin.datadefinitions.export_provider[this.data.provider];
-        }
-
-        this.providerSettings.add(new klass(this.data.configuration ? this.data.configuration : {}, this).getForm());
+        this.providerSettings.add(new pimcore.plugin.datadefinitions.export_provider[this.data.provider](this.data.configuration ? this.data.configuration : {}, this).getForm());
         this.providerSettings.enable();
     },
 
@@ -300,16 +284,8 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
         if (type) {
             type = type.toLowerCase();
 
-            var klass;
-
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.fetchers[type]) {
-                klass = pimcore.plugin.importdefinitions.fetchers[type];
-            } else if (pimcore.plugin.datadefinitions.fetchers[type]) {
-                klass = pimcore.plugin.datadefinitions.fetchers[type];
-            }
-
-            if (klass) {
-                this.fetcher = new klass;
+            if (pimcore.plugin.datadefinitions.fetchers[type]) {
+                this.fetcher = new pimcore.plugin.datadefinitions.fetchers[type]();
 
                 this.getFetcherPanel().add(this.fetcher.getLayout(Ext.isObject(this.data.fetcherConfig) ? this.data.fetcherConfig : {}, this.data));
                 this.getFetcherPanel().show();

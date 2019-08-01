@@ -313,15 +313,7 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
         if (this.providerSettings) {
             this.providerSettings.removeAll();
 
-            var klass;
-
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.provider[provider]) {
-                klass = pimcore.plugin.importdefinitions.provider[provider];
-            } else if (pimcore.plugin.datadefinitions.provider[provider]) {
-                klass = pimcore.plugin.datadefinitions.provider[provider];
-            }
-
-            if (klass !== undefined) {
+            if (pimcore.plugin.datadefinitions.provider[provider] !== undefined) {
                 if (this.data.provider === null) {
                     this.data.provider = provider;
                     this.save(function () {
@@ -357,15 +349,7 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
     },
 
     updateProviderMapViews: function () {
-        var klass;
-
-        if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.provider[this.data.provider]) {
-            klass = pimcore.plugin.importdefinitions.provider[this.data.provider];
-        } else if (pimcore.plugin.datadefinitions.provider[this.data.provider]) {
-            klass = pimcore.plugin.datadefinitions.provider[this.data.provider];
-        }
-
-        this.providerSettings.add(new klass(this.data.configuration ? this.data.configuration : {}, this).getForm());
+        this.providerSettings.add(new pimcore.plugin.datadefinitions.provider[this.data.provider](this.data.configuration ? this.data.configuration : {}, this).getForm());
         this.providerSettings.enable();
     },
 

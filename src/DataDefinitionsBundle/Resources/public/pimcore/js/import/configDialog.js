@@ -152,16 +152,8 @@ pimcore.plugin.datadefinitions.import.configDialog = Class.create({
         if (type) {
             type = type.toLowerCase();
 
-            var klass;
-
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.interpreters[type]) {
-                klass = pimcore.plugin.importdefinitions.interpreters[type];
-            } else if (pimcore.plugin.datadefinitions.interpreters[type]) {
-                klass = pimcore.plugin.datadefinitions.interpreters[type];
-            }
-
-            if (klass) {
-                this.interpreter = new klass;
+            if (pimcore.plugin.datadefinitions.interpreters[type]) {
+                this.interpreter = new pimcore.plugin.datadefinitions.interpreters[type]();
 
                 this.getInterpreterPanel().add(this.interpreter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.interpreterConfig) ? this.record.data.interpreterConfig : {}, this.config));
                 this.getInterpreterPanel().show();
@@ -191,16 +183,8 @@ pimcore.plugin.datadefinitions.import.configDialog = Class.create({
         if (type) {
             type = type.toLowerCase();
 
-            var klass;
-
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.setters[type]) {
-                klass = pimcore.plugin.importdefinitions.setters[type];
-            } else if (pimcore.plugin.datadefinitions.setters[type]) {
-                klass = pimcore.plugin.datadefinitions.setters[type];
-            }
-
-            if (klass) {
-                this.setter = new klass;
+            if (pimcore.plugin.datadefinitions.setters[type]) {
+                this.setter = new pimcore.plugin.datadefinitions.setters[type]();
 
                 this.getSetterPanel().add(this.setter.getLayout(this.fromColumn, this.toColumn, this.record, Ext.isObject(this.record.data.setterConfig) ? this.record.data.setterConfig : {}, this.config));
                 this.getSetterPanel().show();

@@ -124,16 +124,8 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
         if (type) {
             type = type.toLowerCase();
 
-            var klass;
-
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.interpreters[type]) {
-                klass = pimcore.plugin.importdefinitions.interpreters[type];
-            } else if (pimcore.plugin.datadefinitions.interpreters[type]) {
-                klass = pimcore.plugin.datadefinitions.interpreters[type];
-            }
-
-            if (klass) {
-                this.trueInterpreter = new klass;
+            if (pimcore.plugin.datadefinitions.interpreters[type]) {
+                this.trueInterpreter = new pimcore.plugin.datadefinitions.interpreters[type]();
 
                 this.trueInterpreterPanel.add(this.trueInterpreter.getLayout(fromColumn, toColumn, record, Ext.isObject(config) ? config : {}, parentConfig));
                 this.trueInterpreterPanel.show();
@@ -151,16 +143,8 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
         if (type) {
             type = type.toLowerCase();
 
-            var klass;
-
-            if (pimcore.plugin.importdefinitions && pimcore.plugin.importdefinitions.interpreters[type]) {
-                klass = pimcore.plugin.importdefinitions.interpreters[type];
-            } else if (pimcore.plugin.datadefinitions.interpreters[type]) {
-                klass = pimcore.plugin.datadefinitions.interpreters[type];
-            }
-
             if (pimcore.plugin.datadefinitions.interpreters[type]) {
-                this.falseInterpreter = new klass;
+                this.falseInterpreter = new pimcore.plugin.datadefinitions.interpreters[type]();
 
                 this.falseInterpreterPanel.add(this.falseInterpreter.getLayout(fromColumn, toColumn, record, Ext.isObject(config) ? config : {}, parentConfig));
                 this.falseInterpreterPanel.show();

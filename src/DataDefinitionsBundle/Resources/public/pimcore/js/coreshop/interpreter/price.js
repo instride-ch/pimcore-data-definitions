@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.coreshop_price');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.coreshop_price');
 
 pimcore.plugin.datadefinitions.interpreters.coreshop_price = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -23,3 +24,5 @@ pimcore.plugin.datadefinitions.interpreters.coreshop_price = Class.create(pimcor
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.coreshop_price = Class.create(pimcore.plugin.datadefinitions.interpreters.coreshop_price, {});

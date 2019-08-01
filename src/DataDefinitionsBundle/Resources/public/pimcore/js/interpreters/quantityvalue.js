@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.quantity_value');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.quantity_value');
 
 pimcore.plugin.datadefinitions.interpreters.quantity_value = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -27,3 +28,5 @@ pimcore.plugin.datadefinitions.interpreters.quantity_value = Class.create(pimcor
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.quantity_value = Class.create(pimcore.plugin.datadefinitions.interpreters.quantity_value, {});

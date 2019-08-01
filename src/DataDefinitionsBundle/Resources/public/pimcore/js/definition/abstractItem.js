@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.definition.abstractItem');
+pimcore.registerNS('pimcore.plugin.importdefinitions.definition.abstractItem');
 
 pimcore.plugin.datadefinitions.definition.abstractItem = Class.create(coreshop.resource.item, {
     getPanel: function () {
@@ -170,3 +171,5 @@ pimcore.plugin.datadefinitions.definition.abstractItem = Class.create(coreshop.r
         automap.grid.getView().refresh();
     }
 });
+
+pimcore.plugin.importdefinitions.definition.abstractItem = Class.create(pimcore.plugin.datadefinitions.definition.abstractItem, {});

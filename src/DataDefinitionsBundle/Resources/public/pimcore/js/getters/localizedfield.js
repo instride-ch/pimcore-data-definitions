@@ -12,7 +12,9 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.getters.localizedfield');
+pimcore.registerNS('pimcore.plugin.importdefinitions.getters.localizedfield');
 
 pimcore.plugin.datadefinitions.getters.localizedfield = Class.create(pimcore.plugin.datadefinitions.setters.localizedfield, {
 
 });
+pimcore.plugin.importdefinitions.getters.localizedfield = Class.create(pimcore.plugin.datadefinitions.getters.localizedfield, {});

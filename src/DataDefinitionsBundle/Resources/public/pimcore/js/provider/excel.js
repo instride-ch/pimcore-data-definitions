@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.provider.excel');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.excel');
 
 pimcore.plugin.datadefinitions.provider.excel = Class.create(pimcore.plugin.datadefinitions.provider.abstractprovider, {
     getItems : function () {
@@ -64,3 +65,5 @@ pimcore.plugin.datadefinitions.provider.excel = Class.create(pimcore.plugin.data
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.provider.excel = Class.create(pimcore.plugin.datadefinitions.provider.excel, {});

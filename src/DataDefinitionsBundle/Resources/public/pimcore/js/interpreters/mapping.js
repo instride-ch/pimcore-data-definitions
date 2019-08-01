@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.mapping');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.mapping');
 
 pimcore.plugin.datadefinitions.interpreters.mapping = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout: function (fromColumn, toColumn, record, config) {
@@ -115,3 +116,5 @@ pimcore.plugin.datadefinitions.interpreters.mapping = Class.create(pimcore.plugi
         };
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.mapping = Class.create(pimcore.plugin.datadefinitions.interpreters.mapping, {});

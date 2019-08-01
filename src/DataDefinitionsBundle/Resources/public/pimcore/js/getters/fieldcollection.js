@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.getters.fieldcollection');
+pimcore.registerNS('pimcore.plugin.importdefinitions.getters.fieldcollection');
 
 pimcore.plugin.datadefinitions.getters.fieldcollection = Class.create(pimcore.plugin.datadefinitions.setters.fieldcollection, {
     getLayout: function (fromColumn, toColumn, record, config, definitionConfig) {
@@ -34,3 +35,5 @@ pimcore.plugin.datadefinitions.getters.fieldcollection = Class.create(pimcore.pl
         };
     }
 });
+
+pimcore.plugin.importdefinitions.getters.fieldcollection = Class.create(pimcore.plugin.datadefinitions.getters.fieldcollection, {});

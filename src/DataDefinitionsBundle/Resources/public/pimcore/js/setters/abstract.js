@@ -12,10 +12,14 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.setters');
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters');
 pimcore.registerNS('pimcore.plugin.datadefinitions.setters.abstract');
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters.abstract');
 
 pimcore.plugin.datadefinitions.setters.abstract = Class.create({
     getLayout : function () {
         return [];
     }
 });
+
+pimcore.plugin.importdefinitions.setters.abstract = Class.create(pimcore.plugin.datadefinitions.setters.abstract, {});

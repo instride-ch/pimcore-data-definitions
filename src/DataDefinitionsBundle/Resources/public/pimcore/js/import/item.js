@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.import.item');
+pimcore.registerNS('pimcore.plugin.importdefinitions.import.item');
 
 pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadefinitions.definition.abstractItem, {
     iconCls: 'data_definitions_icon_import_definition',
@@ -638,3 +639,5 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
         return data;
     }
 });
+
+pimcore.plugin.importdefinitions.import.item = Class.create(pimcore.plugin.datadefinitions.import.item, {});

@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.conditional');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.conditional');
 
 pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout: function (fromColumn, toColumn, record, config) {
@@ -214,3 +215,5 @@ pimcore.plugin.datadefinitions.interpreters.conditional = Class.create(pimcore.p
         };
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.conditional = Class.create(pimcore.plugin.datadefinitions.interpreters.conditional, {});

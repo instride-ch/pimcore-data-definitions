@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.object_resolver');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.object_resolver');
 
 pimcore.plugin.datadefinitions.interpreters.object_resolver = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -60,3 +61,5 @@ pimcore.plugin.datadefinitions.interpreters.object_resolver = Class.create(pimco
         ];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.object_resolver = Class.create(pimcore.plugin.datadefinitions.interpreters.object_resolver, {});

@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.export.panel');
+pimcore.registerNS('pimcore.plugin.importdefinitions.export.panel');
 
 pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.panel, {
     layoutId: 'data_definitions_export_definition_panel',
@@ -169,3 +170,5 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
         return pimcore.plugin.datadefinitions.export.item;
     }
 });
+
+pimcore.plugin.importdefinitions.export.panel = Class.create(pimcore.plugin.datadefinitions.export.panel, {});

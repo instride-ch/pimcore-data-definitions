@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.import.configDialog');
+pimcore.registerNS('pimcore.plugin.importdefinitions.import.configDialog');
 
 pimcore.plugin.datadefinitions.import.configDialog = Class.create({
     getConfigDialog : function (fromColumn, toColumn, record, config) {
@@ -256,3 +257,5 @@ pimcore.plugin.datadefinitions.import.configDialog = Class.create({
         }
     }
 });
+
+pimcore.plugin.importdefinitions.import.configDialog = Class.create(pimcore.plugin.datadefinitions.import.configDialog, {});

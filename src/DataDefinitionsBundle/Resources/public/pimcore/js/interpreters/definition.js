@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.definition');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.definition');
 
 pimcore.plugin.datadefinitions.interpreters.definition = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -24,3 +25,5 @@ pimcore.plugin.datadefinitions.interpreters.definition = Class.create(pimcore.pl
         ];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.definition = Class.create(pimcore.plugin.datadefinitions.interpreters.definition, {});

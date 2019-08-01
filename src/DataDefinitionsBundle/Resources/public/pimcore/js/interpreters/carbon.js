@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.carbon');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.carbon');
 
 pimcore.plugin.datadefinitions.interpreters.carbon = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -24,3 +25,5 @@ pimcore.plugin.datadefinitions.interpreters.carbon = Class.create(pimcore.plugin
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.carbon = Class.create(pimcore.plugin.datadefinitions.interpreters.carbon, {});

@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.provider.xml');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.xml');
 
 pimcore.plugin.datadefinitions.provider.xml = Class.create(pimcore.plugin.datadefinitions.provider.abstractprovider, {
     getItems : function () {
@@ -68,3 +69,5 @@ pimcore.plugin.datadefinitions.provider.xml = Class.create(pimcore.plugin.datade
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.provider.xml = Class.create(pimcore.plugin.datadefinitions.provider.xml, {});

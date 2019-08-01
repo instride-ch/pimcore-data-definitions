@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.nested');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.nested');
 
 pimcore.plugin.datadefinitions.interpreters.nested = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getStore: function() {
@@ -118,3 +119,5 @@ pimcore.plugin.datadefinitions.interpreters.nested = Class.create(pimcore.plugin
         };
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.nested = Class.create(pimcore.plugin.datadefinitions.interpreters.nested, {});

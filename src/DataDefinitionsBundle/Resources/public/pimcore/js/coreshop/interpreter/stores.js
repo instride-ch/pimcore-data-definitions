@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.coreshop_stores');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.coreshop_stores');
 
 pimcore.plugin.datadefinitions.interpreters.coreshop_stores = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout: function (fromColumn, toColumn, record, config) {
@@ -24,3 +25,5 @@ pimcore.plugin.datadefinitions.interpreters.coreshop_stores = Class.create(pimco
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.coreshop_stores = Class.create(pimcore.plugin.datadefinitions.interpreters.coreshop_stores, {});

@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.provider.csv');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.csv');
 
 pimcore.plugin.datadefinitions.provider.csv = Class.create(pimcore.plugin.datadefinitions.provider.abstractprovider, {
     getItems : function () {
@@ -50,3 +51,5 @@ pimcore.plugin.datadefinitions.provider.csv = Class.create(pimcore.plugin.datade
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.provider.csv = Class.create(pimcore.plugin.datadefinitions.provider.csv, {});

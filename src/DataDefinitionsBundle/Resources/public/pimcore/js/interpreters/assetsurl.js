@@ -12,5 +12,8 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.assets_url');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.assets_url');
 
 pimcore.plugin.datadefinitions.interpreters.assets_url = Class.create(pimcore.plugin.datadefinitions.interpreters.asset_url, {});
+
+pimcore.plugin.importdefinitions.interpreters.assets_url = Class.create(pimcore.plugin.datadefinitions.interpreters.assets_url, {});

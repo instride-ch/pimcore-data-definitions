@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.provider.external_sql');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.external_sql');
 
 pimcore.plugin.datadefinitions.provider.external_sql = Class.create(pimcore.plugin.datadefinitions.provider.abstractprovider, {
     getItems : function () {
@@ -62,3 +63,5 @@ pimcore.plugin.datadefinitions.provider.external_sql = Class.create(pimcore.plug
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.provider.external_sql = Class.create(pimcore.plugin.datadefinitions.provider.external_sql, {});

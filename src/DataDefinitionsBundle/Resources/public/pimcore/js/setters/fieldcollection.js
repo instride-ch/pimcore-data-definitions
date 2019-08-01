@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.setters.fieldcollection');
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters.fieldcollection');
 
 pimcore.plugin.datadefinitions.setters.fieldcollection = Class.create(pimcore.plugin.datadefinitions.setters.abstract, {
     getLayout: function (fromColumn, toColumn, record, config, definitionConfig) {
@@ -58,3 +59,5 @@ pimcore.plugin.datadefinitions.setters.fieldcollection = Class.create(pimcore.pl
         };
     }
 });
+
+pimcore.plugin.importdefinitions.setters.fieldcollection = Class.create(pimcore.plugin.datadefinitions.setters.fieldcollection, {});

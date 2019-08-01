@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.setters.localizedfield');
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters.localizedfield');
 
 pimcore.plugin.datadefinitions.setters.localizedfield = Class.create(pimcore.plugin.datadefinitions.setters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -24,3 +25,5 @@ pimcore.plugin.datadefinitions.setters.localizedfield = Class.create(pimcore.plu
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.setters.localizedfield = Class.create(pimcore.plugin.datadefinitions.setters.localizedfield, {});

@@ -12,7 +12,9 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.getters.coreshop_store_values');
+pimcore.registerNS('pimcore.plugin.importdefinitions.getters.coreshop_store_values');
 
 pimcore.plugin.datadefinitions.getters.coreshop_store_values = Class.create(pimcore.plugin.datadefinitions.setters.coreshop_store_values, {
 
 });
+pimcore.plugin.importdefinitions.getters.coreshop_store_values = Class.create(pimcore.plugin.datadefinitions.getters.coreshop_store_values, {});

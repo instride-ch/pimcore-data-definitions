@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.default_value');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.default_value');
 
 pimcore.plugin.datadefinitions.interpreters.default_value = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -24,3 +25,5 @@ pimcore.plugin.datadefinitions.interpreters.default_value = Class.create(pimcore
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.default_value = Class.create(pimcore.plugin.datadefinitions.interpreters.default_value, {});

@@ -12,7 +12,10 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.getters.objectbrick');
+pimcore.registerNS('pimcore.plugin.importdefinitions.getters.objectbrick');
 
 pimcore.plugin.datadefinitions.getters.objectbrick = Class.create(pimcore.plugin.datadefinitions.setters.objectbrick, {
 
 });
+
+pimcore.plugin.importdefinitions.getters.objectbrick = Class.create(pimcore.plugin.datadefinitions.getters.objectbrick, {});

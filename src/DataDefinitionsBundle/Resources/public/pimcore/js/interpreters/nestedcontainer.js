@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.nestedcontainer');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.nestedcontainer');
 
 pimcore.plugin.datadefinitions.interpreters.nestedcontainer = Class.create({
     parent: {},
@@ -155,3 +156,5 @@ pimcore.plugin.datadefinitions.interpreters.nestedcontainer = Class.create({
         return items;
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.nestedcontainer = Class.create(pimcore.plugin.datadefinitions.interpreters.nestedcontainer, {});

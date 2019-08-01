@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.setters.classificationstore');
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters.classificationstore');
 
 pimcore.plugin.datadefinitions.setters.classificationstore = Class.create(pimcore.plugin.datadefinitions.setters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -28,3 +29,5 @@ pimcore.plugin.datadefinitions.setters.classificationstore = Class.create(pimcor
         };
     }
 });
+
+pimcore.plugin.importdefinitions.setters.classificationstore = Class.create(pimcore.plugin.datadefinitions.setters.classificationstore, {});

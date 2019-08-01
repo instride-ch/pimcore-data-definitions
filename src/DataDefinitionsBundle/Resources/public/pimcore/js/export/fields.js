@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.export.fields');
+pimcore.registerNS('pimcore.plugin.importdefinitions.export.fields');
 
 pimcore.plugin.datadefinitions.export.fields = Class.create({
     id: null,
@@ -372,3 +373,4 @@ pimcore.plugin.datadefinitions.export.fields = Class.create({
 
     }
 });
+pimcore.plugin.importdefinitions.export.fields = Class.create(pimcore.plugin.datadefinitions.export.fields, {});

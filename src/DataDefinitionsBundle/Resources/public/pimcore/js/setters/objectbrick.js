@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.setters.objectbrick');
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters.objectbrick');
 
 pimcore.plugin.datadefinitions.setters.objectbrick = Class.create(pimcore.plugin.datadefinitions.setters.abstract, {
     getLayout: function (fromColumn, toColumn, record, config, definitionConfig) {
@@ -49,3 +50,5 @@ pimcore.plugin.datadefinitions.setters.objectbrick = Class.create(pimcore.plugin
         };
     }
 });
+
+pimcore.plugin.importdefinitions.setters.objectbrick = Class.create(pimcore.plugin.datadefinitions.setters.objectbrick, {});

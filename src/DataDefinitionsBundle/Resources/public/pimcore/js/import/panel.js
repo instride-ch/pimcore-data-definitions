@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.import.panel');
+pimcore.registerNS('pimcore.plugin.importdefinitions.import.panel');
 
 pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.panel, {
     layoutId: 'data_definitions_import_definition_panel',
@@ -197,3 +198,5 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
         return pimcore.plugin.datadefinitions.import.item;
     }
 });
+
+pimcore.plugin.importdefinitions.import.panel = Class.create(pimcore.plugin.datadefinitions.import.panel, {});

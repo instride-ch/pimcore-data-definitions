@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.asset_url');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.asset_url');
 
 pimcore.plugin.datadefinitions.interpreters.asset_url = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -102,3 +103,5 @@ pimcore.plugin.datadefinitions.interpreters.asset_url = Class.create(pimcore.plu
         ];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.asset_url = Class.create(pimcore.plugin.datadefinitions.interpreters.asset_url, {});

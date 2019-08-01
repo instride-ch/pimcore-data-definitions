@@ -12,5 +12,8 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.multi_href');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.multi_href');
 
 pimcore.plugin.datadefinitions.interpreters.multi_href = Class.create(pimcore.plugin.datadefinitions.interpreters.href, {});
+
+pimcore.plugin.importdefinitions.interpreters.multi_href = Class.create(pimcore.plugin.datadefinitions.interpreters.multi_href, {});

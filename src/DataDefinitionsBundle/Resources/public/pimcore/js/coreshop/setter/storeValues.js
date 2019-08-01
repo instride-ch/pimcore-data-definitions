@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.setters.coreshop_store_values');
+pimcore.registerNS('pimcore.plugin.importdefinitions.setters.coreshop_store_values');
 
 pimcore.plugin.datadefinitions.setters.coreshop_store_values = Class.create(pimcore.plugin.datadefinitions.setters.abstract, {
     getLayout : function (fromColumn, toColumn, record, config) {
@@ -29,3 +30,4 @@ pimcore.plugin.datadefinitions.setters.coreshop_store_values = Class.create(pimc
         }];
     }
 });
+pimcore.plugin.importdefinitions.setters.coreshop_store_values = Class.create(pimcore.plugin.datadefinitions.setters.coreshop_store_values, {});

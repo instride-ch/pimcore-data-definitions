@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.iterator');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.iterator');
 
 pimcore.plugin.datadefinitions.interpreters.iterator = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getStore: function() {
@@ -127,3 +128,5 @@ pimcore.plugin.datadefinitions.interpreters.iterator = Class.create(pimcore.plug
         return {};
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.iterator = Class.create(pimcore.plugin.datadefinitions.interpreters.iterator, {});

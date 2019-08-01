@@ -12,9 +12,12 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.empty');
+pimcore.registerNS('pimcore.plugin.importdefinitions.interpreters.empty');
 
 pimcore.plugin.datadefinitions.interpreters.empty = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout : function () {
         return [];
     }
 });
+
+pimcore.plugin.importdefinitions.interpreters.empty = Class.create(pimcore.plugin.datadefinitions.interpreters.empty, {});

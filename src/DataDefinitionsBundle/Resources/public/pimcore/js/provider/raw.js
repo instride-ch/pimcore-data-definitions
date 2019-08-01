@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.provider.raw');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.raw');
 
 pimcore.plugin.datadefinitions.provider.raw = Class.create(pimcore.plugin.datadefinitions.provider.abstractprovider, {
     getItems : function () {
@@ -26,3 +27,5 @@ pimcore.plugin.datadefinitions.provider.raw = Class.create(pimcore.plugin.datade
         }];
     }
 });
+
+pimcore.plugin.importdefinitions.provider.raw = Class.create(pimcore.plugin.datadefinitions.provider.raw, {});

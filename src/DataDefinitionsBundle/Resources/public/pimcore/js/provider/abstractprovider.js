@@ -12,6 +12,7 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.provider.abstractprovider');
+pimcore.registerNS('pimcore.plugin.importdefinitions.provider.abstractprovider');
 
 pimcore.plugin.datadefinitions.provider.abstractprovider = Class.create({
     data : {},
@@ -75,3 +76,5 @@ pimcore.plugin.datadefinitions.provider.abstractprovider = Class.create({
         }.bind(this));
     }
 });
+
+pimcore.plugin.importdefinitions.provider.abstractprovider = Class.create(pimcore.plugin.datadefinitions.provider.abstractprovider, {});

@@ -12,10 +12,14 @@
  */
 
 pimcore.registerNS('pimcore.plugin.datadefinitions.fetchers');
+pimcore.registerNS('pimcore.plugin.importdefinitions.fetchers');
 pimcore.registerNS('pimcore.plugin.datadefinitions.fetchers.abstract');
+pimcore.registerNS('pimcore.plugin.importdefinitions.fetchers.abstract');
 
 pimcore.plugin.datadefinitions.fetchers.abstract = Class.create({
     getLayout : function () {
         return [];
     }
 });
+
+pimcore.plugin.importdefinitions.fetchers.abstract = Class.create(pimcore.plugin.datadefinitions.fetchers.abstract, {});

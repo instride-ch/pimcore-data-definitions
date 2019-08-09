@@ -76,6 +76,7 @@ class DataDefinitionsExtension extends AbstractModelExtension
             $config['pimcore_admin']['js']['process_manager_import'] = '/bundles/datadefinitions/pimcore/js/process_manager/import_definitions.js';
             $config['pimcore_admin']['js']['process_manager_export'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_definitions.js';
             $config['pimcore_admin']['js']['process_manager_export_contextmenu'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_contextmenu.js';
+            $config['pimcore_admin']['js']['process_manager_export_search'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_search.js';
             $loader->load('process_manager.yml');
         }
 

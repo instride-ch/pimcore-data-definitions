@@ -49,8 +49,6 @@ class ObjectsFetcher implements FetcherInterface
     {
         $class = $definition->getClass();
         $classDefinition = ClassDefinition::getByName($class);
-        $obj = null;
-
         if (!$classDefinition instanceof ClassDefinition) {
             throw new \InvalidArgumentException(sprintf('Class not found %s', $class));
         }
@@ -59,15 +57,71 @@ class ObjectsFetcher implements FetcherInterface
         $list = new $classList;
         $list->setUnpublished($definition->isFetchUnpublished());
 
+        $rootNode = null;
+        $conditionFilters = [];
         if (isset($params['root'])) {
             $rootNode = Concrete::getById($params['root']);
 
             if (null !== $rootNode) {
-                $list->addConditionParam('o_path LIKE :path', ['path' => $rootNode->getFullPath().'%']);
+                $quotedPath = $list->quote($rootNode->getRealFullPath());
+                $quotedWildcardPath = $list->quote(str_replace('//', '/', $rootNode->getRealFullPath() . '/') . '%');
+                $conditionFilters[] = '(o_path = ' . $quotedPath . ' OR o_path LIKE ' . $quotedWildcardPath . ')';
             }
         }
 
+        if ($params['query']) {
+            $query = $this->filterQueryParam($params['query']);
+            if (!empty($query)) {
+                $conditionFilters[] = 'oo_id IN (SELECT id FROM search_backend_data WHERE MATCH (`data`,`properties`) AGAINST (' . $list->quote($query) . ' IN BOOLEAN MODE))';
+            }
+        }
+
+        if ($params['only_direct_children'] == 'true' && null !== $rootNode) {
+            $conditionFilters[] = 'o_parentId = ' . $rootNode->getId();
+        }
+
+        if ($params['condition']) {
+            $conditionFilters[] = '(' . $params['condition'] . ')';
+        }
+        if ($params['ids']) {
+            $quotedIds = [];
+            foreach ($params['ids'] as $id) {
+                $quotedIds[] = $list->quote($id);
+            }
+            if (!empty($quotedIds)) {
+                $conditionFilters[] = 'oo_id IN (' . implode(',', $quotedIds) . ')';
+            }
+        }
+        
+        $list->setCondition(implode(' AND ', $conditionFilters));
+
         return $list;
+    }
+
+    /**
+     * @param string $query
+     *
+     * @return string
+     */
+    protected function filterQueryParam(string $query)
+    {
+        if ($query == '*') {
+            $query = '';
+        }
+
+        $query = str_replace('%', '*', $query);
+        $query = str_replace('@', '#', $query);
+        $query = preg_replace("@([^ ])\-@", '$1 ', $query);
+
+        $query = str_replace(['<', '>', '(', ')', '~'], ' ', $query);
+
+        // it is not allowed to have * behind another *
+        $query = preg_replace('#[*]+#', '*', $query);
+
+        // no boolean operators at the end of the query
+        $query = rtrim($query, '+- ');
+
+        return $query;
     }
 }
 

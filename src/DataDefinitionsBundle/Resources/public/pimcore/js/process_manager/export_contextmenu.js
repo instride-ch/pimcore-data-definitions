@@ -33,15 +33,16 @@ pimcore.plugin.datadefinitions.export.context_menu = Class.create(pimcore.plugin
                     rootProperty: 'data'
                 }
             },
+            sorters: [{
+                property: 'name',
+                direction: 'ASC'
+            }],
+            sortRoot: 'data',
             autoLoad: true,
             listeners: {
-                load: function(store, executables, successful) {
-                    if (!successful) {
-                        return;
-                    }
-
+                refresh: function(store) {
                     var exportMenu = [];
-                    executables.forEach(function (executable) {
+                    store.each(function (executable) {
                         exportMenu.push({
                             text: executable.get('name'),
                             iconCls: "pimcore_icon_object pimcore_icon_overlay_add",
@@ -53,7 +54,7 @@ pimcore.plugin.datadefinitions.export.context_menu = Class.create(pimcore.plugin
                         tree.add([
                             { xtype: 'menuseparator' },
                             {
-                                text: t("importdefinitions_processmanager_export_from_here"),
+                                text: t("data_definitions_processmanager_export_from_here"),
                                 iconCls: "pimcore_icon_object pimcore_icon_overlay_download",
                                 menu: exportMenu
                             }

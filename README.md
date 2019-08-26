@@ -13,7 +13,7 @@ as often you like. Everything within Data Definitions is extendable.
 
 ## Getting started/Installation
  * Install via composer  
- ```composer require w-vision/data-definitions^3.0```
+ ```composer require w-vision/data-definitions:^3.0```
  * Enable via command-line (or inside the pimcore extension manager)  
  ```bin/console pimcore:bundle:enable DataDefinitionsBundle```
  * Install via command-line (or inside the pimcore extension manager)  

@@ -31,7 +31,7 @@ final class ExportDefinitionProcess extends Pimcore
             $settings['params'] = (array)$params;
         }
 
-        $settings['command'] = sprintf('export-definitions:export -d %s -p "%s"', $settings['definition'],
+        $settings['command'] = sprintf('data-definitions:export -d %s -p "%s"', $settings['definition'],
             addslashes(json_encode($settings['params'])));
 
         $executable->setSettings($settings);

@@ -4,9 +4,9 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop;
 
 
+use CoreShop\Bundle\CurrencyBundle\Form\Type\CurrencyChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class MoneyInterpreterType extends AbstractType
@@ -18,6 +18,6 @@ final class MoneyInterpreterType extends AbstractType
     {
         $builder
             ->add('isFloat', CheckboxType::class)
-            ->add('currency', IntegerType::class);
+            ->add('currency', CurrencyChoiceType::class);
     }
 }

@@ -28,3 +28,9 @@ services:
             - '@coreshop.repository.currency'
         tags:
             - { name: data_definitions.interpreter, type: coreshop_currency, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop\MoneyInterpreter:
+        arguments:
+            - '@coreshop.repository.currency'
+        tags:
+            - { name: data_definitions.interpreter, type: coreshop_money, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop\MoneyInterpreterType }

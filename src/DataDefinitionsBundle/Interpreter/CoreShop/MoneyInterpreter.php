@@ -81,18 +81,18 @@ final class MoneyInterpreter implements InterpreterInterface
      */
     private function resolveCurrency($value, $configuration)
     {
-        if (preg_match('/^\pL+$/u', $value)) {
+        $currency = null;
 
-            // data contains letters
+        if (preg_match('/^\pL+$/u', $value)) {
             $currencyCode = preg_replace("/[^a-zA-Z]+/", "", $value);
 
-            return $this->currencyRepository->getByCode($currencyCode);
+            $currency = $this->currencyRepository->getByCode($currencyCode);
         }
 
-        if (isset($configuration['currency']) && null !== $configuration['currency']) {
-            return $this->currencyRepository->find($configuration['currency']);
+        if ($currency === null && isset($configuration['currency']) && null !== $configuration['currency']) {
+            $currency = $this->currencyRepository->find($configuration['currency']);
         }
 
-        return null;
+        return $currency;
     }
 }

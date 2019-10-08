@@ -8,9 +8,7 @@ use CoreShop\Component\Core\Repository\CurrencyRepositoryInterface;
 use CoreShop\Component\Currency\Model\CurrencyInterface;
 use CoreShop\Component\Currency\Model\Money;
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Interpreter\Mapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
@@ -59,6 +57,7 @@ final class MoneyInterpreter implements InterpreterInterface
     private function getValue($value, $configuration)
     {
         $inputIsFloat = $configuration['isFloat'];
+
         $value = preg_replace("/[^0-9,.]+/", "", $value);
 
         if (\is_string($value)) {

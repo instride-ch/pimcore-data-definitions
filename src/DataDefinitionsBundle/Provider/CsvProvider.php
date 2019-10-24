@@ -125,7 +125,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
 
         $records = $stmt->process($csv);
 
-        return iterator_to_array($records);
+        return $records;
     }
 
     /**

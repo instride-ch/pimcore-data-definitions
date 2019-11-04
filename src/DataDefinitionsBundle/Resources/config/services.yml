@@ -148,12 +148,14 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetsUrlInterpreter:
         arguments:
             - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
+            - '@GuzzleHttp\Client'
         tags:
             - { name: data_definitions.interpreter, type: assets_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
 
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter:
         arguments:
             - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
+            - '@GuzzleHttp\Client'
         tags:
             - { name: data_definitions.interpreter, type: asset_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
 

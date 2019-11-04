@@ -14,7 +14,10 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\TransferException;
 use Pimcore\File;
+use Pimcore\Http\ClientFactory;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Tool as PimcoreTool;
@@ -96,7 +99,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 
             if (!$asset instanceof Asset) {
                 // Download
-                $data = @file_get_contents($value);
+                $data = $this->getFileContents($value);
 
                 if ($data) {
                     $asset = new Asset();
@@ -128,6 +131,39 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param string $value
+     * @return null|string
+     */
+    protected function getFileContents(string $value): ?string
+    {
+        $httpClient = $this->createHttpClient();
+
+        try {
+            $response = $httpClient->request('GET', $value);
+        } catch (TransferException $ex) {
+            $response = null;
+        }
+
+        if ($response && $response->getStatusCode() === 200) {
+            return (string) $response->getBody();
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array $config
+     * @return Client
+     */
+    protected function createHttpClient(array $config = []): Client
+    {
+        /** @var ClientFactory $clientFactory */
+        $clientFactory = \Pimcore::getContainer()->get(ClientFactory::class);
+
+        return $clientFactory->createClient($config);
     }
 }
 

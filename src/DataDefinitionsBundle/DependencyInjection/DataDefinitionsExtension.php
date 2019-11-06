@@ -58,7 +58,7 @@ class DataDefinitionsExtension extends AbstractModelExtension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
@@ -77,6 +77,7 @@ class DataDefinitionsExtension extends AbstractModelExtension
         if (array_key_exists('CoreShopCoreBundle', $bundles)) {
             $config['pimcore_admin']['js']['coreshop_interpreter_price'] = '/bundles/datadefinitions/pimcore/js/coreshop/interpreter/price.js';
             $config['pimcore_admin']['js']['coreshop_interpreter_stores'] = '/bundles/datadefinitions/pimcore/js/coreshop/interpreter/stores.js';
+            $config['pimcore_admin']['js']['coreshop_interpreter_money'] = '/bundles/datadefinitions/pimcore/js/coreshop/interpreter/money.js';
             $config['pimcore_admin']['js']['coreshop_setter_storePrice'] = '/bundles/datadefinitions/pimcore/js/coreshop/setter/storePrice.js';
             $config['pimcore_admin']['js']['coreshop_getter_storePrice'] = '/bundles/datadefinitions/pimcore/js/coreshop/getter/storePrice.js';
             $config['pimcore_admin']['js']['coreshop_setter_store_values'] = '/bundles/datadefinitions/pimcore/js/coreshop/setter/storeValues.js';

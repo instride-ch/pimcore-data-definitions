@@ -14,6 +14,8 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\TransferException;
 use Pimcore\File;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
@@ -37,11 +39,18 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
     protected $placeholderService;
 
     /**
-     * @param Placeholder $placeholderService
+     * @var Client
      */
-    public function __construct(Placeholder $placeholderService)
+    protected $httpClient;
+
+    /**
+     * @param Placeholder $placeholderService
+     * @param Client $httpClient
+     */
+    public function __construct(Placeholder $placeholderService, Client $httpClient)
     {
         $this->placeholderService = $placeholderService;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -96,7 +105,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 
             if (!$asset instanceof Asset) {
                 // Download
-                $data = @file_get_contents($value);
+                $data = $this->getFileContents($value);
 
                 if ($data) {
                     $asset = new Asset();
@@ -129,6 +138,23 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 
         return null;
     }
+
+    /**
+     * @param string $value
+     * @return null|string
+     */
+    protected function getFileContents(string $value): ?string
+    {
+        try {
+            $response = $this->httpClient->request('GET', $value);
+        } catch (TransferException $ex) {
+            $response = null;
+        }
+
+        if ($response && $response->getStatusCode() === 200) {
+            return (string) $response->getBody();
+        }
+
+        return null;
+    }
 }
-
-

@@ -141,7 +141,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
             }
 
             $this->exportPath = tempnam(sys_get_temp_dir(), 'xml_export_xslt_transformation');
-            $cmd = sprintf('xsltproc %1$s %2$s > %3$s', $xstlPath, $dataPath, $this->getExportPath());
+            $cmd = sprintf('xsltproc -v %1$s %2$s > %3$s', $xstlPath, $dataPath, $this->getExportPath());
             $process = new Process($cmd);
             $process->run();
 

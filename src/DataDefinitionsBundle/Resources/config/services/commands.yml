@@ -1,9 +1,13 @@
 services:
     Wvision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand:
+        arguments:
+            - '@data_definitions.repository.import_definition'
         tags:
             - { name: 'console.command', command: 'data-definitions:list:imports' }
 
     Wvision\Bundle\DataDefinitionsBundle\Command\ListExportDefinitionsCommand:
+        arguments:
+            - '@data_definitions.repository.export_definition'
         tags:
             - { name: 'console.command', command: 'data-definitions:list:exports' }
 

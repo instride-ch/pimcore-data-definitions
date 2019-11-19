@@ -14,6 +14,7 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
+use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,6 +23,21 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class ListExportDefinitionsCommand extends AbstractCommand
 {
+    /**
+     * @var RepositoryInterface
+     */
+    protected $repository;
+
+    /**
+     * @param RepositoryInterface $repository
+     */
+    public function __construct(RepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -41,7 +57,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $exportDefinitions = $this->getContainer()->get('data_definitions.repository.export_definition')->findAll();
+        $exportDefinitions = $this->repository->findAll();
 
         $data = [];
 

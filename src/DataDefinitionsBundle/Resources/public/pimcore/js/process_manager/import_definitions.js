@@ -11,7 +11,7 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-$(document).on('processmanager.ready', function () {
+document.addEventListener('processmanager.ready', function() {
     processmanager.executable.types.importdefinition = Class.create(pimcore.plugin.processmanager.executable.abstractType, {
         getItems: function () {
             pimcore.globalmanager.get('data_definitions_definitions').load();

@@ -87,7 +87,7 @@ final class ProcessManagerExportListener
 
     public function onProgressEvent()
     {
-        if ($this->process) {
+        if (null !== $this->process) {
             $this->process->progress();
             $this->process->save();
 
@@ -100,7 +100,7 @@ final class ProcessManagerExportListener
      */
     public function onStatusEvent(ExportDefinitionEvent $event)
     {
-        if ($this->process) {
+        if (null !== $this->process) {
             $this->process->setMessage($event->getSubject());
             $this->process->save();
 
@@ -113,23 +113,25 @@ final class ProcessManagerExportListener
      */
     public function onFinishedEvent(ExportDefinitionEvent $event)
     {
-        $definition = $event->getDefinition();
+        if (null !== $this->process) {
+            $definition = $event->getDefinition();
 
-        $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
 
-        $provider = $this->providerRegistry->get($definition->getProvider());
+            $provider = $this->providerRegistry->get($definition->getProvider());
 
-        if ($provider instanceof ArtifactGenerationProviderInterface) {
-            if (method_exists($this->process, 'setArtifact')) {
-                $artifact = $provider->generateArtifact(
-                    $definition->getConfiguration(),
-                    $definition,
-                    $event->getParams()
-                );
+            if ($provider instanceof ArtifactGenerationProviderInterface) {
+                if (method_exists($this->process, 'setArtifact')) {
+                    $artifact = $provider->generateArtifact(
+                        $definition->getConfiguration(),
+                        $definition,
+                        $event->getParams()
+                    );
 
-                if ($artifact instanceof Asset) {
-                    $this->process->setArtifact($artifact);
-                    $this->process->save();
+                    if ($artifact instanceof Asset) {
+                        $this->process->setArtifact($artifact);
+                        $this->process->save();
+                    }
                 }
             }
         }

@@ -249,6 +249,10 @@ services:
         tags:
             - { name: data_definitions.interpreter, type: metadata, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MetadataInterpreterType }
 
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\ArrayInterpreter:
+        tags:
+            - { name: data_definitions.interpreter, type: array, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ArrayInterpreterType }
+
     ### PROVIDER
     Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:
         tags:

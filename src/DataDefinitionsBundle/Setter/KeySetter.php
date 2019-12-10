@@ -28,7 +28,8 @@ class KeySetter implements SetterInterface
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $setter = explode('~', $map->getToColumn());
-        $setter = sprintf('set%s', ucfirst($setter[0]));
+        $setter = preg_replace('/^o_/', '', $setter[0]);
+        $setter = sprintf('set%s', ucfirst($setter));
 
         if (method_exists($object, $setter)) {
             $object->$setter(DataObject\Service::getValidKey($value, "object"));

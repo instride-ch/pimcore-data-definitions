@@ -246,8 +246,6 @@ services:
             - { name: data_definitions.interpreter, type: twig, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\TwigInterpreterType }
 
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\MetadataInterpreter:
-        arguments:
-            - '@service_container'
         tags:
             - { name: data_definitions.interpreter, type: metadata, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MetadataInterpreterType }
 

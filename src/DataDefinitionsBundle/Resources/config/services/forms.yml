@@ -31,8 +31,13 @@ services:
         tags:
             - { name: form.type }
 
-    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ProviderChoiceType:
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProviderChoiceType:
         arguments: ['%data_definitions.import_providers%']
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProviderChoiceType:
+        arguments: ['%data_definitions.export_providers%']
         tags:
             - { name: form.type }
 

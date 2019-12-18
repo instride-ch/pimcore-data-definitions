@@ -18,15 +18,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class ProviderChoiceType extends AbstractType
+final class ImportProviderChoiceType extends AbstractType
 {
     /**
-     * @var array
+     * List of providers available to choose
+     *
+     * @var array<string,string>
      */
     private $providers;
 
     /**
-     * @param array $providers
+     * @param array<string,string> $providers
      */
     public function __construct(array $providers)
     {
@@ -51,4 +53,3 @@ final class ProviderChoiceType extends AbstractType
         return ChoiceType::class;
     }
 }
-

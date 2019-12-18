@@ -57,7 +57,7 @@ final class ExportDefinitionType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('provider', ProviderChoiceType::class)
+            ->add('provider', ExportProviderChoiceType::class)
             ->add('fetcher', FetcherChoiceType::class)
             ->add('class', ClassChoiceType::class)
             ->add('runner', ExportRunnerChoiceType::class)

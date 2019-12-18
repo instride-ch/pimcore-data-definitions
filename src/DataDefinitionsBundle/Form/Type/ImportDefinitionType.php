@@ -34,8 +34,11 @@ final class ImportDefinitionType extends AbstractResourceType
     /**
      * {@inheritdoc}
      */
-    public function __construct($dataClass, array $validationGroups, FormTypeRegistryInterface $formTypeRegistry)
-    {
+    public function __construct(
+        $dataClass,
+        array $validationGroups,
+        FormTypeRegistryInterface $formTypeRegistry
+    ) {
         parent::__construct($dataClass, $validationGroups);
 
         $this->formTypeRegistry = $formTypeRegistry;
@@ -47,7 +50,7 @@ final class ImportDefinitionType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('provider', ProviderChoiceType::class)
+            ->add('provider', ImportProviderChoiceType::class)
             ->add('loader', LoaderChoiceType::class)
             ->add('class', ClassChoiceType::class)
             ->add('cleaner', CleanerChoiceType::class)

@@ -116,9 +116,12 @@ EOT
         };
 
         $imTotal = function (ExportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
-            $progress = new ProgressBar($output, $e->getSubject());
-            $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%');
-            $progress->start();
+            $total = $e->getSubject();
+            if ($total > 0) {
+                $progress = new ProgressBar($output, $total);
+                $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%');
+                $progress->start();
+            }
         };
 
         $imProgress = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process) {
@@ -131,6 +134,8 @@ EOT
             if ($progress instanceof ProgressBar) {
                 $progress->finish();
                 $output->writeln('');
+            } else {
+                $output->writeln('<info>No items to export</info>');
             }
 
             $output->writeln('Export finished!');

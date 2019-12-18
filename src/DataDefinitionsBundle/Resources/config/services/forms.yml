@@ -31,6 +31,16 @@ services:
         tags:
             - { name: form.type }
 
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProviderChoiceType:
+        arguments: ['%data_definitions.import_providers%']
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProviderChoiceType:
+        arguments: ['%data_definitions.export_providers%']
+        tags:
+            - { name: form.type }
+
     Wvision\Bundle\DataDefinitionsBundle\Form\Type\LoaderChoiceType:
         arguments: ['%data_definitions.loaders%']
         tags:
@@ -50,7 +60,6 @@ services:
         arguments:
             - '%data_definitions.model.import_definition.class%'
             - '%data_definitions.form.type.definition.validation_groups%'
-            - '%data_definitions.import_providers%'
             - '@data_definitions.form.registry.provider'
         tags:
             - { name: form.type }
@@ -74,7 +83,6 @@ services:
         arguments:
             - '%data_definitions.model.export_definition.class%'
             - '%data_definitions.form.type.export_definition.validation_groups%'
-            - '%data_definitions.export_providers%'
             - '@data_definitions.form.registry.export_provider'
             - '@data_definitions.form.registry.fetcher'
         tags:

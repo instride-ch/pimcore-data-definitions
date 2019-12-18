@@ -17,7 +17,6 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use CoreShop\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,25 +37,16 @@ final class ExportDefinitionType extends AbstractResourceType
     private $fetcherFormTypeRegistry;
 
     /**
-     * List of export providers for select field
-     *
-     * @var array<string,string>
-     */
-    private $providers;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct(
         $dataClass,
         array $validationGroups,
-        array $providers,
         FormTypeRegistryInterface $formTypeRegistry,
         FormTypeRegistryInterface $fetcherFormTypeRegistry
     ) {
         parent::__construct($dataClass, $validationGroups);
 
-        $this->providers = $providers;
         $this->formTypeRegistry = $formTypeRegistry;
         $this->fetcherFormTypeRegistry = $fetcherFormTypeRegistry;
     }
@@ -67,7 +57,7 @@ final class ExportDefinitionType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('provider', ChoiceType::class, ['choices' => $this->providers])
+            ->add('provider', ExportProviderChoiceType::class)
             ->add('fetcher', FetcherChoiceType::class)
             ->add('class', ClassChoiceType::class)
             ->add('runner', ExportRunnerChoiceType::class)

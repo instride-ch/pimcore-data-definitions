@@ -110,12 +110,10 @@ final class Exporter implements ExporterInterface
         $total = $fetcher->count($definition, $params,
             is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
 
-        if ($total > 0) {
-            $this->eventDispatcher->dispatch('data_definitions.export.total',
-                new ExportDefinitionEvent($definition, $total, $params));
+        $this->eventDispatcher->dispatch('data_definitions.export.total',
+            new ExportDefinitionEvent($definition, $total, $params));
 
-            $this->runExport($definition, $params, $total, $fetcher, $provider);
-        }
+        $this->runExport($definition, $params, $total, $fetcher, $provider);
 
         $this->eventDispatcher->dispatch('data_definitions.export.finished',
             new ExportDefinitionEvent($definition, null, $params));

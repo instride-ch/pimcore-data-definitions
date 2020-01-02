@@ -32,8 +32,8 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         $keyParts = explode('~', $map->getToColumn());
 
         $config = $map->getSetterConfig();
-        $keys = $config['fieldcollectionKeys'];
-        $fieldName = $config['fieldcollectionField'];
+        $keys = $config['keys'];
+        $fieldName = $config['field'];
         $class = $config['class'];
         $keys = explode(',', $keys);
         $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\'.ucfirst($class);

@@ -18,7 +18,10 @@ use Carbon\Carbon;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
 use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
+use ProcessManagerBundle\Model\Process;
 use ProcessManagerBundle\Model\ProcessInterface;
+use ProcessManagerBundle\ProcessManagerBundle;
+use ProcessManagerBundle\Repository\ProcessRepository;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
 
 final class ProcessManagerImportListener
@@ -26,7 +29,7 @@ final class ProcessManagerImportListener
     /**
      * @var ProcessInterface
      */
-    private $process;
+    public $process;
 
     /**
      * @var ProcessFactoryInterface
@@ -39,13 +42,19 @@ final class ProcessManagerImportListener
     private $processLogger;
 
     /**
+     * @var ProcessRepository
+     */
+    private $repository;
+
+    /**
      * @param FactoryInterface $processFactory
      * @param ProcessLogger    $processLogger
      */
-    public function __construct(FactoryInterface $processFactory, ProcessLogger $processLogger)
+    public function __construct(FactoryInterface $processFactory, ProcessLogger $processLogger, ProcessRepository $repository)
     {
         $this->processFactory = $processFactory;
         $this->processLogger = $processLogger;
+        $this->repository = $repository;
     }
 
     /**
@@ -65,7 +74,11 @@ final class ProcessManagerImportListener
                 'import_definitions',
                 'Loading',
                 $event->getSubject(),
-                0
+                0,
+                -1,
+                0,
+                1,
+                ProcessManagerBundle::STATUS_RUNNING
             );
             $this->process->save();
 
@@ -76,6 +89,9 @@ final class ProcessManagerImportListener
     public function onProgressEvent()
     {
         if ($this->process) {
+            if ($this->process->getStoppable()) {
+                $this->process = $this->repository->find($this->process->getId());
+            }
             $this->process->progress();
             $this->process->save();
 
@@ -89,6 +105,9 @@ final class ProcessManagerImportListener
     public function onStatusEvent(ImportDefinitionEvent $event)
     {
         if ($this->process) {
+            if ($this->process->getStoppable()) {
+                $this->process = $this->repository->find($this->process->getId());
+            }
             $this->process->setMessage($event->getSubject());
             $this->process->save();
 
@@ -102,6 +121,10 @@ final class ProcessManagerImportListener
     public function onFinishedEvent(ImportDefinitionEvent $event)
     {
         if ($this->process) {
+            if ($this->process->getStatus() == ProcessManagerBundle::STATUS_RUNNING) {
+                $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
+                $this->process->save();
+            }
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
         }
     }

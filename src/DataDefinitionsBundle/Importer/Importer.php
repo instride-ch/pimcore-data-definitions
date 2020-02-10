@@ -23,6 +23,9 @@ use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\Document;
 use Pimcore\Model\Version;
 use Pimcore\Placeholder;
+use ProcessManagerBundle\Model\Process;
+use ProcessManagerBundle\Model\ProcessInterface;
+use ProcessManagerBundle\ProcessManagerBundle;
 use Psr\Log\LoggerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
@@ -32,6 +35,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
@@ -85,6 +89,11 @@ final class Importer implements ImporterInterface
      * @var LoggerInterface
      */
     private $logger;
+
+    /**
+     * @var int
+     */
+    private $processId;
 
     /**
      * Importer constructor.
@@ -173,18 +182,65 @@ final class Importer implements ImporterInterface
         }
 
         if (\count($exceptions) > 0) {
-            $this->sendDocument($definition, Document::getById($definition->getFailureNotificationDocument()),
-                $objectIds, $exceptions);
-            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
+            $this->processFailedImport($definition);
         } else {
-            $this->sendDocument($definition, Document::getById($definition->getSuccessNotificationDocument()),
-                $objectIds, $exceptions);
-            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.success', $params);
+            $this->processSuccessfullImport($definition);
         }
 
         $this->eventDispatcher->dispatch($definition, 'data_definitions.import.finished', '', $params);
 
         return $objectIds;
+    }
+
+    public function processSuccessfullImport(ImportDefinitionInterface $definition)
+    {
+        $this->sendDocument($definition, Document::getById($definition->getSuccessNotificationDocument()),
+            $objectIds, $exceptions);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.success', $params);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function processFailedImport(ImportDefinitionInterface $definition)
+    {
+        $this->sendDocument($definition, Document::getById($definition->getFailureNotificationDocument()),
+            $objectIds, $exceptions);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
+        $processRepository = \Pimcore::getContainer()->get('process_manager.repository.process');
+        /** @var Process $process */
+        $process = $processRepository->findOneBy(['id' => $this->processId]);
+        if ($process instanceof ProcessInterface) {
+            if ($definition->getStopOnException()) {
+                $process->setStatus(ProcessManagerBundle::STATUS_FAILED);
+            } else {
+                $process->setStatus(ProcessManagerBundle::STATUS_COMPLETED_WITH_EXCEPTIONS);
+            }
+            $process->save();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldStop()
+    {
+        if (!$this->processId) {
+            $this->processId = \Pimcore::getContainer()->get(ProcessManagerImportListener::class)->process->getId();
+        }
+
+        $processRepository = \Pimcore::getContainer()->get('process_manager.repository.process');
+        /** @var Process $process */
+        $process = $processRepository->findOneBy(['id' => $this->processId]);
+        if ($process instanceof ProcessInterface) {
+            if ($process->getStatus() == ProcessManagerBundle::STATUS_STOPPING) {
+                $process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
+                $process->save();
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -281,6 +337,12 @@ final class Importer implements ImporterInterface
             }
 
             $this->eventDispatcher->dispatch($definition, 'data_definitions.import.progress', '', $params);
+
+            if ($this->shouldStop()) {
+                $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
+                    'Process has been stopped.');
+                return [$objectIds, $exceptions];
+            }
         }
 
         return [$objectIds, $exceptions];

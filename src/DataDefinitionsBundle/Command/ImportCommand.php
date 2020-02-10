@@ -141,11 +141,28 @@ EOT
 
         $imFinished = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
             if ($progress instanceof ProgressBar) {
-                $progress->finish();
                 $output->writeln('');
             }
 
             $output->writeln('Import finished!');
+            $output->writeln('');
+        };
+
+        $imFailure = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+            if ($progress instanceof ProgressBar) {
+                $output->writeln('');
+            }
+
+            $output->writeln('Import failed!');
+            $output->writeln('');
+        };
+
+        $imSuccess = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+            if ($progress instanceof ProgressBar) {
+                $output->writeln('');
+            }
+
+            $output->writeln('Import finished successfully!');
             $output->writeln('');
         };
 

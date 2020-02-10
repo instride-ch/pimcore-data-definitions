@@ -3,6 +3,7 @@ services:
         arguments:
             - '@process_manager.factory.process'
             - '@process_manager.logger'
+            - '@process_manager.repository.process'
         tags:
             - { name: 'kernel.event_listener', event: 'data_definitions.import.total', method: 'onTotalEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.import.progress', method: 'onProgressEvent' }

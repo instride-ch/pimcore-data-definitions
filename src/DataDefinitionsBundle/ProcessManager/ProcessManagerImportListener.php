@@ -29,7 +29,7 @@ final class ProcessManagerImportListener
     /**
      * @var ProcessInterface
      */
-    public $process;
+    private $process;
 
     /**
      * @var ProcessFactoryInterface
@@ -57,6 +57,14 @@ final class ProcessManagerImportListener
         $this->repository = $repository;
     }
 
+    /**
+     * @return ProcessInterface
+     */
+    public function getProcess(): ProcessInterface
+    {
+        return $this->process;
+    }
+    
     /**
      * @param ImportDefinitionEvent $event
      */

@@ -226,7 +226,7 @@ final class Importer implements ImporterInterface
     public function shouldStop()
     {
         if (!$this->processId) {
-            $this->processId = \Pimcore::getContainer()->get(ProcessManagerImportListener::class)->process->getId();
+            $this->processId = \Pimcore::getContainer()->get(ProcessManagerImportListener::class)->getProcess()->getId();
         }
 
         $processRepository = \Pimcore::getContainer()->get('process_manager.repository.process');

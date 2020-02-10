@@ -37,7 +37,7 @@ final class EventDispatcher implements EventDispatcherInterface
     {
         $event = $this->getEvent($definition, $subject, $params);
 
-        return $this->eventDispatcher->dispatch(
+        $this->eventDispatcher->dispatch(
             sprintf('%s%s', $eventName, isset($params['child']) && $params['child'] ? '.child' : ''),
             $event
         );

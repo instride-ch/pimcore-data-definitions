@@ -33,9 +33,10 @@ pimcore.plugin.datadefinitions.export.fields = Class.create({
                 id: this.id
             },
             success: function (response) {
-                var mapping = Ext.decode(response.responseText);
+                var result = Ext.decode(response.responseText);
                 var mappingIdentifier = {};
                 var tree = {};
+                var mapping = result.fields;
 
                 Ext.each(mapping, function (record) {
                     if (!tree.hasOwnProperty(record.group)) {
@@ -54,6 +55,7 @@ pimcore.plugin.datadefinitions.export.fields = Class.create({
                 this.tree = tree;
                 this.mapping = mapping;
                 this.mappingIdentifier = mappingIdentifier;
+                this.config = result;
 
                 this.configPanel.add([this.getClassDefinitionTreePanel(), this.getSelectionPanel()]);
             }.bind(this)
@@ -183,7 +185,7 @@ pimcore.plugin.datadefinitions.export.fields = Class.create({
                                 }));
 
                                 var dialog = new pimcore.plugin.datadefinitions.export.configDialog();
-                                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.mapping);
+                                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.config);
 
                                 data.records = [copy]; // assign the copy as the new dropNode
                             }
@@ -233,7 +235,7 @@ pimcore.plugin.datadefinitions.export.fields = Class.create({
                 iconCls: 'pimcore_icon_edit',
                 handler: function (node) {
                     var dialog = new pimcore.plugin.datadefinitions.export.configDialog();
-                    dialog.getConfigDialog(node.get('_fromColumn'), node, this.data);
+                    dialog.getConfigDialog(node.get('_fromColumn'), node, this.config);
                 }.bind(this, record)
             }));
         }
@@ -290,7 +292,7 @@ pimcore.plugin.datadefinitions.export.fields = Class.create({
                 this.selectionPanel.getRootNode().appendChild(copy);
 
                 var dialog = new pimcore.plugin.datadefinitions.export.configDialog();
-                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.mapping);
+                dialog.getConfigDialog(copy.get('_fromColumn'), copy, this.config);
             }
         }.bind(this));
 

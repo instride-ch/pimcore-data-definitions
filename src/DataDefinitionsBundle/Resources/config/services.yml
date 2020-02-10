@@ -148,14 +148,12 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetsUrlInterpreter:
         arguments:
             - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
-            - '@pimcore.http_client'
         tags:
             - { name: data_definitions.interpreter, type: assets_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
 
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter:
         arguments:
             - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
-            - '@pimcore.http_client'
         tags:
             - { name: data_definitions.interpreter, type: asset_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
 
@@ -245,10 +243,6 @@ services:
         tags:
             - { name: data_definitions.interpreter, type: twig, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\TwigInterpreterType }
 
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\MetadataInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: metadata, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MetadataInterpreterType }
-
     ### PROVIDER
     Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:
         tags:
@@ -309,14 +303,11 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectbrickSetter:
         tags:
             - { name: data_definitions.setter, type: objectbrick, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
+            - { name: data_definitions.getter, type: objectbrick, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
 
     Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter:
         tags:
             - { name: data_definitions.setter, type: object_type, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Setter\RelationSetter:
-        tags:
-            - { name: data_definitions.setter, type: relation, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     Wvision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener:
         tags:

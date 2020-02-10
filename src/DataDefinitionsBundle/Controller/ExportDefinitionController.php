@@ -163,6 +163,17 @@ class ExportDefinitionController extends ResourceController
 
         $result = $this->getSystemFields();
 
+        $bricks = [];
+        $collections = [];
+
+        foreach ($classDefinition->getFieldDefinitions() as $field) {
+            if ($field instanceof DataObject\ClassDefinition\Data\Objectbricks) {
+                $bricks[$field->getName()] = $field->getAllowedTypes();
+            } elseif ($field instanceof DataObject\ClassDefinition\Data\Fieldcollections) {
+                $collections[$field->getName()] = $field->getAllowedTypes();
+            }
+        }
+
         foreach ($fields as $field) {
             switch (get_class($field)) {
                 case DataObject\ClassDefinition\Data\Localizedfields::class:
@@ -302,7 +313,12 @@ class ExportDefinitionController extends ResourceController
             }
         }
 
-        return $this->viewHandler->handle($result);
+        return $this->viewHandler->handle([
+            'success' => true,
+            'fields' => $result,
+            'bricks' => $bricks,
+            'fieldcollections' => $collections,
+        ]);
     }
 
     /**

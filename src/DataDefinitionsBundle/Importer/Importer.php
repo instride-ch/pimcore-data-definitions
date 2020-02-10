@@ -26,6 +26,7 @@ use Pimcore\Placeholder;
 use ProcessManagerBundle\Model\Process;
 use ProcessManagerBundle\Model\ProcessInterface;
 use ProcessManagerBundle\ProcessManagerBundle;
+use ProcessManagerBundle\Repository\ProcessRepository;
 use Psr\Log\LoggerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
@@ -96,6 +97,16 @@ final class Importer implements ImporterInterface
     private $processId;
 
     /**
+     * @var ProcessManagerImportListener
+     */
+    private $importListener;
+
+    /**
+     * @var ProcessRepository
+     */
+    private $processRepository;
+
+    /**
      * Importer constructor.
      * @param ServiceRegistryInterface $providerRegistry
      * @param ServiceRegistryInterface $filterRegistry
@@ -105,7 +116,7 @@ final class Importer implements ImporterInterface
      * @param ServiceRegistryInterface $cleanerRegistry
      * @param ServiceRegistryInterface $loaderRegistry
      * @param EventDispatcherInterface $eventDispatcher
-     * @param LoggerInterface          $logger
+     * @param LoggerInterface $logger
      */
     public function __construct(
         ServiceRegistryInterface $providerRegistry,
@@ -127,6 +138,22 @@ final class Importer implements ImporterInterface
         $this->loaderRegistry = $loaderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
+        $this->importListener = $importListener;
+        $this->processRepository = $processRepository;
+    }
+
+    public function setImportListener(ProcessManagerImportListener $importListener)
+    {
+        $this->importListener = $importListener;
+    }
+
+    /**
+     * @param ProcessRepository $processRepository
+     * @required
+     */
+    public function setProcessRepository(ProcessRepository $processRepository)
+    {
+        $this->processRepository = $processRepository;
     }
 
     /**
@@ -207,9 +234,13 @@ final class Importer implements ImporterInterface
         $this->sendDocument($definition, Document::getById($definition->getFailureNotificationDocument()),
             $objectIds, $exceptions);
         $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
-        $processRepository = \Pimcore::getContainer()->get('process_manager.repository.process');
+
+        if (!$this->processRepository) {
+            return;
+        }
+
         /** @var Process $process */
-        $process = $processRepository->findOneBy(['id' => $this->processId]);
+        $process = $this->processRepository->findOneBy(['id' => $this->processId]);
         if ($process instanceof ProcessInterface) {
             if ($definition->getStopOnException()) {
                 $process->setStatus(ProcessManagerBundle::STATUS_FAILED);
@@ -225,13 +256,16 @@ final class Importer implements ImporterInterface
      */
     public function shouldStop()
     {
-        if (!$this->processId) {
-            $this->processId = \Pimcore::getContainer()->get(ProcessManagerImportListener::class)->getProcess()->getId();
+        if (!$this->processRepository) {
+            return false;
         }
 
-        $processRepository = \Pimcore::getContainer()->get('process_manager.repository.process');
+        if (!$this->processId) {
+            $this->processId = $this->importListener->getProcess()->getId();
+        }
+
         /** @var Process $process */
-        $process = $processRepository->findOneBy(['id' => $this->processId]);
+        $process = $this->processRepository->findOneBy(['id' => $this->processId]);
         if ($process instanceof ProcessInterface) {
             if ($process->getStatus() == ProcessManagerBundle::STATUS_STOPPING) {
                 $process->setStatus(ProcessManagerBundle::STATUS_STOPPED);

@@ -66,14 +66,6 @@ class DataDefinitionsExtension extends AbstractModelExtension
 
         $bundles = $container->getParameter('kernel.bundles');
 
-        if (array_key_exists('ProcessManagerBundle', $bundles)) {
-            $config['pimcore_admin']['js']['process_manager_import'] = '/bundles/datadefinitions/pimcore/js/process_manager/import_definitions.js';
-            $config['pimcore_admin']['js']['process_manager_export'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_definitions.js';
-            $config['pimcore_admin']['js']['process_manager_export_contextmenu'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_contextmenu.js';
-            $config['pimcore_admin']['js']['process_manager_export_search'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_search.js';
-            $loader->load('process_manager.yml');
-        }
-
         if (array_key_exists('CoreShopCoreBundle', $bundles)) {
             $config['pimcore_admin']['js']['coreshop_interpreter_price'] = '/bundles/datadefinitions/pimcore/js/coreshop/interpreter/price.js';
             $config['pimcore_admin']['js']['coreshop_interpreter_stores'] = '/bundles/datadefinitions/pimcore/js/coreshop/interpreter/stores.js';
@@ -90,6 +82,14 @@ class DataDefinitionsExtension extends AbstractModelExtension
 
         $loader->load('services.yml');
 
+        if (array_key_exists('ProcessManagerBundle', $bundles)) {
+            $config['pimcore_admin']['js']['process_manager_import'] = '/bundles/datadefinitions/pimcore/js/process_manager/import_definitions.js';
+            $config['pimcore_admin']['js']['process_manager_export'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_definitions.js';
+            $config['pimcore_admin']['js']['process_manager_export_contextmenu'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_contextmenu.js';
+            $config['pimcore_admin']['js']['process_manager_export_search'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_search.js';
+            $loader->load('process_manager.yml');
+        }
+        
         $container
             ->registerForAutoconfiguration(CleanerInterface::class)
             ->addTag(CleanerRegistryCompilerPass::CLEANER_TAG);

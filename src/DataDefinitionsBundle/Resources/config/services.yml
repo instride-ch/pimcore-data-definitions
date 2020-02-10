@@ -13,6 +13,8 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection:
         public: true
 
+
+
     Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface: '@Wvision\Bundle\DataDefinitionsBundle\Importer\Importer'
     Wvision\Bundle\DataDefinitionsBundle\Importer\Importer:
         arguments:

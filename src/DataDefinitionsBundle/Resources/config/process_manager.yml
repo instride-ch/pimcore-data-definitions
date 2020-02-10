@@ -35,6 +35,29 @@ services:
         tags:
             - { name: 'process_manager.startup_form_resolver', type: 'exportdefinition' }
 
+    Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener: ~
+
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport:
         tags:
             - { name: process_manager.process_report, type: import_definitions }
+
+    Wvision\Bundle\DataDefinitionsBundle\Importer\Importer:
+        arguments:
+          - '@data_definitions.registry.provider'
+          - '@data_definitions.registry.filter'
+          - '@data_definitions.registry.runner'
+          - '@data_definitions.registry.interpreter'
+          - '@data_definitions.registry.setter'
+          - '@data_definitions.registry.cleaner'
+          - '@data_definitions.registry.loader'
+          - '@Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher'
+          - '@logger'
+        tags:
+          - { name: monolog.logger, channel: import_definition }
+        calls:
+          - method: setImportListener
+            arguments:
+              - '@Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener'
+          - method: setProcessRepository
+            arguments:
+              - '@process_manager.repository.process'

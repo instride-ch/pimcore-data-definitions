@@ -78,8 +78,6 @@ class DataDefinitionsExtension extends AbstractModelExtension
             $loader->load('coreshop.yml');
         }
 
-        $this->registerPimcoreResources('data_definitions', $config['pimcore_admin'], $container);
-
         $loader->load('services.yml');
 
         if (array_key_exists('ProcessManagerBundle', $bundles)) {
@@ -89,6 +87,8 @@ class DataDefinitionsExtension extends AbstractModelExtension
             $config['pimcore_admin']['js']['process_manager_export_search'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_search.js';
             $loader->load('process_manager.yml');
         }
+
+        $this->registerPimcoreResources('data_definitions', $config['pimcore_admin'], $container);
         
         $container
             ->registerForAutoconfiguration(CleanerInterface::class)

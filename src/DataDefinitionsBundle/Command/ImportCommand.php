@@ -16,6 +16,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use Pimcore\Console\AbstractCommand;
+use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -97,15 +98,28 @@ EOT
         }
         $progress = null;
         $process = null;
+        $countProgress = 0;
+        $startTime = time();
 
         if (!$definition instanceof ImportDefinitionInterface) {
             throw new \Exception('Import Definition not found');
         }
 
-        $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process, &$countProgress, $startTime) {
             if ($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getSubject());
                 $progress->display();
+            }
+            else {
+                $output->writeln(
+                    sprintf(
+                        '%s (%s) (%s): %s',
+                        $countProgress,
+                        Helper::formatTime(time() - $startTime),
+                        Helper::formatMemory(memory_get_usage(true)),
+                        $e->getSubject()
+                    )
+                );
             }
         };
 
@@ -117,10 +131,12 @@ EOT
             $progress->start();
         };
 
-        $imProgress = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imProgress = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process, &$countProgress) {
             if ($progress instanceof ProgressBar) {
                 $progress->advance();
             }
+
+            $countProgress++;
         };
 
         $imFinished = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {

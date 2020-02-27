@@ -92,6 +92,9 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                     $filename = $asset->getFilename();
                     $assetPath = $asset->getPath();
                 }
+                else {
+                    $assetPath = $path;
+                }
             } else {
                 // Convert placeholder path
                 $context = new PlaceholderContext($data, $object);
@@ -112,7 +115,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                     $asset->setFilename($filename);
                     $asset->setParent($parent);
                     $asset->setData($data);
-                    $asset->addMetadata(self::METADATA_ORIGIN_URL, 'text', $value);
+                    $asset->addMetadata(self::METADATA_ORIGIN_URL, 'input', $value);
                     $asset->save();
                 }
             } else {

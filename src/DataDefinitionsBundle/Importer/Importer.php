@@ -175,9 +175,11 @@ final class Importer implements ImporterInterface
         if (\count($exceptions) > 0) {
             $this->sendDocument($definition, Document::getById($definition->getFailureNotificationDocument()),
                 $objectIds, $exceptions);
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
         } else {
             $this->sendDocument($definition, Document::getById($definition->getSuccessNotificationDocument()),
                 $objectIds, $exceptions);
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.success', $params);
         }
 
         $this->eventDispatcher->dispatch($definition, 'data_definitions.import.finished', '', $params);

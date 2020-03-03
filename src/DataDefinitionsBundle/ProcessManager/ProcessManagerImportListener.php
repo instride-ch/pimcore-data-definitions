@@ -58,9 +58,9 @@ final class ProcessManagerImportListener
     }
 
     /**
-     * @return ProcessInterface
+     * @return ProcessInterface|null
      */
-    public function getProcess(): ProcessInterface
+    public function getProcess()
     {
         return $this->process;
     }

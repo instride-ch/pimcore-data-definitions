@@ -15,6 +15,7 @@ services:
             - '@process_manager.factory.process'
             - '@process_manager.logger'
             - '@data_definitions.registry.export_provider'
+            - '@process_manager.repository.process'
         tags:
             - { name: 'kernel.event_listener', event: 'data_definitions.export.total', method: 'onTotalEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.export.progress', method: 'onProgressEvent' }
@@ -34,8 +35,6 @@ services:
             - '@data_definitions.repository.export_definition'
         tags:
             - { name: 'process_manager.startup_form_resolver', type: 'exportdefinition' }
-
-    Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener: ~
 
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport:
         tags:
@@ -61,3 +60,22 @@ services:
           - method: setProcessRepository
             arguments:
               - '@process_manager.repository.process'
+
+    Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter:
+        arguments:
+            - '@data_definitions.registry.fetcher'
+            - '@data_definitions.registry.export_runner'
+            - '@data_definitions.registry.interpreter'
+            - '@data_definitions.registry.getter'
+            - '@data_definitions.registry.export_provider'
+            - '@event_dispatcher'
+            - '@logger'
+        tags:
+            - { name: monolog.logger, channel: export_definition }
+        calls:
+            -   method: setExportListener
+                arguments:
+                    - '@Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener'
+            -   method: setProcessRepository
+                arguments:
+                    - '@process_manager.repository.process'

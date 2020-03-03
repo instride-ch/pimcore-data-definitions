@@ -142,6 +142,9 @@ final class Importer implements ImporterInterface
         $this->processRepository = $processRepository;
     }
 
+    /**
+     * @param ProcessManagerImportListener $importListener
+     */
     public function setImportListener(ProcessManagerImportListener $importListener)
     {
         $this->importListener = $importListener;
@@ -219,6 +222,10 @@ final class Importer implements ImporterInterface
         return $objectIds;
     }
 
+    /**
+     * @param ImportDefinitionInterface $definition
+     * @throws \Exception
+     */
     public function processSuccessfullImport(ImportDefinitionInterface $definition)
     {
         $this->sendDocument($definition, Document::getById($definition->getSuccessNotificationDocument()),

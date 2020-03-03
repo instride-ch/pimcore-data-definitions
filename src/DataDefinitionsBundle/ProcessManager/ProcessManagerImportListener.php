@@ -64,7 +64,7 @@ final class ProcessManagerImportListener
     {
         return $this->process;
     }
-    
+
     /**
      * @param ImportDefinitionEvent $event
      */

@@ -17,6 +17,10 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Exporter;
 use CoreShop\Component\Pimcore\DataObject\UnpublishedHelper;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use Pimcore\Model\DataObject\Concrete;
+use ProcessManagerBundle\Model\Process;
+use ProcessManagerBundle\Model\ProcessInterface;
+use ProcessManagerBundle\ProcessManagerBundle;
+use ProcessManagerBundle\Repository\ProcessRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
@@ -27,6 +31,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
 
@@ -71,6 +76,32 @@ final class Exporter implements ExporterInterface
      * @var array
      */
     private $exceptions = [];
+
+    /**
+     * @param ProcessManagerExportListener $exportListener
+     */
+    public function setExportListener(ProcessManagerExportListener $exportListener): void
+    {
+        $this->exportListener = $exportListener;
+    }
+
+    /**
+     * @var ProcessManagerExportListener
+     */
+    private $exportListener;
+
+    /**
+     * @var ProcessRepository
+     */
+    private $processRepository;
+
+    /**
+     * @param ProcessRepository $processRepository
+     */
+    public function setProcessRepository(ProcessRepository $processRepository): void
+    {
+        $this->processRepository = $processRepository;
+    }
 
     /**
      * @param ServiceRegistryInterface $fetcherRegistry
@@ -215,6 +246,13 @@ final class Exporter implements ExporterInterface
                             new ExportDefinitionEvent($definition, null, $params)
                         );
                     }
+
+                    if ($this->shouldStop()) {
+                        $this->eventDispatcher->dispatch('data_definitions.export.status',
+                            new ExportDefinitionEvent($definition, 'Process has been stopped.', $params));
+                        return;
+                    }
+
                 }
                 $provider->exportData($definition->getConfiguration(), $definition, $params);
             },
@@ -345,6 +383,32 @@ final class Exporter implements ExporterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    private function shouldStop()
+    {
+        if (!$this->processRepository) {
+            return false;
+        }
+
+        if (!$this->processId) {
+            $this->processId = $this->exportListener->getProcess()->getId();
+        }
+
+        /** @var Process $process */
+        $process = $this->processRepository->findOneBy(['id' => $this->processId]);
+        if ($process instanceof ProcessInterface) {
+            if ($process->getStatus() == ProcessManagerBundle::STATUS_STOPPING) {
+                $process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
+                $process->save();
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

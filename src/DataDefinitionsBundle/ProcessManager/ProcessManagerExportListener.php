@@ -21,6 +21,8 @@ use Pimcore\Model\Asset;
 use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
 use ProcessManagerBundle\Model\ProcessInterface;
+use ProcessManagerBundle\ProcessManagerBundle;
+use ProcessManagerBundle\Repository\ProcessRepository;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
 
 final class ProcessManagerExportListener
@@ -46,6 +48,11 @@ final class ProcessManagerExportListener
     private $providerRegistry;
 
     /**
+     * @var ProcessRepository
+     */
+    private $repository;
+
+    /**
      * @param FactoryInterface $processFactory
      * @param ProcessLogger $processLogger
      * @param ServiceRegistryInterface $providerRegistry
@@ -53,11 +60,21 @@ final class ProcessManagerExportListener
     public function __construct(
         FactoryInterface $processFactory,
         ProcessLogger $processLogger,
-        ServiceRegistryInterface $providerRegistry
+        ServiceRegistryInterface $providerRegistry,
+        ProcessRepository $repository
     ) {
         $this->processFactory = $processFactory;
         $this->processLogger = $processLogger;
         $this->providerRegistry = $providerRegistry;
+        $this->repository = $repository;
+    }
+
+    /**
+     * @return ProcessInterface
+     */
+    public function getProcess(): ProcessInterface
+    {
+        return $this->process;
     }
 
     /**
@@ -77,7 +94,12 @@ final class ProcessManagerExportListener
                 'export_definitions',
                 'Loading',
                 $event->getSubject(),
-                0
+                0,
+                -1,
+                0,
+                1,
+                ProcessManagerBundle::STATUS_RUNNING
+
             );
             $this->process->save();
 
@@ -87,7 +109,10 @@ final class ProcessManagerExportListener
 
     public function onProgressEvent()
     {
-        if (null !== $this->process) {
+        if ($this->process) {
+            if ($this->process->getStoppable()) {
+                $this->process = $this->repository->find($this->process->getId());
+            }
             $this->process->progress();
             $this->process->save();
 
@@ -100,7 +125,10 @@ final class ProcessManagerExportListener
      */
     public function onStatusEvent(ExportDefinitionEvent $event)
     {
-        if (null !== $this->process) {
+        if ($this->process) {
+            if ($this->process->getStoppable()) {
+                $this->process = $this->repository->find($this->process->getId());
+            }
             $this->process->setMessage($event->getSubject());
             $this->process->save();
 
@@ -114,6 +142,10 @@ final class ProcessManagerExportListener
     public function onFinishedEvent(ExportDefinitionEvent $event)
     {
         if (null !== $this->process) {
+            if ($this->process->getStatus() == ProcessManagerBundle::STATUS_RUNNING) {
+                $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
+                $this->process->save();
+            }
             $definition = $event->getDefinition();
 
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());

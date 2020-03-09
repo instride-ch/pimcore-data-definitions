@@ -23,6 +23,7 @@ use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\Document;
 use Pimcore\Model\Version;
 use Pimcore\Placeholder;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
@@ -163,6 +164,10 @@ final class Importer implements ImporterInterface
 
             if ($cleaner instanceof ParamsAwareInterface) {
                 $cleaner->setParams($params);
+            }
+
+            if ($cleaner instanceof LoggerAwareInterface) {
+                $cleaner->setLogger($this->logger);
             }
 
             $cleaner->cleanup($definition, $objectIds);
@@ -325,6 +330,10 @@ final class Importer implements ImporterInterface
                 $filter->setDataSet($dataSet);
             }
 
+            if ($filter instanceof LoggerAwareInterface) {
+                $filter->setLogger($this->logger);
+            }
+
             if (!$filter->filter($definition, $data, $object)) {
                 $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status', 'Filtered Object', $params);
 
@@ -344,6 +353,10 @@ final class Importer implements ImporterInterface
         if ($runner instanceof RunnerInterface) {
             if ($runner instanceof DataSetAwareInterface) {
                 $runner->setDataSet($dataSet);
+            }
+
+            if ($runner instanceof LoggerAwareInterface) {
+                $runner->setLogger($this->logger);
             }
 
             $runner->preRun($object, $data, $definition, $params);
@@ -369,6 +382,10 @@ final class Importer implements ImporterInterface
                 $runner->setDataSet($dataSet);
             }
 
+            if ($runner instanceof LoggerAwareInterface) {
+                $runner->setLogger($this->logger);
+            }
+
             $shouldSave = $runner->shouldSaveObject($object, $data, $definition, $params);
         }
 
@@ -391,6 +408,10 @@ final class Importer implements ImporterInterface
         if ($runner instanceof RunnerInterface) {
             if ($runner instanceof DataSetAwareInterface) {
                 $runner->setDataSet($dataSet);
+            }
+
+            if ($runner instanceof LoggerAwareInterface) {
+                $runner->setLogger($this->logger);
             }
 
             $runner->postRun($object, $data, $definition, $params);
@@ -427,6 +448,10 @@ final class Importer implements ImporterInterface
                     $interpreter->setDataSet($dataSet);
                 }
 
+                if ($interpreter instanceof LoggerAwareInterface) {
+                    $interpreter->setLogger($this->logger);
+                }
+
                 $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params,
                     $map->getInterpreterConfig());
             } catch (DoNotSetException $ex) {
@@ -446,6 +471,10 @@ final class Importer implements ImporterInterface
                 $runner->setDataSet($dataSet);
             }
 
+            if ($runner instanceof LoggerAwareInterface) {
+                $runner->setLogger($this->logger);
+            }
+
             $shouldSetField = $runner->shouldSetField($object, $map, $value, $data, $definition, $params);
         }
 
@@ -459,6 +488,10 @@ final class Importer implements ImporterInterface
             if ($setter instanceof SetterInterface) {
                 if ($setter instanceof DataSetAwareInterface) {
                     $setter->setDataSet($dataSet);
+                }
+
+                if ($setter instanceof LoggerAwareInterface) {
+                    $setter->setLogger($this->logger);
                 }
 
                 $setter->set($object, $value, $map, $data);

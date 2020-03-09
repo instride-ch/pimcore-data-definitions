@@ -27,6 +27,7 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
+use Wvision\Bundle\DataDefinitionsBundle\Exception\UnexpectedValueException;
 use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
@@ -452,8 +453,21 @@ final class Importer implements ImporterInterface
                     $interpreter->setLogger($this->logger);
                 }
 
-                $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params,
-                    $map->getInterpreterConfig());
+                try {
+                    $value = $interpreter->interpret(
+                        $object,
+                        $value,
+                        $map,
+                        $data,
+                        $definition,
+                        $params,
+                        $map->getInterpreterConfig()
+                    );
+                }
+                catch (UnexpectedValueException $ex) {
+                    $this->logger->info(sprintf('Unexpected Value from Interpreter "%s" with message "%s"', $map->getInterpreter(), $ex->getMessage()));
+                }
+
             } catch (DoNotSetException $ex) {
                 return;
             }

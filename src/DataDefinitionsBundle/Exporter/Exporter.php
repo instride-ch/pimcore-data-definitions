@@ -25,6 +25,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
 use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
+use Wvision\Bundle\DataDefinitionsBundle\Exception\UnexpectedValueException;
 use Wvision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\DynamicColumnGetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
@@ -364,8 +365,21 @@ final class Exporter implements ExporterInterface
             $interpreter = $this->interpreterRegistry->get($map->getInterpreter());
 
             if ($interpreter instanceof InterpreterInterface) {
-                $value = $interpreter->interpret($object, $value, $map, $data, $definition, $params,
-                    $map->getInterpreterConfig());
+                try {
+                    $value = $interpreter->interpret(
+                        $object,
+                        $value,
+                        $map,
+                        $data,
+                        $definition,
+                        $params,
+                        $map->getInterpreterConfig()
+                    );
+                }
+                catch (UnexpectedValueException $ex) {
+                    $this->logger->info(sprintf('Unexpected Value from Interpreter "%s" with message "%s"', $map->getInterpreter(), $ex->getMessage()));
+                }
+
             }
 
         }

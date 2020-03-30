@@ -79,14 +79,6 @@ final class Exporter implements ExporterInterface
     private $exceptions = [];
 
     /**
-     * @param ProcessManagerExportListener $exportListener
-     */
-    public function setExportListener(ProcessManagerExportListener $exportListener): void
-    {
-        $this->exportListener = $exportListener;
-    }
-
-    /**
      * @var ProcessManagerExportListener
      */
     private $exportListener;
@@ -95,14 +87,6 @@ final class Exporter implements ExporterInterface
      * @var ProcessRepository
      */
     private $processRepository;
-
-    /**
-     * @param ProcessRepository $processRepository
-     */
-    public function setProcessRepository(ProcessRepository $processRepository): void
-    {
-        $this->processRepository = $processRepository;
-    }
 
     /**
      * @param ServiceRegistryInterface $fetcherRegistry
@@ -129,6 +113,22 @@ final class Exporter implements ExporterInterface
         $this->exportProviderRegistry = $exportProviderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
+    }
+
+    /**
+     * @param ProcessManagerExportListener $exportListener
+     */
+    public function setExportListener(ProcessManagerExportListener $exportListener): void
+    {
+        $this->exportListener = $exportListener;
+    }
+
+    /**
+     * @param ProcessRepository $processRepository
+     */
+    public function setProcessRepository(ProcessRepository $processRepository): void
+    {
+        $this->processRepository = $processRepository;
     }
 
     /**
@@ -413,7 +413,7 @@ final class Exporter implements ExporterInterface
         }
 
         /** @var Process $process */
-        $process = $this->processRepository->findOneBy(['id' => $this->processId]);
+        $process = $this->processRepository->find($this->processId);
         if ($process instanceof ProcessInterface) {
             if ($process->getStatus() == ProcessManagerBundle::STATUS_STOPPING) {
                 $process->setStatus(ProcessManagerBundle::STATUS_STOPPED);

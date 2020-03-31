@@ -14,6 +14,7 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
+use Pimcore\Tool\Admin;
 use ProcessManagerBundle\Model\ExecutableInterface;
 use ProcessManagerBundle\Process\Pimcore;
 
@@ -25,9 +26,14 @@ final class ImportDefinitionProcess extends Pimcore
     public function run(ExecutableInterface $executable, array $params = null)
     {
         $settings = $executable->getSettings();
+        $params = json_decode($settings['params']);
+        $currentUser = Admin::getCurrentUser();
+        if ($currentUser && !$params->userId) {
+            $params->userId = $currentUser->getId();
+        }
 
         $settings['command'] = sprintf('data-definitions:import -d %s -p "%s"', $settings['definition'],
-            addslashes($settings['params']));
+            addslashes(json_encode($params)));
 
         $executable->setSettings($settings);
 

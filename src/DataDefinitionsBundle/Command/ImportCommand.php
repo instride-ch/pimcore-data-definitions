@@ -90,7 +90,11 @@ EOT
     {
         $eventDispatcher = $this->eventDispatcher;
 
-        $params = $input->getOption('params');
+        $params = json_decode($input->getOption('params'), true);
+        if (!$params['userId']) {
+            $params['userId'] = 0;
+        }
+
         try {
             $definition = $this->repository->find($input->getOption('definition'));
         } catch (\InvalidArgumentException $e) {
@@ -155,7 +159,7 @@ EOT
         $eventDispatcher->addListener('data_definitions.import.progress', $imProgress);
         $eventDispatcher->addListener('data_definitions.import.finished', $imFinished);
 
-        $this->importer->doImport($definition, json_decode($params, true));
+        $this->importer->doImport($definition, $params);
 
         $eventDispatcher->removeListener('data_definitions.import.status', $imStatus);
         $eventDispatcher->removeListener('data_definitions.import.status.child', $imStatus);

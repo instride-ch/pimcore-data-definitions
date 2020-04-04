@@ -14,8 +14,11 @@ services:
         arguments:
             - '@process_manager.factory.process'
             - '@process_manager.logger'
-            - '@data_definitions.registry.export_provider'
             - '@process_manager.repository.process'
+        calls:
+            - method: setProviderRegistry
+              arguments:
+                - '@data_definitions.registry.export_provider'
         tags:
             - { name: 'kernel.event_listener', event: 'data_definitions.export.total', method: 'onTotalEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.export.progress', method: 'onProgressEvent' }

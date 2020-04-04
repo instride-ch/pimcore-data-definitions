@@ -140,8 +140,6 @@ final class Importer implements ImporterInterface
         $this->loaderRegistry = $loaderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
-        $this->importListener = $importListener;
-        $this->processRepository = $processRepository;
     }
 
     /**
@@ -154,7 +152,6 @@ final class Importer implements ImporterInterface
 
     /**
      * @param ProcessRepository $processRepository
-     * @required
      */
     public function setProcessRepository(ProcessRepository $processRepository)
     {

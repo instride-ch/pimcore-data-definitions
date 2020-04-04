@@ -17,7 +17,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
-final class ImportDefinitionEvent extends Event
+final class ImportDefinitionEvent extends Event implements DefinitionEventInterface
 {
     /**
      * @var ImportDefinitionInterface
@@ -48,15 +48,15 @@ final class ImportDefinitionEvent extends Event
     }
 
     /**
-     * @return ImportDefinitionInterface
+     * @inheritDoc
      */
-    public function getDefinition()
+    public function getDefinition() : ImportDefinitionInterface
     {
         return $this->definition;
     }
 
     /**
-     * @return mixed
+     * @inheritDoc
      */
     public function getSubject()
     {

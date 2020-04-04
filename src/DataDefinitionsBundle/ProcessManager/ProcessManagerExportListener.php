@@ -15,8 +15,10 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use ProcessManagerBundle\ProcessManagerBundle;
+use Wvision\Bundle\DataDefinitionsBundle\Event\DefinitionEventInterface;
 
-final class ProcessManagerExportListener
+final class ProcessManagerExportListener extends AbstractProcessManagerListener
 {
     const PROCESS_TYPE = "export_definitions";
 
@@ -28,7 +30,7 @@ final class ProcessManagerExportListener
     /**
      * @param ServiceRegistryInterface $providerRegistry
      */
-    public function setProviderRegistry(ServiceRegistryInterface $providerRegistry)
+    public function setProviderRegistry(ServiceRegistryInterface $providerRegistry) : void
     {
         $this->providerRegistry = $providerRegistry;
     }
@@ -36,7 +38,7 @@ final class ProcessManagerExportListener
     /**
      * @param ExportDefinitionEvent $event
      */
-    public function onFinishedEvent(ExportDefinitionEvent $event)
+    public function onFinishedEvent(DefinitionEventInterface $event) : void
     {
         if (null !== $this->process) {
             if ($this->process->getStatus() == ProcessManagerBundle::STATUS_RUNNING) {

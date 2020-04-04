@@ -11,7 +11,7 @@ interface DefinitionEventInterface
     /**
      * @return ImportDefinitionInterface
      */
-    public function getDefinition() : ImportDefinitionInterface;
+    public function getDefinition();
 
     /**
      * @return mixed

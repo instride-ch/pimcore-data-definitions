@@ -13,8 +13,6 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection:
         public: true
 
-
-
     Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface: '@Wvision\Bundle\DataDefinitionsBundle\Importer\Importer'
     Wvision\Bundle\DataDefinitionsBundle\Importer\Importer:
         arguments:
@@ -29,6 +27,7 @@ services:
             - '@logger'
         tags:
             - { name: monolog.logger, channel: import_definition }
+            - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
 
     Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface: '@Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter'
     Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter:
@@ -42,6 +41,7 @@ services:
             - '@logger'
         tags:
             - { name: monolog.logger, channel: export_definition }
+            - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
 
     ### Registries
     data_definitions.registry.provider:

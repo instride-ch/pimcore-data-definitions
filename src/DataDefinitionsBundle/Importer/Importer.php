@@ -23,10 +23,6 @@ use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\Document;
 use Pimcore\Model\Version;
 use Pimcore\Placeholder;
-use ProcessManagerBundle\Model\Process;
-use ProcessManagerBundle\Model\ProcessInterface;
-use ProcessManagerBundle\ProcessManagerBundle;
-use ProcessManagerBundle\Repository\ProcessRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
@@ -38,7 +34,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
@@ -94,19 +89,9 @@ final class Importer implements ImporterInterface
     private $logger;
 
     /**
-     * @var int
+     * @var bool
      */
-    private $processId;
-
-    /**
-     * @var ProcessManagerImportListener
-     */
-    private $importListener;
-
-    /**
-     * @var ProcessRepository
-     */
-    private $processRepository;
+    private $shouldStop = false;
 
     /**
      * Importer constructor.
@@ -140,22 +125,6 @@ final class Importer implements ImporterInterface
         $this->loaderRegistry = $loaderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
-    }
-
-    /**
-     * @param ProcessManagerImportListener $importListener
-     */
-    public function setImportListener(ProcessManagerImportListener $importListener)
-    {
-        $this->importListener = $importListener;
-    }
-
-    /**
-     * @param ProcessRepository $processRepository
-     */
-    public function setProcessRepository(ProcessRepository $processRepository)
-    {
-        $this->processRepository = $processRepository;
     }
 
     /**
@@ -247,47 +216,14 @@ final class Importer implements ImporterInterface
         $this->sendDocument($definition, Document::getById($definition->getFailureNotificationDocument()),
             $objectIds, $exceptions);
         $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
-
-        if (!$this->processRepository) {
-            return;
-        }
-
-        /** @var Process $process */
-        $process = $this->processRepository->findOneBy(['id' => $this->processId]);
-        if ($process instanceof ProcessInterface) {
-            if ($definition->getStopOnException()) {
-                $process->setStatus(ProcessManagerBundle::STATUS_FAILED);
-            } else {
-                $process->setStatus(ProcessManagerBundle::STATUS_COMPLETED_WITH_EXCEPTIONS);
-            }
-            $process->save();
-        }
     }
 
     /**
-     * @return bool
+     * @return void
      */
-    public function shouldStop()
+    public function stop() : void
     {
-        if (!$this->processRepository) {
-            return false;
-        }
-
-        if (!$this->processId) {
-            $this->processId = $this->importListener->getProcess()->getId();
-        }
-
-        /** @var Process $process */
-        $process = $this->processRepository->findOneBy(['id' => $this->processId]);
-        if ($process instanceof ProcessInterface) {
-            if ($process->getStatus() == ProcessManagerBundle::STATUS_STOPPING) {
-                $process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
-                $process->save();
-                return true;
-            }
-        }
-
-        return false;
+        $this->shouldStop = true;
     }
 
     /**
@@ -385,7 +321,7 @@ final class Importer implements ImporterInterface
 
             $this->eventDispatcher->dispatch($definition, 'data_definitions.import.progress', '', $params);
 
-            if ($this->shouldStop()) {
+            if ($this->shouldStop) {
                 $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
                     'Process has been stopped.');
                 return [$objectIds, $exceptions];

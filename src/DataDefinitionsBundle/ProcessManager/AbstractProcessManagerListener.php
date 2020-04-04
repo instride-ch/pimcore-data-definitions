@@ -12,6 +12,7 @@ use ProcessManagerBundle\Logger\ProcessLogger;
 use ProcessManagerBundle\Model\ProcessInterface;
 use ProcessManagerBundle\ProcessManagerBundle;
 use ProcessManagerBundle\Repository\ProcessRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\DefinitionEventInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
@@ -38,35 +39,38 @@ abstract class AbstractProcessManagerListener
     protected $processLogger;
 
     /**
-     * @var ServiceRegistryInterface
-     */
-    protected $providerRegistry;
-
-    /**
      * @var ProcessRepository
      */
     protected $repository;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * AbstractProcessManagerListener constructor.
      * @param FactoryInterface $processFactory
      * @param ProcessLogger $processLogger
      * @param ProcessRepository $repository
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         FactoryInterface $processFactory,
         ProcessLogger $processLogger,
-        ProcessRepository $repository
+        ProcessRepository $repository,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->processFactory = $processFactory;
         $this->processLogger = $processLogger;
         $this->repository = $repository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      * @return ProcessInterface|null
      */
-    public function getProcess()
+    public function getProcess() : ProcessInterface
     {
         return $this->process;
     }
@@ -74,7 +78,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @param DefinitionEventInterface $event
      */
-    public function onTotalEvent(DefinitionEventInterface $event)
+    public function onTotalEvent(DefinitionEventInterface $event) : void
     {
         if (null === $this->process) {
             $date = Carbon::now();
@@ -101,12 +105,21 @@ abstract class AbstractProcessManagerListener
         }
     }
 
-    public function onProgressEvent()
+    /**
+     * @return void
+     */
+    public function onProgressEvent() : void
     {
         if ($this->process) {
             if ($this->process->getStoppable()) {
                 $this->process = $this->repository->find($this->process->getId());
             }
+
+            if ($this->process->getStatus() == ProcessManagerBundle::STATUS_STOPPING) {
+                $this->eventDispatcher->dispatch('data_definitions.stop');
+                $this->process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
+            }
+
             $this->process->progress();
             $this->process->save();
 
@@ -117,7 +130,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @param DefinitionEventInterface $event
      */
-    public function onStatusEvent(DefinitionEventInterface $event)
+    public function onStatusEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
             if ($this->process->getStoppable()) {
@@ -133,7 +146,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @param DefinitionEventInterface $event
      */
-    public function onFinishedEvent(DefinitionEventInterface $event)
+    public function onFinishedEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
             if ($this->process->getStatus() == ProcessManagerBundle::STATUS_RUNNING) {
@@ -141,6 +154,21 @@ abstract class AbstractProcessManagerListener
                 $this->process->save();
             }
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
+        }
+    }
+
+    /**
+     * @param DefinitionEventInterface $event
+     */
+    public function onFailureEvent(DefinitionEventInterface $event) : void
+    {
+        if ($this->process) {
+            if ($event->getDefinition()->getStopOnException()) {
+                $process->setStatus(ProcessManagerBundle::STATUS_FAILED);
+            } else {
+                $process->setStatus(ProcessManagerBundle::STATUS_COMPLETED_WITH_EXCEPTIONS);
+            }
+            $process->save();
         }
     }
 }

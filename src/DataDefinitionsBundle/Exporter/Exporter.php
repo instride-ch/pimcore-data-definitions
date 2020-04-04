@@ -17,10 +17,6 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Exporter;
 use CoreShop\Component\Pimcore\DataObject\UnpublishedHelper;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use Pimcore\Model\DataObject\Concrete;
-use ProcessManagerBundle\Model\Process;
-use ProcessManagerBundle\Model\ProcessInterface;
-use ProcessManagerBundle\ProcessManagerBundle;
-use ProcessManagerBundle\Repository\ProcessRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
@@ -32,7 +28,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
 
@@ -79,14 +74,9 @@ final class Exporter implements ExporterInterface
     private $exceptions = [];
 
     /**
-     * @var ProcessManagerExportListener
+     * @var bool
      */
-    private $exportListener;
-
-    /**
-     * @var ProcessRepository
-     */
-    private $processRepository;
+    private $shouldStop = false;
 
     /**
      * @param ServiceRegistryInterface $fetcherRegistry
@@ -113,22 +103,6 @@ final class Exporter implements ExporterInterface
         $this->exportProviderRegistry = $exportProviderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
-    }
-
-    /**
-     * @param ProcessManagerExportListener $exportListener
-     */
-    public function setExportListener(ProcessManagerExportListener $exportListener): void
-    {
-        $this->exportListener = $exportListener;
-    }
-
-    /**
-     * @param ProcessRepository $processRepository
-     */
-    public function setProcessRepository(ProcessRepository $processRepository): void
-    {
-        $this->processRepository = $processRepository;
     }
 
     /**
@@ -248,7 +222,7 @@ final class Exporter implements ExporterInterface
                         );
                     }
 
-                    if ($this->shouldStop()) {
+                    if ($this->shouldStop) {
                         $this->eventDispatcher->dispatch('data_definitions.export.status',
                             new ExportDefinitionEvent($definition, 'Process has been stopped.', $params));
                         return;
@@ -387,6 +361,10 @@ final class Exporter implements ExporterInterface
         return $value;
     }
 
+    /**
+     * @param ExportMapping $map
+     * @return GetterInterface|null
+     */
     private function fetchGetter(ExportMapping $map): ?GetterInterface
     {
         if ($name = $map->getGetter()) {
@@ -400,29 +378,11 @@ final class Exporter implements ExporterInterface
     }
 
     /**
-     * @return bool
+     * @return void
      */
-    private function shouldStop()
+    public function stop() : void
     {
-        if (!$this->processRepository) {
-            return false;
-        }
-
-        if (!$this->processId) {
-            $this->processId = $this->exportListener->getProcess()->getId();
-        }
-
-        /** @var Process $process */
-        $process = $this->processRepository->find($this->processId);
-        if ($process instanceof ProcessInterface) {
-            if ($process->getStatus() == ProcessManagerBundle::STATUS_STOPPING) {
-                $process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
-                $process->save();
-                return true;
-            }
-        }
-
-        return false;
+        $this->shouldStop = true;
     }
 }
 

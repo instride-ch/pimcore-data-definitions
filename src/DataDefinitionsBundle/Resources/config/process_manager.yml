@@ -4,17 +4,20 @@ services:
             - '@process_manager.factory.process'
             - '@process_manager.logger'
             - '@process_manager.repository.process'
+            - '@event_dispatcher'
         tags:
             - { name: 'kernel.event_listener', event: 'data_definitions.import.total', method: 'onTotalEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.import.progress', method: 'onProgressEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.import.status', method: 'onStatusEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.import.finished', method: 'onFinishedEvent' }
+            - { name: 'kernel.event_listener', event: 'data_definitions.import.failure', method: 'onFailureEvent' }
 
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener:
         arguments:
             - '@process_manager.factory.process'
             - '@process_manager.logger'
             - '@process_manager.repository.process'
+            - '@event_dispatcher'
         calls:
             - method: setProviderRegistry
               arguments:
@@ -24,6 +27,7 @@ services:
             - { name: 'kernel.event_listener', event: 'data_definitions.export.progress', method: 'onProgressEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.export.status', method: 'onStatusEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.export.finished', method: 'onFinishedEvent' }
+            - { name: 'kernel.event_listener', event: 'data_definitions.export.failure', method: 'onFailureEvent' }
 
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess:
         tags:
@@ -42,43 +46,3 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionsReport:
         tags:
             - { name: process_manager.process_report, type: import_definitions }
-
-    Wvision\Bundle\DataDefinitionsBundle\Importer\Importer:
-        arguments:
-          - '@data_definitions.registry.provider'
-          - '@data_definitions.registry.filter'
-          - '@data_definitions.registry.runner'
-          - '@data_definitions.registry.interpreter'
-          - '@data_definitions.registry.setter'
-          - '@data_definitions.registry.cleaner'
-          - '@data_definitions.registry.loader'
-          - '@Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher'
-          - '@logger'
-        tags:
-          - { name: monolog.logger, channel: import_definition }
-        calls:
-          - method: setImportListener
-            arguments:
-              - '@Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener'
-          - method: setProcessRepository
-            arguments:
-              - '@process_manager.repository.process'
-
-    Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter:
-        arguments:
-            - '@data_definitions.registry.fetcher'
-            - '@data_definitions.registry.export_runner'
-            - '@data_definitions.registry.interpreter'
-            - '@data_definitions.registry.getter'
-            - '@data_definitions.registry.export_provider'
-            - '@event_dispatcher'
-            - '@logger'
-        tags:
-            - { name: monolog.logger, channel: export_definition }
-        calls:
-            -   method: setExportListener
-                arguments:
-                    - '@Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener'
-            -   method: setProcessRepository
-                arguments:
-                    - '@process_manager.repository.process'

@@ -37,10 +37,15 @@ class CheckboxInterpreter implements InterpreterInterface, DataSetAwareInterface
         $params,
         $configuration
     ) {
-        if ($value === "") {
-            return null;
+        if (is_string($value)) {
+            if ($value === "") {
+                return null;
+            }
+
+            return filter_var(strtolower($value), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         }
-        return filter_var(strtolower($value), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+
+        return (boolval($value));
     }
 }
 

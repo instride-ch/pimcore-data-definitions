@@ -251,6 +251,10 @@ services:
         tags:
             - { name: data_definitions.interpreter, type: twig, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\TwigInterpreterType }
 
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\DoNotSetOnEmptyInterpreter:
+      tags:
+        - { name: data_definitions.interpreter, type: donotsetonempty, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
     ### PROVIDER
     Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:
         tags:

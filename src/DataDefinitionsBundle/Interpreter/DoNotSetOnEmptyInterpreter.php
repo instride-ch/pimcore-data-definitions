@@ -24,7 +24,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 class DoNotSetOnEmptyInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
     use DataSetAwareTrait;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -41,7 +41,7 @@ class DoNotSetOnEmptyInterpreter implements InterpreterInterface, DataSetAwareIn
             throw new DoNotSetException();
         }
 
-        if (is_array($value) && count($value) == 0) {
+        if (is_array($value) && count($value) === 0) {
             throw new DoNotSetException();
         }
 

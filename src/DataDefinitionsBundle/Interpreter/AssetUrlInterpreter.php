@@ -17,6 +17,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 use Pimcore\File;
+use Pimcore\Http\Exception\ResponseException;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Tool as PimcoreTool;
@@ -69,7 +70,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         $path = $configuration['path'];
 
         if (filter_var($value, FILTER_VALIDATE_URL)) {
-            $filename = File::getValidFilename(basename($value));
+            $filename = $this->getFileName($value);
             $assetsUrlPrefix = PimcoreTool::getHostUrl().str_replace(PIMCORE_WEB_ROOT, '', PIMCORE_ASSET_DIRECTORY);
 
             // check if URL seems to be pointing to our own asset URL
@@ -78,21 +79,10 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                 $filename = $asset->getFilename();
                 $assetPath = dirname($assetFullPath);
             } elseif ($configuration['deduplicate_by_url']) {
-                $listing = new Asset\Listing();
-                $listing->onCreateQuery(function (\Pimcore\Db\ZendCompatibility\QueryBuilder $select) {
-                    $select->join('assets_metadata AS am', 'id = am.cid', ['cid']);
-                });
-                $listing->addConditionParam('am.name = ?', self::METADATA_ORIGIN_URL);
-                $listing->addConditionParam('am.data = ?', $value);
-                $listing->setLimit(1);
-                $listing->setOrder(['creationDate', 'desc']);
-
-                $asset = $listing->current();
-                if ($asset) {
+                if ($asset = $this->getDuplicatedAsset($value)) {
                     $filename = $asset->getFilename();
                     $assetPath = $asset->getPath();
-                }
-                else {
+                } else {
                     $assetPath = $path;
                 }
             } else {
@@ -143,6 +133,37 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
     }
 
     /**
+     * @param  string $url
+     * @return string|null
+     */
+    private function getFileName(string $url) : ?string
+    {
+        try {
+            $response = $this->httpClient->request("HEAD", $url);
+            $headers = $response->getHeaders();
+
+            if (
+                isset($headers["Content-Disposition"]) &&
+                preg_match(
+                    '/^.*?filename=(?<f>[^\s]+|\x22[^\x22]+\x22)\x3B?.*$/m',
+                    current($headers["Content-Disposition"]),
+                    $match
+                )
+            ) {
+                $filename =  trim($match['f'], ' ";');
+            }
+        } catch (ResponseException $exception) {
+            $filename = null;
+        }
+
+        if (!$filename) {
+            $filename = File::getValidFilename(basename($url));
+        }
+
+        return $filename;
+    }
+
+    /**
      * @param string $value
      * @return null|string
      */
@@ -159,5 +180,23 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param string $value
+     * @return Asset|null
+     */
+    private function getDuplicatedAsset(string $value) : ?Asset
+    {
+        $listing = new Asset\Listing();
+        $listing->onCreateQuery(function (\Pimcore\Db\ZendCompatibility\QueryBuilder $select) {
+            $select->join('assets_metadata AS am', 'id = am.cid', ['cid']);
+        });
+        $listing->addConditionParam('am.name = ?', static::METADATA_ORIGIN_URL);
+        $listing->addConditionParam('am.data = ?', $value);
+        $listing->setLimit(1);
+        $listing->setOrder(['creationDate', 'desc']);
+
+        return $listing->current();
     }
 }

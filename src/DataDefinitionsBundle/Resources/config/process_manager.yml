@@ -3,22 +3,31 @@ services:
         arguments:
             - '@process_manager.factory.process'
             - '@process_manager.logger'
+            - '@process_manager.repository.process'
+            - '@event_dispatcher'
         tags:
             - { name: 'kernel.event_listener', event: 'data_definitions.import.total', method: 'onTotalEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.import.progress', method: 'onProgressEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.import.status', method: 'onStatusEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.import.finished', method: 'onFinishedEvent' }
+            - { name: 'kernel.event_listener', event: 'data_definitions.import.failure', method: 'onFailureEvent' }
 
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener:
         arguments:
             - '@process_manager.factory.process'
             - '@process_manager.logger'
-            - '@data_definitions.registry.export_provider'
+            - '@process_manager.repository.process'
+            - '@event_dispatcher'
+        calls:
+            - method: setProviderRegistry
+              arguments:
+                - '@data_definitions.registry.export_provider'
         tags:
             - { name: 'kernel.event_listener', event: 'data_definitions.export.total', method: 'onTotalEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.export.progress', method: 'onProgressEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.export.status', method: 'onStatusEvent' }
             - { name: 'kernel.event_listener', event: 'data_definitions.export.finished', method: 'onFinishedEvent' }
+            - { name: 'kernel.event_listener', event: 'data_definitions.export.failure', method: 'onFailureEvent' }
 
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ImportDefinitionProcess:
         tags:

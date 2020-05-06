@@ -74,6 +74,11 @@ final class Exporter implements ExporterInterface
     private $exceptions = [];
 
     /**
+     * @var bool
+     */
+    private $shouldStop = false;
+
+    /**
      * @param ServiceRegistryInterface $fetcherRegistry
      * @param ServiceRegistryInterface $runnerRegistry
      * @param ServiceRegistryInterface $interpreterRegistry
@@ -216,6 +221,13 @@ final class Exporter implements ExporterInterface
                             new ExportDefinitionEvent($definition, null, $params)
                         );
                     }
+
+                    if ($this->shouldStop) {
+                        $this->eventDispatcher->dispatch('data_definitions.export.status',
+                            new ExportDefinitionEvent($definition, 'Process has been stopped.', $params));
+                        return;
+                    }
+
                 }
                 $provider->exportData($definition->getConfiguration(), $definition, $params);
             },
@@ -349,6 +361,10 @@ final class Exporter implements ExporterInterface
         return $value;
     }
 
+    /**
+     * @param ExportMapping $map
+     * @return GetterInterface|null
+     */
     private function fetchGetter(ExportMapping $map): ?GetterInterface
     {
         if ($name = $map->getGetter()) {
@@ -359,6 +375,14 @@ final class Exporter implements ExporterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @return void
+     */
+    public function stop() : void
+    {
+        $this->shouldStop = true;
     }
 }
 

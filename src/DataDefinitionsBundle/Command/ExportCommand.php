@@ -132,7 +132,6 @@ EOT
 
         $imFinished = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process) {
             if ($progress instanceof ProgressBar) {
-                $progress->finish();
                 $output->writeln('');
             } else {
                 $output->writeln('<info>No items to export</info>');

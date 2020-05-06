@@ -14,106 +14,37 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
-use Carbon\Carbon;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
-use CoreShop\Component\Resource\Factory\FactoryInterface;
-use Pimcore\Model\Asset;
-use ProcessManagerBundle\Factory\ProcessFactoryInterface;
-use ProcessManagerBundle\Logger\ProcessLogger;
-use ProcessManagerBundle\Model\ProcessInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
+use ProcessManagerBundle\ProcessManagerBundle;
+use Wvision\Bundle\DataDefinitionsBundle\Event\DefinitionEventInterface;
 
-final class ProcessManagerExportListener
+final class ProcessManagerExportListener extends AbstractProcessManagerListener
 {
-    /**
-     * @var ProcessInterface
-     */
-    private $process;
+    const PROCESS_TYPE = "export_definitions";
 
-    /**
-     * @var ProcessFactoryInterface
-     */
-    private $processFactory;
+    const PROCESS_NAME = "Export Definitions";
 
-    /**
-     * @var ProcessLogger
-     */
-    private $processLogger;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
+    /** @var ServiceRegistryInterface */
     private $providerRegistry;
 
     /**
-     * @param FactoryInterface $processFactory
-     * @param ProcessLogger $processLogger
      * @param ServiceRegistryInterface $providerRegistry
      */
-    public function __construct(
-        FactoryInterface $processFactory,
-        ProcessLogger $processLogger,
-        ServiceRegistryInterface $providerRegistry
-    ) {
-        $this->processFactory = $processFactory;
-        $this->processLogger = $processLogger;
+    public function setProviderRegistry(ServiceRegistryInterface $providerRegistry) : void
+    {
         $this->providerRegistry = $providerRegistry;
     }
 
     /**
      * @param ExportDefinitionEvent $event
      */
-    public function onTotalEvent(ExportDefinitionEvent $event)
-    {
-        if (null === $this->process) {
-            $date = Carbon::now();
-
-            $this->process = $this->processFactory->createProcess(
-                sprintf(
-                    'Export Definitions (%s): %s',
-                    $date->formatLocalized('%A %d %B %Y'),
-                    $event->getDefinition()->getName()
-                ),
-                'export_definitions',
-                'Loading',
-                $event->getSubject(),
-                0
-            );
-            $this->process->save();
-
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_TOTAL.$event->getSubject());
-        }
-    }
-
-    public function onProgressEvent()
+    public function onFinishedEvent(DefinitionEventInterface $event) : void
     {
         if (null !== $this->process) {
-            $this->process->progress();
-            $this->process->save();
-
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_PROGRESS);
-        }
-    }
-
-    /**
-     * @param ExportDefinitionEvent $event
-     */
-    public function onStatusEvent(ExportDefinitionEvent $event)
-    {
-        if (null !== $this->process) {
-            $this->process->setMessage($event->getSubject());
-            $this->process->save();
-
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS.$event->getSubject());
-        }
-    }
-
-    /**
-     * @param ExportDefinitionEvent $event
-     */
-    public function onFinishedEvent(ExportDefinitionEvent $event)
-    {
-        if (null !== $this->process) {
+            if ($this->process->getStatus() == ProcessManagerBundle::STATUS_RUNNING) {
+                $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
+                $this->process->save();
+            }
             $definition = $event->getDefinition();
 
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());

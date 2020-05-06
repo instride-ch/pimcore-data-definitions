@@ -89,6 +89,11 @@ final class Importer implements ImporterInterface
     private $logger;
 
     /**
+     * @var bool
+     */
+    private $shouldStop = false;
+
+    /**
      * Importer constructor.
      * @param ServiceRegistryInterface $providerRegistry
      * @param ServiceRegistryInterface $filterRegistry
@@ -98,7 +103,7 @@ final class Importer implements ImporterInterface
      * @param ServiceRegistryInterface $cleanerRegistry
      * @param ServiceRegistryInterface $loaderRegistry
      * @param EventDispatcherInterface $eventDispatcher
-     * @param LoggerInterface          $logger
+     * @param LoggerInterface $logger
      */
     public function __construct(
         ServiceRegistryInterface $providerRegistry,
@@ -179,18 +184,46 @@ final class Importer implements ImporterInterface
         }
 
         if (\count($exceptions) > 0) {
-            $this->sendDocument($definition, Document::getById($definition->getFailureNotificationDocument()),
-                $objectIds, $exceptions);
-            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
+            $this->processFailedImport($definition, $params);
         } else {
-            $this->sendDocument($definition, Document::getById($definition->getSuccessNotificationDocument()),
-                $objectIds, $exceptions);
-            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.success', $params);
+            $this->processSuccessfullImport($definition, $params);
         }
 
         $this->eventDispatcher->dispatch($definition, 'data_definitions.import.finished', '', $params);
 
         return $objectIds;
+    }
+
+    /**
+     * @param ImportDefinitionInterface $definition
+     * @param $params
+     * @throws \Exception
+     */
+    public function processSuccessfullImport(ImportDefinitionInterface $definition, $params)
+    {
+        $this->sendDocument($definition, Document::getById($definition->getSuccessNotificationDocument()),
+            $objectIds, $exceptions);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.success', $params);
+    }
+
+    /**
+     * @param ImportDefinitionInterface $definition
+     * @param $params
+     * @throws \Exception
+     */
+    public function processFailedImport(ImportDefinitionInterface $definition, $params)
+    {
+        $this->sendDocument($definition, Document::getById($definition->getFailureNotificationDocument()),
+            $objectIds, $exceptions);
+        $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
+    }
+
+    /**
+     * @return void
+     */
+    public function stop() : void
+    {
+        $this->shouldStop = true;
     }
 
     /**
@@ -287,6 +320,12 @@ final class Importer implements ImporterInterface
             }
 
             $this->eventDispatcher->dispatch($definition, 'data_definitions.import.progress', '', $params);
+
+            if ($this->shouldStop) {
+                $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status',
+                    'Process has been stopped.');
+                return [$objectIds, $exceptions];
+            }
         }
 
         return [$objectIds, $exceptions];

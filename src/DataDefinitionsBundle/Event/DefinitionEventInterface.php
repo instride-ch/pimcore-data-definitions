@@ -8,15 +8,23 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
+ * @copyright  Copyright (c) 2020 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
+namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
-final class ProcessManagerImportListener extends AbstractProcessManagerListener
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+
+interface DefinitionEventInterface
 {
-    const PROCESS_TYPE = "import_definitions";
+    /**
+     * @return ImportDefinitionInterface
+     */
+    public function getDefinition();
 
-    const PROCESS_NAME = "Import Definitions";
+    /**
+     * @return mixed
+     */
+    public function getSubject();
 }

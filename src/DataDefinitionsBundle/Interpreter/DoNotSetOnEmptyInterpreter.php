@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016 W-Vision (http://www.w-vision.ch)
+ * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -21,7 +21,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
-class CheckboxInterpreter implements InterpreterInterface, DataSetAwareInterface
+class DoNotSetOnEmptyInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
     use DataSetAwareTrait;
 
@@ -37,15 +37,15 @@ class CheckboxInterpreter implements InterpreterInterface, DataSetAwareInterface
         $params,
         $configuration
     ) {
-        if (is_string($value)) {
-            if ($value === "") {
-                return null;
-            }
-
-            return filter_var(strtolower($value), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        if ($value === "" || $value === null) {
+            throw new DoNotSetException();
         }
 
-        return (boolval($value));
+        if (is_array($value) && count($value) === 0) {
+            throw new DoNotSetException();
+        }
+
+        return $value;
     }
 }
 

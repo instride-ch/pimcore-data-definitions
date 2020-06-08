@@ -29,9 +29,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
 
 abstract class AbstractProcessManagerListener
 {
-    const PROCESS_TYPE = "data_definitions";
+    public const PROCESS_TYPE = 'data_definitions';
 
-    const PROCESS_NAME = "Data Definitions";
+    public const PROCESS_NAME = 'Data Definitions';
 
     /**
      * @var ProcessInterface
@@ -125,7 +125,7 @@ abstract class AbstractProcessManagerListener
                 $this->process = $this->repository->find($this->process->getId());
             }
 
-            if ($this->process->getStatus() == ProcessManagerBundle::STATUS_STOPPING) {
+            if ($this->process->getStatus() === ProcessManagerBundle::STATUS_STOPPING) {
                 $this->eventDispatcher->dispatch('data_definitions.stop');
                 $this->process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
             }
@@ -159,7 +159,7 @@ abstract class AbstractProcessManagerListener
     public function onFinishedEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
-            if ($this->process->getStatus() == ProcessManagerBundle::STATUS_RUNNING) {
+            if ($this->process->getStatus() === ProcessManagerBundle::STATUS_RUNNING) {
                 $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
                 $this->process->save();
             }
@@ -174,11 +174,11 @@ abstract class AbstractProcessManagerListener
     {
         if ($this->process) {
             if ($event->getDefinition()->getStopOnException()) {
-                $process->setStatus(ProcessManagerBundle::STATUS_FAILED);
+                $this->process->setStatus(ProcessManagerBundle::STATUS_FAILED);
             } else {
-                $process->setStatus(ProcessManagerBundle::STATUS_COMPLETED_WITH_EXCEPTIONS);
+                $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED_WITH_EXCEPTIONS);
             }
-            $process->save();
+            $this->process->save();
         }
     }
 }

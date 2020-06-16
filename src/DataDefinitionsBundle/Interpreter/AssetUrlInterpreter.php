@@ -197,6 +197,8 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         $listing->setLimit(1);
         $listing->setOrder(['creationDate', 'desc']);
 
-        return $listing->current();
+        $duplicatedAssets = $listing->getAssets();
+        
+        return empty($duplicatedAssets) === false ? $duplicatedAssets[0] : null;
     }
 }

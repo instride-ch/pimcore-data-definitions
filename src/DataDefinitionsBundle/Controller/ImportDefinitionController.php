@@ -38,6 +38,8 @@ class ImportDefinitionController extends ResourceController
         $setters = $this->getConfigSetters();
         $filters = $this->getConfigFilters();
         $runners = $this->getConfigRunners();
+        $importRuleConditions = $this->getImportRuleConditions();
+        $importRuleActions = $this->getImportRuleActions();
 
         return $this->viewHandler->handle([
             'providers' => array_keys($providers),
@@ -47,6 +49,10 @@ class ImportDefinitionController extends ResourceController
             'setter' => array_keys($setters),
             'filters' => array_keys($filters),
             'runner' => array_keys($runners),
+            'import_rules' => [
+                'conditions' => array_keys($importRuleConditions),
+                'actions' => array_keys($importRuleActions)
+            ]
         ]);
     }
 
@@ -318,6 +324,22 @@ class ImportDefinitionController extends ResourceController
     protected function getConfigRunners(): array
     {
         return $this->getParameter('data_definitions.runners');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getImportRuleConditions(): array
+    {
+        return $this->getParameter('data_definitions.import_rule.conditions');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getImportRuleActions(): array
+    {
+        return $this->getParameter('data_definitions.import_rule.actions');
     }
 }
 

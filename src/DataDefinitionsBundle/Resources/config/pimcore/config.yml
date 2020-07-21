@@ -65,5 +65,12 @@ data_definitions:
             fetcher_abstract: '/bundles/datadefinitions/pimcore/js/fetchers/abstract.js'
             fetcher_objects: '/bundles/datadefinitions/pimcore/js/fetchers/objects.js'
             fuse: '/bundles/datadefinitions/pimcore/js/automap/fuse.min.js'
+            import_rule_action: '/bundles/datadefinitions/pimcore/js/import_rule/action.js'
+            import_rule_condition: '/bundles/datadefinitions/pimcore/js/import_rule/condition.js'
+            import_rule_item: '/bundles/datadefinitions/pimcore/js/import_rule/item.js'
+            import_rule_panel: '/bundles/datadefinitions/pimcore/js/import_rule/panel.js'
+            import_rules_interpreter: '/bundles/datadefinitions/pimcore/js/interpreters/import_rule.js'
+            import_rules_condition_expression: '/bundles/datadefinitions/pimcore/js/import_rule/conditions/expression.js'
+            import_rules_action_expression: '/bundles/datadefinitions/pimcore/js/import_rule/actions/expression.js'
         css:
             data_definition: '/bundles/datadefinitions/pimcore/css/datadefinition.css'

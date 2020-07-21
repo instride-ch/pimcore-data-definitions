@@ -168,6 +168,7 @@ class Dao extends Model\Dao\PhpArrayTable
                     }
                 }
             }
+
             $this->db->insertOrUpdate($data, $this->model->getId());
         } catch (\Exception $e) {
             throw $e;

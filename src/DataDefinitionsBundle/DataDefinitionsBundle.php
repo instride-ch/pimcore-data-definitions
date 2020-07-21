@@ -17,8 +17,10 @@ namespace Wvision\Bundle\DataDefinitionsBundle;
 use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\ComposerPackageBundleInterface;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
+use CoreShop\Bundle\RuleBundle\CoreShopRuleBundle;
 use Pimcore\Extension\Bundle\PimcoreBundleInterface;
 use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
+use Pimcore\HttpKernel\BundleCollection\BundleCollection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
@@ -27,6 +29,8 @@ use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportRunn
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\FetcherRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\GetterRegistryCompilerPass;
+use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ImportRuleActionPass;
+use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ImportRuleConditionPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\LoaderRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
@@ -36,6 +40,18 @@ use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegi
 class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBundleInterface, ComposerPackageBundleInterface
 {
     use PackageVersionTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function registerDependentBundles(BundleCollection $collection)
+    {
+        parent::registerDependentBundles($collection);
+
+        $collection->addBundles([
+            new CoreShopRuleBundle(),
+        ], 3500);
+    }
 
     public function getContainerExtension()
     {
@@ -95,6 +111,8 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         $builder->addCompilerPass(new FetcherRegistryCompilerPass());
         $builder->addCompilerPass(new ExportProviderRegistryCompilerPass());
         $builder->addCompilerPass(new ExportRunnerRegistryCompilerPass());
+        $builder->addCompilerPass(new ImportRuleConditionPass());
+        $builder->addCompilerPass(new ImportRuleActionPass());
     }
 
     /**

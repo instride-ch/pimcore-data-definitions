@@ -92,6 +92,8 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
                 this.runners = [];
                 this.getters = [];
                 this.fetchers = [];
+                this.importRuleConditions = [];
+                this.importRuleActions = [];
 
                 config.providers.forEach(function (provider) {
                     this.providers.push([provider]);
@@ -111,6 +113,14 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
 
                 config.fetchers.forEach(function (fetcher) {
                     this.fetchers.push([fetcher]);
+                }.bind(this));
+
+                config.import_rules.conditions.forEach(function (condition) {
+                    this.conditions.push([condition]);
+                }.bind(this));
+
+                config.import_rules.actions.forEach(function (actions) {
+                    this.action.push([actions]);
                 }.bind(this));
 
                 var providerStore = new Ext.data.ArrayStore({
@@ -157,6 +167,10 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
 
                 pimcore.globalmanager.add('importdefinitions_fetchers', fetchersStore);
                 pimcore.globalmanager.add('data_definitions_fetchers', fetchersStore);
+
+
+                pimcore.globalmanager.add('data_definitions_import_rule_conditions', config.import_rules.conditions);
+                pimcore.globalmanager.add('data_definitions_import_rule_actions', config.import_rules.actions);
 
                 this.getLayout();
             }.bind(this)

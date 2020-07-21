@@ -22,7 +22,7 @@ body.pimcore_version_6 .data_definitions_nav_icon_export_definition {
     background: url(../img/export_definition_white.svg) center center no-repeat !important;
 }
 
-.data_definitions_icon_settings {
+.coreshop_rule_icon_condition_expression, .data_definitions_icon_settings {
     background: url(../img/settings.svg) center center no-repeat !important;
 }
 
@@ -46,4 +46,8 @@ body.pimcore_version_6 .data_definitions_nav_icon_export_definition {
     padding: 0px !important;
     background: none !important;
     border: none !important;
+}
+
+.data_definitions_icon_import_rules {
+    background: url(../img/rules.svg) center center no-repeat !important;
 }

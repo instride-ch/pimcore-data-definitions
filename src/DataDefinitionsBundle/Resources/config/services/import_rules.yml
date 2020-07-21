@@ -1,0 +1,107 @@
+parameters:
+    data_definitions.form.type.import_rule.action.validation_groups: [data_definitions]
+    data_definitions.form.type.import_rule.condition.validation_groups: [data_definitions]
+    data_definitions.form.type.import_rule.validation_groups: [data_definitions]
+
+services:
+    data_definitions.import_rule.action:
+        class: CoreShop\Component\Registry\ServiceRegistry
+        public: true
+        arguments:
+            - Wvision\Bundle\DataDefinitionsBundle\Rules\Action\ImportRuleProcessorInterface
+            - 'Import Rule Action Processors'
+
+    data_definitions.form.import_rule.action:
+        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+    data_definitions.import_rule.condition:
+        class: CoreShop\Component\Registry\ServiceRegistry
+        public: true
+        arguments:
+            - Wvision\Bundle\DataDefinitionsBundle\Rules\Condition\ImportRuleConditionCheckerInterface
+            - 'Import Rule Condition Checkers'
+
+    data_definitions.form.import_rule.condition:
+        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRuleActionChoiceType:
+        arguments:
+            - '%data_definitions.import_rule.actions%'
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRuleConditionChoiceType:
+        arguments:
+            - '%data_definitions.import_rule.conditions%'
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRuleActionCollectionType:
+        arguments:
+            - '@data_definitions.import_rule.action'
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRuleConditionCollectionType:
+        arguments:
+            - '@data_definitions.import_rule.condition'
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRuleActionType:
+        arguments:
+            - '%data_definitions.form.type.import_rule.action.validation_groups%'
+            - '@data_definitions.form.import_rule.action'
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRuleConditionType:
+        arguments:
+            - '%data_definitions.form.type.definition.validation_groups%'
+            - '@data_definitions.form.import_rule.condition'
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRuleType:
+        arguments:
+            - '%data_definitions.form.type.definition.validation_groups%'
+        tags:
+            - { name: form.type }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Condition\ExpressionConditionChecker:
+        arguments:
+            - '@coreshop.expression_language'
+            - '@service_container'
+        tags:
+            - { name: data_definitions.import_rule.condition, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\Condition\ExpressionConditionType }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Action\ExpressionRuleProcessor:
+        arguments:
+            - '@coreshop.expression_language'
+            - '@service_container'
+        tags:
+            - { name: data_definitions.import_rule.action, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\Action\ExpressionConditionType }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplierInterface: '@Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplier'
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplier:
+        arguments:
+            - '@data_definitions.import_rule.action'
+
+    data_definitions.import_rules.conditions.validation.processor:
+        class: CoreShop\Component\Rule\Condition\RuleConditionsValidationProcessor
+        shared: false
+        arguments:
+            - '@data_definitions.import_rule.condition'
+            - 'Import Rules Interface'
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\ImportRuleValidationProcessorInterface: '@Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\ImportRuleValidationProcessor'
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\ImportRuleValidationProcessor:
+        arguments:
+            - '@data_definitions.import_rules.conditions.validation.processor'
+
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\ImportRuleInterpreter:
+        arguments:
+            - '@Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\ImportRuleValidationProcessorInterface'
+            - '@Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplierInterface'
+        tags:
+            - { name: data_definitions.interpreter, type: import_rule, form-type: Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRulesInterpreterType }

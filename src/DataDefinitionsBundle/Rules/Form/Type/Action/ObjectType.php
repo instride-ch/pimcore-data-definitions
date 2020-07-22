@@ -12,13 +12,18 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Condition;
+namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\Action;
 
-use CoreShop\Component\Rule\Condition\ConditionCheckerInterface;
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 
-interface ImportRuleConditionCheckerInterface extends ConditionCheckerInterface
+final class ObjectType extends AbstractType
 {
-    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $concrete, array $params, array $configuration);
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('object', TextType::class);
+    }
 }
+

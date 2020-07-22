@@ -14,9 +14,10 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Processor;
 
+use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 interface RuleApplierInterface
 {
-    public function applyRule(ImportRuleInterface $rule, $params);
+    public function applyRule(ImportRuleInterface $rule, Concrete $concrete, $params);
 }

@@ -68,25 +68,15 @@ pimcore.plugin.datadefinitions.import_rule.item = Class.create(coreshop.rules.it
     },
 
     save: function (callback) {
-        if (this.isValid()) {
-            var saveData = this.getSaveData();
 
-            saveData['id'] = this.data.id;
-            saveData = this.convertDotNotationToObject(saveData);
+    },
 
-            if (saveData.hasOwnProperty('stores')) {
-                var stores = [];
+    getSaveData: function ($super) {
+        saveData = $super();
 
-                saveData.stores.forEach(function (store) {
-                    stores.push(store + "");
-                });
+        saveData.id = this.record.id;
 
-                saveData.stores = stores;
-            }
-
-            this.record.set(saveData);
-            this.data = this.record.getData();
-        }
+        return saveData;
     },
 
     getActionContainerClass: function () {

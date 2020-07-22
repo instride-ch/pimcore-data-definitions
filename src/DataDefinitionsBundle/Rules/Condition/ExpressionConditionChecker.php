@@ -14,6 +14,7 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Condition;
 
+use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
@@ -40,7 +41,7 @@ class ExpressionConditionChecker extends AbstractConditionChecker
         $this->container = $container;
     }
 
-    public function isImportRuleValid(ImportRuleInterface $subject, array $params, array $configuration)
+    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $object, array $params, array $configuration)
     {
         $expression = $configuration['expression'];
 

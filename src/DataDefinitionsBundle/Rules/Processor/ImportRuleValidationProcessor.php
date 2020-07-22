@@ -17,6 +17,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Processor;
 use CoreShop\Component\Resource\Model\ResourceInterface;
 use CoreShop\Component\Rule\Condition\RuleConditionsValidationProcessorInterface;
 use CoreShop\Component\Rule\Model\RuleInterface;
+use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
@@ -40,9 +41,12 @@ class ImportRuleValidationProcessor implements ImportRuleValidationProcessorInte
      */
     public function isImportRuleValid(
         DataDefinitionInterface $definition,
+        Concrete $object,
         ImportRuleInterface $importRule,
         array $params
     ) {
+        $params['object'] = $object;
+
         return $this->isValid($definition, $importRule, $params);
     }
 

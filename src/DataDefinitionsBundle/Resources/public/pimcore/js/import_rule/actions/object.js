@@ -10,23 +10,23 @@
  *
  */
 
-pimcore.registerNS('pimcore.plugin.datadefinitions.import_rule.actions.expression');
-pimcore.plugin.datadefinitions.import_rule.actions.expression = Class.create(coreshop.rules.actions.abstract, {
+pimcore.registerNS('pimcore.plugin.datadefinitions.import_rule.actions.object');
+pimcore.plugin.datadefinitions.import_rule.actions.object = Class.create(coreshop.rules.actions.abstract, {
 
-    type: 'expression',
+    type: 'object',
 
     getForm: function () {
-        this.expression = Ext.create({
+        this.object = Ext.create({
             xtype: 'textfield',
-            fieldLabel: t('data_definitions_interpreter_expression'),
-            name: 'expression',
+            fieldLabel: t('data_definitions_interpreter_object_id'),
+            name: 'object',
             width: 500,
-            value: this.data ? this.data.expression : null
+            value: this.data ? this.data.object : null
         });
 
         this.form = new Ext.form.Panel({
             items: [
-                this.expression
+                this.object
             ]
         });
 
@@ -35,7 +35,7 @@ pimcore.plugin.datadefinitions.import_rule.actions.expression = Class.create(cor
 
     getValues: function () {
         return {
-            expression: this.expression.getValue()
+            object: this.object.getValue()
         };
     }
 });

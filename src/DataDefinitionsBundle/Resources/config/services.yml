@@ -2,6 +2,7 @@ imports:
     - { resource: "services/forms.yml" }
     - { resource: "services/installer.yml" }
     - { resource: "services/commands.yml" }
+    - { resource: "services/import_rules.yml" }
 
 services:
     Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher:

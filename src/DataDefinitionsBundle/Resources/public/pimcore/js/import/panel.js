@@ -186,6 +186,9 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
                 pimcore.globalmanager.add('importdefinitions_runners', runnersStore);
                 pimcore.globalmanager.add('data_definitions_runners', runnersStore);
 
+                pimcore.globalmanager.add('data_definitions_import_rule_conditions', config.import_rules.conditions);
+                pimcore.globalmanager.add('data_definitions_import_rule_actions', config.import_rules.actions);
+
                 this.getLayout();
             }.bind(this)
         });

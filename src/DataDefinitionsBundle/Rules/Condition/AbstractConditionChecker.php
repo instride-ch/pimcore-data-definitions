@@ -17,6 +17,8 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Condition;
 use CoreShop\Component\Resource\Model\ResourceInterface;
 use CoreShop\Component\Rule\Model\RuleInterface;
 use InvalidArgumentException;
+use Pimcore\Model\DataObject\Concrete;
+use Webmozart\Assert\Assert;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 abstract class AbstractConditionChecker implements ImportRuleConditionCheckerInterface
@@ -30,6 +32,12 @@ abstract class AbstractConditionChecker implements ImportRuleConditionCheckerInt
             throw new InvalidArgumentException('Import Rule Condition $subject needs to be instance of ImportRuleInterface');
         }
 
-        return $this->isImportRuleValid($rule, $params, $configuration);
+        Assert::keyExists($params, 'object');
+
+        $object = $params['object'];
+
+        Assert::isInstanceOf($object, Concrete::class);
+
+        return $this->isImportRuleValid($rule, $object, $params, $configuration);
     }
 }

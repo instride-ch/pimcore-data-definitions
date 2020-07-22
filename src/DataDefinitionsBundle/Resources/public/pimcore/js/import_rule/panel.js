@@ -71,6 +71,7 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
 
         this.store.getRange().forEach(function(value, index) {
             panelData[value.id] = value.data;
+            panelData[value.id].id = value.id;
         });
 
         var result = Ext.Object.each(this.panels, function(key, panel) {
@@ -129,7 +130,7 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
 
     addItemComplete: function (button, value, object) {
         var jsonData = {
-            id: new Ext.data.identifier.Uuid().generate(),
+            _id: new Ext.data.identifier.Uuid().generate(),
             name: value,
             active: true,
             conditions: [],

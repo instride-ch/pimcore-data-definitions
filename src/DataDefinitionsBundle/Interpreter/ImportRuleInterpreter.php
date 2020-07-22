@@ -23,6 +23,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRule;
+use Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\ImportRuleValidationProcessorInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplierInterface;
 
 class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterface
@@ -33,7 +34,7 @@ class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterfa
     protected $ruleValidationProcessor;
 
     public function __construct(
-        RuleValidationProcessorInterface $ruleValidationProcessor,
+        ImportRuleValidationProcessorInterface $ruleValidationProcessor,
         RuleApplierInterface $ruleProcessor
     )
     {
@@ -90,10 +91,15 @@ class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterfa
         $validResult = false;
 
         foreach ($ruleObjects as $rule) {
-            if ($this->ruleValidationProcessor->isValid($definition, $rule, $params)) {
+            if ($this->ruleValidationProcessor->isImportRuleValid($definition, $object, $rule, $params)) {
+                echo PHP_EOL . "=============================================" . PHP_EOL;
+                echo "result " . $object->getId();
+                echo PHP_EOL . "=============================================" . PHP_EOL;
+
                 $validResult = true;
                 $result[] = $this->ruleProcessor->applyRule(
                     $rule,
+                    $object,
                     $params
                 );
             }

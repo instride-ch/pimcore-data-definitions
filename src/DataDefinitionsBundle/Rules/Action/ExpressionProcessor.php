@@ -14,11 +14,12 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Action;
 
+use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
-class ExpressionRuleProcessor implements ImportRuleProcessorInterface
+class ExpressionProcessor implements ImportRuleProcessorInterface
 {
     /**
      * @var ExpressionLanguage
@@ -40,7 +41,7 @@ class ExpressionRuleProcessor implements ImportRuleProcessorInterface
         $this->container = $container;
     }
 
-    public function apply(ImportRuleInterface $rule, array $configuration, $params = [])
+    public function apply(ImportRuleInterface $rule, Concrete $concrete, array $configuration, $params = [])
     {
         $expression = $configuration['expression'];
 

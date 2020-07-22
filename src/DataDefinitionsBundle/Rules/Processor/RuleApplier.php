@@ -15,6 +15,7 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Processor;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Action\ImportRuleProcessorInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
@@ -36,7 +37,7 @@ class RuleApplier implements RuleApplierInterface
     /**
      * {@inheritdoc}
      */
-    public function applyRule(ImportRuleInterface $rule, $params)
+    public function applyRule(ImportRuleInterface $rule, Concrete $concrete, $params)
     {
         $result = [];
 
@@ -44,7 +45,7 @@ class RuleApplier implements RuleApplierInterface
             $processor = $this->actionServiceRegistry->get($action->getType());
 
             if ($processor instanceof ImportRuleProcessorInterface) {
-                $result = $processor->apply($rule, $action->getConfiguration(), $params);
+                $result = $processor->apply($rule, $concrete, $action->getConfiguration(), $params);
             }
         }
 

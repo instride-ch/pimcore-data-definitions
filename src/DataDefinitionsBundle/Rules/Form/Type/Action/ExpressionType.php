@@ -18,7 +18,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-final class ExpressionConditionType extends AbstractType
+final class ExpressionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -92,10 +92,6 @@ class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterfa
 
         foreach ($ruleObjects as $rule) {
             if ($this->ruleValidationProcessor->isImportRuleValid($definition, $object, $rule, $params)) {
-                echo PHP_EOL . "=============================================" . PHP_EOL;
-                echo "result " . $object->getId();
-                echo PHP_EOL . "=============================================" . PHP_EOL;
-
                 $validResult = true;
                 $result[] = $this->ruleProcessor->applyRule(
                     $rule,

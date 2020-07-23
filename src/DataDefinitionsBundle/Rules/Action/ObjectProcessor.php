@@ -12,19 +12,17 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Processor;
+namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Action;
 
-use CoreShop\Component\Rule\Condition\RuleValidationProcessorInterface;
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
-interface ImportRuleValidationProcessorInterface extends RuleValidationProcessorInterface
+class ObjectProcessor implements ImportRuleProcessorInterface
 {
-    public function isImportRuleValid(
-        DataDefinitionInterface $definition,
-        Concrete $object,
-        ImportRuleInterface $importRule,
-        array $params
-    );
+    public function apply(ImportRuleInterface $rule, Concrete $concrete, array $configuration, $params = [])
+    {
+        return Concrete::getById($configuration['object']);
+    }
 }

@@ -75,12 +75,16 @@ services:
         tags:
             - { name: data_definitions.import_rule.condition, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\Condition\ExpressionConditionType }
 
-    Wvision\Bundle\DataDefinitionsBundle\Rules\Action\ExpressionRuleProcessor:
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Action\ExpressionProcessor:
         arguments:
             - '@coreshop.expression_language'
             - '@service_container'
         tags:
-            - { name: data_definitions.import_rule.action, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\Action\ExpressionConditionType }
+            - { name: data_definitions.import_rule.action, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\Action\ExpressionType }
+
+    Wvision\Bundle\DataDefinitionsBundle\Rules\Action\ObjectProcessor:
+        tags:
+            - { name: data_definitions.import_rule.action, type: object, form-type: Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\Action\ObjectType }
 
     Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplierInterface: '@Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplier'
     Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplier:

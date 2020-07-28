@@ -21,6 +21,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController;
 use Wvision\Bundle\DataDefinitionsBundle\Controller\ImportDefinitionController;
+use Wvision\Bundle\DataDefinitionsBundle\Controller\ImportRuleController;
 use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType;
 use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
@@ -61,20 +62,20 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('import_definition')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->variableNode('options')->end()
-                                ->scalarNode('permission')->defaultValue('data_definitions_import')->cannotBeOverwritten()
-                            ->end()
-                            ->arrayNode('classes')
-                                ->addDefaultsIfNotSet()
-                                ->children()
-                                    ->scalarNode('model')->defaultValue(ImportDefinition::class)->cannotBeEmpty()->end()
-                                    ->scalarNode('interface')->defaultValue(ImportDefinitionInterface::class)->cannotBeEmpty()->end()
-                                    ->scalarNode('admin_controller')->defaultValue(ImportDefinitionController::class)->cannotBeEmpty()->end()
-                                    ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
-                                    ->scalarNode('repository')->defaultValue(Repository\DefinitionRepository::class)->cannotBeEmpty()->end()
-                                    ->scalarNode('form')->defaultValue(ImportDefinitionType::class)->cannotBeEmpty()->end()
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                    ->scalarNode('permission')->defaultValue('data_definitions_import')->cannotBeOverwritten()
+                                ->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(ImportDefinition::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('interface')->defaultValue(ImportDefinitionInterface::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('admin_controller')->defaultValue(ImportDefinitionController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(Repository\DefinitionRepository::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue(ImportDefinitionType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

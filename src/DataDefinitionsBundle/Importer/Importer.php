@@ -184,9 +184,9 @@ final class Importer implements ImporterInterface
         }
 
         if (\count($exceptions) > 0) {
-            $this->processFailedImport($definition, $params);
+            $this->processFailedImport($definition, $params, $objectIds, $exceptions);
         } else {
-            $this->processSuccessfullImport($definition, $params);
+            $this->processSuccessfullImport($definition, $params, $objectIds, $exceptions);
         }
 
         $this->eventDispatcher->dispatch($definition, 'data_definitions.import.finished', '', $params);
@@ -196,10 +196,12 @@ final class Importer implements ImporterInterface
 
     /**
      * @param ImportDefinitionInterface $definition
-     * @param $params
+     * @param                           $params
+     * @param                           $objectIds
+     * @param                           $exceptions
      * @throws \Exception
      */
-    public function processSuccessfullImport(ImportDefinitionInterface $definition, $params)
+    public function processSuccessfullImport(ImportDefinitionInterface $definition, $params, $objectIds, $exceptions)
     {
         $this->sendDocument($definition, Document::getById($definition->getSuccessNotificationDocument()),
             $objectIds, $exceptions);
@@ -208,10 +210,12 @@ final class Importer implements ImporterInterface
 
     /**
      * @param ImportDefinitionInterface $definition
-     * @param $params
+     * @param                           $params
+     * @param                           $objectIds
+     * @param                           $exceptions
      * @throws \Exception
      */
-    public function processFailedImport(ImportDefinitionInterface $definition, $params)
+    public function processFailedImport(ImportDefinitionInterface $definition, $params, $objectIds, $exceptions)
     {
         $this->sendDocument($definition, Document::getById($definition->getFailureNotificationDocument()),
             $objectIds, $exceptions);

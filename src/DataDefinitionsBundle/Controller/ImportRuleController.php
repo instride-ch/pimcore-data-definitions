@@ -83,6 +83,7 @@ class ImportRuleController extends AdminController
                 'active' => $rawRule['active'] === 'yes',
             ];
             $conditions = [];
+            $actions = [];
 
             //new type
             //same config key
@@ -177,6 +178,7 @@ class ImportRuleController extends AdminController
 
             $rule['actions'] = $actions;
             $rule['conditions'] = $conditions;
+            $rule['id'] = sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
 
             $rules[] = $rule;
         }
@@ -232,9 +234,9 @@ class ImportRuleController extends AdminController
                 $type = $action['type'];
 
                 foreach ($action['configuration'] as $key => $value) {
-                    $actionHeader = 'action_' . $type . '___' . $key;
+                    $actionHeader = 'action_' . $type . '___1___' . $key;
 
-                    if (!array_key_exists($conditionHeader, $countPerType)) {
+                    if (!array_key_exists($actionHeader, $countPerType)) {
                         $countPerType[$actionHeader] = 0;
                     }
 
@@ -290,7 +292,7 @@ class ImportRuleController extends AdminController
                 $type = $action['type'];
 
                 foreach ($action['configuration'] as $key => $value) {
-                    $actionHeader = 'action_' . $type . '___' . $key;
+                    $actionHeader = 'action_' . $type . '___1___' . $key;
 
                     if (!array_key_exists($actionHeader, $countPerType)) {
                         $countPerType[$actionHeader] = 0;

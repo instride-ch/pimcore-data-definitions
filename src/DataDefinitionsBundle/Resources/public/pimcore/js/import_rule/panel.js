@@ -131,6 +131,8 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
     },
 
     save: function() {
+        var stopped = false;
+
         var result = Ext.Object.each(this.panels, function(key, panel) {
             if (!panel.isValid()) {
                 stopped = true;

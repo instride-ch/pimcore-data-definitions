@@ -55,6 +55,14 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
                 layout: 'border',
                 items: this.getItems(),
                 buttons: [{
+                        text: t('import'),
+                        iconCls: 'pimcore_icon_import',
+                        handler: this.importRules.bind(this)
+                }, {
+                    text: t('export'),
+                    iconCls: 'pimcore_icon_export',
+                    handler: this.exportRules.bind(this)
+                },{
                     text: t('save'),
                     iconCls: 'pimcore_icon_apply',
                     handler: this.save.bind(this)
@@ -65,9 +73,50 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
         return this.layout;
     },
 
-    save: function() {
+    exportRules: function() {
+        pimcore.settings.showCloseConfirmation = false;
+        window.setTimeout(function () {
+            pimcore.settings.showCloseConfirmation = true;
+        }, 1000);
+
+        var rules = Ext.JSON.encode(this.getData());
+        var form = Ext.create('Ext.form.Panel', {
+            standardSubmit: true,
+            url: '/admin/data_definitions/import_rules/export'
+        });
+
+        form.submit({
+            params: {
+                csrfToken: pimcore.settings['csrfToken'],
+                rules: rules
+            }
+        });
+    },
+
+    importRules: function() {
+        pimcore.helpers.uploadDialog('/admin/data_definitions/import_rules/import', 'file', function (res) {
+            var res = Ext.decode(res.response.responseText);
+
+            if (res.success) {
+                pimcore.helpers.showNotification(t('success'), t('success'), 'success');
+
+                Ext.Object.each(this.panels, function(key, panel) {
+                    panel.destroy();
+                });
+
+                this.panels = [];
+
+                this.store.setData(res.rules);
+            } else {
+                pimcore.helpers.showNotification(t('error'), res.message, 'error');
+            }
+        }.bind(this), function () {
+            Ext.MessageBox.alert(t('error'), t('error'));
+        });
+    },
+
+    getData: function() {
         var panelData = {};
-        var stopped = false;
 
         this.store.getRange().forEach(function(value, index) {
             panelData[value.id] = value.data;
@@ -75,19 +124,27 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
         });
 
         var result = Ext.Object.each(this.panels, function(key, panel) {
+            panelData[key] = panel.getSaveData();
+        });
+
+        return Object.values(panelData);
+    },
+
+    save: function() {
+        var stopped = false;
+
+        var result = Ext.Object.each(this.panels, function(key, panel) {
             if (!panel.isValid()) {
                 stopped = true;
                 return false;
             }
-
-            panelData[key] = panel.getSaveData();
         });
 
         if (stopped) {
             return;
         }
 
-        this.interpreter.close(Object.values(panelData));
+        this.interpreter.close(this.getData());
     },
 
     refresh: function () {

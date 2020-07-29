@@ -109,3 +109,7 @@ services:
             - '@Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplierInterface'
         tags:
             - { name: data_definitions.interpreter, type: import_rule, form-type: Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\ImportRulesInterpreterType }
+
+    Wvision\Bundle\DataDefinitionsBundle\Controller\ImportRuleController:
+        tags:
+            - { name: controller.service_arguments }

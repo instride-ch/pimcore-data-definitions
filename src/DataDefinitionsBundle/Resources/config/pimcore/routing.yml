@@ -57,3 +57,11 @@ data_definitions_admin_export_definitions:
             path: duplicate
             action: duplicate
             methods: [POST]
+
+data_definitions_admin_export_import_rules:
+    path: /admin/data_definitions/import_rules/export
+    defaults: { _controller: Wvision\Bundle\DataDefinitionsBundle\Controller\ImportRuleController::exportAction}
+
+data_definitions_admin_import_import_rules:
+    path: /admin/data_definitions/import_rules/import
+    defaults: { _controller: Wvision\Bundle\DataDefinitionsBundle\Controller\ImportRuleController::importAction}

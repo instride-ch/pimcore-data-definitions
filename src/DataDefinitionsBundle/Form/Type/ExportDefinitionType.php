@@ -26,19 +26,9 @@ use Symfony\Component\Form\FormInterface;
 
 final class ExportDefinitionType extends AbstractResourceType
 {
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $formTypeRegistry;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $fetcherFormTypeRegistry;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(
         $dataClass,
         array $validationGroups,
@@ -51,9 +41,6 @@ final class ExportDefinitionType extends AbstractResourceType
         $this->fetcherFormTypeRegistry = $fetcherFormTypeRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

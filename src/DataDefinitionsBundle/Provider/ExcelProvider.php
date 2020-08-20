@@ -21,6 +21,7 @@ use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Writer\WriterInterface;
 use Pimcore\Model\Asset;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
@@ -29,24 +30,22 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 {
     use ArtifactProviderTrait;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $exportPath;
 
-    /** @var WriterInterface */
+    /**
+     * @var WriterInterface
+     */
     private $writer;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function testData($configuration)
+    public function testData(array $configuration): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getColumns($configuration)
+    public function getColumns(array $configuration)
     {
         if ($configuration['exampleFile']) {
             $exampleFile = Asset::getById($configuration['exampleFile']);
@@ -69,10 +68,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getData($configuration, $definition, $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
     {
         $file = $this->getFile($params['file']);
 
@@ -105,10 +101,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $headers = null;
         if (null === $this->writer) {
@@ -125,10 +118,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         $writer->addRow(array_values($data));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $writer = $this->getWriter();
         $writer->close();
@@ -141,9 +131,6 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         rename($this->getExportPath(), $file);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
     {
         return fopen($this->getExportPath(), 'rb');

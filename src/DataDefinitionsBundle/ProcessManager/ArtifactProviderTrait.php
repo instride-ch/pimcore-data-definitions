@@ -19,9 +19,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 trait ArtifactProviderTrait
 {
-    /**
-     * {@inheritdoc}
-     */
     public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset
     {
         if (!$params['artifact']) {

@@ -22,39 +22,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ExportMappingCollectionType extends AbstractType
 {
-    /**
-     * @var DataMapperInterface
-     */
     private $dataMapper;
 
-    /**
-     * @param DataMapperInterface $dataMapper
-     */
     public function __construct(
         DataMapperInterface $dataMapper
     ) {
         $this->dataMapper = $dataMapper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return CollectionType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->setDataMapper($this->dataMapper);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);

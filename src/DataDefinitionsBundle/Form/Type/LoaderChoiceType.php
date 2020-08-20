@@ -20,22 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class LoaderChoiceType extends AbstractType
 {
-    /**
-     * @var array
-     */
     private $loaders;
 
-    /**
-     * @param array $loaders
-     */
     public function __construct(array $loaders)
     {
         $this->loaders = $loaders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -43,9 +34,6 @@ final class LoaderChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

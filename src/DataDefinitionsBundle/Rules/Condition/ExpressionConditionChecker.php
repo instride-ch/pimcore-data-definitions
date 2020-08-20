@@ -21,27 +21,16 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class ExpressionConditionChecker extends AbstractConditionChecker
 {
-    /**
-     * @var ExpressionLanguage
-     */
     protected $expressionLanguage;
-
-    /**
-     * @var ContainerInterface
-     */
     protected $container;
 
-    /**
-     * @param ExpressionLanguage $expressionLanguage
-     * @param ContainerInterface $container
-     */
     public function __construct(ExpressionLanguage $expressionLanguage, ContainerInterface $container)
     {
         $this->expressionLanguage = $expressionLanguage;
         $this->container = $container;
     }
 
-    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $object, array $params, array $configuration)
+    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $object, array $params, array $configuration): bool
     {
         $expression = $configuration['expression'];
 

@@ -19,10 +19,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
 final class ObjectDeleteListener
 {
-    /**
-     * @param DataObjectEvent $event
-     * @throws \Exception
-     */
     public function onDataObjectDelete(DataObjectEvent $event)
     {
         $resource = $event->getObject();

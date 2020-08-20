@@ -22,22 +22,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 final class CurrencyInterpreter implements InterpreterInterface
 {
-    /**
-     * @var CurrencyRepositoryInterface
-     */
     private $currencyRepository;
 
-    /**
-     * @param CurrencyRepositoryInterface $currencyRepository
-     */
     public function __construct(CurrencyRepositoryInterface $currencyRepository)
     {
         $this->currencyRepository = $currencyRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

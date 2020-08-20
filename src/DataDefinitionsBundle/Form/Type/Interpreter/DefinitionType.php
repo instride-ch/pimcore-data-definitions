@@ -20,9 +20,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Form\Type\DefinitionChoiceType;
 
 class DefinitionType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

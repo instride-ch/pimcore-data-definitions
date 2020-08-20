@@ -23,10 +23,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class RelationSetter implements SetterInterface
 {
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $fieldName = $map->getToColumn();
@@ -37,7 +33,7 @@ class RelationSetter implements SetterInterface
         if (!is_array($existingElements)) {
             $existingElements = [];
         }
-        
+
         // Find unique key (path) for all existing elements
         $existingKeys = [];
         foreach ($existingElements as $existingElement) {
@@ -49,7 +45,7 @@ class RelationSetter implements SetterInterface
             $value = [$value];
         }
 
-        // Add all values that does not already exist. 
+        // Add all values that does not already exist.
         foreach ($value as $newElement) {
             $newKey = (string)$newElement;
             if (!in_array($newKey, $existingKeys)) {

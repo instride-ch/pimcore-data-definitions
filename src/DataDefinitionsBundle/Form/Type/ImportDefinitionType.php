@@ -26,14 +26,8 @@ use Symfony\Component\Form\FormInterface;
 
 final class ImportDefinitionType extends AbstractResourceType
 {
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $formTypeRegistry;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(
         $dataClass,
         array $validationGroups,
@@ -44,9 +38,6 @@ final class ImportDefinitionType extends AbstractResourceType
         $this->formTypeRegistry = $formTypeRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

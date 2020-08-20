@@ -19,17 +19,11 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 final class DefinitionMappingDataMapper implements DataMapperInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function mapDataToForms($data, $forms): void
     {
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function mapFormsToData($forms, &$data): void
     {
         $actualData = [];

@@ -14,10 +14,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 final class MoneyInterpreter implements InterpreterInterface
 {
-
-    /**
-     * @var CurrencyRepositoryInterface
-     */
     private $currencyRepository;
 
     public function __construct(CurrencyRepositoryInterface $currencyRepository)
@@ -25,9 +21,6 @@ final class MoneyInterpreter implements InterpreterInterface
         $this->currencyRepository = $currencyRepository;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

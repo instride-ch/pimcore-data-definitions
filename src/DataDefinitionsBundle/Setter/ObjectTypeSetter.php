@@ -20,9 +20,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ObjectTypeSetter implements SetterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         if ($value === Concrete::OBJECT_TYPE_FOLDER) {

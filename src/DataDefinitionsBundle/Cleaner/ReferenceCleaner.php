@@ -19,10 +19,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class ReferenceCleaner extends AbstractCleaner
 {
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function cleanup(DataDefinitionInterface $definition, $objects)
     {
         $notFoundObjects = $this->getObjectsToClean($definition, $objects);

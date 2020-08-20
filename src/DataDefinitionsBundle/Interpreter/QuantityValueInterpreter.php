@@ -24,9 +24,6 @@ class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInte
 {
     use DataSetAwareTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

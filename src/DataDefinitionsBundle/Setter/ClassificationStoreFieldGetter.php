@@ -22,9 +22,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 
 class ClassificationStoreFieldGetter implements GetterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function get(Concrete $object, ExportMapping $map, $data)
     {
         $classificationStoreGetter = sprintf('get%s', ucfirst($map->getFromColumn()));

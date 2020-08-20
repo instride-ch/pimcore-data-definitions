@@ -22,10 +22,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class LocalizedfieldSetter implements SetterInterface, GetterInterface
 {
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $config = $map->getSetterConfig();

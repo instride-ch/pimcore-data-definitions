@@ -19,50 +19,28 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class ExportDefinitionEvent extends Event implements DefinitionEventInterface
 {
-    /**
-     * @var ExportDefinitionInterface
-     */
     protected $definition;
-
-    /**
-     * @var mixed
-     */
+    protected $params = [];
     protected $subject;
 
-    protected $params = [];
-
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @param null                      $subject
-     * @param array                     $params
-     */
-    public function __construct(ExportDefinitionInterface $definition, $subject = null, $params = [])
+    public function __construct(ExportDefinitionInterface $definition, $subject = null, array $params = [])
     {
         $this->definition = $definition;
         $this->subject = $subject;
         $this->params = $params;
     }
 
-    /**
-     * @return ExportDefinitionInterface
-     */
-    public function getDefinition()
+    public function getDefinition(): ExportDefinitionInterface
     {
         return $this->definition;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSubject()
     {
         return $this->subject;
     }
 
-    /**
-     * @return array
-     */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }

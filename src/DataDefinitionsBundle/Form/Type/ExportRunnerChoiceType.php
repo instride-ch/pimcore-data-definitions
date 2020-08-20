@@ -20,22 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ExportRunnerChoiceType extends AbstractType
 {
-    /**
-     * @var array
-     */
     private $runners;
 
-    /**
-     * @param array $runners
-     */
     public function __construct(array $runners)
     {
         $this->runners = $runners;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -43,9 +34,6 @@ final class ExportRunnerChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

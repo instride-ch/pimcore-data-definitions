@@ -20,22 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class FetcherChoiceType extends AbstractType
 {
-    /**
-     * @var array
-     */
     private $fetchers;
 
-    /**
-     * @param array $fetchers
-     */
     public function __construct(array $fetchers)
     {
         $this->fetchers = $fetchers;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -43,9 +34,6 @@ final class FetcherChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

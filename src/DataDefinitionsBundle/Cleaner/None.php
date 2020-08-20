@@ -18,9 +18,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class None extends AbstractCleaner
 {
-    /**
-     * {@inheritdoc}
-     */
     public function cleanup(DataDefinitionInterface $definition, $objects)
     {
         // Nothing to do here

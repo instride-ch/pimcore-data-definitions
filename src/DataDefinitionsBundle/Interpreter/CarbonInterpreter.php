@@ -25,9 +25,6 @@ class CarbonInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
     use DataSetAwareTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

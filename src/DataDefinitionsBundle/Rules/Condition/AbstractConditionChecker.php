@@ -23,10 +23,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 abstract class AbstractConditionChecker implements ImportRuleConditionCheckerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function isValid(ResourceInterface $subject, RuleInterface $rule, array $configuration, $params = [])
+    public function isValid(ResourceInterface $subject, RuleInterface $rule, array $configuration, $params = []): bool
     {
         if (!$rule instanceof ImportRuleInterface) {
             throw new InvalidArgumentException('Import Rule Condition $subject needs to be instance of ImportRuleInterface');

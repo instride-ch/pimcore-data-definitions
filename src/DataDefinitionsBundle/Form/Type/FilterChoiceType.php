@@ -20,22 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class FilterChoiceType extends AbstractType
 {
-    /**
-     * @var array
-     */
     private $filters;
 
-    /**
-     * @param array $filters
-     */
     public function __construct(array $filters)
     {
         $this->filters = $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -43,9 +34,6 @@ final class FilterChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

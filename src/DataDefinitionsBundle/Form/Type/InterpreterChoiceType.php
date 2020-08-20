@@ -20,22 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class InterpreterChoiceType extends AbstractType
 {
-    /**
-     * @var array
-     */
     private $interpreters;
 
-    /**
-     * @param array $interpreters
-     */
     public function __construct(array $interpreters)
     {
         $this->interpreters = $interpreters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -43,9 +34,6 @@ final class InterpreterChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

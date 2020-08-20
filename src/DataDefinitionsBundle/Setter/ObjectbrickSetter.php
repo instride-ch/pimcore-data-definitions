@@ -23,9 +23,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ObjectbrickSetter implements SetterInterface, GetterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $keyParts = explode('~', $map->getToColumn());

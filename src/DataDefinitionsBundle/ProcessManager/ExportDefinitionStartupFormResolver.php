@@ -22,22 +22,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class ExportDefinitionStartupFormResolver implements ProcessStartupFormResolverInterface
 {
-    /**
-     * @var RepositoryInterface
-     */
     private $definitionRepository;
 
-    /**
-     * @param RepositoryInterface $definitionRepository
-     */
     public function __construct(RepositoryInterface $definitionRepository)
     {
         $this->definitionRepository = $definitionRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(ExecutableInterface $executable): bool
     {
         if ($executable->getType() !== 'exportdefinition') {
@@ -57,9 +48,6 @@ final class ExportDefinitionStartupFormResolver implements ProcessStartupFormRes
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resolveFormType(ExecutableInterface $executable): ?string
     {
         return ExportDefinitionObjectStartupForm::class;

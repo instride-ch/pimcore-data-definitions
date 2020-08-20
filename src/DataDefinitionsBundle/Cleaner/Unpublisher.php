@@ -18,10 +18,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class Unpublisher extends AbstractCleaner
 {
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function cleanup(DataDefinitionInterface $definition, $objects)
     {
         $notFoundObjects = $this->getObjectsToClean($definition, $objects);

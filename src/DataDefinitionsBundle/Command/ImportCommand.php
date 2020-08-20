@@ -28,19 +28,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ImportCommand extends AbstractCommand
 {
-    /**
-     * @var EventDispatcherInterface
-     */
     protected $eventDispatcher;
-
-    /**
-     * @var RepositoryInterface
-     */
     protected $repository;
-
-    /**
-     * @var ImporterInterface
-     */
     protected $importer;
 
     public function __construct(
@@ -55,9 +44,6 @@ final class ImportCommand extends AbstractCommand
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -82,10 +68,6 @@ EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $eventDispatcher = $this->eventDispatcher;

@@ -18,6 +18,7 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
@@ -26,23 +27,14 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
 {
     use ArtifactProviderTrait;
 
-    /**
-     * @var array
-     */
     private $exportData = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function testData($configuration)
+    public function testData(array $configuration): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getColumns($configuration)
+    public function getColumns(array $configuration)
     {
         $csvHeaders = $configuration['csvHeaders'];
         $csvExample = $configuration['csvExample'];
@@ -76,10 +68,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getData($configuration, $definition, $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
     {
         $csvHeaders = $configuration['csvHeaders'];
         $delimiter = $configuration['delimiter'];
@@ -128,10 +117,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $records;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         if (!array_key_exists('file', $params)) {
             return;
@@ -148,18 +134,12 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $writer->insertAll($this->exportData);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $this->exportData[] = $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    public function provideArtifactStream(array $configuration, ExportDefinitionInterface $definition, array $params)
     {
         $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
 

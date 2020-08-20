@@ -25,10 +25,10 @@
     }
   ],
   "require": {
-    "coreshop/resource-bundle": "^2.0",
-    "coreshop/rule-bundle": "^2.0",
-    "coreshop/pimcore-bundle": "^2.0",
-    "coreshop/pimcore": "^2.0",
+    "coreshop/resource-bundle": "^3.0",
+    "coreshop/rule-bundle": "^3.0",
+    "coreshop/pimcore-bundle": "^3.0",
+    "coreshop/pimcore": "^3.0",
     "pimcore/pimcore": "^6.5",
     "league/csv": "^9.0",
     "box/spout": "^2.7"
@@ -69,7 +69,7 @@
       ]
     },
     "branch-alias": {
-      "dev-master": "3.2-dev"
+      "dev-master": "4.0-dev"
     }
   },
   "minimum-stability": "dev",

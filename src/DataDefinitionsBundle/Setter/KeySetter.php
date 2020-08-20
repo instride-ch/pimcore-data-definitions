@@ -21,10 +21,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class KeySetter implements SetterInterface
 {
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $setter = explode('~', $map->getToColumn());

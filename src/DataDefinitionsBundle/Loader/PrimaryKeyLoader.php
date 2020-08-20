@@ -21,9 +21,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class PrimaryKeyLoader implements LoaderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(string $class, $data, DataDefinitionInterface $definition, $params): ?Concrete
     {
         $classObject = '\Pimcore\Model\DataObject\\'.ucfirst($class);

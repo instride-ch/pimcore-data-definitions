@@ -21,22 +21,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class TwigInterpreter implements InterpreterInterface
 {
-    /**
-     * @var \Twig\Environment
-     */
     private $twig;
 
-    /**
-     * @param \Twig\Environment $twig
-     */
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }
 
-    /**
-     *{@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

@@ -27,24 +27,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class ExportCommand extends AbstractCommand
 {
-    /**
-     * @var string
-     */
     protected $name;
-
-    /**
-     * @var EventDispatcherInterface
-     */
     protected $eventDispatcher;
-
-    /**
-     * @var RepositoryInterface
-     */
     protected $repository;
-
-    /**
-     * @var ExporterInterface
-     */
     protected $exporter;
 
     public function __construct(
@@ -59,9 +44,6 @@ final class ExportCommand extends AbstractCommand
         $this->exporter = $exporter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -83,10 +65,6 @@ EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $eventDispatcher = $this->eventDispatcher;

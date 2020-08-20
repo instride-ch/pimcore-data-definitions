@@ -21,20 +21,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class ExpressionProcessor implements ImportRuleProcessorInterface
 {
-    /**
-     * @var ExpressionLanguage
-     */
     protected $expressionLanguage;
-
-    /**
-     * @var ContainerInterface
-     */
     protected $container;
 
-    /**
-     * @param ExpressionLanguage $expressionLanguage
-     * @param ContainerInterface $container
-     */
     public function __construct(ExpressionLanguage $expressionLanguage, ContainerInterface $container)
     {
         $this->expressionLanguage = $expressionLanguage;

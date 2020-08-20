@@ -43,68 +43,17 @@ use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
 final class Importer implements ImporterInterface
 {
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $providerRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $filterRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $runnerRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $interpreterRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $setterRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $cleanerRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $loaderRegistry;
-
-    /**
-     * @var EventDispatcherInterface
-     */
     private $eventDispatcher;
-
-    /**
-     * @var LoggerInterface
-     */
     private $logger;
-
-    /**
-     * @var bool
-     */
     private $shouldStop = false;
 
-    /**
-     * Importer constructor.
-     * @param ServiceRegistryInterface $providerRegistry
-     * @param ServiceRegistryInterface $filterRegistry
-     * @param ServiceRegistryInterface $runnerRegistry
-     * @param ServiceRegistryInterface $interpreterRegistry
-     * @param ServiceRegistryInterface $setterRegistry
-     * @param ServiceRegistryInterface $cleanerRegistry
-     * @param ServiceRegistryInterface $loaderRegistry
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param LoggerInterface $logger
-     */
     public function __construct(
         ServiceRegistryInterface $providerRegistry,
         ServiceRegistryInterface $filterRegistry,

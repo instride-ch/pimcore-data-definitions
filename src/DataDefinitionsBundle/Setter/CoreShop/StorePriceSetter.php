@@ -25,22 +25,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
 class StorePriceSetter implements SetterInterface, GetterInterface
 {
-    /**
-     * @var StoreRepositoryInterface
-     */
     private $storeRepository;
 
-    /**
-     * @param StoreRepositoryInterface $storeRepository
-     */
     public function __construct(StoreRepositoryInterface $storeRepository)
     {
         $this->storeRepository = $storeRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $config = $map->getSetterConfig();
@@ -66,9 +57,6 @@ class StorePriceSetter implements SetterInterface, GetterInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get(Concrete $object, ExportMapping $map, $data)
     {
         $config = $map->getGetterConfig();

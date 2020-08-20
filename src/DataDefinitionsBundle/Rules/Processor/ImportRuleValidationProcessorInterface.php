@@ -26,5 +26,5 @@ interface ImportRuleValidationProcessorInterface extends RuleValidationProcessor
         Concrete $object,
         ImportRuleInterface $importRule,
         array $params
-    );
+    ): bool;
 }

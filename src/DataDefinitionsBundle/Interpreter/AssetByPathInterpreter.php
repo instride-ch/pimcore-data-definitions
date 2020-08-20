@@ -21,22 +21,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
 
 class AssetByPathInterpreter implements InterpreterInterface
 {
-    /**
-     * @var Placeholder
-     */
     protected $placeholderService;
 
-    /**
-     * @param Placeholder $placeholderService
-     */
     public function __construct(Placeholder $placeholderService)
     {
         $this->placeholderService = $placeholderService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

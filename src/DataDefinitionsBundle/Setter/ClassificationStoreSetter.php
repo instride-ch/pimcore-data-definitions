@@ -22,9 +22,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ClassificationStoreSetter implements SetterInterface, GetterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $mapConfig = $map->getSetterConfig();
@@ -50,9 +47,6 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get(Concrete $object, ExportMapping $map, $data)
     {
         $mapConfig = $map->getGetterConfig();

@@ -26,19 +26,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 
 final class ImportMappingType extends AbstractResourceType
 {
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $setterTypeRegistry;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $interpreterTypeRegistry;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(
         array $validationGroups,
         FormTypeRegistryInterface $setterTypeRegistry,
@@ -50,9 +40,6 @@ final class ImportMappingType extends AbstractResourceType
         $this->interpreterTypeRegistry = $interpreterTypeRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

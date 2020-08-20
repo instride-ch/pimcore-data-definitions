@@ -21,23 +21,15 @@ use Wvision\Bundle\DataDefinitionsBundle\Event\DefinitionEventInterface;
 final class ProcessManagerExportListener extends AbstractProcessManagerListener
 {
     const PROCESS_TYPE = "export_definitions";
-
     const PROCESS_NAME = "Export Definitions";
 
-    /** @var ServiceRegistryInterface */
     private $providerRegistry;
 
-    /**
-     * @param ServiceRegistryInterface $providerRegistry
-     */
     public function setProviderRegistry(ServiceRegistryInterface $providerRegistry) : void
     {
         $this->providerRegistry = $providerRegistry;
     }
 
-    /**
-     * @param ExportDefinitionEvent $event
-     */
     public function onFinishedEvent(DefinitionEventInterface $event) : void
     {
         if (null !== $this->process) {

@@ -43,19 +43,11 @@ use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
 class DataDefinitionsExtension extends AbstractModelExtension
 {
-    /**
-     * @return string
-     */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'data_definitions';
     }
 
-
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
@@ -89,7 +81,7 @@ class DataDefinitionsExtension extends AbstractModelExtension
         }
 
         $this->registerPimcoreResources('data_definitions', $config['pimcore_admin'], $container);
-        
+
         $container
             ->registerForAutoconfiguration(CleanerInterface::class)
             ->addTag(CleanerRegistryCompilerPass::CLEANER_TAG);

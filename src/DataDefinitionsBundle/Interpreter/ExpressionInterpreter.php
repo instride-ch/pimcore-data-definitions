@@ -26,29 +26,15 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
 {
     use DataSetAwareTrait;
 
-    /**
-     * @var ExpressionLanguage
-     */
     protected $expressionLanguage;
-
-    /**
-     * @var ContainerInterface
-     */
     protected $container;
 
-    /**
-     * @param ExpressionLanguage $expressionLanguage
-     * @param ContainerInterface $container
-     */
     public function __construct(ExpressionLanguage $expressionLanguage, ContainerInterface $container)
     {
         $this->expressionLanguage = $expressionLanguage;
         $this->container = $container;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

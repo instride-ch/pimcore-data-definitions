@@ -27,26 +27,10 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
 {
     use DataSetAwareTrait;
 
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $interpreterRegistry;
-
-    /**
-     * @var ExpressionLanguage
-     */
     protected $expressionLanguage;
-
-    /**
-     * @var ContainerInterface
-     */
     protected $container;
 
-    /**
-     * @param ServiceRegistryInterface $interpreterRegistry
-     * @param ExpressionLanguage       $expressionLanguage
-     * @param ContainerInterface       $container
-     */
     public function __construct(
         ServiceRegistryInterface $interpreterRegistry,
         ExpressionLanguage $expressionLanguage,
@@ -57,9 +41,6 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
         $this->container = $container;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

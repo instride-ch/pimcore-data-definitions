@@ -23,10 +23,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class FieldCollectionSetter implements SetterInterface, GetterInterface
 {
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function set(Concrete $object, $value, ImportMapping $map, $data)
     {
         $keyParts = explode('~', $map->getToColumn());
@@ -91,9 +87,6 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get(Concrete $object, ExportMapping $map, $data)
     {
         $keyParts = explode('~', $map->getFromColumn());

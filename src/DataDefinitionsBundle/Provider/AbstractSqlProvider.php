@@ -15,20 +15,21 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Doctrine\DBAL\Connection;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
 abstract class AbstractSqlProvider implements ImportProviderInterface
 {
     /**
-     * @param $configuration
+     * @param array $configuration
      * @return Connection
      */
-    abstract protected function getDb($configuration);
+    abstract protected function getDb(array $configuration);
 
     /**
      * {@inheritdoc}
      */
-    public function testData($configuration)
+    public function testData(array $configuration): bool
     {
         return \is_object($this->getDb($configuration));
     }
@@ -37,7 +38,7 @@ abstract class AbstractSqlProvider implements ImportProviderInterface
      * {@inheritdoc}
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getColumns($configuration)
+    public function getColumns(array $configuration)
     {
         $db = $this->getDb($configuration);
         $query = $db->query($configuration['query']);
@@ -64,7 +65,7 @@ abstract class AbstractSqlProvider implements ImportProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($configuration, $definition, $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
     {
         $db = $this->getDb($configuration);
 

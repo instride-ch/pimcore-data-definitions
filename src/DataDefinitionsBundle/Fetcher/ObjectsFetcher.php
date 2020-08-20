@@ -21,9 +21,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class ObjectsFetcher implements FetcherInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset, array $configuration)
     {
         $list = $this->getClassListing($definition, $params);
@@ -33,19 +30,12 @@ class ObjectsFetcher implements FetcherInterface
         return $list->load();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(ExportDefinitionInterface $definition, $params, array $configuration): int
     {
         return $this->getClassListing($definition, $params)->getTotalCount();
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @return Listing
-     */
-    private function getClassListing(ExportDefinitionInterface $definition, $params)
+    private function getClassListing(ExportDefinitionInterface $definition, array $params)
     {
         $class = $definition->getClass();
         $classDefinition = ClassDefinition::getByName($class);
@@ -92,20 +82,15 @@ class ObjectsFetcher implements FetcherInterface
                 $conditionFilters[] = 'oo_id IN (' . implode(',', $quotedIds) . ')';
             }
         }
-        
+
         $list->setCondition(implode(' AND ', $conditionFilters));
 
         return $list;
     }
 
-    /**
-     * @param string $query
-     *
-     * @return string
-     */
     protected function filterQueryParam(string $query)
     {
-        if ($query == '*') {
+        if ($query === '*') {
             $query = '';
         }
 

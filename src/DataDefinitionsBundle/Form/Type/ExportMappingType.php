@@ -25,19 +25,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 
 final class ExportMappingType extends AbstractResourceType
 {
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $interpreterTypeRegistry;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $getterTypeRegistry;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(
         array $validationGroups,
         FormTypeRegistryInterface $getterTypeRegistry,
@@ -49,9 +39,6 @@ final class ExportMappingType extends AbstractResourceType
         $this->interpreterTypeRegistry = $interpreterTypeRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

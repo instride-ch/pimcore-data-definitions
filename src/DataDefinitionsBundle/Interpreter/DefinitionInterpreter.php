@@ -24,29 +24,15 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class DefinitionInterpreter implements InterpreterInterface
 {
-    /**
-     * @var RepositoryInterface
-     */
     private $definitionRepository;
-
-    /**
-     * @var ImporterInterface
-     */
     private $importer;
 
-    /**
-     * @param RepositoryInterface $definitionRepository
-     * @param ImporterInterface   $importer
-     */
     public function __construct(RepositoryInterface $definitionRepository, ImporterInterface $importer)
     {
         $this->definitionRepository = $definitionRepository;
         $this->importer = $importer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

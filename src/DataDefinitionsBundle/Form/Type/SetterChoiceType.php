@@ -20,22 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SetterChoiceType extends AbstractType
 {
-    /**
-     * @var array
-     */
     private $setters;
 
-    /**
-     * @param array $setters
-     */
     public function __construct(array $setters)
     {
         $this->setters = $setters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -43,9 +34,6 @@ final class SetterChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

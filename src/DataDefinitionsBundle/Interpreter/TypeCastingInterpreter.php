@@ -25,14 +25,9 @@ class TypeCastingInterpreter implements InterpreterInterface, DataSetAwareInterf
     use DataSetAwareTrait;
 
     const TYPE_INT = 'int';
-
     const TYPE_STRING = 'string';
-
     const TYPE_BOOLEAN = 'boolean';
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

@@ -19,54 +19,28 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ImportDefinitionEvent extends Event implements DefinitionEventInterface
 {
-    /**
-     * @var ImportDefinitionInterface
-     */
     protected $definition;
-
-    /**
-     * @var mixed
-     */
     protected $subject;
-
-    /**
-     * @param ImportDefinitionInterface $definition
-     * @var array
-     */
     protected $options;
 
-    /**
-     * @param ImportDefinitionInterface $definition
-     * @param mixed                     $subject
-     * @param array                     $options
-     */
-    public function __construct(ImportDefinitionInterface $definition, $subject = null, $options = [])
+    public function __construct(ImportDefinitionInterface $definition, $subject = null, array $options = [])
     {
         $this->definition = $definition;
         $this->subject = $subject;
         $this->options = $options;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getDefinition() : ImportDefinitionInterface
     {
         return $this->definition;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getSubject()
     {
         return $this->subject;
     }
 
-    /**
-     * @return array
-     */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }

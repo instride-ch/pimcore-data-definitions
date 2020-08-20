@@ -34,30 +34,15 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 
     use DataSetAwareTrait;
 
-    /**
-     * @var Placeholder
-     */
     protected $placeholderService;
-
-    /**
-     * @var Client
-     */
     protected $httpClient;
 
-    /**
-     * @param Placeholder $placeholderService
-     * @param Client $httpClient
-     */
     public function __construct(Placeholder $placeholderService, Client $httpClient)
     {
         $this->placeholderService = $placeholderService;
         $this->httpClient = $httpClient;
     }
 
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function interpret(
         Concrete $object,
         $value,
@@ -198,7 +183,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         $listing->setOrder(['creationDate', 'desc']);
 
         $duplicatedAssets = $listing->getAssets();
-        
+
         return empty($duplicatedAssets) === false ? $duplicatedAssets[0] : null;
     }
 }

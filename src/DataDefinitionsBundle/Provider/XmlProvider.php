@@ -18,6 +18,7 @@ use Pimcore\Model\Asset;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
@@ -62,7 +63,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function testData($configuration)
+    public function testData(array $configuration): bool
     {
         return true;
     }
@@ -70,7 +71,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function getColumns($configuration)
+    public function getColumns(array $configuration)
     {
         $exampleFile = Asset::getById($configuration['exampleFile']);
         $rows = $this->convertXmlToArray($exampleFile->getData(), $configuration['exampleXPath']);
@@ -96,7 +97,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function getData($configuration, $definition, $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
     {
         $file = $this->getFile($params['file']);
         $xml = file_get_contents($file);
@@ -104,7 +105,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $this->convertXmlToArray($xml, $configuration['xPath']);
     }
 
-    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $writer = $this->getXMLWriter();
 
@@ -119,7 +120,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         }
     }
 
-    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $writer = $this->getXMLWriter();
 

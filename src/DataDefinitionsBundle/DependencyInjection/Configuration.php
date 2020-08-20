@@ -32,9 +32,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Repository;
 
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
@@ -51,9 +48,6 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
     private function addModelsSection(ArrayNodeDefinition $node)
     {
         $node
@@ -105,9 +99,6 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
     private function addPimcoreResourcesSection(ArrayNodeDefinition $node)
     {
         $node->children()

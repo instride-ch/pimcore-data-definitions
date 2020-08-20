@@ -20,9 +20,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class AssetsUrlInterpreter extends AssetUrlInterpreter
 {
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

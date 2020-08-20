@@ -24,22 +24,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class InterpreterCollectionType extends AbstractType
 {
-    /**
-     * @var ServiceRegistryInterface
-     */
     protected $registry;
 
-    /**
-     * @param ServiceRegistryInterface $registry
-     */
     public function __construct(ServiceRegistryInterface $registry)
     {
         $this->registry = $registry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $prototypes = [];
@@ -59,9 +50,6 @@ final class InterpreterCollectionType extends AbstractType
         $builder->setAttribute('prototypes', $prototypes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['prototypes'] = [];
@@ -72,9 +60,6 @@ final class InterpreterCollectionType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -86,9 +71,6 @@ final class InterpreterCollectionType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return CollectionType::class;

@@ -41,9 +41,6 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
 {
     use PackageVersionTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function registerDependentBundles(BundleCollection $collection)
     {
         parent::registerDependentBundles($collection);
@@ -75,17 +72,11 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPackageName()
     {
         return 'w-vision/data-definitions';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSupportedDrivers()
     {
         return [
@@ -93,9 +84,6 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $builder)
     {
         parent::build($builder);
@@ -115,25 +103,16 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         $builder->addCompilerPass(new ImportRuleActionPass());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNiceName()
     {
         return 'Data Definitions';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription()
     {
         return 'Data Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getComposerPackageName()
     {
         return 'w-vision/data-definitions';
@@ -144,41 +123,26 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         return $this->container->get(Installer::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAdminIframePath()
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsPaths()
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCssPaths()
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEditmodeJsPaths()
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEditmodeCssPaths()
     {
         return [];

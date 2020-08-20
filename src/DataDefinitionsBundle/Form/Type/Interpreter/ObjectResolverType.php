@@ -22,9 +22,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType;
 
 class ObjectResolverType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

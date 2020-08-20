@@ -26,22 +26,13 @@ final class NestedInterpreter implements InterpreterInterface, DataSetAwareInter
 {
     use DataSetAwareTrait;
 
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $interpreterRegistry;
 
-    /**
-     * @param ServiceRegistryInterface $interpreterRegistry
-     */
     public function __construct(ServiceRegistryInterface $interpreterRegistry)
     {
         $this->interpreterRegistry = $interpreterRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

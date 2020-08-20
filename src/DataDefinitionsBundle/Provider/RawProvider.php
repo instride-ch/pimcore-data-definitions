@@ -14,22 +14,17 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
 class RawProvider implements ImportProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function testData($configuration)
+    public function testData(array $configuration): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getColumns($configuration)
+    public function getColumns(array $configuration)
     {
         $headers = explode(',', $configuration['headers']);
         $returnHeaders = [];
@@ -52,10 +47,7 @@ class RawProvider implements ImportProviderInterface
         return $returnHeaders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getData($configuration, $definition, $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
     {
         return $params['data'];
     }

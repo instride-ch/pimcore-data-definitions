@@ -25,9 +25,6 @@ class MultiHrefInterpreter implements InterpreterInterface, DataSetAwareInterfac
 {
     use DataSetAwareTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

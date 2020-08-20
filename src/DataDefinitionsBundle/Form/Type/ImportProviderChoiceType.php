@@ -20,24 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ImportProviderChoiceType extends AbstractType
 {
-    /**
-     * List of providers available to choose
-     *
-     * @var array<string,string>
-     */
     private $providers;
 
-    /**
-     * @param array<string,string> $providers
-     */
     public function __construct(array $providers)
     {
         $this->providers = $providers;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -45,9 +34,6 @@ final class ImportProviderChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

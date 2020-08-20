@@ -33,60 +33,16 @@ use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
 
 final class Exporter implements ExporterInterface
 {
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $fetcherRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $runnerRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $interpreterRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $getterRegistry;
-
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $exportProviderRegistry;
-
-    /**
-     * @var EventDispatcherInterface
-     */
     private $eventDispatcher;
-
-    /**
-     * @var LoggerInterface
-     */
     private $logger;
-
-    /**
-     * @var array
-     */
     private $exceptions = [];
-
-    /**
-     * @var bool
-     */
     private $shouldStop = false;
 
-    /**
-     * @param ServiceRegistryInterface $fetcherRegistry
-     * @param ServiceRegistryInterface $runnerRegistry
-     * @param ServiceRegistryInterface $interpreterRegistry
-     * @param ServiceRegistryInterface $getterRegistry
-     * @param ServiceRegistryInterface $exportProviderRegistry
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param LoggerInterface          $logger
-     */
     public function __construct(
         ServiceRegistryInterface $fetcherRegistry,
         ServiceRegistryInterface $runnerRegistry,

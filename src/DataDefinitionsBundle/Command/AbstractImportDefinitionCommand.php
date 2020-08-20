@@ -25,24 +25,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractImportDefinitionCommand extends AbstractCommand
 {
-    /**
-     * @var MetadataInterface
-     */
     protected $metadata;
-
-    /**
-     * @var RepositoryInterface
-     */
     protected $repository;
-
-    /**
-     * @var ObjectManager
-     */
     protected $manager;
-
-    /**
-     * @var ResourceFormFactoryInterface
-     */
     protected $resourceFormFactory;
 
     public function __construct(
@@ -59,9 +44,6 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $type = $this->getType();
@@ -76,10 +58,6 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
             );
     }
 
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $path = $this->getPath();

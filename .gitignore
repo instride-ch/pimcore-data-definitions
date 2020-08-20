@@ -53,3 +53,5 @@ generate-and-copy.sh
 var
 app/config/config.yml
 composer.lock
+docker-compose.yml
+app/config/local

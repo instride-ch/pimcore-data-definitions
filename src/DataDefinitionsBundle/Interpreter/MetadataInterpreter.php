@@ -21,10 +21,7 @@ use Pimcore\Model\DataObject\Data\ElementMetadata;
 use Pimcore\Model\DataObject\Data\ObjectMetadata;
 
 class MetadataInterpreter implements InterpreterInterface
-{    
-    /**
-     * {@inheritdoc}
-     */
+{
     public function interpret(
         Concrete $object,
         $value,
@@ -36,7 +33,7 @@ class MetadataInterpreter implements InterpreterInterface
     ) {
         $class = "\\Pimcore\\Model\\DataObject\\Data\\" . $configuration['class'];
         $fieldname = $map->getToColumn();
-        
+
         $metadata = $configuration['metadata'];
         $metadata = json_decode($metadata, true);
         if (!is_array($metadata)) {
@@ -47,8 +44,8 @@ class MetadataInterpreter implements InterpreterInterface
         foreach ($metadata as $metadataKey => $metadataValue) {
             $setter = 'set' . ucfirst($metadataKey);
             $elementMetadata->$setter($metadataValue);
-        }        
-        
+        }
+
         return $elementMetadata;
     }
 }

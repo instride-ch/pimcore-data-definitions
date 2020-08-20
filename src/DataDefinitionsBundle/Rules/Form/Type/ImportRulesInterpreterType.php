@@ -20,10 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class ImportRulesInterpreterType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('rules', CollectionType::class, [

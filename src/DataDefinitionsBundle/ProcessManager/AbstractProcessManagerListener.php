@@ -30,41 +30,14 @@ use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
 abstract class AbstractProcessManagerListener
 {
     public const PROCESS_TYPE = 'data_definitions';
-
     public const PROCESS_NAME = 'Data Definitions';
 
-    /**
-     * @var ProcessInterface
-     */
     protected $process;
-
-    /**
-     * @var ProcessFactoryInterface
-     */
     protected $processFactory;
-
-    /**
-     * @var ProcessLogger
-     */
     protected $processLogger;
-
-    /**
-     * @var ProcessRepository
-     */
     protected $repository;
-
-    /**
-     * @var EventDispatcherInterface
-     */
     protected $eventDispatcher;
 
-    /**
-     * AbstractProcessManagerListener constructor.
-     * @param FactoryInterface $processFactory
-     * @param ProcessLogger $processLogger
-     * @param ProcessRepository $repository
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         FactoryInterface $processFactory,
         ProcessLogger $processLogger,

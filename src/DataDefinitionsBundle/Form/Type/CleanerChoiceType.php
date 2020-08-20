@@ -20,22 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CleanerChoiceType extends AbstractType
 {
-    /**
-     * @var array
-     */
     private $cleaners;
 
-    /**
-     * @param array $cleaners
-     */
     public function __construct(array $cleaners)
     {
         $this->cleaners = $cleaners;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -43,9 +34,6 @@ final class CleanerChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

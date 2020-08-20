@@ -17,6 +17,5 @@ namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 final class ProcessManagerImportListener extends AbstractProcessManagerListener
 {
     const PROCESS_TYPE = "import_definitions";
-
     const PROCESS_NAME = "Import Definitions";
 }

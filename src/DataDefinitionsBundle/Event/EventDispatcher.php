@@ -17,22 +17,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
-    /**
-     * @var SymfonyEventDispatcherInterface
-     */
     private $eventDispatcher;
 
-    /**
-     * @param SymfonyEventDispatcherInterface $eventDispatcher
-     */
     public function __construct(SymfonyEventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatch(DataDefinitionInterface $definition, $eventName, $subject = '', $params = [])
     {
         $event = $this->getEvent($definition, $subject, $params);

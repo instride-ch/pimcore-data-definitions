@@ -25,9 +25,6 @@ class DoNotSetOnEmptyInterpreter implements InterpreterInterface, DataSetAwareIn
 {
     use DataSetAwareTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

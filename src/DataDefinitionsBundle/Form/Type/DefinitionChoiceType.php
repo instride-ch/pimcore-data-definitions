@@ -25,22 +25,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class DefinitionChoiceType extends AbstractType
 {
-    /**
-     * @var RepositoryInterface
-     */
     private $definitionRepository;
 
-    /**
-     * @param RepositoryInterface $definitionRepository
-     */
     public function __construct(RepositoryInterface $definitionRepository)
     {
         $this->definitionRepository = $definitionRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['multiple']) {
@@ -48,9 +39,6 @@ final class DefinitionChoiceType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -72,9 +60,6 @@ final class DefinitionChoiceType extends AbstractType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

@@ -26,22 +26,13 @@ final class IteratorInterpreter implements InterpreterInterface, DataSetAwareInt
 {
     use DataSetAwareTrait;
 
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $interpreterRegistry;
 
-    /**
-     * @param ServiceRegistryInterface $interpreterRegistry
-     */
     public function __construct(ServiceRegistryInterface $interpreterRegistry)
     {
         $this->interpreterRegistry = $interpreterRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

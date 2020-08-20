@@ -21,9 +21,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ObjectResolverInterpreter implements InterpreterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

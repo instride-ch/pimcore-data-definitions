@@ -23,14 +23,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ListImportDefinitionsCommand extends AbstractCommand
 {
-    /**
-     * @var RepositoryInterface
-     */
     protected $repository;
 
-    /**
-     * @param RepositoryInterface $repository
-     */
     public function __construct(RepositoryInterface $repository)
     {
         $this->repository = $repository;
@@ -38,9 +32,6 @@ final class ListImportDefinitionsCommand extends AbstractCommand
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -52,9 +43,6 @@ EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $importDefinitions = $this->repository->findAll();

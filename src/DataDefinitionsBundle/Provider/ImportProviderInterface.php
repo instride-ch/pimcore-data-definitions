@@ -14,6 +14,7 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
 interface ImportProviderInterface
@@ -25,7 +26,7 @@ interface ImportProviderInterface
      * @return boolean
      * @throws \Exception
      */
-    public function testData($configuration);
+    public function testData(array $configuration): bool;
 
     /**
      * Get Columns from data
@@ -33,16 +34,16 @@ interface ImportProviderInterface
      * @param array $configuration
      * @return FromColumn[]
      */
-    public function getColumns($configuration);
+    public function getColumns(array $configuration);
 
     /**
-     * @param array $configuration
-     * @param       $definition
-     * @param       $params
-     * @param null  $filter
-     * @return ImportDataSetInterface|array
+     * @param array                     $configuration
+     * @param ImportDefinitionInterface $definition
+     * @param array                     $params
+     * @param null                      $filter
+     * @return mixed
      */
-    public function getData($configuration, $definition, $params, $filter = null);
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null);
 }
 
 

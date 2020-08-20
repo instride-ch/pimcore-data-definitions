@@ -23,37 +23,25 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class ImportRuleValidationProcessor implements ImportRuleValidationProcessorInterface
 {
-    /**
-     * @var RuleConditionsValidationProcessorInterface
-     */
     private $ruleConditionsValidationProcessor;
 
-    /**
-     * @param RuleConditionsValidationProcessorInterface $ruleConditionsValidationProcessor
-     */
     public function __construct(RuleConditionsValidationProcessorInterface $ruleConditionsValidationProcessor)
     {
         $this->ruleConditionsValidationProcessor = $ruleConditionsValidationProcessor;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isImportRuleValid(
         DataDefinitionInterface $definition,
         Concrete $object,
         ImportRuleInterface $importRule,
         array $params
-    ) {
+    ): bool {
         $params['object'] = $object;
 
         return $this->isValid($definition, $importRule, $params);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isValid(ResourceInterface $subject, RuleInterface $rule, $params = [])
+    public function isValid(ResourceInterface $subject, RuleInterface $rule, $params = []): bool
     {
         return $this->ruleConditionsValidationProcessor->isValid(
             $subject,

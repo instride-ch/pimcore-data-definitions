@@ -21,22 +21,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class RuleApplier implements RuleApplierInterface
 {
-    /**
-     * @var ServiceRegistryInterface
-     */
     private $actionServiceRegistry;
 
-    /**
-     * @param ServiceRegistryInterface $actionServiceRegistry
-     */
     public function __construct(ServiceRegistryInterface $actionServiceRegistry)
     {
         $this->actionServiceRegistry = $actionServiceRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function applyRule(ImportRuleInterface $rule, Concrete $concrete, $params)
     {
         $result = [];

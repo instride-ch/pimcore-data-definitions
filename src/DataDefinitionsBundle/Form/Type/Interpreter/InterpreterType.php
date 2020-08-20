@@ -26,22 +26,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType;
 
 final class InterpreterType extends AbstractType
 {
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $formTypeRegistry;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(FormTypeRegistryInterface $formTypeRegistry)
     {
         $this->formTypeRegistry = $formTypeRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -85,9 +76,6 @@ final class InterpreterType extends AbstractType
             });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);

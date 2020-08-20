@@ -15,6 +15,7 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
@@ -45,20 +46,14 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $depth;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function testData($configuration)
+    public function testData(array $configuration): bool
     {
         $jsonExample = $configuration['jsonExample'];
 
         return $this->getJsonDepth(json_decode($jsonExample, true)) === 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getColumns($configuration)
+    public function getColumns(array $configuration)
     {
         $jsonExample = $configuration['jsonExample'];
 
@@ -80,10 +75,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $returnHeaders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getData($configuration, $definition, $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
     {
         $file = $this->getFile($params['file']);
 
@@ -96,27 +88,18 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function exportData($configuration, ExportDefinitionInterface $definition, $params)
+    public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $file = $this->getFile($params['file']);
 
         file_put_contents($file, json_encode($this->exportData));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addExportData(array $data, $configuration, ExportDefinitionInterface $definition, $params)
+    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $this->exportData[] = $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
     {
         $stream = fopen('php://memory', 'rw+');

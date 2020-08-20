@@ -24,9 +24,6 @@ class DefaultValueInterpreter implements InterpreterInterface, DataSetAwareInter
 {
     use DataSetAwareTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function interpret(
         Concrete $object,
         $value,

@@ -29,7 +29,7 @@ services:
 
     Wvision\Bundle\DataDefinitionsBundle\Command\ImportImportDefinitionCommand:
         arguments:
-            - "@=service('coreshop.resource_registry').get('data_definitions.import_definition')"
+            - '@=service("CoreShop\\Component\\Resource\\Metadata\\RegistryInterface").get("data_definitions.import_definition")'
             - '@data_definitions.repository.import_definition'
             - '@CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager'
             - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'
@@ -38,7 +38,7 @@ services:
 
     Wvision\Bundle\DataDefinitionsBundle\Command\ImportExportDefinitionCommand:
         arguments:
-            - "@=service('coreshop.resource_registry').get('data_definitions.export_definition')"
+            - '@=service("CoreShop\\Component\\Resource\\Metadata\\RegistryInterface").get("data_definitions.export_definition")'
             - '@data_definitions.repository.export_definition'
             - '@CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager'
             - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'

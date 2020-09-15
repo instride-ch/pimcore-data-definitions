@@ -111,7 +111,8 @@ pimcore.plugin.datadefinitions.interpreters.mapping = Class.create(pimcore.plugi
                     from: rec.data.from,
                     to: rec.data.to
                 };
-            })
+            }),
+            return_null_when_not_found: this.checkbox.getSubmitValue()
         };
     }
 });

@@ -115,14 +115,6 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
                     this.fetchers.push([fetcher]);
                 }.bind(this));
 
-                config.import_rules.conditions.forEach(function (condition) {
-                    this.conditions.push([condition]);
-                }.bind(this));
-
-                config.import_rules.actions.forEach(function (actions) {
-                    this.action.push([actions]);
-                }.bind(this));
-
                 var providerStore = new Ext.data.ArrayStore({
                     data: this.providers,
                     fields: ['provider'],
@@ -167,7 +159,6 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
 
                 pimcore.globalmanager.add('importdefinitions_fetchers', fetchersStore);
                 pimcore.globalmanager.add('data_definitions_fetchers', fetchersStore);
-
 
                 pimcore.globalmanager.add('data_definitions_import_rule_conditions', config.import_rules.conditions);
                 pimcore.globalmanager.add('data_definitions_import_rule_actions', config.import_rules.actions);

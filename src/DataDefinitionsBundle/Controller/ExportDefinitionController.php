@@ -35,6 +35,8 @@ class ExportDefinitionController extends ResourceController
         $runners = $this->getConfigRunners();
         $getters = $this->getConfigGetters();
         $fetchers = $this->getConfigFetchers();
+        $importRuleConditions = $this->getImportRuleConditions();
+        $importRuleActions = $this->getImportRuleActions();
 
         return $this->viewHandler->handle(
             [
@@ -43,6 +45,10 @@ class ExportDefinitionController extends ResourceController
                 'runner' => array_keys($runners),
                 'getters' => array_keys($getters),
                 'fetchers' => array_keys($fetchers),
+                'import_rules' => [
+                    'conditions' => array_keys($importRuleConditions),
+                    'actions' => array_keys($importRuleActions)
+                ]
             ]
         );
     }
@@ -441,6 +447,22 @@ class ExportDefinitionController extends ResourceController
     protected function getConfigFetchers(): array
     {
         return $this->getParameter('data_definitions.fetchers');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getImportRuleConditions(): array
+    {
+        return $this->getParameter('data_definitions.import_rule.conditions');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getImportRuleActions(): array
+    {
+        return $this->getParameter('data_definitions.import_rule.actions');
     }
 }
 

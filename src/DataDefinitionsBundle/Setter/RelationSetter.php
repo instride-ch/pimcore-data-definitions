@@ -45,7 +45,7 @@ class RelationSetter implements SetterInterface
         }
 
 
-        if (!is_array($value)) {
+        if (!is_iterable($value)) {
             $value = [$value];
         }
 

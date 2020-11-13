@@ -109,8 +109,9 @@ class ImportRuleController extends AdminController
                     list($configIndex, $configKey) = explode('___', $configKeyAndIndex);
 
                     if (null === $lastConfigType && null === $lastConfigKey && null === $lastConfigIndex) {
-                        $lastConfigType = $lastConfigType;
+                        $lastConfigType = $configType;
                         $lastConfigKey = $configKey;
+                        $lastConfigIndex = $configIndex;
                         $condition = [
                             'type' => $configType,
                             'configuration' => []
@@ -144,8 +145,9 @@ class ImportRuleController extends AdminController
                     list($configIndex, $configKey) = explode('___', $configKeyAndIndex);
 
                     if (null === $lastConfigType && null === $lastConfigKey && null === $lastConfigIndex) {
-                        $lastConfigType = $lastConfigType;
+                        $lastConfigType = $configType;
                         $lastConfigKey = $configKey;
+                        $lastConfigIndex = $configIndex;
                         $action = [
                             'type' => $configType,
                             'configuration' => []

@@ -80,7 +80,7 @@ class ImportRuleController extends AdminController
         foreach ($raw as $rawRule) {
             $rule = [
                 'name' => $rawRule['name'],
-                'active' => $rawRule['active'] === 'yes',
+                'active' => strtolower($rawRule['active']) === 'yes',
             ];
             $conditions = [];
             $actions = [];

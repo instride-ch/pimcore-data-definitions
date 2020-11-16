@@ -15,14 +15,22 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Action;
 
 use Pimcore\Model\DataObject\Concrete;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class ObjectProcessor implements ImportRuleProcessorInterface
 {
-    public function apply(ImportRuleInterface $rule, Concrete $concrete, array $configuration, $params = [])
+    public function apply(ImportRuleInterface $rule, Concrete $concrete, $value, array $configuration, array $params = [])
     {
-        return Concrete::getById($configuration['object']);
+        $object = Concrete::getById($configuration['object']);
+
+        if ($object) {
+            if (is_array($value)) {
+                $value[] = $object;
+            } else {
+                $value = $object;
+            }
+        }
+
+        return $value;
     }
 }

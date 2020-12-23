@@ -59,10 +59,12 @@ final class ProcessManagerExportListener extends AbstractProcessManagerListener
                         $event->getParams()
                     );
 
-                    if ($artifact instanceof Asset) {
-                        $this->process->setArtifact($artifact);
-                        $this->process->save();
+                    if (null === $artifact) {
+                        return;
                     }
+
+                    $this->process->setArtifact($artifact);
+                    $this->process->save();
                 }
             }
         }

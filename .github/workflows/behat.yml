@@ -1,9 +1,9 @@
 name: Behat
 on:
   push:
-    branches: [ master, '3.2' ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, '3.2' ]
+    branches: [ master ]
 
 jobs:
   behat:
@@ -23,9 +23,8 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     strategy:
       matrix:
-        php: [7.2, 7.3, 7.4]
-        symfony: [~3.4, ^4.0]
-        pimcore: [~6.6.0, ~6.7.0, ~6.8.0]
+        php: [ 7.4 ]
+        pimcore: [ 10.0.x-dev ]
 
     steps:
     - uses: actions/checkout@v2

@@ -39,8 +39,7 @@
     "phpstan/phpstan": "^0.12",
     "phpstan/phpstan-doctrine": "^0.12",
     "phpstan/phpstan-symfony": "^0.12",
-    "phpstan/phpstan-webmozart-assert": "^0.12",
-    "symplify/easy-coding-standard": "^9.0.0"
+    "phpstan/phpstan-webmozart-assert": "^0.12"
   },
   "conflict": {
     "dpfaffenbauer/process-manager": "<2.4"

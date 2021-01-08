@@ -132,4 +132,24 @@ final class PimcoreContext implements Context
             sprintf('Expected value %s but is %s', $value, $actualValue)
         );
     }
+
+    /**
+     * @Given /^the field "([^"]+)" for object of the definition should be of type external-image$/
+     */
+    public function theFieldForObjectOfDefinitionShouldBeOfTypeExternalImage($field, DataObject\Concrete $object)
+    {
+        $actualValue = $object->getValueForFieldName($field);
+
+        Assert::isInstanceOf($actualValue, DataObject\Data\ExternalImage::class);
+    }
+
+    /**
+     * @Given /^the field "([^"]+)" for object of the definition should be of type link$/
+     */
+    public function theFieldForObjectOfDefinitionShouldBeOfTypeLink($field, DataObject\Concrete $object)
+    {
+        $actualValue = $object->getValueForFieldName($field);
+
+        Assert::isInstanceOf($actualValue, DataObject\Data\Link::class);
+    }
 }

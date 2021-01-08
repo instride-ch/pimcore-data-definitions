@@ -17,7 +17,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use CoreShop\Component\Resource\Metadata\MetadataInterface;
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

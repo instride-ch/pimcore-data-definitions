@@ -1,5 +1,0 @@
-services:
-    data_definitions.behat.filter.simple:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Service\Filter\SimpleFilter
-        tags:
-            - { name: data_definitions.filter, type: simple }

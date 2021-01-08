@@ -22,7 +22,6 @@ use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\Document;
 use Pimcore\Model\Version;
-use Pimcore\Placeholder;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
@@ -39,6 +38,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
+use Wvision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext;
 use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
 final class Importer implements ImporterInterface
@@ -52,6 +53,7 @@ final class Importer implements ImporterInterface
     private $loaderRegistry;
     private $eventDispatcher;
     private $logger;
+    private $placeholderService;
     private $shouldStop = false;
 
     public function __construct(
@@ -63,6 +65,7 @@ final class Importer implements ImporterInterface
         ServiceRegistryInterface $cleanerRegistry,
         ServiceRegistryInterface $loaderRegistry,
         EventDispatcherInterface $eventDispatcher,
+        Placeholder $placeholderService,
         LoggerInterface $logger
     ) {
         $this->providerRegistry = $providerRegistry;
@@ -73,6 +76,7 @@ final class Importer implements ImporterInterface
         $this->cleanerRegistry = $cleanerRegistry;
         $this->loaderRegistry = $loaderRegistry;
         $this->eventDispatcher = $eventDispatcher;
+        $this->placeholderService = $placeholderService;
         $this->logger = $logger;
     }
 
@@ -540,10 +544,10 @@ final class Importer implements ImporterInterface
             $obj = new $classObject();
         }
 
-        $key = Service::getValidKey($this->createKey($definition, $data), 'object');
+        $key = Service::getValidKey($this->createKey($definition, $data, $obj), 'object');
 
         if ($definition->getRelocateExistingObjects() || !$obj->getId()) {
-            $obj->setParent(Service::createFolderByPath($this->createPath($definition, $data)));
+            $obj->setParent(Service::createFolderByPath($this->createPath($definition, $data, $obj)));
         }
 
         if ($definition->getRenameExistingObjects() || !$obj->getId()) {
@@ -563,28 +567,14 @@ final class Importer implements ImporterInterface
         return $obj;
     }
 
-    /**
-     * @param ImportDefinitionInterface $definition
-     * @param array                     $data
-     * @return string
-     */
-    private function createPath(ImportDefinitionInterface $definition, $data)
+    private function createPath(ImportDefinitionInterface $definition, array $data, $object = null): string
     {
-        $placeholderHelper = new Placeholder();
-
-        return $placeholderHelper->replacePlaceholders($definition->getObjectPath(), $data);
+        return $this->placeholderService->replace($definition->getObjectPath(), new PlaceholderContext($data, $object));
     }
 
-    /**
-     * @param ImportDefinitionInterface $definition
-     * @param array                     $data
-     * @return string
-     */
-    private function createKey(ImportDefinitionInterface $definition, $data)
+    private function createKey(ImportDefinitionInterface $definition, array $data, $object = null): string
     {
-        $placeholderHelper = new Placeholder();
-
-        return $placeholderHelper->replacePlaceholders($definition->getKey(), $data);
+        return $this->placeholderService->replace($definition->getKey(), new PlaceholderContext($data, $object));
     }
 }
 

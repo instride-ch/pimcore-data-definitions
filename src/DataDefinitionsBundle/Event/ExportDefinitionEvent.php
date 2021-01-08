@@ -14,7 +14,7 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 final class ExportDefinitionEvent extends Event implements DefinitionEventInterface

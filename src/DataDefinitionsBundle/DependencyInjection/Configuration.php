@@ -34,8 +34,8 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('wvision_data_definitions');
+        $treeBuilder = new TreeBuilder('wvision_data_definitions');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()

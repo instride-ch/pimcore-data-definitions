@@ -18,6 +18,7 @@ use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
+use Wvision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext;
 
 class AssetByPathInterpreter implements InterpreterInterface
 {
@@ -39,7 +40,7 @@ class AssetByPathInterpreter implements InterpreterInterface
     ) {
         $assetFullPath = $configuration['path']."/".$value;
 
-        return \Pimcore\Model\Asset::getByPath($assetFullPath);
+        return \Pimcore\Model\Asset::getByPath($this->placeholderService->replace($assetFullPath, new PlaceholderContext($data, $object)));
     }
 }
 

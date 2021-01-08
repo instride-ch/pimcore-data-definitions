@@ -9,7 +9,9 @@ services:
         arguments:
             - '@event_dispatcher'
 
-    Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder: ~
+    Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder:
+        arguments:
+            - '@twig'
 
     Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection:
         public: true
@@ -25,6 +27,7 @@ services:
             - '@data_definitions.registry.cleaner'
             - '@data_definitions.registry.loader'
             - '@Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher'
+            - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
             - '@logger'
         tags:
             - { name: monolog.logger, channel: import_definition }

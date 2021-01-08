@@ -15,17 +15,15 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
 use Carbon\Carbon;
-use CoreShop\Component\Registry\ServiceRegistryInterface;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
 use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
 use ProcessManagerBundle\Model\ProcessInterface;
 use ProcessManagerBundle\ProcessManagerBundle;
 use ProcessManagerBundle\Repository\ProcessRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\DefinitionEventInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
 
 abstract class AbstractProcessManagerListener
 {
@@ -99,7 +97,7 @@ abstract class AbstractProcessManagerListener
             }
 
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_STOPPING) {
-                $this->eventDispatcher->dispatch('data_definitions.stop');
+                $this->eventDispatcher->dispatch(new GenericEvent(), 'data_definitions.stop');
                 $this->process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
             }
 

@@ -14,46 +14,24 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Service;
 
-use Pimcore\File;
+use Twig\Environment;
 
 final class Placeholder
 {
-    /**
-     * @var \Pimcore\Placeholder
-     */
-    private $helper;
+    private $twig;
 
-    /**
-     * @param                    $placeholder
-     * @param PlaceholderContext $context
-     *
-     * @return string
-     */
-    public function replace($placeholder, PlaceholderContext $context)
+    public function __construct(Environment $twig)
     {
-        $myData = $context->toArray();
-
-        foreach ($myData as &$d) {
-            if (\is_string($d)) {
-                $d = File::getValidFilename($d);
-            }
-        }
-
-        unset($d);
-
-        return $this->getHelper()->replacePlaceholders($placeholder, $myData);
+        $this->twig = $twig;
     }
 
-    /**
-     * @return \Pimcore\Placeholder
-     */
-    private function getHelper()
+    public function replace($placeholder, PlaceholderContext $context)
     {
-        if (null === $this->helper) {
-            $this->helper = new \Pimcore\Placeholder();
+        if (null === $placeholder) {
+            return '';
         }
 
-        return $this->helper;
+        return $this->twig->createTemplate($placeholder)->render($context->toArray());
     }
 }
 

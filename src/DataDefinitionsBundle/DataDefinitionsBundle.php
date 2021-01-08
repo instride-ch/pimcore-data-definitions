@@ -120,7 +120,8 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
 
     public function getInstaller()
     {
-        return $this->container->get(Installer::class);
+//        return $this->container->get(Installer::class);
+        return null;
     }
 
     public function getAdminIframePath()

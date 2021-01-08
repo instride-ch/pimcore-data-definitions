@@ -14,15 +14,13 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle;
 
-use Doctrine\DBAL\Migrations\Version;
-use Doctrine\DBAL\Schema\Schema;
 use Pimcore\Console\Application;
-use Pimcore\Extension\Bundle\Installer\MigrationInstaller;
+use Pimcore\Extension\Bundle\Installer\AbstractInstaller;
 use Symfony\Component\Console\Input\ArrayInput;
 
-class Installer extends MigrationInstaller
+class Installer extends AbstractInstaller
 {
-    protected function beforeInstallMigration()
+    public function install()
     {
         $kernel = \Pimcore::getKernel();
         $application = new Application($kernel);
@@ -32,12 +30,29 @@ class Installer extends MigrationInstaller
         $application->run(new ArrayInput($options));
     }
 
-    public function migrateInstall(Schema $schema, Version $version)
+    public function uninstall()
     {
+
     }
 
-    public function migrateUninstall(Schema $schema, Version $version)
+    public function isInstalled()
     {
+        return \Pimcore::getContainer()->get('doctrine.dbal.default_connection')->getSchemaManager()->tablesExist('data_definitions_import_log');
+    }
+
+    public function canBeInstalled()
+    {
+        return !\Pimcore::getContainer()->get('doctrine.dbal.default_connection')->getSchemaManager()->tablesExist('data_definitions_import_log');
+    }
+
+    public function canBeUninstalled()
+    {
+        return false;
+    }
+
+    public function needsReloadAfterInstall()
+    {
+        return true;
     }
 }
 

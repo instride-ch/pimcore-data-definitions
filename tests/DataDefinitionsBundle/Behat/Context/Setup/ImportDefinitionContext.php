@@ -29,56 +29,15 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 final class ImportDefinitionContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
     private $sharedStorage;
-
-    /**
-     * @var FactoryInterface
-     */
     private $factory;
-
-    /**
-     * @var ObjectManager
-     */
     private $manager;
-
-    /**
-     * @var ImporterInterface
-     */
     private $importer;
-
-    /**
-     * @var FormFactoryInterface
-     */
     private $formFactory;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $providerFormRegistry;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $interpreterFormRegistry;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $setterFormRegistry;
 
-    /**
-     * @param SharedStorageInterface    $sharedStorage
-     * @param FactoryInterface          $factory
-     * @param ObjectManager             $manager
-     * @param ImporterInterface         $importer
-     * @param FormFactoryInterface      $formFactory
-     * @param FormTypeRegistryInterface $providerFormRegistry
-     * @param FormTypeRegistryInterface $interpreterFormRegistry
-     * @param FormTypeRegistryInterface $setterFormRegistry
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         FactoryInterface $factory,

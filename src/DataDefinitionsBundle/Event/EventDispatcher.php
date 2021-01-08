@@ -12,7 +12,7 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class EventDispatcher implements EventDispatcherInterface
@@ -29,8 +29,8 @@ final class EventDispatcher implements EventDispatcherInterface
         $event = $this->getEvent($definition, $subject, $params);
 
         $this->eventDispatcher->dispatch(
+            $event,
             sprintf('%s%s', $eventName, isset($params['child']) && $params['child'] ? '.child' : ''),
-            $event
         );
     }
 

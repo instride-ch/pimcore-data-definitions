@@ -6,5 +6,3 @@ services:
 
     Wvision\Bundle\DataDefinitionsBundle\Installer:
         public: true
-        arguments:
-            $bundle: "@=service('kernel').getBundle('DataDefinitionsBundle')"

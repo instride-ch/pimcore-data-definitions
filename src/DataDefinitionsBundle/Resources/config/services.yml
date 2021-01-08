@@ -256,6 +256,14 @@ services:
       tags:
         - { name: data_definitions.interpreter, type: donotsetonempty, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\LinkInterpreter:
+        tags:
+            - { name: data_definitions.interpreter, type: link, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\ExternalImageInterpreter:
+        tags:
+            - { name: data_definitions.interpreter, type: external_image, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
     ### PROVIDER
     Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:
         tags:

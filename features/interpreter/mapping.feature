@@ -51,7 +51,7 @@ Feature: Adding a import with a interpreter
       | key  | value    |
       | file | test.csv |
     Then there should be "1" data-objects for definition
-    And the field "tags" for object of the definition should have the value "false"
+    And the field "tags" for object of the definition should have the value "null"
 
     Scenario: When I run the import with a invalid mapping entry, it should return null
       Given the import-definitions mapping for column "tags" uses interpreter "mapping" with config:

@@ -126,6 +126,9 @@ final class PimcoreContext implements Context
         else if ($value === 'true') {
             $value = true;
         }
+        else if ($value === 'null') {
+            $value = null;
+        }
 
         Assert::true(
             $actualValue === $value,

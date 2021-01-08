@@ -12,7 +12,7 @@ Feature: Adding a import with a interpreter
     And the import-definition "Category" provider is "raw" with the configuration:
       | key         | value   |
       | headers     | catname |
-    And  the import-definitions mapping is:
+    And the import-definitions mapping is:
       | fromColumn | toColumn | primary |
       | catname    | name     | true    |
     And there is a import-definition "Product" for class "Product"

@@ -14,9 +14,9 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Repository;
 
-use CoreShop\Bundle\ResourceBundle\Pimcore\PimcoreRepository;
+use CoreShop\Bundle\ResourceBundle\Pimcore\PimcoreDaoRepository;
 
-class DefinitionRepository extends PimcoreRepository
+class DefinitionRepository extends PimcoreDaoRepository
 {
     /**
      * @param string $name

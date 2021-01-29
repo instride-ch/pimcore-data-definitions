@@ -44,6 +44,8 @@ class LinkInterpreter implements InterpreterInterface
                 $link->setDirect($value);
             }
 
+            $link->setText($value);
+
             if ($value instanceof ElementInterface) {
                 $link->setObject($value);
             }

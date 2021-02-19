@@ -21,6 +21,7 @@ use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\Document;
+use Pimcore\Model\Factory;
 use Pimcore\Model\Version;
 use Pimcore\Placeholder;
 use Psr\Log\LoggerAwareInterface;
@@ -88,6 +89,9 @@ final class Importer implements ImporterInterface
      */
     private $logger;
 
+    /** @var Factory */
+    private $modelFactory;
+
     /**
      * @var bool
      */
@@ -104,6 +108,7 @@ final class Importer implements ImporterInterface
      * @param ServiceRegistryInterface $loaderRegistry
      * @param EventDispatcherInterface $eventDispatcher
      * @param LoggerInterface $logger
+     * @param Factory $modelFactory
      */
     public function __construct(
         ServiceRegistryInterface $providerRegistry,
@@ -114,7 +119,8 @@ final class Importer implements ImporterInterface
         ServiceRegistryInterface $cleanerRegistry,
         ServiceRegistryInterface $loaderRegistry,
         EventDispatcherInterface $eventDispatcher,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Factory $modelFactory
     ) {
         $this->providerRegistry = $providerRegistry;
         $this->filterRegistry = $filterRegistry;
@@ -125,6 +131,7 @@ final class Importer implements ImporterInterface
         $this->loaderRegistry = $loaderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
+        $this->modelFactory = $modelFactory;
     }
 
     /**
@@ -588,7 +595,8 @@ final class Importer implements ImporterInterface
         $obj = $loader->load($class, $data, $definition, $params);
 
         if (null === $obj) {
-            $obj = new $classObject();
+            $classImplementation = $this->modelFactory->getClassNameFor($classObject) ?? $classObject;
+            $obj = new $classImplementation();
         }
 
         $key = Service::getValidKey($this->createKey($definition, $data), 'object');

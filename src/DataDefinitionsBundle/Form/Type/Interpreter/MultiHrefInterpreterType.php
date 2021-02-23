@@ -15,7 +15,6 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class MultiHrefInterpreterType extends AbstractType
@@ -23,10 +22,9 @@ final class MultiHrefInterpreterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function getParent()
     {
-        $builder
-            ->add('class', TextType::class);
+        return HrefInterpreterType::class;
     }
 }
 

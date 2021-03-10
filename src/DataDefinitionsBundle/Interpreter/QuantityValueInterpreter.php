@@ -36,6 +36,7 @@ class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInte
         $params,
         $configuration
     ) {
+        $value = $value !== '' ? $value : null;
         $unit = $configuration['unit'];
 
         return new \Pimcore\Model\DataObject\Data\QuantityValue($value, $unit);

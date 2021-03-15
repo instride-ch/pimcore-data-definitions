@@ -26,6 +26,7 @@ services:
             - '@data_definitions.registry.loader'
             - '@Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher'
             - '@logger'
+            - '@pimcore.model.factory'
         tags:
             - { name: monolog.logger, channel: import_definition }
             - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }

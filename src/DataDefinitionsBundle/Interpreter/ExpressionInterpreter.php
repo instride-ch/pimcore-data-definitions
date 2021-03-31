@@ -17,6 +17,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Wvision\Bundle\DataDefinitionsBundle\Exception\InterpreterException;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
@@ -60,16 +61,20 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
     ) {
         $expression = $configuration['expression'];
 
-        return $this->expressionLanguage->evaluate($expression, [
-            'value' => $value,
-            'object' => $object,
-            'map' => $map,
-            'data' => $data,
-            'definition' => $definition,
-            'params' => $params,
-            'configuration' => $configuration,
-            'container' => $this->container,
-        ]);
+        try {
+            return $this->expressionLanguage->evaluate($expression, [
+                'value' => $value,
+                'object' => $object,
+                'map' => $map,
+                'data' => $data,
+                'definition' => $definition,
+                'params' => $params,
+                'configuration' => $configuration,
+                'container' => $this->container,
+            ]);
+        } catch (\Throwable $exception) {
+            throw InterpreterException::fromInterpreter($definition, $map, $params, $value, $exception);
+        }
     }
 }
 

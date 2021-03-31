@@ -303,7 +303,7 @@ final class Importer implements ImporterInterface
 
         foreach ($dataSet as $row) {
             try {
-                $object = $this->importRow($definition, $row, $dataSet, $params, $filter);
+                $object = $this->importRow($definition, $row, $dataSet, array_merge($params, ['row' => $count]), $filter);
 
                 if ($object instanceof Concrete) {
                     $objectIds[] = $object->getId();

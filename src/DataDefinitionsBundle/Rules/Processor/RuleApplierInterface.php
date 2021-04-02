@@ -19,5 +19,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 interface RuleApplierInterface
 {
-    public function applyRule(ImportRuleInterface $rule, Concrete $concrete, $params);
+    public function applyRule(ImportRuleInterface $rule, Concrete $concrete, $value, array $params);
 }

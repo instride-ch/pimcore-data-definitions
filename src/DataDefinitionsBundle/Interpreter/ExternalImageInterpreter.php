@@ -15,15 +15,14 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
+use Pimcore\Model\DataObject\Data\ExternalImage;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
-class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInterface
+class ExternalImageInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
     public function interpret(
         Concrete $object,
         $value,
@@ -33,10 +32,15 @@ class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInte
         $params,
         $configuration
     ) {
-        $value = $value !== '' ? $value : null;
-        $unit = $configuration['unit'];
+        if (($definition instanceof ExportDefinitionInterface) && $value instanceof ExternalImage) {
+            return $value->getUrl();
+        }
 
-        return new \Pimcore\Model\DataObject\Data\QuantityValue($value, $unit);
+        if (($definition instanceof ImportDefinitionInterface) && filter_var($value, FILTER_VALIDATE_URL)) {
+            return new ExternalImage($value);
+        }
+
+        return null;
     }
 }
 

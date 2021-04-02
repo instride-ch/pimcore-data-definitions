@@ -21,6 +21,7 @@ use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\Document;
+use Pimcore\Model\Factory;
 use Pimcore\Model\Version;
 use Pimcore\Placeholder;
 use Psr\Log\LoggerAwareInterface;
@@ -52,6 +53,7 @@ final class Importer implements ImporterInterface
     private $loaderRegistry;
     private $eventDispatcher;
     private $logger;
+    private $modelFactory;
     private $shouldStop = false;
 
     public function __construct(
@@ -63,7 +65,8 @@ final class Importer implements ImporterInterface
         ServiceRegistryInterface $cleanerRegistry,
         ServiceRegistryInterface $loaderRegistry,
         EventDispatcherInterface $eventDispatcher,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Factory $modelFactory
     ) {
         $this->providerRegistry = $providerRegistry;
         $this->filterRegistry = $filterRegistry;
@@ -74,6 +77,7 @@ final class Importer implements ImporterInterface
         $this->loaderRegistry = $loaderRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
+        $this->modelFactory = $modelFactory;
     }
 
     /**
@@ -245,7 +249,7 @@ final class Importer implements ImporterInterface
 
         foreach ($dataSet as $row) {
             try {
-                $object = $this->importRow($definition, $row, $dataSet, $params, $filter);
+                $object = $this->importRow($definition, $row, $dataSet, array_merge($params, ['row' => $count]), $filter);
 
                 if ($object instanceof Concrete) {
                     $objectIds[] = $object->getId();
@@ -537,7 +541,8 @@ final class Importer implements ImporterInterface
         $obj = $loader->load($class, $data, $definition, $params);
 
         if (null === $obj) {
-            $obj = new $classObject();
+            $classImplementation = $this->modelFactory->getClassNameFor($classObject) ?? $classObject;
+            $obj = new $classImplementation();
         }
 
         $key = Service::getValidKey($this->createKey($definition, $data), 'object');

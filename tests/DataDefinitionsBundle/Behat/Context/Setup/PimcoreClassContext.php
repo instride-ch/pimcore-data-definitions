@@ -322,6 +322,70 @@ final class PimcoreClassContext implements Context
     }
 
     /**
+     * @Given /^the (definition) has a external-image field "([^"]+)"$/
+     */
+    public function definitionHasExternalImageField($definition, $name)
+    {
+        $jsonDefinition = sprintf('
+            {
+                "fieldtype": "externalImage",
+                "width": null,
+                "queryColumnType": "longtext",
+                "columnType": "longtext",
+                "phpdocType": \\Pimcore\\Model\\DataObject\\Data\\ExternalImage",
+                "name": "%s",
+                "title": "%s",
+                "tooltip": "",
+                "mandatory": false,
+                "noteditable": false,
+                "index": false,
+                "locked": false,
+                "style": "",
+                "permissions": null,
+                "datatype": "data",
+                "relationType": false,
+                "invisible": false,
+                "visibleGridView": true,
+                "visibleSearch": true
+            }
+        ', $name, $name);
+
+        $this->addFieldDefinitionToDefinition($definition, $jsonDefinition);
+    }
+
+ /**
+     * @Given /^the (definition) has a link field "([^"]+)"$/
+     */
+    public function definitionHasLinkField($definition, $name)
+    {
+        $jsonDefinition = sprintf('
+            {
+                "fieldtype": "link",
+                "width": null,
+                "queryColumnType": "text",
+                "columnType": "text",
+                "phpdocType": \\Pimcore\\Model\\DataObject\\Data\\Link",
+                "name": "%s",
+                "title": "%s",
+                "tooltip": "",
+                "mandatory": false,
+                "noteditable": false,
+                "index": false,
+                "locked": false,
+                "style": "",
+                "permissions": null,
+                "datatype": "data",
+                "relationType": false,
+                "invisible": false,
+                "visibleGridView": true,
+                "visibleSearch": true
+            }
+        ', $name, $name);
+
+        $this->addFieldDefinitionToDefinition($definition, $jsonDefinition);
+    }
+
+    /**
      * @Given /^the (definition) has a wysiwyg field "([^"]+)"$/
      */
     public function definitionHasWysiwygField($definition, $name)

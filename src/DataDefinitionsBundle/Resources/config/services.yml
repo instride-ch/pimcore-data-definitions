@@ -26,6 +26,7 @@ services:
             - '@data_definitions.registry.loader'
             - '@Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher'
             - '@logger'
+            - '@pimcore.model.factory'
         tags:
             - { name: monolog.logger, channel: import_definition }
             - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
@@ -255,6 +256,14 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\DoNotSetOnEmptyInterpreter:
       tags:
         - { name: data_definitions.interpreter, type: donotsetonempty, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\LinkInterpreter:
+        tags:
+            - { name: data_definitions.interpreter, type: link, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\ExternalImageInterpreter:
+        tags:
+            - { name: data_definitions.interpreter, type: external_image, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     ### PROVIDER
     Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:

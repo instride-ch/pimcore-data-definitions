@@ -30,7 +30,7 @@ class ExpressionProcessor implements ImportRuleProcessorInterface
         $this->container = $container;
     }
 
-    public function apply(ImportRuleInterface $rule, Concrete $concrete, array $configuration, $params = [])
+    public function apply(ImportRuleInterface $rule, Concrete $concrete, $value, array $configuration, array $params = [])
     {
         $expression = $configuration['expression'];
 

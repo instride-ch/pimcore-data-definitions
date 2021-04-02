@@ -87,29 +87,18 @@ class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterfa
             'dataSet' => $this->getDataSet()
         ];
 
-        $result = [];
-        $validResult = false;
-
         foreach ($ruleObjects as $rule) {
             if ($this->ruleValidationProcessor->isImportRuleValid($definition, $object, $rule, $params)) {
-                $validResult = true;
-                $result[] = $this->ruleProcessor->applyRule(
+                $value = $this->ruleProcessor->applyRule(
                     $rule,
                     $object,
+                    $value,
                     $params
                 );
             }
         }
 
-        if (!$validResult) {
-            return $value;
-        }
-
-        if (count($result) === 1) {
-            return $result[0];
-        }
-
-        return $result;
+        return $value;
     }
 }
 

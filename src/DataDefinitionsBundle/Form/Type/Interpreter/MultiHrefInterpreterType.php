@@ -26,5 +26,3 @@ final class MultiHrefInterpreterType extends AbstractType
             ->add('class', TextType::class);
     }
 }
-
-

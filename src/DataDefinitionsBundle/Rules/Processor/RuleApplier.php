@@ -28,22 +28,16 @@ class RuleApplier implements RuleApplierInterface
         $this->actionServiceRegistry = $actionServiceRegistry;
     }
 
-    public function applyRule(ImportRuleInterface $rule, Concrete $concrete, $params)
+    public function applyRule(ImportRuleInterface $rule, Concrete $concrete, $value, array $params)
     {
-        $result = [];
-
         foreach ($rule->getActions() as $action) {
             $processor = $this->actionServiceRegistry->get($action->getType());
 
             if ($processor instanceof ImportRuleProcessorInterface) {
-                $result = $processor->apply($rule, $concrete, $action->getConfiguration(), $params);
+                $value = $processor->apply($rule, $concrete, $value, $action->getConfiguration(), $params);
             }
         }
 
-        if (is_array($result) && count($result) === 1) {
-            return $result[0];
-        }
-
-        return $result;
+        return $value;
     }
 }

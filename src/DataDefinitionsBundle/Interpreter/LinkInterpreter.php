@@ -15,15 +15,15 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
+use Pimcore\Model\DataObject\Data\Link;
+use Pimcore\Model\Element\ElementInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
-class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInterface
+class LinkInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
     public function interpret(
         Concrete $object,
         $value,
@@ -33,10 +33,27 @@ class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInte
         $params,
         $configuration
     ) {
-        $value = $value !== '' ? $value : null;
-        $unit = $configuration['unit'];
+        if (($definition instanceof ExportDefinitionInterface) && $value instanceof Link) {
+            return $value->getHref();
+        }
 
-        return new \Pimcore\Model\DataObject\Data\QuantityValue($value, $unit);
+        if (($definition instanceof ImportDefinitionInterface)) {
+            $link = new Link();
+
+            if (filter_var($value, FILTER_VALIDATE_URL)) {
+                $link->setDirect($value);
+            }
+
+            $link->setText($value);
+
+            if ($value instanceof ElementInterface) {
+                $link->setObject($value);
+            }
+
+            return $link;
+        }
+
+        return null;
     }
 }
 

@@ -9,7 +9,8 @@ as often you like. Everything within Data Definitions is extendable.
 ![Interface](docs/images/mapping.png)
 
 ## Requirements
-* Pimcore 5.8 or 6.0
+* Pimcore 5.8 or 6.x
+* Pimcore X (since Version 5)
 
 ## Getting started/Installation
  * Install via composer  

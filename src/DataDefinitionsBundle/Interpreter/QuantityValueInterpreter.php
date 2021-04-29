@@ -12,9 +12,12 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Data\QuantityValue;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
@@ -36,8 +39,6 @@ class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInte
         $value = $value !== '' ? $value : null;
         $unit = $configuration['unit'];
 
-        return new \Pimcore\Model\DataObject\Data\QuantityValue($value, $unit);
+        return new QuantityValue($value, $unit);
     }
 }
-
-

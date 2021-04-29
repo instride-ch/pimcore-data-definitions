@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop;
 

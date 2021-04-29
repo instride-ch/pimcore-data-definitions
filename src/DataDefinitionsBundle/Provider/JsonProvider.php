@@ -12,13 +12,18 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use function count;
 
 class JsonProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
@@ -37,7 +42,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
      */
     protected function getJsonDepth(array $arr)
     {
-        $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
+        $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($arr));
         $depth = 0;
         foreach ($it as $v) {
             $it->getDepth() > $depth and $depth = $it->getDepth();
@@ -60,7 +65,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         $rows = json_decode($jsonExample, true);
         $returnHeaders = [];
 
-        if (\count($rows) > 0) {
+        if (count($rows) > 0) {
             $firstRow = $rows[0];
 
             foreach ($firstRow as $key => $val) {
@@ -108,5 +113,3 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $stream;
     }
 }
-
-

@@ -12,26 +12,21 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
+use Exception;
+use Pimcore\Logger;
 use Pimcore\Model\AbstractModel;
 
 class Log extends AbstractModel
 {
-    /**
-     * @var int
-     */
-    public $id;
+    public int $id;
 
-    /**
-     * @var int
-     */
-    public $definition;
+    public int $definition;
 
-    /**
-     * @var int
-     */
-    public $o_id;
+    public int $o_id;
 
     /**
      * Get Log by id
@@ -46,8 +41,8 @@ class Log extends AbstractModel
             $obj->getDao()->getById($id);
 
             return $obj;
-        } catch (\Exception $ex) {
-            \Logger::warn(sprintf('Log with ID %s not found', $id));
+        } catch (Exception $ex) {
+            Logger::warn(sprintf('Log with ID %s not found', $id));
         }
 
         return null;
@@ -101,5 +96,3 @@ class Log extends AbstractModel
         $this->o_id = $o_id;
     }
 }
-
-

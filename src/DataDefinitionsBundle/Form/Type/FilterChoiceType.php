@@ -20,21 +20,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class FilterChoiceType extends AbstractType
 {
-    private $filters;
+    private array $filters;
 
     public function __construct(array $filters)
     {
         $this->filters = $filters;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'choices' => array_flip($this->filters),
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }

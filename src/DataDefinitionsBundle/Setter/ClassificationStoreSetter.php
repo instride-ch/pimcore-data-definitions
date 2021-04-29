@@ -12,17 +12,19 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
+use Pimcore\Model\DataObject\Classificationstore;
 use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ClassificationStoreSetter implements SetterInterface, GetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, ImportMapping $map, $data): void
     {
         $mapConfig = $map->getSetterConfig();
         $fieldName = $mapConfig['field'];
@@ -34,7 +36,7 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
         if (method_exists($object, $classificationStoreGetter)) {
             $classificationStore = $object->$classificationStoreGetter();
 
-            if ($classificationStore instanceof \Pimcore\Model\DataObject\Classificationstore) {
+            if ($classificationStore instanceof Classificationstore) {
                 $groups = $classificationStore->getActiveGroups();
 
                 if (!$groups[$groupConfig]) {
@@ -59,7 +61,7 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
         if (method_exists($object, $classificationStoreGetter)) {
             $classificationStore = $object->$classificationStoreGetter();
 
-            if ($classificationStore instanceof \Pimcore\Model\DataObject\Classificationstore) {
+            if ($classificationStore instanceof Classificationstore) {
                 $groups = $classificationStore->getActiveGroups();
 
                 if (!$groups[$groupConfig]) {
@@ -74,5 +76,3 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
         return null;
     }
 }
-
-

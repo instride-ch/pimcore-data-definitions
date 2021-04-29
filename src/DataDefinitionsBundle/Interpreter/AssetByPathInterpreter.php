@@ -12,22 +12,17 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
+use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
 
 class AssetByPathInterpreter implements InterpreterInterface
 {
-    protected $placeholderService;
-
-    public function __construct(Placeholder $placeholderService)
-    {
-        $this->placeholderService = $placeholderService;
-    }
-
     public function interpret(
         Concrete $object,
         $value,
@@ -37,10 +32,8 @@ class AssetByPathInterpreter implements InterpreterInterface
         $params,
         $configuration
     ) {
-        $assetFullPath = $configuration['path']."/".$value;
+        $assetFullPath = $configuration['path'] . '/' . $value;
 
-        return \Pimcore\Model\Asset::getByPath($assetFullPath);
+        return Asset::getByPath($assetFullPath);
     }
 }
-
-

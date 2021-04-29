@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Pimcore\Migrations\Migration\AbstractPimcoreMigration;
+use Doctrine\Migrations\AbstractMigration;
 
-class Version20190731104917 extends AbstractPimcoreMigration
+class Version20190731104917 extends AbstractMigration
 {
     /**
      * @param Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         if ($schema->hasTable('import_definitions_log')) {
             // delete just created table before renaming the old table
@@ -25,9 +27,8 @@ class Version20190731104917 extends AbstractPimcoreMigration
     /**
      * @param Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-
     }
 }

@@ -12,30 +12,29 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
+
+use Closure;
+use Iterator;
 
 class ImportDataSet implements ImportDataSetInterface
 {
-    /**
-     * @var /Iterator
-     */
-    private $iterator;
+    private Iterator $iterator;
 
     /**
      * @var int|false
      */
-    private $countAll;
+    private int|false $countAll;
 
-    /**
-     * @var null|\Closure
-     */
-    private $processor;
+    private ?Closure $processor;
 
-    public function __construct(\Iterator $iterator, \Closure $processor = null)
+    public function __construct(Iterator $iterator, Closure $processor = null)
     {
         $this->iterator = $iterator;
         $this->countAll = false;
-        $this->processor = $processor ?? function ($current) {
+        $this->processor = $processor ?? static function ($current) {
                 return $current;
             };
     }
@@ -115,5 +114,3 @@ class ImportDataSet implements ImportDataSetInterface
         return $this->countAll;
     }
 }
-
-

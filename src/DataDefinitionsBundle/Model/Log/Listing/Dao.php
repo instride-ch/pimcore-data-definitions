@@ -12,15 +12,20 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\Log\Listing;
 
-use Pimcore\Db\ZendCompatibility\Expression;
-use Pimcore\Db\ZendCompatibility\QueryBuilder;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Exception;
 use Pimcore\Model\Listing;
+use Pimcore\Model\Listing\Dao\QueryBuilderHelperTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
 class Dao extends Listing\Dao\AbstractDao
 {
+    use QueryBuilderHelperTrait;
+
     /**
      * @var string
      */
@@ -31,7 +36,7 @@ class Dao extends Listing\Dao\AbstractDao
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getTableName()
     {
@@ -40,41 +45,25 @@ class Dao extends Listing\Dao\AbstractDao
 
     /**
      * @return QueryBuilder
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getQuery()
+    public function getQueryBuilder()
     {
-        // init
-        $select = $this->db->select();
+        $queryBuilder = $this->db->createQueryBuilder();
 
-        // create base
         $field = sprintf('%s.id', $this->getTableName());
-        $select->from(
-            [$this->getTableName()], [
-                new Expression(sprintf('SQL_CALC_FOUND_ROWS %s as id', $field)),
-            ]
-        );
+        $queryBuilder->select([sprintf('SQL_CALC_FOUND_ROWS %s as id', $field)]);
+        $queryBuilder->from($this->getTableName());
+        $this->applyListingParametersToQueryBuilder($queryBuilder);
 
-        // add condition
-        $this->addConditions($select);
-
-        // group by
-        $this->addGroupBy($select);
-
-        // order
-        $this->addOrder($select);
-
-        // limit
-        $this->addLimit($select);
-
-        return $select;
+        return $queryBuilder;
     }
 
     /**
      * Loads objects from the database.
      *
      * @return Log[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function load()
     {
@@ -97,7 +86,7 @@ class Dao extends Listing\Dao\AbstractDao
      * Loads a list for the specified parameters, returns an array of ids.
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadIdList()
     {
@@ -107,7 +96,7 @@ class Dao extends Listing\Dao\AbstractDao
             $this->totalCount = (int)$this->db->fetchOne('SELECT FOUND_ROWS()');
 
             return $objectIds;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -116,29 +105,23 @@ class Dao extends Listing\Dao\AbstractDao
      * Get Count
      *
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getCount()
+    public function getCount(): int
     {
-        $amount = (int)$this->db->fetchOne('SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition().$this->getOffsetLimit(),
+        return (int)$this->db->fetchOne('SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition().$this->getOffsetLimit(),
             $this->model->getConditionVariables());
-
-        return $amount;
     }
 
     /**
      * Get Total Count.
      *
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
-        $amount = (int)$this->db->fetchOne('SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition(),
+        return (int)$this->db->fetchOne('SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition(),
             $this->model->getConditionVariables());
-
-        return $amount;
     }
 }
-
-

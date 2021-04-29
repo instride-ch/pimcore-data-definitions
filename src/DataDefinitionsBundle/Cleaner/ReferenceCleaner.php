@@ -12,22 +12,25 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Cleaner;
 
 use Pimcore\Model\Dependency;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use function count;
 
 class ReferenceCleaner extends AbstractCleaner
 {
-    public function cleanup(DataDefinitionInterface $definition, $objects)
+    public function cleanup(DataDefinitionInterface $definition, array $objectIds)
     {
-        $notFoundObjects = $this->getObjectsToClean($definition, $objects);
+        $notFoundObjects = $this->getObjectsToClean($definition, $objectIds);
 
         foreach ($notFoundObjects as $obj) {
             $dependency = $obj->getDependencies();
 
             if ($dependency instanceof Dependency) {
-                if (\count($dependency->getRequiredBy()) === 0) {
+                if (count($dependency->getRequiredBy()) === 0) {
                     $obj->delete();
                 } else {
                     $obj->setPublished(false);
@@ -37,4 +40,3 @@ class ReferenceCleaner extends AbstractCleaner
         }
     }
 }
-

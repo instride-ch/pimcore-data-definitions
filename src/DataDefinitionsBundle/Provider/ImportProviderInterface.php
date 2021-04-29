@@ -12,8 +12,11 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use Exception;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
@@ -24,7 +27,7 @@ interface ImportProviderInterface
      *
      * @param array $configuration
      * @return boolean
-     * @throws \Exception
+     * @throws Exception
      */
     public function testData(array $configuration): bool;
 
@@ -45,5 +48,3 @@ interface ImportProviderInterface
      */
     public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null);
 }
-
-

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
@@ -21,7 +23,6 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController;
 use Wvision\Bundle\DataDefinitionsBundle\Controller\ImportDefinitionController;
-use Wvision\Bundle\DataDefinitionsBundle\Controller\ImportRuleController;
 use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType;
 use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
@@ -34,8 +35,8 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('wvision_data_definitions');
+        $treeBuilder = new TreeBuilder('wvision_data_definitions');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()

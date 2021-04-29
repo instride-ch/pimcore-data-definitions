@@ -9,5 +9,4 @@ A Import Definition consists of following parts:
  - [Interpreter](./interpreter.md)
  - [Setter](./import/setter.md)
  - [Commands](./commands.md)
- - [Placeholders](./placeholders.md)
  - [Auto Wire](./autowiring.md)

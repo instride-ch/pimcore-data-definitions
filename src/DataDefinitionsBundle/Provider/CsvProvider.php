@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use League\Csv\Reader;
@@ -22,12 +24,14 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use function chr;
+use function count;
 
 class CsvProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 
-    private $exportData = [];
+    private array $exportData = [];
 
     public function testData(array $configuration): bool
     {
@@ -36,7 +40,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
 
     public function getColumns(array $configuration)
     {
-        $csvHeaders = $configuration['csvHeaders'];
+        $csvHeaders = (string) $configuration['csvHeaders'];
         $csvExample = $configuration['csvExample'];
         $delimiter = $configuration['delimiter'];
         $enclosure = $configuration['enclosure'];
@@ -44,12 +48,12 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $returnHeaders = [];
         $rows = str_getcsv($csvHeaders ?: $csvExample, "\n"); //parse the rows
 
-        if (\count($rows) > 0) {
+        if (count($rows) > 0) {
             $headerRow = $rows[0];
 
-            $headers = str_getcsv($headerRow, $delimiter, $enclosure ?: \chr(8));
+            $headers = str_getcsv($headerRow, $delimiter, $enclosure ?: chr(8));
 
-            if (\count($headers) > 0) {
+            if (count($headers) > 0) {
                 //First line are the headers
                 foreach ($headers as $header) {
                     if (!$header) {
@@ -96,7 +100,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
             $writer->insertOne($headers);
             $writer->insertAll($records);
 
-            $csv = Reader::createFromString($writer->getContent());
+            $csv = Reader::createFromString($writer->toString());
             $csv->setHeaderOffset(0);
         } else {
             $csv->setHeaderOffset(0);
@@ -105,11 +109,11 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $stmt = new Statement();
 
         if ($offset) {
-            $stmt = $stmt->offset(intval($offset));
+            $stmt = $stmt->offset((int)$offset);
         }
 
         if ($limit) {
-            $stmt = $stmt->limit(intval($limit));
+            $stmt = $stmt->limit((int)$limit);
         }
 
         $records = $stmt->process($csv);
@@ -154,5 +158,3 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $stream;
     }
 }
-
-

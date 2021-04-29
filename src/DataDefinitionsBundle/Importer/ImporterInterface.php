@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Importer;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
@@ -23,7 +25,5 @@ interface ImporterInterface
      * @param                           $params
      * @return array of object ids
      */
-    public function doImport(ImportDefinitionInterface $definition, $params);
+    public function doImport(ImportDefinitionInterface $definition, $params): array;
 }
-
-

@@ -12,16 +12,17 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class KeySetter implements SetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, ImportMapping $map, $data): void
     {
         $setter = explode('~', $map->getToColumn());
         $setter = preg_replace('/^o_/', '', $setter[0]);
@@ -32,5 +33,3 @@ class KeySetter implements SetterInterface
         }
     }
 }
-
-

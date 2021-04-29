@@ -12,9 +12,13 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
+use Exception;
+use InvalidArgumentException;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -28,9 +32,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ImportCommand extends AbstractCommand
 {
-    protected $eventDispatcher;
-    protected $repository;
-    protected $importer;
+    protected EventDispatcherInterface $eventDispatcher;
+    protected RepositoryInterface $repository;
+    protected ImporterInterface $importer;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -44,7 +48,7 @@ final class ImportCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('data-definitions:import')
@@ -79,7 +83,7 @@ EOT
 
         try {
             $definition = $this->repository->find($input->getOption('definition'));
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $definition = $this->repository->findByName($input->getOption('definition'));
         }
         $progress = null;
@@ -88,7 +92,7 @@ EOT
         $startTime = time();
 
         if (!$definition instanceof ImportDefinitionInterface) {
-            throw new \Exception('Import Definition not found');
+            throw new Exception('Import Definition not found');
         }
 
         $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process, &$countProgress, $startTime) {
@@ -169,4 +173,3 @@ EOT
         return 0;
     }
 }
-

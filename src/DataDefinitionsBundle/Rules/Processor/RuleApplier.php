@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Processor;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
@@ -21,7 +23,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class RuleApplier implements RuleApplierInterface
 {
-    private $actionServiceRegistry;
+    private ServiceRegistryInterface $actionServiceRegistry;
 
     public function __construct(ServiceRegistryInterface $actionServiceRegistry)
     {

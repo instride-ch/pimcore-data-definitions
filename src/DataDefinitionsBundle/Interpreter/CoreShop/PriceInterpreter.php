@@ -18,6 +18,7 @@ use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use function is_string;
 
 final class PriceInterpreter implements InterpreterInterface
 {
@@ -32,7 +33,7 @@ final class PriceInterpreter implements InterpreterInterface
     ) {
         $inputIsFloat = $configuration['isFloat'];
 
-        if (\is_string($value)) {
+        if (is_string($value)) {
             $value = str_replace(',', '.', $value);
             $value = (float)$value;
         }

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -40,6 +42,7 @@ class MetadataInterpreter implements InterpreterInterface
             $metadata = [];
         }
 
+        /** @var ElementMetadata|ObjectMetadata $elementMetadata */
         $elementMetadata = new $class($fieldname, array_keys($metadata), $value);
         foreach ($metadata as $metadataKey => $metadataValue) {
             $setter = 'set' . ucfirst($metadataKey);
@@ -49,5 +52,3 @@ class MetadataInterpreter implements InterpreterInterface
         return $elementMetadata;
     }
 }
-
-

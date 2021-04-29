@@ -12,13 +12,15 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Cleaner;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class None extends AbstractCleaner
 {
-    public function cleanup(DataDefinitionInterface $definition, $objects)
+    public function cleanup(DataDefinitionInterface $definition, array $objectIds)
     {
         // Nothing to do here
     }

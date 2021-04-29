@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 
 use Pimcore\Model\DataObject\ClassDefinition;
@@ -21,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ClassChoiceType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $classes = new ClassDefinition\Listing();
         $classes = $classes->load();
@@ -38,9 +40,8 @@ final class ClassChoiceType extends AbstractType
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }
 }
-

@@ -12,32 +12,37 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle;
 
-use Doctrine\DBAL\Migrations\Version;
-use Doctrine\DBAL\Schema\Schema;
+use Pimcore;
 use Pimcore\Console\Application;
-use Pimcore\Extension\Bundle\Installer\MigrationInstaller;
+use Pimcore\Extension\Bundle\Installer\SettingsStoreAwareInstaller;
 use Symfony\Component\Console\Input\ArrayInput;
+use Wvision\Bundle\DataDefinitionsBundle\Migrations\Version20190731104917;
 
-class Installer extends MigrationInstaller
+class Installer extends SettingsStoreAwareInstaller
 {
-    protected function beforeInstallMigration()
+    public function getLastMigrationVersionClassName(): ?string
     {
-        $kernel = \Pimcore::getKernel();
+        return Version20190731104917::class;
+    }
+
+    public function install(): void
+    {
+        $kernel = Pimcore::getKernel();
         $application = new Application($kernel);
         $application->setAutoExit(false);
         $options = ['command' => 'coreshop:resources:install'];
         $options = array_merge($options, ['--no-interaction' => true, '--application-name data_definitions']);
         $application->run(new ArrayInput($options));
+
+        parent::install();
     }
 
-    public function migrateInstall(Schema $schema, Version $version)
+    public function uninstall(): void
     {
-    }
-
-    public function migrateUninstall(Schema $schema, Version $version)
-    {
+        parent::uninstall();
     }
 }
-

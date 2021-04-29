@@ -7,5 +7,4 @@ A Export Definition consists of following parts:
  - [Interpreter](./interpreter.md)
  - [Getter](./export/getter.md)
  - [Commands](./commands.md)
- - [Placeholders](./placeholders.md)
  - [Auto Wire](./autowiring.md)

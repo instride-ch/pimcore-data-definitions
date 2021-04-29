@@ -10,6 +10,8 @@
  * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
@@ -17,20 +19,20 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
-    private $eventDispatcher;
+    private SymfonyEventDispatcherInterface $eventDispatcher;
 
     public function __construct(SymfonyEventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function dispatch(DataDefinitionInterface $definition, $eventName, $subject = '', $params = [])
+    public function dispatch(DataDefinitionInterface $definition, $eventName, $subject = '', $params = []): void
     {
         $event = $this->getEvent($definition, $subject, $params);
 
         $this->eventDispatcher->dispatch(
-            sprintf('%s%s', $eventName, isset($params['child']) && $params['child'] ? '.child' : ''),
-            $event
+            $event,
+            sprintf('%s%s', $eventName, isset($params['child']) && $params['child'] ? '.child' : '')
         );
     }
 
@@ -40,9 +42,8 @@ final class EventDispatcher implements EventDispatcherInterface
      * @param array               $params
      * @return ImportDefinitionEvent
      */
-    private function getEvent(DataDefinitionInterface $definition, $subject = '', $params = [])
+    private function getEvent(DataDefinitionInterface $definition, $subject = '', $params = []): ImportDefinitionEvent
     {
         return new ImportDefinitionEvent($definition, $subject, $params);
     }
 }
-

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
 use Pimcore\Model\Asset;
@@ -25,5 +27,5 @@ interface ArtifactGenerationProviderInterface
      * @param                           $params
      * @return Asset
      */
-    public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset;
+    public function generateArtifact(array $configuration, ExportDefinitionInterface $definition, $params): ?Asset;
 }

@@ -12,8 +12,11 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
 
+use Exception;
 use Pimcore\Model;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
@@ -22,16 +25,14 @@ class Listing extends Model\Listing\JsonListing
     /**
      * Contains the results of the list.
      * They are all an instance of Configuration.
-     *
-     * @var array
      */
-    public $definitions;
+    public ?array $definitions = null;
 
     /**
      * Get Configurations.
      *
      * @return ImportDefinitionInterface[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function getObjects()
     {
@@ -47,10 +48,8 @@ class Listing extends Model\Listing\JsonListing
      *
      * @param array $definitions
      */
-    public function setObjects($definitions)
+    public function setObjects(array $definitions)
     {
         $this->definitions = $definitions;
     }
 }
-
-

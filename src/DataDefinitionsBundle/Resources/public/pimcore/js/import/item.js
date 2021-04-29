@@ -357,7 +357,7 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
         if (!this.mappingSettings) {
             this.mappingSettings = Ext.create({
                 xtype: 'panel',
-                layout: 'border',
+                layout: 'fit',
                 title: t('data_definitions_mapping_settings'),
                 iconCls: 'data_definitions_icon_mapping',
                 disabled: true
@@ -433,7 +433,7 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
 
                         var grid = Ext.create({
                             xtype: 'grid',
-                            region: 'center',
+                            //region: 'center',
                             store: gridStore,
                             plugins: [cellEditingPlugin],
                             features: [{

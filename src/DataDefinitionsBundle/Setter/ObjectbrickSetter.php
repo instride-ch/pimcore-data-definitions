@@ -12,9 +12,12 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
 use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Objectbrick;
 use Pimcore\Model\DataObject\Objectbrick\Data\AbstractData;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
@@ -38,12 +41,12 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
         if (method_exists($object, $brickGetter)) {
             $brick = $object->$brickGetter();
 
-            if (!$brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
-                $brick = new \Pimcore\Model\DataObject\Objectbrick($object, $fieldName);
+            if (!$brick instanceof Objectbrick) {
+                $brick = new Objectbrick($object, $fieldName);
                 $object->$brickSetter($brick);
             }
 
-            if ($brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
+            if ($brick instanceof Objectbrick) {
                 $brickClassGetter = sprintf('get%s', ucfirst($class));
                 $brickClassSetter = sprintf('set%s', ucfirst($class));
 
@@ -80,34 +83,30 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
         if (method_exists($object, $brickGetter)) {
             $brick = $object->$brickGetter();
 
-            if (!$brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
+            if (!$brick instanceof Objectbrick) {
                 return;
             }
 
-            if ($brick instanceof \Pimcore\Model\DataObject\Objectbrick) {
-                $brickClassGetter = sprintf('get%s', ucfirst($class));
-                $brickClassSetter = sprintf('set%s', ucfirst($class));
+            $brickClassGetter = sprintf('get%s', ucfirst($class));
+            $brickClassSetter = sprintf('set%s', ucfirst($class));
 
-                $brickFieldObject = $brick->$brickClassGetter();
+            $brickFieldObject = $brick->$brickClassGetter();
 
-                if (!$brickFieldObject instanceof AbstractData) {
-                    $brickFieldObjectClass = 'Pimcore\Model\DataObject\Objectbrick\Data\\'.$class;
+            if (!$brickFieldObject instanceof AbstractData) {
+                $brickFieldObjectClass = 'Pimcore\Model\DataObject\Objectbrick\Data\\'.$class;
 
-                    $brickFieldObject = new $brickFieldObjectClass($object);
+                $brickFieldObject = new $brickFieldObjectClass($object);
 
-                    $brick->$brickClassSetter($brickFieldObject);
-                }
+                $brick->$brickClassSetter($brickFieldObject);
+            }
 
-                $getter = sprintf('get%s', ucfirst($brickField));
+            $getter = sprintf('get%s', ucfirst($brickField));
 
-                if (method_exists($brickFieldObject, $getter)) {
-                    return $brickFieldObject->$getter();
-                }
+            if (method_exists($brickFieldObject, $getter)) {
+                return $brickFieldObject->$getter();
             }
         }
 
         return null;
     }
 }
-
-

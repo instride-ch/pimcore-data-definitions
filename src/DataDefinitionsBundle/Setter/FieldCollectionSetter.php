@@ -12,18 +12,21 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
+use Exception;
 use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Fieldcollection;
 use Pimcore\Model\DataObject\Fieldcollection\Data\AbstractData as AbstractFieldCollection;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class FieldCollectionSetter implements SetterInterface, GetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, ImportMapping $map, $data): void
     {
         $keyParts = explode('~', $map->getToColumn());
 
@@ -32,7 +35,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         $fieldName = $config['field'];
         $class = $config['class'];
         $keys = explode(',', $keys);
-        $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\'.ucfirst($class);
+        $fieldCollectionClass = 'Pimcore\Model\DataObject\Fieldcollection\Data\\' . ucfirst($class);
         $field = $keyParts[3];
         $mappedKeys = [];
 
@@ -51,8 +54,8 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         if (method_exists($object, $getter)) {
             $fieldCollection = $object->$getter();
 
-            if (!$fieldCollection instanceof \Pimcore\Model\DataObject\Fieldcollection) {
-                $fieldCollection = new \Pimcore\Model\DataObject\Fieldcollection();
+            if (!$fieldCollection instanceof Fieldcollection) {
+                $fieldCollection = new Fieldcollection();
             }
 
             $items = $fieldCollection->getItems();
@@ -102,7 +105,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         if (method_exists($object, $getter)) {
             $fieldCollection = $object->$getter();
 
-            if (!$fieldCollection instanceof \Pimcore\Model\DataObject\Fieldcollection) {
+            if (!$fieldCollection instanceof Fieldcollection) {
                 return null;
             }
 
@@ -136,7 +139,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
      * @param       $fieldcollection
      * @param       $data
      * @return boolean
-     * @throws \Exception
+     * @throws Exception
      */
     protected function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, $data)
     {
@@ -157,5 +160,3 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         return true;
     }
 }
-
-

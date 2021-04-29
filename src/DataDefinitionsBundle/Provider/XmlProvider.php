@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Pimcore\Model\Asset;
@@ -22,12 +24,14 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use XMLWriter;
+use function count;
 
 class XmlProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 
-    /** @var \XMLWriter */
+    /** @var XMLWriter */
     private $writer;
 
     /** @var string */
@@ -79,7 +83,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
 
         $returnHeaders = [];
 
-        if (\count($rows) > 0) {
+        if (count($rows) > 0) {
             $firstRow = $rows;
 
             foreach ($firstRow as $key => $val) {
@@ -165,10 +169,10 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return fopen($this->getExportPath(), 'rb');
     }
 
-    private function getXMLWriter(): \XMLWriter
+    private function getXMLWriter(): XMLWriter
     {
         if (null === $this->writer) {
-            $this->writer = new \XMLWriter();
+            $this->writer = new XMLWriter();
             $this->writer->openMemory();
             $this->writer->setIndent(true);
             $this->writer->startDocument('1.0', 'UTF-8');
@@ -189,12 +193,12 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $this->exportPath;
     }
 
-    private function flush(\XMLWriter $writer): void
+    private function flush(XMLWriter $writer): void
     {
         file_put_contents($this->getExportPath(), $writer->flush(true), FILE_APPEND);
     }
 
-    private function serialize(\XMLWriter $writer, ?string $name, $data, ?int $key = null): void
+    private function serialize(XMLWriter $writer, ?string $name, $data, ?int $key = null): void
     {
         if (is_scalar($data)) {
             $writer->startElement('property');
@@ -237,7 +241,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         }
     }
 
-    private function serializeCollection(\XMLWriter $writer, array $data): void
+    private function serializeCollection(XMLWriter $writer, array $data): void
     {
         foreach ($data as $key => $value) {
             if (is_numeric($key)) {
@@ -248,5 +252,3 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         }
     }
 }
-
-

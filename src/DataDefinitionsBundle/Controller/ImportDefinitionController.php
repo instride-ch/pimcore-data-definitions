@@ -12,22 +12,27 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
+use Exception;
 use Pimcore\Model\DataObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection;
+use function is_array;
 
 class ImportDefinitionController extends ResourceController
 {
     /**
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return mixed|JsonResponse
      */
     public function getConfigAction()
     {
@@ -70,7 +75,7 @@ class ImportDefinitionController extends ResourceController
                 if ($this->get('data_definitions.registry.provider')->get($definition->getProvider())->testData($definition->getConfiguration())) {
                     return $this->viewHandler->handle(['success' => true]);
                 }
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 return $this->viewHandler->handle(['success' => false, 'message' => $ex->getMessage()]);
             }
         }
@@ -80,8 +85,8 @@ class ImportDefinitionController extends ResourceController
 
     /**
      * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
+     * @return mixed|JsonResponse
+     * @throws Exception
      */
     public function getColumnsAction(Request $request)
     {
@@ -96,7 +101,7 @@ class ImportDefinitionController extends ResourceController
             try {
                 $fromColumns = $this->get('data_definitions.registry.provider')->get($definition->getProvider())->getColumns($definition->getConfiguration());
                 $fromColumns[] = $customFromColumn;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $fromColumns = [];
             }
 
@@ -132,7 +137,7 @@ class ImportDefinitionController extends ResourceController
             foreach ($toColumns as $classToColumn) {
                 $found = false;
 
-                if (\is_array($mappings)) {
+                if (is_array($mappings)) {
                     foreach ($mappings as $mapping) {
                         if ($mapping->getToColumn() === $classToColumn->getIdentifier()) {
                             $found = true;
@@ -215,7 +220,7 @@ class ImportDefinitionController extends ResourceController
 
     /**
      * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return mixed|JsonResponse
      */
     public function importAction(Request $request)
     {
@@ -248,7 +253,7 @@ class ImportDefinitionController extends ResourceController
 
     /**
      * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return mixed|JsonResponse
      */
     public function duplicateAction(Request $request)
     {
@@ -275,7 +280,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getConfigProviders(): array
     {
-        return $this->getParameter('data_definitions.import_providers');
+        return $this->container->getParameter('data_definitions.import_providers');
     }
 
     /**
@@ -283,7 +288,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getConfigLoaders(): array
     {
-        return $this->getParameter('data_definitions.loaders');
+        return $this->container->getParameter('data_definitions.loaders');
     }
 
     /**
@@ -291,7 +296,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getConfigInterpreters(): array
     {
-        return $this->getParameter('data_definitions.interpreters');
+        return $this->container->getParameter('data_definitions.interpreters');
     }
 
     /**
@@ -299,7 +304,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getConfigCleaners(): array
     {
-        return $this->getParameter('data_definitions.cleaners');
+        return $this->container->getParameter('data_definitions.cleaners');
     }
 
     /**
@@ -307,7 +312,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getConfigSetters(): array
     {
-        return $this->getParameter('data_definitions.setters');
+        return $this->container->getParameter('data_definitions.setters');
     }
 
     /**
@@ -315,7 +320,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getConfigFilters(): array
     {
-        return $this->getParameter('data_definitions.filters');
+        return $this->container->getParameter('data_definitions.filters');
     }
 
     /**
@@ -323,7 +328,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getConfigRunners(): array
     {
-        return $this->getParameter('data_definitions.runners');
+        return $this->container->getParameter('data_definitions.runners');
     }
 
     /**
@@ -331,7 +336,7 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getImportRuleConditions(): array
     {
-        return $this->getParameter('data_definitions.import_rule.conditions');
+        return $this->container->getParameter('data_definitions.import_rule.conditions');
     }
 
     /**
@@ -339,7 +344,6 @@ class ImportDefinitionController extends ResourceController
      */
     protected function getImportRuleActions(): array
     {
-        return $this->getParameter('data_definitions.import_rule.actions');
+        return $this->container->getParameter('data_definitions.import_rule.actions');
     }
 }
-

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
@@ -26,8 +28,8 @@ use Symfony\Component\Form\FormInterface;
 
 final class ExportDefinitionType extends AbstractResourceType
 {
-    private $formTypeRegistry;
-    private $fetcherFormTypeRegistry;
+    private FormTypeRegistryInterface $formTypeRegistry;
+    private FormTypeRegistryInterface $fetcherFormTypeRegistry;
 
     public function __construct(
         $dataClass,
@@ -41,7 +43,7 @@ final class ExportDefinitionType extends AbstractResourceType
         $this->fetcherFormTypeRegistry = $fetcherFormTypeRegistry;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('provider', ExportProviderChoiceType::class)
@@ -134,7 +136,7 @@ final class ExportDefinitionType extends AbstractResourceType
      * @param FormInterface $form
      * @param string        $configurationType
      */
-    protected function addConfigurationFields(FormInterface $form, $configurationType)
+    protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('configuration', $configurationType);
     }
@@ -144,7 +146,7 @@ final class ExportDefinitionType extends AbstractResourceType
      * @param mixed         $data
      * @return string|null
      */
-    protected function getRegistryIdentifier(FormInterface $form, $data = null)
+    protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if (null !== $data && null !== $data->getProvider()) {
             return $data->getProvider();
@@ -161,7 +163,7 @@ final class ExportDefinitionType extends AbstractResourceType
      * @param FormInterface $form
      * @param string        $configurationType
      */
-    protected function addFetcherConfigurationFields(FormInterface $form, $configurationType)
+    protected function addFetcherConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('fetcherConfig', $configurationType);
     }
@@ -171,7 +173,7 @@ final class ExportDefinitionType extends AbstractResourceType
      * @param mixed         $data
      * @return string|null
      */
-    protected function getFetcherRegistryIdentifier(FormInterface $form, $data = null)
+    protected function getFetcherRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if (null !== $data && null !== $data->getFetcher()) {
             return $data->getFetcher();
@@ -180,4 +182,3 @@ final class ExportDefinitionType extends AbstractResourceType
         return null;
     }
 }
-

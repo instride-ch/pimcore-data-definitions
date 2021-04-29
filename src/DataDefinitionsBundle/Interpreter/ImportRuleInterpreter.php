@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Rule\Condition\RuleValidationProcessorInterface;
@@ -30,8 +32,8 @@ class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterfa
 {
     use DataSetAwareTrait;
 
-    protected $ruleProcessor;
-    protected $ruleValidationProcessor;
+    protected RuleApplierInterface $ruleProcessor;
+    protected ImportRuleValidationProcessorInterface $ruleValidationProcessor;
 
     public function __construct(
         ImportRuleValidationProcessorInterface $ruleValidationProcessor,
@@ -101,5 +103,3 @@ class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterfa
         return $value;
     }
 }
-
-

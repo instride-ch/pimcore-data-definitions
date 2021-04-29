@@ -12,11 +12,14 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Doctrine\DBAL\Connection;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
+use function is_object;
 
 abstract class AbstractSqlProvider implements ImportProviderInterface
 {
@@ -31,18 +34,19 @@ abstract class AbstractSqlProvider implements ImportProviderInterface
      */
     public function testData(array $configuration): bool
     {
-        return \is_object($this->getDb($configuration));
+        return is_object($this->getDb($configuration));
     }
 
     /**
      * {@inheritdoc}
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getColumns(array $configuration)
     {
         $db = $this->getDb($configuration);
-        $query = $db->query($configuration['query']);
-        $data = $query->fetch();
+        $query = $db->executeQuery($configuration['query']);
+        $data = $query->fetchAssociative();
         $columns = [];
         $returnColumns = [];
 
@@ -69,7 +73,7 @@ abstract class AbstractSqlProvider implements ImportProviderInterface
     {
         $db = $this->getDb($configuration);
 
-        return $db->fetchAll($configuration['query']);
+        return $db->fetchAllAssociative($configuration['query']);
     }
 }
 

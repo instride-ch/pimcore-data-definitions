@@ -12,8 +12,11 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Service;
 
+use Exception;
 use Pimcore\Model\DataObject;
 use Pimcore\Tool;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\ToColumn;
@@ -23,7 +26,7 @@ class FieldSelection
     /**
      * @param DataObject\ClassDefinition $class
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function getClassDefinition(DataObject\ClassDefinition $class): array
     {
@@ -210,5 +213,3 @@ class FieldSelection
         return $toColumn;
     }
 }
-
-

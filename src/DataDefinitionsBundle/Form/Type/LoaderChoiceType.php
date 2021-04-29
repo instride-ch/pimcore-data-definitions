@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -20,23 +22,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class LoaderChoiceType extends AbstractType
 {
-    private $loaders;
+    private array $loaders;
 
     public function __construct(array $loaders)
     {
         $this->loaders = $loaders;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'choices' => array_flip($this->loaders),
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }
 }
-

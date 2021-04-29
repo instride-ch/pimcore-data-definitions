@@ -12,12 +12,15 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use CoreShop\Component\Resource\Metadata\MetadataInterface;
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use InvalidArgumentException;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,15 +28,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractImportDefinitionCommand extends AbstractCommand
 {
-    protected $metadata;
-    protected $repository;
-    protected $manager;
-    protected $resourceFormFactory;
+    protected MetadataInterface $metadata;
+
+    protected RepositoryInterface $repository;
+
+    protected EntityManagerInterface $manager;
+
+    protected ResourceFormFactoryInterface $resourceFormFactory;
 
     public function __construct(
         MetadataInterface $metadata,
         RepositoryInterface $repository,
-        ObjectManager $manager,
+        EntityManagerInterface $manager,
         ResourceFormFactoryInterface $resourceFormFactory
     ) {
         $this->metadata = $metadata;
@@ -44,7 +50,7 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $type = $this->getType();
 
@@ -67,7 +73,7 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
 
         try {
             $definition = $this->repository->findByName($data['name']);
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $class = $this->repository->getClassName();
             $definition = new $class();
         }
@@ -94,14 +100,14 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
      * Validate and return path to JSON file
      *
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      */
-    protected function getPath()
+    protected function getPath(): string
     {
         $path = $this->input->getArgument('path');
         if (!file_exists($path) || !is_readable($path)) {
-            throw new \InvalidArgumentException('File does not exist');
+            throw new InvalidArgumentException('File does not exist');
         }
 
         return $path;
@@ -112,6 +118,5 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
      *
      * @return string
      */
-    abstract protected function getType();
+    abstract protected function getType(): string;
 }
-

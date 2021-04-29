@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter;
 
 use Symfony\Component\Form\AbstractType;
@@ -20,12 +22,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class MappingType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('from', TextType::class)
             ->add('to', TextType::class);
     }
 }
-
-

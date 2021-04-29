@@ -14,17 +14,10 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher;
+namespace Wvision\Bundle\DataDefinitionsBundle\Exception;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Exception;
 
-final class ObjectsFetcherType extends AbstractType
+class SpoutException extends Exception
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('unpublished', CheckboxType::class);
-    }
 }

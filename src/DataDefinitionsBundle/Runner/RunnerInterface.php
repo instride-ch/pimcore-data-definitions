@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -25,7 +27,7 @@ interface RunnerInterface
      * @param DataDefinitionInterface $definition
      * @param array               $params
      */
-    public function preRun(Concrete $object, $data, DataDefinitionInterface $definition, $params);
+    public function preRun(Concrete $object, array $data, DataDefinitionInterface $definition, array $params);
 
     /**
      * @param Concrete            $object
@@ -33,7 +35,5 @@ interface RunnerInterface
      * @param DataDefinitionInterface $definition
      * @param array               $params
      */
-    public function postRun(Concrete $object, $data, DataDefinitionInterface $definition, $params);
+    public function postRun(Concrete $object, array $data, DataDefinitionInterface $definition, array $params);
 }
-
-

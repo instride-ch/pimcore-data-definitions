@@ -9,8 +9,6 @@ services:
         arguments:
             - '@event_dispatcher'
 
-    Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder: ~
-
     Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection:
         public: true
 
@@ -151,14 +149,12 @@ services:
     ### INTERPRETER
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetsUrlInterpreter:
         arguments:
-            - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
             - '@pimcore.http_client'
         tags:
             - { name: data_definitions.interpreter, type: assets_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
 
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter:
         arguments:
-            - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
             - '@pimcore.http_client'
         tags:
             - { name: data_definitions.interpreter, type: asset_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
@@ -168,8 +164,6 @@ services:
             - { name: data_definitions.interpreter, type: metadata, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MetadataInterpreterType }
 
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter:
-        arguments:
-            - '@Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder'
         tags:
             - { name: data_definitions.interpreter, type: asset_by_path, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType }
 

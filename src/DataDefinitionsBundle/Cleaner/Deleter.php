@@ -12,19 +12,27 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Cleaner;
 
+use Exception;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class Deleter extends AbstractCleaner
 {
-    public function cleanup(DataDefinitionInterface $definition, $objects)
+    /**
+     * @param DataDefinitionInterface $definition
+     * @param array $objectIds
+     * @return void
+     * @throws Exception
+     */
+    public function cleanup(DataDefinitionInterface $definition, array $objectIds): void
     {
-        $notFoundObjects = $this->getObjectsToClean($definition, $objects);
+        $notFoundObjects = $this->getObjectsToClean($definition, $objectIds);
 
         foreach ($notFoundObjects as $obj) {
             $obj->delete();
         }
     }
 }
-

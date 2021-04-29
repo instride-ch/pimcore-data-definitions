@@ -12,16 +12,18 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ImportDefinitionEvent extends Event implements DefinitionEventInterface
 {
-    protected $definition;
+    protected ImportDefinitionInterface $definition;
     protected $subject;
-    protected $options;
+    protected array $options;
 
     public function __construct(ImportDefinitionInterface $definition, $subject = null, array $options = [])
     {
@@ -45,4 +47,3 @@ final class ImportDefinitionEvent extends Event implements DefinitionEventInterf
         return $this->options;
     }
 }
-

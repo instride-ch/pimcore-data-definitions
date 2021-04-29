@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 abstract class AbstractFileProvider
@@ -21,14 +23,12 @@ abstract class AbstractFileProvider
      *
      * @return string
      */
-    protected function getFile($file)
+    protected function getFile(string $file): string
     {
-        if (strpos($file, '/') !== 0) {
+        if (!str_starts_with($file, '/')) {
             $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $file);
         }
 
         return $file;
     }
 }
-
-

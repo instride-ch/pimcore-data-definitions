@@ -12,15 +12,12 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Event;
+declare(strict_types=1);
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
 interface DefinitionEventInterface
 {
-    /**
-     * @return ImportDefinitionInterface
-     */
     public function getDefinition();
 
     /**

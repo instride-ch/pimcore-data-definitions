@@ -12,12 +12,15 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle;
 
 use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\ComposerPackageBundleInterface;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Bundle\RuleBundle\CoreShopRuleBundle;
+use LogicException;
 use Pimcore\Extension\Bundle\PimcoreBundleInterface;
 use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
@@ -41,7 +44,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
 {
     use PackageVersionTrait;
 
-    public static function registerDependentBundles(BundleCollection $collection)
+    public static function registerDependentBundles(BundleCollection $collection): void
     {
         parent::registerDependentBundles($collection);
 
@@ -57,7 +60,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
 
             if (null !== $extension) {
                 if (!$extension instanceof ExtensionInterface) {
-                    throw new \LogicException(sprintf('Extension %s must implement Symfony\Component\DependencyInjection\Extension\ExtensionInterface.',
+                    throw new LogicException(sprintf('Extension %s must implement Symfony\Component\DependencyInjection\Extension\ExtensionInterface.',
                         get_class($extension)));
                 }
 
@@ -72,19 +75,19 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         }
     }
 
-    public function getPackageName()
+    public function getPackageName(): string
     {
         return 'w-vision/data-definitions';
     }
 
-    public function getSupportedDrivers()
+    public function getSupportedDrivers(): array
     {
         return [
             CoreShopResourceBundle::DRIVER_PIMCORE,
         ];
     }
 
-    public function build(ContainerBuilder $builder)
+    public function build(ContainerBuilder $builder): void
     {
         parent::build($builder);
 
@@ -103,17 +106,17 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         $builder->addCompilerPass(new ImportRuleActionPass());
     }
 
-    public function getNiceName()
+    public function getNiceName(): string
     {
         return 'Data Definitions';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Data Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.';
     }
 
-    protected function getComposerPackageName()
+    protected function getComposerPackageName(): string
     {
         return 'w-vision/data-definitions';
     }
@@ -128,24 +131,23 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         return null;
     }
 
-    public function getJsPaths()
+    public function getJsPaths(): array
     {
         return [];
     }
 
-    public function getCssPaths()
+    public function getCssPaths(): array
     {
         return [];
     }
 
-    public function getEditmodeJsPaths()
+    public function getEditmodeJsPaths(): array
     {
         return [];
     }
 
-    public function getEditmodeCssPaths()
+    public function getEditmodeCssPaths(): array
     {
         return [];
     }
 }
-

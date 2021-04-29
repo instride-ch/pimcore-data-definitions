@@ -12,24 +12,28 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Exception;
 
+use RuntimeException;
+use Throwable;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
-class InterpreterException extends \RuntimeException
+class InterpreterException extends RuntimeException
 {
-    private function __construct(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?\Throwable $previous = null)
+    private function __construct(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?Throwable $previous = null)
     {
         parent::__construct($this->formatMessage($definition, $mapping, $params, $value, $previous), null, $previous);
     }
 
-    public static function fromInterpreter(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?\Throwable $previous = null)
+    public static function fromInterpreter(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?Throwable $previous = null): InterpreterException
     {
         return new self($definition, $mapping, $params, $value, $previous);
     }
 
-    private function formatMessage(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?\Throwable $previous = null): string
+    private function formatMessage(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?Throwable $previous = null): string
     {
         $format = '%1$s, %2$s';
         if ($previous !== null) {

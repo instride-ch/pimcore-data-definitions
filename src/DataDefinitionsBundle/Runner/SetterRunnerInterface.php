@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -22,7 +24,7 @@ interface SetterRunnerInterface extends RunnerInterface
 {
     /**
      * @param Concrete            $object
-     * @param Mapping             $map
+     * @param MappingInterface    $map
      * @param                     $value
      * @param                     $data
      * @param DataDefinitionInterface $definition
@@ -38,5 +40,3 @@ interface SetterRunnerInterface extends RunnerInterface
         $params
     );
 }
-
-

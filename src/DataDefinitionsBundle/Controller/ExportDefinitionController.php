@@ -12,11 +12,15 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
 use Pimcore\Model\DataObject;
+use Pimcore\Tool;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,7 +30,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn;
 class ExportDefinitionController extends ResourceController
 {
     /**
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return mixed|JsonResponse
      */
     public function getConfigAction()
     {
@@ -90,7 +94,7 @@ class ExportDefinitionController extends ResourceController
 
     /**
      * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return mixed|JsonResponse
      */
     public function importAction(Request $request)
     {
@@ -123,7 +127,7 @@ class ExportDefinitionController extends ResourceController
 
     /**
      * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return mixed|JsonResponse
      */
     public function duplicateAction(Request $request)
     {
@@ -150,7 +154,7 @@ class ExportDefinitionController extends ResourceController
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function getColumnsAction(Request $request)
     {
@@ -165,7 +169,7 @@ class ExportDefinitionController extends ResourceController
         $fields = $classDefinition->getFieldDefinitions();
 
         $csLoadedGroupIds = [];
-        $activatedLanguages = \Pimcore\Tool::getValidLanguages();
+        $activatedLanguages = Tool::getValidLanguages();
 
         $result = $this->getSystemFields();
 
@@ -414,7 +418,7 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getConfigProviders(): array
     {
-        return $this->getParameter('data_definitions.export_providers');
+        return $this->container->getParameter('data_definitions.export_providers');
     }
 
     /**
@@ -422,7 +426,7 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getConfigInterpreters(): array
     {
-        return $this->getParameter('data_definitions.interpreters');
+        return $this->container->getParameter('data_definitions.interpreters');
     }
 
     /**
@@ -430,7 +434,7 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getConfigRunners(): array
     {
-        return $this->getParameter('data_definitions.export_runners');
+        return $this->container->getParameter('data_definitions.export_runners');
     }
 
     /**
@@ -438,7 +442,7 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getConfigGetters(): array
     {
-        return $this->getParameter('data_definitions.getters');
+        return $this->container->getParameter('data_definitions.getters');
     }
 
     /**
@@ -446,7 +450,7 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getConfigFetchers(): array
     {
-        return $this->getParameter('data_definitions.fetchers');
+        return $this->container->getParameter('data_definitions.fetchers');
     }
 
     /**
@@ -454,7 +458,7 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getImportRuleConditions(): array
     {
-        return $this->getParameter('data_definitions.import_rule.conditions');
+        return $this->container->getParameter('data_definitions.import_rule.conditions');
     }
 
     /**
@@ -462,7 +466,6 @@ class ExportDefinitionController extends ResourceController
      */
     protected function getImportRuleActions(): array
     {
-        return $this->getParameter('data_definitions.import_rule.actions');
+        return $this->container->getParameter('data_definitions.import_rule.actions');
     }
 }
-

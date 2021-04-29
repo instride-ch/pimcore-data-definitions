@@ -12,14 +12,16 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
-use Box\Spout\Common\Type;
-use Box\Spout\Reader\ReaderFactory;
+use Box\Spout\Common\Exception\IOException;
 use Box\Spout\Reader\ReaderInterface;
-use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Writer\Exception\WriterNotOpenedException;
 use Box\Spout\Writer\WriterInterface;
 use Pimcore\Model\Asset;
+use Wvision\Bundle\DataDefinitionsBundle\Exception\SpoutException;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
@@ -30,15 +32,10 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 {
     use ArtifactProviderTrait;
 
-    /**
-     * @var string
-     */
-    private $exportPath;
+    private string $exportPath;
 
-    /**
-     * @var WriterInterface
-     */
-    private $writer;
+    private WriterInterface $writer;
+    protected bool $useSpoutLegacy = false;
 
     public function testData(array $configuration): bool
     {
@@ -50,7 +47,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         if ($configuration['exampleFile']) {
             $exampleFile = Asset::getById($configuration['exampleFile']);
             if (null !== $exampleFile) {
-                $reader = $this->createReader(PIMCORE_ASSET_DIRECTORY.$exampleFile->getFullPath());
+                $reader = $this->createReader(PIMCORE_ASSET_DIRECTORY . $exampleFile->getFullPath());
 
                 $sheetIterator = $reader->getSheetIterator();
                 $sheetIterator->rewind();
@@ -62,7 +59,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
                 }
             }
         } elseif ($configuration['excelHeaders']) {
-            return $this->buildColumns(str_getcsv($configuration['excelHeaders']));
+            return $this->buildColumns(str_getcsv((string)$configuration['excelHeaders']));
         }
 
         return [];
@@ -115,7 +112,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
                 $data[$key] = (string)$item;
             }
         }
-        $writer->addRow(array_values($data));
+        $writer->addRow($this->useSpoutLegacy ? array_values($data) : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray(array_values($data)));
     }
 
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
@@ -138,7 +135,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
     private function createReader(string $path): ReaderInterface
     {
-        $reader = ReaderFactory::create(Type::XLSX);
+        $reader = $this->getXlsxReader();
         $reader->open($path);
 
         return $reader;
@@ -147,7 +144,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     private function getWriter(): WriterInterface
     {
         if (null === $this->writer) {
-            $this->writer = WriterFactory::create(Type::XLSX);
+            $this->writer = $this->getXlsxWriter();
             $this->writer->openToFile($this->getExportPath());
         }
 
@@ -189,15 +186,49 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     }
 
     /**
-     * @param array|null      $headers
+     * @param array|null $headers
      * @param WriterInterface $writer
+     * @throws IOException
+     * @throws WriterNotOpenedException
      */
     private function addHeaders(?array $headers, WriterInterface $writer): void
     {
         if (null !== $headers) {
-            $writer->addRow($headers);
+            $writer->addRow($this->useSpoutLegacy ? $headers : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray($headers));
         }
     }
+
+    /**
+     * @return \Box\Spout\Reader\XLSX\Reader
+     * @throws SpoutException
+     */
+    protected function getXlsxReader(): \Box\Spout\Reader\XLSX\Reader
+    {
+        if (class_exists(\Box\Spout\Reader\Common\Creator\ReaderEntityFactory::class)) {
+            return \Box\Spout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
+        }
+        if (class_exists(\Box\Spout\Reader\ReaderFactory::class)) {
+            $this->useSpoutLegacy = true;
+            return \Box\Spout\Reader\ReaderFactory::create(\Box\Spout\Common\Type::XLSX);
+        }
+
+        throw new SpoutException('Error creating Spout XLSX Reader');
+    }
+
+    /**
+     * @return \Box\Spout\Writer\XLSX\Writer
+     * @throws SpoutException
+     */
+    protected function getXlsxWriter(): \Box\Spout\Writer\XLSX\Writer
+    {
+        if (class_exists(\Box\Spout\Writer\Common\Creator\WriterEntityFactory::class)) {
+            return \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createXLSXWriter();
+        }
+        if (class_exists(\Box\Spout\Writer\WriterFactory::class)) {
+            $this->useSpoutLegacy = true;
+            return \Box\Spout\Reader\WriterFactory::create(\Box\Spout\Common\Type::XLSX);
+        }
+
+        throw new SpoutException('Error creating Spout XLSX Writer');
+    }
 }
-
-

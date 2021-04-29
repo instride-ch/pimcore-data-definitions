@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 use Pimcore\Model\AbstractModel;
@@ -81,8 +83,8 @@ abstract class AbstractDataDefinition extends AbstractModel implements DataDefin
     /**
      * Get By Id
      *
-     * @param int $id
-     * @return Definition
+     * @param $id
+     * @return static
      */
     public static function getById($id)
     {
@@ -285,5 +287,3 @@ abstract class AbstractDataDefinition extends AbstractModel implements DataDefin
         $this->successNotificationDocument = $successNotificationDocument;
     }
 }
-
-

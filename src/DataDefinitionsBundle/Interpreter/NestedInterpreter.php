@@ -39,10 +39,10 @@ final class NestedInterpreter implements InterpreterInterface, DataSetAwareInter
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         Assert::keyExists($configuration, 'interpreters');
         Assert::isArray($configuration['interpreters'], 'Interpreter Config needs to be array');

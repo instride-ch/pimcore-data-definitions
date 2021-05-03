@@ -32,7 +32,7 @@ class ExpressionConditionChecker extends AbstractConditionChecker
         $this->container = $container;
     }
 
-    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $object, array $params, array $configuration): bool
+    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $concrete, array $params, array $configuration): bool
     {
         $expression = $configuration['expression'];
 

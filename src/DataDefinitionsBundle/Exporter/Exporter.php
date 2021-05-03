@@ -67,10 +67,6 @@ final class Exporter implements ExporterInterface
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     * @throws Exception
-     */
     public function doExport(ExportDefinitionInterface $definition, array $params)
     {
         $fetcher = $this->getFetcher($definition);
@@ -91,10 +87,6 @@ final class Exporter implements ExporterInterface
         );
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @return FetcherInterface
-     */
     private function getFetcher(ExportDefinitionInterface $definition): FetcherInterface
     {
         if (!$this->fetcherRegistry->has($definition->getFetcher())) {
@@ -108,11 +100,7 @@ final class Exporter implements ExporterInterface
         return $fetcher;
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @return ExportProviderInterface
-     */
-    private function getProvider(ExportDefinitionInterface $definition)
+    private function getProvider(ExportDefinitionInterface $definition): ExportProviderInterface
     {
         if (!$this->exportProviderRegistry->has($definition->getProvider())) {
             throw new InvalidArgumentException(sprintf('Definition %s has no valid export provider configured',
@@ -122,14 +110,6 @@ final class Exporter implements ExporterInterface
         return $this->exportProviderRegistry->get($definition->getProvider());
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     * @param int                       $total
-     * @param FetcherInterface          $fetcher
-     * @param ExportProviderInterface   $provider
-     * @throws Exception
-     */
     private function runExport(
         ExportDefinitionInterface $definition,
         $params,
@@ -203,14 +183,6 @@ final class Exporter implements ExporterInterface
         );
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @param Concrete                  $object
-     * @param                           $params
-     * @param ExportProviderInterface   $provider
-     * @return array
-     * @throws Exception
-     */
     private function exportRow(
         ExportDefinitionInterface $definition,
         Concrete $object,
@@ -281,16 +253,6 @@ final class Exporter implements ExporterInterface
         return $data;
     }
 
-    /**
-     * @param Concrete                  $object
-     * @param ExportMapping             $map
-     * @param                           $data
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     * @param null|GetterInterface      $getter
-     * @return mixed|null
-     * @throws DoNotSetException
-     */
     private function getObjectValue(
         Concrete $object,
         ExportMapping $map,
@@ -337,10 +299,6 @@ final class Exporter implements ExporterInterface
         return $value;
     }
 
-    /**
-     * @param ExportMapping $map
-     * @return GetterInterface|null
-     */
     private function fetchGetter(ExportMapping $map): ?GetterInterface
     {
         if ($name = $map->getGetter()) {
@@ -353,9 +311,6 @@ final class Exporter implements ExporterInterface
         return null;
     }
 
-    /**
-     * @return void
-     */
     public function stop() : void
     {
         $this->shouldStop = true;

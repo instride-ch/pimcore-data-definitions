@@ -20,10 +20,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 interface ImporterInterface
 {
-    /**
-     * @param ImportDefinitionInterface $definition
-     * @param                           $params
-     * @return array of object ids
-     */
-    public function doImport(ImportDefinitionInterface $definition, $params): array;
+    public function doImport(ImportDefinitionInterface $definition, array $params): array;
 }

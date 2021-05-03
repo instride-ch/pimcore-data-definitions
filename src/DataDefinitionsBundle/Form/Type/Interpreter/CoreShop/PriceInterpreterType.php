@@ -22,9 +22,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class PriceInterpreterType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

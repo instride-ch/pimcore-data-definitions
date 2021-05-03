@@ -20,28 +20,14 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 interface FetcherInterface
 {
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     * @param int                       $limit
-     * @param int                       $offset
-     * @param                           $configuration
-     * @return array
-     */
     public function fetch(
         ExportDefinitionInterface $definition,
-        $params,
+        array $params,
         int $limit,
         int $offset,
         array $configuration
     );
 
-    /**+
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     * @param                           $configuration
-     * @return int
-     */
-    public function count(ExportDefinitionInterface $definition, $params, array $configuration): int;
+    public function count(ExportDefinitionInterface $definition, array $params, array $configuration): int;
 }
 

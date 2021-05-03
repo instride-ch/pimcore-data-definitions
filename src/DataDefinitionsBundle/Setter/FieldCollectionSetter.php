@@ -134,14 +134,7 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
         return null;
     }
 
-    /**
-     * @param array $keys
-     * @param       $fieldcollection
-     * @param       $data
-     * @return boolean
-     * @throws Exception
-     */
-    protected function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, $data)
+    protected function isValidKey(array $keys, AbstractFieldCollection $fieldcollection, array $data): bool
     {
         foreach ($keys as $key) {
             $getter = sprintf('get%s', ucfirst($key['to']));

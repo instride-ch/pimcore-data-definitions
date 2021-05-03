@@ -31,13 +31,12 @@
   "require": {
     "php": ">=8.0",
     "ext-json": "*",
-    "box/spout": "^2.7|^3.0",
+    "box/spout": "^3.0",
     "league/csv": "^9.7",
     "coreshop/resource-bundle": "^3.0",
     "coreshop/rule-bundle": "^3.0",
     "coreshop/pimcore-bundle": "^3.0",
-    "coreshop/pimcore": "^3.0",
-    "pimcore/pimcore": "^v10.0.0-BETA1|^10.0"
+    "pimcore/pimcore": "^10.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
@@ -49,7 +48,7 @@
     "phpstan/phpstan-webmozart-assert": "^0.12"
   },
   "conflict": {
-    "dpfaffenbauer/process-manager": "<2.4"
+
   },
   "suggest": {
     "dpfaffenbauer/process-manager": "Allows to start Imports/Exports from within Pimcore UI and also tracks Status of current processes."
@@ -74,7 +73,7 @@
       ]
     },
     "branch-alias": {
-      "dev-master": "5.0-dev"
+      "dev-master": "4.0-dev"
     }
   },
   "minimum-stability": "dev",

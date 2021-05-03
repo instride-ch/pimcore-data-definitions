@@ -21,19 +21,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface RunnerInterface
 {
-    /**
-     * @param Concrete            $object
-     * @param array               $data
-     * @param DataDefinitionInterface $definition
-     * @param array               $params
-     */
     public function preRun(Concrete $object, array $data, DataDefinitionInterface $definition, array $params);
 
-    /**
-     * @param Concrete            $object
-     * @param array               $data
-     * @param DataDefinitionInterface $definition
-     * @param array               $params
-     */
     public function postRun(Concrete $object, array $data, DataDefinitionInterface $definition, array $params);
 }

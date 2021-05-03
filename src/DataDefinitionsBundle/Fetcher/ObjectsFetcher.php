@@ -23,7 +23,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class ObjectsFetcher implements FetcherInterface
 {
-    public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset, array $configuration)
+    public function fetch(ExportDefinitionInterface $definition, array $params, int $limit, int $offset, array $configuration)
     {
         $list = $this->getClassListing($definition, $params);
         $list->setLimit($limit);
@@ -32,7 +32,7 @@ class ObjectsFetcher implements FetcherInterface
         return $list->load();
     }
 
-    public function count(ExportDefinitionInterface $definition, $params, array $configuration): int
+    public function count(ExportDefinitionInterface $definition, array $params, array $configuration): int
     {
         return $this->getClassListing($definition, $params)->getTotalCount();
     }
@@ -86,7 +86,7 @@ class ObjectsFetcher implements FetcherInterface
         }
 
         $list->setCondition(implode(' AND ', $conditionFilters));
-        
+
         // ensure a stable sort across pages
         $list->setOrderKey('o_id');
         $list->setOrder('asc');

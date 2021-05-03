@@ -27,10 +27,10 @@ class AssetByPathInterpreter implements InterpreterInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $assetFullPath = $configuration['path'] . '/' . $value;
 

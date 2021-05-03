@@ -21,10 +21,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 
 interface GetterInterface
 {
-    /**
-     * @param Concrete      $object
-     * @param ExportMapping $map
-     * @param array|null    $data
-     */
     public function get(Concrete $object, ExportMapping $map, ?array $data);
 }

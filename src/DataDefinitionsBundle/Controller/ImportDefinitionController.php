@@ -31,10 +31,7 @@ use function is_array;
 
 class ImportDefinitionController extends ResourceController
 {
-    /**
-     * @return mixed|JsonResponse
-     */
-    public function getConfigAction()
+    public function getConfigAction(): JsonResponse
     {
         $providers = $this->getConfigProviders();
         $loaders = $this->getConfigLoaders();
@@ -61,11 +58,7 @@ class ImportDefinitionController extends ResourceController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function testDataAction(Request $request)
+    public function testDataAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
         $definition = $this->repository->find($id);
@@ -83,12 +76,7 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|JsonResponse
-     * @throws Exception
-     */
-    public function getColumnsAction(Request $request)
+    public function getColumnsAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
         $definition = $this->repository->find($id);
@@ -185,10 +173,6 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function exportAction(Request $request): Response
     {
         $id = (int)$request->get('id');
@@ -218,11 +202,7 @@ class ImportDefinitionController extends ResourceController
         throw new NotFoundHttpException();
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|JsonResponse
-     */
-    public function importAction(Request $request)
+    public function importAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
@@ -251,11 +231,7 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|JsonResponse
-     */
-    public function duplicateAction(Request $request)
+    public function duplicateAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
@@ -275,73 +251,46 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigProviders(): array
     {
         return $this->container->getParameter('data_definitions.import_providers');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigLoaders(): array
     {
         return $this->container->getParameter('data_definitions.loaders');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigInterpreters(): array
     {
         return $this->container->getParameter('data_definitions.interpreters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigCleaners(): array
     {
         return $this->container->getParameter('data_definitions.cleaners');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigSetters(): array
     {
         return $this->container->getParameter('data_definitions.setters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigFilters(): array
     {
         return $this->container->getParameter('data_definitions.filters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigRunners(): array
     {
         return $this->container->getParameter('data_definitions.runners');
     }
 
-    /**
-     * @return array
-     */
     protected function getImportRuleConditions(): array
     {
         return $this->container->getParameter('data_definitions.import_rule.conditions');
     }
 
-    /**
-     * @return array
-     */
     protected function getImportRuleActions(): array
     {
         return $this->container->getParameter('data_definitions.import_rule.actions');

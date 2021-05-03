@@ -29,11 +29,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstractImportDefinitionCommand extends AbstractCommand
 {
     protected MetadataInterface $metadata;
-
     protected RepositoryInterface $repository;
-
     protected EntityManagerInterface $manager;
-
     protected ResourceFormFactoryInterface $resourceFormFactory;
 
     public function __construct(

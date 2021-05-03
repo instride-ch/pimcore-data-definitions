@@ -31,10 +31,10 @@ class CarbonInterpreter implements InterpreterInterface, DataSetAwareInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         if ($value) {
             $format = $configuration['date_format'];

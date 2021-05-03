@@ -33,7 +33,7 @@ class ObjectResolverInterpreter implements InterpreterInterface
         $configuration
     ) {
         if (!$value) {
-            return $value;
+            return null;
         }
 
         $class = 'Pimcore\Model\DataObject\\'.ucfirst($configuration['class']);

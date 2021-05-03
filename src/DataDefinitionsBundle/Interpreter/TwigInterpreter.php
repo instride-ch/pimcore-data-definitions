@@ -34,10 +34,10 @@ class TwigInterpreter implements InterpreterInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         return $this->twig->createTemplate($configuration['template'])->render([
             'value' => $value,

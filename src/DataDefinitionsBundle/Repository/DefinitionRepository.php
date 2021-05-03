@@ -17,14 +17,11 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Repository;
 
 use CoreShop\Bundle\ResourceBundle\Pimcore\PimcoreDaoRepository;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class DefinitionRepository extends PimcoreDaoRepository
 {
-    /**
-     * @param string $name
-     * @return object|null
-     */
-    public function findByName(string $name)
+    public function findByName(string $name): ?DataDefinitionInterface
     {
         $class = $this->metadata->getClass('model');
         $definitionEntry = new $class();

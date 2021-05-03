@@ -23,11 +23,6 @@ use Doctrine\DBAL\Exception;
 
 class ExternalSqlProvider extends AbstractSqlProvider
 {
-    /**
-     * @param array $configuration
-     * @return Connection
-     * @throws Exception
-     */
     protected function getDb(array $configuration): Connection
     {
         $config = new Configuration();

@@ -26,10 +26,10 @@ class AssetsUrlInterpreter extends AssetUrlInterpreter
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $assets = [];
         foreach ((array)$value as $item) {

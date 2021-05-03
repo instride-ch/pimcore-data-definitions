@@ -25,10 +25,10 @@ final class StoresInterpreter implements InterpreterInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         return $configuration['stores'];
     }

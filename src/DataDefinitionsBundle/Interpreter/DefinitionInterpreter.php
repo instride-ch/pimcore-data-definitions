@@ -39,10 +39,10 @@ class DefinitionInterpreter implements InterpreterInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $subDefinition = $this->definitionRepository->find($configuration['definition']);
 

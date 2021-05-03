@@ -26,9 +26,6 @@ class ImportRule implements ImportRuleInterface, Serializable
 
     protected int $id;
 
-    /**
-     * @inheritDoc
-     */
     public function getId()
     {
         return $this->id;

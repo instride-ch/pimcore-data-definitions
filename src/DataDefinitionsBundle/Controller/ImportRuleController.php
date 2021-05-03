@@ -342,10 +342,6 @@ class ImportRuleController extends AdminController
         return new BinaryFileResponse($filePath);
     }
 
-    /**
-     * @return \Box\Spout\Reader\XLSX\Reader
-     * @throws SpoutException
-     */
     protected function getXlsxReader(): \Box\Spout\Reader\XLSX\Reader
     {
         if (class_exists(\Box\Spout\Reader\Common\Creator\ReaderEntityFactory::class)) {
@@ -359,10 +355,6 @@ class ImportRuleController extends AdminController
         throw new SpoutException('Error creating Spout XLSX Reader');
     }
 
-    /**
-     * @return \Box\Spout\Writer\XLSX\Writer
-     * @throws SpoutException
-     */
     protected function getXlsxWriter(): \Box\Spout\Writer\XLSX\Writer
     {
         if (class_exists(\Box\Spout\Writer\Common\Creator\WriterEntityFactory::class)) {

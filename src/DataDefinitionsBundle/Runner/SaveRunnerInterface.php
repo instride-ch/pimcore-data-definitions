@@ -21,12 +21,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface SaveRunnerInterface extends RunnerInterface
 {
-    /**
-     * @param Concrete            $object
-     * @param                     $data
-     * @param DataDefinitionInterface $definition
-     * @param                     $params
-     * @return boolean
-     */
-    public function shouldSaveObject(Concrete $object, $data, DataDefinitionInterface $definition, $params);
+    public function shouldSaveObject(Concrete $object, array $data, DataDefinitionInterface $definition, array $params);
 }

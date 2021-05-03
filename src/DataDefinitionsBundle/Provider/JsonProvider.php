@@ -18,6 +18,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
@@ -58,7 +59,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $this->getJsonDepth(json_decode($jsonExample, true)) === 1;
     }
 
-    public function getColumns(array $configuration)
+    public function getColumns(array $configuration): array
     {
         $jsonExample = $configuration['jsonExample'];
 
@@ -80,7 +81,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null)
     {
         $file = $this->getFile($params['file']);
 
@@ -105,7 +106,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         $this->exportData[] = $data;
     }
 
-    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, array $params)
     {
         $stream = fopen('php://memory', 'rw+');
         fwrite($stream, json_encode($this->exportData));

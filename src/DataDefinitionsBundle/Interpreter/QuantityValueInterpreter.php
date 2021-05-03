@@ -31,10 +31,10 @@ class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInte
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $value = $value !== '' ? $value : null;
         $unit = $configuration['unit'];

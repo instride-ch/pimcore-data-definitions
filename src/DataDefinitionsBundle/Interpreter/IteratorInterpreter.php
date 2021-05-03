@@ -39,10 +39,10 @@ final class IteratorInterpreter implements InterpreterInterface, DataSetAwareInt
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         if (null === $value) {
             return [];

@@ -18,11 +18,6 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 abstract class AbstractFileProvider
 {
-    /**
-     * @param string $file
-     *
-     * @return string
-     */
     protected function getFile(string $file): string
     {
         if (!str_starts_with($file, '/')) {

@@ -25,7 +25,7 @@ use function count;
 
 class PrimaryKeyLoader implements LoaderInterface
 {
-    public function load(string $class, $data, DataDefinitionInterface $definition, $params): ?Concrete
+    public function load(string $class, array $data, DataDefinitionInterface $definition, array $params): ?Concrete
     {
         $classObject = '\Pimcore\Model\DataObject\\'.ucfirst($class);
         $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';

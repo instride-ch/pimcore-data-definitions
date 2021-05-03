@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### Added 
+### [4.0.0]
 
 - Pimcore X compatibility
 - [BC] removed Placeholder Functionality (because removed from Pimcore). Use your own Interpreter instead.

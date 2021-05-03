@@ -21,11 +21,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 
 interface SetterInterface
 {
-    /**
-     * @param Concrete      $object
-     * @param               $value
-     * @param ImportMapping $map
-     * @param array         $data
-     */
     public function set(Concrete $object, $value, ImportMapping $map, array $data);
 }

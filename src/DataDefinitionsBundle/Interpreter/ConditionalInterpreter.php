@@ -47,10 +47,10 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $params = [
             'value' => $value,

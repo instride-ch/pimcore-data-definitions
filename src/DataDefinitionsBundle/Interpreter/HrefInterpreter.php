@@ -32,10 +32,10 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $type = $configuration['type'] ?: 'object';
         $objectClass = $configuration['class'];

@@ -48,10 +48,10 @@ class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterfa
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $rules = $configuration['rules'];
         $ruleObjects = [];

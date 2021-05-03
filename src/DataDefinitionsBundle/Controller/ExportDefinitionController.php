@@ -29,10 +29,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn;
 
 class ExportDefinitionController extends ResourceController
 {
-    /**
-     * @return mixed|JsonResponse
-     */
-    public function getConfigAction()
+    public function getConfigAction(): JsonResponse
     {
         $providers = $this->getConfigProviders();
         $interpreters = $this->getConfigInterpreters();
@@ -57,10 +54,6 @@ class ExportDefinitionController extends ResourceController
         );
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function exportAction(Request $request): Response
     {
         $id = (int)$request->get('id');
@@ -92,11 +85,7 @@ class ExportDefinitionController extends ResourceController
         throw new NotFoundHttpException();
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|JsonResponse
-     */
-    public function importAction(Request $request)
+    public function importAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
@@ -125,11 +114,7 @@ class ExportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|JsonResponse
-     */
-    public function duplicateAction(Request $request)
+    public function duplicateAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
@@ -149,14 +134,7 @@ class ExportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * Get Pimcore Class Definition.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function getColumnsAction(Request $request)
+    public function getColumnsAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
         $definition = $this->repository->find($id);
@@ -331,10 +309,7 @@ class ExportDefinitionController extends ResourceController
         ]);
     }
 
-    /**
-     * @return array
-     */
-    protected function getSystemFields()
+    protected function getSystemFields(): array
     {
         $systemColumns = [
             [
@@ -396,11 +371,6 @@ class ExportDefinitionController extends ResourceController
         return $result;
     }
 
-    /**
-     * @param DataObject\ClassDefinition\Data $field
-     * @param string                          $group
-     * @return FromColumn
-     */
     protected function getFieldConfiguration(DataObject\ClassDefinition\Data $field, $group = 'fields'): FromColumn
     {
         $fromColumn = new FromColumn();
@@ -413,57 +383,36 @@ class ExportDefinitionController extends ResourceController
         return $fromColumn;
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigProviders(): array
     {
         return $this->container->getParameter('data_definitions.export_providers');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigInterpreters(): array
     {
         return $this->container->getParameter('data_definitions.interpreters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigRunners(): array
     {
         return $this->container->getParameter('data_definitions.export_runners');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigGetters(): array
     {
         return $this->container->getParameter('data_definitions.getters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigFetchers(): array
     {
         return $this->container->getParameter('data_definitions.fetchers');
     }
 
-    /**
-     * @return array
-     */
     protected function getImportRuleConditions(): array
     {
         return $this->container->getParameter('data_definitions.import_rule.conditions');
     }
 
-    /**
-     * @return array
-     */
     protected function getImportRuleActions(): array
     {
         return $this->container->getParameter('data_definitions.import_rule.actions');

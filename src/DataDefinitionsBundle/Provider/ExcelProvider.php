@@ -22,6 +22,7 @@ use Box\Spout\Writer\Exception\WriterNotOpenedException;
 use Box\Spout\Writer\WriterInterface;
 use Pimcore\Model\Asset;
 use Wvision\Bundle\DataDefinitionsBundle\Exception\SpoutException;
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
@@ -42,7 +43,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         return true;
     }
 
-    public function getColumns(array $configuration)
+    public function getColumns(array $configuration): array
     {
         if ($configuration['exampleFile']) {
             $exampleFile = Asset::getById($configuration['exampleFile']);
@@ -65,7 +66,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         return [];
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null)
     {
         $file = $this->getFile($params['file']);
 
@@ -88,7 +89,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
             $rowCount = count($row);
             if ($rowCount < $headersCount) {
                 // append missing values
-                $row = array_pad($row, $headersCount, null);
+                $row = array_pad($row, (int)$headersCount, null);
             } elseif ($rowCount >= $headersCount) {
                 // remove overflow
                 $row = array_slice($row, 0, $headersCount);
@@ -160,11 +161,6 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         return $this->exportPath;
     }
 
-    /**
-     * @param $row
-     *
-     * @return array
-     */
     private function buildColumns($row): array
     {
         $headers = [];
@@ -185,12 +181,6 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         return $headers;
     }
 
-    /**
-     * @param array|null $headers
-     * @param WriterInterface $writer
-     * @throws IOException
-     * @throws WriterNotOpenedException
-     */
     private function addHeaders(?array $headers, WriterInterface $writer): void
     {
         if (null !== $headers) {
@@ -198,37 +188,13 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         }
     }
 
-    /**
-     * @return \Box\Spout\Reader\XLSX\Reader
-     * @throws SpoutException
-     */
     protected function getXlsxReader(): \Box\Spout\Reader\XLSX\Reader
     {
-        if (class_exists(\Box\Spout\Reader\Common\Creator\ReaderEntityFactory::class)) {
-            return \Box\Spout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
-        }
-        if (class_exists(\Box\Spout\Reader\ReaderFactory::class)) {
-            $this->useSpoutLegacy = true;
-            return \Box\Spout\Reader\ReaderFactory::create(\Box\Spout\Common\Type::XLSX);
-        }
-
-        throw new SpoutException('Error creating Spout XLSX Reader');
+        return \Box\Spout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
     }
 
-    /**
-     * @return \Box\Spout\Writer\XLSX\Writer
-     * @throws SpoutException
-     */
     protected function getXlsxWriter(): \Box\Spout\Writer\XLSX\Writer
     {
-        if (class_exists(\Box\Spout\Writer\Common\Creator\WriterEntityFactory::class)) {
-            return \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createXLSXWriter();
-        }
-        if (class_exists(\Box\Spout\Writer\WriterFactory::class)) {
-            $this->useSpoutLegacy = true;
-            return \Box\Spout\Reader\WriterFactory::create(\Box\Spout\Common\Type::XLSX);
-        }
-
-        throw new SpoutException('Error creating Spout XLSX Writer');
+        return \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createXLSXWriter();
     }
 }

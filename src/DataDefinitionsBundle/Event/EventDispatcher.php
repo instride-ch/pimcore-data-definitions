@@ -26,7 +26,7 @@ final class EventDispatcher implements EventDispatcherInterface
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function dispatch(DataDefinitionInterface $definition, $eventName, $subject = '', $params = []): void
+    public function dispatch(DataDefinitionInterface $definition, $eventName, $subject = null, $params = []): void
     {
         $event = $this->getEvent($definition, $subject, $params);
 
@@ -36,13 +36,7 @@ final class EventDispatcher implements EventDispatcherInterface
         );
     }
 
-    /**
-     * @param DataDefinitionInterface $definition
-     * @param string              $subject
-     * @param array               $params
-     * @return ImportDefinitionEvent
-     */
-    private function getEvent(DataDefinitionInterface $definition, $subject = '', $params = []): ImportDefinitionEvent
+    private function getEvent(DataDefinitionInterface $definition, $subject = null, $params = []): ImportDefinitionEvent
     {
         return new ImportDefinitionEvent($definition, $subject, $params);
     }

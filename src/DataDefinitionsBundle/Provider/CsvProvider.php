@@ -19,6 +19,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Csv\Writer;
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
@@ -38,7 +39,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return true;
     }
 
-    public function getColumns(array $configuration)
+    public function getColumns(array $configuration): array
     {
         $csvHeaders = (string) $configuration['csvHeaders'];
         $csvExample = $configuration['csvExample'];
@@ -72,7 +73,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null)
     {
         $csvHeaders = $configuration['csvHeaders'];
         $delimiter = $configuration['delimiter'];

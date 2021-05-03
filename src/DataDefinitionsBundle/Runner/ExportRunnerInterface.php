@@ -21,19 +21,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 interface ExportRunnerInterface
 {
-    /**
-     * @param Concrete                  $object
-     * @param array                     $data
-     * @param ExportDefinitionInterface $definition
-     * @param array                     $params
-     */
     public function exportPreRun(Concrete $object, array $data, ExportDefinitionInterface $definition, array $params);
 
-    /**
-     * @param Concrete                  $object
-     * @param array                     $data
-     * @param ExportDefinitionInterface $definition
-     * @param array                     $params
-     */
     public function exportPostRun(Concrete $object, array $data, ExportDefinitionInterface $definition, array $params);
 }

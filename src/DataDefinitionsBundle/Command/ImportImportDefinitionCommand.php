@@ -18,11 +18,6 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 final class ImportImportDefinitionCommand extends AbstractImportDefinitionCommand
 {
-    /**
-     * Get type
-     *
-     * @return string
-     */
     protected function getType(): string
     {
         return 'Import';

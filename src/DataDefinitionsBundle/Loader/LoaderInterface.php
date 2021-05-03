@@ -21,13 +21,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface LoaderInterface
 {
-    /**
-     * @param string                  $class
-     * @param                         $data
-     * @param DataDefinitionInterface $definition
-     * @param                         $params
-     *
-     * @return null|Concrete
-     */
-    public function load(string $class, $data, DataDefinitionInterface $definition, $params): ?Concrete;
+    public function load(string $class, array $data, DataDefinitionInterface $definition, array $params): ?Concrete;
 }

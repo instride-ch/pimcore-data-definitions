@@ -31,10 +31,10 @@ class DoNotSetOnEmptyInterpreter implements InterpreterInterface, DataSetAwareIn
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         if ($value === "" || $value === null) {
             throw new DoNotSetException();

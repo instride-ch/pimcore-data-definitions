@@ -23,11 +23,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\ToColumn;
 
 class FieldSelection
 {
-    /**
-     * @param DataObject\ClassDefinition $class
-     * @return array
-     * @throws Exception
-     */
     public function getClassDefinition(DataObject\ClassDefinition $class): array
     {
         $fields = $class->getFieldDefinitions();
@@ -197,10 +192,6 @@ class FieldSelection
         return $result;
     }
 
-    /**
-     * @param DataObject\ClassDefinition\Data $field
-     * @return ToColumn
-     */
     protected function getFieldConfiguration(DataObject\ClassDefinition\Data $field): ToColumn
     {
         $toColumn = new ToColumn();

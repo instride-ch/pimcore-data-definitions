@@ -20,10 +20,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 interface ExporterInterface
 {
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     * @return mixed
-     */
     public function doExport(ExportDefinitionInterface $definition, array $params);
 }

@@ -30,10 +30,10 @@ class DefaultValueInterpreter implements InterpreterInterface, DataSetAwareInter
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         return $configuration['value'];
     }

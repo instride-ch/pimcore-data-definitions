@@ -22,21 +22,12 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 interface SetterRunnerInterface extends RunnerInterface
 {
-    /**
-     * @param Concrete            $object
-     * @param MappingInterface    $map
-     * @param                     $value
-     * @param                     $data
-     * @param DataDefinitionInterface $definition
-     * @param                     $params
-     * @return mixed
-     */
     public function shouldSetField(
         Concrete $object,
         MappingInterface $map,
         $value,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params
+        array $params
     );
 }

@@ -45,10 +45,10 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $path = $configuration['path'];
 
@@ -109,10 +109,6 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         return null;
     }
 
-    /**
-     * @param  string $url
-     * @return string|null
-     */
     private function getFileName(string $url) : ?string
     {
         $filename = null;
@@ -140,10 +136,6 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         return $filename;
     }
 
-    /**
-     * @param string $value
-     * @return null|string
-     */
     protected function getFileContents(string $value): ?string
     {
         try {
@@ -159,10 +151,6 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         return null;
     }
 
-    /**
-     * @param string $value
-     * @return Asset|null
-     */
     private function getDuplicatedAsset(string $value) : ?Asset
     {
         $listing = new Asset\Listing();

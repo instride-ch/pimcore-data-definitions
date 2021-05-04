@@ -34,20 +34,10 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
 {
     use ArtifactProviderTrait;
 
-    /** @var XMLWriter */
-    private $writer;
+    private XMLWriter $writer;
+    private string $exportPath;
+    private int $exportCounter = 0;
 
-    /** @var string */
-    private $exportPath;
-
-    /** @var int */
-    private $exportCounter = 0;
-
-    /**
-     * @param $xml
-     * @param $xpath
-     * @return mixed
-     */
     protected function convertXmlToArray($xml, $xpath)
     {
         $xml = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -67,17 +57,11 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $array;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function testData(array $configuration): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getColumns(array $configuration): array
     {
         $exampleFile = Asset::getById($configuration['exampleFile']);
@@ -101,9 +85,6 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
         $file = $this->getFile($params['file']);

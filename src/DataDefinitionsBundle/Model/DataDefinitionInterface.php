@@ -56,9 +56,9 @@ interface DataDefinitionInterface extends ResourceInterface
     public function getClass();
 
     /**
-     * @param int $class
+     * @param string $class
      */
-    public function setClass($class);
+    public function setClass(string $class);
 
     /**
      * @return mixed

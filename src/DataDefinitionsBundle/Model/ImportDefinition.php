@@ -78,193 +78,134 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
      */
     public $forceLoadObject = false;
 
-    /**
-     * {@inheritdoc}
-     */
+    public static function getById($id)
+    {
+        $definitionEntry = new ImportDefinition();
+        $definitionEntry->setId((int)$id);
+        /**
+         * @var \Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
+         */
+        $dao = $definitionEntry->getDao();
+        $dao->getById($id);
+
+        return $definitionEntry;
+    }
+
     public function getLoader()
     {
         return $this->loader;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLoader($loader)
     {
         $this->loader = $loader;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getObjectPath()
     {
         return $this->objectPath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setObjectPath($objectPath)
     {
         $this->objectPath = $objectPath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCleaner()
     {
         return $this->cleaner;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setCleaner($cleaner)
     {
         $this->cleaner = $cleaner;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getKey()
     {
         return $this->key;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setKey($key)
     {
         $this->key = $key;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilter()
     {
         return $this->filter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setFilter($filter)
     {
         $this->filter = $filter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRenameExistingObjects()
     {
         return $this->renameExistingObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setRenameExistingObjects($renameExistingObjects)
     {
         $this->renameExistingObjects = $renameExistingObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRelocateExistingObjects()
     {
         return $this->relocateExistingObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setRelocateExistingObjects($relocateExistingObjects)
     {
         $this->relocateExistingObjects = $relocateExistingObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCreateVersion()
     {
         return $this->createVersion;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setCreateVersion($createVersion)
     {
         $this->createVersion = $createVersion;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOmitMandatoryCheck()
     {
         return $this->omitMandatoryCheck;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOmitMandatoryCheck($omitMandatoryCheck)
     {
         $this->omitMandatoryCheck = $omitMandatoryCheck;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSkipNewObjects()
     {
         return $this->skipNewObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSkipNewObjects($skipNewObjects)
     {
         $this->skipNewObjects = $skipNewObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSkipExistingObjects()
     {
         return $this->skipExistingObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSkipExistingObjects($skipExistingObjects)
     {
         $this->skipExistingObjects = $skipExistingObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getForceLoadObject()
     {
         return $this->forceLoadObject;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setForceLoadObject($forceLoadObject)
     {
         $this->forceLoadObject = $forceLoadObject;

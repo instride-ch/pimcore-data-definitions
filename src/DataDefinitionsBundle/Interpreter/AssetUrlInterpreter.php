@@ -55,7 +55,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         if (filter_var($value, FILTER_VALIDATE_URL)) {
             $asset = null;
             $filename = $this->getFileName($value);
-            
+
             if ($configuration['deduplicate_by_url']) {
                 if ($asset = $this->getDuplicatedAsset($value)) {
                     $filename = $asset->getFilename();
@@ -152,7 +152,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
     {
         $listing = new Asset\Listing();
         $listing->onCreateQueryBuilder(
-            function (QueryBuilder $select) use ($listing) {
+            function (QueryBuilder $select) {
                 $select->join('assets_metadata AS am', 'id = am.cid', 'cid');
             }
         );

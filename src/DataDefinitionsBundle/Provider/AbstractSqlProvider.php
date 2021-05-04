@@ -39,7 +39,7 @@ abstract class AbstractSqlProvider implements ImportProviderInterface
         $columns = [];
         $returnColumns = [];
 
-        if (isset($data)) {
+        if (count($data) > 0) {
             // there is at least one row - we can grab columns from it
             $columns = array_keys((array)$data);
         }

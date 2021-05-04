@@ -33,33 +33,34 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
      */
     public $fetchUnpublished = false;
 
-    /**
-     * {@inheritdoc}
-     */
+        public static function getById($id)
+    {
+        $definitionEntry = new ExportDefinition();
+        $definitionEntry->setId((int)$id);
+        /**
+         * @var \Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
+         */
+        $dao = $definitionEntry->getDao();
+        $dao->getById($id);
+
+        return $definitionEntry;
+    }
+
     public function getFetcher()
     {
         return $this->fetcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setFetcher($fetcher)
     {
         $this->fetcher = $fetcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFetcherConfig()
     {
         return $this->fetcherConfig;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setFetcherConfig($fetcherConfig)
     {
         $this->fetcherConfig = $fetcherConfig;

@@ -25,17 +25,18 @@ use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 abstract class AbstractImportDefinitionCommand extends AbstractCommand
 {
     protected MetadataInterface $metadata;
-    protected RepositoryInterface $repository;
+    protected DefinitionRepository $repository;
     protected EntityManagerInterface $manager;
     protected ResourceFormFactoryInterface $resourceFormFactory;
 
     public function __construct(
         MetadataInterface $metadata,
-        RepositoryInterface $repository,
+        DefinitionRepository $repository,
         EntityManagerInterface $manager,
         ResourceFormFactoryInterface $resourceFormFactory
     ) {

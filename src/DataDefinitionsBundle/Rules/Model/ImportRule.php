@@ -17,10 +17,8 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Model;
 
 use CoreShop\Component\Rule\Model\RuleTrait;
-use Exception;
-use Serializable;
 
-class ImportRule implements ImportRuleInterface, Serializable
+class ImportRule implements ImportRuleInterface
 {
     use RuleTrait;
 
@@ -29,20 +27,5 @@ class ImportRule implements ImportRuleInterface, Serializable
     public function getId()
     {
         return $this->id;
-    }
-
-    public function serialize()
-    {
-        return [
-            'name' => $this->getName(),
-            'active' => $this->getActive(),
-            'actions' => $this->getActions()->getValues(),
-            'conditions' => $this->getConditions()->getValues()
-        ];
-    }
-
-    public function unserialize($serialized)
-    {
-        throw new Exception('not supported');
     }
 }

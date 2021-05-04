@@ -281,6 +281,8 @@ services:
             - { name: data_definitions.import_provider, type: external_sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExternalSqlProviderType }
 
     Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider:
+        arguments:
+            - '@doctrine.dbal.default_connection'
         tags:
             - { name: data_definitions.import_provider, type: sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType }
 

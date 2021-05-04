@@ -201,8 +201,6 @@ final class Importer implements ImporterInterface
                 $mail->setParams($params);
 
                 $mail->send();
-            } elseif (is_a($document, "\\Pimcore\\Model\\Document\\Pushover")) {
-                $document->send($params);
             }
         }
     }
@@ -349,7 +347,7 @@ final class Importer implements ImporterInterface
 
         $this->logger->info(sprintf('Imported Object: %s', $object->getRealFullPath()));
 
-        /** @var $mapItem ImportMapping */
+        /** @var ImportMapping $mapItem */
         foreach ($definition->getMapping() as $mapItem) {
             $value = null;
 

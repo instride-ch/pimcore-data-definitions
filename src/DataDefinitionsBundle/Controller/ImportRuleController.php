@@ -240,8 +240,8 @@ class ImportRuleController extends AdminController
 
                     $countPerType[$actionHeader]++;
 
-                    if ($countPerType[$conditionHeader] > 1) {
-                        $actionHeader = 'action_' . $type . '___'.$countPerType[$conditionHeader].'___' . $key;
+                    if ($countPerType[$actionHeader] > 1) {
+                        $actionHeader = 'action_' . $type . '___'.$countPerType[$actionHeader].'___' . $key;
                     }
 
                     if (!in_array($actionHeader, $headersAction)) {
@@ -299,7 +299,7 @@ class ImportRuleController extends AdminController
                     $countPerType[$actionHeader]++;
 
                     if ($countPerType[$actionHeader] > 1) {
-                        $actionHeader = 'action_' . $type . '___'.$countPerType[$conditionHeader].'___' . $key;
+                        $actionHeader = 'action_' . $type . '___'.$countPerType[$actionHeader].'___' . $key;
                     }
 
                     if (is_array($value)) {
@@ -344,27 +344,11 @@ class ImportRuleController extends AdminController
 
     protected function getXlsxReader(): \Box\Spout\Reader\XLSX\Reader
     {
-        if (class_exists(\Box\Spout\Reader\Common\Creator\ReaderEntityFactory::class)) {
-            return \Box\Spout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
-        }
-        if (class_exists(\Box\Spout\Reader\ReaderFactory::class)) {
-            $this->useSpoutLegacy = true;
-            return \Box\Spout\Reader\ReaderFactory::create(\Box\Spout\Common\Type::XLSX);
-        }
-
-        throw new SpoutException('Error creating Spout XLSX Reader');
+        return \Box\Spout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
     }
 
     protected function getXlsxWriter(): \Box\Spout\Writer\XLSX\Writer
     {
-        if (class_exists(\Box\Spout\Writer\Common\Creator\WriterEntityFactory::class)) {
-            return \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createXLSXWriter();
-        }
-        if (class_exists(\Box\Spout\Writer\WriterFactory::class)) {
-            $this->useSpoutLegacy = true;
-            return \Box\Spout\Reader\WriterFactory::create(\Box\Spout\Common\Type::XLSX);
-        }
-
-        throw new SpoutException('Error creating Spout XLSX Writer');
+        return \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createXLSXWriter();
     }
 }

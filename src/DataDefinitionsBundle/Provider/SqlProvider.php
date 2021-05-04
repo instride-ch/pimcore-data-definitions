@@ -21,12 +21,15 @@ use Pimcore\Db;
 
 class SqlProvider extends AbstractSqlProvider
 {
-    /**
-     * @param $configuration
-     * @return Connection
-     */
-    protected function getDb($configuration): Connection
+    protected Connection $connection;
+
+    public function __construct(Connection $connection)
     {
-        return Db::get();
+        $this->connection = $connection;
+    }
+
+    protected function getDb(array $configuration): Connection
+    {
+        return $this->connection;
     }
 }

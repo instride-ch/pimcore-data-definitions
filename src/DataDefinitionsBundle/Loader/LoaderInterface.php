@@ -17,9 +17,9 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Loader;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 interface LoaderInterface
 {
-    public function load(string $class, array $data, DataDefinitionInterface $definition, array $params): ?Concrete;
+    public function load(string $class, array $data, ImportDefinitionInterface $definition, array $params): ?Concrete;
 }

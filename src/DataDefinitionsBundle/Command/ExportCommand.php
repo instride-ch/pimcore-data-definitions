@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
-use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use Exception;
 use InvalidArgumentException;
 use Pimcore\Console\AbstractCommand;
@@ -28,16 +27,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
 use Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 final class ExportCommand extends AbstractCommand
 {
     protected EventDispatcherInterface $eventDispatcher;
-    protected RepositoryInterface $repository;
+    protected DefinitionRepository $repository;
     protected ExporterInterface $exporter;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        RepositoryInterface $repository,
+        DefinitionRepository $repository,
         ExporterInterface $exporter
     ) {
         parent::__construct();
@@ -89,14 +89,14 @@ EOT
             throw new Exception('Export Definition not found');
         }
 
-        $imStatus = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imStatus = function (ExportDefinitionEvent $e) use (&$progress) {
             if ($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getSubject());
                 $progress->display();
             }
         };
 
-        $imTotal = function (ExportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
+        $imTotal = function (ExportDefinitionEvent $e) use ($output, &$progress) {
             $total = $e->getSubject();
             if ($total > 0) {
                 $progress = new ProgressBar($output, $total);
@@ -105,13 +105,13 @@ EOT
             }
         };
 
-        $imProgress = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imProgress = function (ExportDefinitionEvent $e) use (&$progress) {
             if ($progress instanceof ProgressBar) {
                 $progress->advance();
             }
         };
 
-        $imFinished = function (ExportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imFinished = function (ExportDefinitionEvent $e) use ($output, &$progress) {
             if ($progress instanceof ProgressBar) {
                 $output->writeln('');
             } else {

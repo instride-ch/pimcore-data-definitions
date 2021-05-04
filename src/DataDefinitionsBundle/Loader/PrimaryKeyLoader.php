@@ -21,11 +21,13 @@ use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use function count;
 
 class PrimaryKeyLoader implements LoaderInterface
 {
-    public function load(string $class, array $data, DataDefinitionInterface $definition, array $params): ?Concrete
+    public function load(string $class, array $data, ImportDefinitionInterface $definition, array $params): ?Concrete
     {
         $classObject = '\Pimcore\Model\DataObject\\'.ucfirst($class);
         $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';
@@ -33,6 +35,9 @@ class PrimaryKeyLoader implements LoaderInterface
         $list = new $classList();
 
         if ($list instanceof Listing) {
+            /**
+             * @var ImportMapping[] $mapping
+             */
             $mapping = $definition->getMapping();
             $condition = [];
             $conditionValues = [];

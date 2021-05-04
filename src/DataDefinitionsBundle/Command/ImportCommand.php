@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
-use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use Exception;
 use InvalidArgumentException;
 use Pimcore\Console\AbstractCommand;
@@ -29,16 +28,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
 use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 final class ImportCommand extends AbstractCommand
 {
     protected EventDispatcherInterface $eventDispatcher;
-    protected RepositoryInterface $repository;
+    protected DefinitionRepository $repository;
     protected ImporterInterface $importer;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        RepositoryInterface $repository,
+        DefinitionRepository $repository,
         ImporterInterface $importer
     ) {
         $this->eventDispatcher = $eventDispatcher;
@@ -95,7 +95,7 @@ EOT
             throw new Exception('Import Definition not found');
         }
 
-        $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process, &$countProgress, $startTime) {
+        $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$countProgress, $startTime) {
             if ($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getSubject());
                 $progress->display();
@@ -113,7 +113,7 @@ EOT
             }
         };
 
-        $imTotal = function (ImportDefinitionEvent $e) use ($output, $definition, &$progress, &$process) {
+        $imTotal = function (ImportDefinitionEvent $e) use ($output, &$progress) {
             $progress = new ProgressBar($output, $e->getSubject());
             $progress->setFormat(
                 ' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%'
@@ -121,7 +121,7 @@ EOT
             $progress->start();
         };
 
-        $imProgress = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process, &$countProgress) {
+        $imProgress = function (ImportDefinitionEvent $e) use (&$progress, &$countProgress) {
             if ($progress instanceof ProgressBar) {
                 $progress->advance();
             }
@@ -129,7 +129,7 @@ EOT
             $countProgress++;
         };
 
-        $imFinished = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imFinished = function (ImportDefinitionEvent $e) use ($output, &$progress) {
             if ($progress instanceof ProgressBar) {
                 $output->writeln('');
             }
@@ -138,7 +138,7 @@ EOT
             $output->writeln('');
         };
 
-        $imFailure = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imFailure = function (ImportDefinitionEvent $e) use ($output, &$progress) {
             if ($progress instanceof ProgressBar) {
                 $output->writeln('');
             }
@@ -147,7 +147,7 @@ EOT
             $output->writeln('');
         };
 
-        $imSuccess = function (ImportDefinitionEvent $e) use ($output, &$progress, &$process) {
+        $imSuccess = function (ImportDefinitionEvent $e) use ($output, &$progress) {
             if ($progress instanceof ProgressBar) {
                 $output->writeln('');
             }

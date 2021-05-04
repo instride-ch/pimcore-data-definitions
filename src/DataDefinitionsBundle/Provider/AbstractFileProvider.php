@@ -20,9 +20,9 @@ abstract class AbstractFileProvider
 {
     protected function getFile(string $file): string
     {
-        if (!str_starts_with($file, '/')) {
-            $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $file);
-        }
+//        if (!str_starts_with($file, '/')) {
+//            $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $file);
+//        }
 
         return $file;
     }

@@ -214,7 +214,7 @@ final class Exporter implements ExporterInterface
 
         if (is_array($definition->getMapping())) {
             /**
-             * @var $mapItem ExportMapping
+             * @var ExportMapping $mapItem
              */
             foreach ($definition->getMapping() as $mapItem) {
                 $getter = $this->fetchGetter($mapItem);

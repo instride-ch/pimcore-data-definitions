@@ -119,12 +119,12 @@ interface ImportDefinitionInterface extends DataDefinitionInterface
     public function setSkipExistingObjects($skipExistingObjects);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getForceLoadObject();
 
     /**
-     * @param $forceLoadObject
+     * @param bool $forceLoadObject
      */
     public function setForceLoadObject($forceLoadObject);
 

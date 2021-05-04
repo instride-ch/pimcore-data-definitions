@@ -18,6 +18,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 use Exception;
 use Pimcore\Model\AbstractModel;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Log\Dao;
 
 class Log extends AbstractModel
 {
@@ -33,7 +34,12 @@ class Log extends AbstractModel
 
         try {
             $obj = new self;
-            $obj->getDao()->getById($id);
+
+            /**
+             * @var Dao $dao
+             */
+            $dao = $obj->getDao();
+            $dao->getById($id);
 
             return $obj;
         } catch (Exception $ex) {

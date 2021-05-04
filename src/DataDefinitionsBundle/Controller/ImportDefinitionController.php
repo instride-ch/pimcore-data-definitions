@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection;
 use function is_array;
@@ -126,6 +127,9 @@ class ImportDefinitionController extends ResourceController
                 $found = false;
 
                 if (is_array($mappings)) {
+                    /**
+                     * @var ImportMapping $mapping
+                     */
                     foreach ($mappings as $mapping) {
                         if ($mapping->getToColumn() === $classToColumn->getIdentifier()) {
                             $found = true;

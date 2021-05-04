@@ -23,19 +23,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
 abstract class AbstractCleaner implements CleanerInterface
 {
-    /**
-     * @param DataDefinitionInterface $definition
-     * @param int[] $objectIds
-     * @return mixed
-     */
-    abstract public function cleanup(DataDefinitionInterface $definition, array $objectIds);
+    abstract public function cleanup(DataDefinitionInterface $definition, array $objectIds): void;
 
-    /**
-     * @param DataDefinitionInterface $definition
-     * @param array               $foundObjectIds
-     * @return Concrete[]
-     * @throws Exception
-     */
     protected function getObjectsToClean(DataDefinitionInterface $definition, array $foundObjectIds): array
     {
         $logs = new Log\Listing();
@@ -71,12 +60,6 @@ abstract class AbstractCleaner implements CleanerInterface
         return $notFound;
     }
 
-    /**
-     * Delete Logs
-     *
-     * @param Log[] $logs
-     * @throws Exception
-     */
     protected function deleteLogs(array $logs): void
     {
         /** @var Log $log */
@@ -85,19 +68,12 @@ abstract class AbstractCleaner implements CleanerInterface
         }
     }
 
-    /**
-     * Save new Log
-     *
-     * @param DataDefinitionInterface $definition
-     * @param array               $objectIds
-     * @throws Exception
-     */
     protected function writeNewLogs(DataDefinitionInterface $definition, array $objectIds): void
     {
         foreach ($objectIds as $objId) {
             $log = new Log();
-            $log->setO_Id($objId);
-            $log->setDefinition($definition->getId());
+            $log->setO_Id((int)$objId);
+            $log->setDefinition((int)$definition->getId());
             $log->save();
         }
     }

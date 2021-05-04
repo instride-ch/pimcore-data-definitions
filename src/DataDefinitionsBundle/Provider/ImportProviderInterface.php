@@ -16,10 +16,8 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
-use Exception;
 use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
 interface ImportProviderInterface
 {
@@ -27,5 +25,5 @@ interface ImportProviderInterface
 
     public function getColumns(array $configuration): array;
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null);
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface;
 }

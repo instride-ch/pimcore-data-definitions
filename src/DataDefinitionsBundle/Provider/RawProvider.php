@@ -51,8 +51,8 @@ class RawProvider implements ImportProviderInterface
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
-        return $params['data'];
+        return new ArrayImportDataSet($params['data']);
     }
 }

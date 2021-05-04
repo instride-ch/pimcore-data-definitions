@@ -16,27 +16,17 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
-use Closure;
 use Iterator;
 
-class ImportDataSet implements ImportDataSetInterface, \Countable
+class ArrayImportDataSet implements ImportDataSetInterface, \Countable
 {
+    private array $data;
     private Iterator $iterator;
 
-    /**
-     * @var int|false
-     */
-    private int|false $countAll;
-
-    private ?Closure $processor;
-
-    public function __construct(Iterator $iterator, Closure $processor = null)
+    public function __construct(array $data)
     {
-        $this->iterator = $iterator;
-        $this->countAll = false;
-        $this->processor = $processor ?? static function ($current) {
-                return $current;
-            };
+        $this->data = $data;
+        $this->iterator = new \ArrayIterator($data);
     }
 
     /**
@@ -47,7 +37,7 @@ class ImportDataSet implements ImportDataSetInterface, \Countable
      */
     public function current()
     {
-        return ($this->processor)($this->iterator->current());
+        return ($this->iterator->current());
     }
 
     /**
@@ -106,11 +96,6 @@ class ImportDataSet implements ImportDataSetInterface, \Countable
      */
     public function count()
     {
-        if (false === $this->countAll) {
-            $this->rewind();
-            $this->countAll = iterator_count($this->iterator);
-        }
-
-        return $this->countAll;
+        return count($this->data);
     }
 }

@@ -4,6 +4,7 @@ Feature: Adding a import with a interpreter
 
   Background:
     Given there is a pimcore class "Product"
+    And the definition has a input field "name"
     And the definition has a link field "link"
     And there is a import-definition "Product" for definition
     And the import-definitions provider is "csv" with the configuration:
@@ -20,11 +21,11 @@ Feature: Adding a import with a interpreter
       | link       | link     | false   | link        | {}  |
     And there is a file test.csv with content:
       """
-      name,image
+      name,link
       test1,http://hbit.nl/
       """
     And I run the import-definitions with params:
       | key  | value    |
       | file | test.csv |
     Then there should be "1" data-objects for definition
-    And the field "image" for object of the definition should be of type link
+    And the field "link" for object of the definition should be of type link

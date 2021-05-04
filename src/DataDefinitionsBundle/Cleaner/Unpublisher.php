@@ -20,7 +20,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class Unpublisher extends AbstractCleaner
 {
-    public function cleanup(DataDefinitionInterface $definition, array $objectIds)
+    public function cleanup(DataDefinitionInterface $definition, array $objectIds): void
     {
         $notFoundObjects = $this->getObjectsToClean($definition, $objectIds);
 

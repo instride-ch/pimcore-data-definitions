@@ -1,32 +1,55 @@
-######################
-# Compiled source    #
-######################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
+# remove the following ignores for your project
+/config/pimcore/constants.php
 
-######################
-# Packages           #
-######################
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
+# symfony default
+/.web-server-pid
+/build/
+/phpunit.xml
+/public/bundles/
 
-######################
-# Logs and databases #
-######################
-*.log
+# local config
+/.env.local
+/.env.local.php
+/.env.*.local
+!/config/local
+/config/local/*
+!config/local/.gitkeep
 
-######################
-# Global             #
-######################
+# pimcore legacy (remove this for your own development)
+!/legacy
+/legacy/*
+!legacy/.gitkeep
+!legacy/bundle
+
+/var/*
+!/var/.gitkeep
+!/var/classes/
+/var/classes/DataObject
+
+!/var/config
+/var/config/system.yml
+/var/config/debug-mode.php
+/var/config/maintenance.php
+
+# project specific recommendations
+/var/config/tag-manager.php
+
+/public/var/
+/web/var/
+/public/sitemap*.xml
+
+# PHP-CS-Fixer
+/.php_cs
+/.php_cs.cache
+
+# composer
+/vendor/
+
+# PhpStorm / IDEA
+.idea
+# NetBeans
+nbproject
+
 .DS_Store
 .DS_Store\?
 ._*
@@ -35,23 +58,11 @@
 Icon\?
 *.sublime-workspace
 *.sublime-project
-atlassian-ide-plugin.xml
 .idea/
-.project
-ehthumbs.db
-Thumbs.db
-Vagrantfile
-.vagrant
-php-cgi.core
-.sass-cache
-views/template/default/data/categories.csv
-views/template/default/data/products.csv
-TestController.php
-tests/output
-tests/tmp
-generate-and-copy.sh
-var
-app/config/config.yml
 composer.lock
 docker-compose.yml
-app/config/local
+config/local
+var/classes
+var/config
+test.csv
+web

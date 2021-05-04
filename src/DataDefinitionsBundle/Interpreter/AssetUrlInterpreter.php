@@ -53,16 +53,10 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         $path = $configuration['path'];
 
         if (filter_var($value, FILTER_VALIDATE_URL)) {
+            $asset = null;
             $filename = $this->getFileName($value);
-            $assetsUrlPrefix = PimcoreTool::getHostUrl().str_replace(PIMCORE_WEB_ROOT, '', PIMCORE_ASSET_DIRECTORY);
-
-            // check if URL seems to be pointing to our own asset URL
-            $assetFullPath = str_replace($assetsUrlPrefix, '', $value);
-            $assetPath = '_-undefined-_';
-            if (str_starts_with($value, $assetsUrlPrefix) && null !== $asset = Asset::getByPath($assetFullPath)) {
-                $filename = $asset->getFilename();
-                $assetPath = dirname($assetFullPath);
-            } elseif ($configuration['deduplicate_by_url']) {
+            
+            if ($configuration['deduplicate_by_url']) {
                 if ($asset = $this->getDuplicatedAsset($value)) {
                     $filename = $asset->getFilename();
                     $assetPath = $asset->getPath();
@@ -70,18 +64,21 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                     $assetPath = $path;
                 }
             }
+            else {
+                $assetPath = $path;
+            }
 
             $parent = Asset\Service::createFolderByPath($assetPath);
 
             if (!$asset instanceof Asset) {
                 // Download
-                $data = $this->getFileContents($value);
+                $fileData = $this->getFileContents($value);
 
-                if ($data) {
-                    $asset = new Asset();
-                    $asset->setFilename($filename);
-                    $asset->setParent($parent);
-                    $asset->setData($data);
+                if ($fileData) {
+                    $asset = Asset::create($parent->getId(), [
+                        'filename' => $filename,
+                        'data' => $fileData
+                    ], false);
                     $asset->addMetadata(self::METADATA_ORIGIN_URL, 'input', $value);
                     $asset->save();
                 }

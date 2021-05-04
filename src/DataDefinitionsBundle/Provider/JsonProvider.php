@@ -81,17 +81,17 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
         $file = $this->getFile($params['file']);
 
         if (file_exists($file)) {
             $json = file_get_contents($file);
 
-            return json_decode($json, true);
+            return new ArrayImportDataSet(\json_decode($json, true));
         }
 
-        return [];
+        return new ArrayImportDataSet([]);
     }
 
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void

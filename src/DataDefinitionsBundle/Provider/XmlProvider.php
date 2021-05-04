@@ -16,7 +16,9 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use Pimcore\File;
 use Pimcore\Model\Asset;
+use Pimcore\Tool\Storage;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
@@ -102,12 +104,12 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
         $file = $this->getFile($params['file']);
         $xml = file_get_contents($file);
 
-        return $this->convertXmlToArray($xml, $configuration['xPath']);
+        return new ArrayImportDataSet($this->convertXmlToArray($xml, $configuration['xPath']));
     }
 
     public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
@@ -136,21 +138,27 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         // XSLT transformation support
         if (array_key_exists('xsltPath', $configuration) && $configuration['xsltPath']) {
             $dataPath = $this->getExportPath();
-            $xstlPath = $file = sprintf('%s/%s', PIMCORE_ASSET_DIRECTORY, ltrim($configuration['xsltPath'], '/'));
 
-            if (!file_exists($xstlPath)) {
-                throw new RuntimeException(sprintf('Passed XSLT file "%1$s" not found', $configuration['xsltPath']));
+            $storage = Storage::get('asset');
+            $path = ltrim($configuration['xsltPath'], '/');
+
+            if (!$storage->fileExists($path)) {
+                throw new RuntimeException(sprintf('Passed XSLT file "%1$s" not found', $path));
             }
 
-            if (!is_readable($xstlPath)) {
-                throw new RuntimeException(sprintf('Passed XSLT file "%1$s" not readable', $configuration['xsltPath']));
-            }
+            $extension = File::getFileExtension($configuration['xsltPath']);
+            $workingPath = File::getLocalTempFilePath($extension);
+            file_put_contents($workingPath, $storage->read($path));
 
             $this->exportPath = tempnam(sys_get_temp_dir(), 'xml_export_xslt_transformation');
-            $cmd = sprintf('xsltproc -v %1$s %2$s > %3$s', $xstlPath, $dataPath, $this->getExportPath());
+            $cmd = sprintf('xsltproc -v %1$s %2$s > %3$s', $workingPath, $dataPath, $this->getExportPath());
             $process = new Process($cmd);
             $process->setTimeout(null);
             $process->run();
+
+            if (!stream_is_local($path)) {
+                unlink($workingPath);
+            }
 
             if (false === $process->isSuccessful()) {
                 throw new RuntimeException($process->getErrorOutput());

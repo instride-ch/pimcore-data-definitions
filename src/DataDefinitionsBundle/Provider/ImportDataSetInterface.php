@@ -19,6 +19,6 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 use Countable;
 use Iterator;
 
-interface ImportDataSetInterface extends Countable, Iterator
+interface ImportDataSetInterface extends Iterator
 {
 }

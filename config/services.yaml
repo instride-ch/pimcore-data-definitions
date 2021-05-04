@@ -1,0 +1,10 @@
+parameters:
+    secret: krJmBPcnKpGOIGlJm2R/uG47u2lM/ekmYlSZNhkCtx0=
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler: ~

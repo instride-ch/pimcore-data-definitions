@@ -41,6 +41,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
@@ -218,11 +219,11 @@ final class Importer implements ImporterInterface
         ImportDefinitionInterface $definition,
         array $params,
         FilterInterface $filter = null,
-        ?array $dataSet = null
+        ImportDataSetInterface $dataSet = null
     ): array
     {
         if (null === $dataSet) {
-            $dataSet = [];
+            $dataSet = new ImportDataSet(new \EmptyIterator());
         }
 
         $count = 0;
@@ -274,7 +275,7 @@ final class Importer implements ImporterInterface
     private function importRow(
         ImportDefinitionInterface $definition,
         array $data,
-        array $dataSet,
+        ImportDataSetInterface $dataSet,
         array $params,
         FilterInterface $filter = null
     ): ?Concrete
@@ -424,7 +425,7 @@ final class Importer implements ImporterInterface
         ImportMapping $map,
         $value,
         array $data,
-        $dataSet,
+        ImportDataSetInterface $dataSet,
         ImportDefinitionInterface $definition,
         array $params,
         RunnerInterface $runner = null
@@ -449,7 +450,7 @@ final class Importer implements ImporterInterface
                         $data,
                         $definition,
                         $params,
-                        $map->getInterpreterConfig()
+                        $map->getInterpreterConfig() ?? []
                     );
                 }
                 catch (UnexpectedValueException $ex) {
@@ -554,6 +555,10 @@ final class Importer implements ImporterInterface
 
     private function createPath(ImportDefinitionInterface $definition, array $data): string
     {
+        if (!$definition->getObjectPath()) {
+            return '';
+        }
+
         if (str_starts_with($definition->getObjectPath(), '@')) {
             return $this->expressionLanguage->evaluate($definition->getObjectPath(), $data);
         }
@@ -563,10 +568,14 @@ final class Importer implements ImporterInterface
 
     private function createKey(ImportDefinitionInterface $definition, array $data): string
     {
+        if (!$definition->getKey()) {
+            return '';
+        }
+
         if (str_starts_with($definition->getKey(), '@')) {
             return $this->expressionLanguage->evaluate($definition->getKey(), $data);
         }
 
-        return $definition->getKey() ?? '';
+        return $definition->getKey();
     }
 }

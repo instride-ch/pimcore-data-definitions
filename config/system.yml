@@ -11,15 +11,8 @@ pimcore:
             de: ''
         default_language: ''
         disable_usage_statistics: false
-        debug: true
-        debug_ip: ''
-        http_auth:
-            username: ''
-            password: ''
         debug_admin_translations: false
-        devmode: false
         instance_identifier: ''
-        show_cookie_notice: false
     documents:
         versions:
             days: null
@@ -47,13 +40,6 @@ pimcore:
             email: ''
             simple_api_key: ''
             browser_api_key: ''
-    cache:
-        enabled: false
-        lifetime: null
-        exclude_patterns: ''
-        exclude_cookie: ''
-    webservice:
-        enabled: true
     httpclient:
         adapter: Socket
         proxy_host: ''
@@ -67,9 +53,6 @@ pimcore:
         return:
             name: pimcore
             email: pimcore@example.com
-        method: sendmail
-        debug:
-            email_addresses: ''
     newsletter:
         sender:
             name: ''
@@ -77,8 +60,6 @@ pimcore:
         return:
             name: ''
             email: ''
-        method: sendmail
-        debug: null
         use_specific: true
     applicationlog:
         mail_notification:
@@ -92,23 +73,4 @@ pimcore_admin:
         color_login_screen: ''
         color_admin_interface: ''
         login_screen_custom_image: ''
-swiftmailer:
-    mailers:
-        pimcore_mailer:
-            transport: smtp
-            delivery_addresses: []
-            host: ''
-            username: ''
-            password: ''
-            port: ''
-            encryption: null
-            auth_mode:
-        newsletter_mailer:
-            transport: sendmail
-            delivery_addresses: []
-            host: ''
-            username: ''
-            password: null
-            port: ''
-            encryption: null
-            auth_mode: null
+

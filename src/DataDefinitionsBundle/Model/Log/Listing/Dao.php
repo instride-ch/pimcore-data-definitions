@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\Log\Listing;
 
 use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\DBAL\Query\QueryBuilder as DoctrineQueryBuilder;
 use Exception;
 use Pimcore\Model\Listing;
 use Pimcore\Model\Listing\Dao\QueryBuilderHelperTrait;
@@ -44,22 +45,6 @@ class Dao extends Listing\Dao\AbstractDao
     }
 
     /**
-     * @return QueryBuilder
-     * @throws Exception
-     */
-    public function getQueryBuilder()
-    {
-        $queryBuilder = $this->db->createQueryBuilder();
-
-        $field = sprintf('%s.id', $this->getTableName());
-        $queryBuilder->select([sprintf('SQL_CALC_FOUND_ROWS %s as id', $field)]);
-        $queryBuilder->from($this->getTableName());
-        $this->applyListingParametersToQueryBuilder($queryBuilder);
-
-        return $queryBuilder;
-    }
-
-    /**
      * Loads objects from the database.
      *
      * @return Log[]
@@ -82,6 +67,16 @@ class Dao extends Listing\Dao\AbstractDao
         return $objects;
     }
 
+    public function getQueryBuilder(...$columns): DoctrineQueryBuilder
+    {
+        $queryBuilder = $this->db->createQueryBuilder();
+        $queryBuilder->select(...$columns)->from($this->getTableName());
+
+        $this->applyListingParametersToQueryBuilder($queryBuilder);
+
+        return $queryBuilder;
+    }
+
     /**
      * Loads a list for the specified parameters, returns an array of ids.
      *
@@ -90,16 +85,13 @@ class Dao extends Listing\Dao\AbstractDao
      */
     public function loadIdList()
     {
-        try {
-            $query = $this->getQuery();
-            $objectIds = $this->db->fetchCol($query, $this->model->getConditionVariables());
-            $this->totalCount = (int)$this->db->fetchOne('SELECT FOUND_ROWS()');
+        $queryBuilder = $this->getQueryBuilder(['id']);
+        $assetIds = $this->db->fetchCol((string) $queryBuilder, $this->model->getConditionVariables(), $this->model->getConditionVariableTypes());
 
-            return $objectIds;
-        } catch (Exception $e) {
-            throw $e;
-        }
+        return array_map('intval', $assetIds);
     }
+
+
 
     /**
      * Get Count

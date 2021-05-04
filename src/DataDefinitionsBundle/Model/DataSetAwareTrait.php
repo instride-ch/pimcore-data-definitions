@@ -16,25 +16,18 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
+
 trait DataSetAwareTrait
 {
-    /**
-     * @var array
-     */
-    protected $dataSet;
+    protected ImportDataSetInterface $dataSet;
 
-    /**
-     * @return array
-     */
-    public function getDataSet()
+    public function getDataSet(): ImportDataSetInterface
     {
         return $this->dataSet;
     }
 
-    /**
-     * @param array $dataSet
-     */
-    public function setDataSet($dataSet)
+    public function setDataSet(ImportDataSetInterface $dataSet): void
     {
         $this->dataSet = $dataSet;
     }

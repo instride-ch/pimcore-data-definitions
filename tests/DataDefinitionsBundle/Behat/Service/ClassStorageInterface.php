@@ -14,22 +14,9 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Service;
 
 interface ClassStorageInterface
 {
-    /**
-     * @param string $className
-     *
-     * @return string
-     */
-    public function get($className);
+    public function get(string $className): string;
 
-    /**
-     * @param string $className
-     *
-     * @return bool
-     */
-    public function has($className);
+    public function has(string $className): bool;
 
-    /**
-     * @param string $className
-     */
-    public function set($className);
+    public function set(string $className): string;
 }

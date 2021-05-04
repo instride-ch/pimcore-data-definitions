@@ -14,15 +14,9 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Service;
 
 class ClassStorage implements ClassStorageInterface
 {
-    /**
-     * @var array
-     */
     private $storage = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get($className)
+    public function get(string $className): string
     {
         if (!isset($this->storage[$className])) {
             throw new \InvalidArgumentException(sprintf('There is no class name for "%s"!', $className));
@@ -31,28 +25,19 @@ class ClassStorage implements ClassStorageInterface
         return $this->storage[$className];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function has($className)
+    public function has(string $className): bool
     {
         return isset($this->storage[$className]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function set($className)
+    public function set(string $className): string
     {
         $this->storage[$className] = $this->getBehatClassName($className);
 
         return $this->storage[$className];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    private function getBehatClassName($className)
+    private function getBehatClassName(string $className): string
     {
         return sprintf('Behat%s%s', $className, uniqid());
     }

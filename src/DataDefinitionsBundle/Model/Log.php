@@ -17,80 +17,55 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 use Exception;
-use Pimcore\Logger;
 use Pimcore\Model\AbstractModel;
 
 class Log extends AbstractModel
 {
-    public int $id;
+    protected $id;
+    protected $definition;
+    protected $o_id;
 
-    public int $definition;
-
-    public int $o_id;
-
-    /**
-     * Get Log by id
-     *
-     * @param $id
-     * @return null|Log
-     */
     public static function getById($id)
     {
+        if (!is_numeric($id) || $id < 1) {
+            return null;
+        }
+
         try {
             $obj = new self;
             $obj->getDao()->getById($id);
 
             return $obj;
         } catch (Exception $ex) {
-            Logger::warn(sprintf('Log with ID %s not found', $id));
+            return null;
         }
-
-        return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
     public function setId($id)
     {
         $this->id = $id;
     }
 
-    /**
-     * @return int
-     */
     public function getDefinition()
     {
         return $this->definition;
     }
 
-    /**
-     * @param int $definition
-     */
     public function setDefinition($definition)
     {
         $this->definition = $definition;
     }
 
-    /**
-     * @return int
-     */
     public function getO_Id()
     {
         return $this->o_id;
     }
 
-    /**
-     * @param int $o_id
-     */
     public function setO_Id($o_id)
     {
         $this->o_id = $o_id;

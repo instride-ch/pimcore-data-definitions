@@ -29,7 +29,16 @@ if (file_exists($a = getcwd() . '/vendor/autoload.php')) {
 \Pimcore\Bootstrap::setProjectRoot();
 
 define('PIMCORE_CONSOLE', true);
-define('PIMCORE_KERNEL_CLASS', '\AppKernel');
+
+
+$input = new \Symfony\Component\Console\Input\ArgvInput();
+if (null !== $env = $input->getParameterOption(['--env', '-e'], null, true)) {
+    putenv('APP_ENV='.$_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = $env);
+}
+
+if ($input->hasParameterOption('--no-debug', true)) {
+    putenv('APP_DEBUG='.$_SERVER['APP_DEBUG'] = $_ENV['APP_DEBUG'] = '0');
+}
 
 /** @var \Pimcore\Kernel $kernel */
 $kernel = \Pimcore\Bootstrap::startupCli();

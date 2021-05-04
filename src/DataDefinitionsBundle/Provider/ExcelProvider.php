@@ -21,6 +21,7 @@ use Box\Spout\Reader\ReaderInterface;
 use Box\Spout\Writer\Exception\WriterNotOpenedException;
 use Box\Spout\Writer\WriterInterface;
 use Pimcore\Model\Asset;
+use Pimcore\Tool\Storage;
 use Wvision\Bundle\DataDefinitionsBundle\Exception\SpoutException;
 use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
@@ -48,7 +49,9 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         if ($configuration['exampleFile']) {
             $exampleFile = Asset::getById($configuration['exampleFile']);
             if (null !== $exampleFile) {
-                $reader = $this->createReader(PIMCORE_ASSET_DIRECTORY . $exampleFile->getFullPath());
+                $storage = Storage::get('asset');
+                $stream = $storage->readStream($exampleFile->getFullPath());
+                $reader = $this->createReader($stream);
 
                 $sheetIterator = $reader->getSheetIterator();
                 $sheetIterator->rewind();
@@ -66,7 +69,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         return [];
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
         $file = $this->getFile($params['file']);
 
@@ -134,7 +137,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         return fopen($this->getExportPath(), 'rb');
     }
 
-    private function createReader(string $path): ReaderInterface
+    private function createReader($path): ReaderInterface
     {
         $reader = $this->getXlsxReader();
         $reader->open($path);

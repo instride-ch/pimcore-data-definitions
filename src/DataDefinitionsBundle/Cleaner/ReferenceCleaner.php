@@ -22,7 +22,7 @@ use function count;
 
 class ReferenceCleaner extends AbstractCleaner
 {
-    public function cleanup(DataDefinitionInterface $definition, array $objectIds)
+    public function cleanup(DataDefinitionInterface $definition, array $objectIds): void
     {
         $notFoundObjects = $this->getObjectsToClean($definition, $objectIds);
 

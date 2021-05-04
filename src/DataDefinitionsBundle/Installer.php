@@ -17,18 +17,12 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle;
 
 use Pimcore;
-use Pimcore\Console\Application;
 use Pimcore\Extension\Bundle\Installer\SettingsStoreAwareInstaller;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
-use Wvision\Bundle\DataDefinitionsBundle\Migrations\Version20190731104917;
 
 class Installer extends SettingsStoreAwareInstaller
 {
-    public function getLastMigrationVersionClassName(): ?string
-    {
-        return Version20190731104917::class;
-    }
-
     public function install(): void
     {
         $kernel = Pimcore::getKernel();

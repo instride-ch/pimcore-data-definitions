@@ -19,24 +19,13 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 use Closure;
 use Iterator;
 
-class ImportDataSet implements ImportDataSetInterface, \Countable
+class TraversableImportDataSet implements ImportDataSetInterface
 {
-    private Iterator $iterator;
+    private \IteratorIterator $iterator;
 
-    /**
-     * @var int|false
-     */
-    private int|false $countAll;
-
-    private ?Closure $processor;
-
-    public function __construct(Iterator $iterator, Closure $processor = null)
+    public function __construct(\Traversable $iterator)
     {
-        $this->iterator = $iterator;
-        $this->countAll = false;
-        $this->processor = $processor ?? static function ($current) {
-                return $current;
-            };
+        $this->iterator = new \IteratorIterator($iterator);
     }
 
     /**
@@ -47,7 +36,7 @@ class ImportDataSet implements ImportDataSetInterface, \Countable
      */
     public function current()
     {
-        return ($this->processor)($this->iterator->current());
+        return ($this->iterator->current());
     }
 
     /**
@@ -93,24 +82,5 @@ class ImportDataSet implements ImportDataSetInterface, \Countable
     public function rewind()
     {
         $this->iterator->rewind();
-    }
-
-    /**
-     * Count elements of an object
-     * @link https://php.net/manual/en/countable.count.php
-     * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
-     * @since 5.1.0
-     */
-    public function count()
-    {
-        if (false === $this->countAll) {
-            $this->rewind();
-            $this->countAll = iterator_count($this->iterator);
-        }
-
-        return $this->countAll;
     }
 }

@@ -73,14 +73,14 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
         $csvHeaders = $configuration['csvHeaders'];
         $delimiter = $configuration['delimiter'];
         $enclosure = $configuration['enclosure'];
 
-        $offset = $params['offset'];
-        $limit = $params['limit'];
+        $offset = $params['offset'] ?? null;
+        $limit = $params['limit'] ?? null;
 
         $file = $this->getFile($params['file']);
 
@@ -119,7 +119,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
 
         $records = $stmt->process($csv);
 
-        return $records;
+        return new TraversableImportDataSet($records);
     }
 
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void

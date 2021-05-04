@@ -20,9 +20,6 @@ use Pimcore\Db\PhpArrayFileTable;
 
 final class IMSetupContext implements Context
 {
-    /**
-     * @var bool
-     */
     private static $setupDone = false;
 
     /**

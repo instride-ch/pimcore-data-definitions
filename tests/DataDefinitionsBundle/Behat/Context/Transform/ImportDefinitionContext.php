@@ -15,29 +15,18 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
-use CoreShop\Component\Resource\Repository\PimcoreRepositoryInterface;
+use CoreShop\Component\Resource\Repository\PimcoreDaoRepositoryInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class ImportDefinitionContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
     private $sharedStorage;
-
-    /**
-     * @var PimcoreRepositoryInterface
-     */
     private $definitionRepository;
 
-    /**
-     * @param SharedStorageInterface     $sharedStorage
-     * @param PimcoreRepositoryInterface $definitionRepository
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
-        PimcoreRepositoryInterface $definitionRepository
+        PimcoreDaoRepositoryInterface $definitionRepository
     ) {
         $this->sharedStorage = $sharedStorage;
         $this->definitionRepository = $definitionRepository;
@@ -51,7 +40,7 @@ final class ImportDefinitionContext implements Context
         $all = $this->definitionRepository->findAll();
 
         /**
-         * @var DefinitionInterface $definition
+         * @var DataDefinitionInterface $definition
          */
         foreach ($all as $definition) {
             if ($definition->getName() === $name) {

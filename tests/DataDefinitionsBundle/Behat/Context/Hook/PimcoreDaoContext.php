@@ -26,14 +26,8 @@ use Pimcore\Model\DataObject\Objectbrick;
 
 final class PimcoreDaoContext implements Context
 {
-    /**
-     * @var Connection
-     */
     private $connection;
 
-    /**
-     * @param Connection $connection
-     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;

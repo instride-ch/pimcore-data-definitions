@@ -29,56 +29,15 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 final class ImportDefinitionContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
     private $sharedStorage;
-
-    /**
-     * @var FactoryInterface
-     */
     private $factory;
-
-    /**
-     * @var ObjectManager
-     */
     private $manager;
-
-    /**
-     * @var ImporterInterface
-     */
     private $importer;
-
-    /**
-     * @var FormFactoryInterface
-     */
     private $formFactory;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $providerFormRegistry;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $interpreterFormRegistry;
-
-    /**
-     * @var FormTypeRegistryInterface
-     */
     private $setterFormRegistry;
 
-    /**
-     * @param SharedStorageInterface    $sharedStorage
-     * @param FactoryInterface          $factory
-     * @param ObjectManager             $manager
-     * @param ImporterInterface         $importer
-     * @param FormFactoryInterface      $formFactory
-     * @param FormTypeRegistryInterface $providerFormRegistry
-     * @param FormTypeRegistryInterface $interpreterFormRegistry
-     * @param FormTypeRegistryInterface $setterFormRegistry
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         FactoryInterface $factory,
@@ -335,15 +294,17 @@ final class ImportDefinitionContext implements Context
             if (isset($row['interpreter']) && $row['interpreter']) {
                 $column->setInterpreter($row['interpreter']);
 
-                $data = json_decode($row['interpreterConfig'], true);
+                if (isset($row['interpreterConfig'])) {
+                    $data = json_decode($row['interpreterConfig'], true);
 
-                $column->setInterpreterConfig(
-                    $this->processArrayConfiguration(
-                        $this->interpreterFormRegistry,
-                        $row['interpreter'],
-                        $data ?? []
-                    )
-                );
+                    $column->setInterpreterConfig(
+                        $this->processArrayConfiguration(
+                            $this->interpreterFormRegistry,
+                            $row['interpreter'],
+                            $data ?? []
+                        )
+                    );
+                }
             }
 
             if (isset($row['setter']) && $row['setter']) {

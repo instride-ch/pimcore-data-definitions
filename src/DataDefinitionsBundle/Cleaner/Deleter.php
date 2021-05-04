@@ -21,12 +21,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class Deleter extends AbstractCleaner
 {
-    /**
-     * @param DataDefinitionInterface $definition
-     * @param array $objectIds
-     * @return void
-     * @throws Exception
-     */
     public function cleanup(DataDefinitionInterface $definition, array $objectIds): void
     {
         $notFoundObjects = $this->getObjectsToClean($definition, $objectIds);

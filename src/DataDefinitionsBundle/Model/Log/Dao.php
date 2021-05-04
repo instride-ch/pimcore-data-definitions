@@ -56,7 +56,7 @@ class Dao extends AbstractDao
      */
     public function save()
     {
-        $vars = get_object_vars($this->model);
+        $vars = $this->model->getObjectVars();
 
         $buffer = [];
 
@@ -91,7 +91,7 @@ class Dao extends AbstractDao
         }
 
         $this->db->insert($this->tableName, $buffer);
-        $this->model->setId($this->db->lastInsertId());
+        $this->model->setId((int)$this->db->lastInsertId());
     }
 
     /**

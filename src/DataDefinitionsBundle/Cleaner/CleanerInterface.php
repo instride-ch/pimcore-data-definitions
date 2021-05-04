@@ -20,11 +20,6 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface CleanerInterface
 {
-    /**
-     * @param DataDefinitionInterface $definition
-     * @param int[]               $objectIds
-     * @return mixed
-     */
-    public function cleanup(DataDefinitionInterface $definition, array $objectIds);
+    public function cleanup(DataDefinitionInterface $definition, array $objectIds): void;
 }
 

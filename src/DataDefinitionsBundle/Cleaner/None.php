@@ -20,7 +20,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class None extends AbstractCleaner
 {
-    public function cleanup(DataDefinitionInterface $definition, array $objectIds)
+    public function cleanup(DataDefinitionInterface $definition, array $objectIds): void
     {
         // Nothing to do here
     }

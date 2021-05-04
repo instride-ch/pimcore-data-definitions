@@ -1,0 +1,10 @@
+imports:
+    - { resource: ../../config.yaml }
+
+doctrine:
+  dbal:
+    connections:
+      default:
+        options:
+          !php/const:PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT: true
+          !php/const:PDO::MYSQL_ATTR_SSL_CA: '/etc/ssl/certs/azure-ca.pem'

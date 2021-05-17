@@ -53,7 +53,7 @@ final class PimcoreClassContext implements Context
         $classDefinition = new ClassDefinition();
         $classDefinition->setName($name);
         $classDefinition->setLayoutDefinitions(
-            json_decode('')
+            json_decode('', true)
         );
         $classDefinition->save();
 
@@ -845,7 +845,7 @@ final class PimcoreClassContext implements Context
     private function addFieldDefinitionToDefinition($definition, $fieldDefinition)
     {
         $definitionUpdater = $this->getUpdater($definition);
-        $definitionUpdater->insertField(json_decode(stripslashes($fieldDefinition)));
+        $definitionUpdater->insertField(json_decode(stripslashes($fieldDefinition), true));
         $definitionUpdater->save();
     }
 

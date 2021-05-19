@@ -77,7 +77,8 @@ EOT
         $eventDispatcher = $this->eventDispatcher;
 
         $params = json_decode($input->getOption('params'), true);
-        if (!$params['userId']) {
+
+        if (!isset($params['userId'])) {
             $params['userId'] = 0;
         }
 
@@ -86,6 +87,7 @@ EOT
         } catch (InvalidArgumentException $e) {
             $definition = $this->repository->findByName($input->getOption('definition'));
         }
+
         $progress = null;
         $process = null;
         $countProgress = 0;

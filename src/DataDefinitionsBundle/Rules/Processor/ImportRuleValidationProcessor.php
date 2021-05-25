@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Processor;
 
 use CoreShop\Component\Resource\Model\ResourceInterface;
@@ -23,7 +25,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class ImportRuleValidationProcessor implements ImportRuleValidationProcessorInterface
 {
-    private $ruleConditionsValidationProcessor;
+    private RuleConditionsValidationProcessorInterface $ruleConditionsValidationProcessor;
 
     public function __construct(RuleConditionsValidationProcessorInterface $ruleConditionsValidationProcessor)
     {

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Condition;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -21,8 +23,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class ExpressionConditionChecker extends AbstractConditionChecker
 {
-    protected $expressionLanguage;
-    protected $container;
+    protected ExpressionLanguage $expressionLanguage;
+    protected ContainerInterface $container;
 
     public function __construct(ExpressionLanguage $expressionLanguage, ContainerInterface $container)
     {
@@ -30,7 +32,7 @@ class ExpressionConditionChecker extends AbstractConditionChecker
         $this->container = $container;
     }
 
-    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $object, array $params, array $configuration): bool
+    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $concrete, array $params, array $configuration): bool
     {
         $expression = $configuration['expression'];
 

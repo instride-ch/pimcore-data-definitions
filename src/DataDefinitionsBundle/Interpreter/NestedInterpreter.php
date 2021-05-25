@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
@@ -26,7 +28,7 @@ final class NestedInterpreter implements InterpreterInterface, DataSetAwareInter
 {
     use DataSetAwareTrait;
 
-    private $interpreterRegistry;
+    private ServiceRegistryInterface $interpreterRegistry;
 
     public function __construct(ServiceRegistryInterface $interpreterRegistry)
     {
@@ -37,10 +39,10 @@ final class NestedInterpreter implements InterpreterInterface, DataSetAwareInter
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         Assert::keyExists($configuration, 'interpreters');
         Assert::isArray($configuration['interpreters'], 'Interpreter Config needs to be array');
@@ -59,5 +61,3 @@ final class NestedInterpreter implements InterpreterInterface, DataSetAwareInter
         return $value;
     }
 }
-
-

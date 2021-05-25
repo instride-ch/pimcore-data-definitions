@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper;
 
 use Symfony\Component\Form\DataMapperInterface;
@@ -21,7 +23,6 @@ final class DefinitionMappingDataMapper implements DataMapperInterface
 {
     public function mapDataToForms($data, $forms): void
     {
-
     }
 
     public function mapFormsToData($forms, &$data): void
@@ -41,4 +42,3 @@ final class DefinitionMappingDataMapper implements DataMapperInterface
         $data = $actualData;
     }
 }
-

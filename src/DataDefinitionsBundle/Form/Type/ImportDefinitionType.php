@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
@@ -26,7 +28,7 @@ use Symfony\Component\Form\FormInterface;
 
 final class ImportDefinitionType extends AbstractResourceType
 {
-    private $formTypeRegistry;
+    private FormTypeRegistryInterface $formTypeRegistry;
 
     public function __construct(
         $dataClass,
@@ -38,7 +40,7 @@ final class ImportDefinitionType extends AbstractResourceType
         $this->formTypeRegistry = $formTypeRegistry;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('provider', ImportProviderChoiceType::class)
@@ -104,7 +106,7 @@ final class ImportDefinitionType extends AbstractResourceType
      * @param FormInterface $form
      * @param string        $configurationType
      */
-    protected function addConfigurationFields(FormInterface $form, $configurationType)
+    protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('configuration', $configurationType);
     }
@@ -114,7 +116,7 @@ final class ImportDefinitionType extends AbstractResourceType
      * @param mixed         $data
      * @return string|null
      */
-    protected function getRegistryIdentifier(FormInterface $form, $data = null)
+    protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if (null !== $data && null !== $data->getProvider()) {
             return $data->getProvider();
@@ -127,4 +129,3 @@ final class ImportDefinitionType extends AbstractResourceType
         return null;
     }
 }
-

@@ -21,20 +21,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 final class PimcoreAssetContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
     private $sharedStorage;
-
-    /**
-     * @var KernelInterface
-     */
     private $kernel;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     * @param KernelInterface        $kernel
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         KernelInterface $kernel

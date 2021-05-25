@@ -1,0 +1,23 @@
+imports:
+    - { resource: ../dev/config.yaml }
+    - { resource: ../../services_test.yaml }
+    - { resource: '../../../tests/DataDefinitionsBundle/Behat/Resources/config/services.yml' }
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                url: '%pimcore_test.db.dsn%'
+                host: ~
+                port: ~
+                dbname: ~
+                user: ~
+                password: ~
+
+parameters:
+    pimcore_test.db.dsn: '%env(PIMCORE_TEST_DB_DSN)%'
+    env(PIMCORE_TEST_DB_DSN): ~
+
+framework:
+    session:
+        handler_id: 'Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler'

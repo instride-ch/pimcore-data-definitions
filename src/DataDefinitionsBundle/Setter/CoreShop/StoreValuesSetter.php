@@ -12,15 +12,19 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop;
 
 use CoreShop\Component\Core\Model\StoreInterface;
 use CoreShop\Component\Store\Repository\StoreRepositoryInterface;
+use InvalidArgumentException;
 use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
+use function is_array;
 
 class StoreValuesSetter implements SetterInterface, GetterInterface
 {
@@ -35,7 +39,7 @@ class StoreValuesSetter implements SetterInterface, GetterInterface
     {
         $config = $map->getSetterConfig();
 
-        if (!array_key_exists('stores', $config) || !\is_array($config['stores'])) {
+        if (!array_key_exists('stores', $config) || !is_array($config['stores'])) {
             return;
         }
 
@@ -43,13 +47,13 @@ class StoreValuesSetter implements SetterInterface, GetterInterface
             $store = $this->storeRepository->find($store);
 
             if (!$store instanceof StoreInterface) {
-                throw new \InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
+                throw new InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
             }
 
             $setter = sprintf('set%sOfType', ucfirst($map->getToColumn()));
 
             if (!method_exists($object, $setter)) {
-                throw new \InvalidArgumentException(sprintf('Expected a %s function but can not find it', $setter));
+                throw new InvalidArgumentException(sprintf('Expected a %s function but can not find it', $setter));
             }
 
             $object->$setter($config['type'], $value, $store);
@@ -60,7 +64,7 @@ class StoreValuesSetter implements SetterInterface, GetterInterface
     {
         $config = $map->getGetterConfig();
 
-        if (!array_key_exists('stores', $config) || !\is_array($config['stores'])) {
+        if (!array_key_exists('stores', $config) || !is_array($config['stores'])) {
             return [];
         }
 
@@ -70,13 +74,13 @@ class StoreValuesSetter implements SetterInterface, GetterInterface
             $store = $this->storeRepository->find($store);
 
             if (!$store instanceof StoreInterface) {
-                throw new \InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
+                throw new InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
             }
 
             $getter = sprintf('get%sOfType', ucfirst($map->getFromColumn()));
 
             if (!method_exists($object, $getter)) {
-                throw new \InvalidArgumentException(sprintf('Expected a %s function but can not find it', $getter));
+                throw new InvalidArgumentException(sprintf('Expected a %s function but can not find it', $getter));
             }
 
             $values[$store->getId()] = $object->$getter($config['type'], $store);
@@ -85,5 +89,3 @@ class StoreValuesSetter implements SetterInterface, GetterInterface
         return $values;
     }
 }
-
-

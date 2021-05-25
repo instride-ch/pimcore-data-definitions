@@ -12,8 +12,11 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 use Pimcore\File;
@@ -25,21 +28,16 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Service\Placeholder;
-use Wvision\Bundle\DataDefinitionsBundle\Service\PlaceholderContext;
 
 class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 {
-    const METADATA_ORIGIN_URL = 'origin_url';
-
     use DataSetAwareTrait;
 
-    protected $placeholderService;
-    protected $httpClient;
+    protected const METADATA_ORIGIN_URL = 'origin_url';
+    protected Client $httpClient;
 
-    public function __construct(Placeholder $placeholderService, Client $httpClient)
+    public function __construct(Client $httpClient)
     {
-        $this->placeholderService = $placeholderService;
         $this->httpClient = $httpClient;
     }
 
@@ -47,49 +45,40 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $path = $configuration['path'];
 
         if (filter_var($value, FILTER_VALIDATE_URL)) {
+            $asset = null;
             $filename = $this->getFileName($value);
-            $assetsUrlPrefix = PimcoreTool::getHostUrl().str_replace(PIMCORE_WEB_ROOT, '', PIMCORE_ASSET_DIRECTORY);
 
-            // check if URL seems to be pointing to our own asset URL
-            $assetFullPath = str_replace($assetsUrlPrefix, '', $value);
-            if (0 === strpos($value, $assetsUrlPrefix) && null !== $asset = Asset::getByPath($assetFullPath)) {
-                $filename = $asset->getFilename();
-                $assetPath = dirname($assetFullPath);
-            } elseif ($configuration['deduplicate_by_url']) {
+            if ($configuration['deduplicate_by_url']) {
                 if ($asset = $this->getDuplicatedAsset($value)) {
                     $filename = $asset->getFilename();
                     $assetPath = $asset->getPath();
                 } else {
                     $assetPath = $path;
                 }
-            } else {
-                // Convert placeholder path
-                $context = new PlaceholderContext($data, $object);
-                $assetPath = $this->placeholderService->replace($path, $context);
-                $assetFullPath = sprintf('%s/%s', $assetPath, $filename);
-
-                $asset = Asset::getByPath($assetFullPath);
+            }
+            else {
+                $assetPath = $path;
             }
 
             $parent = Asset\Service::createFolderByPath($assetPath);
 
             if (!$asset instanceof Asset) {
                 // Download
-                $data = $this->getFileContents($value);
+                $fileData = $this->getFileContents($value);
 
-                if ($data) {
-                    $asset = new Asset();
-                    $asset->setFilename($filename);
-                    $asset->setParent($parent);
-                    $asset->setData($data);
+                if ($fileData) {
+                    $asset = Asset::create($parent->getId(), [
+                        'filename' => $filename,
+                        'data' => $fileData
+                    ], false);
                     $asset->addMetadata(self::METADATA_ORIGIN_URL, 'input', $value);
                     $asset->save();
                 }
@@ -117,12 +106,9 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         return null;
     }
 
-    /**
-     * @param  string $url
-     * @return string|null
-     */
     private function getFileName(string $url) : ?string
     {
+        $filename = null;
         try {
             $response = $this->httpClient->request("HEAD", $url);
             $headers = $response->getHeaders();
@@ -138,7 +124,6 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                 $filename =  trim($match['f'], ' ";');
             }
         } catch (ResponseException $exception) {
-            $filename = null;
         }
 
         if (!$filename) {
@@ -148,10 +133,6 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         return $filename;
     }
 
-    /**
-     * @param string $value
-     * @return null|string
-     */
     protected function getFileContents(string $value): ?string
     {
         try {
@@ -167,16 +148,14 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         return null;
     }
 
-    /**
-     * @param string $value
-     * @return Asset|null
-     */
     private function getDuplicatedAsset(string $value) : ?Asset
     {
         $listing = new Asset\Listing();
-        $listing->onCreateQuery(function (\Pimcore\Db\ZendCompatibility\QueryBuilder $select) {
-            $select->join('assets_metadata AS am', 'id = am.cid', ['cid']);
-        });
+        $listing->onCreateQueryBuilder(
+            function (QueryBuilder $select) {
+                $select->join('assets_metadata AS am', 'id = am.cid', 'cid');
+            }
+        );
         $listing->addConditionParam('am.name = ?', static::METADATA_ORIGIN_URL);
         $listing->addConditionParam('am.data = ?', $value);
         $listing->setLimit(1);

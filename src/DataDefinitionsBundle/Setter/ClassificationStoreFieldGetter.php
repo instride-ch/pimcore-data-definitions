@@ -12,9 +12,12 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
 use Pimcore\Model\DataObject;
+use Pimcore\Model\DataObject\Classificationstore;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Tool;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
@@ -29,7 +32,7 @@ class ClassificationStoreFieldGetter implements GetterInterface
         if (method_exists($object, $classificationStoreGetter)) {
             $classificationStore = $object->$classificationStoreGetter();
 
-            if ($classificationStore instanceof \Pimcore\Model\DataObject\Classificationstore) {
+            if ($classificationStore instanceof Classificationstore) {
                 $groups = $classificationStore->getActiveGroups();
                 $values = [];
 
@@ -64,5 +67,3 @@ class ClassificationStoreFieldGetter implements GetterInterface
         return null;
     }
 }
-
-

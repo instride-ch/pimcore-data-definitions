@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type;
 
 use CoreShop\Bundle\RuleBundle\Form\Type\RuleType;
@@ -24,7 +26,7 @@ final class ImportRuleType extends RuleType
 {
     public function __construct(array $validationGroups = [])
     {
-        parent::__construct(null, $validationGroups);
+        parent::__construct('', $validationGroups);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -20,23 +22,12 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 interface SetterRunnerInterface extends RunnerInterface
 {
-    /**
-     * @param Concrete            $object
-     * @param Mapping             $map
-     * @param                     $value
-     * @param                     $data
-     * @param DataDefinitionInterface $definition
-     * @param                     $params
-     * @return mixed
-     */
     public function shouldSetField(
         Concrete $object,
         MappingInterface $map,
         $value,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params
+        array $params
     );
 }
-
-

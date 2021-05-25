@@ -12,22 +12,14 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Loader;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 interface LoaderInterface
 {
-    /**
-     * @param string                  $class
-     * @param                         $data
-     * @param DataDefinitionInterface $definition
-     * @param                         $params
-     *
-     * @return null|Concrete
-     */
-    public function load(string $class, $data, DataDefinitionInterface $definition, $params): ?Concrete;
+    public function load(string $class, array $data, ImportDefinitionInterface $definition, array $params): ?Concrete;
 }
-
-

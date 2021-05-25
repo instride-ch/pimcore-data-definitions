@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -22,7 +24,7 @@ use Symfony\Component\Validator\Constraints\File;
 
 final class ImportRulesImportType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('file', FileType::class, [
@@ -37,10 +39,9 @@ final class ImportRulesImportType extends AbstractType
 
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('csrf_protection', false);
         $resolver->setDefault('allow_extra_fields', true);
     }
 }
-

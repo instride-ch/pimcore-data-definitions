@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
@@ -23,7 +25,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 final class ListImportDefinitionsCommand extends AbstractCommand
 {
-    protected $repository;
+    protected RepositoryInterface $repository;
 
     public function __construct(RepositoryInterface $repository)
     {
@@ -32,7 +34,7 @@ final class ListImportDefinitionsCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('data-definitions:list:imports')
@@ -67,4 +69,3 @@ EOT
         return 0;
     }
 }
-

@@ -12,13 +12,19 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use function count;
 
 class JsonProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
@@ -37,7 +43,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
      */
     protected function getJsonDepth(array $arr)
     {
-        $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
+        $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($arr));
         $depth = 0;
         foreach ($it as $v) {
             $it->getDepth() > $depth and $depth = $it->getDepth();
@@ -53,14 +59,14 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $this->getJsonDepth(json_decode($jsonExample, true)) === 1;
     }
 
-    public function getColumns(array $configuration)
+    public function getColumns(array $configuration): array
     {
         $jsonExample = $configuration['jsonExample'];
 
         $rows = json_decode($jsonExample, true);
         $returnHeaders = [];
 
-        if (\count($rows) > 0) {
+        if (count($rows) > 0) {
             $firstRow = $rows[0];
 
             foreach ($firstRow as $key => $val) {
@@ -75,17 +81,17 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null)
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
         $file = $this->getFile($params['file']);
 
         if (file_exists($file)) {
             $json = file_get_contents($file);
 
-            return json_decode($json, true);
+            return new ArrayImportDataSet(\json_decode($json, true));
         }
 
-        return [];
+        return new ArrayImportDataSet([]);
     }
 
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
@@ -100,7 +106,7 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         $this->exportData[] = $data;
     }
 
-    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
+    public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, array $params)
     {
         $stream = fopen('php://memory', 'rw+');
         fwrite($stream, json_encode($this->exportData));
@@ -108,5 +114,3 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $stream;
     }
 }
-
-

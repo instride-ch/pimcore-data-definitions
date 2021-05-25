@@ -12,24 +12,27 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
+use Exception;
 use Pimcore\Model\DataObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection;
+use function is_array;
 
 class ImportDefinitionController extends ResourceController
 {
-    /**
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getConfigAction()
+    public function getConfigAction(): JsonResponse
     {
         $providers = $this->getConfigProviders();
         $loaders = $this->getConfigLoaders();
@@ -56,11 +59,7 @@ class ImportDefinitionController extends ResourceController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function testDataAction(Request $request)
+    public function testDataAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
         $definition = $this->repository->find($id);
@@ -70,7 +69,7 @@ class ImportDefinitionController extends ResourceController
                 if ($this->get('data_definitions.registry.provider')->get($definition->getProvider())->testData($definition->getConfiguration())) {
                     return $this->viewHandler->handle(['success' => true]);
                 }
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 return $this->viewHandler->handle(['success' => false, 'message' => $ex->getMessage()]);
             }
         }
@@ -78,12 +77,7 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
-     */
-    public function getColumnsAction(Request $request)
+    public function getColumnsAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
         $definition = $this->repository->find($id);
@@ -96,7 +90,7 @@ class ImportDefinitionController extends ResourceController
             try {
                 $fromColumns = $this->get('data_definitions.registry.provider')->get($definition->getProvider())->getColumns($definition->getConfiguration());
                 $fromColumns[] = $customFromColumn;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $fromColumns = [];
             }
 
@@ -132,7 +126,10 @@ class ImportDefinitionController extends ResourceController
             foreach ($toColumns as $classToColumn) {
                 $found = false;
 
-                if (\is_array($mappings)) {
+                if (is_array($mappings)) {
+                    /**
+                     * @var ImportMapping $mapping
+                     */
                     foreach ($mappings as $mapping) {
                         if ($mapping->getToColumn() === $classToColumn->getIdentifier()) {
                             $found = true;
@@ -180,10 +177,6 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function exportAction(Request $request): Response
     {
         $id = (int)$request->get('id');
@@ -213,11 +206,7 @@ class ImportDefinitionController extends ResourceController
         throw new NotFoundHttpException();
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function importAction(Request $request)
+    public function importAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
@@ -246,11 +235,7 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function duplicateAction(Request $request)
+    public function duplicateAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
@@ -270,76 +255,48 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigProviders(): array
     {
-        return $this->getParameter('data_definitions.import_providers');
+        return $this->container->getParameter('data_definitions.import_providers');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigLoaders(): array
     {
-        return $this->getParameter('data_definitions.loaders');
+        return $this->container->getParameter('data_definitions.loaders');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigInterpreters(): array
     {
-        return $this->getParameter('data_definitions.interpreters');
+        return $this->container->getParameter('data_definitions.interpreters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigCleaners(): array
     {
-        return $this->getParameter('data_definitions.cleaners');
+        return $this->container->getParameter('data_definitions.cleaners');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigSetters(): array
     {
-        return $this->getParameter('data_definitions.setters');
+        return $this->container->getParameter('data_definitions.setters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigFilters(): array
     {
-        return $this->getParameter('data_definitions.filters');
+        return $this->container->getParameter('data_definitions.filters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigRunners(): array
     {
-        return $this->getParameter('data_definitions.runners');
+        return $this->container->getParameter('data_definitions.runners');
     }
 
-    /**
-     * @return array
-     */
     protected function getImportRuleConditions(): array
     {
-        return $this->getParameter('data_definitions.import_rule.conditions');
+        return $this->container->getParameter('data_definitions.import_rule.conditions');
     }
 
-    /**
-     * @return array
-     */
     protected function getImportRuleActions(): array
     {
-        return $this->getParameter('data_definitions.import_rule.actions');
+        return $this->container->getParameter('data_definitions.import_rule.actions');
     }
 }
-

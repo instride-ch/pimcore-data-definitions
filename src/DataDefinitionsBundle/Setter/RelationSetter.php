@@ -12,18 +12,16 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
 use Pimcore\Model\DataObject\Concrete;
-use Pimcore\Model\DataObject\Fieldcollection\Data\AbstractData as AbstractFieldCollection;
-use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class RelationSetter implements SetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(Concrete $object, $value, ImportMapping $map, $data): void
     {
         $fieldName = $map->getToColumn();
         $getter = sprintf('get%s', ucfirst($fieldName));
@@ -56,5 +54,3 @@ class RelationSetter implements SetterInterface
         $object->$setter($existingElements);
     }
 }
-
-

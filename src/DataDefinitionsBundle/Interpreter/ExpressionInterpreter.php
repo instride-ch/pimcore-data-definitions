@@ -12,11 +12,14 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Throwable;
 use Wvision\Bundle\DataDefinitionsBundle\Exception\InterpreterException;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
@@ -27,8 +30,8 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
 {
     use DataSetAwareTrait;
 
-    protected $expressionLanguage;
-    protected $container;
+    protected ExpressionLanguage $expressionLanguage;
+    protected ContainerInterface $container;
 
     public function __construct(ExpressionLanguage $expressionLanguage, ContainerInterface $container)
     {
@@ -40,10 +43,10 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $expression = $configuration['expression'];
 
@@ -58,10 +61,8 @@ class ExpressionInterpreter implements InterpreterInterface, DataSetAwareInterfa
                 'configuration' => $configuration,
                 'container' => $this->container,
             ]);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw InterpreterException::fromInterpreter($definition, $map, $params, $value, $exception);
         }
     }
 }
-
-

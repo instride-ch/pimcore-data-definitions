@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
@@ -24,8 +26,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class DefinitionInterpreter implements InterpreterInterface
 {
-    private $definitionRepository;
-    private $importer;
+    private RepositoryInterface $definitionRepository;
+    private ImporterInterface $importer;
 
     public function __construct(RepositoryInterface $definitionRepository, ImporterInterface $importer)
     {
@@ -37,10 +39,10 @@ class DefinitionInterpreter implements InterpreterInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $subDefinition = $this->definitionRepository->find($configuration['definition']);
 
@@ -54,10 +56,8 @@ class DefinitionInterpreter implements InterpreterInterface
             return DataObject::getById($imported[0]);
         }
 
-        return array_map(function ($id) {
+        return array_map(static function ($id) {
             return DataObject::getById($id);
         }, $imported);
     }
 }
-
-

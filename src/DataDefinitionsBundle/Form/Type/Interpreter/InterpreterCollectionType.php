@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
@@ -24,14 +26,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class InterpreterCollectionType extends AbstractType
 {
-    protected $registry;
+    protected ServiceRegistryInterface $registry;
 
     public function __construct(ServiceRegistryInterface $registry)
     {
         $this->registry = $registry;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $prototypes = [];
         foreach (array_keys($this->registry->all()) as $type) {
@@ -50,7 +52,7 @@ final class InterpreterCollectionType extends AbstractType
         $builder->setAttribute('prototypes', $prototypes);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['prototypes'] = [];
 
@@ -60,7 +62,7 @@ final class InterpreterCollectionType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'allow_add' => true,
@@ -71,10 +73,8 @@ final class InterpreterCollectionType extends AbstractType
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return CollectionType::class;
     }
 }
-
-

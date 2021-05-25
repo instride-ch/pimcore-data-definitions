@@ -41,4 +41,4 @@ Feature: Adding a import with a interpreter
       | key  | value    |
       | file | test.csv |
     Then there should be "1" data-objects for definition
-    And the field "image" for object of the definition should have the value "false"
+    And the field "image" for object of the definition should have the value "null"

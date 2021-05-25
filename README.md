@@ -9,11 +9,12 @@ as often you like. Everything within Data Definitions is extendable.
 ![Interface](docs/images/mapping.png)
 
 ## Requirements
-* Pimcore 5.8 or 6.0
+* Pimcore 5.8 or 6.x
+* Pimcore X (since Version 4.0)
 
 ## Getting started/Installation
  * Install via composer  
- ```composer require w-vision/data-definitions:^3.0```
+ ```composer require w-vision/data-definitions```
  * Enable via command-line (or inside the pimcore extension manager)  
  ```bin/console pimcore:bundle:enable DataDefinitionsBundle```
  * Install via command-line (or inside the pimcore extension manager)  

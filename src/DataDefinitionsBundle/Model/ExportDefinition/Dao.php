@@ -12,10 +12,17 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
 
+use Exception;
+use InvalidArgumentException;
 use Pimcore\Model;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use function count;
+use function in_array;
+use function is_array;
 
 class Dao extends Model\Dao\PhpArrayTable
 {
@@ -32,7 +39,7 @@ class Dao extends Model\Dao\PhpArrayTable
      * Get Configuration By Id
      *
      * @param null $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function getById($id = null)
     {
@@ -45,7 +52,7 @@ class Dao extends Model\Dao\PhpArrayTable
         if (isset($data['id'])) {
             $this->assignVariablesToModel($data);
         } else {
-            throw new \InvalidArgumentException(sprintf('Export Definition with id: %s does not exist',
+            throw new InvalidArgumentException(sprintf('Export Definition with id: %s does not exist',
                 $this->model->getId()));
         }
     }
@@ -53,7 +60,7 @@ class Dao extends Model\Dao\PhpArrayTable
     /**
      * @param array $data
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     protected function assignVariablesToModel($data)
     {
@@ -64,7 +71,7 @@ class Dao extends Model\Dao\PhpArrayTable
                 $maps = array();
 
                 foreach ($this->model->getMapping() as $map) {
-                    if (\is_array($map)) {
+                    if (is_array($map)) {
                         $mapObj = new ExportMapping();
                         $mapObj->setValues($map);
 
@@ -81,7 +88,7 @@ class Dao extends Model\Dao\PhpArrayTable
      * Get Definition by name.
      *
      * @param null $name
-     * @throws \Exception
+     * @throws Exception
      */
     public function getByName($name = null)
     {
@@ -95,10 +102,10 @@ class Dao extends Model\Dao\PhpArrayTable
             return $row['name'] === $name;
         });
 
-        if ($data[0]['id'] && \count($data)) {
+        if ($data[0]['id'] && count($data)) {
             $this->assignVariablesToModel($data[0]);
         } else {
-            throw new \InvalidArgumentException(sprintf('Definition with name: %s does not exist',
+            throw new InvalidArgumentException(sprintf('Definition with name: %s does not exist',
                 $this->model->getName()));
         }
     }
@@ -106,7 +113,7 @@ class Dao extends Model\Dao\PhpArrayTable
     /**
      * Save Configuration
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function save()
     {
@@ -138,7 +145,7 @@ class Dao extends Model\Dao\PhpArrayTable
             ];
 
             foreach ($dataRaw as $key => $value) {
-                if (\in_array($key, $allowedProperties, true)) {
+                if (in_array($key, $allowedProperties, true)) {
                     if ($key === 'providerConfiguration') {
                         if ($value) {
                             $data[$key] = get_object_vars($value);
@@ -147,7 +154,7 @@ class Dao extends Model\Dao\PhpArrayTable
                         if ($value) {
                             $data[$key] = array();
 
-                            if (\is_array($value)) {
+                            if (is_array($value)) {
                                 foreach ($value as $map) {
                                     $data[$key][] = get_object_vars($map);
                                 }
@@ -159,7 +166,7 @@ class Dao extends Model\Dao\PhpArrayTable
                 }
             }
             $this->db->insertOrUpdate($data, $this->model->getId());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
 
@@ -170,12 +177,10 @@ class Dao extends Model\Dao\PhpArrayTable
 
     /**
      * Deletes object from database
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete()
     {
         $this->db->delete($this->model->getId());
     }
 }
-
-

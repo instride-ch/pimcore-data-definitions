@@ -2,6 +2,10 @@
   "name": "w-vision/data-definitions",
   "type": "pimcore-bundle",
   "license": "GPL-3.0-or-later",
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
   "description": "Data Definitions allows you to define your DataObject Imports and Exports using a nice GUI and re-run the definitions as often you like.",
   "keywords": [
     "pimcore",
@@ -25,26 +29,26 @@
     }
   ],
   "require": {
-    "coreshop/resource-bundle": "^2.0 | ^3.0",
-    "coreshop/rule-bundle": "^2.0 | ^3.0",
-    "coreshop/pimcore-bundle": "^2.0 | ^3.0",
-    "coreshop/pimcore": "^2.0 | ^3.0",
-    "pimcore/pimcore": "^6.5",
-    "league/csv": "^9.0",
-    "box/spout": "^2.7"
+    "php": ">=8.0",
+    "ext-json": "*",
+    "box/spout": "^3.0",
+    "league/csv": "^9.7",
+    "coreshop/resource-bundle": "^3.0",
+    "coreshop/rule-bundle": "^3.0",
+    "coreshop/pimcore-bundle": "^3.0",
+    "pimcore/pimcore": "^10.0"
   },
   "require-dev": {
-    "behat/behat": "^3.3",
-    "friends-of-behat/symfony-extension": "^2.0.0",
-    "phpstan/phpstan": "^0.10.5",
-    "phpstan/phpstan-doctrine": "^0.10",
-    "phpstan/phpstan-shim": "^0.10",
-    "phpstan/phpstan-symfony": "^0.10",
-    "phpstan/phpstan-webmozart-assert": "^0.10",
-    "symplify/easy-coding-standard": "^4.3.0"
+    "roave/security-advisories": "dev-latest",
+    "behat/behat": "^3.8",
+    "friends-of-behat/symfony-extension": "^2.2.0",
+    "phpstan/phpstan": "^0.12",
+    "phpstan/phpstan-doctrine": "^0.12",
+    "phpstan/phpstan-symfony": "^0.12",
+    "phpstan/phpstan-webmozart-assert": "^0.12"
   },
   "conflict": {
-    "dpfaffenbauer/process-manager": "<2.4"
+
   },
   "suggest": {
     "dpfaffenbauer/process-manager": "Allows to start Imports/Exports from within Pimcore UI and also tracks Status of current processes."
@@ -59,7 +63,7 @@
       "Wvision\\Bundle\\DataDefinitionsBundle\\Behat\\": "tests/DataDefinitionsBundle/Behat"
     },
     "classmap": [
-      "app/AppKernel.php"
+      "src/Kernel.php"
     ]
   },
   "extra": {

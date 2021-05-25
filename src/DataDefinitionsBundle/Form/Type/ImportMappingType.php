@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
@@ -26,8 +28,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 
 final class ImportMappingType extends AbstractResourceType
 {
-    private $setterTypeRegistry;
-    private $interpreterTypeRegistry;
+    private FormTypeRegistryInterface $setterTypeRegistry;
+    private FormTypeRegistryInterface $interpreterTypeRegistry;
 
     public function __construct(
         array $validationGroups,
@@ -40,7 +42,7 @@ final class ImportMappingType extends AbstractResourceType
         $this->interpreterTypeRegistry = $interpreterTypeRegistry;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('fromColumn', TextType::class)
@@ -114,7 +116,7 @@ final class ImportMappingType extends AbstractResourceType
      * @param FormInterface $form
      * @param string        $configurationType
      */
-    protected function addSetterConfigurationFields(FormInterface $form, $configurationType)
+    protected function addSetterConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('setterConfig', $configurationType);
     }
@@ -123,7 +125,7 @@ final class ImportMappingType extends AbstractResourceType
      * @param FormInterface $form
      * @param string        $configurationType
      */
-    protected function addInterpreterConfigurationFields(FormInterface $form, $configurationType)
+    protected function addInterpreterConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('interpreterConfig', $configurationType);
     }
@@ -133,7 +135,7 @@ final class ImportMappingType extends AbstractResourceType
      * @param mixed         $data
      * @return string|null
      */
-    protected function getSetterRegistryIdentifier(FormInterface $form, $data = null)
+    protected function getSetterRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if (null !== $data && null !== $data->getSetter()) {
             return $data->getSetter();
@@ -147,7 +149,7 @@ final class ImportMappingType extends AbstractResourceType
      * @param mixed         $data
      * @return string|null
      */
-    protected function getInterpreterRegistryIdentifier(FormInterface $form, $data = null)
+    protected function getInterpreterRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if (null !== $data && null !== $data->getInterpreter()) {
             return $data->getInterpreter();
@@ -156,4 +158,3 @@ final class ImportMappingType extends AbstractResourceType
         return null;
     }
 }
-

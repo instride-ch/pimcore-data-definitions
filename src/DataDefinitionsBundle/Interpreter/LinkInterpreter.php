@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -28,10 +30,10 @@ class LinkInterpreter implements InterpreterInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         if (($definition instanceof ExportDefinitionInterface) && $value instanceof Link) {
             return $value->getHref();
@@ -47,7 +49,7 @@ class LinkInterpreter implements InterpreterInterface
             $link->setText($value);
 
             if ($value instanceof ElementInterface) {
-                $link->setObject($value);
+                $link->setElement($value);
             }
 
             return $link;
@@ -56,5 +58,3 @@ class LinkInterpreter implements InterpreterInterface
         return null;
     }
 }
-
-

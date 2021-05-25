@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 interface ImportDefinitionInterface extends DataDefinitionInterface
@@ -117,12 +119,12 @@ interface ImportDefinitionInterface extends DataDefinitionInterface
     public function setSkipExistingObjects($skipExistingObjects);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getForceLoadObject();
 
     /**
-     * @param $forceLoadObject
+     * @param bool $forceLoadObject
      */
     public function setForceLoadObject($forceLoadObject);
 
@@ -136,5 +138,3 @@ interface ImportDefinitionInterface extends DataDefinitionInterface
      */
     public function setCreateVersion($createVersion);
 }
-
-

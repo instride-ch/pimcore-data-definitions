@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider;
 
 use Symfony\Component\Form\AbstractType;
@@ -20,11 +22,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class CsvProviderType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('delimiter', TextType::class)
             ->add('enclosure', TextType::class);
     }
 }
-

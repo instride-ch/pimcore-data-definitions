@@ -11,6 +11,7 @@ use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use function is_string;
 
 final class MoneyInterpreter implements InterpreterInterface
 {
@@ -25,12 +26,11 @@ final class MoneyInterpreter implements InterpreterInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
-    )
-    {
+        array $params,
+        array $configuration
+    ) {
         $value = $this->getValue($value, $configuration);
         $currency = $this->resolveCurrency($value, $configuration);
 
@@ -53,7 +53,7 @@ final class MoneyInterpreter implements InterpreterInterface
 
         $value = preg_replace("/[^0-9,.]+/", "", $value);
 
-        if (\is_string($value)) {
+        if (is_string($value)) {
             $value = str_replace(',', '.', $value);
             $value = (float)$value;
         }

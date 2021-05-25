@@ -12,17 +12,14 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Cleaner;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface CleanerInterface
 {
-    /**
-     * @param DataDefinitionInterface $definition
-     * @param int[]               $objectIds
-     * @return mixed
-     */
-    public function cleanup(DataDefinitionInterface $definition, $objectIds);
+    public function cleanup(DataDefinitionInterface $definition, array $objectIds): void;
 }
 

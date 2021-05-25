@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Form\Type\Action;
 
 use Symfony\Component\Form\AbstractType;
@@ -26,4 +28,3 @@ final class ObjectType extends AbstractType
             ->add('object', TextType::class);
     }
 }
-

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -29,10 +31,10 @@ class MultiHrefInterpreter implements InterpreterInterface, DataSetAwareInterfac
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $objectClass = $configuration['class'];
 
@@ -53,5 +55,3 @@ class MultiHrefInterpreter implements InterpreterInterface, DataSetAwareInterfac
         return $value;
     }
 }
-
-

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
@@ -25,34 +27,34 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class DefinitionChoiceType extends AbstractType
 {
-    private $definitionRepository;
+    private RepositoryInterface $definitionRepository;
 
     public function __construct(RepositoryInterface $definitionRepository)
     {
         $this->definitionRepository = $definitionRepository;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['multiple']) {
             $builder->addModelTransformer(new CollectionToArrayTransformer());
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults(
                 [
                     'choices' => function (Options $options) {
-                        return array_map(function (DataDefinitionInterface $def) {
+                        return array_map(static function (DataDefinitionInterface $def) {
                             return $def->getId();
                         }, $this->definitionRepository->findAll());
                     },
                     'choice_label' => function ($val) {
                         $def = $this->definitionRepository->find($val);
 
-                        return $def->getName();
+                        return $def !== null ? $def->getName() : null;
                     },
                     'choice_translation_domain' => false,
                     'active' => true,
@@ -60,9 +62,8 @@ final class DefinitionChoiceType extends AbstractType
             );
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }
 }
-

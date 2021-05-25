@@ -4,6 +4,7 @@ Feature: Adding a import with a interpreter
 
   Background:
     Given there is a pimcore class "Product"
+    And the definition has a input field "name"
     And the definition has a external-image field "image"
     And there is a import-definition "Product" for definition
     And the import-definitions provider is "csv" with the configuration:

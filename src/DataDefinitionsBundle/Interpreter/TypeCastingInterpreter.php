@@ -12,8 +12,11 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
+use InvalidArgumentException;
 use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
@@ -24,35 +27,30 @@ class TypeCastingInterpreter implements InterpreterInterface, DataSetAwareInterf
 {
     use DataSetAwareTrait;
 
-    const TYPE_INT = 'int';
-    const TYPE_STRING = 'string';
-    const TYPE_BOOLEAN = 'boolean';
+    protected const TYPE_INT = 'int';
+    protected const TYPE_STRING = 'string';
+    protected const TYPE_BOOLEAN = 'boolean';
 
     public function interpret(
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $type = $configuration['toType'];
 
         switch ($type) {
             case static::TYPE_INT:
                 return (int)$value;
-                break;
             case static::TYPE_STRING:
                 return (string)$value;
-                break;
             case static::TYPE_BOOLEAN:
                 return (boolean)$value;
-                break;
         }
 
-        throw new \InvalidArgumentException(sprintf('Not valid type cast given, given %s', $type));
+        throw new InvalidArgumentException(sprintf('Not valid type cast given, given %s', $type));
     }
 }
-
-

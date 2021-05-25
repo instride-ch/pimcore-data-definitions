@@ -12,17 +12,16 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Repository;
 
 use CoreShop\Bundle\ResourceBundle\Pimcore\PimcoreDaoRepository;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class DefinitionRepository extends PimcoreDaoRepository
 {
-    /**
-     * @param string $name
-     * @return object|null
-     */
-    public function findByName($name)
+    public function findByName(string $name): ?DataDefinitionInterface
     {
         $class = $this->metadata->getClass('model');
         $definitionEntry = new $class();
@@ -31,5 +30,3 @@ class DefinitionRepository extends PimcoreDaoRepository
         return $definitionEntry;
     }
 }
-
-

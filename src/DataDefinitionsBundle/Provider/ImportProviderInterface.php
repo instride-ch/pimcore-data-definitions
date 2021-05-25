@@ -12,38 +12,18 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 
 interface ImportProviderInterface
 {
-    /**
-     * Test Data provided for this Provider
-     *
-     * @param array $configuration
-     * @return boolean
-     * @throws \Exception
-     */
     public function testData(array $configuration): bool;
 
-    /**
-     * Get Columns from data
-     *
-     * @param array $configuration
-     * @return FromColumn[]
-     */
-    public function getColumns(array $configuration);
+    public function getColumns(array $configuration): array;
 
-    /**
-     * @param array                     $configuration
-     * @param ImportDefinitionInterface $definition
-     * @param array                     $params
-     * @param null                      $filter
-     * @return mixed
-     */
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, $filter = null);
+    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface;
 }
-
-

@@ -12,10 +12,14 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Listing;
 
+use Exception;
 use Pimcore;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
+use function count;
 
 class Dao extends Pimcore\Model\Dao\PhpArrayTable
 {
@@ -32,7 +36,7 @@ class Dao extends Pimcore\Model\Dao\PhpArrayTable
      * Loads a list of Definitions for the specified parameters, returns an array of Definitions elements.
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function load()
     {
@@ -52,14 +56,12 @@ class Dao extends Pimcore\Model\Dao\PhpArrayTable
      * Get total count
      *
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     public function getTotalCount()
     {
         $data = $this->db->fetchAll($this->model->getFilter(), $this->model->getOrder());
 
-        return \count($data);
+        return count($data);
     }
 }
-
-

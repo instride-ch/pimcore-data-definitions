@@ -12,10 +12,11 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
@@ -29,10 +30,10 @@ class CheckboxInterpreter implements InterpreterInterface, DataSetAwareInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         if (is_string($value)) {
             if ($value === "") {
@@ -42,8 +43,6 @@ class CheckboxInterpreter implements InterpreterInterface, DataSetAwareInterface
             return filter_var(strtolower($value), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         }
 
-        return (boolval($value));
+        return ((bool)$value);
     }
 }
-
-

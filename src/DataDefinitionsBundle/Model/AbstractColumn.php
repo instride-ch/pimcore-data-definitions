@@ -12,19 +12,18 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 abstract class AbstractColumn
 {
-    /**
-     * @var string
-     */
-    public $identifier;
+    public string $identifier;
 
     /**
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -32,7 +31,7 @@ abstract class AbstractColumn
     /**
      * @param string $identifier
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         $this->identifier = $identifier;
     }
@@ -40,7 +39,7 @@ abstract class AbstractColumn
     /**
      * @param array $values
      */
-    public function setValues(array $values)
+    public function setValues(array $values): void
     {
         foreach ($values as $key => $value) {
             if ($key === 'o_type') {
@@ -55,5 +54,3 @@ abstract class AbstractColumn
         }
     }
 }
-
-

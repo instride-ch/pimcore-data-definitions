@@ -25,6 +25,12 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
         get: '/admin/data_definitions/export_definitions/get'
     },
 
+    routing: {
+        add: null,
+        delete: null,
+        get: null
+    },
+
     providers: [],
     cleaners: [],
     interpreters: [],

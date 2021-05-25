@@ -12,19 +12,27 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
+use Exception;
+use InvalidArgumentException;
 use Pimcore\Model\Dao\AbstractDao;
+use function count;
+use function in_array;
+use function is_bool;
+use function is_callable;
 
 class Dao extends AbstractDao
 {
-    protected $tableName = 'data_definitions_import_log';
+    protected string $tableName = 'data_definitions_import_log';
 
     /**
      * Get log by id
      *
      * @param null $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function getById($id = null)
     {
@@ -35,7 +43,7 @@ class Dao extends AbstractDao
         $data = $this->db->fetchRow('SELECT * FROM '.$this->tableName.' WHERE id = ?', $this->model->getId());
 
         if (!$data['id']) {
-            throw new \InvalidArgumentException(sprintf('Object with the ID %s does not exist', $this->model->getId()));
+            throw new InvalidArgumentException(sprintf('Object with the ID %s does not exist', $this->model->getId()));
         }
 
         $this->assignVariablesToModel($data);
@@ -44,31 +52,31 @@ class Dao extends AbstractDao
     /**
      * Save log
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function save()
     {
-        $vars = get_object_vars($this->model);
+        $vars = $this->model->getObjectVars();
 
         $buffer = [];
 
         $validColumns = $this->getValidTableColumns($this->tableName);
 
-        if (\count($vars)) {
+        if (count($vars)) {
             foreach ($vars as $k => $v) {
-                if (!\in_array($k, $validColumns, true)) {
+                if (!in_array($k, $validColumns, true)) {
                     continue;
                 }
 
                 $getter = sprintf('get%s', ucfirst($k));
 
-                if (!\is_callable([$this->model, $getter])) {
+                if (!is_callable([$this->model, $getter])) {
                     continue;
                 }
 
                 $value = $this->model->$getter();
 
-                if (\is_bool($value)) {
+                if (is_bool($value)) {
                     $value = (int)$value;
                 }
 
@@ -83,18 +91,16 @@ class Dao extends AbstractDao
         }
 
         $this->db->insert($this->tableName, $buffer);
-        $this->model->setId($this->db->lastInsertId());
+        $this->model->setId((int)$this->db->lastInsertId());
     }
 
     /**
      * Delete vote
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete()
     {
         $this->db->delete($this->tableName, ['id' => $this->model->getId()]);
     }
 }
-
-

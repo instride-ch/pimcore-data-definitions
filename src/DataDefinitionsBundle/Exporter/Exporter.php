@@ -12,10 +12,15 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Exporter;
 
 use CoreShop\Component\Pimcore\DataObject\UnpublishedHelper;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
+use Exception;
+use InvalidArgumentException;
+use Pimcore;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -30,18 +35,19 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
+use function is_array;
 
 final class Exporter implements ExporterInterface
 {
-    private $fetcherRegistry;
-    private $runnerRegistry;
-    private $interpreterRegistry;
-    private $getterRegistry;
-    private $exportProviderRegistry;
-    private $eventDispatcher;
-    private $logger;
-    private $exceptions = [];
-    private $shouldStop = false;
+    private ServiceRegistryInterface$fetcherRegistry;
+    private ServiceRegistryInterface$runnerRegistry;
+    private ServiceRegistryInterface$interpreterRegistry;
+    private ServiceRegistryInterface$getterRegistry;
+    private ServiceRegistryInterface$exportProviderRegistry;
+    private EventDispatcherInterface$eventDispatcher;
+    private LoggerInterface$logger;
+    private array $exceptions = [];
+    private bool $shouldStop = false;
 
     public function __construct(
         ServiceRegistryInterface $fetcherRegistry,
@@ -61,10 +67,6 @@ final class Exporter implements ExporterInterface
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function doExport(ExportDefinitionInterface $definition, array $params)
     {
         $fetcher = $this->getFetcher($definition);
@@ -72,23 +74,23 @@ final class Exporter implements ExporterInterface
         $total = $fetcher->count($definition, $params,
             is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
 
-        $this->eventDispatcher->dispatch('data_definitions.export.total',
-            new ExportDefinitionEvent($definition, $total, $params));
+        $this->eventDispatcher->dispatch(
+            new ExportDefinitionEvent($definition, $total, $params),
+            'data_definitions.export.total'
+        );
 
         $this->runExport($definition, $params, $total, $fetcher, $provider);
 
-        $this->eventDispatcher->dispatch('data_definitions.export.finished',
-            new ExportDefinitionEvent($definition, null, $params));
+        $this->eventDispatcher->dispatch(
+            new ExportDefinitionEvent($definition, null, $params),
+            'data_definitions.export.finished'
+        );
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @return FetcherInterface
-     */
-    private function getFetcher(ExportDefinitionInterface $definition)
+    private function getFetcher(ExportDefinitionInterface $definition): FetcherInterface
     {
         if (!$this->fetcherRegistry->has($definition->getFetcher())) {
-            throw new \InvalidArgumentException(sprintf('Export Definition %s has no valid fetcher configured',
+            throw new InvalidArgumentException(sprintf('Export Definition %s has no valid fetcher configured',
                 $definition->getName()));
         }
 
@@ -98,28 +100,16 @@ final class Exporter implements ExporterInterface
         return $fetcher;
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @return ExportProviderInterface
-     */
-    private function getProvider(ExportDefinitionInterface $definition)
+    private function getProvider(ExportDefinitionInterface $definition): ExportProviderInterface
     {
         if (!$this->exportProviderRegistry->has($definition->getProvider())) {
-            throw new \InvalidArgumentException(sprintf('Definition %s has no valid export provider configured',
+            throw new InvalidArgumentException(sprintf('Definition %s has no valid export provider configured',
                 $definition->getName()));
         }
 
         return $this->exportProviderRegistry->get($definition->getProvider());
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     * @param int                       $total
-     * @param FetcherInterface          $fetcher
-     * @param ExportProviderInterface   $provider
-     * @throws \Exception
-     */
     private function runExport(
         ExportDefinitionInterface $definition,
         $params,
@@ -140,7 +130,7 @@ final class Exporter implements ExporterInterface
                         $params,
                         $perLoop,
                         $i * $perLoop,
-                        \is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []
+                        is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []
                     );
 
                     foreach ($objects as $object) {
@@ -148,23 +138,23 @@ final class Exporter implements ExporterInterface
                             $this->exportRow($definition, $object, $params, $provider);
 
                             if (($count + 1) % $countToClean === 0) {
-                                \Pimcore::collectGarbage();
+                                Pimcore::collectGarbage();
                                 $this->logger->info('Clean Garbage');
                                 $this->eventDispatcher->dispatch(
-                                    'data_definitions.export.status',
-                                    new ExportDefinitionEvent($definition, 'Collect Garbage', $params)
+                                    new ExportDefinitionEvent($definition, 'Collect Garbage', $params),
+                                    'data_definitions.export.status'
                                 );
                             }
 
                             $count++;
-                        } catch (\Exception $ex) {
+                        } catch (Exception $ex) {
                             $this->logger->error($ex);
 
                             $this->exceptions[] = $ex;
 
                             $this->eventDispatcher->dispatch(
-                                'data_definitions.export.status',
-                                new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()), $params)
+                                new ExportDefinitionEvent($definition, sprintf('Error: %s', $ex->getMessage()), $params),
+                                'data_definitions.export.status'
                             );
 
                             if ($definition->getStopOnException()) {
@@ -173,14 +163,16 @@ final class Exporter implements ExporterInterface
                         }
 
                         $this->eventDispatcher->dispatch(
-                            'data_definitions.export.progress',
-                            new ExportDefinitionEvent($definition, null, $params)
+                            new ExportDefinitionEvent($definition, null, $params),
+                            'data_definitions.export.progress'
                         );
                     }
 
                     if ($this->shouldStop) {
-                        $this->eventDispatcher->dispatch('data_definitions.export.status',
-                            new ExportDefinitionEvent($definition, 'Process has been stopped.', $params));
+                        $this->eventDispatcher->dispatch(
+                            new ExportDefinitionEvent($definition, 'Process has been stopped.', $params),
+                            'data_definitions.export.status'
+                        );
                         return;
                     }
 
@@ -191,14 +183,6 @@ final class Exporter implements ExporterInterface
         );
     }
 
-    /**
-     * @param ExportDefinitionInterface $definition
-     * @param Concrete                  $object
-     * @param                           $params
-     * @param ExportProviderInterface   $provider
-     * @return array
-     * @throws \Exception
-     */
     private function exportRow(
         ExportDefinitionInterface $definition,
         Concrete $object,
@@ -209,10 +193,14 @@ final class Exporter implements ExporterInterface
 
         $runner = null;
 
-        $this->eventDispatcher->dispatch('data_definitions.export.status',
-            new ExportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId()), $params));
-        $this->eventDispatcher->dispatch('data_definitions.export.object.start',
-            new ExportDefinitionEvent($definition, $object, $params));
+        $this->eventDispatcher->dispatch(
+            new ExportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId()), $params),
+            'data_definitions.export.status'
+        );
+        $this->eventDispatcher->dispatch(
+            new ExportDefinitionEvent($definition, $object, $params),
+            'data_definitions.export.object.start'
+        );
 
         if ($definition->getRunner()) {
             $runner = $this->runnerRegistry->get($definition->getRunner());
@@ -226,7 +214,7 @@ final class Exporter implements ExporterInterface
 
         if (is_array($definition->getMapping())) {
             /**
-             * @var $mapItem ExportMapping
+             * @var ExportMapping $mapItem
              */
             foreach ($definition->getMapping() as $mapItem) {
                 $getter = $this->fetchGetter($mapItem);
@@ -249,10 +237,14 @@ final class Exporter implements ExporterInterface
 
         $provider->addExportData($data, $definition->getConfiguration(), $definition, $params);
 
-        $this->eventDispatcher->dispatch('data_definitions.export.status',
-            new ExportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath()), $params));
-        $this->eventDispatcher->dispatch('data_definitions.export.object.finished',
-            new ExportDefinitionEvent($definition, $object, $params));
+        $this->eventDispatcher->dispatch(
+            new ExportDefinitionEvent($definition, sprintf('Exported Object %s', $object->getFullPath()), $params),
+            'data_definitions.export.status'
+        );
+        $this->eventDispatcher->dispatch(
+            new ExportDefinitionEvent($definition, $object, $params),
+            'data_definitions.export.object.finished'
+        );
 
         if ($runner instanceof ExportRunnerInterface) {
             $data = $runner->exportPostRun($object, $data, $definition, $params);
@@ -261,16 +253,6 @@ final class Exporter implements ExporterInterface
         return $data;
     }
 
-    /**
-     * @param Concrete                  $object
-     * @param ExportMapping             $map
-     * @param                           $data
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     * @param null|GetterInterface      $getter
-     * @return mixed|null
-     * @throws DoNotSetException
-     */
     private function getObjectValue(
         Concrete $object,
         ExportMapping $map,
@@ -284,7 +266,7 @@ final class Exporter implements ExporterInterface
         if (null !== $getter) {
             $value = $getter->get($object, $map, $data);
         } else {
-            $getter = "get".ucfirst($map->getFromColumn());
+            $getter = 'get' . ucfirst($map->getFromColumn());
 
             if (method_exists($object, $getter)) {
                 $value = $object->$getter();
@@ -317,10 +299,6 @@ final class Exporter implements ExporterInterface
         return $value;
     }
 
-    /**
-     * @param ExportMapping $map
-     * @return GetterInterface|null
-     */
     private function fetchGetter(ExportMapping $map): ?GetterInterface
     {
         if ($name = $map->getGetter()) {
@@ -333,12 +311,8 @@ final class Exporter implements ExporterInterface
         return null;
     }
 
-    /**
-     * @return void
-     */
     public function stop() : void
     {
         $this->shouldStop = true;
     }
 }
-

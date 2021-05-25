@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\EventListener;
 
 use Pimcore\Event\Model\DataObjectEvent;
@@ -19,7 +21,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
 final class ObjectDeleteListener
 {
-    public function onDataObjectDelete(DataObjectEvent $event)
+    public function onDataObjectDelete(DataObjectEvent $event): void
     {
         $resource = $event->getObject();
 
@@ -33,4 +35,3 @@ final class ObjectDeleteListener
         }
     }
 }
-

@@ -12,20 +12,18 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception;
 
 class ExternalSqlProvider extends AbstractSqlProvider
 {
-    /**
-     * @param $configuration
-     * @return Connection
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    protected function getDb($configuration)
+    protected function getDb(array $configuration): Connection
     {
         $config = new Configuration();
         $connectionParams = [
@@ -40,5 +38,3 @@ class ExternalSqlProvider extends AbstractSqlProvider
         return DriverManager::getConnection($connectionParams, $config);
     }
 }
-
-

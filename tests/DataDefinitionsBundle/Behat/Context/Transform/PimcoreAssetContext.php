@@ -20,14 +20,8 @@ use Pimcore\Model\Asset;
 
 final class PimcoreAssetContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
     private $sharedStorage;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage
     ) {

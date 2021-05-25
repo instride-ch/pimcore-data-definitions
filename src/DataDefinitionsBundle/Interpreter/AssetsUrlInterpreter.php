@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -24,10 +26,10 @@ class AssetsUrlInterpreter extends AssetUrlInterpreter
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         $assets = [];
         foreach ((array)$value as $item) {
@@ -41,5 +43,3 @@ class AssetsUrlInterpreter extends AssetUrlInterpreter
         return $assets ?: null;
     }
 }
-
-

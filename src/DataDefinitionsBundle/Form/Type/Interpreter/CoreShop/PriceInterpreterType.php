@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop;
 
 use Symfony\Component\Form\AbstractType;
@@ -20,14 +22,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class PriceInterpreterType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('isFloat', CheckboxType::class);
     }
 }
-
-

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -31,7 +33,7 @@ class ObjectResolverInterpreter implements InterpreterInterface
         $configuration
     ) {
         if (!$value) {
-            return $value;
+            return null;
         }
 
         $class = 'Pimcore\Model\DataObject\\'.ucfirst($configuration['class']);
@@ -50,5 +52,3 @@ class ObjectResolverInterpreter implements InterpreterInterface
         return null;
     }
 }
-
-

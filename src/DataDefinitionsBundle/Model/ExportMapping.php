@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 class ExportMapping extends AbstractMapping
@@ -58,5 +60,3 @@ class ExportMapping extends AbstractMapping
         $this->getterConfig = $getterConfig;
     }
 }
-
-

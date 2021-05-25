@@ -12,11 +12,15 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
 use Pimcore\Model\DataObject;
+use Pimcore\Tool;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -25,10 +29,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn;
 
 class ExportDefinitionController extends ResourceController
 {
-    /**
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getConfigAction()
+    public function getConfigAction(): JsonResponse
     {
         $providers = $this->getConfigProviders();
         $interpreters = $this->getConfigInterpreters();
@@ -53,10 +54,6 @@ class ExportDefinitionController extends ResourceController
         );
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function exportAction(Request $request): Response
     {
         $id = (int)$request->get('id');
@@ -88,11 +85,7 @@ class ExportDefinitionController extends ResourceController
         throw new NotFoundHttpException();
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function importAction(Request $request)
+    public function importAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
@@ -121,11 +114,7 @@ class ExportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * @param Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function duplicateAction(Request $request)
+    public function duplicateAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
         $definition = $this->repository->find($id);
@@ -145,14 +134,7 @@ class ExportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
-    /**
-     * Get Pimcore Class Definition.
-     *
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getColumnsAction(Request $request)
+    public function getColumnsAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
         $definition = $this->repository->find($id);
@@ -165,7 +147,7 @@ class ExportDefinitionController extends ResourceController
         $fields = $classDefinition->getFieldDefinitions();
 
         $csLoadedGroupIds = [];
-        $activatedLanguages = \Pimcore\Tool::getValidLanguages();
+        $activatedLanguages = Tool::getValidLanguages();
 
         $result = $this->getSystemFields();
 
@@ -327,10 +309,7 @@ class ExportDefinitionController extends ResourceController
         ]);
     }
 
-    /**
-     * @return array
-     */
-    protected function getSystemFields()
+    protected function getSystemFields(): array
     {
         $systemColumns = [
             [
@@ -392,11 +371,6 @@ class ExportDefinitionController extends ResourceController
         return $result;
     }
 
-    /**
-     * @param DataObject\ClassDefinition\Data $field
-     * @param string                          $group
-     * @return FromColumn
-     */
     protected function getFieldConfiguration(DataObject\ClassDefinition\Data $field, $group = 'fields'): FromColumn
     {
         $fromColumn = new FromColumn();
@@ -409,60 +383,38 @@ class ExportDefinitionController extends ResourceController
         return $fromColumn;
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigProviders(): array
     {
-        return $this->getParameter('data_definitions.export_providers');
+        return $this->container->getParameter('data_definitions.export_providers');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigInterpreters(): array
     {
-        return $this->getParameter('data_definitions.interpreters');
+        return $this->container->getParameter('data_definitions.interpreters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigRunners(): array
     {
-        return $this->getParameter('data_definitions.export_runners');
+        return $this->container->getParameter('data_definitions.export_runners');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigGetters(): array
     {
-        return $this->getParameter('data_definitions.getters');
+        return $this->container->getParameter('data_definitions.getters');
     }
 
-    /**
-     * @return array
-     */
     protected function getConfigFetchers(): array
     {
-        return $this->getParameter('data_definitions.fetchers');
+        return $this->container->getParameter('data_definitions.fetchers');
     }
 
-    /**
-     * @return array
-     */
     protected function getImportRuleConditions(): array
     {
-        return $this->getParameter('data_definitions.import_rule.conditions');
+        return $this->container->getParameter('data_definitions.import_rule.conditions');
     }
 
-    /**
-     * @return array
-     */
     protected function getImportRuleActions(): array
     {
-        return $this->getParameter('data_definitions.import_rule.actions');
+        return $this->container->getParameter('data_definitions.import_rule.actions');
     }
 }
-

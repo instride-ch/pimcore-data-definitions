@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 use CoreShop\Component\Resource\Model\ResourceInterface;
@@ -54,9 +56,9 @@ interface DataDefinitionInterface extends ResourceInterface
     public function getClass();
 
     /**
-     * @param int $class
+     * @param string $class
      */
-    public function setClass($class);
+    public function setClass(string $class);
 
     /**
      * @return mixed
@@ -69,12 +71,12 @@ interface DataDefinitionInterface extends ResourceInterface
     public function setName($name);
 
     /**
-     * @return Mapping[]
+     * @return MappingInterface[]
      */
     public function getMapping();
 
     /**
-     * @param Mapping[] $mapping
+     * @param MappingInterface[] $mapping
      */
     public function setMapping($mapping);
 
@@ -138,6 +140,3 @@ interface DataDefinitionInterface extends ResourceInterface
      */
     public function setSuccessNotificationDocument($successNotificationDocument);
 }
-
-
-

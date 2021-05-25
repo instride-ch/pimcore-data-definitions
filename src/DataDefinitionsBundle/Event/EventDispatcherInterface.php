@@ -10,19 +10,13 @@
  * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Event;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface EventDispatcherInterface
 {
-    /**
-     * @param DataDefinitionInterface $definition
-     * @param                     $eventName
-     * @param string              $subject
-     * @param array               $params
-     * @return mixed
-     */
-    public function dispatch(DataDefinitionInterface $definition, $eventName, $subject = '', $params = []);
+    public function dispatch(DataDefinitionInterface $definition, string $eventName, $subject = null, array $params = []);
 }
-

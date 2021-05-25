@@ -12,16 +12,22 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Loader;
 
+use InvalidArgumentException;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use function count;
 
 class PrimaryKeyLoader implements LoaderInterface
 {
-    public function load(string $class, $data, DataDefinitionInterface $definition, $params): ?Concrete
+    public function load(string $class, array $data, ImportDefinitionInterface $definition, array $params): ?Concrete
     {
         $classObject = '\Pimcore\Model\DataObject\\'.ucfirst($class);
         $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';
@@ -29,6 +35,9 @@ class PrimaryKeyLoader implements LoaderInterface
         $list = new $classList();
 
         if ($list instanceof Listing) {
+            /**
+             * @var ImportMapping[] $mapping
+             */
             $mapping = $definition->getMapping();
             $condition = [];
             $conditionValues = [];
@@ -39,8 +48,8 @@ class PrimaryKeyLoader implements LoaderInterface
                 }
             }
 
-            if (\count($condition) === 0) {
-                throw new \InvalidArgumentException('No primary identifier defined!');
+            if (count($condition) === 0) {
+                throw new InvalidArgumentException('No primary identifier defined!');
             }
 
             $list->setUnpublished(true);
@@ -53,11 +62,11 @@ class PrimaryKeyLoader implements LoaderInterface
             $list->load();
             $objectData = $list->getObjects();
 
-            if (\count($objectData) > 1) {
-                throw new \InvalidArgumentException('Object with the same primary key was found multiple times');
+            if (count($objectData) > 1) {
+                throw new InvalidArgumentException('Object with the same primary key was found multiple times');
             }
 
-            if (\count($objectData) === 1) {
+            if (count($objectData) === 1) {
                 $obj = $objectData[0];
 
                 if ($definition->getForceLoadObject()) {
@@ -75,5 +84,3 @@ class PrimaryKeyLoader implements LoaderInterface
         return null;
     }
 }
-
-

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -21,7 +23,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class TwigInterpreter implements InterpreterInterface
 {
-    private $twig;
+    private Environment $twig;
 
     public function __construct(Environment $twig)
     {
@@ -32,10 +34,10 @@ class TwigInterpreter implements InterpreterInterface
         Concrete $object,
         $value,
         MappingInterface $map,
-        $data,
+        array $data,
         DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        array $params,
+        array $configuration
     ) {
         return $this->twig->createTemplate($configuration['template'])->render([
             'value' => $value,
@@ -48,5 +50,3 @@ class TwigInterpreter implements InterpreterInterface
         ]);
     }
 }
-
-

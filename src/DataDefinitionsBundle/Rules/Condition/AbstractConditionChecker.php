@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Condition;
 
 use CoreShop\Component\Resource\Model\ResourceInterface;
@@ -23,7 +25,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 abstract class AbstractConditionChecker implements ImportRuleConditionCheckerInterface
 {
-    public function isValid(ResourceInterface $subject, RuleInterface $rule, array $configuration, $params = []): bool
+    public function isValid(ResourceInterface $subject, RuleInterface $rule, array $configuration, array $params = []): bool
     {
         if (!$rule instanceof ImportRuleInterface) {
             throw new InvalidArgumentException('Import Rule Condition $subject needs to be instance of ImportRuleInterface');

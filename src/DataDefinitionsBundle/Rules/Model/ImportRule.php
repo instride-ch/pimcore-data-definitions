@@ -12,39 +12,20 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Model;
 
 use CoreShop\Component\Rule\Model\RuleTrait;
 
-class ImportRule implements ImportRuleInterface, \Serializable
+class ImportRule implements ImportRuleInterface
 {
     use RuleTrait;
 
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @inheritDoc
-     */
     public function getId()
     {
         return $this->id;
-    }
-
-    public function serialize()
-    {
-        return [
-            'name' => $this->getName(),
-            'active' => $this->getActive(),
-            'actions' => $this->getActions()->getValues(),
-            'conditions' => $this->getConditions()->getValues()
-        ];
-    }
-
-    public function unserialize($serialized)
-    {
-        throw new \Exception('not supported');
     }
 }

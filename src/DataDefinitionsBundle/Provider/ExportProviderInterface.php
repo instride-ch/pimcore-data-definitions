@@ -12,26 +12,15 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 interface ExportProviderInterface
 {
-    /**
-     * @param array                     $data
-     * @param array                     $configuration
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     */
     public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void;
 
-    /**
-     * @param array                     $configuration
-     * @param ExportDefinitionInterface $definition
-     * @param                           $params
-     */
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void;
 }
-
-

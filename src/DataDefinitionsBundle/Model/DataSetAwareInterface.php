@@ -12,21 +12,15 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
 interface DataSetAwareInterface
 {
-    /**
-     * @return ImportDataSetInterface|array
-     */
-    public function getDataSet();
+    public function getDataSet(): ImportDataSetInterface;
 
-    /**
-     * @param ImportDataSetInterface|array $dataSet
-     */
-    public function setDataSet($dataSet);
+    public function setDataSet(ImportDataSetInterface $dataSet): void;
 }
-
-

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
 use ProcessManagerBundle\Model\ProcessInterface;
@@ -160,9 +162,9 @@ class ImportDefinitionsReport implements ReportInterface
      * @param $result
      * @return bool
      */
-    protected function checkForProgress($line, &$result)
+    protected function checkForProgress($line, &$result): bool
     {
-        if (false !== strpos($line, self::EVENT_PROGRESS)) {
+        if (str_contains($line, self::EVENT_PROGRESS)) {
             $result['currentObject'] = $result['currentObject'] + 1;
 
             return true;
@@ -176,12 +178,12 @@ class ImportDefinitionsReport implements ReportInterface
      * @param $result
      * @return bool
      */
-    protected function checkForTotal($line, &$result)
+    protected function checkForTotal($line, &$result): bool
     {
         $pos = strpos($line, self::EVENT_TOTAL);
         if ($pos) {
             $total = substr($line, $pos + strlen(self::EVENT_TOTAL));
-            $result['total'] = intval($total);
+            $result['total'] = (int)$total;
 
             return true;
         }
@@ -194,7 +196,7 @@ class ImportDefinitionsReport implements ReportInterface
      * @param $result
      * @return bool
      */
-    protected function checkForError($line, &$result)
+    protected function checkForError($line, &$result): bool
     {
         $pos = strpos($line, self::EVENT_STATUS_ERROR);
         if (false !== $pos) {
@@ -210,7 +212,7 @@ class ImportDefinitionsReport implements ReportInterface
      * @param $line
      * @param $result
      */
-    protected function processChecks($line, &$result)
+    protected function processChecks($line, &$result): void
     {
         foreach (self::CHECKS as $check) {
             $pos = strpos($line, $check['text']);
@@ -220,5 +222,3 @@ class ImportDefinitionsReport implements ReportInterface
         }
     }
 }
-
-

@@ -12,16 +12,18 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Fetcher;
 
+use InvalidArgumentException;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Concrete;
-use Pimcore\Model\DataObject\Listing;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class ObjectsFetcher implements FetcherInterface
 {
-    public function fetch(ExportDefinitionInterface $definition, $params, int $limit, int $offset, array $configuration)
+    public function fetch(ExportDefinitionInterface $definition, array $params, int $limit, int $offset, array $configuration)
     {
         $list = $this->getClassListing($definition, $params);
         $list->setLimit($limit);
@@ -30,7 +32,7 @@ class ObjectsFetcher implements FetcherInterface
         return $list->load();
     }
 
-    public function count(ExportDefinitionInterface $definition, $params, array $configuration): int
+    public function count(ExportDefinitionInterface $definition, array $params, array $configuration): int
     {
         return $this->getClassListing($definition, $params)->getTotalCount();
     }
@@ -40,7 +42,7 @@ class ObjectsFetcher implements FetcherInterface
         $class = $definition->getClass();
         $classDefinition = ClassDefinition::getByName($class);
         if (!$classDefinition instanceof ClassDefinition) {
-            throw new \InvalidArgumentException(sprintf('Class not found %s', $class));
+            throw new InvalidArgumentException(sprintf('Class not found %s', $class));
         }
 
         $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';
@@ -84,7 +86,7 @@ class ObjectsFetcher implements FetcherInterface
         }
 
         $list->setCondition(implode(' AND ', $conditionFilters));
-        
+
         // ensure a stable sort across pages
         $list->setOrderKey('o_id');
         $list->setOrder('asc');
@@ -98,8 +100,7 @@ class ObjectsFetcher implements FetcherInterface
             $query = '';
         }
 
-        $query = str_replace('%', '*', $query);
-        $query = str_replace('@', '#', $query);
+        $query = str_replace(['%', '@'], ['*', '#'], $query);
         $query = preg_replace("@([^ ])\-@", '$1 ', $query);
 
         $query = str_replace(['<', '>', '(', ')', '~'], ' ', $query);
@@ -113,4 +114,3 @@ class ObjectsFetcher implements FetcherInterface
         return $query;
     }
 }
-

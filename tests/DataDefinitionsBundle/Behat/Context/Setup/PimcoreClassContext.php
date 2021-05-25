@@ -32,20 +32,9 @@ use Pimcore\Tool;
 
 final class PimcoreClassContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
     private $sharedStorage;
-
-    /**
-     * @var ClassStorageInterface
-     */
     private $classStorage;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     * @param ClassStorageInterface  $classStorage
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         ClassStorageInterface $classStorage
@@ -64,7 +53,7 @@ final class PimcoreClassContext implements Context
         $classDefinition = new ClassDefinition();
         $classDefinition->setName($name);
         $classDefinition->setLayoutDefinitions(
-            json_decode('')
+            json_decode('', true)
         );
         $classDefinition->save();
 
@@ -329,10 +318,9 @@ final class PimcoreClassContext implements Context
         $jsonDefinition = sprintf('
             {
                 "fieldtype": "externalImage",
-                "width": null,
-                "queryColumnType": "longtext",
-                "columnType": "longtext",
-                "phpdocType": \\Pimcore\\Model\\DataObject\\Data\\ExternalImage",
+                "previewWidth": "",
+                "inputWidth": "",
+                "previewHeight": "",
                 "name": "%s",
                 "title": "%s",
                 "tooltip": "",
@@ -345,8 +333,8 @@ final class PimcoreClassContext implements Context
                 "datatype": "data",
                 "relationType": false,
                 "invisible": false,
-                "visibleGridView": true,
-                "visibleSearch": true
+                "visibleGridView": false,
+                "visibleSearch": false
             }
         ', $name, $name);
 
@@ -361,10 +349,6 @@ final class PimcoreClassContext implements Context
         $jsonDefinition = sprintf('
             {
                 "fieldtype": "link",
-                "width": null,
-                "queryColumnType": "text",
-                "columnType": "text",
-                "phpdocType": \\Pimcore\\Model\\DataObject\\Data\\Link",
                 "name": "%s",
                 "title": "%s",
                 "tooltip": "",
@@ -377,8 +361,8 @@ final class PimcoreClassContext implements Context
                 "datatype": "data",
                 "relationType": false,
                 "invisible": false,
-                "visibleGridView": true,
-                "visibleSearch": true
+                "visibleGridView": false,
+                "visibleSearch": false
             }
         ', $name, $name);
 
@@ -454,13 +438,13 @@ final class PimcoreClassContext implements Context
     }
 
     /**
-     * @Given /^the (definition) has a href field "([^"]+)"$/
+     * @Given /^the (definition) has a relation field "([^"]+)"$/
      */
-    public function definitionHasHrefField($definition, $name)
+    public function definitionHasRelationField($definition, $name)
     {
         $jsonDefinition = sprintf('
             {
-                "fieldtype": "href",
+                "fieldtype": "manyToOneRelation",
                 "width": "",
                 "assetUploadPath": "",
                 "relationType": true,
@@ -861,7 +845,7 @@ final class PimcoreClassContext implements Context
     private function addFieldDefinitionToDefinition($definition, $fieldDefinition)
     {
         $definitionUpdater = $this->getUpdater($definition);
-        $definitionUpdater->insertField(json_decode(stripslashes($fieldDefinition)));
+        $definitionUpdater->insertField(json_decode(stripslashes($fieldDefinition), true));
         $definitionUpdater->save();
     }
 

@@ -12,14 +12,17 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
+use Exception;
 use Pimcore\Model;
 use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
-use Zend\Paginator\Adapter\AdapterInterface;
-use Zend\Paginator\AdapterAggregateInterface;
+use Pimcore\Model\Paginator\PaginateListingInterface;
+use function in_array;
 
-class Listing extends Model\Listing\AbstractListing implements AdapterInterface, AdapterAggregateInterface, \Iterator
+class Listing extends Model\Listing\AbstractListing implements PaginateListingInterface
 {
     /**
      * List of Logs.
@@ -35,10 +38,8 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
 
     /**
      * List of valid order keys.
-     *
-     * @var array
      */
-    public $validOrderKeys = ['id'];
+    public array $validOrderKeys = ['id'];
 
     /**
      * Test if the passed key is valid.
@@ -49,12 +50,12 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      */
     public function isValidOrderKey($key)
     {
-        return \in_array($key, $this->validOrderKeys, true);
+        return in_array($key, $this->validOrderKeys, true);
     }
 
     /**
      * @return Log[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function getObjects()
     {
@@ -79,7 +80,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      * Get total count
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function count()
     {
@@ -92,7 +93,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      * @param int $offset
      * @param int $itemCountPerPage
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getItems($offset, $itemCountPerPage)
     {
@@ -139,7 +140,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
     /**
      * Rewind
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function rewind()
     {
@@ -151,7 +152,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      * Current
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function current()
     {
@@ -164,7 +165,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      * Key
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function key()
     {
@@ -177,7 +178,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      * Next
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function next()
     {
@@ -190,7 +191,7 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
      * Valid
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function valid()
     {
@@ -199,5 +200,3 @@ class Listing extends Model\Listing\AbstractListing implements AdapterInterface,
         return $this->current() !== false;
     }
 }
-
-

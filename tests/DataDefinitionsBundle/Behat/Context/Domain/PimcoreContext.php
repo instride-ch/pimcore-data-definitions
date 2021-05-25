@@ -22,15 +22,8 @@ use Webmozart\Assert\Assert;
 
 final class PimcoreContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
     private $sharedStorage;
 
-
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     */
     public function __construct(SharedStorageInterface $sharedStorage)
     {
         $this->sharedStorage = $sharedStorage;
@@ -126,6 +119,9 @@ final class PimcoreContext implements Context
         else if ($value === 'true') {
             $value = true;
         }
+        else if ($value === 'null') {
+            $value = null;
+        }
 
         Assert::true(
             $actualValue === $value,
@@ -134,7 +130,7 @@ final class PimcoreContext implements Context
     }
 
     /**
-     * @Given /^the field "([^"]+)" for object of the definition should be of type external-image$/
+     * @Given /^the field "([^"]+)" for (object of the definition) should be of type external-image$/
      */
     public function theFieldForObjectOfDefinitionShouldBeOfTypeExternalImage($field, DataObject\Concrete $object)
     {
@@ -144,7 +140,7 @@ final class PimcoreContext implements Context
     }
 
     /**
-     * @Given /^the field "([^"]+)" for object of the definition should be of type link$/
+     * @Given /^the field "([^"]+)" for (object of the definition) should be of type link$/
      */
     public function theFieldForObjectOfDefinitionShouldBeOfTypeLink($field, DataObject\Concrete $object)
     {

@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Filter;
 
 use Pimcore\Model\DataObject\Concrete;
@@ -19,13 +21,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface FilterInterface
 {
-    /**
-     * @param DataDefinitionInterface $definition
-     * @param array               $data
-     * @param Concrete            $object
-     *
-     * @return boolean
-     */
-    public function filter(DataDefinitionInterface $definition, $data, $object);
+    public function filter(DataDefinitionInterface $definition, array $data, Concrete $object): bool;
 }
-

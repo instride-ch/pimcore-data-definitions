@@ -12,6 +12,8 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop;
 
 use CoreShop\Bundle\StoreBundle\Form\Type\StoreChoiceType;
@@ -20,6 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use function is_array;
 
 final class StoresInterpreterType extends AbstractType
 {
@@ -36,7 +39,7 @@ final class StoresInterpreterType extends AbstractType
                 function ($value) {
                     $resolvedValues = [];
 
-                    if (!\is_array($value) ||
+                    if (!is_array($value) ||
                         !array_key_exists('stores', $value) ||
                         !$value['stores'] instanceof ArrayCollection) {
                         return [];
@@ -55,5 +58,3 @@ final class StoresInterpreterType extends AbstractType
             ));
     }
 }
-
-

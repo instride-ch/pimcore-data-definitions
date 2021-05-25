@@ -25,8 +25,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 
 final class ExportMappingType extends AbstractResourceType
 {
-    private $interpreterTypeRegistry;
-    private $getterTypeRegistry;
+    private FormTypeRegistryInterface $interpreterTypeRegistry;
+    private FormTypeRegistryInterface $getterTypeRegistry;
 
     public function __construct(
         array $validationGroups,
@@ -39,7 +39,7 @@ final class ExportMappingType extends AbstractResourceType
         $this->interpreterTypeRegistry = $interpreterTypeRegistry;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('fromColumn', TextType::class)
@@ -112,7 +112,7 @@ final class ExportMappingType extends AbstractResourceType
      * @param FormInterface $form
      * @param string        $configurationType
      */
-    protected function addGetterConfigurationFields(FormInterface $form, $configurationType)
+    protected function addGetterConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('getterConfig', $configurationType);
     }
@@ -121,7 +121,7 @@ final class ExportMappingType extends AbstractResourceType
      * @param FormInterface $form
      * @param string        $configurationType
      */
-    protected function addInterpreterConfigurationFields(FormInterface $form, $configurationType)
+    protected function addInterpreterConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('interpreterConfig', $configurationType);
     }
@@ -132,7 +132,7 @@ final class ExportMappingType extends AbstractResourceType
      * @param mixed         $data
      * @return string|null
      */
-    protected function getGetterRegistryIdentifier(FormInterface $form, $data = null)
+    protected function getGetterRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if (null !== $data && null !== $data->getGetter()) {
             return $data->getGetter();
@@ -146,7 +146,7 @@ final class ExportMappingType extends AbstractResourceType
      * @param mixed         $data
      * @return string|null
      */
-    protected function getInterpreterRegistryIdentifier(FormInterface $form, $data = null)
+    protected function getInterpreterRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if (null !== $data && null !== $data->getInterpreter()) {
             return $data->getInterpreter();
@@ -155,4 +155,3 @@ final class ExportMappingType extends AbstractResourceType
         return null;
     }
 }
-

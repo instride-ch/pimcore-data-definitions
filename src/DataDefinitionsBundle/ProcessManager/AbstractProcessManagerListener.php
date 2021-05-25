@@ -12,10 +12,11 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\ProcessManager;
 
 use Carbon\Carbon;
-use CoreShop\Component\Registry\ServiceRegistryInterface;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
 use ProcessManagerBundle\Factory\ProcessFactoryInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
@@ -24,8 +25,6 @@ use ProcessManagerBundle\ProcessManagerBundle;
 use ProcessManagerBundle\Repository\ProcessRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\DefinitionEventInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ExportDefinitionEvent;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
 
 abstract class AbstractProcessManagerListener
 {

@@ -20,16 +20,15 @@ use ProcessManagerBundle\Process\Pimcore;
 
 final class ImportDefinitionProcess extends Pimcore
 {
-    /**
-     * {@inheritdoc}
-     */
     public function run(ExecutableInterface $executable, array $params = null)
     {
         $settings = $executable->getSettings();
-        $params = json_decode($settings['params']);
+        $params = json_decode($settings['params'], true);
+
         $currentUser = Admin::getCurrentUser();
-        if ($currentUser && !$params->userId) {
-            $params->userId = $currentUser->getId();
+
+        if ($currentUser && !isset($params['userId'])) {
+            $params['userId'] = $currentUser->getId();
         }
 
         $settings['command'] = [

@@ -32,8 +32,13 @@ final class ImportDefinitionProcess extends Pimcore
             $params->userId = $currentUser->getId();
         }
 
-        $settings['command'] = sprintf('data-definitions:import -d %s -p "%s"', $settings['definition'],
-            addslashes(json_encode($params)));
+        $settings['command'] = [
+            'data-definitions:import',
+            '-d',
+            $settings['definition'],
+            '-p',
+            json_encode($params),
+        ];
 
         $executable->setSettings($settings);
 

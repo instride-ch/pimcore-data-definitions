@@ -102,7 +102,7 @@ class Dao extends Model\Dao\PhpArrayTable
             return $row['name'] === $name;
         });
 
-        if ($data[0]['id'] && count($data)) {
+        if (isset($data[0]['id']) && count($data)) {
             $this->assignVariablesToModel($data[0]);
         } else {
             throw new InvalidArgumentException(sprintf('Definition with name: %s does not exist',

@@ -31,7 +31,7 @@ services:
         arguments:
             - '@=service("CoreShop\\Component\\Resource\\Metadata\\RegistryInterface").get("data_definitions.import_definition")'
             - '@data_definitions.repository.import_definition'
-            - '@doctrine.orm.default_entity_manager'
+            - '@CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager'
             - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'
         tags:
             - { name: 'console.command', command: 'data-definitions:definition:import:import' }
@@ -40,7 +40,7 @@ services:
         arguments:
             - '@=service("CoreShop\\Component\\Resource\\Metadata\\RegistryInterface").get("data_definitions.export_definition")'
             - '@data_definitions.repository.export_definition'
-            - '@doctrine.orm.default_entity_manager'
+            - '@CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager'
             - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'
         tags:
             - { name: 'console.command', command: 'data-definitions:definition:import:export' }

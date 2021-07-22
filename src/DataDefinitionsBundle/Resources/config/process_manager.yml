@@ -2,7 +2,7 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerImportListener:
         arguments:
             - '@process_manager.factory.process'
-            - '@process_manager.logger'
+            - '@ProcessManagerBundle\Logger\ProcessLogger'
             - '@process_manager.repository.process'
             - '@event_dispatcher'
         tags:
@@ -15,7 +15,7 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\ProcessManager\ProcessManagerExportListener:
         arguments:
             - '@process_manager.factory.process'
-            - '@process_manager.logger'
+            - '@ProcessManagerBundle\Logger\ProcessLogger'
             - '@process_manager.repository.process'
             - '@event_dispatcher'
         calls:

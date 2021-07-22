@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle;
 
+use Composer\InstalledVersions;
 use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\ComposerPackageBundleInterface;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
@@ -40,10 +41,8 @@ use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRe
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
 
-class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBundleInterface, ComposerPackageBundleInterface
+class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBundleInterface
 {
-    use PackageVersionTrait;
-
     public static function registerDependentBundles(BundleCollection $collection): void
     {
         parent::registerDependentBundles($collection);
@@ -51,11 +50,6 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         $collection->addBundles([
             new CoreShopRuleBundle(),
         ], 3500);
-    }
-
-    public function getPackageName(): string
-    {
-        return 'w-vision/data-definitions';
     }
 
     public function getSupportedDrivers(): array
@@ -84,6 +78,15 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         $builder->addCompilerPass(new ImportRuleActionPass());
     }
 
+    public function getVersion(): string
+    {
+        if (InstalledVersions::isInstalled('w-vision/data-definitions')) {
+            return InstalledVersions::getVersion('w-vision/data-definitions');
+        }
+
+        return '';
+    }
+
     public function getNiceName(): string
     {
         return 'Data Definitions';
@@ -92,11 +95,6 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
     public function getDescription(): string
     {
         return 'Data Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.';
-    }
-
-    protected function getComposerPackageName(): string
-    {
-        return 'w-vision/data-definitions';
     }
 
     public function getInstaller()

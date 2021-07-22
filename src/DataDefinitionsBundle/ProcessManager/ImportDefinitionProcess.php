@@ -22,7 +22,7 @@ use ProcessManagerBundle\Process\Pimcore;
 
 final class ImportDefinitionProcess extends Pimcore
 {
-    public function run(ExecutableInterface $executable, array $params = null)
+    public function run(ExecutableInterface $executable, array $params = null): int
     {
         $settings = $executable->getSettings();
         $params = json_decode($settings['params'], true);

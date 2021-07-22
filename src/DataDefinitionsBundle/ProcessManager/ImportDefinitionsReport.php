@@ -56,7 +56,7 @@ class ImportDefinitionsReport implements ReportInterface
     ];
 
 
-    public function generateReport(ProcessInterface $process, $log)
+    public function generateReport(ProcessInterface $process, string $log): string
     {
         $result = $this->doReport($log);
 

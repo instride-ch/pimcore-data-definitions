@@ -111,8 +111,8 @@ final class Importer implements ImporterInterface
         /** @var ImportDataSetInterface|array $data */
         $data = $this->getData($definition, $params);
 
-        if ((\is_countable($data) || $data instanceof Countable) && \count($data) > 0) {
-            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.total', \count($data), $params);
+        if ((\is_countable($data) || $data instanceof Countable) && $data->count() > 0) {
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.total', $data->count(), $params);
         }
 
         [$objectIds, $exceptions] = $this->runImport($definition, $params, $filter, $data);

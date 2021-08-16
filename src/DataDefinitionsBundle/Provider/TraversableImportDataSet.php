@@ -9,23 +9,27 @@
  * files that are distributed with this source code.
  *
  * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3
+ *     (GPLv3)
  */
 
 declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
-use Closure;
-use Iterator;
+use Countable;
+use IteratorIterator;
+use Traversable;
 
-class TraversableImportDataSet implements ImportDataSetInterface
+class TraversableImportDataSet implements ImportDataSetInterface, Countable
 {
-    private \IteratorIterator $iterator;
+    private IteratorIterator $iterator;
+    private int $count;
 
-    public function __construct(\Traversable $iterator)
+    public function __construct(Traversable $iterator)
     {
-        $this->iterator = new \IteratorIterator($iterator);
+        $this->iterator = new IteratorIterator($iterator);
+        $this->count = iterator_count($this->iterator);
     }
 
     /**
@@ -82,5 +86,14 @@ class TraversableImportDataSet implements ImportDataSetInterface
     public function rewind()
     {
         $this->iterator->rewind();
+    }
+
+    /**
+     * Return the number of elements in the Iterator
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->count;
     }
 }

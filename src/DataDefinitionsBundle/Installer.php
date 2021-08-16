@@ -26,7 +26,7 @@ class Installer extends SettingsStoreAwareInstaller
     public function install(): void
     {
         $kernel = Pimcore::getKernel();
-        $application = new Application($kernel);
+        $application = new Pimcore\Console\Application($kernel);
         $application->setAutoExit(false);
         $options = ['command' => 'coreshop:resources:install'];
         $options = array_merge($options, ['--no-interaction' => true, '--application-name data_definitions']);

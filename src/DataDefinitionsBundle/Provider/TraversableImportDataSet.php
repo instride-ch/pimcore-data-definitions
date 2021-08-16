@@ -28,8 +28,8 @@ class TraversableImportDataSet implements ImportDataSetInterface, Countable
 
     public function __construct(Traversable $iterator)
     {
+        $this->count = iterator_count($iterator);
         $this->iterator = new IteratorIterator($iterator);
-        $this->count = iterator_count($this->iterator);
     }
 
     /**

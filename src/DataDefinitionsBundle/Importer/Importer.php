@@ -282,9 +282,6 @@ final class Importer implements ImporterInterface
         FilterInterface $filter = null
     ): ?Concrete
     {
-        if (null === $data) {
-            return null;
-        }
         $runner = null;
 
         $object = $this->getObject($definition, $data, $params);

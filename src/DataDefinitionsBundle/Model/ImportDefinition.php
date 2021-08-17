@@ -78,6 +78,11 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
      */
     public $forceLoadObject = false;
 
+    /**
+     * @var string
+     */
+    public $persister;
+
     public static function getById($id)
     {
         $definitionEntry = new ImportDefinition();
@@ -209,5 +214,15 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
     public function setForceLoadObject($forceLoadObject)
     {
         $this->forceLoadObject = $forceLoadObject;
+    }
+
+    public function getPersister()
+    {
+        return $this->persister;
+    }
+
+    public function setPersister($persister)
+    {
+        $this->persister = $persister;
     }
 }

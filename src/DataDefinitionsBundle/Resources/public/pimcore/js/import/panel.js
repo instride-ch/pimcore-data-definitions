@@ -37,6 +37,7 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
     setters: [],
     filters: [],
     runners: [],
+    persisters: [],
 
     getDefaultGridConfiguration: function () {
         return {
@@ -100,6 +101,7 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
                 this.setters = [];
                 this.cleaners = [];
                 this.runners = [];
+                this.persisters = [];
 
                 config.providers.forEach(function (provider) {
                     this.providers.push([provider]);
@@ -127,6 +129,10 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
 
                 config.runner.forEach(function (runner) {
                     this.runners.push([runner]);
+                }.bind(this));
+
+                config.persister.forEach(function (persister) {
+                    this.persisters.push([persister]);
                 }.bind(this));
 
                 var providerStore = new Ext.data.ArrayStore({
@@ -162,7 +168,7 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
                     idProperty: 'cleaner'
                 });
 
-                pimcore.globalmanager.add('importdefinitions_cleaners', cleanersStore);
+                pimcore.globalmanager.add('importdefinitions_s', cleanersStore);
                 pimcore.globalmanager.add('data_definitions_cleaners', cleanersStore);
 
                 var interpretersStore = new Ext.data.ArrayStore({
@@ -191,6 +197,15 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
 
                 pimcore.globalmanager.add('importdefinitions_runners', runnersStore);
                 pimcore.globalmanager.add('data_definitions_runners', runnersStore);
+
+                var persistersStore = new Ext.data.ArrayStore({
+                    data: this.persisters,
+                    fields: ['persister'],
+                    idProperty: 'persister'
+                });
+
+                pimcore.globalmanager.add('importdefinitions_persisters', persistersStore);
+                pimcore.globalmanager.add('data_definitions_persisters', persistersStore);
 
                 pimcore.globalmanager.add('data_definitions_import_rule_conditions', config.import_rules.conditions);
                 pimcore.globalmanager.add('data_definitions_import_rule_actions', config.import_rules.actions);

@@ -49,6 +49,7 @@ final class ImportDefinitionType extends AbstractResourceType
             ->add('cleaner', CleanerChoiceType::class)
             ->add('filter', FilterChoiceType::class)
             ->add('runner', RunnerChoiceType::class)
+            ->add('persister', PersisterChoiceType::class)
             ->add('name', TextType::class)
             ->add('objectPath', TextType::class)
             ->add('key', TextType::class)

@@ -25,7 +25,7 @@ class InterpreterException extends RuntimeException
 {
     private function __construct(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?Throwable $previous = null)
     {
-        parent::__construct($this->formatMessage($definition, $mapping, $params, $value, $previous), null, $previous);
+        parent::__construct($this->formatMessage($definition, $mapping, $params, $value, $previous), 0, $previous);
     }
 
     public static function fromInterpreter(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?Throwable $previous = null): InterpreterException

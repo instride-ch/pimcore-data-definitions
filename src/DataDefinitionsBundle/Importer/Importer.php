@@ -230,6 +230,10 @@ final class Importer implements ImporterInterface
         $exceptions = [];
 
         foreach ($dataSet as $row) {
+            if ($row === null) {
+                continue;
+            }
+
             try {
                 $object = $this->importRow($definition, $row, $dataSet, array_merge($params, ['row' => $count]), $filter);
 
@@ -278,9 +282,6 @@ final class Importer implements ImporterInterface
         FilterInterface $filter = null
     ): ?Concrete
     {
-        if (null === $data) {
-            return null;
-        }
         $runner = null;
 
         $object = $this->getObject($definition, $data, $params);
@@ -551,14 +552,14 @@ final class Importer implements ImporterInterface
         return $obj;
     }
 
-    private function createPath(ImportDefinitionInterface $definition, array $data): string
+private function createPath(ImportDefinitionInterface $definition, array $data): string
     {
         if (!$definition->getObjectPath()) {
             return '';
         }
 
         if (str_starts_with($definition->getObjectPath(), '@')) {
-            return $this->expressionLanguage->evaluate($definition->getObjectPath(), $data);
+            return $this->expressionLanguage->evaluate(substr($definition->getObjectPath(), 1), $data);
         }
 
         return $definition->getObjectPath() ?? '';
@@ -571,7 +572,7 @@ final class Importer implements ImporterInterface
         }
 
         if (str_starts_with($definition->getKey(), '@')) {
-            return $this->expressionLanguage->evaluate($definition->getKey(), $data);
+            return $this->expressionLanguage->evaluate(substr($definition->getKey(), 1), $data);
         }
 
         return $definition->getKey();

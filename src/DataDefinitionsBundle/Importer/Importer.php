@@ -230,6 +230,10 @@ final class Importer implements ImporterInterface
         $exceptions = [];
 
         foreach ($dataSet as $row) {
+            if ($row === null) {
+                continue;
+            }
+
             try {
                 $object = $this->importRow($definition, $row, $dataSet, array_merge($params, ['row' => $count]), $filter);
 
@@ -278,9 +282,6 @@ final class Importer implements ImporterInterface
         FilterInterface $filter = null
     ): ?Concrete
     {
-        if (null === $data) {
-            return null;
-        }
         $runner = null;
 
         $object = $this->getObject($definition, $data, $params);

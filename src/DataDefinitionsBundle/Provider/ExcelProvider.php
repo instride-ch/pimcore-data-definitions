@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use Box\Spout\Common\Entity\Row;
 use Box\Spout\Common\Exception\IOException;
 use Box\Spout\Reader\ReaderInterface;
 use Box\Spout\Writer\Exception\WriterNotOpenedException;
@@ -81,24 +82,26 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         $headers = null;
         $headersCount = null;
 
-        return new ImportDataSet($rowIterator, function (array $row) use (&$headers, &$headersCount) {
+        return new ImportDataSet($rowIterator, function (Row $row) use (&$headers, &$headersCount) {
+            $rowArray = $row->toArray();
+
             if (null === $headers) {
-                $headers = $row;
+                $headers = $rowArray;
                 $headersCount = count($headers);
 
                 return null;
             }
 
-            $rowCount = count($row);
+            $rowCount = count($rowArray);
             if ($rowCount < $headersCount) {
                 // append missing values
-                $row = array_pad($row, (int)$headersCount, null);
+                $rowArray = array_pad($rowArray, (int)$headersCount, null);
             } elseif ($rowCount >= $headersCount) {
                 // remove overflow
-                $row = array_slice($row, 0, $headersCount);
+                $rowArray = array_slice($rowArray, 0, $headersCount);
             }
 
-            return array_combine($headers, $row);
+            return array_combine($headers, $rowArray);
         });
     }
 

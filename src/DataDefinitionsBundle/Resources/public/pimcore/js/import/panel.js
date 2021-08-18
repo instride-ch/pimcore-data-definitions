@@ -168,7 +168,7 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
                     idProperty: 'cleaner'
                 });
 
-                pimcore.globalmanager.add('importdefinitions_s', cleanersStore);
+                pimcore.globalmanager.add('importdefinitions_cleaners', cleanersStore);
                 pimcore.globalmanager.add('data_definitions_cleaners', cleanersStore);
 
                 var interpretersStore = new Ext.data.ArrayStore({

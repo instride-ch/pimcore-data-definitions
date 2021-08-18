@@ -16,15 +16,14 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
-use Closure;
-use Iterator;
-
-class TraversableImportDataSet implements ImportDataSetInterface
+class TraversableImportDataSet implements ImportDataSetInterface, \Countable
 {
     private \IteratorIterator $iterator;
+    private int $count;
 
     public function __construct(\Traversable $iterator)
     {
+        $this->count = iterator_count($iterator);
         $this->iterator = new \IteratorIterator($iterator);
     }
 
@@ -82,5 +81,14 @@ class TraversableImportDataSet implements ImportDataSetInterface
     public function rewind()
     {
         $this->iterator->rewind();
+    }
+
+    /**
+     * Return the number of elements in the Iterator
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->count;
     }
 }

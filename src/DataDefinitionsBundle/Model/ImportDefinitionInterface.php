@@ -137,4 +137,14 @@ interface ImportDefinitionInterface extends DataDefinitionInterface
      * @param boolean $createVersion
      */
     public function setCreateVersion($createVersion);
+
+    /**
+     * @return mixed
+     */
+    public function getPersister();
+
+    /**
+     * @param string $persister
+     */
+    public function setPersister($persister);
 }

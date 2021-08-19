@@ -56,6 +56,11 @@ services:
         tags:
             - { name: form.type }
 
+    Wvision\Bundle\DataDefinitionsBundle\Form\Type\PersisterChoiceType:
+        arguments: ['%data_definitions.persisters%']
+        tags:
+            - { name: form.type }
+
     Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType:
         arguments:
             - '%data_definitions.model.import_definition.class%'

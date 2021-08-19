@@ -22,6 +22,7 @@ services:
             - '@data_definitions.registry.setter'
             - '@data_definitions.registry.cleaner'
             - '@data_definitions.registry.loader'
+            - '@data_definitions.registry.persister'
             - '@Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher'
             - '@logger'
             - '@pimcore.model.factory'
@@ -129,6 +130,12 @@ services:
         arguments:
             - Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface
             - 'Export Definition Runners'
+
+    data_definitions.registry.persister:
+        class: CoreShop\Component\Registry\ServiceRegistry
+        arguments:
+            - Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface
+            - 'Import Definition Persisters'
 
     ### CLEANER
     Wvision\Bundle\DataDefinitionsBundle\Cleaner\Deleter:
@@ -344,3 +351,8 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader:
         tags:
             - { name: data_definitions.loader, type: primary_key }
+
+    ### PERSISTER
+    Wvision\Bundle\DataDefinitionsBundle\Persister\Persister:
+        tags:
+            - { name: data_definitions.persister, type: persister }

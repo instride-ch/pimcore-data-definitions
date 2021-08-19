@@ -37,6 +37,7 @@ use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ImportRule
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ImportRuleConditionPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\LoaderRegistryCompilerPass;
+use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\PersisterRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
@@ -76,6 +77,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         $builder->addCompilerPass(new ExportRunnerRegistryCompilerPass());
         $builder->addCompilerPass(new ImportRuleConditionPass());
         $builder->addCompilerPass(new ImportRuleActionPass());
+        $builder->addCompilerPass(new PersisterRegistryCompilerPass());
     }
 
     public function getVersion(): string

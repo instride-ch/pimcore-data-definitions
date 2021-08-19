@@ -44,6 +44,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
@@ -58,6 +59,7 @@ final class Importer implements ImporterInterface
     private ServiceRegistryInterface $setterRegistry;
     private ServiceRegistryInterface $cleanerRegistry;
     private ServiceRegistryInterface $loaderRegistry;
+    private ServiceRegistryInterface $persisterRegistry;
     private EventDispatcherInterface $eventDispatcher;
     private LoggerInterface $logger;
     private Factory $modelFactory;
@@ -72,6 +74,7 @@ final class Importer implements ImporterInterface
         ServiceRegistryInterface $setterRegistry,
         ServiceRegistryInterface $cleanerRegistry,
         ServiceRegistryInterface $loaderRegistry,
+        ServiceRegistryInterface $persisterRegistry,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger,
         Factory $modelFactory,
@@ -84,6 +87,7 @@ final class Importer implements ImporterInterface
         $this->setterRegistry = $setterRegistry;
         $this->cleanerRegistry = $cleanerRegistry;
         $this->loaderRegistry = $loaderRegistry;
+        $this->persisterRegistry = $persisterRegistry;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
         $this->modelFactory = $modelFactory;
@@ -372,9 +376,12 @@ final class Importer implements ImporterInterface
         }
 
         if ($shouldSave) {
+            $params['versionNote'] = sprintf('%s - %s', $definition->getId(), $definition->getName());
+
             $object->setUserModification($params['userId'] ?? 0);
             $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
-            $object->save();
+
+            $this->saveObject($object, $definition, $params);
 
             $this->eventDispatcher->dispatch(
                 $definition,
@@ -576,5 +583,24 @@ private function createPath(ImportDefinitionInterface $definition, array $data):
         }
 
         return $definition->getKey();
+    }
+
+    private function saveObject(Concrete $object, ImportDefinitionInterface $definition, array $params): void
+    {
+        $persister = null;
+
+        if ($definition->getPersister()) {
+            $persister = $this->persisterRegistry->get($definition->getPersister());
+        }
+
+        if (!$persister instanceof PersisterInterface) {
+            $persister = $this->persisterRegistry->get('persister');
+        }
+
+        if ($persister instanceof LoggerAwareInterface) {
+            $persister->setLogger($this->logger);
+        }
+
+        $persister->persist($object, $definition, $params);
     }
 }

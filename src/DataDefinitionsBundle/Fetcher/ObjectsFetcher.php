@@ -61,21 +61,21 @@ class ObjectsFetcher implements FetcherInterface
             }
         }
 
-        if ($params['query']) {
+        if (isset($params['query'])) {
             $query = $this->filterQueryParam($params['query']);
             if (!empty($query)) {
                 $conditionFilters[] = 'oo_id IN (SELECT id FROM search_backend_data WHERE MATCH (`data`,`properties`) AGAINST (' . $list->quote($query) . ' IN BOOLEAN MODE))';
             }
         }
 
-        if ($params['only_direct_children'] == 'true' && null !== $rootNode) {
+        if (isset($params['only_direct_children']) && $params['only_direct_children'] == 'true' && null !== $rootNode) {
             $conditionFilters[] = 'o_parentId = ' . $rootNode->getId();
         }
 
-        if ($params['condition']) {
+        if (!empty($params['condition'])) {
             $conditionFilters[] = '(' . $params['condition'] . ')';
         }
-        if ($params['ids']) {
+        if (isset($params['ids']) && is_array($params['ids'])) {
             $quotedIds = [];
             foreach ($params['ids'] as $id) {
                 $quotedIds[] = $list->quote($id);

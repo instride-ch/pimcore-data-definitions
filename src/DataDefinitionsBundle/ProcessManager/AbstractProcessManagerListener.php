@@ -33,6 +33,8 @@ abstract class AbstractProcessManagerListener
 
     public const PROCESS_NAME = 'Data Definitions';
 
+    private const PROCESS_PROGRESS_THROTTLE_SECONDS = 5;
+
     /**
      * @var ProcessInterface
      */
@@ -57,6 +59,11 @@ abstract class AbstractProcessManagerListener
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
+
+    /**
+     * @var null|\DateTimeInterface
+     */
+    protected $lastProgressAt;
 
     /**
      * AbstractProcessManagerListener constructor.
@@ -124,6 +131,16 @@ abstract class AbstractProcessManagerListener
             if ($this->process->getStoppable()) {
                 $this->process = $this->repository->find($this->process->getId());
             }
+
+            $now = new \DateTimeImmutable();
+            if ($this->lastProgressAt instanceof \DateTimeInterface) {
+                $diff = $now->getTimestamp() - $this->lastProgressAt->getTimestamp();
+
+                if (self::PROCESS_PROGRESS_THROTTLE_SECONDS > $diff) {
+                    return;
+                }
+            }
+            $this->lastProgressAt = $now;
 
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_STOPPING) {
                 $this->eventDispatcher->dispatch('data_definitions.stop');

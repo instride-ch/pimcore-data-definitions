@@ -66,6 +66,11 @@ abstract class AbstractProcessManagerListener
     protected $lastProgressAt;
 
     /**
+     * @var int
+     */
+    protected $lastStepsCount = 0;
+
+    /**
      * AbstractProcessManagerListener constructor.
      * @param FactoryInterface $processFactory
      * @param ProcessLogger $processLogger
@@ -125,7 +130,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @return void
      */
-    public function onProgressEvent() : void
+    public function onProgressEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
             if ($this->process->getStoppable()) {
@@ -133,6 +138,7 @@ abstract class AbstractProcessManagerListener
             }
 
             $now = new \DateTimeImmutable();
+            $this->lastStepsCount++;
             if ($this->lastProgressAt instanceof \DateTimeInterface) {
                 $diff = $now->getTimestamp() - $this->lastProgressAt->getTimestamp();
 
@@ -147,8 +153,10 @@ abstract class AbstractProcessManagerListener
                 $this->process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
             }
 
-            $this->process->progress();
+            $this->process->progress($this->lastStepsCount);
             $this->process->save();
+
+            $this->lastStepsCount = 0;
 
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_PROGRESS);
         }
@@ -177,6 +185,7 @@ abstract class AbstractProcessManagerListener
     {
         if ($this->process) {
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_RUNNING) {
+                $this->process->setProgress($this->process->getTotal());
                 $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
                 $this->process->save();
             }

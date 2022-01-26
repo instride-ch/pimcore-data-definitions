@@ -20,7 +20,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
 interface DataSetAwareInterface
 {
-    public function getDataSet(): ImportDataSetInterface;
+    public function getDataSet(): ?ImportDataSetInterface;
 
-    public function setDataSet(ImportDataSetInterface $dataSet): void;
+    public function setDataSet(?ImportDataSetInterface $dataSet): void;
 }

@@ -108,7 +108,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
         $headers = null;
-        if (null === $this->writer) {
+        if (!isset($this->writer)) {
             $headers = array_keys($data);
         }
         $writer = $this->getWriter();
@@ -150,7 +150,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
     private function getWriter(): WriterInterface
     {
-        if (null === $this->writer) {
+        if (!isset($this->writer)) {
             $this->writer = $this->getXlsxWriter();
             $this->writer->openToFile($this->getExportPath());
         }
@@ -160,7 +160,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
     private function getExportPath(): string
     {
-        if (null === $this->exportPath) {
+        if (!isset($this->exportPath)) {
             $this->exportPath = tempnam(sys_get_temp_dir(), 'excel_export_provider');
         }
 

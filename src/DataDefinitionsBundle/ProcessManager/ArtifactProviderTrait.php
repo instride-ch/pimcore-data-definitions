@@ -23,7 +23,7 @@ trait ArtifactProviderTrait
 {
     public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset
     {
-        if (!$params['artifact']) {
+        if (!isset($params['artifact'])) {
             return null;
         }
 

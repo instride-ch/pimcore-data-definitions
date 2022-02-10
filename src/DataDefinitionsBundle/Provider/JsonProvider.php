@@ -96,6 +96,10 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
 
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
     {
+        if (!array_key_exists('file', $params)) {
+            return;
+        }
+
         $file = $this->getFile($params['file']);
 
         file_put_contents($file, json_encode($this->exportData));

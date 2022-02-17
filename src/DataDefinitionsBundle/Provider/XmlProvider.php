@@ -201,7 +201,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                 $writer->writeAttribute('name', $name);
             }
             if (null !== $key) {
-                $writer->writeAttribute('key', $key);
+                $writer->writeAttribute('key', (string) $key);
             }
             if (is_string($data)) {
                 $writer->writeCdata($data);
@@ -217,7 +217,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                     $writer->writeAttribute('name', $name);
                 }
                 if (null !== $key) {
-                    $writer->writeAttribute('key', $key);
+                    $writer->writeAttribute('key', (string) $key);
                 }
                 $this->serializeCollection($writer, $data);
                 $writer->endElement();
@@ -228,7 +228,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                         $writer->writeAttribute('name', $name);
                     }
                     if (null !== $key) {
-                        $writer->writeAttribute('key', $key);
+                        $writer->writeAttribute('key', (string) $key);
                     }
                     $writer->writeCdata((string)$data);
                     $writer->endElement();

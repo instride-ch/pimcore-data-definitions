@@ -49,6 +49,11 @@ abstract class AbstractProcessManagerListener
      */
     protected $lastStepsCount = 0;
 
+    /**
+     * @var null|\DateTimeInterface
+     */
+    protected $lastStatusAt;
+
     public function __construct(
         FactoryInterface $processFactory,
         ProcessLogger $processLogger,
@@ -140,6 +145,16 @@ abstract class AbstractProcessManagerListener
     public function onStatusEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
+            $now = new \DateTimeImmutable();
+            if ($this->lastStepsCount instanceof \DateTimeInterface) {
+                $diff = $now->getTimestamp() - $this->lastStepsCount->getTimestamp();
+
+                if (self::PROCESS_PROGRESS_THROTTLE_SECONDS > $diff) {
+                    return;
+                }
+            }
+            $this->lastStepsCount = $now;
+
             if ($this->process->getStoppable()) {
                 $this->process = $this->repository->find($this->process->getId());
             }
@@ -158,6 +173,7 @@ abstract class AbstractProcessManagerListener
         if ($this->process) {
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_RUNNING) {
                 $this->process->setProgress($this->process->getTotal());
+                $this->process->setMessage($event->getSubject());
                 $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
                 $this->process->save();
             }

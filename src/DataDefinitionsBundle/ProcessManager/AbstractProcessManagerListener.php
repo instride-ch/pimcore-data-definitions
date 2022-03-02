@@ -105,10 +105,6 @@ abstract class AbstractProcessManagerListener
     public function onProgressEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
-            if ($this->process->getStoppable()) {
-                $this->process = $this->repository->find($this->process->getId());
-            }
-
             $now = new \DateTimeImmutable();
             $this->lastStepsCount++;
             if ($this->lastProgressAt instanceof \DateTimeInterface) {
@@ -119,6 +115,10 @@ abstract class AbstractProcessManagerListener
                 }
             }
             $this->lastProgressAt = $now;
+
+            if ($this->process->getStoppable()) {
+                $this->process = $this->repository->find($this->process->getId());
+            }
 
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_STOPPING) {
                 $this->eventDispatcher->dispatch('data_definitions.stop');

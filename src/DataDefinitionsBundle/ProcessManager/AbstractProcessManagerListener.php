@@ -31,11 +31,23 @@ abstract class AbstractProcessManagerListener
     public const PROCESS_TYPE = 'data_definitions';
     public const PROCESS_NAME = 'Data Definitions';
 
+    private const PROCESS_PROGRESS_THROTTLE_SECONDS = 5;
+
     protected $process;
     protected $processFactory;
     protected $processLogger;
     protected $repository;
     protected $eventDispatcher;
+
+    /**
+     * @var null|\DateTimeInterface
+     */
+    protected $lastProgressAt;
+
+    /**
+     * @var int
+     */
+    protected $lastStepsCount = 0;
 
     public function __construct(
         FactoryInterface $processFactory,
@@ -90,20 +102,33 @@ abstract class AbstractProcessManagerListener
     /**
      * @return void
      */
-    public function onProgressEvent() : void
+    public function onProgressEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
             if ($this->process->getStoppable()) {
                 $this->process = $this->repository->find($this->process->getId());
             }
 
+            $now = new \DateTimeImmutable();
+            $this->lastStepsCount++;
+            if ($this->lastProgressAt instanceof \DateTimeInterface) {
+                $diff = $now->getTimestamp() - $this->lastProgressAt->getTimestamp();
+
+                if (self::PROCESS_PROGRESS_THROTTLE_SECONDS > $diff) {
+                    return;
+                }
+            }
+            $this->lastProgressAt = $now;
+
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_STOPPING) {
                 $this->eventDispatcher->dispatch('data_definitions.stop');
                 $this->process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
             }
 
-            $this->process->progress();
+            $this->process->progress($this->lastStepsCount);
             $this->process->save();
+
+            $this->lastStepsCount = 0;
 
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_PROGRESS);
         }
@@ -132,6 +157,7 @@ abstract class AbstractProcessManagerListener
     {
         if ($this->process) {
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_RUNNING) {
+                $this->process->setProgress($this->process->getTotal());
                 $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
                 $this->process->save();
             }

@@ -85,11 +85,10 @@ document.addEventListener('processmanager.ready', function() {
 
         addDataFromSelector: function (data) {
             this.setValue(data.fullpath);
-            console.log(data);
         },
 
         setValue: function (value) {
-            var params = '{"file":"web/var/assets' + value + '"}';
+            var params = '{"file":"var/assets' + value + '"}';
             Ext.getCmp('data_definitions_processmanager_params').setValue(params);
         }
     });

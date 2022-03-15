@@ -31,7 +31,7 @@ abstract class AbstractProcessManagerListener
     public const PROCESS_TYPE = 'data_definitions';
     public const PROCESS_NAME = 'Data Definitions';
 
-    private const PROCESS_PROGRESS_THROTTLE_SECONDS = 5;
+    private const PROCESS_PROGRESS_THROTTLE_SECONDS = 1;
 
     protected $process;
     protected $processFactory;
@@ -47,7 +47,12 @@ abstract class AbstractProcessManagerListener
     /**
      * @var int
      */
-    protected $lastStepsCount = 0;
+    protected $lastProgressStepsCount = 0;
+
+    /**
+     * @var null|\DateTimeInterface
+     */
+    protected $lastStatusAt;
 
     public function __construct(
         FactoryInterface $processFactory,
@@ -105,12 +110,8 @@ abstract class AbstractProcessManagerListener
     public function onProgressEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
-            if ($this->process->getStoppable()) {
-                $this->process = $this->repository->find($this->process->getId());
-            }
-
             $now = new \DateTimeImmutable();
-            $this->lastStepsCount++;
+            $this->lastProgressStepsCount++;
             if ($this->lastProgressAt instanceof \DateTimeInterface) {
                 $diff = $now->getTimestamp() - $this->lastProgressAt->getTimestamp();
 
@@ -120,15 +121,19 @@ abstract class AbstractProcessManagerListener
             }
             $this->lastProgressAt = $now;
 
+            if ($this->process->getStoppable()) {
+                $this->process = $this->repository->find($this->process->getId());
+            }
+
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_STOPPING) {
                 $this->eventDispatcher->dispatch('data_definitions.stop');
                 $this->process->setStatus(ProcessManagerBundle::STATUS_STOPPED);
             }
 
-            $this->process->progress($this->lastStepsCount);
+            $this->process->progress($this->lastProgressStepsCount);
             $this->process->save();
 
-            $this->lastStepsCount = 0;
+            $this->lastProgressStepsCount = 0;
 
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_PROGRESS);
         }
@@ -140,6 +145,16 @@ abstract class AbstractProcessManagerListener
     public function onStatusEvent(DefinitionEventInterface $event) : void
     {
         if ($this->process) {
+            $now = new \DateTimeImmutable();
+            if ($this->lastStatusAt instanceof \DateTimeInterface) {
+                $diff = $now->getTimestamp() - $this->lastStatusAt->getTimestamp();
+
+                if (self::PROCESS_PROGRESS_THROTTLE_SECONDS > $diff) {
+                    return;
+                }
+            }
+            $this->lastStatusAt = $now;
+
             if ($this->process->getStoppable()) {
                 $this->process = $this->repository->find($this->process->getId());
             }
@@ -158,7 +173,9 @@ abstract class AbstractProcessManagerListener
         if ($this->process) {
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_RUNNING) {
                 $this->process->setProgress($this->process->getTotal());
+                $this->process->setMessage($event->getSubject());
                 $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
+                $this->process->setCompleted(time());
                 $this->process->save();
             }
             $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
@@ -176,6 +193,7 @@ abstract class AbstractProcessManagerListener
             } else {
                 $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED_WITH_EXCEPTIONS);
             }
+            $this->process->setCompleted(time());
             $this->process->save();
         }
     }

@@ -37,7 +37,9 @@ final class ProcessManagerExportListener extends AbstractProcessManagerListener
         if (null !== $this->process) {
             if ($this->process->getStatus() == ProcessManagerBundle::STATUS_RUNNING) {
                 $this->process->setProgress($this->process->getTotal());
+                $this->process->setMessage($event->getSubject());
                 $this->process->setStatus(ProcessManagerBundle::STATUS_COMPLETED);
+                $this->process->setCompleted(time());
                 $this->process->save();
             }
             $definition = $event->getDefinition();

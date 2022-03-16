@@ -21,5 +21,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface FilterInterface
 {
-    public function filter(DataDefinitionInterface $definition, array $data, Concrete $object): bool;
+    public function filter(DataDefinitionInterface $definition, array $data, Concrete $object, array $params): bool;
 }

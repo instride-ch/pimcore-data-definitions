@@ -17,8 +17,6 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\TransferException;
 use Pimcore\File;
 use Pimcore\Http\Exception\ResponseException;
 use Pimcore\Model\Asset;
@@ -34,11 +32,13 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
     use DataSetAwareTrait;
 
     protected const METADATA_ORIGIN_URL = 'origin_url';
-    protected Client $httpClient;
+    protected \Psr\Http\Client\ClientInterface $httpClient;
+    protected \Psr\Http\Message\RequestFactoryInterface $requestFactory;
 
-    public function __construct(Client $httpClient)
+    public function __construct(\Psr\Http\Client\ClientInterface $httpClient, \Psr\Http\Message\RequestFactoryInterface $requestFactory)
     {
         $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
     }
 
     public function interpret(
@@ -110,7 +110,8 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
     {
         $filename = null;
         try {
-            $response = $this->httpClient->request("HEAD", $url);
+            $request = $this->requestFactory->createRequest('HEAD', $url);
+            $response = $this->httpClient->sendRequest($request);
             $headers = $response->getHeaders();
 
             if (
@@ -123,7 +124,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
             ) {
                 $filename =  trim($match['f'], ' ";');
             }
-        } catch (ResponseException $exception) {
+        } catch (\Psr\Http\Client\ClientExceptionInterface $exception) {
         }
 
         if (!$filename) {
@@ -136,12 +137,13 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
     protected function getFileContents(string $value): ?string
     {
         try {
-            $response = $this->httpClient->request('GET', $value);
-        } catch (TransferException $ex) {
-            $response = null;
+            $request = $this->requestFactory->createRequest('GET', $value);
+            $response = $this->httpClient->sendRequest($request);
+        } catch (\Psr\Http\Client\ClientExceptionInterface $ex) {
+            return null;
         }
 
-        if ($response && $response->getStatusCode() === 200) {
+        if ($response->getStatusCode() === 200) {
             return (string) $response->getBody();
         }
 

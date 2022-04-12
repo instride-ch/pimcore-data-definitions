@@ -157,13 +157,15 @@ services:
     ### INTERPRETER
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetsUrlInterpreter:
         arguments:
-            - '@pimcore.http_client'
+            - '@Psr\Http\Client\ClientInterface'
+            - '@Psr\Http\Message\RequestFactoryInterface'
         tags:
             - { name: data_definitions.interpreter, type: assets_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
 
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter:
         arguments:
-            - '@pimcore.http_client'
+            - '@Psr\Http\Client\ClientInterface'
+            - '@Psr\Http\Message\RequestFactoryInterface'
         tags:
             - { name: data_definitions.interpreter, type: asset_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
 

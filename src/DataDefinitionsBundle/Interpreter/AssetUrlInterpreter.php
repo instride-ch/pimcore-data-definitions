@@ -155,7 +155,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         $listing = new Asset\Listing();
         $listing->onCreateQueryBuilder(
             function (QueryBuilder $select) {
-                $select->join('assets_metadata AS am', 'id = am.cid', 'cid');
+                $select->join('assets','assets_metadata', 'am', 'id = am.cid');
             }
         );
         $listing->addConditionParam('am.name = ?', static::METADATA_ORIGIN_URL);

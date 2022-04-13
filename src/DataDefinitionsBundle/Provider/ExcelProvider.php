@@ -72,7 +72,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
     public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
-        $file = $this->getFile($params['file']);
+        $file = $this->getFile($params);
 
         $reader = $this->createReader($file);
         $sheetIterator = $reader->getSheetIterator();
@@ -131,7 +131,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
             return;
         }
 
-        $file = $this->getFile($params['file']);
+        $file = $this->getFile($params);
         rename($this->getExportPath(), $file);
     }
 

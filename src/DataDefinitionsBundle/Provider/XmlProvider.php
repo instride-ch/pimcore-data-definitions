@@ -87,7 +87,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
 
     public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
     {
-        $file = $this->getFile($params['file']);
+        $file = $this->getFile($params);
         $xml = file_get_contents($file);
 
         return new ArrayImportDataSet($this->convertXmlToArray($xml, $configuration['xPath']));
@@ -155,7 +155,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
             return;
         }
 
-        $file = $this->getFile($params['file']);
+        $file = $this->getFile($params);
         rename($this->getExportPath(), $file);
     }
 

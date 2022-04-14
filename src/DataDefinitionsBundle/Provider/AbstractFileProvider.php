@@ -16,14 +16,26 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
+use Pimcore\Model\Asset;
+
 abstract class AbstractFileProvider
 {
-    protected function getFile(string $file): string
+    protected function getFile(array $params): string
     {
 //        if (!str_starts_with($file, '/')) {
 //            $file = sprintf('%s/%s', PIMCORE_PROJECT_ROOT, $file);
 //        }
 
-        return $file;
+        if (isset($params['asset'])) {
+            $asset = Asset::getByPath($params['asset']);
+
+            return $asset->getTemporaryFile();
+        }
+
+        if (isset($params['file'])) {
+            return $params['file'];
+        }
+
+        throw new \RuntimeException('No file or asset given');
     }
 }

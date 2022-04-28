@@ -156,7 +156,8 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         }
 
         $file = $this->getFile($params);
-        rename($this->getExportPath(), $file);
+        copy($this->getExportPath(), $file);
+        unlink($this->getExportPath());
     }
 
     public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)

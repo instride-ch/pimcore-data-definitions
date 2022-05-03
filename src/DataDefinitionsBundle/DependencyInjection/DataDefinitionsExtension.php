@@ -71,6 +71,10 @@ class DataDefinitionsExtension extends AbstractModelExtension
 
         $loader->load('services.yml');
 
+        if (class_exists(\GuzzleHttp\Psr7\HttpFactory::class)) {
+            $loader->load('guzzle_psr7.yml');
+        }
+
         if (array_key_exists('ProcessManagerBundle', $bundles)) {
             $config['pimcore_admin']['js']['process_manager_import'] = '/bundles/datadefinitions/pimcore/js/process_manager/import_definitions.js';
             $config['pimcore_admin']['js']['process_manager_export'] = '/bundles/datadefinitions/pimcore/js/process_manager/export_definitions.js';

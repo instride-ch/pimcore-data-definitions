@@ -15,7 +15,6 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
-use CoreShop\Component\Pimcore\DataObject\ClassLoader;
 use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorageInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
 use Pimcore\Cache\Runtime;
@@ -46,8 +45,6 @@ final class PimcoreClassContext implements Context
         Runtime::clear();
 
         $name = $this->classStorage->get($name);
-
-        ClassLoader::forceLoadDataObjectClass($name);
 
         $classDefinition = ClassDefinition::getByName($name);
 

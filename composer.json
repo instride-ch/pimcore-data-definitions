@@ -32,11 +32,13 @@
     "php": ">=8.0",
     "ext-json": "*",
     "box/spout": "^3.0",
-    "league/csv": "^9.7",
+    "coreshop/pimcore-bundle": "^3.0",
     "coreshop/resource-bundle": "^3.0",
     "coreshop/rule-bundle": "^3.0",
-    "coreshop/pimcore-bundle": "^3.0",
-    "pimcore/pimcore": "^10.0",
+    "jms/serializer": "^3.17.1",
+    "league/csv": "^9.7",
+    "nyholm/psr7": "^1.5",
+    "pimcore/pimcore": "^10.2",
     "psr/http-client-implementation": "^1.0",
     "psr/http-factory-implementation": "^1.0"
   },
@@ -50,10 +52,11 @@
     "phpstan/phpstan-webmozart-assert": "^1.1.2"
   },
   "conflict": {
-
+    "guzzlehttp/psr7": "< 2.0"
   },
   "suggest": {
-    "dpfaffenbauer/process-manager": "Allows to start Imports/Exports from within Pimcore UI and also tracks Status of current processes."
+    "dpfaffenbauer/process-manager": "Allows to start Imports/Exports from within Pimcore UI and also tracks Status of current processes.",
+    "guzzlehttp/psr7": "For downloading external data like Images"
   },
   "autoload": {
     "psr-4": {

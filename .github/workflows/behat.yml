@@ -22,15 +22,17 @@ jobs:
       PIMCORE_CLASS_DIRECTORY: 'var/tmp/behat/var/classes'
       PIMCORE_WRITE_TARGET_STATICROUTES: 'settings-store'
       PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/data_defs_test"
+
     services:
-      mysql:
-        image: mysql:8.0
+      database:
+        image: "mariadb:10.5"
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: data_defs_test
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     name: "${{ matrix.pimcore }}, PHP ${{ matrix.php }}"
     strategy:
       matrix:
@@ -98,3 +100,19 @@ jobs:
 
     - name: Run Behat
       run: vendor/bin/behat --strict --no-interaction -vvv -f progress --config behat.yml.dist -p default
+
+    - name: Upload Behat logs
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: "Behat logs (non-JS, PHP ${{ matrix.php }}, Symfony ${{ matrix.pimcore }})"
+        path: etc/build/
+        if-no-files-found: ignore
+
+    - name: Upload Pimcore logs
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: "Pimcore logs (non-JS, PHP ${{ matrix.php }}, Symfony ${{ matrix.pimcore }})"
+        path: var/log/
+        if-no-files-found: ignore

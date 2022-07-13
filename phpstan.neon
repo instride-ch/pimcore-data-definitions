@@ -1,13 +1,10 @@
 parameters:
-    autoload_files:
-        - %currentWorkingDirectory%/vendor/pimcore/pimcore/lib/helper-functions.php
-
     reportUnmatchedIgnoredErrors: false
 
     symfony:
         container_xml_path: var/cache/dev/KernelDevDebugContainer.xml
 
-    excludes_analyse:
+    excludePaths:
         # Makes PHPStan crash
         - '**/DependencyInjection/Configuration.php'
         - '**/Migrations/Version*.php'

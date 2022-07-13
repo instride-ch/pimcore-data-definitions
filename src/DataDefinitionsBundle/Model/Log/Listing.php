@@ -79,10 +79,10 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Get total count
      *
-     * @return mixed
+     * @return int
      * @throws Exception
      */
-    public function count()
+    public function count(): int
     {
         return $this->getTotalCount();
     }
@@ -142,7 +142,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      *
      * @throws Exception
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->getData();
         reset($this->data);
@@ -154,7 +154,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      * @return mixed
      * @throws Exception
      */
-    public function current()
+    public function current(): mixed
     {
         $this->getData();
 
@@ -167,7 +167,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      * @return mixed
      * @throws Exception
      */
-    public function key()
+    public function key(): mixed
     {
         $this->getData();
 
@@ -177,14 +177,14 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Next
      *
-     * @return mixed
+     * @return void
      * @throws Exception
      */
-    public function next()
+    public function next(): void
     {
         $this->getData();
 
-        return next($this->data);
+        next($this->data);
     }
 
     /**
@@ -193,7 +193,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      * @return bool
      * @throws Exception
      */
-    public function valid()
+    public function valid(): bool
     {
         $this->getData();
 

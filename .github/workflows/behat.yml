@@ -33,11 +33,11 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    name: "${{ matrix.pimcore }}, PHP ${{ matrix.php }}, Deps ${{ matrix.dependencies }}"
+    name: "${{ matrix.pimcore }}, PHP ${{ matrix.php }}"
     strategy:
       matrix:
         php: [ 8.0 ]
-        pimcore: [ ^10.2, 10.x-dev ]
+        pimcore: [ ^10.2, ^10.3, ^10.4, 10.x-dev ]
 
     steps:
     - uses: actions/checkout@v2

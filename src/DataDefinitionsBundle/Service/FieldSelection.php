@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Service;
 
-use Exception;
 use Pimcore\Model\DataObject;
 use Pimcore\Tool;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\ToColumn;
@@ -138,8 +137,10 @@ class FieldSelection
                 $allowedGroupIds = $field->getAllowedGroupIds();
 
                 if ($allowedGroupIds) {
-                    $list->setCondition('ID in ('.implode(',', $allowedGroupIds).') AND storeId = ?',
-                        [$field->getStoreId()]);
+                    $list->setCondition(
+                        'ID in ('.implode(',', $allowedGroupIds).') AND storeId = ?',
+                        [$field->getStoreId()]
+                    );
                 } else {
                     $list->setCondition('storeId = ?', [$field->getStoreId()]);
                 }

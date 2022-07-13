@@ -14,24 +14,18 @@
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
 
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use function is_string;
 
 final class PriceInterpreter implements InterpreterInterface
 {
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
         $inputIsFloat = $configuration['isFloat'];
+        $value = $context->getValue();
 
         if (is_string($value)) {
             $value = str_replace(',', '.', $value);

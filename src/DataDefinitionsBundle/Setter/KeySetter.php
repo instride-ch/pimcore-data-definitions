@@ -17,19 +17,18 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
 use Pimcore\Model\DataObject;
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
 
 class KeySetter implements SetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data): void
+    public function set(SetterContextInterface $context): void
     {
-        $setter = explode('~', $map->getToColumn());
+        $setter = explode('~', $context->getImportMapping()->getToColumn());
         $setter = preg_replace('/^o_/', '', $setter[0]);
         $setter = sprintf('set%s', ucfirst($setter));
 
-        if (method_exists($object, $setter)) {
-            $object->$setter(DataObject\Service::getValidKey($value, "object"));
+        if (method_exists($context->getObject(), $setter)) {
+            $context->getObject()->$setter(DataObject\Service::getValidKey($context->getValue(), "object"));
         }
     }
 }

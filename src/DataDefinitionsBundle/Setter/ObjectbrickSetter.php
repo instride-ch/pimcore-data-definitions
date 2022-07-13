@@ -16,21 +16,19 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
-use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Objectbrick;
 use Pimcore\Model\DataObject\Objectbrick\Data\AbstractData;
+use Wvision\Bundle\DataDefinitionsBundle\Context\GetterContextInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ObjectbrickSetter implements SetterInterface, GetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(SetterContextInterface $context)
     {
-        $keyParts = explode('~', $map->getToColumn());
+        $keyParts = explode('~', $context->getImportMapping()->getToColumn());
 
-        $config = $map->getSetterConfig();
+        $config = $context->getImportMapping()->getSetterConfig();
         $fieldName = $config['brickField'];
         $class = $config['class'];
         $brickField = $keyParts[3];
@@ -38,12 +36,12 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
         $brickGetter = sprintf('get%s', ucfirst($fieldName));
         $brickSetter = sprintf('set%s', ucfirst($fieldName));
 
-        if (method_exists($object, $brickGetter)) {
-            $brick = $object->$brickGetter();
+        if (method_exists($context->getObject(), $brickGetter)) {
+            $brick = $context->getObject()->$brickGetter();
 
             if (!$brick instanceof Objectbrick) {
-                $brick = new Objectbrick($object, $fieldName);
-                $object->$brickSetter($brick);
+                $brick = new Objectbrick($context->getObject(), $fieldName);
+                $context->getObject()->$brickSetter($brick);
             }
 
             if ($brick instanceof Objectbrick) {
@@ -55,7 +53,7 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
                 if (!$brickFieldObject instanceof AbstractData) {
                     $brickFieldObjectClass = 'Pimcore\Model\DataObject\Objectbrick\Data\\'.$class;
 
-                    $brickFieldObject = new $brickFieldObjectClass($object);
+                    $brickFieldObject = new $brickFieldObjectClass($context->getObject());
 
                     $brick->$brickClassSetter($brickFieldObject);
                 }
@@ -63,25 +61,25 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
                 $setter = sprintf('set%s', ucfirst($brickField));
 
                 if (method_exists($brickFieldObject, $setter)) {
-                    $brickFieldObject->$setter($value);
+                    $brickFieldObject->$setter($context->getValue());
                 }
             }
         }
     }
 
-    public function get(Concrete $object, ExportMapping $map, $data)
+    public function get(GetterContextInterface $context)
     {
-        $keyParts = explode('~', $map->getFromColumn());
+        $keyParts = explode('~', $context->getMapping()->getFromColumn());
 
-        $config = $map->getGetterConfig();
+        $config = $context->getMapping()->getGetterConfig();
         $fieldName = $config['brickField'];
         $class = $config['class'];
         $brickField = $keyParts[3];
 
         $brickGetter = sprintf('get%s', ucfirst($fieldName));
 
-        if (method_exists($object, $brickGetter)) {
-            $brick = $object->$brickGetter();
+        if (method_exists($context->getObject(), $brickGetter)) {
+            $brick = $context->getObject()->$brickGetter();
 
             if (!$brick instanceof Objectbrick) {
                 return;
@@ -95,7 +93,7 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
             if (!$brickFieldObject instanceof AbstractData) {
                 $brickFieldObjectClass = 'Pimcore\Model\DataObject\Objectbrick\Data\\'.$class;
 
-                $brickFieldObject = new $brickFieldObjectClass($object);
+                $brickFieldObject = new $brickFieldObjectClass($context->getObject());
 
                 $brick->$brickClassSetter($brickFieldObject);
             }

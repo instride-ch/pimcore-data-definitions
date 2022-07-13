@@ -57,5 +57,9 @@ trait ArtifactProviderTrait
      * @param ExportDefinitionInterface $definition
      * @param array $params
      */
-    abstract public function provideArtifactStream(array $configuration, ExportDefinitionInterface $definition, array $params);
+    abstract public function provideArtifactStream(
+        array $configuration,
+        ExportDefinitionInterface $definition,
+        array $params
+    );
 }

@@ -16,18 +16,17 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Fetcher;
 
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\FetcherContextInterface;
 
 interface FetcherInterface
 {
     public function fetch(
-        ExportDefinitionInterface $definition,
-        array $params,
+        FetcherContextInterface $context,
         int $limit,
         int $offset,
         array $configuration
     );
 
-    public function count(ExportDefinitionInterface $definition, array $params, array $configuration): int;
+    public function count(FetcherContextInterface $context, array $configuration): int;
 }
 

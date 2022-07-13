@@ -14,13 +14,20 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Context;
 
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-interface DataSetAwareInterface
+interface LoaderContextInterface
 {
-    public function getDataSet(): ?ImportDataSetInterface;
+    public function getDefinition(): ImportDefinitionInterface;
 
-    public function setDataSet(?ImportDataSetInterface $dataSet): void;
+    public function getParams(): array;
+
+    public function getDataRow(): array;
+
+    public function getDataSet(): ImportDataSetInterface;
+
+    public function getClass(): string;
 }

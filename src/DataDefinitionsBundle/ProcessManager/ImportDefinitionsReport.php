@@ -200,7 +200,10 @@ class ImportDefinitionsReport implements ReportInterface
     {
         $pos = strpos($line, self::EVENT_STATUS_ERROR);
         if (false !== $pos) {
-            $result['productStatus'][$result['currentObject']]['error'] = substr($line, $pos + strlen(self::EVENT_STATUS_ERROR));
+            $result['productStatus'][$result['currentObject']]['error'] = substr(
+                $line,
+                $pos + strlen(self::EVENT_STATUS_ERROR)
+            );
 
             return true;
         }

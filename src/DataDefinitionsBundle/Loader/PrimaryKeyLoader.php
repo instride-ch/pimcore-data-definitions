@@ -20,17 +20,16 @@ use InvalidArgumentException;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\LoaderContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use function count;
 
 class PrimaryKeyLoader implements LoaderInterface
 {
-    public function load(string $class, array $data, ImportDefinitionInterface $definition, array $params): ?Concrete
+    public function load(LoaderContextInterface $context): ?Concrete
     {
-        $classObject = '\Pimcore\Model\DataObject\\'.ucfirst($class);
-        $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';
+        $classObject = '\Pimcore\Model\DataObject\\'.ucfirst($context->getClass());
+        $classList = '\Pimcore\Model\DataObject\\'.ucfirst($context->getClass()).'\Listing';
 
         $list = new $classList();
 
@@ -38,13 +37,13 @@ class PrimaryKeyLoader implements LoaderInterface
             /**
              * @var ImportMapping[] $mapping
              */
-            $mapping = $definition->getMapping();
+            $mapping = $context->getDefinition()->getMapping();
             $condition = [];
             $conditionValues = [];
             foreach ($mapping as $map) {
                 if ($map->getPrimaryIdentifier()) {
                     $condition[] = '`'.$map->getToColumn().'` = ?';
-                    $conditionValues[] = $data[$map->getFromColumn()];
+                    $conditionValues[] = $context->getDataRow()[$map->getFromColumn()];
                 }
             }
 
@@ -69,7 +68,7 @@ class PrimaryKeyLoader implements LoaderInterface
             if (count($objectData) === 1) {
                 $obj = $objectData[0];
 
-                if ($definition->getForceLoadObject()) {
+                if ($context->getDefinition()->getForceLoadObject()) {
                     $obj = DataObject::getById($obj->getId(), true);
 
                     if (!$obj instanceof $classObject) {

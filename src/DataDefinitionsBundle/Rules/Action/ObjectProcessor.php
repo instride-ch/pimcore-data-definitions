@@ -21,8 +21,13 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 class ObjectProcessor implements ImportRuleProcessorInterface
 {
-    public function apply(ImportRuleInterface $rule, Concrete $concrete, $value, array $configuration, array $params = [])
-    {
+    public function apply(
+        ImportRuleInterface $rule,
+        Concrete $concrete,
+        $value,
+        array $configuration,
+        array $params = []
+    ) {
         $object = Concrete::getById($configuration['object']);
 
         if ($object) {

@@ -114,7 +114,7 @@ final class ImportMappingType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param string        $configurationType
+     * @param string $configurationType
      */
     protected function addSetterConfigurationFields(FormInterface $form, string $configurationType): void
     {
@@ -123,7 +123,7 @@ final class ImportMappingType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param string        $configurationType
+     * @param string $configurationType
      */
     protected function addInterpreterConfigurationFields(FormInterface $form, string $configurationType): void
     {
@@ -132,7 +132,7 @@ final class ImportMappingType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param mixed         $data
+     * @param mixed $data
      * @return string|null
      */
     protected function getSetterRegistryIdentifier(FormInterface $form, $data = null): ?string
@@ -146,7 +146,7 @@ final class ImportMappingType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param mixed         $data
+     * @param mixed $data
      * @return string|null
      */
     protected function getInterpreterRegistryIdentifier(FormInterface $form, $data = null): ?string

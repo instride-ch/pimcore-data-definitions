@@ -14,13 +14,13 @@
 pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.carbon');
 
 pimcore.plugin.datadefinitions.interpreters.carbon = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
-    getLayout : function (fromColumn, toColumn, record, config) {
+    getLayout: function (fromColumn, toColumn, record, config) {
         return [{
-            xtype : 'textfield',
+            xtype: 'textfield',
             fieldLabel: t('date_format'),
             name: 'date_format',
             width: 500,
-            value : config.date_format ? config.date_format : null
+            value: config.date_format ? config.date_format : null
         }];
     }
 });

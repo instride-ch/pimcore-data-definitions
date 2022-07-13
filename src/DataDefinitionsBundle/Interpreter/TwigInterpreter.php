@@ -16,10 +16,8 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
 use Twig\Environment;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class TwigInterpreter implements InterpreterInterface
 {
@@ -31,21 +29,17 @@ class TwigInterpreter implements InterpreterInterface
     }
 
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
         return $this->twig->createTemplate($configuration['template'])->render([
-            'value' => $value,
-            'object' => $object,
-            'map' => $map,
-            'data' => $data,
-            'definition' => $definition,
-            'params' => $params,
+            'value' => $context->getValue(),
+            'object' => $context->getObject(),
+            'map' => $context->getMapping(),
+            'data' => $context->getDataRow(),
+            'data_set' => $context->getDataSet(),
+            'definition' => $context->getDefinition(),
+            'params' => $context->getParams(),
             'configuration' => $configuration,
         ]);
     }

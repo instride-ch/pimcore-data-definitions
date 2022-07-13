@@ -16,23 +16,16 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class ObjectResolverInterpreter implements InterpreterInterface
 {
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        $data,
-        DataDefinitionInterface $definition,
-        $params,
-        $configuration
+        InterpreterContextInterface $context,
+        array $configuration
     ) {
-        if (!$value) {
+        if (!$context->getValue()) {
             return null;
         }
 
@@ -42,7 +35,7 @@ class ObjectResolverInterpreter implements InterpreterInterface
         /**
          * @var Listing $listing
          */
-        $listing = $class::$lookup($value);
+        $listing = $class::$lookup($context->getValue());
         $listing->setUnpublished($configuration['match_unpublished']);
 
         if ($listing->count() === 1) {

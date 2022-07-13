@@ -27,12 +27,12 @@ final class ProcessManagerExportListener extends AbstractProcessManagerListener
 
     private $providerRegistry;
 
-    public function setProviderRegistry(ServiceRegistryInterface $providerRegistry) : void
+    public function setProviderRegistry(ServiceRegistryInterface $providerRegistry): void
     {
         $this->providerRegistry = $providerRegistry;
     }
 
-    public function onFinishedEvent(DefinitionEventInterface $event) : void
+    public function onFinishedEvent(DefinitionEventInterface $event): void
     {
         if (null !== $this->process) {
             if ($this->process->getStatus() == ProcessManagerBundle::STATUS_RUNNING) {

@@ -16,10 +16,9 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\RunnerContextInterface;
 
 interface SaveRunnerInterface extends RunnerInterface
 {
-    public function shouldSaveObject(Concrete $object, array $data, DataDefinitionInterface $definition, array $params);
+    public function shouldSaveObject(RunnerContextInterface $context);
 }

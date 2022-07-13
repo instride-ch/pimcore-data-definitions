@@ -16,13 +16,11 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\RunnerContextInterface;
 
 interface ImportStartFinishRunnerInterface
 {
-    public function startImport(ImportDataSetInterface $data, DataDefinitionInterface $definition, array $params);
+    public function startImport(RunnerContextInterface $context);
 
-    public function finishImport(ImportDataSetInterface $data, DataDefinitionInterface $definition, array $params);
+    public function finishImport(RunnerContextInterface $context);
 }

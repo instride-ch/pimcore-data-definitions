@@ -18,8 +18,8 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
 use Exception;
 use Pimcore\Model;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 use Pimcore\Model\Paginator\PaginateListingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 use function in_array;
 
 class Listing extends Model\Listing\AbstractListing implements PaginateListingInterface

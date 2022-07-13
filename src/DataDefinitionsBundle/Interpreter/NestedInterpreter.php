@@ -17,45 +17,40 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
-use Pimcore\Model\DataObject\Concrete;
 use Webmozart\Assert\Assert;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-final class NestedInterpreter implements InterpreterInterface, DataSetAwareInterface
+final class NestedInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
-    private ServiceRegistryInterface $interpreterRegistry;
-
-    public function __construct(ServiceRegistryInterface $interpreterRegistry)
-    {
-        $this->interpreterRegistry = $interpreterRegistry;
+    public function __construct(
+        private ServiceRegistryInterface $interpreterRegistry,
+        private ContextFactoryInterface $contextFactory
+    ) {
     }
 
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
         Assert::keyExists($configuration, 'interpreters');
         Assert::isArray($configuration['interpreters'], 'Interpreter Config needs to be array');
 
+        $value = $context->getValue();
+
         foreach ($configuration['interpreters'] as $interpreter) {
             $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
+            $newContext = $this->contextFactory->createInterpreterContext(
+                $context->getDefinition(),
+                $context->getParams(),
+                $context->getDataRow(),
+                $context->getDataSet(),
+                $context->getObject(),
+                $value,
+                $context->getMapping()
+            );
 
-            if ($interpreterObject instanceof DataSetAwareInterface) {
-                $interpreterObject->setDataSet($this->getDataSet());
-            }
-
-            $value = $interpreterObject->interpret($object, $value, $map, $data, $definition, $params,
-                $interpreter['interpreterConfig']);
+            $value = $interpreterObject->interpret($newContext, $interpreter['interpreterConfig']);
         }
 
         return $value;

@@ -16,18 +16,17 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
 
 class RelationSetter implements SetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data): void
+    public function set(SetterContextInterface $context): void
     {
-        $fieldName = $map->getToColumn();
+        $fieldName = $context->getImportMapping()->getToColumn();
         $getter = sprintf('get%s', ucfirst($fieldName));
         $setter = sprintf('set%s', ucfirst($fieldName));
 
-        $existingElements = $object->$getter();
+        $existingElements = $context->getObject()->$getter();
         if (!is_array($existingElements)) {
             $existingElements = [];
         }
@@ -38,6 +37,7 @@ class RelationSetter implements SetterInterface
             $existingKeys[] = (string)$existingElement;
         }
 
+        $value = $context->getValue();
 
         if (!is_iterable($value)) {
             $value = [$value];
@@ -51,6 +51,6 @@ class RelationSetter implements SetterInterface
             }
         }
 
-        $object->$setter($existingElements);
+        $context->getObject()->$setter($existingElements);
     }
 }

@@ -16,12 +16,11 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\RunnerContextInterface;
 
 interface ExportRunnerInterface
 {
-    public function exportPreRun(Concrete $object, array $data, ExportDefinitionInterface $definition, array $params);
+    public function exportPreRun(RunnerContextInterface $context);
 
-    public function exportPostRun(Concrete $object, array $data, ExportDefinitionInterface $definition, array $params);
+    public function exportPostRun(RunnerContextInterface $context);
 }

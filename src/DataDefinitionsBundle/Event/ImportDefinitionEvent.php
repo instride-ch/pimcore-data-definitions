@@ -32,7 +32,7 @@ final class ImportDefinitionEvent extends Event implements DefinitionEventInterf
         $this->options = $options;
     }
 
-    public function getDefinition() : ImportDefinitionInterface
+    public function getDefinition(): ImportDefinitionInterface
     {
         return $this->definition;
     }

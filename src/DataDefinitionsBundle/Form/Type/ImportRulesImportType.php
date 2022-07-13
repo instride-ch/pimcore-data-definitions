@@ -31,10 +31,10 @@ final class ImportRulesImportType extends AbstractType
                 'constraints' => [
                     new File([
                         'mimeTypes' => [
-                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                        ]
-                    ])
-                ]
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                        ],
+                    ]),
+                ],
             ]);
 
     }

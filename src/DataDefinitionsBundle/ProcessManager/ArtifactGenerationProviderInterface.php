@@ -22,7 +22,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 interface ArtifactGenerationProviderInterface
 {
     /**
-     * @param array                     $configuration
+     * @param array $configuration
      * @param ExportDefinitionInterface $definition
      * @param                           $params
      * @return Asset

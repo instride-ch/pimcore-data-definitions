@@ -17,18 +17,12 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
-use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterface
+class ConditionalInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
     private ServiceRegistryInterface $interpreterRegistry;
     protected ExpressionLanguage $expressionLanguage;
     protected ContainerInterface $container;
@@ -44,21 +38,17 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
     }
 
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
         $params = [
-            'value' => $value,
-            'object' => $object,
-            'map' => $map,
-            'data' => $data,
-            'definition' => $definition,
-            'params' => $params,
+            'value' => $context->getValue(),
+            'object' => $context->getObject(),
+            'map' => $context->getMapping(),
+            'data' => $context->getDataRow(),
+            'data_set' => $context->getDataSet(),
+            'definition' => $context->getDefinition(),
+            'params' => $context->getParams(),
             'configuration' => $configuration,
             'container' => $this->container,
         ];
@@ -74,14 +64,9 @@ class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterf
         $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
 
         if (!$interpreterObject instanceof InterpreterInterface) {
-            return $value;
+            return $context->getValue();
         }
 
-        if ($interpreterObject instanceof DataSetAwareInterface) {
-            $interpreterObject->setDataSet($this->getDataSet());
-        }
-
-        return $interpreterObject->interpret($object, $value, $map, $data, $definition, $params,
-            $interpreter['interpreterConfig']);
+        return $interpreterObject->interpret($context, $interpreter['interpreterConfig']);
     }
 }

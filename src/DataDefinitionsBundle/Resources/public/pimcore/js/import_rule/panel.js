@@ -55,14 +55,14 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
                 layout: 'border',
                 items: this.getItems(),
                 buttons: [{
-                        text: t('import'),
-                        iconCls: 'pimcore_icon_import',
-                        handler: this.importRules.bind(this)
+                    text: t('import'),
+                    iconCls: 'pimcore_icon_import',
+                    handler: this.importRules.bind(this)
                 }, {
                     text: t('export'),
                     iconCls: 'pimcore_icon_export',
                     handler: this.exportRules.bind(this)
-                },{
+                }, {
                     text: t('save'),
                     iconCls: 'pimcore_icon_apply',
                     handler: this.save.bind(this)
@@ -73,7 +73,7 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
         return this.layout;
     },
 
-    exportRules: function() {
+    exportRules: function () {
         pimcore.settings.showCloseConfirmation = false;
         window.setTimeout(function () {
             pimcore.settings.showCloseConfirmation = true;
@@ -93,14 +93,14 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
         });
     },
 
-    importRules: function() {
+    importRules: function () {
         pimcore.helpers.uploadDialog('/admin/data_definitions/import_rules/import', 'file', function (res) {
             var res = Ext.decode(res.response.responseText);
 
             if (res.success) {
                 pimcore.helpers.showNotification(t('success'), t('success'), 'success');
 
-                Ext.Object.each(this.panels, function(key, panel) {
+                Ext.Object.each(this.panels, function (key, panel) {
                     panel.destroy();
                 });
 
@@ -115,25 +115,25 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
         });
     },
 
-    getData: function() {
+    getData: function () {
         var panelData = {};
 
-        this.store.getRange().forEach(function(value, index) {
+        this.store.getRange().forEach(function (value, index) {
             panelData[value.id] = value.data;
             panelData[value.id].id = value.id;
         });
 
-        var result = Ext.Object.each(this.panels, function(key, panel) {
+        var result = Ext.Object.each(this.panels, function (key, panel) {
             panelData[key] = panel.getSaveData();
         });
 
         return Object.values(panelData);
     },
 
-    save: function() {
+    save: function () {
         var stopped = false;
 
-        var result = Ext.Object.each(this.panels, function(key, panel) {
+        var result = Ext.Object.each(this.panels, function (key, panel) {
             if (!panel.isValid()) {
                 stopped = true;
                 return false;
@@ -224,8 +224,7 @@ pimcore.plugin.datadefinitions.import_rule.panel = Class.create(coreshop.rules.p
 
         if (this.panels[panelKey]) {
             this.panels[panelKey].activate();
-        }
-        else {
+        } else {
             var itemClass = this.getItemClass();
 
             this.panels[panelKey] = new itemClass(this, record.data, panelKey, this.type, record);

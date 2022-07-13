@@ -16,10 +16,9 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Getter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Context\GetterContextInterface;
 
 interface GetterInterface
 {
-    public function get(Concrete $object, ExportMapping $map, ?array $data);
+    public function get(GetterContextInterface $context);
 }

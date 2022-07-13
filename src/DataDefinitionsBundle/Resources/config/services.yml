@@ -1,360 +1,367 @@
 imports:
-    - { resource: "services/forms.yml" }
-    - { resource: "services/installer.yml" }
-    - { resource: "services/commands.yml" }
-    - { resource: "services/import_rules.yml" }
+  - { resource: "services/forms.yml" }
+  - { resource: "services/installer.yml" }
+  - { resource: "services/commands.yml" }
+  - { resource: "services/import_rules.yml" }
 
 services:
-    Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher:
-        arguments:
-            - '@event_dispatcher'
-
-    Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection:
-        public: true
-
-    Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface: '@Wvision\Bundle\DataDefinitionsBundle\Importer\Importer'
-    Wvision\Bundle\DataDefinitionsBundle\Importer\Importer:
-        arguments:
-            - '@data_definitions.registry.provider'
-            - '@data_definitions.registry.filter'
-            - '@data_definitions.registry.runner'
-            - '@data_definitions.registry.interpreter'
-            - '@data_definitions.registry.setter'
-            - '@data_definitions.registry.cleaner'
-            - '@data_definitions.registry.loader'
-            - '@data_definitions.registry.persister'
-            - '@Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher'
-            - '@logger'
-            - '@pimcore.model.factory'
-            - '@coreshop.expression_language'
-        tags:
-            - { name: monolog.logger, channel: import_definition }
-            - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
-
-    Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface: '@Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter'
-    Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter:
-        arguments:
-            - '@data_definitions.registry.fetcher'
-            - '@data_definitions.registry.export_runner'
-            - '@data_definitions.registry.interpreter'
-            - '@data_definitions.registry.getter'
-            - '@data_definitions.registry.export_provider'
-            - '@event_dispatcher'
-            - '@logger'
-        tags:
-            - { name: monolog.logger, channel: export_definition }
-            - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
-
-    ### Registries
-    data_definitions.registry.provider:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        public: true
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface
-            - 'Import Definition Providers'
-
-    data_definitions.form.registry.provider:
-        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
-
-    data_definitions.registry.export_provider:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface
-            - 'Import Definition Export Providers'
-
-    data_definitions.form.registry.export_provider:
-        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
-
-    data_definitions.registry.loader:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface
-            - 'Import Definition Loaders'
-
-    data_definitions.registry.cleaner:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface
-            - 'Import Definition Cleaners'
-
-    data_definitions.registry.filter:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface
-            - 'Import Definition Filters'
-
-    data_definitions.registry.interpreter:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface
-            - 'Import Definition Interpreters'
-
-    data_definitions.form.registry.interpreter:
-        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
-
-    data_definitions.registry.setter:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface
-            - 'Import Definition Setters'
-
-    data_definitions.form.registry.setter:
-        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
-
-    data_definitions.registry.getter:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface
-            - 'Import Definition Getters'
-
-    data_definitions.form.registry.getter:
-        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
-
-    data_definitions.registry.fetcher:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface
-            - 'Import Definition Fetchers'
-
-    data_definitions.form.registry.fetcher:
-        class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
-
-    data_definitions.registry.runner:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface
-            - 'Import Definition Runners'
-
-    data_definitions.registry.export_runner:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface
-            - 'Export Definition Runners'
-
-    data_definitions.registry.persister:
-        class: CoreShop\Component\Registry\ServiceRegistry
-        arguments:
-            - Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface
-            - 'Import Definition Persisters'
-
-    ### CLEANER
-    Wvision\Bundle\DataDefinitionsBundle\Cleaner\Deleter:
-        tags:
-            - { name: data_definitions.cleaner, type: deleter }
-
-    Wvision\Bundle\DataDefinitionsBundle\Cleaner\None:
-        tags:
-            - { name: data_definitions.cleaner, type: none }
-
-    Wvision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner:
-        tags:
-            - { name: data_definitions.cleaner, type: reference_cleaner }
-
-    Wvision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher:
-        tags:
-            - { name: data_definitions.cleaner, type: unpublisher }
-
-    ### INTERPRETER
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetsUrlInterpreter:
-        arguments:
-            - '@Psr\Http\Client\ClientInterface'
-            - '@Psr\Http\Message\RequestFactoryInterface'
-        tags:
-            - { name: data_definitions.interpreter, type: assets_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter:
-        arguments:
-            - '@Psr\Http\Client\ClientInterface'
-            - '@Psr\Http\Message\RequestFactoryInterface'
-        tags:
-            - { name: data_definitions.interpreter, type: asset_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\MetadataInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: metadata, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MetadataInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: asset_by_path, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: carbon, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CarbonInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: checkbox, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: default_value, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\DefaultValueInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: specific_object, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\SpecificObjectInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\HrefInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: href, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\HrefInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: multi_href, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MultiHrefInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: quantity_value, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter:
-        arguments:
-            - '@data_definitions.registry.interpreter'
-        tags:
-            - { name: data_definitions.interpreter, type: nested, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\ExpressionInterpreter:
-        arguments:
-            - '@coreshop.expression_language'
-            - '@service_container'
-        tags:
-            - { name: data_definitions.interpreter, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter:
-        arguments:
-            - '@service_container'
-        tags:
-            - { name: data_definitions.interpreter, type: object_resolver, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefinitionInterpreter:
-        arguments:
-            - '@data_definitions.repository.import_definition'
-            - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
-        tags:
-            - { name: data_definitions.interpreter, type: definition, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\DefinitionType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter:
-        arguments:
-            - '@data_definitions.registry.interpreter'
-            - '@coreshop.expression_language'
-            - '@service_container'
-        tags:
-            - { name: data_definitions.interpreter, type: conditional, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter:
-        arguments:
-            - '@service_container'
-        tags:
-            - { name: data_definitions.interpreter, type: mapping, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MappingInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter:
-        arguments:
-            - '@data_definitions.registry.interpreter'
-        tags:
-            - { name: data_definitions.interpreter, type: iterator, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\TwigInterpreter:
-        arguments:
-            - '@twig'
-        tags:
-            - { name: data_definitions.interpreter, type: twig, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\TwigInterpreterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\DoNotSetOnEmptyInterpreter:
-      tags:
-        - { name: data_definitions.interpreter, type: donotsetonempty, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\LinkInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: link, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Interpreter\ExternalImageInterpreter:
-        tags:
-            - { name: data_definitions.interpreter, type: external_image, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    ### PROVIDER
-    Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:
-        tags:
-            - { name: data_definitions.import_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\CsvProviderType }
-            - { name: data_definitions.export_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider:
-        tags:
-            - { name: data_definitions.import_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType }
-            - { name: data_definitions.export_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Provider\JsonProvider:
-        tags:
-            - { name: data_definitions.import_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\JsonProviderType }
-            - { name: data_definitions.export_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider:
-        tags:
-            - { name: data_definitions.import_provider, type: external_sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExternalSqlProviderType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider:
-        arguments:
-            - '@doctrine.dbal.default_connection'
-        tags:
-            - { name: data_definitions.import_provider, type: sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider:
-        tags:
-            - { name: data_definitions.import_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType }
-            - { name: data_definitions.export_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\XmlProviderType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider:
-        tags:
-            - { name: data_definitions.import_provider, type: raw, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType }
-
-    ### SETTER AND GETTER
-    Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter:
-        tags:
-            - { name: data_definitions.setter, type: classificationstore, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
-            - { name: data_definitions.getter, type: classificationstore, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter:
-        tags:
-            - { name: data_definitions.getter, type: classificationstore_field, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter:
-        tags:
-            - { name: data_definitions.setter, type: fieldcollection, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
-            - { name: data_definitions.getter, type: fieldcollection, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Setter\KeySetter:
-        tags:
-            - { name: data_definitions.setter, type: key, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter:
-        tags:
-            - { name: data_definitions.setter, type: localizedfield, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
-            - { name: data_definitions.getter, type: localizedfield, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectbrickSetter:
-        tags:
-            - { name: data_definitions.setter, type: objectbrick, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
-            - { name: data_definitions.getter, type: objectbrick, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter:
-        tags:
-            - { name: data_definitions.setter, type: object_type, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\Setter\RelationSetter:
-        tags:
-            - { name: data_definitions.setter, type: relation, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
-
-    Wvision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener:
-        tags:
-            - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onDataObjectDelete }
-
-    Wvision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher:
-        tags:
-            - { name: data_definitions.fetcher, type: objects, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType }
-
-    ### LOADER
-    Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader:
-        tags:
-            - { name: data_definitions.loader, type: primary_key }
-
-    ### PERSISTER
-    Wvision\Bundle\DataDefinitionsBundle\Persister\Persister:
-        tags:
-            - { name: data_definitions.persister, type: persister }
+  Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher:
+    arguments:
+      - '@event_dispatcher'
+
+  Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection:
+    public: true
+
+  Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface: '@Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactory'
+  Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactory: ~
+
+  Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface: '@Wvision\Bundle\DataDefinitionsBundle\Importer\Importer'
+  Wvision\Bundle\DataDefinitionsBundle\Importer\Importer:
+    arguments:
+      - '@data_definitions.registry.provider'
+      - '@data_definitions.registry.filter'
+      - '@data_definitions.registry.runner'
+      - '@data_definitions.registry.interpreter'
+      - '@data_definitions.registry.setter'
+      - '@data_definitions.registry.cleaner'
+      - '@data_definitions.registry.loader'
+      - '@data_definitions.registry.persister'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcher'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface'
+      - '@logger'
+      - '@pimcore.model.factory'
+      - '@coreshop.expression_language'
+    tags:
+      - { name: monolog.logger, channel: import_definition }
+      - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
+
+  Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface: '@Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter'
+  Wvision\Bundle\DataDefinitionsBundle\Exporter\Exporter:
+    arguments:
+      - '@data_definitions.registry.fetcher'
+      - '@data_definitions.registry.export_runner'
+      - '@data_definitions.registry.interpreter'
+      - '@data_definitions.registry.getter'
+      - '@data_definitions.registry.export_provider'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface'
+      - '@event_dispatcher'
+      - '@logger'
+    tags:
+      - { name: monolog.logger, channel: export_definition }
+      - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
+
+  ### Registries
+  data_definitions.registry.provider:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    public: true
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface
+      - 'Import Definition Providers'
+
+  data_definitions.form.registry.provider:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  data_definitions.registry.export_provider:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface
+      - 'Import Definition Export Providers'
+
+  data_definitions.form.registry.export_provider:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  data_definitions.registry.loader:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface
+      - 'Import Definition Loaders'
+
+  data_definitions.registry.cleaner:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface
+      - 'Import Definition Cleaners'
+
+  data_definitions.registry.filter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface
+      - 'Import Definition Filters'
+
+  data_definitions.registry.interpreter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface
+      - 'Import Definition Interpreters'
+
+  data_definitions.form.registry.interpreter:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  data_definitions.registry.setter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface
+      - 'Import Definition Setters'
+
+  data_definitions.form.registry.setter:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  data_definitions.registry.getter:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface
+      - 'Import Definition Getters'
+
+  data_definitions.form.registry.getter:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  data_definitions.registry.fetcher:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface
+      - 'Import Definition Fetchers'
+
+  data_definitions.form.registry.fetcher:
+    class: CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+  data_definitions.registry.runner:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface
+      - 'Import Definition Runners'
+
+  data_definitions.registry.export_runner:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface
+      - 'Export Definition Runners'
+
+  data_definitions.registry.persister:
+    class: CoreShop\Component\Registry\ServiceRegistry
+    arguments:
+      - Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface
+      - 'Import Definition Persisters'
+
+  ### CLEANER
+  Wvision\Bundle\DataDefinitionsBundle\Cleaner\Deleter:
+    tags:
+      - { name: data_definitions.cleaner, type: deleter }
+
+  Wvision\Bundle\DataDefinitionsBundle\Cleaner\None:
+    tags:
+      - { name: data_definitions.cleaner, type: none }
+
+  Wvision\Bundle\DataDefinitionsBundle\Cleaner\ReferenceCleaner:
+    tags:
+      - { name: data_definitions.cleaner, type: reference_cleaner }
+
+  Wvision\Bundle\DataDefinitionsBundle\Cleaner\Unpublisher:
+    tags:
+      - { name: data_definitions.cleaner, type: unpublisher }
+
+  ### INTERPRETER
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetsUrlInterpreter:
+    arguments:
+      - '@Psr\Http\Client\ClientInterface'
+      - '@Psr\Http\Message\RequestFactoryInterface'
+    tags:
+      - { name: data_definitions.interpreter, type: assets_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetsUrlInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetUrlInterpreter:
+    arguments:
+      - '@Psr\Http\Client\ClientInterface'
+      - '@Psr\Http\Message\RequestFactoryInterface'
+    tags:
+      - { name: data_definitions.interpreter, type: asset_url, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetUrlInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\MetadataInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: metadata, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MetadataInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\AssetByPathInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: asset_by_path, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\AssetByPathInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\CarbonInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: carbon, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CarbonInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\CheckboxInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: checkbox, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefaultValueInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: default_value, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\DefaultValueInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\SpecificObjectInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: specific_object, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\SpecificObjectInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\HrefInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: href, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\HrefInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\MultiHrefInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: multi_href, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MultiHrefInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\QuantityValueInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: quantity_value, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\QuantityValueInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\NestedInterpreter:
+    arguments:
+      - '@data_definitions.registry.interpreter'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface'
+    tags:
+      - { name: data_definitions.interpreter, type: nested, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\NestedInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\ExpressionInterpreter:
+    arguments:
+      - '@coreshop.expression_language'
+      - '@service_container'
+    tags:
+      - { name: data_definitions.interpreter, type: expression, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ExpressionInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\ObjectResolverInterpreter:
+    arguments:
+      - '@service_container'
+    tags:
+      - { name: data_definitions.interpreter, type: object_resolver, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ObjectResolverType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\DefinitionInterpreter:
+    arguments:
+      - '@data_definitions.repository.import_definition'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+    tags:
+      - { name: data_definitions.interpreter, type: definition, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\DefinitionType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\ConditionalInterpreter:
+    arguments:
+      - '@data_definitions.registry.interpreter'
+      - '@coreshop.expression_language'
+      - '@service_container'
+    tags:
+      - { name: data_definitions.interpreter, type: conditional, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\MappingInterpreter:
+    arguments:
+      - '@service_container'
+    tags:
+      - { name: data_definitions.interpreter, type: mapping, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\MappingInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\IteratorInterpreter:
+    arguments:
+      - '@data_definitions.registry.interpreter'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface'
+    tags:
+      - { name: data_definitions.interpreter, type: iterator, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\IteratorInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\TwigInterpreter:
+    arguments:
+      - '@twig'
+    tags:
+      - { name: data_definitions.interpreter, type: twig, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\TwigInterpreterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\DoNotSetOnEmptyInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: donotsetonempty, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\LinkInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: link, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Interpreter\ExternalImageInterpreter:
+    tags:
+      - { name: data_definitions.interpreter, type: external_image, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  ### PROVIDER
+  Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:
+    tags:
+      - { name: data_definitions.import_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\CsvProviderType }
+      - { name: data_definitions.export_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider:
+    tags:
+      - { name: data_definitions.import_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType }
+      - { name: data_definitions.export_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Provider\JsonProvider:
+    tags:
+      - { name: data_definitions.import_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\JsonProviderType }
+      - { name: data_definitions.export_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Provider\ExternalSqlProvider:
+    tags:
+      - { name: data_definitions.import_provider, type: external_sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExternalSqlProviderType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Provider\SqlProvider:
+    arguments:
+      - '@doctrine.dbal.default_connection'
+    tags:
+      - { name: data_definitions.import_provider, type: sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider:
+    tags:
+      - { name: data_definitions.import_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType }
+      - { name: data_definitions.export_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\XmlProviderType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Provider\RawProvider:
+    tags:
+      - { name: data_definitions.import_provider, type: raw, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\RawProviderType }
+
+  ### SETTER AND GETTER
+  Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreSetter:
+    tags:
+      - { name: data_definitions.setter, type: classificationstore, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
+      - { name: data_definitions.getter, type: classificationstore, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ClassificationStoreSetterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Setter\ClassificationStoreFieldGetter:
+    tags:
+      - { name: data_definitions.getter, type: classificationstore_field, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Setter\FieldCollectionSetter:
+    tags:
+      - { name: data_definitions.setter, type: fieldcollection, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
+      - { name: data_definitions.getter, type: fieldcollection, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\FieldCollectionSetterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Setter\KeySetter:
+    tags:
+      - { name: data_definitions.setter, type: key, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Setter\LocalizedfieldSetter:
+    tags:
+      - { name: data_definitions.setter, type: localizedfield, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
+      - { name: data_definitions.getter, type: localizedfield, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\LocalizedFieldSetterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectbrickSetter:
+    tags:
+      - { name: data_definitions.setter, type: objectbrick, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
+      - { name: data_definitions.getter, type: objectbrick, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Setter\ObjectBrickSetterType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Setter\ObjectTypeSetter:
+    tags:
+      - { name: data_definitions.setter, type: object_type, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\Setter\RelationSetter:
+    tags:
+      - { name: data_definitions.setter, type: relation, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
+  Wvision\Bundle\DataDefinitionsBundle\EventListener\ObjectDeleteListener:
+    tags:
+      - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onDataObjectDelete }
+
+  Wvision\Bundle\DataDefinitionsBundle\Fetcher\ObjectsFetcher:
+    tags:
+      - { name: data_definitions.fetcher, type: objects, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Fetcher\ObjectsFetcherType }
+
+  ### LOADER
+  Wvision\Bundle\DataDefinitionsBundle\Loader\PrimaryKeyLoader:
+    tags:
+      - { name: data_definitions.loader, type: primary_key }
+
+  ### PERSISTER
+  Wvision\Bundle\DataDefinitionsBundle\Persister\Persister:
+    tags:
+      - { name: data_definitions.persister, type: persister }

@@ -7,10 +7,8 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
 use CoreShop\Component\Core\Repository\CurrencyRepositoryInterface;
 use CoreShop\Component\Currency\Model\CurrencyInterface;
 use CoreShop\Component\Currency\Model\Money;
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use function is_string;
 
 final class MoneyInterpreter implements InterpreterInterface
@@ -23,15 +21,10 @@ final class MoneyInterpreter implements InterpreterInterface
     }
 
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
-        $value = $this->getValue($value, $configuration);
+        $value = $this->getValue($context->getValue(), $configuration);
         $currency = $this->resolveCurrency($value, $configuration);
 
         if (null === $currency) {

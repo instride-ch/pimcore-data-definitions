@@ -41,7 +41,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
 
     public function getColumns(array $configuration): array
     {
-        $csvHeaders = (string) $configuration['csvHeaders'];
+        $csvHeaders = (string)$configuration['csvHeaders'];
         $csvExample = $configuration['csvExample'];
         $delimiter = $configuration['delimiter'];
         $enclosure = $configuration['enclosure'];
@@ -73,8 +73,12 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
-    {
+    public function getData(
+        array $configuration,
+        ImportDefinitionInterface $definition,
+        array $params,
+        FilterInterface $filter = null
+    ): ImportDataSetInterface {
         $csvHeaders = $configuration['csvHeaders'];
         $delimiter = $configuration['delimiter'];
         $enclosure = $configuration['enclosure'];
@@ -139,8 +143,12 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $writer->insertAll($this->exportData);
     }
 
-    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
-    {
+    public function addExportData(
+        array $data,
+        array $configuration,
+        ExportDefinitionInterface $definition,
+        array $params
+    ): void {
         $this->exportData[] = $data;
     }
 

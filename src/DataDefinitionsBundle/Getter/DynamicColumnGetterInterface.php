@@ -16,8 +16,7 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Getter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Context\GetterContextInterface;
 
 interface DynamicColumnGetterInterface extends GetterInterface
 {
@@ -31,5 +30,5 @@ interface DynamicColumnGetterInterface extends GetterInterface
      *               with other columns from the definition and to always return
      *               exactly the same keys in exactly the same order for each object.
      */
-    public function get(Concrete $object, ExportMapping $map, ?array $data): array;
+    public function get(GetterContextInterface $context): array;
 }

@@ -17,24 +17,23 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
 use Pimcore\Model\DataObject\Classificationstore;
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\GetterContextInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 
 class ClassificationStoreSetter implements SetterInterface, GetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data): void
+    public function set(SetterContextInterface $context): void
     {
-        $mapConfig = $map->getSetterConfig();
+        $mapConfig = $context->getImportMapping()->getSetterConfig();
         $fieldName = $mapConfig['field'];
         $keyConfig = (int)$mapConfig['keyConfig'];
         $groupConfig = (int)$mapConfig['groupConfig'];
 
         $classificationStoreGetter = sprintf('get%s', ucfirst($fieldName));
 
-        if (method_exists($object, $classificationStoreGetter)) {
-            $classificationStore = $object->$classificationStoreGetter();
+        if (method_exists($context->getObject(), $classificationStoreGetter)) {
+            $classificationStore = $context->getObject()->$classificationStoreGetter();
 
             if ($classificationStore instanceof Classificationstore) {
                 $groups = $classificationStore->getActiveGroups();
@@ -44,22 +43,22 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
                     $classificationStore->setActiveGroups($groups);
                 }
 
-                $classificationStore->setLocalizedKeyValue($groupConfig, $keyConfig, $value);
+                $classificationStore->setLocalizedKeyValue($groupConfig, $keyConfig, $context->getValue());
             }
         }
     }
 
-    public function get(Concrete $object, ExportMapping $map, $data)
+    public function get(GetterContextInterface $context)
     {
-        $mapConfig = $map->getGetterConfig();
+        $mapConfig = $context->getMapping()->getGetterConfig();
         $fieldName = $mapConfig['field'];
         $keyConfig = (int)$mapConfig['keyConfig'];
         $groupConfig = (int)$mapConfig['groupConfig'];
 
         $classificationStoreGetter = sprintf('get%s', ucfirst($fieldName));
 
-        if (method_exists($object, $classificationStoreGetter)) {
-            $classificationStore = $object->$classificationStoreGetter();
+        if (method_exists($context->getObject(), $classificationStoreGetter)) {
+            $classificationStore = $context->getObject()->$classificationStoreGetter();
 
             if ($classificationStore instanceof Classificationstore) {
                 $groups = $classificationStore->getActiveGroups();

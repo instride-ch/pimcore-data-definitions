@@ -19,28 +19,18 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Element\Service;
 use Pimcore\Tool;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
+class HrefInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
         $type = $configuration['type'] ?: 'object';
         $objectClass = $configuration['class'];
 
-        if (!$value) {
+        if (!$context->getValue()) {
             return null;
         }
 
@@ -55,7 +45,7 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
                 $class = new $class();
 
                 if ($class instanceof Concrete) {
-                    $ret = $class::getById($value);
+                    $ret = $class::getById($context->getValue());
 
                     if ($ret instanceof Concrete) {
                         return $ret;
@@ -63,7 +53,7 @@ class HrefInterpreter implements InterpreterInterface, DataSetAwareInterface
                 }
             }
         } else {
-            return Service::getElementById($type, $value);
+            return Service::getElementById($type, $context->getValue());
         }
 
         return null;

@@ -16,24 +16,17 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class AssetsUrlInterpreter extends AssetUrlInterpreter
 {
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
         $assets = [];
-        foreach ((array)$value as $item) {
-            $asset = parent::interpret($object, $item, $map, $data, $definition, $params, $configuration);
+        foreach ((array)$context->getValue() as $item) {
+            $asset = parent::interpret($context, $configuration);
 
             if ($asset) {
                 $assets[] = $asset;

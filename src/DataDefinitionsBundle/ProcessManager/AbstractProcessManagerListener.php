@@ -69,7 +69,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @return ProcessInterface|null
      */
-    public function getProcess() : ProcessInterface
+    public function getProcess(): ProcessInterface
     {
         return $this->process;
     }
@@ -77,14 +77,14 @@ abstract class AbstractProcessManagerListener
     /**
      * @param DefinitionEventInterface $event
      */
-    public function onTotalEvent(DefinitionEventInterface $event) : void
+    public function onTotalEvent(DefinitionEventInterface $event): void
     {
         if (null === $this->process) {
             $date = Carbon::now();
 
             $this->process = $this->processFactory->createProcess(
                 sprintf(
-                    static::PROCESS_NAME . ' (%s): %s',
+                    static::PROCESS_NAME.' (%s): %s',
                     $date->formatLocalized('%A %d %B %Y'),
                     $event->getDefinition()->getName()
                 ),
@@ -107,7 +107,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @return void
      */
-    public function onProgressEvent(DefinitionEventInterface $event) : void
+    public function onProgressEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
             $now = new \DateTimeImmutable();
@@ -142,7 +142,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @param DefinitionEventInterface $event
      */
-    public function onStatusEvent(DefinitionEventInterface $event) : void
+    public function onStatusEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
             $now = new \DateTimeImmutable();
@@ -168,7 +168,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @param DefinitionEventInterface $event
      */
-    public function onFinishedEvent(DefinitionEventInterface $event) : void
+    public function onFinishedEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
             if ($this->process->getStatus() === ProcessManagerBundle::STATUS_RUNNING) {
@@ -185,7 +185,7 @@ abstract class AbstractProcessManagerListener
     /**
      * @param DefinitionEventInterface $event
      */
-    public function onFailureEvent(DefinitionEventInterface $event) : void
+    public function onFailureEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
             if ($event->getDefinition()->getStopOnException()) {

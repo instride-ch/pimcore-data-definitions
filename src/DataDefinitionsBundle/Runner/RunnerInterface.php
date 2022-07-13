@@ -16,12 +16,11 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\RunnerContextInterface;
 
 interface RunnerInterface
 {
-    public function preRun(Concrete $object, array $data, DataDefinitionInterface $definition, array $params);
+    public function preRun(RunnerContextInterface $context);
 
-    public function postRun(Concrete $object, array $data, DataDefinitionInterface $definition, array $params);
+    public function postRun(RunnerContextInterface $context);
 }

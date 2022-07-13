@@ -23,24 +23,44 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class InterpreterException extends RuntimeException
 {
-    private function __construct(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?Throwable $previous = null)
-    {
+    private function __construct(
+        DataDefinitionInterface $definition,
+        MappingInterface $mapping,
+        array $params,
+        $value,
+        ?Throwable $previous = null
+    ) {
         parent::__construct($this->formatMessage($definition, $mapping, $params, $value, $previous), 0, $previous);
     }
 
-    public static function fromInterpreter(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?Throwable $previous = null): InterpreterException
-    {
+    public static function fromInterpreter(
+        DataDefinitionInterface $definition,
+        MappingInterface $mapping,
+        array $params,
+        $value,
+        ?Throwable $previous = null
+    ): InterpreterException {
         return new self($definition, $mapping, $params, $value, $previous);
     }
 
-    private function formatMessage(DataDefinitionInterface $definition, MappingInterface $mapping, array $params, $value, ?Throwable $previous = null): string
-    {
+    private function formatMessage(
+        DataDefinitionInterface $definition,
+        MappingInterface $mapping,
+        array $params,
+        $value,
+        ?Throwable $previous = null
+    ): string {
         $format = '%1$s, %2$s';
         if ($previous !== null) {
             $format = '%1$s, %2$s: %3$s';
         }
 
-        return sprintf($format, $this->formatDefinition($definition), $this->formatSource($mapping, $value, $params['row'] ?? null), $previous ? $previous->getMessage() : null);
+        return sprintf(
+            $format,
+            $this->formatDefinition($definition),
+            $this->formatSource($mapping, $value, $params['row'] ?? null),
+            $previous ? $previous->getMessage() : null
+        );
     }
 
     private function formatDefinition(DataDefinitionInterface $definition): string
@@ -55,7 +75,15 @@ class InterpreterException extends RuntimeException
             $format = 'from "%1$s" (row %5$d) to "%2$s" (interpreter "%3$s", config %4$s), got value %6$s';
         }
 
-        return sprintf($format, $mapping->getFromColumn(), $mapping->getToColumn(), $mapping->getInterpreter(), var_export_pretty($mapping->getInterpreterConfig()), $row, $this->formatValue($value));
+        return sprintf(
+            $format,
+            $mapping->getFromColumn(),
+            $mapping->getToColumn(),
+            $mapping->getInterpreter(),
+            var_export_pretty($mapping->getInterpreterConfig()),
+            $row,
+            $this->formatValue($value)
+        );
     }
 
     private function formatValue($value): string

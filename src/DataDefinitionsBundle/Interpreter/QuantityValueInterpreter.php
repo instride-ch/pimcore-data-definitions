@@ -16,27 +16,16 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Data\QuantityValue;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class QuantityValueInterpreter implements InterpreterInterface, DataSetAwareInterface
+class QuantityValueInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
-        $value = $value !== '' ? $value : null;
+        $value = $context->getValue() !== '' ? $context->getValue() : null;
         $unit = $configuration['unit'];
 
         return new QuantityValue($value, $unit);

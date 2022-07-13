@@ -18,22 +18,12 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Tool;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class MultiHrefInterpreter implements InterpreterInterface, DataSetAwareInterface
+class MultiHrefInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
     public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
+        InterpreterContextInterface $context,
         array $configuration
     ) {
         $objectClass = $configuration['class'];
@@ -44,7 +34,7 @@ class MultiHrefInterpreter implements InterpreterInterface, DataSetAwareInterfac
             $class = new $class();
 
             if ($class instanceof Concrete) {
-                $ret = $class::getById($value);
+                $ret = $class::getById($context->getValue());
 
                 if ($ret instanceof Concrete) {
                     return [$ret];
@@ -52,6 +42,6 @@ class MultiHrefInterpreter implements InterpreterInterface, DataSetAwareInterfac
             }
         }
 
-        return $value;
+        return $context->getValue();
     }
 }

@@ -18,7 +18,6 @@ namespace Wvision\Bundle\DataDefinitionsBundle;
 
 use Pimcore;
 use Pimcore\Extension\Bundle\Installer\SettingsStoreAwareInstaller;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 
 class Installer extends SettingsStoreAwareInstaller

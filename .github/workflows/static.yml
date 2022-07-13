@@ -58,13 +58,13 @@ jobs:
       - if: matrix.dependencies == 'highest'
         name: Install dependencies highest
         run: |
-          composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
+          composer req guzzlehttp/psr7 pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
           composer update --no-progress --prefer-dist --optimize-autoloader
 
       - if: matrix.dependencies == 'lowest'
         name: Install dependencies lowest
         run: |
-          composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
+          composer req guzzlehttp/psr7 pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
           composer update --no-progress --prefer-dist --optimize-autoloader --prefer-lowest
 
       - name: Validate YAML

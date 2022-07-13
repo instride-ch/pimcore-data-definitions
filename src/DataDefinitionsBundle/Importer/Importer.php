@@ -313,7 +313,7 @@ final class Importer implements ImporterInterface
                 $filter->setLogger($this->logger);
             }
 
-            if (!$filter->filter($definition, $data, $object)) {
+            if (!$filter->filter($definition, $data, $object, $params)) {
                 $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status', 'Filtered Object', $params);
 
                 return null;

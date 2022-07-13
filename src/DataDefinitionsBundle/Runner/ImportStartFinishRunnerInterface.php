@@ -14,12 +14,15 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Filter;
+namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
 use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-interface FilterInterface
+interface ImportStartFinishRunnerInterface
 {
-    public function filter(DataDefinitionInterface $definition, array $data, Concrete $object, array $params): bool;
+    public function startImport(ImportDataSetInterface $data, DataDefinitionInterface $definition, array $params);
+
+    public function finishImport(ImportDataSetInterface $data, DataDefinitionInterface $definition, array $params);
 }

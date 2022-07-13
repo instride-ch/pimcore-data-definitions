@@ -45,7 +45,9 @@ trait ArtifactProviderTrait
         $artifact->setFilename(Asset\Service::getUniqueKey($artifact));
         $artifact->save();
 
-        fclose($stream);
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
 
         return $artifact;
     }

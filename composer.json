@@ -36,7 +36,9 @@
     "coreshop/resource-bundle": "^3.0",
     "coreshop/rule-bundle": "^3.0",
     "coreshop/pimcore-bundle": "^3.0",
-    "pimcore/pimcore": "^10.0"
+    "pimcore/pimcore": "^10.0",
+    "psr/http-client-implementation": "^1.0",
+    "psr/http-factory-implementation": "^1.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",

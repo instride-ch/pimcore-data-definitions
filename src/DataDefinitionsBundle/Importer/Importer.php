@@ -45,6 +45,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Runner\ImportStartFinishRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
@@ -112,6 +113,15 @@ final class Importer implements ImporterInterface
             $filter = $this->filterRegistry->get($filterType);
         }
 
+        $runner = null;
+
+        if ($definition->getRunner()) {
+            /**
+             * @var RunnerInterface $runner
+             */
+            $runner = $this->runnerRegistry->get($definition->getRunner());
+        }
+
         /** @var ImportDataSetInterface|array $data */
         $data = $this->getData($definition, $params);
 
@@ -119,7 +129,15 @@ final class Importer implements ImporterInterface
             $this->eventDispatcher->dispatch($definition, 'data_definitions.import.total', \count($data), $params);
         }
 
-        [$objectIds, $exceptions] = $this->runImport($definition, $params, $filter, $data);
+        if ($runner instanceof ImportStartFinishRunnerInterface) {
+            $runner->startImport($data, $definition, $params);
+        }
+
+        [$objectIds, $exceptions] = $this->runImport($definition, $params, $filter, $runner, $data);
+
+        if ($runner instanceof ImportStartFinishRunnerInterface) {
+            $runner->finishImport($data, $definition, $params);
+        }
 
         $cleanerType = $definition->getCleaner();
         if ($cleanerType) {
@@ -221,7 +239,8 @@ final class Importer implements ImporterInterface
         ImportDefinitionInterface $definition,
         array $params,
         FilterInterface $filter = null,
-        ImportDataSetInterface $dataSet = null
+        RunnerInterface $runner = null,
+        ImportDataSetInterface $dataSet = null,
     ): array
     {
         if (null === $dataSet) {
@@ -239,7 +258,7 @@ final class Importer implements ImporterInterface
             }
 
             try {
-                $object = $this->importRow($definition, $row, $dataSet, array_merge($params, ['row' => $count]), $filter);
+                $object = $this->importRow($definition, $row, $dataSet, array_merge($params, ['row' => $count]), $filter, $runner);
 
                 if ($object instanceof Concrete) {
                     $objectIds[] = $object->getId();
@@ -283,11 +302,10 @@ final class Importer implements ImporterInterface
         array $data,
         ImportDataSetInterface $dataSet,
         array $params,
-        FilterInterface $filter = null
+        FilterInterface $filter = null,
+        RunnerInterface $runner = null,
     ): ?Concrete
     {
-        $runner = null;
-
         $object = $this->getObject($definition, $data, $params);
 
         if (null !== $object && !$object->getId()) {
@@ -313,7 +331,7 @@ final class Importer implements ImporterInterface
                 $filter->setLogger($this->logger);
             }
 
-            if (!$filter->filter($definition, $data, $object)) {
+            if (!$filter->filter($definition, $data, $object, $params)) {
                 $this->eventDispatcher->dispatch($definition, 'data_definitions.import.status', 'Filtered Object', $params);
 
                 return null;
@@ -332,11 +350,6 @@ final class Importer implements ImporterInterface
             $object,
             $params
         );
-
-        if ($definition->getRunner()) {
-            $runner = $this->runnerRegistry->get($definition->getRunner());
-        }
-
 
         if ($runner instanceof RunnerInterface) {
             if ($runner instanceof DataSetAwareInterface) {

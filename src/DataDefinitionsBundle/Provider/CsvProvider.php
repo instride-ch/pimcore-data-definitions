@@ -82,7 +82,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $offset = $params['offset'] ?? null;
         $limit = $params['limit'] ?? null;
 
-        $file = $this->getFile($params['file']);
+        $file = $this->getFile($params);
 
         $csv = Reader::createFromPath($file, 'r');
         $csv->setDelimiter($delimiter);
@@ -128,7 +128,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
             return;
         }
 
-        $file = $this->getFile($params['file']);
+        $file = $this->getFile($params);
 
         $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
 

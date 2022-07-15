@@ -271,16 +271,25 @@ services:
 
     ### PROVIDER
     Wvision\Bundle\DataDefinitionsBundle\Provider\CsvProvider:
+        arguments:
+            - '@Wvision\Bundle\DataDefinitionsBundle\Service\StorageLocator'
+            - '@Pimcore\Helper\LongRunningHelper'
         tags:
             - { name: data_definitions.import_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\CsvProviderType }
             - { name: data_definitions.export_provider, type: csv, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\CsvProviderType }
 
     Wvision\Bundle\DataDefinitionsBundle\Provider\ExcelProvider:
+        arguments:
+          - '@Wvision\Bundle\DataDefinitionsBundle\Service\StorageLocator'
+          - '@Pimcore\Helper\LongRunningHelper'
         tags:
             - { name: data_definitions.import_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\ExcelProviderType }
             - { name: data_definitions.export_provider, type: excel, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
     Wvision\Bundle\DataDefinitionsBundle\Provider\JsonProvider:
+        arguments:
+          - '@Wvision\Bundle\DataDefinitionsBundle\Service\StorageLocator'
+          - '@Pimcore\Helper\LongRunningHelper'
         tags:
             - { name: data_definitions.import_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\JsonProviderType }
             - { name: data_definitions.export_provider, type: json, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
@@ -296,6 +305,9 @@ services:
             - { name: data_definitions.import_provider, type: sql, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\SqlProviderType }
 
     Wvision\Bundle\DataDefinitionsBundle\Provider\XmlProvider:
+        arguments:
+          - '@Wvision\Bundle\DataDefinitionsBundle\Service\StorageLocator'
+          - '@Pimcore\Helper\LongRunningHelper'
         tags:
             - { name: data_definitions.import_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportProvider\XmlProviderType }
             - { name: data_definitions.export_provider, type: xml, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportProvider\XmlProviderType }
@@ -358,3 +370,7 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Persister\Persister:
         tags:
             - { name: data_definitions.persister, type: persister }
+
+    Wvision\Bundle\DataDefinitionsBundle\Service\StorageLocator:
+      arguments:
+        $locator: !tagged_locator { tag: flysystem.storage }

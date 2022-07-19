@@ -22,11 +22,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class MultiHrefInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $objectClass = $configuration['class'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $objectClass = $context->getConfiguration()['class'];
 
         $class = 'Pimcore\Model\DataObject\\'.ucfirst($objectClass);
 

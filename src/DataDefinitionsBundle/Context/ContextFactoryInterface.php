@@ -29,7 +29,8 @@ interface ContextFactoryInterface
 {
     public function createFetcherContext(
         ExportDefinitionInterface $definition,
-        array $params
+        array $params,
+        array $configuration,
     ): FetcherContextInterface;
 
     public function createLoaderContext(
@@ -37,7 +38,7 @@ interface ContextFactoryInterface
         array $params,
         array $dataRow,
         ImportDataSetInterface $dataSet,
-        string $class
+        string $class,
     ): LoaderContextInterface;
 
     public function createFilterContext(
@@ -45,7 +46,7 @@ interface ContextFactoryInterface
         array $params,
         array $dataRow,
         ImportDataSetInterface $dataSet,
-        Concrete $object
+        Concrete $object,
     ): FilterContextInterface;
 
     public function createGetterContext(
@@ -68,11 +69,12 @@ interface ContextFactoryInterface
     public function createInterpreterContext(
         DataDefinitionInterface $definition,
         array $params,
+        array $configuration,
         array $dataRow,
         ?ImportDataSetInterface $dataSet,
         Concrete $object,
         mixed $value,
-        MappingInterface $mapping
+        MappingInterface $mapping,
     ): InterpreterContextInterface;
 
     public function createRunnerContext(
@@ -80,6 +82,6 @@ interface ContextFactoryInterface
         array $params,
         ?array $dataRow,
         ?ImportDataSetInterface $dataSet,
-        ?Concrete $object
+        ?Concrete $object,
     ): RunnerContextInterface;
 }

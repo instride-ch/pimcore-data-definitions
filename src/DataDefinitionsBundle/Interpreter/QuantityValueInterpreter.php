@@ -21,12 +21,10 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class QuantityValueInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         $value = $context->getValue() !== '' ? $context->getValue() : null;
-        $unit = $configuration['unit'];
+        $unit = $context->getConfiguration()['unit'];
 
         return new QuantityValue($value, $unit);
     }

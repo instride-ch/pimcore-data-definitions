@@ -20,12 +20,10 @@ final class MoneyInterpreter implements InterpreterInterface
         $this->currencyRepository = $currencyRepository;
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $value = $this->getValue($context->getValue(), $configuration);
-        $currency = $this->resolveCurrency($value, $configuration);
+    public function interpret(InterpreterContextInterface $context)
+    {
+        $value = $this->getValue($context->getValue(), $context->getConfiguration());
+        $currency = $this->resolveCurrency($value, $context->getConfiguration());
 
         if (null === $currency) {
             return null;
@@ -36,13 +34,13 @@ final class MoneyInterpreter implements InterpreterInterface
 
     /**
      * @param $value
-     * @param $configuration
+     * @param $context->getConfiguration()
      *
      * @return int
      */
-    private function getValue($value, $configuration)
+    private function getValue($value, $context->getConfiguration())
     {
-        $inputIsFloat = $configuration['isFloat'];
+        $inputIsFloat = $context->getConfiguration()['isFloat'];
 
         $value = preg_replace("/[^0-9,.]+/", "", $value);
 
@@ -60,11 +58,11 @@ final class MoneyInterpreter implements InterpreterInterface
 
     /**
      * @param string $value
-     * @param array $configuration
+     * @param array $context->getConfiguration()
      *
      * @return CurrencyInterface|null
      */
-    private function resolveCurrency($value, $configuration)
+    private function resolveCurrency($value, $context->getConfiguration())
     {
         $currency = null;
 
@@ -74,8 +72,8 @@ final class MoneyInterpreter implements InterpreterInterface
             $currency = $this->currencyRepository->getByCode($currencyCode);
         }
 
-        if ($currency === null && isset($configuration['currency']) && null !== $configuration['currency']) {
-            $currency = $this->currencyRepository->find($configuration['currency']);
+        if ($currency === null && isset($context->getConfiguration()['currency']) && null !== $context->getConfiguration()['currency']) {
+            $currency = $this->currencyRepository->find($context->getConfiguration()['currency']);
         }
 
         return $currency;

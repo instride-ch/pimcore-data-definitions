@@ -23,10 +23,9 @@ interface FetcherInterface
     public function fetch(
         FetcherContextInterface $context,
         int $limit,
-        int $offset,
-        array $configuration
+        int $offset
     );
 
-    public function count(FetcherContextInterface $context, array $configuration): int;
+    public function count(FetcherContextInterface $context): int;
 }
 

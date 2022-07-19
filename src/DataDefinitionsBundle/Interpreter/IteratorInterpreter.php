@@ -29,16 +29,14 @@ final class IteratorInterpreter implements InterpreterInterface
     ) {
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         if (null === $context->getValue()) {
             return [];
         }
         Assert::isArray($context->getValue(), 'IteratorInterpreter can only be used with array values');
 
-        $interpreter = $configuration['interpreter'];
+        $interpreter = $context->getConfiguration()['interpreter'];
         $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
 
         $value = $context->getValue();
@@ -48,6 +46,7 @@ final class IteratorInterpreter implements InterpreterInterface
             $context = $this->contextFactory->createInterpreterContext(
                 $context->getDefinition(),
                 $context->getParams(),
+                $interpreter['interpreterConfig'],
                 $context->getDataRow(),
                 $context->getDataSet(),
                 $context->getObject(),
@@ -55,7 +54,7 @@ final class IteratorInterpreter implements InterpreterInterface
                 $context->getMapping()
             );
 
-            $result[] = $interpreterObject->interpret($context, $interpreter['interpreterConfig']);
+            $result[] = $interpreterObject->interpret($context);
         }
 
         return $result;

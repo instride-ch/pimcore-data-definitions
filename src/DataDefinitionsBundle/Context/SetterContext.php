@@ -21,27 +21,19 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-class SetterContext implements SetterContextInterface
+class SetterContext extends Context implements SetterContextInterface
 {
     public function __construct(
-        protected DataDefinitionInterface $definition,
-        protected array $params,
+        DataDefinitionInterface $definition,
+        array $params,
+        array $configuration,
         protected Concrete $object,
         protected ImportMapping $mapping,
         protected array $dataRow,
         protected ImportDataSetInterface $dataSet,
         protected mixed $value,
     ) {
-    }
-
-    public function getDefinition(): DataDefinitionInterface
-    {
-        return $this->definition;
-    }
-
-    public function getParams(): array
-    {
-        return $this->params;
+        parent::__construct($definition, $params, $configuration);
     }
 
     public function getObject(): Concrete
@@ -49,7 +41,7 @@ class SetterContext implements SetterContextInterface
         return $this->object;
     }
 
-    public function getImportMapping(): ImportMapping
+    public function getMapping(): ImportMapping
     {
         return $this->mapping;
     }

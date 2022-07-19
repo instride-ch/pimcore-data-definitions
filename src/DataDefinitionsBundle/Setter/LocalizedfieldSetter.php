@@ -24,9 +24,9 @@ class LocalizedfieldSetter implements SetterInterface, GetterInterface
 {
     public function set(SetterContextInterface $context): void
     {
-        $config = $context->getImportMapping()->getSetterConfig();
+        $config = $context->getMapping()->getSetterConfig();
 
-        $setter = explode('~', $context->getImportMapping()->getToColumn());
+        $setter = explode('~', $context->getMapping()->getToColumn());
         $setter = sprintf('set%s', ucfirst($setter[0]));
 
         if (method_exists($context->getObject(), $setter)) {

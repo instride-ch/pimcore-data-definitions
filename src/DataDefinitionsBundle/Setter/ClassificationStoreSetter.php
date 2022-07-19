@@ -25,7 +25,7 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
 {
     public function set(SetterContextInterface $context): void
     {
-        $mapConfig = $context->getImportMapping()->getSetterConfig();
+        $mapConfig = $context->getMapping()->getSetterConfig();
         $fieldName = $mapConfig['field'];
         $keyConfig = (int)$mapConfig['keyConfig'];
         $groupConfig = (int)$mapConfig['groupConfig'];

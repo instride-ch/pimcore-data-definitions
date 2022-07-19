@@ -22,7 +22,7 @@ class RelationSetter implements SetterInterface
 {
     public function set(SetterContextInterface $context): void
     {
-        $fieldName = $context->getImportMapping()->getToColumn();
+        $fieldName = $context->getMapping()->getToColumn();
         $getter = sprintf('get%s', ucfirst($fieldName));
         $setter = sprintf('set%s', ucfirst($fieldName));
 

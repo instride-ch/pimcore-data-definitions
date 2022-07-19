@@ -35,17 +35,15 @@ class AssetUrlInterpreter implements InterpreterInterface
         $this->requestFactory = $requestFactory;
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $path = $configuration['path'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $path = $context->getConfiguration()['path'];
 
         if (filter_var($context->getValue(), FILTER_VALIDATE_URL)) {
             $asset = null;
             $filename = $this->getFileName($context->getValue());
 
-            if ($configuration['deduplicate_by_url']) {
+            if ($context->getConfiguration()['deduplicate_by_url']) {
                 if ($asset = $this->getDuplicatedAsset($context->getValue())) {
                     $filename = $asset->getFilename();
                     $assetPath = $asset->getPath();
@@ -73,12 +71,12 @@ class AssetUrlInterpreter implements InterpreterInterface
             } else {
                 $save = false;
 
-                if ($configuration['relocate_existing_objects'] && $asset->getParent() !== $parent) {
+                if ($context->getConfiguration()['relocate_existing_objects'] && $asset->getParent() !== $parent) {
                     $asset->setParent($parent);
                     $save = true;
                 }
 
-                if ($configuration['rename_existing_objects'] && $asset->getFilename() !== $filename) {
+                if ($context->getConfiguration()['rename_existing_objects'] && $asset->getFilename() !== $filename) {
                     $asset->setFilename($filename);
                     $save = true;
                 }

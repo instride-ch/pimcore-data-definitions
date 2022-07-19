@@ -20,24 +20,16 @@ use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 
-class GetterContext implements GetterContextInterface
+class GetterContext extends Context implements GetterContextInterface
 {
     public function __construct(
-        protected DataDefinitionInterface $definition,
-        protected array $params,
+        DataDefinitionInterface $definition,
+        array $params,
+        array $configuration,
         protected Concrete $object,
         protected ExportMapping $mapping
     ) {
-    }
-
-    public function getDefinition(): DataDefinitionInterface
-    {
-        return $this->definition;
-    }
-
-    public function getParams(): array
-    {
-        return $this->params;
+        parent::__construct($definition, $params, $configuration);
     }
 
     public function getObject(): Concrete

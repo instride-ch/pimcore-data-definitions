@@ -19,25 +19,27 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Context;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-class LoaderContext implements LoaderContextInterface
+class LoaderContext extends Context implements LoaderContextInterface
 {
     public function __construct(
-        protected ImportDefinitionInterface $definition,
-        protected array $params,
+        ImportDefinitionInterface $definition,
+        array $params,
+        array $configuration,
         protected array $dataRow,
         protected ImportDataSetInterface $dataSet,
         protected string $class
     ) {
+        parent::__construct($definition, $params, $configuration);
     }
 
     public function getDefinition(): ImportDefinitionInterface
     {
-        return $this->definition;
-    }
+        /**
+         * @var ImportDefinitionInterface $definition
+         */
+        $definition = $this->definition;
 
-    public function getParams(): array
-    {
-        return $this->params;
+        return $definition;
     }
 
     public function getDataRow(): array

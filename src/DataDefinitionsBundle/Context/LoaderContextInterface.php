@@ -19,11 +19,9 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Context;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-interface LoaderContextInterface
+interface LoaderContextInterface extends ContextInterface
 {
     public function getDefinition(): ImportDefinitionInterface;
-
-    public function getParams(): array;
 
     public function getDataRow(): array;
 

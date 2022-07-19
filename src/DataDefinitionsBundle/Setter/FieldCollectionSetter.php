@@ -26,9 +26,9 @@ class FieldCollectionSetter implements SetterInterface, GetterInterface
 {
     public function set(SetterContextInterface $context): void
     {
-        $keyParts = explode('~', $context->getImportMapping()->getToColumn());
+        $keyParts = explode('~', $context->getMapping()->getToColumn());
 
-        $config = $context->getImportMapping()->getSetterConfig();
+        $config = $context->getMapping()->getSetterConfig();
         $keys = $config['keys'];
         $fieldName = $config['field'];
         $class = $config['class'];

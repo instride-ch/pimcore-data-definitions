@@ -24,10 +24,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 class LinkInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         if (($context->getDefinition() instanceof ExportDefinitionInterface) && $context->getValue() instanceof Link) {
             return $context->getValue()->getHref();
         }

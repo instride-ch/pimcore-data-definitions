@@ -33,11 +33,8 @@ class ExpressionInterpreter implements InterpreterInterface
         $this->container = $container;
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $expression = $configuration['expression'];
+    public function interpret(InterpreterContextInterface $context): mixed {
+        $expression = $context->getConfiguration()['expression'];
 
         try {
             return $this->expressionLanguage->evaluate($expression, [
@@ -48,7 +45,7 @@ class ExpressionInterpreter implements InterpreterInterface
                 'data_set' => $context->getDataSet(),
                 'definition' => $context->getDefinition(),
                 'params' => $context->getParams(),
-                'configuration' => $configuration,
+                'configuration' => $context->getConfiguration(),
                 'container' => $this->container,
             ]);
         } catch (Throwable $exception) {

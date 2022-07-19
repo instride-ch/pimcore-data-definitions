@@ -14,14 +14,17 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
+namespace Wvision\Bundle\DataDefinitionsBundle\Context;
 
-use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
-class DefaultValueInterpreter implements InterpreterInterface
+interface ContextInterface
 {
-    public function interpret(InterpreterContextInterface $context): mixed
-    {
-        return $context->getConfiguration()['value'];
-    }
+    public function getDefinition(): DataDefinitionInterface;
+
+    public function getParams(): array;
+
+    public function getConfiguration(): array;
+
+    public function withConfiguration(array $configuration): self;
 }

@@ -36,7 +36,7 @@ class StorePriceSetter implements SetterInterface, GetterInterface
 
     public function set(SetterContextInterface $context)
     {
-        $config = $context->getImportMapping()->getSetterConfig();
+        $config = $context->getMapping()->getSetterConfig();
 
         if (!array_key_exists('stores', $config) || !is_array($config['stores'])) {
             return;
@@ -49,7 +49,7 @@ class StorePriceSetter implements SetterInterface, GetterInterface
                 throw new InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
             }
 
-            $setter = sprintf('set%s', ucfirst($context->getImportMapping()->getToColumn()));
+            $setter = sprintf('set%s', ucfirst($context->getMapping()->getToColumn()));
 
             if (!method_exists($context->getObject(), $setter)) {
                 throw new InvalidArgumentException(sprintf('Expected a %s function but can not find it', $setter));

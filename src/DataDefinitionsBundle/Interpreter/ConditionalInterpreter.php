@@ -37,10 +37,8 @@ class ConditionalInterpreter implements InterpreterInterface
         $this->container = $container;
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         $params = [
             'value' => $context->getValue(),
             'object' => $context->getObject(),
@@ -49,16 +47,16 @@ class ConditionalInterpreter implements InterpreterInterface
             'data_set' => $context->getDataSet(),
             'definition' => $context->getDefinition(),
             'params' => $context->getParams(),
-            'configuration' => $configuration,
+            'configuration' => $context->getConfiguration(),
             'container' => $this->container,
         ];
 
-        $condition = $configuration['condition'];
+        $condition = $context->getConfiguration()['condition'];
 
         if ($this->expressionLanguage->evaluate($condition, $params)) {
-            $interpreter = $configuration['true_interpreter'];
+            $interpreter = $context->getConfiguration()['true_interpreter'];
         } else {
-            $interpreter = $configuration['false_interpreter'];
+            $interpreter = $context->getConfiguration()['false_interpreter'];
         }
 
         $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);

@@ -20,13 +20,11 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class AssetsUrlInterpreter extends AssetUrlInterpreter
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         $assets = [];
         foreach ((array)$context->getValue() as $item) {
-            $asset = parent::interpret($context, $configuration);
+            $asset = parent::interpret($context);
 
             if ($asset) {
                 $assets[] = $asset;

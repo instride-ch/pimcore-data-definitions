@@ -25,11 +25,9 @@ class TypeCastingInterpreter implements InterpreterInterface
     protected const TYPE_STRING = 'string';
     protected const TYPE_BOOLEAN = 'boolean';
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $type = $configuration['toType'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $type = $context->getConfiguration()['toType'];
 
         switch ($type) {
             case static::TYPE_INT:

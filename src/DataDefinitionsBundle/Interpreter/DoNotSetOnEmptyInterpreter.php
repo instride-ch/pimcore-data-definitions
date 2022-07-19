@@ -21,10 +21,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
 
 class DoNotSetOnEmptyInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         if ($context->getValue() === "" || $context->getValue() === null) {
             throw new DoNotSetException();
         }

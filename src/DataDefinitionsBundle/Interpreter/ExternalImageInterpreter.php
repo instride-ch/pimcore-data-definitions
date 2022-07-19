@@ -23,10 +23,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 class ExternalImageInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         if (($context->getDefinition() instanceof ExportDefinitionInterface) && $context->getValue(
             ) instanceof ExternalImage) {
             return $context->getValue()->getUrl();

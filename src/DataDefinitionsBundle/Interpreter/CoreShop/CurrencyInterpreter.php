@@ -27,10 +27,8 @@ final class CurrencyInterpreter implements InterpreterInterface
         $this->currencyRepository = $currencyRepository;
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         return $this->currencyRepository->getByCode($context->getValue());
     }
 }

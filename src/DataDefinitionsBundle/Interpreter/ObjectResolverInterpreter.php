@@ -21,22 +21,20 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class ObjectResolverInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         if (!$context->getValue()) {
             return null;
         }
 
-        $class = 'Pimcore\Model\DataObject\\'.ucfirst($configuration['class']);
-        $lookup = 'getBy'.ucfirst($configuration['field']);
+        $class = 'Pimcore\Model\DataObject\\'.ucfirst($context->getConfiguration()['class']);
+        $lookup = 'getBy'.ucfirst($context->getConfiguration()['field']);
 
         /**
          * @var Listing $listing
          */
         $listing = $class::$lookup($context->getValue());
-        $listing->setUnpublished($configuration['match_unpublished']);
+        $listing->setUnpublished($context->getConfiguration()['match_unpublished']);
 
         if ($listing->count() === 1) {
             return $listing->current();

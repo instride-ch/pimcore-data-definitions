@@ -21,11 +21,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class AssetByPathInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $assetFullPath = $configuration['path'].'/'.$context->getValue();
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $assetFullPath = $context->getConfiguration()['path'].'/'.$context->getValue();
 
         return Asset::getByPath($assetFullPath);
     }

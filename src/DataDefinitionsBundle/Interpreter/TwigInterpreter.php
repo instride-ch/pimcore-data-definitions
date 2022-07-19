@@ -28,11 +28,9 @@ class TwigInterpreter implements InterpreterInterface
         $this->twig = $twig;
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        return $this->twig->createTemplate($configuration['template'])->render([
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        return $this->twig->createTemplate($context->getConfiguration()['template'])->render([
             'value' => $context->getValue(),
             'object' => $context->getObject(),
             'map' => $context->getMapping(),
@@ -40,7 +38,7 @@ class TwigInterpreter implements InterpreterInterface
             'data_set' => $context->getDataSet(),
             'definition' => $context->getDefinition(),
             'params' => $context->getParams(),
-            'configuration' => $configuration,
+            'configuration' => $context->getConfiguration(),
         ]);
     }
 }

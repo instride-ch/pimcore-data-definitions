@@ -21,13 +21,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-interface SetterContextInterface
+interface SetterContextInterface extends ContextInterface
 {
-    public function getDefinition(): DataDefinitionInterface;
-
-    public function getParams(): array;
-
-    public function getImportMapping(): ImportMapping;
+    public function getMapping(): ImportMapping;
 
     public function getObject(): Concrete;
 

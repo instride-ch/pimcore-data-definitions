@@ -29,9 +29,10 @@ class ContextFactory implements ContextFactoryInterface
 {
     public function createFetcherContext(
         ExportDefinitionInterface $definition,
-        array $params
+        array $params,
+        array $configuration,
     ): FetcherContextInterface {
-        return new FetcherContext($definition, $params);
+        return new FetcherContext($definition, $params, $configuration);
     }
 
     public function createLoaderContext(
@@ -39,9 +40,9 @@ class ContextFactory implements ContextFactoryInterface
         array $params,
         array $dataRow,
         ImportDataSetInterface $dataSet,
-        string $class
+        string $class,
     ): LoaderContextInterface {
-        return new LoaderContext($definition, $params, $dataRow, $dataSet, $class);
+        return new LoaderContext($definition, $params, [], $dataRow, $dataSet, $class);
     }
 
     public function createFilterContext(
@@ -49,9 +50,9 @@ class ContextFactory implements ContextFactoryInterface
         array $params,
         array $dataRow,
         ImportDataSetInterface $dataSet,
-        Concrete $object
+        Concrete $object,
     ): FilterContextInterface {
-        return new FilterContext($definition, $params, $dataRow, $dataSet, $object);
+        return new FilterContext($definition, $params, [], $dataRow, $dataSet, $object);
     }
 
     public function createGetterContext(
@@ -60,7 +61,7 @@ class ContextFactory implements ContextFactoryInterface
         Concrete $object,
         ExportMapping $mapping,
     ): GetterContextInterface {
-        return new GetterContext($definition, $params, $object, $mapping);
+        return new GetterContext($definition, $params, [], $object, $mapping);
     }
 
     public function createSetterContext(
@@ -72,19 +73,20 @@ class ContextFactory implements ContextFactoryInterface
         ImportDataSetInterface $dataSet,
         mixed $value,
     ): SetterContextInterface {
-        return new SetterContext($definition, $params, $object, $mapping, $dataRow, $dataSet, $value);
+        return new SetterContext($definition, $params, [], $object, $mapping, $dataRow, $dataSet, $value);
     }
 
     public function createInterpreterContext(
         DataDefinitionInterface $definition,
         array $params,
+        array $configuration,
         array $dataRow,
         ?ImportDataSetInterface $dataSet,
         Concrete $object,
         mixed $value,
-        MappingInterface $mapping
+        MappingInterface $mapping,
     ): InterpreterContextInterface {
-        return new InterpreterContext($definition, $params, $dataRow, $dataSet, $object, $value, $mapping);
+        return new InterpreterContext($definition, $params, $configuration, $dataRow, $dataSet, $object, $value, $mapping);
     }
 
     public function createRunnerContext(
@@ -92,8 +94,8 @@ class ContextFactory implements ContextFactoryInterface
         array $params,
         ?array $dataRow,
         ?ImportDataSetInterface $dataSet,
-        ?Concrete $object
+        ?Concrete $object,
     ): RunnerContextInterface {
-        return new RunnerContext($definition, $params, $dataRow, $dataSet, $object);
+        return new RunnerContext($definition, $params, [], $dataRow, $dataSet, $object);
     }
 }

@@ -20,25 +20,17 @@ use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-class RunnerContext implements RunnerContextInterface
+class RunnerContext extends Context implements RunnerContextInterface
 {
     public function __construct(
-        protected DataDefinitionInterface $definition,
-        protected array $params,
+        DataDefinitionInterface $definition,
+        array $params,
+        array $configuration,
         protected ?array $dataRow,
         protected ?ImportDataSetInterface $dataSet,
         protected ?Concrete $object
     ) {
-    }
-
-    public function getDefinition(): DataDefinitionInterface
-    {
-        return $this->definition;
-    }
-
-    public function getParams(): array
-    {
-        return $this->params;
+        parent::__construct($definition, $params, $configuration);
     }
 
     public function getDataRow(): ?array

@@ -33,11 +33,8 @@ class DefinitionInterpreter implements InterpreterInterface
         $this->importer = $importer;
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $subDefinition = $this->definitionRepository->find($configuration['definition']);
+    public function interpret(InterpreterContextInterface $context): mixed {
+        $subDefinition = $this->definitionRepository->find($context->getConfiguration()['definition']);
 
         if (!$subDefinition instanceof ImportDefinitionInterface) {
             return null;

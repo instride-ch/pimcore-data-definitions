@@ -18,21 +18,23 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Context;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
-class FetcherContext implements FetcherContextInterface
+class FetcherContext extends Context implements FetcherContextInterface
 {
     public function __construct(
-        protected ExportDefinitionInterface $definition,
-        protected array $params
+        ExportDefinitionInterface $definition,
+        array $params,
+        array $configuration,
     ) {
+        parent::__construct($definition, $params, $configuration);
     }
 
     public function getDefinition(): ExportDefinitionInterface
     {
-        return $this->definition;
-    }
+        /**
+         * @var ExportDefinitionInterface $definition
+         */
+        $definition = $this->definition;
 
-    public function getParams(): array
-    {
-        return $this->params;
+        return $definition;
     }
 }

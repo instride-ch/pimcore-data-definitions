@@ -473,16 +473,14 @@ final class Importer implements ImporterInterface
                     $context = $this->contextFactory->createInterpreterContext(
                         $definition,
                         $params,
+                        $map->getInterpreterConfig() ?? [],
                         $data,
                         $dataSet,
                         $object,
                         $value,
                         $map
                     );
-                    $value = $interpreter->interpret(
-                        $context,
-                        $map->getInterpreterConfig() ?? []
-                    );
+                    $value = $interpreter->interpret($context);
                 } catch (UnexpectedValueException $ex) {
                     $this->logger->info(
                         sprintf(

@@ -20,10 +20,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class CheckboxInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): ?bool
+    {
         if (is_string($context->getValue())) {
             if ($context->getValue() === "") {
                 return null;

@@ -29,20 +29,19 @@ final class NestedInterpreter implements InterpreterInterface
     ) {
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        Assert::keyExists($configuration, 'interpreters');
-        Assert::isArray($configuration['interpreters'], 'Interpreter Config needs to be array');
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        Assert::keyExists($context->getConfiguration(), 'interpreters');
+        Assert::isArray($context->getConfiguration()['interpreters'], 'Interpreter Config needs to be array');
 
         $value = $context->getValue();
 
-        foreach ($configuration['interpreters'] as $interpreter) {
+        foreach ($context->getConfiguration()['interpreters'] as $interpreter) {
             $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
             $newContext = $this->contextFactory->createInterpreterContext(
                 $context->getDefinition(),
                 $context->getParams(),
+                $interpreter['interpreterConfig'],
                 $context->getDataRow(),
                 $context->getDataSet(),
                 $context->getObject(),
@@ -50,7 +49,7 @@ final class NestedInterpreter implements InterpreterInterface
                 $context->getMapping()
             );
 
-            $value = $interpreterObject->interpret($newContext, $interpreter['interpreterConfig']);
+            $value = $interpreterObject->interpret($newContext);
         }
 
         return $value;

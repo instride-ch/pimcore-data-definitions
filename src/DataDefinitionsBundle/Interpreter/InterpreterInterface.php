@@ -20,8 +20,5 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 interface InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    );
+    public function interpret(InterpreterContextInterface $context): mixed;
 }

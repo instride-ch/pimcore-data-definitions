@@ -21,11 +21,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class SpecificObjectInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $objectId = $configuration['objectId'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $objectId = $context->getConfiguration()['objectId'];
 
         return DataObject::getById($objectId);
     }

@@ -26,9 +26,9 @@ class ObjectbrickSetter implements SetterInterface, GetterInterface
 {
     public function set(SetterContextInterface $context)
     {
-        $keyParts = explode('~', $context->getImportMapping()->getToColumn());
+        $keyParts = explode('~', $context->getMapping()->getToColumn());
 
-        $config = $context->getImportMapping()->getSetterConfig();
+        $config = $context->getMapping()->getSetterConfig();
         $fieldName = $config['brickField'];
         $class = $config['class'];
         $brickField = $keyParts[3];

@@ -23,12 +23,10 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class HrefInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $type = $configuration['type'] ?: 'object';
-        $objectClass = $configuration['class'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $type = $context->getConfiguration()['type'] ?: 'object';
+        $objectClass = $context->getConfiguration()['class'];
 
         if (!$context->getValue()) {
             return null;

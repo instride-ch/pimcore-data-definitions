@@ -20,11 +20,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class MappingInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $interpreterMap = $configuration['mapping'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $interpreterMap = $context->getConfiguration()['mapping'];
         $resolvedMap = [];
 
         if (!is_array($interpreterMap)) {
@@ -39,7 +37,7 @@ class MappingInterpreter implements InterpreterInterface
             return $resolvedMap[$context->getValue()];
         }
 
-        if ($configuration['return_null_when_not_found']) {
+        if ($context->getConfiguration()['return_null_when_not_found']) {
             return null;
         }
 

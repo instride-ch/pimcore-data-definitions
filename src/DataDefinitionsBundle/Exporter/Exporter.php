@@ -58,14 +58,11 @@ final class Exporter implements ExporterInterface
 
     public function doExport(ExportDefinitionInterface $definition, array $params)
     {
-        $fetcherContext = $this->contextFactory->createFetcherContext($definition, $params);
+        $fetcherContext = $this->contextFactory->createFetcherContext($definition, $params, is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []);
 
         $fetcher = $this->getFetcher($definition);
         $provider = $this->getProvider($definition);
-        $total = $fetcher->count(
-            $fetcherContext,
-            is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []
-        );
+        $total = $fetcher->count($fetcherContext);
 
         $this->eventDispatcher->dispatch(
             new ExportDefinitionEvent($definition, $total, $params),
@@ -130,8 +127,7 @@ final class Exporter implements ExporterInterface
                     $objects = $fetcher->fetch(
                         $fetcherContext,
                         $perLoop,
-                        $i * $perLoop,
-                        is_array($definition->getFetcherConfig()) ? $definition->getFetcherConfig() : []
+                        $i * $perLoop
                     );
 
                     foreach ($objects as $object) {
@@ -196,7 +192,7 @@ final class Exporter implements ExporterInterface
         $data = [];
 
         $runner = null;
-        $runnerContext = $this->contextFactory->createRunnerContext($definition, $params, null, null, $object);
+        $runnerContext = $this->contextFactory->createRunnerContext($definition, $params, null, $object);
 
         $this->eventDispatcher->dispatch(
             new ExportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId()), $params),
@@ -287,16 +283,14 @@ final class Exporter implements ExporterInterface
                     $context = $this->contextFactory->createInterpreterContext(
                         $definition,
                         $params,
+                        $map->getInterpreterConfig(),
                         $data,
                         null,
                         $object,
                         $value,
                         $map
                     );
-                    $value = $interpreter->interpret(
-                        $context,
-                        $map->getInterpreterConfig()
-                    );
+                    $value = $interpreter->interpret($context);
                 } catch (UnexpectedValueException $ex) {
                     $this->logger->info(
                         sprintf(

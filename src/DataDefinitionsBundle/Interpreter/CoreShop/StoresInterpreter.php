@@ -19,11 +19,9 @@ use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
 
 final class StoresInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        return $configuration['stores'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        return $context->getConfiguration()['stores'];
     }
 }
 

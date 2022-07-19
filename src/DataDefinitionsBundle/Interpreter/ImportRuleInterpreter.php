@@ -36,11 +36,9 @@ class ImportRuleInterpreter implements InterpreterInterface
         $this->ruleProcessor = $ruleProcessor;
     }
 
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $rules = $configuration['rules'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $rules = $context->getConfiguration()['rules'];
         $ruleObjects = [];
 
         foreach ($rules as $rule) {

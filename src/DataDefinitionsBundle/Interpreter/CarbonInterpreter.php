@@ -21,12 +21,10 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class CarbonInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): bool|null|\Carbon\Carbon
+    {
         if ($context->getValue()) {
-            $format = $configuration['date_format'];
+            $format = $context->getConfiguration()['date_format'];
             if (!empty($format)) {
                 return Carbon::createFromFormat($format, $context->getValue());
             }

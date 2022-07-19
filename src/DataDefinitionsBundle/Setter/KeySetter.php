@@ -23,7 +23,7 @@ class KeySetter implements SetterInterface
 {
     public function set(SetterContextInterface $context): void
     {
-        $setter = explode('~', $context->getImportMapping()->getToColumn());
+        $setter = explode('~', $context->getMapping()->getToColumn());
         $setter = preg_replace('/^o_/', '', $setter[0]);
         $setter = sprintf('set%s', ucfirst($setter));
 

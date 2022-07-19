@@ -20,12 +20,8 @@ use Pimcore\Model\DataObject\Concrete;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-interface RunnerContextInterface
+interface RunnerContextInterface extends ContextInterface
 {
-    public function getDefinition(): DataDefinitionInterface;
-
-    public function getParams(): array;
-
     public function getDataRow(): ?array;
 
     public function getDataSet(): ?ImportDataSetInterface;

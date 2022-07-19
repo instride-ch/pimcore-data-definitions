@@ -20,11 +20,9 @@ use function is_string;
 
 final class PriceInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        InterpreterContextInterface $context,
-        array $configuration
-    ) {
-        $inputIsFloat = $configuration['isFloat'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $inputIsFloat = $context->getConfiguration()['isFloat'];
         $value = $context->getValue();
 
         if (is_string($value)) {

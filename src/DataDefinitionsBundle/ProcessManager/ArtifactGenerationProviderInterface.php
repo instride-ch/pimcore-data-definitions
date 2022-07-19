@@ -24,8 +24,8 @@ interface ArtifactGenerationProviderInterface
     /**
      * @param array $configuration
      * @param ExportDefinitionInterface $definition
-     * @param                           $params
+     * @param array $params
      * @return Asset
      */
-    public function generateArtifact(array $configuration, ExportDefinitionInterface $definition, $params): ?Asset;
+    public function generateArtifact(array $configuration, ExportDefinitionInterface $definition, array $params): ?Asset;
 }

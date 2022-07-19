@@ -24,7 +24,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class ObjectsFetcher implements FetcherInterface
 {
-    public function fetch(FetcherContextInterface $context, int $limit, int $offset, array $configuration)
+    public function fetch(FetcherContextInterface $context, int $limit, int $offset)
     {
         $list = $this->getClassListing($context->getDefinition(), $context->getParams());
         $list->setLimit($limit);
@@ -33,7 +33,7 @@ class ObjectsFetcher implements FetcherInterface
         return $list->load();
     }
 
-    public function count(FetcherContextInterface $context, array $configuration): int
+    public function count(FetcherContextInterface $context): int
     {
         return $this->getClassListing($context->getDefinition(), $context->getParams())->getTotalCount();
     }

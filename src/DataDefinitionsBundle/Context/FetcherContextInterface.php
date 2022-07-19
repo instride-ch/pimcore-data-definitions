@@ -18,9 +18,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Context;
 
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
-interface FetcherContextInterface
+interface FetcherContextInterface extends ContextInterface
 {
     public function getDefinition(): ExportDefinitionInterface;
-
-    public function getParams(): array;
 }

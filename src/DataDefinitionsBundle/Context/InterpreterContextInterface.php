@@ -14,13 +14,21 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Context;
 
+use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
-interface DataSetAwareInterface
+interface InterpreterContextInterface extends ContextInterface
 {
+    public function getDataRow(): array;
+
     public function getDataSet(): ?ImportDataSetInterface;
 
-    public function setDataSet(?ImportDataSetInterface $dataSet): void;
+    public function getObject(): Concrete;
+
+    public function getValue(): mixed;
+
+    public function getMapping(): MappingInterface;
 }

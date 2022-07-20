@@ -87,12 +87,12 @@ pimcore.plugin.datadefinitions.interpreters.asset_url = Class.create(pimcore.plu
                         var isDeduplicateByUrlDisabled = (enabled === false);
 
                         relocateExistingCheckbox
-                        .setValue(false)
-                        .setDisabled(isDeduplicateByUrlDisabled);
+                            .setValue(false)
+                            .setDisabled(isDeduplicateByUrlDisabled);
 
                         renameExistingCheckbox
-                        .setValue(false)
-                        .setDisabled(isDeduplicateByUrlDisabled);
+                            .setValue(false)
+                            .setDisabled(isDeduplicateByUrlDisabled);
                     }
                 }
             },

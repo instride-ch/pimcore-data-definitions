@@ -89,7 +89,7 @@ final class InterpreterType extends AbstractType
 
     /**
      * @param FormInterface $form
-     * @param string        $configurationType
+     * @param string $configurationType
      */
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
@@ -98,7 +98,7 @@ final class InterpreterType extends AbstractType
 
     /**
      * @param FormInterface $form
-     * @param mixed         $data
+     * @param mixed $data
      *
      * @return string|null
      */

@@ -55,8 +55,12 @@ abstract class AbstractSqlProvider implements ImportProviderInterface
         return $returnColumns;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
-    {
+    public function getData(
+        array $configuration,
+        ImportDefinitionInterface $definition,
+        array $params,
+        FilterInterface $filter = null
+    ): ImportDataSetInterface {
         $db = $this->getDb($configuration);
 
         return new ArrayImportDataSet($db->fetchAllAssociative($configuration['query']));

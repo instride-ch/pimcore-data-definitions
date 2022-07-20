@@ -32,29 +32,31 @@ final class StoresInterpreterType extends AbstractType
             ->add('stores', StoreChoiceType::class, [
                 'multiple' => true,
             ])
-            ->addModelTransformer(new CallbackTransformer(
-                function ($value) {
-                    return $value;
-                },
-                function ($value) {
-                    $resolvedValues = [];
+            ->addModelTransformer(
+                new CallbackTransformer(
+                    function ($value) {
+                        return $value;
+                    },
+                    function ($value) {
+                        $resolvedValues = [];
 
-                    if (!is_array($value) ||
-                        !array_key_exists('stores', $value) ||
-                        !$value['stores'] instanceof ArrayCollection) {
-                        return [];
-                    }
-
-                    foreach ($value['stores'] as $val) {
-                        if ($val instanceof StoreInterface) {
-                            $resolvedValues[] = $val->getId();
+                        if (!is_array($value) ||
+                            !array_key_exists('stores', $value) ||
+                            !$value['stores'] instanceof ArrayCollection) {
+                            return [];
                         }
+
+                        foreach ($value['stores'] as $val) {
+                            if ($val instanceof StoreInterface) {
+                                $resolvedValues[] = $val->getId();
+                            }
+                        }
+
+                        $value['stores'] = $resolvedValues;
+
+                        return $value;
                     }
-
-                    $value['stores'] = $resolvedValues;
-
-                    return $value;
-                }
-            ));
+                )
+            );
     }
 }

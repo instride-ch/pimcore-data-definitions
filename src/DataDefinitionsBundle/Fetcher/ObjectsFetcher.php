@@ -19,22 +19,23 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Fetcher;
 use InvalidArgumentException;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\FetcherContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class ObjectsFetcher implements FetcherInterface
 {
-    public function fetch(ExportDefinitionInterface $definition, array $params, int $limit, int $offset, array $configuration)
+    public function fetch(FetcherContextInterface $context, int $limit, int $offset)
     {
-        $list = $this->getClassListing($definition, $params);
+        $list = $this->getClassListing($context->getDefinition(), $context->getParams());
         $list->setLimit($limit);
         $list->setOffset($offset);
 
         return $list->load();
     }
 
-    public function count(ExportDefinitionInterface $definition, array $params, array $configuration): int
+    public function count(FetcherContextInterface $context): int
     {
-        return $this->getClassListing($definition, $params)->getTotalCount();
+        return $this->getClassListing($context->getDefinition(), $context->getParams())->getTotalCount();
     }
 
     private function getClassListing(ExportDefinitionInterface $definition, array $params)
@@ -56,24 +57,26 @@ class ObjectsFetcher implements FetcherInterface
 
             if (null !== $rootNode) {
                 $quotedPath = $list->quote($rootNode->getRealFullPath());
-                $quotedWildcardPath = $list->quote(str_replace('//', '/', $rootNode->getRealFullPath() . '/') . '%');
-                $conditionFilters[] = '(o_path = ' . $quotedPath . ' OR o_path LIKE ' . $quotedWildcardPath . ')';
+                $quotedWildcardPath = $list->quote(str_replace('//', '/', $rootNode->getRealFullPath().'/').'%');
+                $conditionFilters[] = '(o_path = '.$quotedPath.' OR o_path LIKE '.$quotedWildcardPath.')';
             }
         }
 
         if (isset($params['query'])) {
             $query = $this->filterQueryParam($params['query']);
             if (!empty($query)) {
-                $conditionFilters[] = 'oo_id IN (SELECT id FROM search_backend_data WHERE MATCH (`data`,`properties`) AGAINST (' . $list->quote($query) . ' IN BOOLEAN MODE))';
+                $conditionFilters[] = 'oo_id IN (SELECT id FROM search_backend_data WHERE MATCH (`data`,`properties`) AGAINST ('.$list->quote(
+                        $query
+                    ).' IN BOOLEAN MODE))';
             }
         }
 
         if (isset($params['only_direct_children']) && $params['only_direct_children'] == 'true' && null !== $rootNode) {
-            $conditionFilters[] = 'o_parentId = ' . $rootNode->getId();
+            $conditionFilters[] = 'o_parentId = '.$rootNode->getId();
         }
 
         if (isset($params['condition'])) {
-            $conditionFilters[] = '(' . $params['condition'] . ')';
+            $conditionFilters[] = '('.$params['condition'].')';
         }
         if (isset($params['ids'])) {
             $quotedIds = [];
@@ -81,7 +84,7 @@ class ObjectsFetcher implements FetcherInterface
                 $quotedIds[] = $list->quote($id);
             }
             if (!empty($quotedIds)) {
-                $conditionFilters[] = 'oo_id IN (' . implode(',', $quotedIds) . ')';
+                $conditionFilters[] = 'oo_id IN ('.implode(',', $quotedIds).')';
             }
         }
 

@@ -28,22 +28,21 @@ final class ExportDefinitionObjectStartupForm extends AbstractStartupFormType
     {
         $builder
             ->add('root', TextType::class, [
-                'required' => false
+                'required' => false,
             ])
             ->add('query', TextType::class, [
-                'required' => false
+                'required' => false,
             ])
             ->add('only_direct_children', CheckboxType::class, [
-                'required' => false
+                'required' => false,
             ])
             ->add('condition', TextType::class, [
-                'required' => false
+                'required' => false,
             ])
             ->add('ids', CollectionType::class, [
                 'allow_add' => true,
                 'entry_type' => TextType::class,
-                'required' => false
-            ])
-        ;
+                'required' => false,
+            ]);
     }
 }

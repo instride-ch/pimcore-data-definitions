@@ -25,7 +25,6 @@ final class CarbonInterpreterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date_format', TextType::class)
-        ;
+            ->add('date_format', TextType::class);
     }
 }

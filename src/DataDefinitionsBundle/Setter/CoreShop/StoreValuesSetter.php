@@ -19,10 +19,9 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop;
 use CoreShop\Component\Core\Model\StoreInterface;
 use CoreShop\Component\Store\Repository\StoreRepositoryInterface;
 use InvalidArgumentException;
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\GetterContextInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 use function is_array;
 
@@ -35,9 +34,9 @@ class StoreValuesSetter implements SetterInterface, GetterInterface
         $this->storeRepository = $storeRepository;
     }
 
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(SetterContextInterface $context)
     {
-        $config = $map->getSetterConfig();
+        $config = $context->getMapping()->getSetterConfig();
 
         if (!array_key_exists('stores', $config) || !is_array($config['stores'])) {
             return;
@@ -50,19 +49,19 @@ class StoreValuesSetter implements SetterInterface, GetterInterface
                 throw new InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
             }
 
-            $setter = sprintf('set%sOfType', ucfirst($map->getToColumn()));
+            $setter = sprintf('set%sOfType', ucfirst($context->getMapping()->getToColumn()));
 
-            if (!method_exists($object, $setter)) {
+            if (!method_exists($context->getObject(), $setter)) {
                 throw new InvalidArgumentException(sprintf('Expected a %s function but can not find it', $setter));
             }
 
-            $object->$setter($config['type'], $value, $store);
+            $context->getObject()->$setter($config['type'], $context->getValue(), $store);
         }
     }
 
-    public function get(Concrete $object, ExportMapping $map, $data)
+    public function get(GetterContextInterface $context)
     {
-        $config = $map->getGetterConfig();
+        $config = $context->getMapping()->getGetterConfig();
 
         if (!array_key_exists('stores', $config) || !is_array($config['stores'])) {
             return [];
@@ -77,13 +76,13 @@ class StoreValuesSetter implements SetterInterface, GetterInterface
                 throw new InvalidArgumentException(sprintf('Store with ID %s not found', $config['store']));
             }
 
-            $getter = sprintf('get%sOfType', ucfirst($map->getFromColumn()));
+            $getter = sprintf('get%sOfType', ucfirst($context->getMapping()->getFromColumn()));
 
-            if (!method_exists($object, $getter)) {
+            if (!method_exists($context->getObject(), $getter)) {
                 throw new InvalidArgumentException(sprintf('Expected a %s function but can not find it', $getter));
             }
 
-            $values[$store->getId()] = $object->$getter($config['type'], $store);
+            $values[$store->getId()] = $context->getObject()->$getter($config['type'], $store);
         }
 
         return $values;

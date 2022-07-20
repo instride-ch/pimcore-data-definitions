@@ -18,53 +18,39 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Pimcore\File;
-use Pimcore\Http\Exception\ResponseException;
 use Pimcore\Model\Asset;
-use Pimcore\Model\DataObject\Concrete;
-use Pimcore\Tool as PimcoreTool;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
+class AssetUrlInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
     protected const METADATA_ORIGIN_URL = 'origin_url';
     protected \Psr\Http\Client\ClientInterface $httpClient;
     protected \Psr\Http\Message\RequestFactoryInterface $requestFactory;
 
-    public function __construct(\Psr\Http\Client\ClientInterface $httpClient, \Psr\Http\Message\RequestFactoryInterface $requestFactory)
-    {
+    public function __construct(
+        \Psr\Http\Client\ClientInterface $httpClient,
+        \Psr\Http\Message\RequestFactoryInterface $requestFactory
+    ) {
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
     }
 
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        $path = $configuration['path'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $path = $context->getConfiguration()['path'];
 
-        if (filter_var($value, FILTER_VALIDATE_URL)) {
+        if (filter_var($context->getValue(), FILTER_VALIDATE_URL)) {
             $asset = null;
-            $filename = $this->getFileName($value);
+            $filename = $this->getFileName($context->getValue());
 
-            if ($configuration['deduplicate_by_url']) {
-                if ($asset = $this->getDuplicatedAsset($value)) {
+            if ($context->getConfiguration()['deduplicate_by_url']) {
+                if ($asset = $this->getDuplicatedAsset($context->getValue())) {
                     $filename = $asset->getFilename();
                     $assetPath = $asset->getPath();
                 } else {
                     $assetPath = $path;
                 }
-            }
-            else {
+            } else {
                 $assetPath = $path;
             }
 
@@ -72,25 +58,25 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
 
             if (!$asset instanceof Asset) {
                 // Download
-                $fileData = $this->getFileContents($value);
+                $fileData = $this->getFileContents($context->getValue());
 
                 if ($fileData) {
                     $asset = Asset::create($parent->getId(), [
                         'filename' => $filename,
-                        'data' => $fileData
+                        'data' => $fileData,
                     ], false);
-                    $asset->addMetadata(self::METADATA_ORIGIN_URL, 'input', $value);
+                    $asset->addMetadata(self::METADATA_ORIGIN_URL, 'input', $context->getValue());
                     $asset->save();
                 }
             } else {
                 $save = false;
 
-                if ($configuration['relocate_existing_objects'] && $asset->getParent() !== $parent) {
+                if ($context->getConfiguration()['relocate_existing_objects'] && $asset->getParent() !== $parent) {
                     $asset->setParent($parent);
                     $save = true;
                 }
 
-                if ($configuration['rename_existing_objects'] && $asset->getFilename() !== $filename) {
+                if ($context->getConfiguration()['rename_existing_objects'] && $asset->getFilename() !== $filename) {
                     $asset->setFilename($filename);
                     $save = true;
                 }
@@ -106,7 +92,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         return null;
     }
 
-    private function getFileName(string $url) : ?string
+    private function getFileName(string $url): ?string
     {
         $filename = null;
         try {
@@ -122,7 +108,7 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
                     $match
                 )
             ) {
-                $filename =  trim($match['f'], ' ";');
+                $filename = trim($match['f'], ' ";');
             }
         } catch (\Psr\Http\Client\ClientExceptionInterface $exception) {
         }
@@ -144,18 +130,18 @@ class AssetUrlInterpreter implements InterpreterInterface, DataSetAwareInterface
         }
 
         if ($response->getStatusCode() === 200) {
-            return (string) $response->getBody();
+            return (string)$response->getBody();
         }
 
         return null;
     }
 
-    private function getDuplicatedAsset(string $value) : ?Asset
+    private function getDuplicatedAsset(string $value): ?Asset
     {
         $listing = new Asset\Listing();
         $listing->onCreateQueryBuilder(
             function (QueryBuilder $select) {
-                $select->join('assets','assets_metadata', 'am', 'id = am.cid');
+                $select->join('assets', 'assets_metadata', 'am', 'id = am.cid');
             }
         );
         $listing->addConditionParam('am.name = ?', static::METADATA_ORIGIN_URL);

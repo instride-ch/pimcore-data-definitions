@@ -39,7 +39,8 @@ final class ListExportDefinitionsCommand extends AbstractCommand
         $this
             ->setName('data-definitions:list:exports')
             ->setDescription('List all Export Definitions.')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>%command.name%</info> lists all Data Definitions for Exports.
 EOT
             );

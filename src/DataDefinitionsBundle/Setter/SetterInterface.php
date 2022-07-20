@@ -16,10 +16,9 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
 
 interface SetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, array $data);
+    public function set(SetterContextInterface $context);
 }

@@ -16,36 +16,27 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 use Pimcore\Model\DataObject\Data\ElementMetadata;
 use Pimcore\Model\DataObject\Data\ObjectMetadata;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class MetadataInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        $class = "\\Pimcore\\Model\\DataObject\\Data\\" . $configuration['class'];
-        $fieldname = $map->getToColumn();
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $class = "\\Pimcore\\Model\\DataObject\\Data\\".$context->getConfiguration()['class'];
+        $fieldname = $context->getMapping()->getToColumn();
 
-        $metadata = $configuration['metadata'];
-        $metadata = json_decode($metadata, true);
+        $metadata = $context->getConfiguration()['metadata'];
+        $metadata = json_decode($metadata, true, 512, JSON_THROW_ON_ERROR);
         if (!is_array($metadata)) {
             $metadata = [];
         }
 
         /** @var ElementMetadata|ObjectMetadata $elementMetadata */
-        $elementMetadata = new $class($fieldname, array_keys($metadata), $value);
+        $elementMetadata = new $class($fieldname, array_keys($metadata), $context->getValue());
         foreach ($metadata as $metadataKey => $metadataValue) {
-            $setter = 'set' . ucfirst($metadataKey);
+            $setter = 'set'.ucfirst($metadataKey);
             $elementMetadata->$setter($metadataValue);
         }
 

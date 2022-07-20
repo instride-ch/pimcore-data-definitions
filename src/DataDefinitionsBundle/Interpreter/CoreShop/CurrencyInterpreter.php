@@ -15,10 +15,8 @@
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
 
 use CoreShop\Component\Currency\Repository\CurrencyRepositoryInterface;
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 final class CurrencyInterpreter implements InterpreterInterface
 {
@@ -29,16 +27,9 @@ final class CurrencyInterpreter implements InterpreterInterface
         $this->currencyRepository = $currencyRepository;
     }
 
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        return $this->currencyRepository->getByCode($value);
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        return $this->currencyRepository->getByCode($context->getValue());
     }
 }
 

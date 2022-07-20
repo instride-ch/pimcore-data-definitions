@@ -48,8 +48,8 @@ class ExportDefinitionController extends ResourceController
                 'fetchers' => array_keys($fetchers),
                 'import_rules' => [
                     'conditions' => array_keys($importRuleConditions),
-                    'actions' => array_keys($importRuleActions)
-                ]
+                    'actions' => array_keys($importRuleActions),
+                ],
             ]
         );
     }
@@ -173,8 +173,13 @@ class ExportDefinitionController extends ResourceController
 
                             $localizedField->setGroup('localizedfield.'.strtolower($language));
                             $localizedField->setType('localizedfields');
-                            $localizedField->setIdentifier(sprintf('%s~%s', $localizedField->getIdentifier(),
-                                $language));
+                            $localizedField->setIdentifier(
+                                sprintf(
+                                    '%s~%s',
+                                    $localizedField->getIdentifier(),
+                                    $language
+                                )
+                            );
                             $localizedField->setGetter('localizedfield');
                             $localizedField->setConfig(['language' => $language]);
                             $localizedField->setGetterConfig(['language' => $language]);
@@ -194,7 +199,8 @@ class ExportDefinitionController extends ResourceController
                             $classDefs = $brickDefinition->getClassDefinitions();
 
                             foreach ($classDefs as $classDef) {
-                                if ($classDef['classname'] === $classDefinition->getName() && $classDef['fieldname'] === $field->getName()) {
+                                if ($classDef['classname'] === $classDefinition->getName(
+                                    ) && $classDef['fieldname'] === $field->getName()) {
                                     $fields = $brickDefinition->getFieldDefinitions();
 
                                     foreach ($fields as $brickField) {
@@ -202,8 +208,14 @@ class ExportDefinitionController extends ResourceController
 
                                         $resultField->setGroup('objectbrick.'.$key);
                                         $resultField->setType('objectbricks');
-                                        $resultField->setIdentifier(sprintf('objectbrick~%s~%s~%s', $field->getName(),
-                                            $key, $resultField->getIdentifier()));
+                                        $resultField->setIdentifier(
+                                            sprintf(
+                                                'objectbrick~%s~%s~%s',
+                                                $field->getName(),
+                                                $key,
+                                                $resultField->getIdentifier()
+                                            )
+                                        );
                                         $resultField->setGetter('objectbrick');
                                         $resultField->setConfig(['class' => $key]);
                                         $resultField->setType('objectbrick');
@@ -228,8 +240,14 @@ class ExportDefinitionController extends ResourceController
 
                             $resultField->setGroup('fieldcollection.'.$type);
                             $resultField->setType('fieldcollections');
-                            $resultField->setIdentifier(sprintf('fieldcollection~%s~%s~%s', $field->getName(), $type,
-                                $resultField->getIdentifier()));
+                            $resultField->setIdentifier(
+                                sprintf(
+                                    'fieldcollection~%s~%s~%s',
+                                    $field->getName(),
+                                    $type,
+                                    $resultField->getIdentifier()
+                                )
+                            );
                             $resultField->setGetter('fieldcollection');
                             $resultField->setConfig(['class' => $type]);
                             $resultField->setType('fieldcollection');
@@ -250,8 +268,10 @@ class ExportDefinitionController extends ResourceController
                     $allowedGroupIds = $field->getAllowedGroupIds();
 
                     if ($allowedGroupIds) {
-                        $list->setCondition('ID in ('.implode(',', $allowedGroupIds).') AND storeId = ?',
-                            [$field->getStoreId()]);
+                        $list->setCondition(
+                            'ID in ('.implode(',', $allowedGroupIds).') AND storeId = ?',
+                            [$field->getStoreId()]
+                        );
                     } else {
                         $list->setCondition('storeId = ?', [$field->getStoreId()]);
                     }
@@ -271,10 +291,21 @@ class ExportDefinitionController extends ResourceController
                                 $keyConfig = DataObject\Classificationstore\KeyConfig::getById($keyId);
 
                                 $toColumn = new FromColumn();
-                                $toColumn->setGroup(sprintf('classificationstore - %s (%s)', $config->getName(),
-                                    $config->getId()));
-                                $toColumn->setIdentifier(sprintf('classificationstore~%s~%s~%s', $field->getName(),
-                                    $keyConfig->getId(), $config->getId()));
+                                $toColumn->setGroup(
+                                    sprintf(
+                                        'classificationstore - %s (%s)',
+                                        $config->getName(),
+                                        $config->getId()
+                                    )
+                                );
+                                $toColumn->setIdentifier(
+                                    sprintf(
+                                        'classificationstore~%s~%s~%s',
+                                        $field->getName(),
+                                        $keyConfig->getId(),
+                                        $config->getId()
+                                    )
+                                );
                                 $toColumn->setType('classificationstore');
                                 $toColumn->setFieldtype($keyConfig->getType());
                                 $toColumn->setGetter('classificationstore');

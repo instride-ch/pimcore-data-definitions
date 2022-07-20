@@ -81,8 +81,12 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
-    {
+    public function getData(
+        array $configuration,
+        ImportDefinitionInterface $definition,
+        array $params,
+        FilterInterface $filter = null
+    ): ImportDataSetInterface {
         $file = $this->getFile($params);
 
         if (file_exists($file)) {
@@ -105,8 +109,12 @@ class JsonProvider extends AbstractFileProvider implements ImportProviderInterfa
         file_put_contents($file, json_encode($this->exportData));
     }
 
-    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
-    {
+    public function addExportData(
+        array $data,
+        array $configuration,
+        ExportDefinitionInterface $definition,
+        array $params
+    ): void {
         $this->exportData[] = $data;
     }
 

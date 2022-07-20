@@ -16,26 +16,13 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class MappingInterpreter implements InterpreterInterface, DataSetAwareInterface
+class MappingInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        $interpreterMap = $configuration['mapping'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $interpreterMap = $context->getConfiguration()['mapping'];
         $resolvedMap = [];
 
         if (!is_array($interpreterMap)) {
@@ -46,14 +33,14 @@ class MappingInterpreter implements InterpreterInterface, DataSetAwareInterface
             $resolvedMap[$itemMap['from']] = $itemMap['to'];
         }
 
-        if (array_key_exists($value, $resolvedMap)) {
-            return $resolvedMap[$value];
+        if (array_key_exists($context->getValue(), $resolvedMap)) {
+            return $resolvedMap[$context->getValue()];
         }
 
-        if ($configuration['return_null_when_not_found']) {
+        if ($context->getConfiguration()['return_null_when_not_found']) {
             return null;
         }
 
-        return $value;
+        return $context->getValue();
     }
 }

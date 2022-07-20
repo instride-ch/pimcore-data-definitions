@@ -25,5 +25,10 @@ interface ImportProviderInterface
 
     public function getColumns(array $configuration): array;
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface;
+    public function getData(
+        array $configuration,
+        ImportDefinitionInterface $definition,
+        array $params,
+        FilterInterface $filter = null
+    ): ImportDataSetInterface;
 }

@@ -134,7 +134,7 @@ final class ExportDefinitionType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param string        $configurationType
+     * @param string $configurationType
      */
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
@@ -143,7 +143,7 @@ final class ExportDefinitionType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param mixed         $data
+     * @param mixed $data
      * @return string|null
      */
     protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
@@ -161,7 +161,7 @@ final class ExportDefinitionType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param string        $configurationType
+     * @param string $configurationType
      */
     protected function addFetcherConfigurationFields(FormInterface $form, string $configurationType): void
     {
@@ -170,7 +170,7 @@ final class ExportDefinitionType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param mixed         $data
+     * @param mixed $data
      * @return string|null
      */
     protected function getFetcherRegistryIdentifier(FormInterface $form, $data = null): ?string

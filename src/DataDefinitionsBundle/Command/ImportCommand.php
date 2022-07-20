@@ -101,8 +101,7 @@ EOT
             if ($progress instanceof ProgressBar) {
                 $progress->setMessage($e->getSubject());
                 $progress->display();
-            }
-            else {
+            } else {
                 $output->writeln(
                     sprintf(
                         '%s (%s) (%s): %s',

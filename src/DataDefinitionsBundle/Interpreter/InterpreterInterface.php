@@ -16,20 +16,9 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 interface InterpreterInterface
 {
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    );
+    public function interpret(InterpreterContextInterface $context): mixed;
 }

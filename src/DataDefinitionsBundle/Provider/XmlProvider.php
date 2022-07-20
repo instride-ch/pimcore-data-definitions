@@ -85,16 +85,24 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
-    {
+    public function getData(
+        array $configuration,
+        ImportDefinitionInterface $definition,
+        array $params,
+        FilterInterface $filter = null
+    ): ImportDataSetInterface {
         $file = $this->getFile($params);
         $xml = file_get_contents($file);
 
         return new ArrayImportDataSet($this->convertXmlToArray($xml, $configuration['xPath']));
     }
 
-    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
-    {
+    public function addExportData(
+        array $data,
+        array $configuration,
+        ExportDefinitionInterface $definition,
+        array $params
+    ): void {
         $writer = $this->getXMLWriter();
 
         $writer->startElement('object');
@@ -134,9 +142,12 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
             $this->exportPath = tempnam(sys_get_temp_dir(), 'xml_export_xslt_transformation');
             $cmd = [
                 'xsltproc',
-                '-v', '--noout',
-                '--output', $this->getExportPath(),
-                $workingPath, $dataPath,
+                '-v',
+                '--noout',
+                '--output',
+                $this->getExportPath(),
+                $workingPath,
+                $dataPath,
             ];
             $process = new Process($cmd);
             $process->setTimeout(null);
@@ -202,7 +213,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                 $writer->writeAttribute('name', $name);
             }
             if (null !== $key) {
-                $writer->writeAttribute('key', (string) $key);
+                $writer->writeAttribute('key', (string)$key);
             }
             if (is_string($data)) {
                 $writer->writeCdata($data);
@@ -218,7 +229,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                     $writer->writeAttribute('name', $name);
                 }
                 if (null !== $key) {
-                    $writer->writeAttribute('key', (string) $key);
+                    $writer->writeAttribute('key', (string)$key);
                 }
                 $this->serializeCollection($writer, $data);
                 $writer->endElement();
@@ -229,7 +240,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                         $writer->writeAttribute('name', $name);
                     }
                     if (null !== $key) {
-                        $writer->writeAttribute('key', (string) $key);
+                        $writer->writeAttribute('key', (string)$key);
                     }
                     $writer->writeCdata((string)$data);
                     $writer->endElement();

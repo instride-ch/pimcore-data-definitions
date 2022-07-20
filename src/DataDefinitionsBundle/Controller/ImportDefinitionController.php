@@ -56,8 +56,8 @@ class ImportDefinitionController extends ResourceController
             'persister' => array_keys($persisters),
             'import_rules' => [
                 'conditions' => array_keys($importRuleConditions),
-                'actions' => array_keys($importRuleActions)
-            ]
+                'actions' => array_keys($importRuleActions),
+            ],
         ]);
     }
 
@@ -68,7 +68,9 @@ class ImportDefinitionController extends ResourceController
 
         if ($definition instanceof ImportDefinitionInterface) {
             try {
-                if ($this->get('data_definitions.registry.provider')->get($definition->getProvider())->testData($definition->getConfiguration())) {
+                if ($this->get('data_definitions.registry.provider')->get($definition->getProvider())->testData(
+                    $definition->getConfiguration()
+                )) {
                     return $this->viewHandler->handle(['success' => true]);
                 }
             } catch (Exception $ex) {
@@ -90,7 +92,9 @@ class ImportDefinitionController extends ResourceController
             $customFromColumn->setLabel('Custom');
 
             try {
-                $fromColumns = $this->get('data_definitions.registry.provider')->get($definition->getProvider())->getColumns($definition->getConfiguration());
+                $fromColumns = $this->get('data_definitions.registry.provider')->get(
+                    $definition->getProvider()
+                )->getColumns($definition->getConfiguration());
                 $fromColumns[] = $customFromColumn;
             } catch (Exception $e) {
                 $fromColumns = [];
@@ -193,8 +197,10 @@ class ImportDefinitionController extends ResourceController
 
                 $response = new Response();
                 $response->headers->set('Content-Type', 'application/json');
-                $response->headers->set('Content-Disposition',
-                    sprintf('attachment; filename="import-definition-%s.json"', $name));
+                $response->headers->set(
+                    'Content-Disposition',
+                    sprintf('attachment; filename="import-definition-%s.json"', $name)
+                );
                 $response->headers->set('Pragma', 'no-cache');
                 $response->headers->set('Expires', '0');
                 $response->headers->set('Content-Transfer-Encoding', 'binary');

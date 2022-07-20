@@ -33,7 +33,7 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
      */
     public $fetchUnpublished = false;
 
-        public static function getById($id)
+    public static function getById($id)
     {
         $definitionEntry = new ExportDefinition();
         $definitionEntry->setId((int)$id);

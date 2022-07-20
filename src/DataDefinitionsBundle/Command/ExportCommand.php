@@ -52,17 +52,20 @@ final class ExportCommand extends AbstractCommand
         $this
             ->setName('data-definitions:export')
             ->setDescription('Run a Data Definition Export.')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>%command.name%</info> runs a Data Definition Export.
 EOT
             )
             ->addOption(
-                'definition', 'd',
+                'definition',
+                'd',
                 InputOption::VALUE_REQUIRED,
                 'Import Definition ID or Name'
             )
             ->addOption(
-                'params', 'p',
+                'params',
+                'p',
                 InputOption::VALUE_REQUIRED,
                 'JSON Encoded Params'
             );
@@ -100,7 +103,9 @@ EOT
             $total = $e->getSubject();
             if ($total > 0) {
                 $progress = new ProgressBar($output, $total);
-                $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%');
+                $progress->setFormat(
+                    ' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%'
+                );
                 $progress->start();
             }
         };

@@ -52,8 +52,12 @@ class Dao extends Model\Dao\PhpArrayTable
         if (isset($data['id'])) {
             $this->assignVariablesToModel($data);
         } else {
-            throw new InvalidArgumentException(sprintf('Export Definition with id: %s does not exist',
-                $this->model->getId()));
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Export Definition with id: %s does not exist',
+                    $this->model->getId()
+                )
+            );
         }
     }
 
@@ -105,8 +109,12 @@ class Dao extends Model\Dao\PhpArrayTable
         if ($data[0]['id'] && count($data)) {
             $this->assignVariablesToModel($data[0]);
         } else {
-            throw new InvalidArgumentException(sprintf('Definition with name: %s does not exist',
-                $this->model->getName()));
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Definition with name: %s does not exist',
+                    $this->model->getName()
+                )
+            );
         }
     }
 

@@ -192,7 +192,7 @@ final class Exporter implements ExporterInterface
         $data = [];
 
         $runner = null;
-        $runnerContext = $this->contextFactory->createRunnerContext($definition, $params, null, $object);
+        $runnerContext = $this->contextFactory->createRunnerContext($definition, $params, null, null, $object);
 
         $this->eventDispatcher->dispatch(
             new ExportDefinitionEvent($definition, sprintf('Export Object %s', $object->getId()), $params),

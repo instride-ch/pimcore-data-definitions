@@ -65,6 +65,6 @@ class ConditionalInterpreter implements InterpreterInterface
             return $context->getValue();
         }
 
-        return $interpreterObject->interpret($context, $interpreter['interpreterConfig']);
+        return $interpreterObject->interpret($context);
     }
 }

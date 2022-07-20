@@ -12,11 +12,12 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
 
 use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use function is_string;
 
 final class PriceInterpreter implements InterpreterInterface
 {
@@ -25,7 +26,7 @@ final class PriceInterpreter implements InterpreterInterface
         $inputIsFloat = $context->getConfiguration()['isFloat'];
         $value = $context->getValue();
 
-        if (is_string($value)) {
+        if (\is_string($value)) {
             $value = str_replace(',', '.', $value);
             $value = (float)$value;
         }

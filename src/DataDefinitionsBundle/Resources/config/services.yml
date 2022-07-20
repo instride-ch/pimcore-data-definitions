@@ -242,6 +242,7 @@ services:
         - '@data_definitions.registry.interpreter'
         - '@coreshop.expression_language'
         - '@service_container'
+        - '@Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface'
       tags:
         - { name: data_definitions.interpreter, type: conditional, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\ConditionalInterpreterType }
 

@@ -19,22 +19,17 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class ConditionalInterpreter implements InterpreterInterface
 {
-    private ServiceRegistryInterface $interpreterRegistry;
-    protected ExpressionLanguage $expressionLanguage;
-    protected ContainerInterface $container;
-
     public function __construct(
-        ServiceRegistryInterface $interpreterRegistry,
-        ExpressionLanguage $expressionLanguage,
-        ContainerInterface $container
+        protected ServiceRegistryInterface $interpreterRegistry,
+        protected ExpressionLanguage $expressionLanguage,
+        protected ContainerInterface $container,
+        protected  ContextFactoryInterface $contextFactory
     ) {
-        $this->interpreterRegistry = $interpreterRegistry;
-        $this->expressionLanguage = $expressionLanguage;
-        $this->container = $container;
     }
 
     public function interpret(InterpreterContextInterface $context): mixed
@@ -65,6 +60,19 @@ class ConditionalInterpreter implements InterpreterInterface
             return $context->getValue();
         }
 
-        return $interpreterObject->interpret($context);
+        $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
+
+        $newContext = $this->contextFactory->createInterpreterContext(
+            $context->getDefinition(),
+            $context->getParams(),
+            $interpreter['interpreterConfig'],
+            $context->getDataRow(),
+            $context->getDataSet(),
+            $context->getObject(),
+            $context->getValue(),
+            $context->getMapping()
+        );
+
+        return $interpreterObject->interpret($newContext);
     }
 }

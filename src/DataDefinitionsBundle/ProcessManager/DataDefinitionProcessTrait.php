@@ -35,7 +35,7 @@ trait DataDefinitionProcessTrait
         }
 
         $settings['command'] = [
-            'data-definitions:export',
+            $type,
             '-d',
             $settings['definition'],
             '-p',

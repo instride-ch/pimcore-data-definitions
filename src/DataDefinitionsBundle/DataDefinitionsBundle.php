@@ -20,6 +20,7 @@ use Composer\InstalledVersions;
 use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Bundle\RuleBundle\CoreShopRuleBundle;
+use Pimcore\Extension\Bundle\Installer\InstallerInterface;
 use Pimcore\Extension\Bundle\PimcoreBundleInterface;
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -95,12 +96,12 @@ class DataDefinitionsBundle extends AbstractResourceBundle implements PimcoreBun
         return 'Data Definitions allows you to create reusable Definitions for Importing all kinds of data into DataObjects.';
     }
 
-    public function getInstaller()
+    public function getInstaller(): ?InstallerInterface
     {
         return $this->container->get(Installer::class);
     }
 
-    public function getAdminIframePath()
+    public function getAdminIframePath(): ?string
     {
         return null;
     }

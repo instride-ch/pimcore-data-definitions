@@ -119,7 +119,6 @@ final class Exporter implements ExporterInterface
         UnpublishedHelper::hideUnpublished(
             function () use ($definition, $params, $total, $fetcher, $provider, $fetcherContext) {
                 $count = 0;
-                $countToClean = 1000;
                 $perLoop = 50;
                 $perRun = ceil($total / $perLoop);
 
@@ -134,7 +133,7 @@ final class Exporter implements ExporterInterface
                         try {
                             $this->exportRow($definition, $object, $params, $provider);
 
-                            if (($count + 1) % $countToClean === 0) {
+                            if (($count + 1) % $perLoop === 0) {
                                 Pimcore::collectGarbage();
                                 $this->logger->info('Clean Garbage');
                                 $this->eventDispatcher->dispatch(

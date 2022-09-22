@@ -235,7 +235,7 @@ final class Importer implements ImporterInterface
         }
 
         $count = 0;
-        $countToClean = 1000;
+        $countToClean = 50;
         $objectIds = [];
         $exceptions = [];
 

@@ -38,7 +38,7 @@
     "jms/serializer": "^3.17.1",
     "league/csv": "^9.7",
     "nyholm/psr7": "^1.5",
-    "pimcore/pimcore": "^10.2",
+    "pimcore/pimcore": "^10.5",
     "psr/http-client-implementation": "^1.0",
     "psr/http-factory-implementation": "^1.0"
   },

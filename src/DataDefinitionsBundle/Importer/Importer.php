@@ -277,7 +277,7 @@ final class Importer implements ImporterInterface
 
                 $this->eventDispatcher->dispatch(
                     $definition,
-                    'data_definitions.import.status',
+                    'data_definitions.import.failure',
                     sprintf('Error: %s', $ex->getMessage()),
                     $params
                 );

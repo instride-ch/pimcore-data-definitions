@@ -195,6 +195,10 @@ abstract class AbstractProcessManagerListener
             }
             $this->process->setCompleted(time());
             $this->process->save();
+
+            if (is_string($event->getSubject())) {
+                $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS_ERROR.$event->getSubject());
+            }
         }
     }
 }

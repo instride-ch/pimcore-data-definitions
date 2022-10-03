@@ -145,6 +145,8 @@ abstract class AbstractProcessManagerListener
     public function onStatusEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS.$event->getSubject());
+
             $now = new \DateTimeImmutable();
             if ($this->lastStatusAt instanceof \DateTimeInterface) {
                 $diff = $now->getTimestamp() - $this->lastStatusAt->getTimestamp();
@@ -160,8 +162,6 @@ abstract class AbstractProcessManagerListener
             }
             $this->process->setMessage($event->getSubject());
             $this->process->save();
-
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS.$event->getSubject());
         }
     }
 
@@ -195,6 +195,10 @@ abstract class AbstractProcessManagerListener
             }
             $this->process->setCompleted(time());
             $this->process->save();
+
+            if (is_string($event->getSubject())) {
+                $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS_ERROR.$event->getSubject());
+            }
         }
     }
 }

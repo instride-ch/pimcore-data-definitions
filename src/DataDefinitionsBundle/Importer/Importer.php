@@ -257,7 +257,22 @@ final class Importer implements ImporterInterface
                 if ($object instanceof Concrete) {
                     $objectIds[] = $object->getId();
                 }
+            } catch (Throwable $ex) {
+                $this->logger->error($ex);
 
+                $exceptions[] = $ex;
+
+                $this->eventDispatcher->dispatch(
+                    $definition,
+                    'data_definitions.import.failure',
+                    sprintf('Error: %s', $ex->getMessage()),
+                    $params
+                );
+
+                if ($definition->getStopOnException()) {
+                    throw $ex;
+                }
+            } finally {
                 if (($count + 1) % $countToClean === 0) {
                     Pimcore::collectGarbage();
                     $this->logger->info('Clean Garbage');
@@ -270,21 +285,6 @@ final class Importer implements ImporterInterface
                 }
 
                 $count++;
-            } catch (Throwable $ex) {
-                $this->logger->error($ex);
-
-                $exceptions[] = $ex;
-
-                $this->eventDispatcher->dispatch(
-                    $definition,
-                    'data_definitions.import.status',
-                    sprintf('Error: %s', $ex->getMessage()),
-                    $params
-                );
-
-                if ($definition->getStopOnException()) {
-                    throw $ex;
-                }
             }
 
             $this->eventDispatcher->dispatch($definition, 'data_definitions.import.progress', '', $params);

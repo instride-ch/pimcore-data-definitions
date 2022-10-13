@@ -28,6 +28,8 @@ final class AssetsUrlInterpreterType extends AbstractType
         $builder
             ->add('path', TextType::class)
             ->add('deduplicate_by_url', CheckboxType::class)
+            ->add('deduplicate_by_hash', CheckboxType::class)
+            ->add('use_content_disposition', CheckboxType::class)
             ->add('relocate_existing_objects', CheckboxType::class)
             ->add('rename_existing_objects', CheckboxType::class);
     }

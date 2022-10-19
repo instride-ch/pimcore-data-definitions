@@ -44,26 +44,27 @@ class AssetUrlInterpreter implements InterpreterInterface
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new \InvalidArgumentException(sprintf('Provided asset URL value %1$s is not a valid URL', $url));
         }
+        $parent = Asset\Service::createFolderByPath($path);
+        $filename = $this->getFileName($url, $context->getConfiguration()['use_content_disposition'] ?? false);
 
         $asset = null;
-        if ($context->getConfiguration()['deduplicate_by_url']) {
+        if ($context->getConfiguration()['deduplicate_by_url'] ?? false) {
             $asset = $this->deduplicateAssetByUrl($url);
         }
 
         $fileHash = null;
+        $fileData = null;
         if ($asset === null) {
             $fileData = $this->getFileContents($url);
             $fileHash = md5($fileData);
 
-            if ($context->getConfiguration()['deduplicate_by_hash']) {
+            if ($context->getConfiguration()['deduplicate_by_hash'] ?? false) {
                 $asset = $this->deduplicateAssetByHash($fileHash);
             }
         }
 
         if ($asset === null) {
             // asset doesn't exist already
-            $parent = Asset\Service::createFolderByPath($path);
-            $filename = $this->getFileName($url);
             $asset = Asset::create($parent->getId(), [
                 'filename' => $filename,
                 'data' => $fileData,
@@ -83,11 +84,11 @@ class AssetUrlInterpreter implements InterpreterInterface
             $asset->addMetadata(self::METADATA_ORIGIN_HASH, 'input', $fileHash);
             $save = true;
         }
-        if ($context->getConfiguration()['relocate_existing_objects'] && $asset->getParent() !== $parent) {
+        if ($context->getConfiguration()['relocate_existing_objects'] ?? false && $asset->getParent() !== $parent) {
             $asset->setParent($parent);
             $save = true;
         }
-        if ($context->getConfiguration()['rename_existing_objects'] && $asset->getFilename() !== $filename) {
+        if ($context->getConfiguration()['rename_existing_objects'] ?? false && $asset->getFilename() !== $filename) {
             $asset->setFilename($filename);
             $save = true;
         }

@@ -24,6 +24,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 class AssetUrlInterpreter implements InterpreterInterface
 {
     protected const METADATA_ORIGIN_URL = 'origin_url';
+    protected const METADATA_ORIGIN_HASH = 'origin_hash';
     protected \Psr\Http\Client\ClientInterface $httpClient;
     protected \Psr\Http\Message\RequestFactoryInterface $requestFactory;
 
@@ -38,105 +39,123 @@ class AssetUrlInterpreter implements InterpreterInterface
     public function interpret(InterpreterContextInterface $context): mixed
     {
         $path = $context->getConfiguration()['path'];
+        $url = $context->getValue();
 
-        if (filter_var($context->getValue(), FILTER_VALIDATE_URL)) {
-            $asset = null;
-            $filename = $this->getFileName($context->getValue());
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+            throw new \InvalidArgumentException(sprintf('Provided asset URL value %1$s is not a valid URL', $url));
+        }
+        $parent = Asset\Service::createFolderByPath($path);
+        $filename = $this->getFileName($url, $context->getConfiguration()['use_content_disposition'] ?? false);
 
-            if ($context->getConfiguration()['deduplicate_by_url']) {
-                if ($asset = $this->getDuplicatedAsset($context->getValue())) {
-                    $filename = $asset->getFilename();
-                    $assetPath = $asset->getPath();
-                } else {
-                    $assetPath = $path;
-                }
-            } else {
-                $assetPath = $path;
-            }
-
-            $parent = Asset\Service::createFolderByPath($assetPath);
-
-            if (!$asset instanceof Asset) {
-                // Download
-                $fileData = $this->getFileContents($context->getValue());
-
-                if ($fileData) {
-                    $asset = Asset::create($parent->getId(), [
-                        'filename' => $filename,
-                        'data' => $fileData,
-                    ], false);
-                    $asset->addMetadata(self::METADATA_ORIGIN_URL, 'input', $context->getValue());
-                    $asset->save();
-                }
-            } else {
-                $save = false;
-
-                if ($context->getConfiguration()['relocate_existing_objects'] && $asset->getParent() !== $parent) {
-                    $asset->setParent($parent);
-                    $save = true;
-                }
-
-                if ($context->getConfiguration()['rename_existing_objects'] && $asset->getFilename() !== $filename) {
-                    $asset->setFilename($filename);
-                    $save = true;
-                }
-
-                if ($save) {
-                    $asset->save();
-                }
-            }
-
-            return $asset;
+        $asset = null;
+        if ($context->getConfiguration()['deduplicate_by_url'] ?? false) {
+            $asset = $this->deduplicateAssetByUrl($url);
         }
 
-        return null;
+        $fileHash = null;
+        $fileData = null;
+        if ($asset === null) {
+            $fileData = $this->getFileContents($url);
+            $fileHash = md5($fileData);
+
+            if ($context->getConfiguration()['deduplicate_by_hash'] ?? false) {
+                $asset = $this->deduplicateAssetByHash($fileHash);
+            }
+        }
+
+        if ($asset === null) {
+            // asset doesn't exist already
+            $asset = Asset::create($parent->getId(), [
+                'filename' => $filename,
+                'data' => $fileData,
+            ], false);
+        }
+
+        $save = false;
+        $currentUrl = $asset->getMetadata(self::METADATA_ORIGIN_URL) ?? '';
+        if (strpos($currentUrl, $url) === false) {
+            $url = $currentUrl ? $currentUrl .'|'. $url : $url;
+            $asset->addMetadata(self::METADATA_ORIGIN_URL, 'input', $url);
+            $save = true;
+        }
+
+        // $fileHash might not be available here if we deduplicated by URL
+        if ($fileHash !== null && $asset->getMetadata(self::METADATA_ORIGIN_HASH) !== $fileHash) {
+            $asset->addMetadata(self::METADATA_ORIGIN_HASH, 'input', $fileHash);
+            $save = true;
+        }
+        if ($context->getConfiguration()['relocate_existing_objects'] ?? false && $asset->getParent() !== $parent) {
+            $asset->setParent($parent);
+            $save = true;
+        }
+        if ($context->getConfiguration()['rename_existing_objects'] ?? false && $asset->getFilename() !== $filename) {
+            $asset->setFilename($filename);
+            $save = true;
+        }
+
+        if ($save) {
+            $asset->save();
+        }
+
+        return $asset;
     }
 
-    private function getFileName(string $url): ?string
+    private function getFileName(string $url, bool $useContentDisposition = false): ?string
     {
         $filename = null;
-        try {
-            $request = $this->requestFactory->createRequest('HEAD', $url);
-            $response = $this->httpClient->sendRequest($request);
-            $headers = $response->getHeaders();
+        if ($useContentDisposition) {
+            try {
+                $request = $this->requestFactory->createRequest('HEAD', $url);
+                $response = $this->httpClient->sendRequest($request);
+                $headers = $response->getHeaders();
 
-            if (
-                isset($headers["Content-Disposition"]) &&
-                preg_match(
-                    '/^.*?filename=(?<f>[^\s]+|\x22[^\x22]+\x22)\x3B?.*$/m',
-                    current($headers["Content-Disposition"]),
-                    $match
-                )
-            ) {
-                $filename = trim($match['f'], ' ";');
+                if (
+                    isset($headers["Content-Disposition"]) &&
+                    preg_match(
+                        '/^.*?filename=(?<f>[^\s]+|\x22[^\x22]+\x22)\x3B?.*$/m',
+                        current($headers["Content-Disposition"]),
+                        $match
+                    )
+                ) {
+                    $filename = trim($match['f'], ' ";');
+                }
+            } catch (\Psr\Http\Client\ClientExceptionInterface $exception) {
             }
-        } catch (\Psr\Http\Client\ClientExceptionInterface $exception) {
+        }
+        if ($filename === null) {
+            $filename = basename($url);
         }
 
-        if (!$filename) {
-            $filename = File::getValidFilename(basename($url));
-        }
-
-        return $filename;
+        return File::getValidFilename($filename);
     }
 
-    protected function getFileContents(string $value): ?string
+    protected function getFileContents(string $value): string
     {
         try {
             $request = $this->requestFactory->createRequest('GET', $value);
             $response = $this->httpClient->sendRequest($request);
         } catch (\Psr\Http\Client\ClientExceptionInterface $ex) {
-            return null;
+            throw new \RuntimeException('Unable to download asset from URL '.$value);
         }
 
         if ($response->getStatusCode() === 200) {
             return (string)$response->getBody();
         }
 
-        return null;
+        throw new \RuntimeException('Unable to download asset from URL '.$value);
     }
 
-    private function getDuplicatedAsset(string $value): ?Asset
+    private function deduplicateAssetByUrl(string $value): ?Asset
+    {
+        return $this->deduplicateAsset(self::METADATA_ORIGIN_URL, $value, true);
+    }
+
+    private function deduplicateAssetByHash(string $value): ?Asset
+    {
+        return $this->deduplicateAsset(self::METADATA_ORIGIN_HASH, $value);
+    }
+
+    private function deduplicateAsset(string $name, string $value, bool $fuzzy = false)
     {
         $listing = new Asset\Listing();
         $listing->onCreateQueryBuilder(
@@ -144,8 +163,12 @@ class AssetUrlInterpreter implements InterpreterInterface
                 $select->join('assets', 'assets_metadata', 'am', 'id = am.cid');
             }
         );
-        $listing->addConditionParam('am.name = ?', static::METADATA_ORIGIN_URL);
-        $listing->addConditionParam('am.data = ?', $value);
+        $listing->addConditionParam('am.name = ?', $name);
+        if ($fuzzy) {
+            $listing->addConditionParam('am.data LIKE ?', '%'. $value .'%');
+        } else {
+            $listing->addConditionParam('am.data = ?', $value);
+        }
         $listing->setLimit(1);
         $listing->setOrder(['creationDate', 'desc']);
 

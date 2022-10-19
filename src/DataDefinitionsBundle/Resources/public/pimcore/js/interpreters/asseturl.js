@@ -16,12 +16,13 @@ pimcore.registerNS('pimcore.plugin.datadefinitions.interpreters.asset_url');
 pimcore.plugin.datadefinitions.interpreters.asset_url = Class.create(pimcore.plugin.datadefinitions.interpreters.abstract, {
     getLayout: function (fromColumn, toColumn, record, config) {
         var deduplicateByUrlEnabled = Ext.isDefined(config.deduplicate_by_url) ? config.deduplicate_by_url : false
+        var deduplicateByHashEnabled = Ext.isDefined(config.deduplicate_by_hash) ? config.deduplicate_by_hash : false
         var relocateExistingCheckbox = Ext.create({
             xtype: 'checkbox',
             fieldLabel: t('data_definitions_relocate_existing_objects'),
             name: 'relocate_existing_objects',
             value: config.deduplicate_by_url && Ext.isDefined(config.relocate_existing_objects) ? config.relocate_existing_objects : false,
-            disabled: deduplicateByUrlEnabled === false
+            disabled: deduplicateByUrlEnabled === false || deduplicateByHashEnabled === false
         });
 
         var renameExistingCheckbox = Ext.create({
@@ -29,7 +30,7 @@ pimcore.plugin.datadefinitions.interpreters.asset_url = Class.create(pimcore.plu
             fieldLabel: t('data_definitions_rename_existing_objects'),
             name: 'rename_existing_objects',
             value: config.deduplicate_by_url && Ext.isDefined(config.rename_existing_objects) ? config.rename_existing_objects : false,
-            disabled: deduplicateByUrlEnabled === false
+            disabled: deduplicateByUrlEnabled === false || deduplicateByHashEnabled === false
         });
 
         return [{
@@ -95,6 +96,31 @@ pimcore.plugin.datadefinitions.interpreters.asset_url = Class.create(pimcore.plu
                             .setDisabled(isDeduplicateByUrlDisabled);
                     }
                 }
+            },
+            {
+                xtype: 'checkbox',
+                fieldLabel: t('data_definitions_interpreter_asset_url_deduplicate_by_hash'),
+                name: 'deduplicate_by_hash',
+                value: deduplicateByHashEnabled,
+                listeners: {
+                    change: function (el, enabled) {
+                        var isDeduplicateByHashDisabled = (enabled === false);
+
+                        relocateExistingCheckbox
+                            .setValue(false)
+                            .setDisabled(isDeduplicateByHashDisabled);
+
+                        renameExistingCheckbox
+                            .setValue(false)
+                            .setDisabled(isDeduplicateByHashDisabled);
+                    }
+                }
+            },
+            {
+                xtype: 'checkbox',
+                fieldLabel: t('data_definitions_interpreter_asset_url_use_content_disposition'),
+                name: 'use_content_disposition',
+                value: Ext.isDefined(config.use_content_disposition) ? config.use_content_disposition : false
             },
             relocateExistingCheckbox,
             renameExistingCheckbox

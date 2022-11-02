@@ -139,6 +139,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $writer = Writer::createFromPath($file, 'w+');
         $writer->setDelimiter($configuration['delimiter']);
         $writer->setEnclosure($configuration['enclosure']);
+        $writer->setEscape('');
         $writer->insertOne($headers);
         $writer->insertAll($this->exportData);
     }
@@ -161,6 +162,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $writer = Writer::createFromStream($stream);
         $writer->setDelimiter($configuration['delimiter']);
         $writer->setEnclosure($configuration['enclosure']);
+        $writer->setEscape('');
         $writer->insertOne($headers);
         $writer->insertAll($this->exportData);
 

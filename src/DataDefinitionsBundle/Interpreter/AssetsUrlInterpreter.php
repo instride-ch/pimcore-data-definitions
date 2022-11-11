@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContext;
 use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class AssetsUrlInterpreter extends AssetUrlInterpreter
@@ -24,7 +25,17 @@ class AssetsUrlInterpreter extends AssetUrlInterpreter
     {
         $assets = [];
         foreach ((array)$context->getValue() as $item) {
-            $asset = parent::interpret($context);
+            $childContext = new InterpreterContext(
+                $context->getDefinition(),
+                $context->getParams(),
+                $context->getConfiguration(),
+                $context->getDataRow(),
+                $context->getDataSet(),
+                $context->getObject(),
+                $item,
+                $context->getMapping()
+            );
+            $asset = parent::interpret($childContext);
 
             if ($asset) {
                 $assets[] = $asset;

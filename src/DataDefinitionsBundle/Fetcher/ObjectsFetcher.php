@@ -24,6 +24,8 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class ObjectsFetcher implements FetcherInterface
 {
+    protected $list;
+
     public function fetch(FetcherContextInterface $context, int $limit, int $offset)
     {
         $list = $this->getClassListing($context->getDefinition(), $context->getParams());
@@ -40,6 +42,10 @@ class ObjectsFetcher implements FetcherInterface
 
     private function getClassListing(ExportDefinitionInterface $definition, array $params)
     {
+        if ($this->list !== null) {
+            return $this->list;
+        }
+
         $class = $definition->getClass();
         $classDefinition = ClassDefinition::getByName($class);
         if (!$classDefinition instanceof ClassDefinition) {
@@ -94,7 +100,7 @@ class ObjectsFetcher implements FetcherInterface
         $list->setOrderKey('o_id');
         $list->setOrder('asc');
 
-        return $list;
+        return $this->list = $list;
     }
 
     protected function filterQueryParam(string $query)

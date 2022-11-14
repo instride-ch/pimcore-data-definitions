@@ -107,8 +107,8 @@ final class Importer implements ImporterInterface
         }
 
 
-        if ((\is_countable($data) || $data instanceof Countable) && \count($data) > 0) {
-            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.total', \count($data), $params);
+        if ((\is_countable($data) || $data instanceof Countable) && ($count = \count($data)) > 0) {
+            $this->eventDispatcher->dispatch($definition, 'data_definitions.import.total', $count, $params);
         }
 
         if ($runner instanceof ImportStartFinishRunnerInterface) {

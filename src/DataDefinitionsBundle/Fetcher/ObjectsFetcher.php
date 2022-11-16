@@ -19,11 +19,14 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Fetcher;
 use InvalidArgumentException;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Listing;
 use Wvision\Bundle\DataDefinitionsBundle\Context\FetcherContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class ObjectsFetcher implements FetcherInterface
 {
+    protected Listing $list;
+
     public function fetch(FetcherContextInterface $context, int $limit, int $offset)
     {
         $list = $this->getClassListing($context->getDefinition(), $context->getParams());
@@ -38,8 +41,12 @@ class ObjectsFetcher implements FetcherInterface
         return $this->getClassListing($context->getDefinition(), $context->getParams())->getTotalCount();
     }
 
-    private function getClassListing(ExportDefinitionInterface $definition, array $params)
+    private function getClassListing(ExportDefinitionInterface $definition, array $params): Listing
     {
+        if (isset($this->list)) {
+            return $this->list;
+        }
+
         $class = $definition->getClass();
         $classDefinition = ClassDefinition::getByName($class);
         if (!$classDefinition instanceof ClassDefinition) {
@@ -94,7 +101,7 @@ class ObjectsFetcher implements FetcherInterface
         $list->setOrderKey('o_id');
         $list->setOrder('asc');
 
-        return $list;
+        return $this->list = $list;
     }
 
     protected function filterQueryParam(string $query)

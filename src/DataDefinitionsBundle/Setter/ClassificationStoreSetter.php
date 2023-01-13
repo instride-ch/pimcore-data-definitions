@@ -38,7 +38,7 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
             if ($classificationStore instanceof Classificationstore) {
                 $groups = $classificationStore->getActiveGroups();
 
-                if (!$groups[$groupConfig]) {
+                if (!($groups[$groupConfig] ?? false)) {
                     $groups[$groupConfig] = true;
                     $classificationStore->setActiveGroups($groups);
                 }
@@ -63,7 +63,7 @@ class ClassificationStoreSetter implements SetterInterface, GetterInterface
             if ($classificationStore instanceof Classificationstore) {
                 $groups = $classificationStore->getActiveGroups();
 
-                if (!$groups[$groupConfig]) {
+                if (!($groups[$groupConfig] ?? false)) {
                     $groups[$groupConfig] = true;
                     $classificationStore->setActiveGroups($groups);
                 }

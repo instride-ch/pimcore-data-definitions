@@ -26,6 +26,7 @@ final class CsvProviderType extends AbstractType
     {
         $builder
             ->add('delimiter', TextType::class)
-            ->add('enclosure', TextType::class);
+            ->add('enclosure', TextType::class)
+            ->add('escape', TextType::class, ['empty_data' => '']);
     }
 }

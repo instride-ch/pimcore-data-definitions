@@ -17,11 +17,18 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
 
 use Exception;
-use Pimcore\Model;
+use Pimcore\Model\AbstractModel;
+use Pimcore\Model\Listing\CallableFilterListingInterface;
+use Pimcore\Model\Listing\CallableOrderListingInterface;
+use Pimcore\Model\Listing\Traits\FilterListingTrait;
+use Pimcore\Model\Listing\Traits\OrderListingTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
-class Listing extends Model\Listing\JsonListing
+class Listing extends AbstractModel implements CallableFilterListingInterface, CallableOrderListingInterface
 {
+    use FilterListingTrait;
+    use OrderListingTrait;
+
     /**
      * Contains the results of the list.
      * They are all an instance of Configuration.
@@ -34,10 +41,10 @@ class Listing extends Model\Listing\JsonListing
      * @return ExportDefinitionInterface[]
      * @throws Exception
      */
-    public function getObjects(): ?array
+    public function getObjects()
     {
         if (null === $this->definitions) {
-            $this->load();
+            $this->loadList();
         }
 
         return $this->definitions;

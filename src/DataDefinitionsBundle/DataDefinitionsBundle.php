@@ -20,6 +20,8 @@ use Composer\InstalledVersions;
 use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Bundle\RuleBundle\CoreShopRuleBundle;
+use Pimcore\Bundle\AdminBundle\PimcoreAdminBundle;
+use Pimcore\Bundle\SimpleBackendSearchBundle\PimcoreSimpleBackendSearchBundle;
 use Pimcore\Extension\Bundle\Installer\InstallerInterface;
 use Pimcore\Extension\Bundle\PimcoreBundleInterface;
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
@@ -46,6 +48,11 @@ class DataDefinitionsBundle extends AbstractResourceBundle
         parent::registerDependentBundles($collection);
 
         $collection->addBundles([
+            new PimcoreAdminBundle(),
+            new PimcoreSimpleBackendSearchBundle()
+        ]);
+
+        $collection->addBundles([
             new CoreShopRuleBundle(),
         ], 3500);
     }
@@ -57,24 +64,24 @@ class DataDefinitionsBundle extends AbstractResourceBundle
         ];
     }
 
-    public function build(ContainerBuilder $builder): void
+    public function build(ContainerBuilder $container): void
     {
-        parent::build($builder);
+        parent::build($container);
 
-        $builder->addCompilerPass(new CleanerRegistryCompilerPass());
-        $builder->addCompilerPass(new FilterRegistryCompilerPass());
-        $builder->addCompilerPass(new InterpreterRegistryCompilerPass());
-        $builder->addCompilerPass(new ProviderRegistryCompilerPass());
-        $builder->addCompilerPass(new RunnerRegistryCompilerPass());
-        $builder->addCompilerPass(new SetterRegistryCompilerPass());
-        $builder->addCompilerPass(new LoaderRegistryCompilerPass());
-        $builder->addCompilerPass(new GetterRegistryCompilerPass());
-        $builder->addCompilerPass(new FetcherRegistryCompilerPass());
-        $builder->addCompilerPass(new ExportProviderRegistryCompilerPass());
-        $builder->addCompilerPass(new ExportRunnerRegistryCompilerPass());
-        $builder->addCompilerPass(new ImportRuleConditionPass());
-        $builder->addCompilerPass(new ImportRuleActionPass());
-        $builder->addCompilerPass(new PersisterRegistryCompilerPass());
+        $container->addCompilerPass(new CleanerRegistryCompilerPass());
+        $container->addCompilerPass(new FilterRegistryCompilerPass());
+        $container->addCompilerPass(new InterpreterRegistryCompilerPass());
+        $container->addCompilerPass(new ProviderRegistryCompilerPass());
+        $container->addCompilerPass(new RunnerRegistryCompilerPass());
+        $container->addCompilerPass(new SetterRegistryCompilerPass());
+        $container->addCompilerPass(new LoaderRegistryCompilerPass());
+        $container->addCompilerPass(new GetterRegistryCompilerPass());
+        $container->addCompilerPass(new FetcherRegistryCompilerPass());
+        $container->addCompilerPass(new ExportProviderRegistryCompilerPass());
+        $container->addCompilerPass(new ExportRunnerRegistryCompilerPass());
+        $container->addCompilerPass(new ImportRuleConditionPass());
+        $container->addCompilerPass(new ImportRuleActionPass());
+        $container->addCompilerPass(new PersisterRegistryCompilerPass());
     }
 
     public function getVersion(): string

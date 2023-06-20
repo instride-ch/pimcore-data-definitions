@@ -77,19 +77,19 @@ EOT
 
         $params = json_decode($input->getOption('params'), true);
         try {
-            $definition = $this->repository->find($input->getOption('definition'));
-        } catch (InvalidArgumentException $e) {
             $definition = $this->repository->findByName($input->getOption('definition'));
-        }
-        $progress = null;
-        $process = null;
+        } catch (InvalidArgumentException $e) {
 
-        if (!is_array($params)) {
-            $params = [];
         }
 
         if (!$definition instanceof ExportDefinitionInterface) {
             throw new Exception('Export Definition not found');
+        }
+
+        $progress = null;
+
+        if (!is_array($params)) {
+            $params = [];
         }
 
         $imStatus = function (ExportDefinitionEvent $e) use (&$progress) {

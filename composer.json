@@ -32,15 +32,18 @@
     "php": ">=8.0",
     "ext-json": "*",
     "box/spout": "^3.0",
-    "coreshop/pimcore-bundle": "^3.0",
-    "coreshop/resource-bundle": "^3.0",
-    "coreshop/rule-bundle": "^3.0",
+    "coreshop/pimcore-bundle": "^4.0",
+    "coreshop/resource-bundle": "^4.0",
+    "coreshop/rule-bundle": "^4.0",
     "jms/serializer": "^3.17.1",
     "league/csv": "^9.7",
     "nyholm/psr7": "^1.5",
-    "pimcore/pimcore": "^10.5",
+    "pimcore/admin-ui-classic-bundle": "^1.0",
+    "pimcore/pimcore": "^11.0",
     "psr/http-client-implementation": "^1.0",
-    "psr/http-factory-implementation": "^1.0"
+    "psr/http-factory-implementation": "^1.0",
+    "symfony/dotenv": "^6.3",
+    "symfony/http-client": "^6.3"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
@@ -65,7 +68,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Wvision\\Bundle\\DataDefinitionsBundle\\Behat\\": "tests/DataDefinitionsBundle/Behat"
+      "Wvision\\Bundle\\DataDefinitionsBundle\\Behat\\": "tests/DataDefinitionsBundle/Behat",
+      "Pimcore\\Model\\DataObject\\": "var/classes/DataObject"
     },
     "classmap": [
       "src/Kernel.php"

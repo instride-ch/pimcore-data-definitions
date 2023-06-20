@@ -163,6 +163,10 @@ final class Importer implements ImporterInterface
 
     public function processSuccessfullImport(ImportDefinitionInterface $definition, $params, $objectIds, $exceptions)
     {
+        if (!is_int($definition->getSuccessNotificationDocument())) {
+            return;
+        }
+
         $this->sendDocument(
             $definition,
             Document::getById($definition->getSuccessNotificationDocument()),
@@ -174,6 +178,10 @@ final class Importer implements ImporterInterface
 
     public function processFailedImport(ImportDefinitionInterface $definition, $params, $objectIds, $exceptions)
     {
+        if (!is_int($definition->getFailureNotificationDocument())) {
+            return;
+        }
+
         $this->sendDocument(
             $definition,
             Document::getById($definition->getFailureNotificationDocument()),

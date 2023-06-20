@@ -38,6 +38,20 @@ pimcore.plugin.datadefinitions.export.panel = Class.create(coreshop.resource.pan
     filters: [],
     runners: [],
 
+
+    getTopBar: function () {
+        return [
+            {
+                // add button
+                text: t('add'),
+                iconCls: 'pimcore_icon_add',
+                itemId: 'add-button',
+                handler: this.addItem.bind(this),
+                disabled: !pimcore.settings['data-definitions-import-definition-writeable']
+            }
+        ];
+    },
+
     getDefaultGridConfiguration: function () {
         return {
             region: 'west',

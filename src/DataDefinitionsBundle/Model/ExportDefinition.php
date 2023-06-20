@@ -16,6 +16,9 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 
+/**
+ * @method ExportDefinition\Dao getDao()
+ */
 class ExportDefinition extends AbstractDataDefinition implements ExportDefinitionInterface
 {
     /**
@@ -33,7 +36,12 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
      */
     public $fetchUnpublished = false;
 
-    public static function getById($id)
+    public static function getById(string $name)
+    {
+        return static::getByName($name);
+    }
+
+    public static function getByName($id)
     {
         $definitionEntry = new ExportDefinition();
         $definitionEntry->setId((int)$id);
@@ -41,7 +49,7 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
          * @var \Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
          */
         $dao = $definitionEntry->getDao();
-        $dao->getById($id);
+        $dao->getByName($id);
 
         return $definitionEntry;
     }

@@ -83,19 +83,18 @@ EOT
         }
 
         try {
-            $definition = $this->repository->find($input->getOption('definition'));
-        } catch (InvalidArgumentException $e) {
             $definition = $this->repository->findByName($input->getOption('definition'));
-        }
+        } catch (InvalidArgumentException $e) {
 
-        $progress = null;
-        $process = null;
-        $countProgress = 0;
-        $startTime = time();
+        }
 
         if (!$definition instanceof ImportDefinitionInterface) {
             throw new Exception('Import Definition not found');
         }
+
+        $progress = null;
+        $countProgress = 0;
+        $startTime = time();
 
         $imStatus = function (ImportDefinitionEvent $e) use ($output, &$progress, &$countProgress, $startTime) {
             if ($progress instanceof ProgressBar) {

@@ -16,21 +16,23 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Controller;
 
-use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
+use CoreShop\Component\Registry\ServiceRegistryInterface;
 use Exception;
 use Pimcore\Model\DataObject;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\Service\Attribute\SubscribedService;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Wvision\Bundle\DataDefinitionsBundle\Service\FieldSelection;
 use function is_array;
 
-class ImportDefinitionController extends ResourceController
+class ImportDefinitionController extends AbstractDefinitionController
 {
     public function getConfigAction(): JsonResponse
     {
@@ -68,7 +70,9 @@ class ImportDefinitionController extends ResourceController
 
         if ($definition instanceof ImportDefinitionInterface) {
             try {
-                if ($this->get('data_definitions.registry.provider')->get($definition->getProvider())->testData(
+                if ($this->container->get('data_definitions.registry.provider')->get(
+                    $definition->getProvider()
+                )->testData(
                     $definition->getConfiguration()
                 )) {
                     return $this->viewHandler->handle(['success' => true]);
@@ -92,7 +96,7 @@ class ImportDefinitionController extends ResourceController
             $customFromColumn->setLabel('Custom');
 
             try {
-                $fromColumns = $this->get('data_definitions.registry.provider')->get(
+                $fromColumns = $this->container->get('data_definitions.registry.provider')->get(
                     $definition->getProvider()
                 )->getColumns($definition->getConfiguration());
                 $fromColumns[] = $customFromColumn;
@@ -106,7 +110,7 @@ class ImportDefinitionController extends ResourceController
                 throw new NotFoundHttpException();
             }
 
-            $toColumns = $this->get(FieldSelection::class)->getClassDefinition($classDefinition);
+            $toColumns = $this->container->get(FieldSelection::class)->getClassDefinition($classDefinition);
             $mappings = $definition->getMapping();
             $mappingDefinition = [];
             $fromColumnsResult = [];
@@ -263,53 +267,62 @@ class ImportDefinitionController extends ResourceController
         return $this->viewHandler->handle(['success' => false]);
     }
 
+    public static function getSubscribedServices(): array
+    {
+        return parent::getSubscribedServices() + [
+                FieldSelection::class,
+                new SubscribedService('data_definitions.registry.provider', ServiceRegistryInterface::class, attributes: new Autowire(service: 'data_definitions.registry.provider'))
+            ];
+    }
+
+
     protected function getConfigProviders(): array
     {
-        return $this->container->getParameter('data_definitions.import_providers');
+        return $this->getParameter('data_definitions.import_providers');
     }
 
     protected function getConfigLoaders(): array
     {
-        return $this->container->getParameter('data_definitions.loaders');
+        return $this->getParameter('data_definitions.loaders');
     }
 
     protected function getConfigInterpreters(): array
     {
-        return $this->container->getParameter('data_definitions.interpreters');
+        return $this->getParameter('data_definitions.interpreters');
     }
 
     protected function getConfigCleaners(): array
     {
-        return $this->container->getParameter('data_definitions.cleaners');
+        return $this->getParameter('data_definitions.cleaners');
     }
 
     protected function getConfigSetters(): array
     {
-        return $this->container->getParameter('data_definitions.setters');
+        return $this->getParameter('data_definitions.setters');
     }
 
     protected function getConfigFilters(): array
     {
-        return $this->container->getParameter('data_definitions.filters');
+        return $this->getParameter('data_definitions.filters');
     }
 
     protected function getConfigRunners(): array
     {
-        return $this->container->getParameter('data_definitions.runners');
+        return $this->getParameter('data_definitions.runners');
     }
 
     protected function getConfigPersisters(): array
     {
-        return $this->container->getParameter('data_definitions.persisters');
+        return $this->getParameter('data_definitions.persisters');
     }
 
     protected function getImportRuleConditions(): array
     {
-        return $this->container->getParameter('data_definitions.import_rule.conditions');
+        return $this->getParameter('data_definitions.import_rule.conditions');
     }
 
     protected function getImportRuleActions(): array
     {
-        return $this->container->getParameter('data_definitions.import_rule.actions');
+        return $this->getParameter('data_definitions.import_rule.actions');
     }
 }

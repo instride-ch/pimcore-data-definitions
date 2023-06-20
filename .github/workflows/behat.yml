@@ -11,41 +11,45 @@ jobs:
     env:
       APP_ENV: "test"
       IM_SKIP_DB_SETUP: "1"
+      PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/coreshop_test"
       PIMCORE_INSTALL_ADMIN_USERNAME: "admin"
       PIMCORE_INSTALL_ADMIN_PASSWORD: "admin"
       PIMCORE_INSTALL_MYSQL_HOST_SOCKET: "127.0.0.1"
       PIMCORE_INSTALL_MYSQL_USERNAME: "root"
       PIMCORE_INSTALL_MYSQL_PASSWORD: "root"
-      PIMCORE_INSTALL_MYSQL_DATABASE: "data_defs_test"
+      PIMCORE_INSTALL_MYSQL_DATABASE: "coreshop_test"
       PIMCORE_INSTALL_MYSQL_PORT: "3306"
       PIMCORE_KERNEL_CLASS: 'Kernel'
       PIMCORE_CLASS_DIRECTORY: 'var/tmp/behat/var/classes'
-      PIMCORE_WRITE_TARGET_STATICROUTES: 'settings-store'
-      PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/data_defs_test"
+
+    strategy:
+      matrix:
+        php: [ 8.1, 8.2 ]
+        pimcore: [ ^11.0 ]
+        dependencies: [ highest ]
+        exclude:
+          - php: 8.1
+            dependencies: lowest
 
     services:
       database:
-        image: "mariadb:10.5"
+        image: "mysql:8"
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: data_defs_test
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    name: "${{ matrix.pimcore }}, PHP ${{ matrix.php }}"
-    strategy:
-      matrix:
-        php: [ 8.0, 8.1 ]
-        pimcore: [ ^10.5 ]
+    name: "${{ matrix.pimcore }}, PHP ${{ matrix.php }}, Deps ${{ matrix.dependencies }}"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Install PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
+        ini-values: display_errors=On, display_startup_errors=On, error_reporting=32767
         extensions: intl, gd, simpleXML, dom, exif, fileinfo, iconv, mbstring, mysqli, pdo_mysql, zip, zlib
 
     - name: Check PHP Version
@@ -57,26 +61,26 @@ jobs:
 
     - name: Get composer cache directory
       id: composer-cache
-      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
     - name: Cache composer dependencies
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
         restore-keys: ${{ runner.os }}-composer-
 
-    - name: Cache composer dependencies
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-        restore-keys: ${{ runner.os }}-composer-
-
-    - name: Install dependencies highest
+    - if: matrix.dependencies == 'highest'
+      name: Install dependencies highest
       run: |
-        composer req guzzlehttp/psr7 pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
+        composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
         composer update --no-progress --prefer-dist --optimize-autoloader
+
+    - if: matrix.dependencies == 'lowest'
+      name: Install dependencies lowest
+      run: |
+        composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
+        composer update --no-progress --prefer-dist --optimize-autoloader --prefer-lowest
 
     - name: Cache clear
       run: bin/console cache:clear
@@ -85,7 +89,7 @@ jobs:
       run: bin/console assets:install --symlink
 
     - name: Install Pimcore
-      run: PIMCORE_KERNEL_CLASS=Kernel vendor/bin/pimcore-install --ignore-existing-config --env=test --skip-database-config
+      run: PIMCORE_KERNEL_CLASS=Kernel vendor/bin/pimcore-install --env=test --skip-database-config
 
     - name: Install DataDefinitions
       run: bin/console pimcore:bundle:install DataDefinitionsBundle

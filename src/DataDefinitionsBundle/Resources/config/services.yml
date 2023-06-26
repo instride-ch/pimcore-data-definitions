@@ -31,7 +31,7 @@ services:
         - '@logger'
         - '@pimcore.model.factory'
         - '@coreshop.expression_language'
-        - '@messenger.bus.default'
+        - '@messenger.default_bus'
       tags:
         - { name: monolog.logger, channel: import_definition }
         - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }

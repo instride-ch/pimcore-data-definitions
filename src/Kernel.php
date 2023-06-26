@@ -25,8 +25,8 @@ class Kernel extends PimcoreKernel
 
     public function boot()
     {
-        \Pimcore::setKernel($this);
-
         parent::boot();
+        
+        \Pimcore::setKernel($this);
     }
 }

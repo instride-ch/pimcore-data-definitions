@@ -33,19 +33,11 @@ use Wvision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 final class ImportAsyncCommand extends AbstractCommand
 {
-    protected EventDispatcherInterface $eventDispatcher;
-    protected DefinitionRepository $repository;
-    protected ImporterInterface $importer;
-
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        DefinitionRepository $repository,
-        AsyncImporterInterface $importer
+        protected EventDispatcherInterface $eventDispatcher,
+        protected DefinitionRepository $repository,
+        protected AsyncImporterInterface $importer
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->repository = $repository;
-        $this->importer = $importer;
-
         parent::__construct();
     }
 

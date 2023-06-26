@@ -31,6 +31,7 @@ use Pimcore\Model\Version;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Throwable;
 use Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
@@ -39,10 +40,12 @@ use Wvision\Bundle\DataDefinitionsBundle\Exception\UnexpectedValueException;
 use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessage;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Provider\ArrayImportDataSet;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
@@ -52,7 +55,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
-final class Importer implements ImporterInterface
+final class Importer implements ImporterInterface, AsyncImporterInterface
 {
     private bool $shouldStop = false;
 
@@ -69,9 +72,69 @@ final class Importer implements ImporterInterface
         private ContextFactoryInterface $contextFactory,
         private LoggerInterface $logger,
         private Factory $modelFactory,
-        private ExpressionLanguage $expressionLanguage
+        private ExpressionLanguage $expressionLanguage,
+        private MessageBusInterface $bus,
     ) {
 
+    }
+
+    public function doImportRowAsync(ImportDefinitionInterface $definition, array $row, array $params): void
+    {
+        if ($definition->getCreateVersion()) {
+            Version::enable();
+        } else {
+            Version::disable();
+        }
+
+        $dataSet = new ArrayImportDataSet($row);
+        $runner = null;
+        $runnerContext = $this->contextFactory->createRunnerContext($definition, $params, $row, $dataSet, null);
+
+        if ($definition->getRunner()) {
+            /**
+             * @var RunnerInterface $runner
+             */
+            $runner = $this->runnerRegistry->get($definition->getRunner());
+        }
+
+        if ($runner instanceof ImportStartFinishRunnerInterface) {
+            $runner->startImport($runnerContext);
+        }
+
+        $filter = null;
+        $filterType = $definition->getFilter();
+        if ($filterType) {
+            /**
+             * @var FilterInterface $filter
+             */
+            $filter = $this->filterRegistry->get($filterType);
+        }
+
+
+        $object = $this->importRow(
+            $definition,
+            $row,
+            $dataSet,
+            $params,
+            $filter,
+            $runner
+        );
+    }
+
+    public function doImportAsync(ImportDefinitionInterface $definition, array $params): void
+    {
+        /** @var ImportDataSetInterface|array $data */
+        $data = $this->getData($definition, $params);
+
+        foreach ($data as $row) {
+            $this->bus->dispatch(
+                new ImportRowMessage(
+                    $definition->getId(),
+                    $row,
+                    $params,
+                )
+            );
+        }
     }
 
     public function doImport(ImportDefinitionInterface $definition, $params): array

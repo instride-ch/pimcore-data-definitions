@@ -382,3 +382,9 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Service\StorageLocator:
       arguments:
         $locator: !tagged_locator { tag: flysystem.storage }
+
+    Wvision\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessageHandler:
+      arguments:
+        - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+      tags:
+        - { name: messenger.message_handler }

@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('driver')->defaultValue(CoreShopResourceBundle::DRIVER_PIMCORE)->end()
+                ->integerNode('gc_cycle')->defaultValue(50)->end()
             ->end();
 
         $this->addPimcoreResourcesSection($rootNode);

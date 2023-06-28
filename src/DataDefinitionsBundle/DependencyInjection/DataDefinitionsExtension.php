@@ -121,5 +121,7 @@ class DataDefinitionsExtension extends AbstractModelExtension
         $container
             ->registerForAutoconfiguration(PersisterInterface::class)
             ->addTag(PersisterRegistryCompilerPass::PERSISTER_TAG);
+
+        $container->setParameter('data_definitions.gc_cycle', $config['gc_cycle']);
     }
 }

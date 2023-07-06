@@ -79,7 +79,7 @@ final class PimcoreClassContext implements Context
                 "bodyStyle": null,
                 "datatype": "layout",
                 "permissions": null,
-                "childs": [
+                "children": [
                     {
                         "fieldtype": "panel",
                         "labelWidth": 100,
@@ -95,7 +95,7 @@ final class PimcoreClassContext implements Context
                         "bodyStyle": null,
                         "datatype": "layout",
                         "permissions": null,
-                        "childs": [],
+                        "children": [],
                         "locked": false
                     }
                 ],
@@ -159,7 +159,7 @@ final class PimcoreClassContext implements Context
                 "bodyStyle": null,
                 "datatype": "layout",
                 "permissions": null,
-                "childs": [
+                "children": [
                     {
                         "fieldtype": "panel",
                         "labelWidth": 100,
@@ -175,7 +175,7 @@ final class PimcoreClassContext implements Context
                         "bodyStyle": null,
                         "datatype": "layout",
                         "permissions": null,
-                        "childs": [],
+                        "children": [],
                         "locked": false
                     }
                 ],
@@ -217,7 +217,7 @@ final class PimcoreClassContext implements Context
                 "bodyStyle": null,
                 "datatype": "layout",
                 "permissions": null,
-                "childs": [
+                "children": [
                     {
                         "fieldtype": "panel",
                         "labelWidth": 100,
@@ -233,7 +233,7 @@ final class PimcoreClassContext implements Context
                         "bodyStyle": null,
                         "datatype": "layout",
                         "permissions": null,
-                        "childs": [],
+                        "children": [],
                         "locked": false
                     }
                 ],
@@ -318,9 +318,9 @@ final class PimcoreClassContext implements Context
         $jsonDefinition = sprintf('
             {
                 "fieldtype": "externalImage",
-                "previewWidth": "",
-                "inputWidth": "",
-                "previewHeight": "",
+                "previewWidth": null,
+                "inputWidth": null,
+                "previewHeight": null,
                 "name": "%s",
                 "title": "%s",
                 "tooltip": "",
@@ -522,7 +522,7 @@ final class PimcoreClassContext implements Context
             {
                 "fieldtype": "localizedfields",
                 "phpdocType": "\\Pimcore\\Model\\DataObject\\Localizedfield",
-                "childs": [
+                "children": [
                     {
                         "fieldtype": "input",
                         "width": null,
@@ -587,7 +587,7 @@ final class PimcoreClassContext implements Context
             {
                 "fieldtype": "localizedfields",
                 "phpdocType": "\\Pimcore\\Model\\DataObject\\Localizedfield",
-                "childs": [
+                "children": [
                     {
                         "fieldtype": "textarea",
                         "width": "",

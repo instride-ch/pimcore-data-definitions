@@ -20,10 +20,6 @@ use CoreShop\Component\Resource\Model\ResourceInterface;
 
 interface DataDefinitionInterface extends ResourceInterface
 {
-    /**
-     * @return mixed
-     */
-    public function getId();
 
     /**
      * @param int $id

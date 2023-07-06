@@ -5,12 +5,7 @@ parameters:
   data_definitions.form.type.export_mapping.validation_groups: [ data_definitions ]
 
 services:
-  Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper:
-    arguments:
-      - !service
-        class: Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper
-        arguments:
-          - '@property_accessor'
+  Wvision\Bundle\DataDefinitionsBundle\Form\DataMapper\DefinitionMappingDataMapper: ~
 
   Wvision\Bundle\DataDefinitionsBundle\Form\Type\ClassChoiceType:
     tags:

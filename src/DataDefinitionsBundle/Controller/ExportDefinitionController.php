@@ -27,7 +27,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn;
 
-class ExportDefinitionController extends ResourceController
+class ExportDefinitionController extends AbstractDefinitionController
 {
     public function getConfigAction(): JsonResponse
     {
@@ -416,36 +416,36 @@ class ExportDefinitionController extends ResourceController
 
     protected function getConfigProviders(): array
     {
-        return $this->container->getParameter('data_definitions.export_providers');
+        return $this->getParameter('data_definitions.export_providers');
     }
 
     protected function getConfigInterpreters(): array
     {
-        return $this->container->getParameter('data_definitions.interpreters');
+        return $this->getParameter('data_definitions.interpreters');
     }
 
     protected function getConfigRunners(): array
     {
-        return $this->container->getParameter('data_definitions.export_runners');
+        return $this->getParameter('data_definitions.export_runners');
     }
 
     protected function getConfigGetters(): array
     {
-        return $this->container->getParameter('data_definitions.getters');
+        return $this->getParameter('data_definitions.getters');
     }
 
     protected function getConfigFetchers(): array
     {
-        return $this->container->getParameter('data_definitions.fetchers');
+        return $this->getParameter('data_definitions.fetchers');
     }
 
     protected function getImportRuleConditions(): array
     {
-        return $this->container->getParameter('data_definitions.import_rule.conditions');
+        return $this->getParameter('data_definitions.import_rule.conditions');
     }
 
     protected function getImportRuleActions(): array
     {
-        return $this->container->getParameter('data_definitions.import_rule.actions');
+        return $this->getParameter('data_definitions.import_rule.actions');
     }
 }

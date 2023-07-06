@@ -13,16 +13,18 @@
 
 pimcore.registerNS('pimcore.plugin.data_definitions');
 
-pimcore.plugin.data_definitions = Class.create(pimcore.plugin.admin, {
+pimcore.plugin.data_definitions = Class.create({
     getClassName: function () {
         return 'pimcore.plugin.data_definitions';
     },
 
     initialize: function () {
-        pimcore.plugin.broker.registerPlugin(this);
+        document.addEventListener(pimcore.events.pimcoreReady, (e) => {
+            this.pimcoreReady();
+        });
     },
 
-    pimcoreReady: function (params, broker) {
+    pimcoreReady: function () {
 
         var user = pimcore.globalmanager.get('user');
 

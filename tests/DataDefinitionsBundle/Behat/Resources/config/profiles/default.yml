@@ -9,6 +9,6 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: behat-bootstrap.php
             kernel:
-                path: src/Kernel.php
-                class: Kernel
+                path: src/BehatKernel.php
+                class: BehatKernel
                 environment: test

@@ -382,3 +382,11 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Service\StorageLocator:
       arguments:
         $locator: !tagged_locator { tag: flysystem.storage }
+
+    Wvision\Bundle\DataDefinitionsBundle\EventListener\PimcoreSettingsListener:
+      tags:
+        - { name: kernel.event_listener, event: pimcore.admin.indexAction.settings, method: indexSettings }
+
+    Wvision\Bundle\DataDefinitionsBundle\EventListener\WriteableListener:
+      tags:
+        - { name: kernel.event_subscriber }

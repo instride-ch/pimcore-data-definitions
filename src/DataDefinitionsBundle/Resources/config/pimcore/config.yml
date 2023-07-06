@@ -75,3 +75,7 @@ data_definitions:
       import_rules_action_object: '/bundles/datadefinitions/pimcore/js/import_rule/actions/object.js'
     css:
       data_definition: '/bundles/datadefinitions/pimcore/css/datadefinition.css'
+
+framework:
+  http_client:
+    enabled: true

@@ -24,6 +24,10 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
 
     providers: [],
 
+    saveDisabled: function () {
+        return !pimcore.settings['data-definitions-export-definition-writeable'];
+    },
+
     getSettings: function () {
         var classesStore = new Ext.data.JsonStore({
             autoDestroy: true,

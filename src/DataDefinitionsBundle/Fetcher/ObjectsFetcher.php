@@ -98,7 +98,7 @@ class ObjectsFetcher implements FetcherInterface
         $list->setCondition(implode(' AND ', $conditionFilters));
 
         // ensure a stable sort across pages
-        $list->setOrderKey('o_id');
+        $list->setOrderKey('id');
         $list->setOrder('asc');
 
         return $this->list = $list;

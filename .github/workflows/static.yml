@@ -1,41 +1,40 @@
 name: Static Tests (Lint, Stan)
 on:
   push:
-    branches: [ master ]
+    branches: [ next ]
   pull_request:
-    branches: [ master ]
+    branches: [ next ]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     env:
       APP_ENV: "test"
-      PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/data_defs_test"
+      PIMCORE_TEST_DB_DSN: "mysql://root:root@127.0.0.1:3306/coreshop_test"
 
     strategy:
       matrix:
-        php: [ 8.0, 8.1 ]
-        pimcore: [ ^10.5 ]
-        database: [ 'mysql:8.0' ]
-        dependencies: [ highest, lowest ]
+        php: [ 8.1, 8.2 ]
+        pimcore: [ ^11.0 ]
+        dependencies: [ highest ]
         exclude:
           - php: 8.1
             dependencies: lowest
 
     services:
       database:
-        image: "${{ matrix.database }}"
+        image: "mysql:8"
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: data_defs_test
+          MYSQL_DATABASE: coreshop_test
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    name: "${{ matrix.pimcore }}, PHP ${{ matrix.php }}, DB ${{ matrix.database }}, Deps ${{ matrix.dependencies }}"
+    name: "${{ matrix.pimcore }}, PHP ${{ matrix.php }}, Deps ${{ matrix.dependencies }}"
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -49,10 +48,10 @@ jobs:
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache composer dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -61,13 +60,13 @@ jobs:
       - if: matrix.dependencies == 'highest'
         name: Install dependencies highest
         run: |
-          composer req guzzlehttp/psr7 pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
+          composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
           composer update --no-progress --prefer-dist --optimize-autoloader
 
       - if: matrix.dependencies == 'lowest'
         name: Install dependencies lowest
         run: |
-          composer req guzzlehttp/psr7 pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
+          composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
           composer update --no-progress --prefer-dist --optimize-autoloader --prefer-lowest
 
       - name: Validate YAML

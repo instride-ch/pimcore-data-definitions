@@ -24,12 +24,7 @@ use function in_array;
 
 class Listing extends Model\Listing\AbstractListing implements PaginateListingInterface
 {
-    /**
-     * List of Logs.
-     *
-     * @var array
-     */
-    public $data;
+    public ?array $data;
 
     /**
      * @var string
@@ -48,7 +43,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      *
      * @return bool
      */
-    public function isValidOrderKey($key)
+    public function isValidOrderKey($key): bool
     {
         return in_array($key, $this->validOrderKeys, true);
     }
@@ -92,10 +87,10 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      *
      * @param int $offset
      * @param int $itemCountPerPage
-     * @return mixed
+     * @return array
      * @throws Exception
      */
-    public function getItems($offset, $itemCountPerPage)
+    public function getItems($offset, $itemCountPerPage): array
     {
         $this->setOffset($offset);
         $this->setLimit($itemCountPerPage);
@@ -164,10 +159,10 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Key
      *
-     * @return mixed
+     * @return int|string|null
      * @throws Exception
      */
-    public function key(): mixed
+    public function key(): int|string|null
     {
         $this->getData();
 

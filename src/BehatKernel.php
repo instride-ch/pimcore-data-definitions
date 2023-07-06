@@ -15,7 +15,7 @@
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
 use Pimcore\Kernel as PimcoreKernel;
 
-class Kernel extends PimcoreKernel
+class BehatKernel extends PimcoreKernel
 {
     public function registerBundlesToCollection(BundleCollection $collection): void
     {
@@ -25,8 +25,8 @@ class Kernel extends PimcoreKernel
 
     public function boot(): void
     {
-        \Pimcore::setKernel($this);
-
         parent::boot();
+
+        \Pimcore::setKernel($this);
     }
 }

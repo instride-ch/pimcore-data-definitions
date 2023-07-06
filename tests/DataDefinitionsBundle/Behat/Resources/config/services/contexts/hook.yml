@@ -6,6 +6,7 @@ services:
         class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Hook\PimcoreDaoContext
         arguments:
             - '@doctrine.dbal.default_connection'
+            - '@kernel'
         tags:
             - { name: fob.context_service }
 

@@ -163,6 +163,10 @@ final class Importer implements ImporterInterface
 
     public function processSuccessfullImport(ImportDefinitionInterface $definition, $params, $objectIds, $exceptions)
     {
+        if (!is_int($definition->getSuccessNotificationDocument())) {
+            return;
+        }
+
         $this->sendDocument(
             $definition,
             Document::getById($definition->getSuccessNotificationDocument()),
@@ -174,6 +178,10 @@ final class Importer implements ImporterInterface
 
     public function processFailedImport(ImportDefinitionInterface $definition, $params, $objectIds, $exceptions)
     {
+        if (!is_int($definition->getFailureNotificationDocument())) {
+            return;
+        }
+
         $this->sendDocument(
             $definition,
             Document::getById($definition->getFailureNotificationDocument()),
@@ -404,7 +412,7 @@ final class Importer implements ImporterInterface
             $params['versionNote'] = sprintf('%s - %s', $definition->getId(), $definition->getName());
 
             $object->setUserModification($params['userId'] ?? 0);
-            $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
+            $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck() ?: false);
 
             $this->saveObject($object, $definition, $params);
 

@@ -4,7 +4,7 @@ Wvision\Bundle\DataDefinitionsBundle\Model\Definition:
   properties:
     id:
       expose: true
-      type: integer
+      type: string
       xml_attribute: true
       groups: [ List, Detailed ]
     name:

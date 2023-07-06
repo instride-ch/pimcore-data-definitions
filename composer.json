@@ -69,7 +69,10 @@
   "autoload-dev": {
     "psr-4": {
       "Wvision\\Bundle\\DataDefinitionsBundle\\Behat\\": "tests/DataDefinitionsBundle/Behat",
-      "Pimcore\\Model\\DataObject\\": "var/classes/DataObject"
+      "Pimcore\\Model\\DataObject\\": [
+        "var/classes/DataObject",
+        "var/tmp/behat/var/classes/DataObject"
+      ]
     },
     "classmap": [
       "src/Kernel.php"

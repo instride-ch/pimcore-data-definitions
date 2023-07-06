@@ -412,7 +412,7 @@ final class Importer implements ImporterInterface
             $params['versionNote'] = sprintf('%s - %s', $definition->getId(), $definition->getName());
 
             $object->setUserModification($params['userId'] ?? 0);
-            $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck());
+            $object->setOmitMandatoryCheck($definition->getOmitMandatoryCheck() ?: false);
 
             $this->saveObject($object, $definition, $params);
 

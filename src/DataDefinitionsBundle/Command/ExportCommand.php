@@ -76,6 +76,7 @@ EOT
         $eventDispatcher = $this->eventDispatcher;
 
         $params = json_decode($input->getOption('params'), true);
+        $definition = null;
         try {
             $definition = $this->repository->findByName($input->getOption('definition'));
         } catch (InvalidArgumentException $e) {

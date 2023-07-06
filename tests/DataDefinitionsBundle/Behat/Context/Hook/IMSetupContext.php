@@ -17,6 +17,8 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Hook;
 use Behat\Behat\Context\Context;
 use Wvision\Bundle\DataDefinitionsBundle\Installer;
 use Pimcore\Db\PhpArrayFileTable;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
 
 final class IMSetupContext implements Context
 {
@@ -46,18 +48,30 @@ final class IMSetupContext implements Context
      */
     public function purgeDefinitions()
     {
-        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY.'/importdefinitions.php')) {
-            unlink(PIMCORE_CONFIGURATION_DIRECTORY.'/importdefinitions.php');
+        $importDefinitions = new ImportDefinition\Listing();
+
+        foreach ($importDefinitions->getObjects() as $definition) {
+            $definition->delete();
         }
 
-        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY.'/exportdefinitions.php')) {
-            unlink(PIMCORE_CONFIGURATION_DIRECTORY.'/exportdefinitions.php');
-        }
+        $exportDefinitions = new ExportDefinition\Listing();
 
-        $obj = new PhpArrayFileTable();
-        $refObject = new \ReflectionObject($obj);
-        $refProperty = $refObject->getProperty('tables');
-        $refProperty->setAccessible(true);
-        $refProperty->setValue(null, []);
+        foreach ($exportDefinitions->getObjects() as $definition) {
+            $definition->delete();
+        }
+//
+//        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY.'/importdefinitions.php')) {
+//            unlink(PIMCORE_CONFIGURATION_DIRECTORY.'/importdefinitions.php');
+//        }
+//
+//        if (file_exists(PIMCORE_CONFIGURATION_DIRECTORY.'/exportdefinitions.php')) {
+//            unlink(PIMCORE_CONFIGURATION_DIRECTORY.'/exportdefinitions.php');
+//        }
+//
+//        $obj = new PhpArrayFileTable();
+//        $refObject = new \ReflectionObject($obj);
+//        $refProperty = $refObject->getProperty('tables');
+//        $refProperty->setAccessible(true);
+//        $refProperty->setValue(null, []);
     }
 }

@@ -82,6 +82,8 @@ EOT
             $params['userId'] = 0;
         }
 
+        $definition = null;
+
         try {
             $definition = $this->repository->findByName($input->getOption('definition'));
         } catch (InvalidArgumentException $e) {

@@ -17,7 +17,7 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform;
 use Behat\Behat\Context\Context;
 use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorageInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
-use Pimcore\Cache\Runtime;
+use Pimcore\Cache\RuntimeCache;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Concrete;
@@ -42,7 +42,7 @@ final class PimcoreClassContext implements Context
      */
     public function class($name)
     {
-        Runtime::clear();
+        RuntimeCache::clear();
 
         $name = $this->classStorage->get($name);
 
@@ -129,7 +129,7 @@ final class PimcoreClassContext implements Context
      */
     public function definition()
     {
-        Runtime::clear();
+        RuntimeCache::clear();
 
         $name = $this->sharedStorage->get('pimcore_definition_name');
         $class = $this->sharedStorage->get('pimcore_definition_class');

@@ -24,6 +24,9 @@ use Pimcore\Model\Listing\Traits\FilterListingTrait;
 use Pimcore\Model\Listing\Traits\OrderListingTrait;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
+/**
+ * @method loadList()
+ */
 class Listing extends AbstractModel implements CallableFilterListingInterface, CallableOrderListingInterface
 {
     use FilterListingTrait;

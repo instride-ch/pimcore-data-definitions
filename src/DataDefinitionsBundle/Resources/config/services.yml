@@ -269,6 +269,10 @@ services:
       tags:
         - { name: data_definitions.interpreter, type: donotsetonempty, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\TypeCastingInterpreter:
+        tags:
+            - { name: data_definitions.interpreter, type: type_casting, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\LinkInterpreter:
       tags:
         - { name: data_definitions.interpreter, type: link, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }

@@ -29,6 +29,7 @@ final class TypeCastingInterpreterType extends AbstractType
             ->add('toType', ChoiceType::class, [
                 'choices' => [
                     TypeCastingInterpreter::TYPE_INT => TypeCastingInterpreter::TYPE_INT,
+                    TypeCastingInterpreter::TYPE_FLOAT => TypeCastingInterpreter::TYPE_FLOAT,
                     TypeCastingInterpreter::TYPE_STRING => TypeCastingInterpreter::TYPE_STRING,
                     TypeCastingInterpreter::TYPE_BOOLEAN => TypeCastingInterpreter::TYPE_BOOLEAN,
                 ],

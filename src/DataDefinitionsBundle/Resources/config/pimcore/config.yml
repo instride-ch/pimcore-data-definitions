@@ -1,3 +1,6 @@
+imports:
+  - { resource: messenger.yml }
+
 jms_serializer:
   metadata:
     directories:

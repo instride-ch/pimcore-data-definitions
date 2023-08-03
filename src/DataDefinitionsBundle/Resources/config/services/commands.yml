@@ -19,6 +19,14 @@ services:
     tags:
       - { name: 'console.command', command: 'data-definitions:import' }
 
+  Wvision\Bundle\DataDefinitionsBundle\Command\ImportAsyncCommand:
+    arguments:
+      - '@event_dispatcher'
+      - '@data_definitions.repository.import_definition'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+    tags:
+      - { name: 'console.command', command: 'data-definitions:async-import' }
+
   Wvision\Bundle\DataDefinitionsBundle\Command\ExportCommand:
     arguments:
       - '@event_dispatcher'

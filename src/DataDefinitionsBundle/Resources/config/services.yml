@@ -31,6 +31,7 @@ services:
         - '@logger'
         - '@pimcore.model.factory'
         - '@coreshop.expression_language'
+        - '@messenger.default_bus'
       tags:
         - { name: monolog.logger, channel: import_definition }
         - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
@@ -394,3 +395,9 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\EventListener\WriteableListener:
       tags:
         - { name: kernel.event_subscriber }
+
+    Wvision\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessageHandler:
+      arguments:
+        - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+      tags:
+        - { name: messenger.message_handler }

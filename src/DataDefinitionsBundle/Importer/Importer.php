@@ -30,7 +30,6 @@ use Pimcore\Model\Factory;
 use Pimcore\Model\Version;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Throwable;
 use Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
@@ -71,9 +70,8 @@ final class Importer implements ImporterInterface
         private LoggerInterface $logger,
         private Factory $modelFactory,
         private ExpressionLanguage $expressionLanguage,
-        private ParameterBagInterface $parameterBag
+        private int $gcCycle
     ) {
-
     }
 
     public function doImport(ImportDefinitionInterface $definition, $params): array
@@ -237,7 +235,7 @@ final class Importer implements ImporterInterface
         }
 
         $count = 0;
-        $countToClean = $this->parameterBag->get('data_definitions.gc_cycle');
+        $countToClean = $this->gcCycle;
         $objectIds = [];
         $exceptions = [];
 

@@ -23,7 +23,6 @@ use InvalidArgumentException;
 use Pimcore;
 use Pimcore\Model\DataObject\Concrete;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Context\FetcherContextInterface;
@@ -53,7 +52,7 @@ final class Exporter implements ExporterInterface
         private ContextFactoryInterface $contextFactory,
         private EventDispatcherInterface $eventDispatcher,
         private LoggerInterface $logger,
-        private ParameterBagInterface $parameterBag
+        private int $gcCycle
     ) {
 
     }
@@ -121,7 +120,7 @@ final class Exporter implements ExporterInterface
         UnpublishedHelper::hideUnpublished(
             function () use ($definition, $params, $total, $fetcher, $provider, $fetcherContext) {
                 $count = 0;
-                $perLoop = $this->parameterBag->get('data_definitions.gc_cycle');
+                $perLoop = $this->gcCycle;
                 $perRun = ceil($total / $perLoop);
 
                 for ($i = 0; $i < $perRun; $i++) {

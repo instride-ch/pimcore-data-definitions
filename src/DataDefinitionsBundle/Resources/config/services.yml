@@ -31,7 +31,7 @@ services:
         - '@logger'
         - '@pimcore.model.factory'
         - '@coreshop.expression_language'
-        - '@parameter_bag'
+        - '%data_definitions.gc_cycle%'
       tags:
         - { name: monolog.logger, channel: import_definition }
         - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }
@@ -47,7 +47,7 @@ services:
         - '@Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface'
         - '@event_dispatcher'
         - '@logger'
-        - '@parameter_bag'
+        - '%data_definitions.gc_cycle%'
       tags:
         - { name: monolog.logger, channel: export_definition }
         - { name: 'kernel.event_listener', event: 'data_definitions.stop', method: 'stop' }

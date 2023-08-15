@@ -18,6 +18,8 @@ namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Component\Resource\Factory\Factory;
+use Pimcore\Bundle\CoreBundle\DependencyInjection\ConfigurationHelper;
+use Pimcore\Config\LocationAwareConfigRepository;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -38,10 +40,95 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('wvision_data_definitions');
         $rootNode = $treeBuilder->getRootNode();
 
+        ConfigurationHelper::addConfigLocationWithWriteTargetNodes($rootNode, [
+            'import_definitions' => '/var/config/import-definitions',
+            'export_definitions' => '/var/config/export-definitions'
+        ]);
+
         $rootNode
             ->children()
                 ->scalarNode('driver')->defaultValue(CoreShopResourceBundle::DRIVER_PIMCORE)->end()
                 ->integerNode('gc_cycle')->defaultValue(50)->end()
+            ->end();
+
+        $rootNode
+            ->children()
+                ->arrayNode('import_definitions')
+                ->normalizeKeys(false)
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->end()
+                            ->scalarNode('provider')->end()
+                            ->scalarNode('class')->end()
+                            ->scalarNode('runner')->end()
+                            ->booleanNode('stopOnException')->end()
+                            ->scalarNode('failureNotificationDocument')->end()
+                            ->scalarNode('successNotificationDocument')->end()
+                            ->scalarNode('loader')->end()
+                            ->scalarNode('objectPath')->end()
+                            ->scalarNode('cleaner')->end()
+                            ->scalarNode('key')->end()
+                            ->scalarNode('filter')->end()
+                            ->booleanNode('renameExistingObjects')->end()
+                            ->booleanNode('relocateExistingObjects')->end()
+                            ->booleanNode('skipNewObjects')->end()
+                            ->booleanNode('skipExistingObjects')->end()
+                            ->booleanNode('createVersion')->end()
+                            ->booleanNode('omitMandatoryCheck')->end()
+                            ->booleanNode('forceLoadObject')->end()
+                            ->variableNode('configuration')->end()
+                            ->arrayNode('mapping')
+                                ->prototype('array')
+                                    ->children()
+                                        ->scalarNode('primaryIdentifier')->end()
+                                        ->scalarNode('setter')->end()
+                                        ->variableNode('setterConfig')->end()
+                                        ->scalarNode('fromColumn')->end()
+                                        ->scalarNode('toColumn')->end()
+                                        ->scalarNode('interpreter')->end()
+                                        ->variableNode('interpreterConfig')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                            ->integerNode('creationDate')->end()
+                            ->integerNode('modificationDate')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->arrayNode('export_definitions')
+                ->normalizeKeys(false)
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->end()
+                            ->scalarNode('fetcher')->end()
+                            ->variableNode('fetcherConfig')->end()
+                            ->booleanNode('fetchUnpublished')->end()
+                            ->scalarNode('provider')->end()
+                            ->scalarNode('class')->end()
+                            ->scalarNode('loader')->end()
+                            ->variableNode('configuration')->end()
+                            ->scalarNode('runner')->end()
+                            ->booleanNode('stopOnException')->end()
+                            ->scalarNode('failureNotificationDocument')->end()
+                            ->scalarNode('successNotificationDocument')->end()
+                            ->arrayNode('mapping')
+                                ->prototype('array')
+                                    ->children()
+                                        ->scalarNode('primaryIdentifier')->end()
+                                        ->scalarNode('getter')->end()
+                                        ->variableNode('getterConfig')->end()
+                                        ->scalarNode('fromColumn')->end()
+                                        ->scalarNode('toColumn')->end()
+                                        ->scalarNode('interpreter')->end()
+                                        ->variableNode('interpreterConfig')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                            ->integerNode('creationDate')->end()
+                            ->integerNode('modificationDate')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         $this->addPimcoreResourcesSection($rootNode);

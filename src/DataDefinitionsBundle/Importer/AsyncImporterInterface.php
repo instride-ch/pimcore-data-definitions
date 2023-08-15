@@ -14,18 +14,13 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Rules\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Importer;
 
-use CoreShop\Component\Rule\Model\RuleTrait;
+use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
-class ImportRule implements ImportRuleInterface
+interface AsyncImporterInterface
 {
-    use RuleTrait;
+    public function doImportRowAsync(ImportDefinitionInterface $definition, array $row, array $params): void;
 
-    protected int $id;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    public function doImportAsync(ImportDefinitionInterface $definition, array $params): void;
 }

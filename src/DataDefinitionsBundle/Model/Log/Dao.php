@@ -40,7 +40,7 @@ class Dao extends AbstractDao
             $this->model->setId($id);
         }
 
-        $data = $this->db->fetchRow('SELECT * FROM '.$this->tableName.' WHERE id = ?', $this->model->getId());
+        $data = $this->db->fetchAssociative('SELECT * FROM '.$this->tableName.' WHERE id = ?', [$this->model->getId()]);
 
         if (!$data['id']) {
             throw new InvalidArgumentException(sprintf('Object with the ID %s does not exist', $this->model->getId()));

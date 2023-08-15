@@ -12,7 +12,6 @@ pimcore:
         default_language: ''
         disable_usage_statistics: false
         debug_admin_translations: false
-        instance_identifier: ''
     documents:
         versions:
             days: null
@@ -32,14 +31,6 @@ pimcore:
             steps: 10
         icc_rgb_profile: ''
         icc_cmyk_profile: ''
-        hide_edit_image: false
-        disable_tree_preview: false
-    services:
-        google:
-            client_id: ''
-            email: ''
-            simple_api_key: ''
-            browser_api_key: ''
     httpclient:
         adapter: Socket
         proxy_host: ''
@@ -53,14 +44,6 @@ pimcore:
         return:
             name: pimcore
             email: pimcore@example.com
-    newsletter:
-        sender:
-            name: ''
-            email: ''
-        return:
-            name: ''
-            email: ''
-        use_specific: true
     applicationlog:
         mail_notification:
             send_log_summary: false

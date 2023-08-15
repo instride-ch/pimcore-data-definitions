@@ -39,6 +39,19 @@ pimcore.plugin.datadefinitions.import.panel = Class.create(coreshop.resource.pan
     runners: [],
     persisters: [],
 
+    getTopBar: function () {
+        return [
+            {
+                // add button
+                text: t('add'),
+                iconCls: 'pimcore_icon_add',
+                itemId: 'add-button',
+                handler: this.addItem.bind(this),
+                disabled: !pimcore.settings['data-definitions-import-definition-writeable']
+            }
+        ];
+    },
+
     getDefaultGridConfiguration: function () {
         return {
             region: 'west',

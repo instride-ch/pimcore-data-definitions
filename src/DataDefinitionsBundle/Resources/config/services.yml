@@ -31,6 +31,7 @@ services:
         - '@logger'
         - '@pimcore.model.factory'
         - '@coreshop.expression_language'
+        - '@messenger.default_bus'
         - '%data_definitions.gc_cycle%'
       tags:
         - { name: monolog.logger, channel: import_definition }
@@ -271,6 +272,10 @@ services:
       tags:
         - { name: data_definitions.interpreter, type: donotsetonempty, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 
+    Wvision\Bundle\DataDefinitionsBundle\Interpreter\TypeCastingInterpreter:
+      tags:
+        - { name: data_definitions.interpreter, type: type_casting, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\TypeCastingInterpreterType }
+
     Wvision\Bundle\DataDefinitionsBundle\Interpreter\LinkInterpreter:
       tags:
         - { name: data_definitions.interpreter, type: link, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
@@ -384,3 +389,17 @@ services:
     Wvision\Bundle\DataDefinitionsBundle\Service\StorageLocator:
       arguments:
         $locator: !tagged_locator { tag: flysystem.storage }
+
+    Wvision\Bundle\DataDefinitionsBundle\EventListener\PimcoreSettingsListener:
+      tags:
+        - { name: kernel.event_listener, event: pimcore.admin.indexAction.settings, method: indexSettings }
+
+    Wvision\Bundle\DataDefinitionsBundle\EventListener\WriteableListener:
+      tags:
+        - { name: kernel.event_subscriber }
+
+    Wvision\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessageHandler:
+      arguments:
+        - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+      tags:
+        - { name: messenger.message_handler }

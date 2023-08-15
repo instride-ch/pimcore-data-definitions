@@ -1,0 +1,18 @@
+framework:
+    messenger:
+        transports:
+            data_definitions_import:
+                dsn: "doctrine://default?queue_name=data_definitions_import"
+                failure_transport: data_definitions_import_failed
+                retry_strategy:
+                    max_retries: 5
+                    delay: 300000
+                    multiplier: 2
+            # we store failed messages here for admins to manually review them later
+            data_definitions_import_failed:
+                dsn: "doctrine://default?queue_name=data_definitions_import_failed"
+                retry_strategy:
+                    max_retries: 0
+
+        routing:
+            'Wvision\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessage': data_definitions_import

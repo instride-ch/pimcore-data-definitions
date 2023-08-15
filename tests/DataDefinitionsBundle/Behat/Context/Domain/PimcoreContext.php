@@ -64,7 +64,7 @@ final class PimcoreContext implements Context
          * @var DataObject\Listing $list
          */
         $list = $fqcn::getList();
-        $list->setCondition('o_published=0');
+        $list->setCondition('published=0');
 
         Assert::eq($count, $list->getTotalCount(),
             sprintf(
@@ -88,7 +88,7 @@ final class PimcoreContext implements Context
          * @var DataObject\Listing $list
          */
         $list = $fqcn::getList();
-        $list->setCondition('o_published=1');
+        $list->setCondition('published=1');
 
         Assert::eq($count, $list->getTotalCount(),
             sprintf(

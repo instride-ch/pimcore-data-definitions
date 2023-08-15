@@ -17,9 +17,12 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractModelExtension;
+use Pimcore\Config\LocationAwareConfigRepository;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Wvision\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
@@ -45,7 +48,7 @@ use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
-class DataDefinitionsExtension extends AbstractModelExtension
+class DataDefinitionsExtension extends AbstractModelExtension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -122,6 +125,16 @@ class DataDefinitionsExtension extends AbstractModelExtension
             ->registerForAutoconfiguration(PersisterInterface::class)
             ->addTag(PersisterRegistryCompilerPass::PERSISTER_TAG);
 
+        $container->setParameter('data_definitions.config_location', $config['config_location'] ?? []);
+
+        $container->setParameter('data_definitions.import_definitions', $config['import_definitions']);
+        $container->setParameter('data_definitions.export_definitions', $config['export_definitions']);
         $container->setParameter('data_definitions.gc_cycle', $config['gc_cycle']);
+    }
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        LocationAwareConfigRepository::loadSymfonyConfigFiles($container, 'data_definitions', 'export_definitions');
+        LocationAwareConfigRepository::loadSymfonyConfigFiles($container, 'data_definitions', 'import_definitions');
     }
 }

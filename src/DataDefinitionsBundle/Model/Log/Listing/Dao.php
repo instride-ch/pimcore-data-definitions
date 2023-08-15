@@ -49,7 +49,7 @@ class Dao extends Listing\Dao\AbstractDao
      * @return Log[]
      * @throws Exception
      */
-    public function load()
+    public function load(): array
     {
         // load id's
         $list = $this->loadIdList();
@@ -85,7 +85,7 @@ class Dao extends Listing\Dao\AbstractDao
     public function loadIdList()
     {
         $queryBuilder = $this->getQueryBuilder(['id']);
-        $assetIds = $this->db->fetchCol(
+        $assetIds = $this->db->fetchFirstColumn(
             (string)$queryBuilder,
             $this->model->getConditionVariables(),
             $this->model->getConditionVariableTypes()
@@ -105,7 +105,7 @@ class Dao extends Listing\Dao\AbstractDao
     {
         return (int)$this->db->fetchOne(
             'SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition().$this->getOffsetLimit(),
-            $this->model->getConditionVariables()
+            [$this->model->getConditionVariables()]
         );
     }
 
@@ -119,7 +119,7 @@ class Dao extends Listing\Dao\AbstractDao
     {
         return (int)$this->db->fetchOne(
             'SELECT COUNT(*) as amount FROM '.$this->getTableName().$this->getCondition(),
-            $this->model->getConditionVariables()
+            [$this->model->getConditionVariables()]
         );
     }
 }

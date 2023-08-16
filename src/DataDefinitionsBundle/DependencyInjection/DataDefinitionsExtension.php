@@ -129,6 +129,7 @@ class DataDefinitionsExtension extends AbstractModelExtension implements Prepend
 
         $container->setParameter('data_definitions.import_definitions', $config['import_definitions']);
         $container->setParameter('data_definitions.export_definitions', $config['export_definitions']);
+        $container->setParameter('data_definitions.gc_cycle', $config['gc_cycle']);
     }
 
     public function prepend(ContainerBuilder $container): void

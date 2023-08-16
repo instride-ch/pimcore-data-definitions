@@ -74,6 +74,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         private Factory $modelFactory,
         private ExpressionLanguage $expressionLanguage,
         private MessageBusInterface $bus,
+        private int $gcCycle
     ) {
 
     }
@@ -306,7 +307,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         }
 
         $count = 0;
-        $countToClean = 50;
+        $countToClean = $this->gcCycle;
         $objectIds = [];
         $exceptions = [];
 

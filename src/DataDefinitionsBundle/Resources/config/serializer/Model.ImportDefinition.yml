@@ -50,3 +50,8 @@ Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition:
       expose: true
       type: boolean
       groups: [ Detailed ]
+  virtual_properties:
+    isWriteable:
+      exp: object.isWriteable()
+      type: boolean
+      serialized_name: isWriteable

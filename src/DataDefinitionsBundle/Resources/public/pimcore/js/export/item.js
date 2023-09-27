@@ -25,7 +25,7 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
     providers: [],
 
     saveDisabled: function () {
-        return !pimcore.settings['data-definitions-export-definition-writeable'];
+        return !this.data.isWriteable;
     },
 
     getSettings: function () {

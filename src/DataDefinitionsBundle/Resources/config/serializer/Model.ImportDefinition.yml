@@ -50,3 +50,7 @@ Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition:
             expose: true
             type: boolean
             groups: [Detailed]
+        persister:
+            expose: true
+            type: string
+            groups: [Detailed]

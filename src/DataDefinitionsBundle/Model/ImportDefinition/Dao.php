@@ -152,6 +152,7 @@ class Dao extends Model\Dao\PhpArrayTable
                 'forceLoadObject',
                 'loader',
                 'fetcher',
+                'persister',
             ];
 
             foreach ($dataRaw as $key => $value) {

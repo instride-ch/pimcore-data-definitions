@@ -49,7 +49,7 @@ pimcore.plugin.datadefinitions.interpreters.import_rule = Class.create(pimcore.p
         });
     },
 
-    close: function(rules) {
+    close: function (rules) {
         this.rules = rules;
         this.window.destroy();
     },

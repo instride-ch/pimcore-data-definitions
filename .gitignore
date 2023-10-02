@@ -66,3 +66,7 @@ var/classes
 var/config
 test.csv
 web
+public
+docker-compose.yaml
+test-commands.txt
+.docker

@@ -39,7 +39,8 @@ final class ListImportDefinitionsCommand extends AbstractCommand
         $this
             ->setName('data-definitions:list:imports')
             ->setDescription('List all Import Definitions.')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>%command.name%</info> lists all Data Definitions for Imports.
 EOT
             );

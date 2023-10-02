@@ -17,52 +17,33 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
 
 use Exception;
-use InvalidArgumentException;
 use Pimcore\Model;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use function count;
 use function in_array;
 use function is_array;
 
-class Dao extends Model\Dao\PhpArrayTable
+class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
 {
+    private const CONFIG_KEY = 'import_definitions';
+
     /**
      * Configure Configuration File
      */
-    public function configure()
+    public function configure(): void
     {
-        parent::configure();
-        $this->setFile('importdefinitions');
+        $config = \Pimcore::getContainer()->getParameter('data_definitions.config_location');
+        $definitions = \Pimcore::getContainer()->getParameter('data_definitions.import_definitions');
+
+        $storageConfig = $config[self::CONFIG_KEY];
+
+        parent::configure([
+            'containerConfig' => $definitions,
+            'settingsStoreScope' => 'data_definitions',
+            'storageConfig' => $storageConfig,
+        ]);
     }
 
-    /**
-     * Get Configuration By Id
-     *
-     * @param null $id
-     * @throws Exception
-     */
-    public function getById($id = null)
-    {
-        if ($id !== null) {
-            $this->model->setId($id);
-        }
-
-        $data = $this->db->getById($this->model->getId());
-
-        if (isset($data['id'])) {
-            $this->assignVariablesToModel($data);
-        } else {
-            throw new InvalidArgumentException(sprintf('Definition with id: %s does not exist',
-                $this->model->getId()));
-        }
-    }
-
-    /**
-     * @param array $data
-     * @return void
-     * @throws Exception
-     */
-    protected function assignVariablesToModel($data)
+    protected function assignVariablesToModel($data): void
     {
         parent::assignVariablesToModel($data);
 
@@ -90,23 +71,26 @@ class Dao extends Model\Dao\PhpArrayTable
      * @param null $name
      * @throws Exception
      */
-    public function getByName($name = null)
+    public function getByName(string $id = null): void
     {
-        if ($name !== null) {
-            $this->model->setName($name);
+        if ($id != null) {
+            $this->model->setName($id);
         }
 
-        $name = $this->model->getName();
+        $data = $this->getDataByName($this->model->getName());
 
-        $data = $this->db->fetchAll(function ($row) use ($name) {
-            return $row['name'] === $name;
-        });
+        if ($data && $id != null) {
+            $data['id'] = $id;
+        }
 
-        if (isset($data[0]['id']) && count($data)) {
-            $this->assignVariablesToModel($data[0]);
+        if ($data) {
+            $this->assignVariablesToModel($data);
+            $this->model->setName($data['id']);
         } else {
-            throw new InvalidArgumentException(sprintf('Definition with name: %s does not exist',
-                $this->model->getName()));
+            throw new Model\Exception\NotFoundException(sprintf(
+                'Thumbnail with ID "%s" does not exist.',
+                $this->model->getName()
+            ));
         }
     }
 
@@ -123,68 +107,70 @@ class Dao extends Model\Dao\PhpArrayTable
         }
         $this->model->setModificationDate($ts);
 
-        try {
-            $dataRaw = get_object_vars($this->model);
-            $data = [];
-            $allowedProperties = [
-                'id',
-                'name',
-                'provider',
-                'class',
-                'configuration',
-                'creationDate',
-                'modificationDate',
-                'mapping',
-                'objectPath',
-                'cleaner',
-                'key',
-                'renameExistingObjects',
-                'relocateExistingObjects',
-                'filter',
-                'runner',
-                'createVersion',
-                'stopOnException',
-                'omitMandatoryCheck',
-                'failureNotificationDocument',
-                'successNotificationDocument',
-                'skipExistingObjects',
-                'skipNewObjects',
-                'forceLoadObject',
-                'loader',
-                'fetcher',
-                'persister',
-            ];
+        $dataRaw = get_object_vars($this->model);
+        $data = [];
+        $allowedProperties = [
+            'name',
+            'provider',
+            'class',
+            'configuration',
+            'creationDate',
+            'modificationDate',
+            'mapping',
+            'objectPath',
+            'cleaner',
+            'key',
+            'renameExistingObjects',
+            'relocateExistingObjects',
+            'filter',
+            'runner',
+            'createVersion',
+            'stopOnException',
+            'omitMandatoryCheck',
+            'failureNotificationDocument',
+            'successNotificationDocument',
+            'skipExistingObjects',
+            'skipNewObjects',
+            'forceLoadObject',
+            'loader',
+            'fetcher',
+            'persister',
+        ];
 
-            foreach ($dataRaw as $key => $value) {
-                if (in_array($key, $allowedProperties, true)) {
-                    if ($key === 'providerConfiguration') {
-                        if ($value) {
-                            $data[$key] = get_object_vars($value);
-                        }
-                    } elseif ($key === 'mapping') {
-                        if ($value) {
-                            $data[$key] = array();
+        foreach ($dataRaw as $key => $value) {
+            if (in_array($key, $allowedProperties, true)) {
+                if ($key === 'providerConfiguration') {
+                    if ($value) {
+                        $data[$key] = get_object_vars($value);
+                    }
+                } elseif ($key === 'mapping') {
+                    if ($value) {
+                        $data[$key] = array();
 
-                            if (is_array($value)) {
-                                foreach ($value as $map) {
-                                    $data[$key][] = get_object_vars($map);
-                                }
+                        if (is_array($value)) {
+                            foreach ($value as $map) {
+                                $data[$key][] = get_object_vars($map);
                             }
                         }
-                    } else {
-                        $data[$key] = $value;
                     }
+                } else {
+                    $data[$key] = $value;
                 }
             }
-
-            $this->db->insertOrUpdate($data, $this->model->getId());
-        } catch (Exception $e) {
-            throw $e;
         }
 
-        if (!$this->model->getId()) {
-            $this->model->setId($this->db->getLastInsertId());
-        }
+        $this->saveData($this->model->getName(), $data);
+    }
+
+    protected function prepareDataStructureForYaml(string $id, mixed $data): mixed
+    {
+        return [
+            'data_definitions' => [
+                'import_definitions' => [
+                    $id => $data,
+                ],
+            ],
+        ];
     }
 
     /**
@@ -193,6 +179,6 @@ class Dao extends Model\Dao\PhpArrayTable
      */
     public function delete()
     {
-        $this->db->delete($this->model->getId());
+        $this->deleteData($this->model->getName());
     }
 }

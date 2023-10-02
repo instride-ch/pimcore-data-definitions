@@ -18,11 +18,9 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use Pimcore\Model\DataObject;
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class DefinitionInterpreter implements InterpreterInterface
 {
@@ -35,22 +33,14 @@ class DefinitionInterpreter implements InterpreterInterface
         $this->importer = $importer;
     }
 
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        $subDefinition = $this->definitionRepository->find($configuration['definition']);
+    public function interpret(InterpreterContextInterface $context): mixed {
+        $subDefinition = $this->definitionRepository->find($context->getConfiguration()['definition']);
 
         if (!$subDefinition instanceof ImportDefinitionInterface) {
             return null;
         }
 
-        $imported = $this->importer->doImport($subDefinition, ['data' => [$data], 'child' => true]);
+        $imported = $this->importer->doImport($subDefinition, ['data' => [$context->getDataRow()], 'child' => true]);
 
         if (count($imported) === 1) {
             return DataObject::getById($imported[0]);

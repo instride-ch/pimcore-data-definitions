@@ -21,3 +21,12 @@ parameters:
 framework:
     session:
         handler_id: 'Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler'
+
+data_definitions:
+    config_location:
+        import_definitions:
+            write_target:
+                type: settings-store
+        export_definitions:
+            write_target:
+                type: settings-store

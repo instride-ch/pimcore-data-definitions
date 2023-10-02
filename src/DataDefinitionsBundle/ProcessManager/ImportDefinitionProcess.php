@@ -22,27 +22,10 @@ use ProcessManagerBundle\Process\Pimcore;
 
 final class ImportDefinitionProcess extends Pimcore
 {
-    public function run(ExecutableInterface $executable, array $params = null): int
+    use DataDefinitionProcessTrait;
+
+    public function run(ExecutableInterface $executable, array $params = []): int
     {
-        $settings = $executable->getSettings();
-        $params = json_decode($settings['params'], true);
-
-        $currentUser = Admin::getCurrentUser();
-
-        if ($currentUser && !isset($params['userId'])) {
-            $params['userId'] = $currentUser->getId();
-        }
-
-        $settings['command'] = [
-            'data-definitions:import',
-            '-d',
-            $settings['definition'],
-            '-p',
-            json_encode($params),
-        ];
-
-        $executable->setSettings($settings);
-
-        return parent::run($executable);
+        return $this->runDefinition('data-definitions:import', $executable, $params);
     }
 }

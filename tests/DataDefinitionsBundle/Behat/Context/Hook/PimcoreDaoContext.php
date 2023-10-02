@@ -23,14 +23,24 @@ use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Fieldcollection;
 use Pimcore\Model\DataObject\Listing;
 use Pimcore\Model\DataObject\Objectbrick;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 final class PimcoreDaoContext implements Context
 {
-    private $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(
+        private Connection $connection,
+        private KernelInterface $kernel,
+    )
     {
-        $this->connection = $connection;
+
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function setKernel(): void
+    {
+        \Pimcore::setKernel($this->kernel);
     }
 
     /**
@@ -39,14 +49,14 @@ final class PimcoreDaoContext implements Context
     public function purgeObjects()
     {
         Cache::clearAll();
-        Cache\Runtime::clear();
+        Cache\RuntimeCache::clear();
 
         /**
          * @var Listing $list
          */
         $list = new DataObject\Listing();
         $list->setUnpublished(true);
-        $list->setCondition('o_id <> 1');
+        $list->setCondition('id <> 1');
         $list->load();
 
         foreach ($list->getObjects() as $obj) {
@@ -60,7 +70,7 @@ final class PimcoreDaoContext implements Context
     public function purgeAssets()
     {
         Cache::clearAll();
-        Cache\Runtime::clear();
+        Cache\RuntimeCache::clear();
 
         /**
          * @var Asset\Listing $list
@@ -107,7 +117,7 @@ final class PimcoreDaoContext implements Context
     public function clearRuntimeCacheScenario()
     {
         //Clearing it here is totally fine, since each scenario has its own separated context of objects
-        \Pimcore\Cache\Runtime::clear();
+        Cache\RuntimeCache::clear();
     }
 
     /**
@@ -117,7 +127,7 @@ final class PimcoreDaoContext implements Context
     {
         //We should not clear Pimcore Objects here, otherwise we lose the reference to it
         //and end up having the same object twice
-        $copy = \Pimcore\Cache\Runtime::getInstance()->getArrayCopy();
+        $copy = \Pimcore\Cache\RuntimeCache::getInstance()->getArrayCopy();
         $keepItems = [];
 
         foreach ($copy as $key => $value) {
@@ -126,7 +136,7 @@ final class PimcoreDaoContext implements Context
             }
         }
 
-        \Pimcore\Cache\Runtime::clear($keepItems);
+        \Pimcore\Cache\RuntimeCache::clear($keepItems);
     }
 
     /**

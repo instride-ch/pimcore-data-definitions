@@ -17,38 +17,28 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use InvalidArgumentException;
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class TypeCastingInterpreter implements InterpreterInterface, DataSetAwareInterface
+class TypeCastingInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
+    public const TYPE_INT = 'int';
+    public const TYPE_FLOAT = 'float';
+    public const TYPE_STRING = 'string';
+    public const TYPE_BOOLEAN = 'boolean';
 
-    protected const TYPE_INT = 'int';
-    protected const TYPE_STRING = 'string';
-    protected const TYPE_BOOLEAN = 'boolean';
-
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        $type = $configuration['toType'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $type = $context->getConfiguration()['toType'];
 
         switch ($type) {
             case static::TYPE_INT:
-                return (int)$value;
+                return (int)$context->getValue();
+            case static::TYPE_FLOAT:
+                return (float)$context->getValue();
             case static::TYPE_STRING:
-                return (string)$value;
+                return (string)$context->getValue();
             case static::TYPE_BOOLEAN:
-                return (boolean)$value;
+                return (boolean)$context->getValue();
         }
 
         throw new InvalidArgumentException(sprintf('Not valid type cast given, given %s', $type));

@@ -20,7 +20,12 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 interface ExportProviderInterface
 {
-    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void;
+    public function addExportData(
+        array $data,
+        array $configuration,
+        ExportDefinitionInterface $definition,
+        array $params
+    ): void;
 
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void;
 }

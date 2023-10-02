@@ -23,7 +23,7 @@ trait ArtifactProviderTrait
 {
     public function generateArtifact($configuration, ExportDefinitionInterface $definition, $params): ?Asset
     {
-        if (!$params['artifact']) {
+        if (!isset($params['artifact'])) {
             return null;
         }
 
@@ -45,7 +45,9 @@ trait ArtifactProviderTrait
         $artifact->setFilename(Asset\Service::getUniqueKey($artifact));
         $artifact->save();
 
-        fclose($stream);
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
 
         return $artifact;
     }
@@ -55,5 +57,9 @@ trait ArtifactProviderTrait
      * @param ExportDefinitionInterface $definition
      * @param array $params
      */
-    abstract public function provideArtifactStream(array $configuration, ExportDefinitionInterface $definition, array $params);
+    abstract public function provideArtifactStream(
+        array $configuration,
+        ExportDefinitionInterface $definition,
+        array $params
+    );
 }

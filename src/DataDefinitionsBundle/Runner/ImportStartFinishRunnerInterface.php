@@ -14,13 +14,13 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Model;
+namespace Wvision\Bundle\DataDefinitionsBundle\Runner;
 
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\RunnerContextInterface;
 
-interface DataSetAwareInterface
+interface ImportStartFinishRunnerInterface
 {
-    public function getDataSet(): ImportDataSetInterface;
+    public function startImport(RunnerContextInterface $context);
 
-    public function setDataSet(ImportDataSetInterface $dataSet): void;
+    public function finishImport(RunnerContextInterface $context);
 }

@@ -18,18 +18,13 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 
 use Exception;
 use Pimcore\Model;
-use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 use Pimcore\Model\Paginator\PaginateListingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Model\Log;
 use function in_array;
 
 class Listing extends Model\Listing\AbstractListing implements PaginateListingInterface
 {
-    /**
-     * List of Logs.
-     *
-     * @var array
-     */
-    public $data;
+    public ?array $data;
 
     /**
      * @var string
@@ -48,7 +43,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      *
      * @return bool
      */
-    public function isValidOrderKey($key)
+    public function isValidOrderKey($key): bool
     {
         return in_array($key, $this->validOrderKeys, true);
     }
@@ -79,10 +74,10 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Get total count
      *
-     * @return mixed
+     * @return int
      * @throws Exception
      */
-    public function count()
+    public function count(): int
     {
         return $this->getTotalCount();
     }
@@ -92,10 +87,10 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      *
      * @param int $offset
      * @param int $itemCountPerPage
-     * @return mixed
+     * @return array
      * @throws Exception
      */
-    public function getItems($offset, $itemCountPerPage)
+    public function getItems($offset, $itemCountPerPage): array
     {
         $this->setOffset($offset);
         $this->setLimit($itemCountPerPage);
@@ -142,7 +137,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      *
      * @throws Exception
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->getData();
         reset($this->data);
@@ -154,7 +149,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      * @return mixed
      * @throws Exception
      */
-    public function current()
+    public function current(): mixed
     {
         $this->getData();
 
@@ -164,10 +159,10 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Key
      *
-     * @return mixed
+     * @return int|string|null
      * @throws Exception
      */
-    public function key()
+    public function key(): int|string|null
     {
         $this->getData();
 
@@ -177,14 +172,14 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Next
      *
-     * @return mixed
+     * @return void
      * @throws Exception
      */
-    public function next()
+    public function next(): void
     {
         $this->getData();
 
-        return next($this->data);
+        next($this->data);
     }
 
     /**
@@ -193,7 +188,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      * @return bool
      * @throws Exception
      */
-    public function valid()
+    public function valid(): bool
     {
         $this->getData();
 

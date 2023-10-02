@@ -27,6 +27,13 @@ pimcore.plugin.datadefinitions.export_provider.csv = Class.create(pimcore.plugin
             fieldLabel: t('data_definitions_csv_enclosure'),
             anchor: '100%',
             value: this.data['enclosure'] ? this.data.enclosure : '"'
+        }, {
+            xtype: 'textfield',
+            name: 'escape',
+            fieldLabel: t('data_definitions_csv_escape'),
+            anchor: '100%',
+            maxLength: 1,
+            value: this.data['escape'] || '' === this.data['escape'] ? this.data.escape : '\\'
         }];
     }
 });

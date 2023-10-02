@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Cleaner;
 
-use Exception;
 use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class Deleter extends AbstractCleaner

@@ -16,30 +16,25 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Data\ExternalImage;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class ExternalImageInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        if (($definition instanceof ExportDefinitionInterface) && $value instanceof ExternalImage) {
-            return $value->getUrl();
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        if (($context->getDefinition() instanceof ExportDefinitionInterface) && $context->getValue(
+            ) instanceof ExternalImage) {
+            return $context->getValue()->getUrl();
         }
 
-        if (($definition instanceof ImportDefinitionInterface) && filter_var($value, FILTER_VALIDATE_URL)) {
-            return new ExternalImage($value);
+        if (($context->getDefinition() instanceof ImportDefinitionInterface) && filter_var(
+                $context->getValue(),
+                FILTER_VALIDATE_URL
+            )) {
+            return new ExternalImage($context->getValue());
         }
 
         return null;

@@ -17,9 +17,12 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractModelExtension;
+use Pimcore\Config\LocationAwareConfigRepository;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Wvision\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
@@ -29,6 +32,7 @@ use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\FilterRegi
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\GetterRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\LoaderRegistryCompilerPass;
+use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\PersisterRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
@@ -37,17 +41,18 @@ use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
-class DataDefinitionsExtension extends AbstractModelExtension
+class DataDefinitionsExtension extends AbstractModelExtension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
@@ -68,6 +73,10 @@ class DataDefinitionsExtension extends AbstractModelExtension
         }
 
         $loader->load('services.yml');
+
+        if (class_exists(\GuzzleHttp\Psr7\HttpFactory::class)) {
+            $loader->load('guzzle_psr7.yml');
+        }
 
         if (array_key_exists('ProcessManagerBundle', $bundles)) {
             $config['pimcore_admin']['js']['process_manager_import'] = '/bundles/datadefinitions/pimcore/js/process_manager/import_definitions.js';
@@ -112,5 +121,19 @@ class DataDefinitionsExtension extends AbstractModelExtension
         $container
             ->registerForAutoconfiguration(SetterInterface::class)
             ->addTag(SetterRegistryCompilerPass::SETTER_TAG);
+        $container
+            ->registerForAutoconfiguration(PersisterInterface::class)
+            ->addTag(PersisterRegistryCompilerPass::PERSISTER_TAG);
+
+        $container->setParameter('data_definitions.config_location', $config['config_location'] ?? []);
+
+        $container->setParameter('data_definitions.import_definitions', $config['import_definitions']);
+        $container->setParameter('data_definitions.export_definitions', $config['export_definitions']);
+    }
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        LocationAwareConfigRepository::loadSymfonyConfigFiles($container, 'data_definitions', 'export_definitions');
+        LocationAwareConfigRepository::loadSymfonyConfigFiles($container, 'data_definitions', 'import_definitions');
     }
 }

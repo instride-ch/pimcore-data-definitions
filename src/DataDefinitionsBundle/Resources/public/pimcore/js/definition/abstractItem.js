@@ -14,6 +14,10 @@
 pimcore.registerNS('pimcore.plugin.datadefinitions.definition.abstractItem');
 
 pimcore.plugin.datadefinitions.definition.abstractItem = Class.create(coreshop.resource.item, {
+    saveDisabled: function() {
+        return false;
+    },
+
     getPanel: function () {
         var me = this,
             panel = new Ext.TabPanel({
@@ -45,7 +49,8 @@ pimcore.plugin.datadefinitions.definition.abstractItem = Class.create(coreshop.r
                     {
                         text: t('data_definitions_import_definition'),
                         iconCls: 'pimcore_icon_import',
-                        handler: this.upload.bind(this)
+                        handler: this.upload.bind(this),
+                        disabled: this.saveDisabled()
                     },
                     {
                         text: t('data_definitions_export_definition'),
@@ -58,6 +63,7 @@ pimcore.plugin.datadefinitions.definition.abstractItem = Class.create(coreshop.r
                     {
                         text: t('data_definitions_duplicate_definition'),
                         iconCls: 'pimcore_icon_copy',
+                        disabled: this.saveDisabled(),
                         handler: function () {
                             var id = me.data.id;
 
@@ -88,7 +94,8 @@ pimcore.plugin.datadefinitions.definition.abstractItem = Class.create(coreshop.r
                     {
                         text: t('save'),
                         iconCls: 'pimcore_icon_apply',
-                        handler: this.save.bind(this)
+                        handler: this.save.bind(this),
+                        disabled: this.saveDisabled()
                     }],
                 items: this.getItems()
             });

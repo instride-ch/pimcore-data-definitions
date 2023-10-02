@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Doctrine\DBAL\Connection;
-use Pimcore\Db;
 
 class SqlProvider extends AbstractSqlProvider
 {

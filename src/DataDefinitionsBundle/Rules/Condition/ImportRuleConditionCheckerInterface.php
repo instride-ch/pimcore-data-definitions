@@ -22,5 +22,10 @@ use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRuleInterface;
 
 interface ImportRuleConditionCheckerInterface extends ConditionCheckerInterface
 {
-    public function isImportRuleValid(ImportRuleInterface $subject, Concrete $concrete, array $params, array $configuration): bool;
+    public function isImportRuleValid(
+        ImportRuleInterface $subject,
+        Concrete $concrete,
+        array $params,
+        array $configuration
+    ): bool;
 }

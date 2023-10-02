@@ -16,40 +16,31 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Data\Link;
 use Pimcore\Model\Element\ElementInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 class LinkInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        if (($definition instanceof ExportDefinitionInterface) && $value instanceof Link) {
-            return $value->getHref();
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        if (($context->getDefinition() instanceof ExportDefinitionInterface) && $context->getValue() instanceof Link) {
+            return $context->getValue()->getHref();
         }
 
-        if (($definition instanceof ImportDefinitionInterface)) {
+        if (($context->getDefinition() instanceof ImportDefinitionInterface)) {
             $link = new Link();
 
-            if (filter_var($value, FILTER_VALIDATE_URL)) {
-                $link->setDirect($value);
+            if (filter_var($context->getValue(), FILTER_VALIDATE_URL)) {
+                $link->setDirect($context->getValue());
             }
 
-            $link->setText($value);
+            $link->setText($context->getValue());
 
-            if ($value instanceof ElementInterface) {
-                $link->setElement($value);
+            if ($context->getValue() instanceof ElementInterface) {
+                $link->setElement($context->getValue());
             }
 
             return $link;

@@ -1,10 +1,10 @@
 services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: false
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
 
-    Wvision\Bundle\DataDefinitionsBundle\Installer:
-        public: true
-        arguments:
-            $bundle: "@=service('kernel').getBundle('DataDefinitionsBundle')"
+  Wvision\Bundle\DataDefinitionsBundle\Installer:
+    public: true
+    arguments:
+      $bundle: "@=service('kernel').getBundle('DataDefinitionsBundle')"

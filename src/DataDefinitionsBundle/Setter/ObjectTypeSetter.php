@@ -17,25 +17,25 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
 
 class ObjectTypeSetter implements SetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data)
+    public function set(SetterContextInterface $context)
     {
-        if ($value === Concrete::OBJECT_TYPE_FOLDER) {
-            $object->setType(Concrete::OBJECT_TYPE_FOLDER);
+        if ($context->getValue() === Concrete::OBJECT_TYPE_FOLDER) {
+            $context->getObject()->setType(Concrete::OBJECT_TYPE_FOLDER);
 
             return;
         }
 
-        if ($value === Concrete::OBJECT_TYPE_VARIANT) {
-            $object->setType(Concrete::OBJECT_TYPE_VARIANT);
+        if ($context->getValue() === Concrete::OBJECT_TYPE_VARIANT) {
+            $context->getObject()->setType(Concrete::OBJECT_TYPE_VARIANT);
 
             return;
         }
 
-        $object->setType(Concrete::OBJECT_TYPE_OBJECT);
+        $context->getObject()->setType(Concrete::OBJECT_TYPE_OBJECT);
     }
 }
 

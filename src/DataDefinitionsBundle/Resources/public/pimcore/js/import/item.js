@@ -25,6 +25,10 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
 
     providers: [],
 
+    saveDisabled: function () {
+        return !this.data.isWriteable;
+    },
+
     getSettings: function () {
         var classesStore = new Ext.data.JsonStore({
             autoDestroy: true,
@@ -142,6 +146,21 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
                     listeners: {
                         change: function (combo, value) {
                             this.data.cleaner = value;
+                        }.bind(this)
+                    }
+                },
+                {
+                    xtype: 'combo',
+                    fieldLabel: t('data_definitions_persister'),
+                    name: 'persister',
+                    displayField: 'persister',
+                    valueField: 'persister',
+                    store: pimcore.globalmanager.get('data_definitions_persisters'),
+                    value: this.data.persister,
+                    width: 500,
+                    listeners: {
+                        change: function (combo, value) {
+                            this.data.persister = value;
                         }.bind(this)
                     }
                 },

@@ -49,6 +49,7 @@ final class ImportDefinitionType extends AbstractResourceType
             ->add('cleaner', CleanerChoiceType::class)
             ->add('filter', FilterChoiceType::class)
             ->add('runner', RunnerChoiceType::class)
+            ->add('persister', PersisterChoiceType::class)
             ->add('name', TextType::class)
             ->add('objectPath', TextType::class)
             ->add('key', TextType::class)
@@ -104,7 +105,7 @@ final class ImportDefinitionType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param string        $configurationType
+     * @param string $configurationType
      */
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
@@ -113,7 +114,7 @@ final class ImportDefinitionType extends AbstractResourceType
 
     /**
      * @param FormInterface $form
-     * @param mixed         $data
+     * @param mixed $data
      * @return string|null
      */
     protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string

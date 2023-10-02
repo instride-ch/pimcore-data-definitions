@@ -17,22 +17,13 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Pimcore\Model\Asset;
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class AssetByPathInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        $assetFullPath = $configuration['path'] . '/' . $value;
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $assetFullPath = $context->getConfiguration()['path'].'/'.$context->getValue();
 
         return Asset::getByPath($assetFullPath);
     }

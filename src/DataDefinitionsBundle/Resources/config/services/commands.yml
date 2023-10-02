@@ -1,46 +1,54 @@
 services:
-    Wvision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand:
-        arguments:
-            - '@data_definitions.repository.import_definition'
-        tags:
-            - { name: 'console.command', command: 'data-definitions:list:imports' }
+  Wvision\Bundle\DataDefinitionsBundle\Command\ListImportDefinitionsCommand:
+    arguments:
+      - '@data_definitions.repository.import_definition'
+    tags:
+      - { name: 'console.command', command: 'data-definitions:list:imports' }
 
-    Wvision\Bundle\DataDefinitionsBundle\Command\ListExportDefinitionsCommand:
-        arguments:
-            - '@data_definitions.repository.export_definition'
-        tags:
-            - { name: 'console.command', command: 'data-definitions:list:exports' }
+  Wvision\Bundle\DataDefinitionsBundle\Command\ListExportDefinitionsCommand:
+    arguments:
+      - '@data_definitions.repository.export_definition'
+    tags:
+      - { name: 'console.command', command: 'data-definitions:list:exports' }
 
-    Wvision\Bundle\DataDefinitionsBundle\Command\ImportCommand:
-        arguments:
-            - '@event_dispatcher'
-            - '@data_definitions.repository.import_definition'
-            - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
-        tags:
-            - { name: 'console.command', command: 'data-definitions:import' }
+  Wvision\Bundle\DataDefinitionsBundle\Command\ImportCommand:
+    arguments:
+      - '@event_dispatcher'
+      - '@data_definitions.repository.import_definition'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+    tags:
+      - { name: 'console.command', command: 'data-definitions:import' }
 
-    Wvision\Bundle\DataDefinitionsBundle\Command\ExportCommand:
-        arguments:
-            - '@event_dispatcher'
-            - '@data_definitions.repository.export_definition'
-            - '@Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface'
-        tags:
-            - { name: 'console.command', command: 'data-definitions:export' }
+  Wvision\Bundle\DataDefinitionsBundle\Command\ImportAsyncCommand:
+    arguments:
+      - '@event_dispatcher'
+      - '@data_definitions.repository.import_definition'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface'
+    tags:
+      - { name: 'console.command', command: 'data-definitions:async-import' }
 
-    Wvision\Bundle\DataDefinitionsBundle\Command\ImportImportDefinitionCommand:
-        arguments:
-            - '@=service("CoreShop\\Component\\Resource\\Metadata\\RegistryInterface").get("data_definitions.import_definition")'
-            - '@data_definitions.repository.import_definition'
-            - '@CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager'
-            - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'
-        tags:
-            - { name: 'console.command', command: 'data-definitions:definition:import:import' }
+  Wvision\Bundle\DataDefinitionsBundle\Command\ExportCommand:
+    arguments:
+      - '@event_dispatcher'
+      - '@data_definitions.repository.export_definition'
+      - '@Wvision\Bundle\DataDefinitionsBundle\Exporter\ExporterInterface'
+    tags:
+      - { name: 'console.command', command: 'data-definitions:export' }
 
-    Wvision\Bundle\DataDefinitionsBundle\Command\ImportExportDefinitionCommand:
-        arguments:
-            - '@=service("CoreShop\\Component\\Resource\\Metadata\\RegistryInterface").get("data_definitions.export_definition")'
-            - '@data_definitions.repository.export_definition'
-            - '@CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager'
-            - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'
-        tags:
-            - { name: 'console.command', command: 'data-definitions:definition:import:export' }
+  Wvision\Bundle\DataDefinitionsBundle\Command\ImportImportDefinitionCommand:
+    arguments:
+      - '@=service("CoreShop\\Component\\Resource\\Metadata\\RegistryInterface").get("data_definitions.import_definition")'
+      - '@data_definitions.repository.import_definition'
+      - '@CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager'
+      - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'
+    tags:
+      - { name: 'console.command', command: 'data-definitions:definition:import:import' }
+
+  Wvision\Bundle\DataDefinitionsBundle\Command\ImportExportDefinitionCommand:
+    arguments:
+      - '@=service("CoreShop\\Component\\Resource\\Metadata\\RegistryInterface").get("data_definitions.export_definition")'
+      - '@data_definitions.repository.export_definition'
+      - '@CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager'
+      - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'
+    tags:
+      - { name: 'console.command', command: 'data-definitions:definition:import:export' }

@@ -21,7 +21,7 @@ pimcore.object.search = Class.create(pimcore.object.search, {
                 ]
             });
         }
-        
+
         this.exportFromHere = new Ext.SplitButton({
             text: t('data_definitions_processmanager_export_from_here'),
             iconCls: "pimcore_icon_object pimcore_icon_overlay_add",
@@ -49,7 +49,7 @@ pimcore.object.search = Class.create(pimcore.object.search, {
             sortRoot: 'data',
             autoLoad: true,
             listeners: {
-                refresh: function(store) {
+                refresh: function (store) {
                     var exportMenu = [];
                     store.each(function (executable) {
                         exportMenu.push({

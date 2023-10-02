@@ -17,71 +17,62 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
-use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class ConditionalInterpreter implements InterpreterInterface, DataSetAwareInterface
+class ConditionalInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
-    private ServiceRegistryInterface $interpreterRegistry;
-    protected ExpressionLanguage $expressionLanguage;
-    protected ContainerInterface $container;
-
     public function __construct(
-        ServiceRegistryInterface $interpreterRegistry,
-        ExpressionLanguage $expressionLanguage,
-        ContainerInterface $container
+        protected ServiceRegistryInterface $interpreterRegistry,
+        protected ExpressionLanguage $expressionLanguage,
+        protected ContainerInterface $container,
+        protected  ContextFactoryInterface $contextFactory
     ) {
-        $this->interpreterRegistry = $interpreterRegistry;
-        $this->expressionLanguage = $expressionLanguage;
-        $this->container = $container;
     }
 
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
         $params = [
-            'value' => $value,
-            'object' => $object,
-            'map' => $map,
-            'data' => $data,
-            'definition' => $definition,
-            'params' => $params,
-            'configuration' => $configuration,
+            'value' => $context->getValue(),
+            'object' => $context->getObject(),
+            'map' => $context->getMapping(),
+            'data' => $context->getDataRow(),
+            'data_set' => $context->getDataSet(),
+            'definition' => $context->getDefinition(),
+            'params' => $context->getParams(),
+            'configuration' => $context->getConfiguration(),
             'container' => $this->container,
         ];
 
-        $condition = $configuration['condition'];
+        $condition = $context->getConfiguration()['condition'];
 
         if ($this->expressionLanguage->evaluate($condition, $params)) {
-            $interpreter = $configuration['true_interpreter'];
+            $interpreter = $context->getConfiguration()['true_interpreter'];
         } else {
-            $interpreter = $configuration['false_interpreter'];
+            $interpreter = $context->getConfiguration()['false_interpreter'];
         }
 
         $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
 
         if (!$interpreterObject instanceof InterpreterInterface) {
-            return $value;
+            return $context->getValue();
         }
 
-        if ($interpreterObject instanceof DataSetAwareInterface) {
-            $interpreterObject->setDataSet($this->getDataSet());
-        }
+        $interpreterObject = $this->interpreterRegistry->get($interpreter['type']);
 
-        return $interpreterObject->interpret($object, $value, $map, $data, $definition, $params,
-            $interpreter['interpreterConfig']);
+        $newContext = $this->contextFactory->createInterpreterContext(
+            $context->getDefinition(),
+            $context->getParams(),
+            $interpreter['interpreterConfig'],
+            $context->getDataRow(),
+            $context->getDataSet(),
+            $context->getObject(),
+            $context->getValue(),
+            $context->getMapping()
+        );
+
+        return $interpreterObject->interpret($newContext);
     }
 }

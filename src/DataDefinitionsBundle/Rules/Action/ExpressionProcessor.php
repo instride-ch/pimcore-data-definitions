@@ -32,8 +32,13 @@ class ExpressionProcessor implements ImportRuleProcessorInterface
         $this->container = $container;
     }
 
-    public function apply(ImportRuleInterface $rule, Concrete $concrete, $value, array $configuration, array $params = [])
-    {
+    public function apply(
+        ImportRuleInterface $rule,
+        Concrete $concrete,
+        $value,
+        array $configuration,
+        array $params = []
+    ) {
         $expression = $configuration['expression'];
 
         return $this->expressionLanguage->evaluate(

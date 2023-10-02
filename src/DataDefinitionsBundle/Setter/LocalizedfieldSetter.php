@@ -16,34 +16,33 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Setter;
 
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\GetterContextInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 
 class LocalizedfieldSetter implements SetterInterface, GetterInterface
 {
-    public function set(Concrete $object, $value, ImportMapping $map, $data): void
+    public function set(SetterContextInterface $context): void
     {
-        $config = $map->getSetterConfig();
+        $config = $context->getMapping()->getSetterConfig();
 
-        $setter = explode('~', $map->getToColumn());
+        $setter = explode('~', $context->getMapping()->getToColumn());
         $setter = sprintf('set%s', ucfirst($setter[0]));
 
-        if (method_exists($object, $setter)) {
-            $object->$setter($value, $config['language']);
+        if (method_exists($context->getObject(), $setter)) {
+            $context->getObject()->$setter($context->getValue(), $config['language']);
         }
     }
 
-    public function get(Concrete $object, ExportMapping $map, $data)
+    public function get(GetterContextInterface $context)
     {
-        $config = $map->getGetterConfig();
+        $config = $context->getMapping()->getGetterConfig();
 
-        $getter = explode('~', $map->getFromColumn());
+        $getter = explode('~', $context->getMapping()->getFromColumn());
         $getter = sprintf('get%s', ucfirst($getter[0]));
 
-        if (method_exists($object, $getter)) {
-            return $object->$getter($config['language']);
+        if (method_exists($context->getObject(), $getter)) {
+            return $context->getObject()->$getter($config['language']);
         }
 
         return null;

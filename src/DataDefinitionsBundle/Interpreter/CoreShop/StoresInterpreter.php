@@ -12,25 +12,18 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
+declare(strict_types=1);
+
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
 
-use Pimcore\Model\DataObject\Concrete;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
 
 final class StoresInterpreter implements InterpreterInterface
 {
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        return $configuration['stores'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        return $context->getConfiguration()['stores'];
     }
 }
 

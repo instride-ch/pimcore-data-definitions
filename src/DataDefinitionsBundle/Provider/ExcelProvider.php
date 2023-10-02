@@ -17,13 +17,10 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 
 use Box\Spout\Common\Entity\Row;
-use Box\Spout\Common\Exception\IOException;
 use Box\Spout\Reader\ReaderInterface;
-use Box\Spout\Writer\Exception\WriterNotOpenedException;
 use Box\Spout\Writer\WriterInterface;
 use Pimcore\Model\Asset;
 use Pimcore\Tool\Storage;
-use Wvision\Bundle\DataDefinitionsBundle\Exception\SpoutException;
 use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
@@ -70,9 +67,13 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         return [];
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
-    {
-        $file = $this->getFile($params['file']);
+    public function getData(
+        array $configuration,
+        ImportDefinitionInterface $definition,
+        array $params,
+        FilterInterface $filter = null
+    ): ImportDataSetInterface {
+        $file = $this->getFile($params);
 
         $reader = $this->createReader($file);
         $sheetIterator = $reader->getSheetIterator();
@@ -105,10 +106,14 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         });
     }
 
-    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
-    {
+    public function addExportData(
+        array $data,
+        array $configuration,
+        ExportDefinitionInterface $definition,
+        array $params
+    ): void {
         $headers = null;
-        if (null === $this->writer) {
+        if (!isset($this->writer)) {
             $headers = array_keys($data);
         }
         $writer = $this->getWriter();
@@ -119,7 +124,11 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
                 $data[$key] = (string)$item;
             }
         }
-        $writer->addRow($this->useSpoutLegacy ? array_values($data) : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray(array_values($data)));
+        $writer->addRow(
+            $this->useSpoutLegacy ? array_values(
+                $data
+            ) : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray(array_values($data))
+        );
     }
 
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
@@ -131,8 +140,9 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
             return;
         }
 
-        $file = $this->getFile($params['file']);
-        rename($this->getExportPath(), $file);
+        $file = $this->getFile($params);
+        copy($this->getExportPath(), $file);
+        unlink($this->getExportPath());
     }
 
     public function provideArtifactStream($configuration, ExportDefinitionInterface $definition, $params)
@@ -150,7 +160,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
     private function getWriter(): WriterInterface
     {
-        if (null === $this->writer) {
+        if (!isset($this->writer)) {
             $this->writer = $this->getXlsxWriter();
             $this->writer->openToFile($this->getExportPath());
         }
@@ -160,7 +170,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
     private function getExportPath(): string
     {
-        if (null === $this->exportPath) {
+        if (!isset($this->exportPath)) {
             $this->exportPath = tempnam(sys_get_temp_dir(), 'excel_export_provider');
         }
 
@@ -190,7 +200,11 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     private function addHeaders(?array $headers, WriterInterface $writer): void
     {
         if (null !== $headers) {
-            $writer->addRow($this->useSpoutLegacy ? $headers : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray($headers));
+            $writer->addRow(
+                $this->useSpoutLegacy ? $headers : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray(
+                    $headers
+                )
+            );
         }
     }
 

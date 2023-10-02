@@ -41,7 +41,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
 
     public function getColumns(array $configuration): array
     {
-        $csvHeaders = (string) $configuration['csvHeaders'];
+        $csvHeaders = (string)$configuration['csvHeaders'];
         $csvExample = $configuration['csvExample'];
         $delimiter = $configuration['delimiter'];
         $enclosure = $configuration['enclosure'];
@@ -52,7 +52,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         if (count($rows) > 0) {
             $headerRow = $rows[0];
 
-            $headers = str_getcsv($headerRow, $delimiter, $enclosure ?: chr(8));
+            $headers = str_getcsv($headerRow, $delimiter ?? ',', $enclosure ?: chr(8));
 
             if (count($headers) > 0) {
                 //First line are the headers
@@ -73,8 +73,12 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         return $returnHeaders;
     }
 
-    public function getData(array $configuration, ImportDefinitionInterface $definition, array $params, FilterInterface $filter = null): ImportDataSetInterface
-    {
+    public function getData(
+        array $configuration,
+        ImportDefinitionInterface $definition,
+        array $params,
+        FilterInterface $filter = null
+    ): ImportDataSetInterface {
         $csvHeaders = $configuration['csvHeaders'];
         $delimiter = $configuration['delimiter'];
         $enclosure = $configuration['enclosure'];
@@ -82,7 +86,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $offset = $params['offset'] ?? null;
         $limit = $params['limit'] ?? null;
 
-        $file = $this->getFile($params['file']);
+        $file = $this->getFile($params);
 
         $csv = Reader::createFromPath($file, 'r');
         $csv->setDelimiter($delimiter);
@@ -128,19 +132,26 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
             return;
         }
 
-        $file = $this->getFile($params['file']);
+        $file = $this->getFile($params);
 
         $headers = count($this->exportData) > 0 ? array_keys($this->exportData[0]) : [];
 
         $writer = Writer::createFromPath($file, 'w+');
         $writer->setDelimiter($configuration['delimiter']);
         $writer->setEnclosure($configuration['enclosure']);
+        if (isset($configuration['escape'])) {
+            $writer->setEscape($configuration['escape']);
+        }
         $writer->insertOne($headers);
         $writer->insertAll($this->exportData);
     }
 
-    public function addExportData(array $data, array $configuration, ExportDefinitionInterface $definition, array $params): void
-    {
+    public function addExportData(
+        array $data,
+        array $configuration,
+        ExportDefinitionInterface $definition,
+        array $params
+    ): void {
         $this->exportData[] = $data;
     }
 
@@ -153,6 +164,9 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $writer = Writer::createFromStream($stream);
         $writer->setDelimiter($configuration['delimiter']);
         $writer->setEnclosure($configuration['enclosure']);
+        if (isset($configuration['escape'])) {
+            $writer->setEscape($configuration['escape']);
+        }
         $writer->insertOne($headers);
         $writer->insertAll($this->exportData);
 

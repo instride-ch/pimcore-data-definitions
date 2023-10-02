@@ -16,10 +16,9 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Filter;
 
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\FilterContextInterface;
 
 interface FilterInterface
 {
-    public function filter(DataDefinitionInterface $definition, array $data, Concrete $object): bool;
+    public function filter(FilterContextInterface $context): bool;
 }

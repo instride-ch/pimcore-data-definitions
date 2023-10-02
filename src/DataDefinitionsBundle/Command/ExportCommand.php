@@ -52,17 +52,20 @@ final class ExportCommand extends AbstractCommand
         $this
             ->setName('data-definitions:export')
             ->setDescription('Run a Data Definition Export.')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>%command.name%</info> runs a Data Definition Export.
 EOT
             )
             ->addOption(
-                'definition', 'd',
+                'definition',
+                'd',
                 InputOption::VALUE_REQUIRED,
                 'Import Definition ID or Name'
             )
             ->addOption(
-                'params', 'p',
+                'params',
+                'p',
                 InputOption::VALUE_REQUIRED,
                 'JSON Encoded Params'
             );
@@ -73,20 +76,21 @@ EOT
         $eventDispatcher = $this->eventDispatcher;
 
         $params = json_decode($input->getOption('params'), true);
+        $definition = null;
         try {
-            $definition = $this->repository->find($input->getOption('definition'));
-        } catch (InvalidArgumentException $e) {
             $definition = $this->repository->findByName($input->getOption('definition'));
-        }
-        $progress = null;
-        $process = null;
+        } catch (InvalidArgumentException $e) {
 
-        if (!is_array($params)) {
-            $params = [];
         }
 
         if (!$definition instanceof ExportDefinitionInterface) {
             throw new Exception('Export Definition not found');
+        }
+
+        $progress = null;
+
+        if (!is_array($params)) {
+            $params = [];
         }
 
         $imStatus = function (ExportDefinitionEvent $e) use (&$progress) {
@@ -100,7 +104,9 @@ EOT
             $total = $e->getSubject();
             if ($total > 0) {
                 $progress = new ProgressBar($output, $total);
-                $progress->setFormat(' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%');
+                $progress->setFormat(
+                    ' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%'
+                );
                 $progress->start();
             }
         };

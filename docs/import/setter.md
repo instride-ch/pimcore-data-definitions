@@ -13,7 +13,7 @@ Of course, you can also implement your own Setters. Its basically the same as wi
 Todo that, you need to implement the interface ```Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface``` and create a service
 
 ```yml
-acme_bundle.data_definitions.my_interpter:
+acme_bundle.data_definitions.my_setter:
     class: AcmeBundle\DataDefinitions\MySetter
     tags:
       - { name: data_definitions.setter, type: mysetter, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }

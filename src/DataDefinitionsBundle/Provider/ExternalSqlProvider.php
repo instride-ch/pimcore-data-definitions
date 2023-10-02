@@ -19,7 +19,6 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Provider;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Exception;
 
 class ExternalSqlProvider extends AbstractSqlProvider
 {

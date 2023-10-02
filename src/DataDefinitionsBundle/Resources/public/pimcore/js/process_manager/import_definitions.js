@@ -11,7 +11,7 @@
  * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-document.addEventListener('processmanager.ready', function() {
+document.addEventListener('processmanager.ready', function () {
     processmanager.executable.types.importdefinition = Class.create(pimcore.plugin.processmanager.executable.abstractType, {
         getItems: function () {
             pimcore.globalmanager.get('data_definitions_definitions').load();
@@ -85,11 +85,10 @@ document.addEventListener('processmanager.ready', function() {
 
         addDataFromSelector: function (data) {
             this.setValue(data.fullpath);
-            console.log(data);
         },
 
         setValue: function (value) {
-            var params = '{"file":"web/var/assets' + value + '"}';
+            var params = '{"file":"var/assets' + value + '"}';
             Ext.getCmp('data_definitions_processmanager_params').setValue(params);
         }
     });

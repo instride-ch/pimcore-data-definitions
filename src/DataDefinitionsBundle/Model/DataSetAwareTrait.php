@@ -20,14 +20,14 @@ use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
 
 trait DataSetAwareTrait
 {
-    protected ImportDataSetInterface $dataSet;
+    protected ?ImportDataSetInterface $dataSet = null;
 
-    public function getDataSet(): ImportDataSetInterface
+    public function getDataSet(): ?ImportDataSetInterface
     {
-        return $this->dataSet;
+        return $this->dataSet ?? null;
     }
 
-    public function setDataSet(ImportDataSetInterface $dataSet): void
+    public function setDataSet(?ImportDataSetInterface $dataSet): void
     {
         $this->dataSet = $dataSet;
     }

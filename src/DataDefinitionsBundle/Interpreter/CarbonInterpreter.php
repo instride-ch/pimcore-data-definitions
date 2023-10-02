@@ -17,32 +17,19 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Carbon\Carbon;
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
-class CarbonInterpreter implements InterpreterInterface, DataSetAwareInterface
+class CarbonInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        if ($value) {
-            $format = $configuration['date_format'];
+    public function interpret(InterpreterContextInterface $context): bool|null|\Carbon\Carbon
+    {
+        if ($context->getValue()) {
+            $format = $context->getConfiguration()['date_format'];
             if (!empty($format)) {
-                return Carbon::createFromFormat($format, $value);
+                return Carbon::createFromFormat($format, $context->getValue());
             }
 
-            return new Carbon($value);
+            return new Carbon($context->getValue());
         }
 
         return null;

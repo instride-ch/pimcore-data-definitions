@@ -21,25 +21,10 @@ use ProcessManagerBundle\Process\Pimcore;
 
 final class ExportDefinitionProcess extends Pimcore
 {
-    public function run(ExecutableInterface $executable, array $params = null): int
+    use DataDefinitionProcessTrait;
+
+    public function run(ExecutableInterface $executable, array $params = []): int
     {
-        $settings = $executable->getSettings();
-        if (isset($settings['params'])) {
-            $settings['params'] = array_replace(json_decode($settings['params'], true), (array)$params);
-        } else {
-            $settings['params'] = (array)$params;
-        }
-
-        $settings['command'] = [
-            'data-definitions:export',
-            '-d',
-            $settings['definition'],
-            '-p',
-            json_encode($settings['params']),
-        ];
-
-        $executable->setSettings($settings);
-
-        return parent::run($executable, $params);
+        return $this->runDefinition('data-definitions:export', $executable, $params);
     }
 }

@@ -18,5 +18,10 @@ use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 interface EventDispatcherInterface
 {
-    public function dispatch(DataDefinitionInterface $definition, string $eventName, $subject = null, array $params = []);
+    public function dispatch(
+        DataDefinitionInterface $definition,
+        string $eventName,
+        $subject = null,
+        array $params = []
+    );
 }

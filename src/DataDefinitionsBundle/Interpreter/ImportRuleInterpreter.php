@@ -16,44 +16,29 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter;
 
-use CoreShop\Component\Rule\Condition\RuleValidationProcessorInterface;
 use CoreShop\Component\Rule\Model\Action;
 use CoreShop\Component\Rule\Model\Condition;
-use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataSetAwareTrait;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Model\ImportRule;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\ImportRuleValidationProcessorInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Rules\Processor\RuleApplierInterface;
 
-class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterface
+class ImportRuleInterpreter implements InterpreterInterface
 {
-    use DataSetAwareTrait;
-
     protected RuleApplierInterface $ruleProcessor;
     protected ImportRuleValidationProcessorInterface $ruleValidationProcessor;
 
     public function __construct(
         ImportRuleValidationProcessorInterface $ruleValidationProcessor,
         RuleApplierInterface $ruleProcessor
-    )
-    {
+    ) {
         $this->ruleValidationProcessor = $ruleValidationProcessor;
         $this->ruleProcessor = $ruleProcessor;
     }
 
-    public function interpret(
-        Concrete $object,
-        $value,
-        MappingInterface $map,
-        array $data,
-        DataDefinitionInterface $definition,
-        array $params,
-        array $configuration
-    ) {
-        $rules = $configuration['rules'];
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $rules = $context->getConfiguration()['rules'];
         $ruleObjects = [];
 
         foreach ($rules as $rule) {
@@ -81,19 +66,26 @@ class ImportRuleInterpreter implements InterpreterInterface, DataSetAwareInterfa
         }
 
         $params = [
-            'value' => $value,
-            'object' => $object,
-            'map' => $map,
-            'data' => $data,
-            'params' => $params,
-            'dataSet' => $this->getDataSet()
+            'value' => $context->getValue(),
+            'object' => $context->getObject(),
+            'map' => $context->getMapping(),
+            'data' => $context->getDataRow(),
+            'params' => $context->getParams(),
+            'data_set' => $context->getDataSet(),
         ];
 
+        $value = $context->getValue();
+
         foreach ($ruleObjects as $rule) {
-            if ($this->ruleValidationProcessor->isImportRuleValid($definition, $object, $rule, $params)) {
+            if ($this->ruleValidationProcessor->isImportRuleValid(
+                $context->getDefinition(),
+                $context->getObject(),
+                $rule,
+                $params
+            )) {
                 $value = $this->ruleProcessor->applyRule(
                     $rule,
-                    $object,
+                    $context->getObject(),
                     $value,
                     $params
                 );

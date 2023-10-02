@@ -26,7 +26,7 @@ pimcore.plugin.datadefinitions.import.item = Class.create(pimcore.plugin.datadef
     providers: [],
 
     saveDisabled: function () {
-        return !pimcore.settings['data-definitions-import-definition-writeable'];
+        return !this.data.isWriteable;
     },
 
     getSettings: function () {

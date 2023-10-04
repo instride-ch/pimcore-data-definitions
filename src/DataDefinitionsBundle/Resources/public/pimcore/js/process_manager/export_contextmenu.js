@@ -9,6 +9,7 @@ document.addEventListener(pimcore.events.prepareObjectTreeContextMenu, function 
     }
 
     const tree = event.detail.menu;
+    const item = event.detail.object;
 
     Ext.create('Ext.data.Store', {
         model: 'Executable',
@@ -36,13 +37,13 @@ document.addEventListener(pimcore.events.prepareObjectTreeContextMenu, function 
                     exportMenu.push({
                         text: executable.get('name'),
                         iconCls: "pimcore_icon_object pimcore_icon_overlay_add",
-                        handler: function (menuItem) {
+                        handler: function () {
                             Ext.Ajax.request({
                                 url: '/admin/process_manager/executables/run',
                                 params: {
                                     id: executable.id,
                                     startupConfig: Ext.encode({
-                                        root: menuItem.$iid,
+                                        root: item.get('id'),
                                     }),
                                     csrfToken: pimcore.settings['csrfToken']
                                 },

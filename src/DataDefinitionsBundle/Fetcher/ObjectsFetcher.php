@@ -82,7 +82,7 @@ class ObjectsFetcher implements FetcherInterface
             $conditionFilters[] = 'parentId = '.$rootNode->getId();
         }
 
-            if (isset($params['condition'])) {
+        if (isset($params['condition'])) {
             $conditionFilters[] = '('.$params['condition'].')';
         }
         if (isset($params['ids'])) {

@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace Wvision\Bundle\DataDefinitionsBundle\Fetcher;
 
 use InvalidArgumentException;
+use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\ClassDefinition;
-use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Listing;
 use Wvision\Bundle\DataDefinitionsBundle\Context\FetcherContextInterface;
 use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
@@ -60,12 +60,12 @@ class ObjectsFetcher implements FetcherInterface
         $rootNode = null;
         $conditionFilters = [];
         if (isset($params['root'])) {
-            $rootNode = Concrete::getById($params['root']);
+            $rootNode = AbstractObject::getById($params['root']);
 
             if (null !== $rootNode) {
                 $quotedPath = $list->quote($rootNode->getRealFullPath());
                 $quotedWildcardPath = $list->quote(str_replace('//', '/', $rootNode->getRealFullPath().'/').'%');
-                $conditionFilters[] = '(o_path = '.$quotedPath.' OR o_path LIKE '.$quotedWildcardPath.')';
+                $conditionFilters[] = '(path = '.$quotedPath.' OR path LIKE '.$quotedWildcardPath.')';
             }
         }
 
@@ -79,10 +79,10 @@ class ObjectsFetcher implements FetcherInterface
         }
 
         if (isset($params['only_direct_children']) && $params['only_direct_children'] == 'true' && null !== $rootNode) {
-            $conditionFilters[] = 'o_parentId = '.$rootNode->getId();
+            $conditionFilters[] = 'parentId = '.$rootNode->getId();
         }
 
-        if (isset($params['condition'])) {
+            if (isset($params['condition'])) {
             $conditionFilters[] = '('.$params['condition'].')';
         }
         if (isset($params['ids'])) {

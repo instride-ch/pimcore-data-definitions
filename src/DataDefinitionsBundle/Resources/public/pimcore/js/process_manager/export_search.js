@@ -90,7 +90,6 @@ pimcore.object.search = Class.create(pimcore.object.search, {
                     root: this.object.id,
                     query: this.searchField.getValue(),
                     only_direct_children: this.checkboxOnlyDirectChildren.getValue(),
-                    condition: this.sqlEditor.getValue(),
                     ids: ids,
                 }),
                 csrfToken: pimcore.settings['csrfToken']

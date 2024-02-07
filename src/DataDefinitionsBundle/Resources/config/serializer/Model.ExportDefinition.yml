@@ -2,6 +2,10 @@ Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition:
   exclusion_policy: ALL
   xml_root_name: export_definition
   properties:
+    enableInheritance:
+      expose: true
+      type: boolean
+      groups: [Detailed]
     fetcher:
       expose: true
       type: string

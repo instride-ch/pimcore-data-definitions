@@ -22,6 +22,11 @@ namespace Wvision\Bundle\DataDefinitionsBundle\Model;
 class ExportDefinition extends AbstractDataDefinition implements ExportDefinitionInterface
 {
     /**
+     * @var bool
+     */
+    public $enableInheritance = true;
+
+    /**
      * @var string
      */
     public $fetcher;
@@ -52,6 +57,22 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
         $dao->getByName($id);
 
         return $definitionEntry;
+    }
+
+    /**
+     * @param bool $enableInheritance
+     */
+    public function setEnableInheritance(bool $enableInheritance): void
+    {
+        $this->enableInheritance = $enableInheritance;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnableInheritance(): bool
+    {
+        return $this->enableInheritance;
     }
 
     public function getFetcher()

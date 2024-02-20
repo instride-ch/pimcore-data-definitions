@@ -1,7 +1,7 @@
 ## Filter
 A Filter, as the name says, filters your data on runtime. Your method gets called on every "row" and you get to decide if you want to import it, or not.
 
-To implement a new filter, you need to implement the interface ```Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface``` and add a new service
+To implement a new filter, you need to implement the interface ```Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface``` and add a new service
 
 ```yml
 acme_bundle.data_definitions.my_filter:

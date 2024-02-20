@@ -3,7 +3,7 @@ A Getter gets the data to the data object
 
 You can also implement your own Getters.
 
-Todo that, you need to implement the interface ```Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface``` and create a service
+Todo that, you need to implement the interface ```Instride\Bundle\DataDefinitionsBundle\Getter\GetterInterface``` and create a service
 
 ```yml
 acme_bundle.data_definitions.my_getter:

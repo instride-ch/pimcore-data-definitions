@@ -123,13 +123,13 @@ Returns input casted to a given type.
 
 Data Definitions provides you with a basic starting set of Interpreters, but you can create custom ones as well.
 
-Todo that, you need to implement the interface ```Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
+Todo that, you need to implement the interface ```Instride\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface``` and create a service
 
 ```yml
 acme_bundle.data_definitions.my_interpreter:
     class: AcmeBundle\DataDefinitions\MyInterpreter
     tags:
-      - { name: data_definitions.interpreter, type: myinterpreter, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+      - { name: data_definitions.interpreter, type: myinterpreter, form-type: Instride\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 ```
 
 If your Interpreter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:

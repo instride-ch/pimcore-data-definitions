@@ -1,15 +1,16 @@
 <?php
+
 /**
- * Pimcore
+ * Data Definitions.
  *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Enterprise License (PEL)
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
+ * LICENSE
  *
- * @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- * @license    http://www.pimcore.org/license     GPLv3 and PEL
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright 2024 instride AG (https://instride.ch)
+ * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
@@ -19,14 +20,14 @@ class Kernel extends PimcoreKernel
 {
     public function registerBundlesToCollection(BundleCollection $collection): void
     {
-        $collection->addBundle(new \Wvision\Bundle\DataDefinitionsBundle\DataDefinitionsBundle());
+        $collection->addBundle(new \Instride\Bundle\DataDefinitionsBundle\DataDefinitionsBundle());
         $collection->addBundle(new \FriendsOfBehat\SymfonyExtension\Bundle\FriendsOfBehatSymfonyExtensionBundle());
     }
 
     public function boot(): void
     {
         parent::boot();
-        
+
         \Pimcore::setKernel($this);
     }
 }

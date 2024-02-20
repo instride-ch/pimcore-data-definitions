@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright 2024 instride AG (https://instride.ch)
+ * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection;
+namespace Instride\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractModelExtension;
 use Pimcore\Config\LocationAwareConfigRepository;
@@ -23,30 +23,30 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Wvision\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportRunnerRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\FetcherRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\GetterRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\LoaderRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\PersisterRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
-use Wvision\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportRunnerRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\FetcherRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\FilterRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\GetterRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\InterpreterRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\LoaderRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\PersisterRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\Fetcher\FetcherInterface;
+use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
+use Instride\Bundle\DataDefinitionsBundle\Persister\PersisterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface;
+use Instride\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
+use Instride\Bundle\DataDefinitionsBundle\Runner\ExportRunnerInterface;
+use Instride\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
+use Instride\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
 class DataDefinitionsExtension extends AbstractModelExtension implements PrependExtensionInterface
 {

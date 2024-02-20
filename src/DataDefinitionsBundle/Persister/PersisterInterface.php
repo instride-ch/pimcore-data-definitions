@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Persister;
+namespace Instride\Bundle\DataDefinitionsBundle\Persister;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 interface PersisterInterface
 {

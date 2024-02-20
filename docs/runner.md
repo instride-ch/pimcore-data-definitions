@@ -1,7 +1,7 @@
 ## Runner
 A runner gets called before and after every line is imported from your data-source or exported to your export target. This can help you do clean-up or similar stuff.
 
-To implement a new Runner, you need to implement the interface ```Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface``` and add a new service
+To implement a new Runner, you need to implement the interface ```Instride\Bundle\DataDefinitionsBundle\Runner\RunnerInterface``` and add a new service
 
 ```yml
 acme_bundle.data_definitions.my_runner:

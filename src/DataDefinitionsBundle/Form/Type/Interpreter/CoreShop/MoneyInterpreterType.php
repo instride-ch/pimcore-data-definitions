@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop;
+namespace Instride\Bundle\DataDefinitionsBundle\Form\Type\Interpreter\CoreShop;
 
 use CoreShop\Bundle\CurrencyBundle\Form\Type\CurrencyChoiceType;
 use CoreShop\Component\Currency\Model\CurrencyInterface;

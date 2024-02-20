@@ -29,13 +29,13 @@ parameters:
         - '/Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)/'
         - '/Call to an undefined method Pimcore\\Model\\\(.*\)::save\(\)./'
         - '/Call to an undefined method Pimcore\\Model\\\(.*\)::delete\(\)./'
-        - '/Call to an undefined method Wvision\\Bundle\\DataDefinitionsBundle\\Model\\Log\\Listing::load\(\)./'
-        - '/Call to an undefined method Wvision\\Bundle\\DataDefinitionsBundle\\Model\\Log\\Listing::getTotalCount\(\)./'
-        - '/Call to an undefined method Wvision\\Bundle\\DataDefinitionsBundle\\Model\\Log::delete\(\)./'
-        - '/Call to an undefined method Wvision\\Bundle\\DataDefinitionsBundle\\Model\\Log::save\(\)./'
-        - '/Call to an undefined method Wvision\\Bundle\\DataDefinitionsBundle\\Model\\Log::getById\(\)./'
-        - '/Call to an undefined method Wvision\\Bundle\\DataDefinitionsBundle\\Model\\ExportDefinition\\Listing::load\(\)./'
-        - '/Call to an undefined method Wvision\\Bundle\\DataDefinitionsBundle\\Model\\ImportDefinition\\Listing::load\(\)./'
+        - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log\\Listing::load\(\)./'
+        - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log\\Listing::getTotalCount\(\)./'
+        - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log::delete\(\)./'
+        - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log::save\(\)./'
+        - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\Log::getById\(\)./'
+        - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\ExportDefinition\\Listing::load\(\)./'
+        - '/Call to an undefined method Instride\\Bundle\\DataDefinitionsBundle\\Model\\ImportDefinition\\Listing::load\(\)./'
 
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon

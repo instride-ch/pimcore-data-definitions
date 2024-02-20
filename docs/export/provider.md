@@ -5,7 +5,7 @@ Currently, these Export Provider Types are supported:
  - JSON
  - XML
  
-To create a custom provider, you need to implement ```Wvision\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface``` namespace and add a new service:
+To create a custom provider, you need to implement ```Instride\Bundle\DataDefinitionsBundle\Provider\ExportProviderInterface``` namespace and add a new service:
 
 ```yml
 acme_bundle.data_definitions.provider.my_provider:

@@ -8,36 +8,35 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright 2024 instride AG (https://instride.ch)
+ * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection;
+namespace Instride\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Component\Resource\Factory\Factory;
 use Pimcore\Bundle\CoreBundle\DependencyInjection\ConfigurationHelper;
-use Pimcore\Config\LocationAwareConfigRepository;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController;
-use Wvision\Bundle\DataDefinitionsBundle\Controller\ImportDefinitionController;
-use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType;
-use Wvision\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Repository;
+use Instride\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController;
+use Instride\Bundle\DataDefinitionsBundle\Controller\ImportDefinitionController;
+use Instride\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType;
+use Instride\Bundle\DataDefinitionsBundle\Form\Type\ImportDefinitionType;
+use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
+use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Repository;
 
 class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('wvision_data_definitions');
+        $treeBuilder = new TreeBuilder('instride_data_definitions');
         $rootNode = $treeBuilder->getRootNode();
 
         ConfigurationHelper::addConfigLocationWithWriteTargetNodes($rootNode, [

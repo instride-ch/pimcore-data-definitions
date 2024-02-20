@@ -3,13 +3,13 @@ imports:
 
 services:
     data_definitions.behat.shared_storage:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorage
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorage
 
     data_definitions.behat.class_storage:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorage
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Service\ClassStorage
 
     data_definitions.behat.filter.simple:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Service\Filter\SimpleFilter
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Service\Filter\SimpleFilter
         tags:
             - { name: data_definitions.filter, type: simple }
             - { name: fob.context_service }

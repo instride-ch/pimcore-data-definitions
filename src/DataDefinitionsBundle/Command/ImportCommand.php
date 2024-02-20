@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright 2024 instride AG (https://instride.ch)
+ * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Command;
+namespace Instride\Bundle\DataDefinitionsBundle\Command;
 
 use Exception;
 use InvalidArgumentException;
@@ -25,10 +25,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
-use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
+use Instride\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
+use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 final class ImportCommand extends AbstractCommand
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
+namespace Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler;
 
 use CoreShop\Component\Registry\RegisterSimpleRegistryTypePass;
 

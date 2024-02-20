@@ -3,7 +3,7 @@ services:
         public: true
 
     data_definitions.behat.context.transform.pimcore_class:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform\PimcoreClassContext
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Context\Transform\PimcoreClassContext
         arguments:
             - '@data_definitions.behat.shared_storage'
             - '@data_definitions.behat.class_storage'
@@ -11,7 +11,7 @@ services:
             - { name: fob.context_service }
 
     data_definitions.behat.context.transform.import_definition:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform\ImportDefinitionContext
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Context\Transform\ImportDefinitionContext
         arguments:
             - '@data_definitions.behat.shared_storage'
             - '@data_definitions.repository.import_definition'
@@ -19,7 +19,7 @@ services:
             - { name: fob.context_service }
 
     data_definitions.behat.context.transform.pimcore_asset:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Transform\PimcoreAssetContext
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Context\Transform\PimcoreAssetContext
         arguments:
             - '@data_definitions.behat.shared_storage'
         tags:

@@ -10,13 +10,13 @@ A Setter sets the data to the object as it would be needed.
 
 Of course, you can also implement your own Setters. Its basically the same as with Interpreters.
 
-Todo that, you need to implement the interface ```Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface``` and create a service
+Todo that, you need to implement the interface ```Instride\Bundle\DataDefinitionsBundle\Setter\SetterInterface``` and create a service
 
 ```yml
 acme_bundle.data_definitions.my_setter:
     class: AcmeBundle\DataDefinitions\MySetter
     tags:
-      - { name: data_definitions.setter, type: mysetter, form-type: Wvision\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
+      - { name: data_definitions.setter, type: mysetter, form-type: Instride\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType }
 ```
 
 If your Setter does have configuration as well, you need to create a new FormType and add a new Javascript file for the GUI:

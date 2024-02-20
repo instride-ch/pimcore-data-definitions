@@ -8,19 +8,19 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright 2024 instride AG (https://instride.ch)
+ * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
+namespace Instride\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
 
 use CoreShop\Component\Core\Repository\CurrencyRepositoryInterface;
 use CoreShop\Component\Currency\Model\CurrencyInterface;
 use CoreShop\Component\Currency\Model\Money;
-use Wvision\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
+use Instride\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
 
 final class MoneyInterpreter implements InterpreterInterface
 {
@@ -42,7 +42,7 @@ final class MoneyInterpreter implements InterpreterInterface
 
         return new Money($value, $currency);
     }
-    
+
     private function getValue(string $value, InterpreterContextInterface $context): int
     {
         $inputIsFloat = $context->getConfiguration()['isFloat'];

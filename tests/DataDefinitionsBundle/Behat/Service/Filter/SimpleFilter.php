@@ -1,11 +1,11 @@
 <?php
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Service\Filter;
+namespace Instride\Bundle\DataDefinitionsBundle\Behat\Service\Filter;
 
 use Pimcore\Model\DataObject\Concrete;
-use Wvision\Bundle\DataDefinitionsBundle\Context\FilterContextInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Context\FilterContextInterface;
+use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class SimpleFilter implements FilterInterface
 {

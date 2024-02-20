@@ -3,7 +3,7 @@ services:
         public: true
 
     data_definitions.behat.context.domain.pimcore:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Domain\PimcoreContext
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Context\Domain\PimcoreContext
         arguments:
             - '@data_definitions.behat.shared_storage'
         tags:

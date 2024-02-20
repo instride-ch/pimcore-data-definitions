@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2018 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright 2024 instride AG (https://instride.ch)
+ * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Setup;
+namespace Instride\Bundle\DataDefinitionsBundle\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
@@ -20,10 +20,10 @@ use Behat\Gherkin\Node\TableNode;
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Instride\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorageInterface;
+use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Symfony\Component\Form\FormFactoryInterface;
 

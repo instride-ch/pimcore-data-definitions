@@ -3,7 +3,7 @@ A persister takes care about the save process. It basically saves objects. Follo
 
 - `Persister` saves objects
 
-To create your own persister you need to implement `Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface` 
+To create your own persister you need to implement `Instride\Bundle\DataDefinitionsBundle\Persister\PersisterInterface` 
 and add a new service:
 
 ```yml

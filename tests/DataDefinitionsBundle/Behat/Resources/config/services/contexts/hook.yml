@@ -3,7 +3,7 @@ services:
         public: true
 
     data_definitions.behat.context.hook.pimcore_dao:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Hook\PimcoreDaoContext
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Context\Hook\PimcoreDaoContext
         arguments:
             - '@doctrine.dbal.default_connection'
             - '@kernel'
@@ -11,11 +11,11 @@ services:
             - { name: fob.context_service }
 
     data_definitions.behat.context.hook.pimcore_setup:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Hook\PimcoreSetupContext
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Context\Hook\PimcoreSetupContext
         tags:
             - { name: fob.context_service }
 
     data_definitions.behat.context.hook.im_setup:
-        class: Wvision\Bundle\DataDefinitionsBundle\Behat\Context\Hook\IMSetupContext
+        class: Instride\Bundle\DataDefinitionsBundle\Behat\Context\Hook\IMSetupContext
         tags:
             - { name: fob.context_service }

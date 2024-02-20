@@ -8,21 +8,21 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright 2024 instride AG (https://instride.ch)
+ * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Setter\CoreShop;
+namespace Instride\Bundle\DataDefinitionsBundle\Setter\CoreShop;
 
 use CoreShop\Component\Core\Model\StoreInterface;
 use CoreShop\Component\Store\Repository\StoreRepositoryInterface;
 use InvalidArgumentException;
-use Wvision\Bundle\DataDefinitionsBundle\Context\GetterContextInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Context\GetterContextInterface;
+use Instride\Bundle\DataDefinitionsBundle\Context\SetterContextInterface;
+use Instride\Bundle\DataDefinitionsBundle\Getter\GetterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 use function is_array;
 
 class StorePriceSetter implements SetterInterface, GetterInterface

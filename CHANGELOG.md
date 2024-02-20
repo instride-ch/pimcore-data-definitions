@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Pimcore 11 compatibility
+- w-vision > instride rebranding 🔄
+
 ### [4.0.0]
 
 - Pimcore X compatibility

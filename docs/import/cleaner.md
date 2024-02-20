@@ -6,7 +6,7 @@ A cleaner takes care about the clean-up process. It basically deletes or unpubli
  - Reference Cleaner: Deletes only when no references exists, otherwise the object will be unpublished
  - None: does basically nothing
 
-To create your own cleaner you need to implement ```Wvision\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface``` and add a new service
+To create your own cleaner you need to implement ```Instride\Bundle\DataDefinitionsBundle\Cleaner\CleanerInterface``` and add a new service
 
 ```yml
 acme_bundle.data_definitions.my_cleaner:

@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2016-2019 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/DataDefinitions/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright 2024 instride AG (https://instride.ch)
+ * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 declare(strict_types=1);
 
-namespace Wvision\Bundle\DataDefinitionsBundle\Importer;
+namespace Instride\Bundle\DataDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use Countable;
@@ -33,27 +33,27 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Throwable;
-use Wvision\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
-use Wvision\Bundle\DataDefinitionsBundle\Exception\UnexpectedValueException;
-use Wvision\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessage;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use Wvision\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Persister\PersisterInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ArrayImportDataSet;
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSet;
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Runner\ImportStartFinishRunnerInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
-use Wvision\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
+use Instride\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
+use Instride\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
+use Instride\Bundle\DataDefinitionsBundle\Exception\UnexpectedValueException;
+use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
+use Instride\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessage;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Instride\Bundle\DataDefinitionsBundle\Model\ParamsAwareInterface;
+use Instride\Bundle\DataDefinitionsBundle\Persister\PersisterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Provider\ArrayImportDataSet;
+use Instride\Bundle\DataDefinitionsBundle\Provider\ImportDataSet;
+use Instride\Bundle\DataDefinitionsBundle\Provider\ImportDataSetInterface;
+use Instride\Bundle\DataDefinitionsBundle\Provider\ImportProviderInterface;
+use Instride\Bundle\DataDefinitionsBundle\Runner\ImportStartFinishRunnerInterface;
+use Instride\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
+use Instride\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
+use Instride\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
+use Instride\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
 
 final class Importer implements ImporterInterface, AsyncImporterInterface
 {

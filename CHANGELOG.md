@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### [5.0.0]
+
 - Pimcore 11 compatibility
 - w-vision > instride rebranding 🔄
+- [BC] migrated from Box/Spout (v3) to OpenSpout (v4)
 
 ### [4.0.0]
 

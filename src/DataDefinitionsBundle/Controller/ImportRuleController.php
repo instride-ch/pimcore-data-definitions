@@ -16,6 +16,9 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Controller;
 
+use OpenSpout\Common\Entity\Row;
+use OpenSpout\Reader\XLSX\Reader;
+use OpenSpout\Writer\XLSX\Writer;
 use Pimcore\Bundle\AdminBundle\Controller\GDPR\AdminController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -26,8 +29,6 @@ use Instride\Bundle\DataDefinitionsBundle\Form\Type\ImportRulesImportType;
 
 class ImportRuleController extends AdminController
 {
-    protected bool $useSpoutLegacy = false;
-
     public function importAction(Request $request, FormFactoryInterface $formFactory): JsonResponse
     {
         $form = $formFactory->createNamed('', ImportRulesImportType::class);
@@ -179,14 +180,14 @@ class ImportRuleController extends AdminController
             $rule['conditions'] = $conditions;
             $rule['id'] = sprintf(
                 '%04X%04X-%04X-%04X-%04X-%04X%04X%04X',
-                mt_rand(0, 65535),
-                mt_rand(0, 65535),
-                mt_rand(0, 65535),
-                mt_rand(16384, 20479),
-                mt_rand(32768, 49151),
-                mt_rand(0, 65535),
-                mt_rand(0, 65535),
-                mt_rand(0, 65535)
+                random_int(0, 65535),
+                random_int(0, 65535),
+                random_int(0, 65535),
+                random_int(16384, 20479),
+                random_int(32768, 49151),
+                random_int(0, 65535),
+                random_int(0, 65535),
+                random_int(0, 65535)
             );
 
             $rules[] = $rule;
@@ -265,7 +266,6 @@ class ImportRuleController extends AdminController
         //prepare the data
         foreach ($rules as $rule) {
             $countPerType = [];
-            $sameConditionsOfType = [];
             $entry = [
                 'name' => $rule['name'],
                 'active' => $rule['active'] ? 'yes' : 'no',
@@ -338,16 +338,12 @@ class ImportRuleController extends AdminController
                 $entry[$key] = $value;
             }
 
-            $result[] = $this->useSpoutLegacy ? $entry : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray(
-                $entry
-            );
+            $result[] = Row::fromValues($entry);
         }
 
         //merge all headers
         $headerValues = array_values(array_merge($headers, $headersCondition, $headersAction));
-        $headers = $this->useSpoutLegacy ? $headerValues : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray(
-            $headerValues
-        );
+        $headers = Row::fromValues($headerValues);
 
         //write data
         $writer->addRow($headers);
@@ -357,13 +353,13 @@ class ImportRuleController extends AdminController
         return new BinaryFileResponse($filePath);
     }
 
-    protected function getXlsxReader(): \Box\Spout\Reader\XLSX\Reader
+    protected function getXlsxReader(): Reader
     {
-        return \Box\Spout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
+        return new Reader();
     }
 
-    protected function getXlsxWriter(): \Box\Spout\Writer\XLSX\Writer
+    protected function getXlsxWriter(): Writer
     {
-        return \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createXLSXWriter();
+        return new Writer();
     }
 }

@@ -16,9 +16,11 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Provider;
 
-use Box\Spout\Common\Entity\Row;
-use Box\Spout\Reader\ReaderInterface;
-use Box\Spout\Writer\WriterInterface;
+use OpenSpout\Common\Entity\Row;
+use OpenSpout\Reader\ReaderInterface;
+use OpenSpout\Reader\XLSX\Reader;
+use OpenSpout\Writer\WriterInterface;
+use OpenSpout\Writer\XLSX\Writer;
 use Pimcore\Model\Asset;
 use Pimcore\Tool\Storage;
 use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
@@ -35,7 +37,6 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     private string $exportPath;
 
     private WriterInterface $writer;
-    protected bool $useSpoutLegacy = false;
 
     public function testData(array $configuration): bool
     {
@@ -124,11 +125,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
                 $data[$key] = (string)$item;
             }
         }
-        $writer->addRow(
-            $this->useSpoutLegacy ? array_values(
-                $data
-            ) : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray(array_values($data))
-        );
+        $writer->addRow(Row::fromValues(array_values($data)));
     }
 
     public function exportData(array $configuration, ExportDefinitionInterface $definition, array $params): void
@@ -200,21 +197,17 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
     private function addHeaders(?array $headers, WriterInterface $writer): void
     {
         if (null !== $headers) {
-            $writer->addRow(
-                $this->useSpoutLegacy ? $headers : \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createRowFromArray(
-                    $headers
-                )
-            );
+            $writer->addRow(Row::fromValues($headers));
         }
     }
 
-    protected function getXlsxReader(): \Box\Spout\Reader\XLSX\Reader
+    protected function getXlsxReader(): Reader
     {
-        return \Box\Spout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
+        return new Reader();
     }
 
-    protected function getXlsxWriter(): \Box\Spout\Writer\XLSX\Writer
+    protected function getXlsxWriter(): Writer
     {
-        return \Box\Spout\Writer\Common\Creator\WriterEntityFactory::createXLSXWriter();
+        return new Writer();
     }
 }

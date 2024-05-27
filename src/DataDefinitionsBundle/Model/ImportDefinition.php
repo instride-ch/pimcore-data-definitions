@@ -88,10 +88,10 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
 
     public static function getById(int $name)
     {
-        return static::getByName($name);
+        return static::getByName((string)$name);
     }
 
-    public static function getByName($id)
+    public static function getByName(string $id)
     {
         $definitionEntry = new ImportDefinition();
         $definitionEntry->setId((int)$id);

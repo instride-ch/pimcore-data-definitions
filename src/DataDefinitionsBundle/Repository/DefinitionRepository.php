@@ -21,6 +21,11 @@ use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 class DefinitionRepository extends PimcoreDaoRepository
 {
+    public function find($id)
+    {
+        return $this->findByName($id);
+    }
+
     public function findByName(string $name): ?DataDefinitionInterface
     {
         $class = $this->metadata->getClass('model');

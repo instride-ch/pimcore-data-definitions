@@ -24,7 +24,6 @@ use CoreShop\Bundle\RuleBundle\CoreShopRuleBundle;
 use Pimcore\Bundle\AdminBundle\PimcoreAdminBundle;
 use Pimcore\Bundle\SimpleBackendSearchBundle\PimcoreSimpleBackendSearchBundle;
 use Pimcore\Extension\Bundle\Installer\InstallerInterface;
-use Pimcore\Extension\Bundle\PimcoreBundleInterface;
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
@@ -50,7 +49,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle
 
         $collection->addBundles([
             new PimcoreAdminBundle(),
-            new PimcoreSimpleBackendSearchBundle()
+            new PimcoreSimpleBackendSearchBundle(),
         ]);
 
         $collection->addBundles([

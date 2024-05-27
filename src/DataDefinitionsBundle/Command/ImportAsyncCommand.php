@@ -62,19 +62,14 @@ final class ImportAsyncCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $eventDispatcher = $this->eventDispatcher;
-
         $params = json_decode($input->getOption('params'), true);
 
         if (!isset($params['userId'])) {
             $params['userId'] = 0;
         }
 
-        try {
-            $definition = $this->repository->find($input->getOption('definition'));
-        } catch (InvalidArgumentException $e) {
-            $definition = $this->repository->findByName($input->getOption('definition'));
-        }
+        $inputDefinition = $input->getOption('definition');
+        $definition = $this->repository->findByName((string)$inputDefinition);
 
         if (!$definition instanceof ImportDefinitionInterface) {
             throw new Exception('Import Definition not found');

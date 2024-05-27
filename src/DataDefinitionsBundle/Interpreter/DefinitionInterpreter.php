@@ -16,25 +16,23 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Interpreter;
 
-use CoreShop\Component\Resource\Repository\RepositoryInterface;
-use Pimcore\Model\DataObject;
 use Instride\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
+use Pimcore\Model\DataObject;
 
 class DefinitionInterpreter implements InterpreterInterface
 {
-    private RepositoryInterface $definitionRepository;
-    private ImporterInterface $importer;
-
-    public function __construct(RepositoryInterface $definitionRepository, ImporterInterface $importer)
-    {
-        $this->definitionRepository = $definitionRepository;
-        $this->importer = $importer;
+    public function __construct(
+        private readonly DefinitionRepository $definitionRepository,
+        private readonly ImporterInterface $importer
+    ) {
     }
 
-    public function interpret(InterpreterContextInterface $context): mixed {
-        $subDefinition = $this->definitionRepository->find($context->getConfiguration()['definition']);
+    public function interpret(InterpreterContextInterface $context): mixed
+    {
+        $subDefinition = $this->definitionRepository->findByName($context->getConfiguration()['definition']);
 
         if (!$subDefinition instanceof ImportDefinitionInterface) {
             return null;

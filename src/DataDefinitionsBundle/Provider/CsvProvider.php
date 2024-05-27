@@ -47,12 +47,13 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $enclosure = $configuration['enclosure'];
 
         $returnHeaders = [];
-        $rows = str_getcsv($csvHeaders ?: $csvExample, "\n"); //parse the rows
+        $csv = $csvHeaders ?: $csvExample;
+        $rows = str_getcsv($csv ?: '', "\n"); //parse the rows
 
         if (count($rows) > 0) {
             $headerRow = $rows[0];
 
-            $headers = str_getcsv($headerRow, $delimiter ?? ',', $enclosure ?: chr(8));
+            $headers = str_getcsv($headerRow ?: '', $delimiter ?? ',', $enclosure ?: chr(8));
 
             if (count($headers) > 0) {
                 //First line are the headers

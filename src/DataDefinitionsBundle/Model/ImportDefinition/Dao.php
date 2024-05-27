@@ -88,7 +88,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
             $this->model->setName($data['id']);
         } else {
             throw new Model\Exception\NotFoundException(sprintf(
-                'Thumbnail with ID "%s" does not exist.',
+                'Import Definition with ID "%s" does not exist.',
                 $this->model->getName()
             ));
         }

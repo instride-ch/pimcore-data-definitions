@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Instride\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use Pimcore\Model\DataObject;
 use Pimcore\Tool;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -27,6 +28,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn;
 
+/**
+ * @property DefinitionRepository $repository
+ */
 class ExportDefinitionController extends AbstractDefinitionController
 {
     public function getConfigAction(): JsonResponse
@@ -56,10 +60,10 @@ class ExportDefinitionController extends AbstractDefinitionController
 
     public function exportAction(Request $request): Response
     {
-        $id = (int)$request->get('id');
+        $id = $request->get('id');
 
         if ($id) {
-            $definition = $this->repository->find($id);
+            $definition = $this->repository->findByName($id);
 
             if ($definition instanceof ExportDefinitionInterface) {
 
@@ -88,7 +92,7 @@ class ExportDefinitionController extends AbstractDefinitionController
     public function importAction(Request $request): JsonResponse
     {
         $id = (int)$request->get('id');
-        $definition = $this->repository->find($id);
+        $definition = $this->repository->findByName($id);
 
         if ($id && $definition instanceof ExportDefinitionInterface && $request->files->has('Filedata')) {
             $uploadedFile = $request->files->get('Filedata');
@@ -116,8 +120,8 @@ class ExportDefinitionController extends AbstractDefinitionController
 
     public function duplicateAction(Request $request): JsonResponse
     {
-        $id = (int)$request->get('id');
-        $definition = $this->repository->find($id);
+        $id = $request->get('id');
+        $definition = $this->repository->findByName($id);
         $name = (string)$request->get('name');
 
         if ($definition instanceof ExportDefinitionInterface && $name) {
@@ -137,7 +141,7 @@ class ExportDefinitionController extends AbstractDefinitionController
     public function getColumnsAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
-        $definition = $this->repository->find($id);
+        $definition = $this->repository->findByName($id);
 
         if (!$definition instanceof ExportDefinitionInterface || !$definition->getClass()) {
             return $this->viewHandler->handle(['success' => false]);

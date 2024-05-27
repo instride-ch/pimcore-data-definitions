@@ -36,7 +36,7 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
      */
     public $fetchUnpublished = false;
 
-    public static function getById(string $name)
+    public static function getById(int $name)
     {
         return static::getByName($name);
     }

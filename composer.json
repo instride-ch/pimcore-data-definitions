@@ -42,8 +42,8 @@
     "pimcore/pimcore": "^11.0",
     "psr/http-client-implementation": "^1.0",
     "psr/http-factory-implementation": "^1.0",
-    "symfony/dotenv": "^6.3",
-    "symfony/http-client": "^6.3"
+    "symfony/dotenv": "^6.3 | ^7.0",
+    "symfony/http-client": "^6.3 | ^7.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",

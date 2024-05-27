@@ -24,6 +24,7 @@ class PimcoreSettingsListener
 {
     public function indexSettings(IndexActionSettingsEvent $settingsEvent): void
     {
-
+        $settingsEvent->addSetting('data-definitions-import-definition-writeable', (new ImportDefinition())->isWriteable());
+        $settingsEvent->addSetting('data-definitions-export-definition-writeable', (new ExportDefinition())->isWriteable());
     }
 }

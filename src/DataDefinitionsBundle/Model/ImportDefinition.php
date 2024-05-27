@@ -86,7 +86,7 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
      */
     public $persister;
 
-    public static function getById(string $name)
+    public static function getById(int $name)
     {
         return static::getByName($name);
     }

@@ -70,3 +70,5 @@ public
 docker-compose.yaml
 test-commands.txt
 .docker
+cache
+config/pimcore/data-definitions

@@ -91,11 +91,6 @@ abstract class AbstractDataDefinition extends AbstractModel implements DataDefin
         return $this->id;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
     public function getProvider()
     {
         return $this->provider;
@@ -129,13 +124,6 @@ abstract class AbstractDataDefinition extends AbstractModel implements DataDefin
     public function getName()
     {
         return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        $this->setId($name);
     }
 
     public function getMapping()

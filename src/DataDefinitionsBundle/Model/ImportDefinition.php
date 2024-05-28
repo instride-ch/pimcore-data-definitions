@@ -16,11 +16,15 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Model;
 
+use League\Flysystem\FilesystemException;
+
 /**
  * @method ImportDefinition\Dao getDao()
  */
 class ImportDefinition extends AbstractDataDefinition implements ImportDefinitionInterface
 {
+    use IdGenerator;
+
     /**
      * @var string
      */
@@ -86,12 +90,32 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
      */
     public $persister;
 
-    public static function getById(int $name)
+    /**
+     * @throws FilesystemException
+     */
+    public function setId($id)
     {
-        return static::getByName((string)$name);
+        $this->id = $id  ?: $this->getSuggestedId('import-definitions') ;
     }
 
-    public static function getByName(string $id)
+    public function setName($name)
+    {
+        $this->name = $name;
+        if(!$this->id) {
+            $this->setId($this->getSuggestedId('import-definitions'));
+        }
+    }
+
+    public static function getById($id)
+    {   $definitionEntry = new ImportDefinition();
+        $definitionEntry->setId((int)$id);
+
+        $dao = $definitionEntry->getDao();
+        $dao->getById($id);
+        return $definitionEntry;
+    }
+
+    public static function getByName($id)
     {
         $definitionEntry = new ImportDefinition();
         $definitionEntry->setId((int)$id);
@@ -99,7 +123,8 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
          * @var \Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
          */
         $dao = $definitionEntry->getDao();
-        $dao->getByName($id);
+        $dao->getById($id);
+
 
         return $definitionEntry;
     }

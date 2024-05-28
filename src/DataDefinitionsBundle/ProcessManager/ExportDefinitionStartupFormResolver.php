@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\ProcessManager;
 
-use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
+use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use ProcessManagerBundle\Model\ExecutableInterface;
 use ProcessManagerBundle\Process\ProcessStartupFormResolverInterface;
 use Instride\Bundle\DataDefinitionsBundle\Form\Type\ProcessManager\ExportDefinitionObjectStartupForm;
@@ -36,7 +36,7 @@ final class ExportDefinitionStartupFormResolver implements ProcessStartupFormRes
             return false;
         }
 
-        $definition = $this->definitionRepository->findByName($executable->getSettings()['definition']);
+        $definition = $this->definitionRepository->find($executable->getSettings()['definition']);
 
         if (!$definition instanceof ExportDefinitionInterface) {
             return false;

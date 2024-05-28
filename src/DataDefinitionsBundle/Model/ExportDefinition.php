@@ -16,11 +16,15 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Model;
 
+use League\Flysystem\FilesystemException;
+
 /**
  * @method ExportDefinition\Dao getDao()
  */
 class ExportDefinition extends AbstractDataDefinition implements ExportDefinitionInterface
 {
+    use IdGenerator;
+
     /**
      * @var string
      */
@@ -36,9 +40,31 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
      */
     public $fetchUnpublished = false;
 
-    public static function getById(int $name)
+    public static function getById($id)
     {
-        return static::getByName($name);
+        $definitionEntry = new ExportDefinition();
+        $definitionEntry->setId((int)$id);
+
+        $dao = $definitionEntry->getDao();
+        $dao->getById($id);
+        return $definitionEntry;
+    }
+
+    /**
+     * @throws FilesystemException
+     * @throws FilesystemException
+     */
+    public function setId($id)
+    {
+        $this->id = $id  ?: $this->getSuggestedId('export-definitions') ;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+        if(!$this->id) {
+            $this->setId($this->getSuggestedId('export-definitions'));
+        }
     }
 
     public static function getByName($id)
@@ -49,7 +75,7 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
          * @var \Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
          */
         $dao = $definitionEntry->getDao();
-        $dao->getByName($id);
+        $dao->getById($id);
 
         return $definitionEntry;
     }

@@ -18,7 +18,6 @@ namespace Instride\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceController;
 use CoreShop\Component\Resource\Model\ResourceInterface;
-use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use Pimcore\Model\DataObject;
 use Pimcore\Tool;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -26,12 +25,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ExportMapping\FromColumn;
 
-/**
- * @property DefinitionRepository $repository
- */
 abstract class AbstractDefinitionController extends ResourceController
 {
     public function getAction(Request $request): JsonResponse
@@ -41,16 +35,5 @@ abstract class AbstractDefinitionController extends ResourceController
         $resources = $this->findOr404((string) $this->getParameterFromRequest($request, 'id'));
 
         return $this->viewHandler->handle(['data' => $resources, 'success' => true], ['group' => 'Detailed']);
-    }
-
-    protected function findOr404(int|string $id): ResourceInterface
-    {
-        $model = $this->repository->findByName((string)$id);
-
-        if (null === $model || !$model instanceof ResourceInterface) {
-            throw new NotFoundHttpException(sprintf('The "%s" has not been found', $id));
-        }
-
-        return $model;
     }
 }

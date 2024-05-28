@@ -68,8 +68,11 @@ final class ImportAsyncCommand extends AbstractCommand
             $params['userId'] = 0;
         }
 
-        $inputDefinition = $input->getOption('definition');
-        $definition = $this->repository->findByName((string)$inputDefinition);
+        try {
+            $definition = $this->repository->find($input->getOption('definition'));
+        } catch (InvalidArgumentException $e) {
+            $definition = $this->repository->findByName($input->getOption('definition'));
+        }
 
         if (!$definition instanceof ImportDefinitionInterface) {
             throw new Exception('Import Definition not found');

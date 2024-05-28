@@ -68,18 +68,40 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
     }
 
     /**
+     * Get Configuration By id
+     *
+     * @param null $id
+     * @throws Exception
+     */
+    public function getById($id = null)
+    {
+        if (!$id) {
+            $this->model->setId($id);
+        }
+
+        $data = $this->getDataByName((string)$this->model->getId());
+        if ($data && $id != null) {
+            $data['id'] = $id;
+        }
+
+        if ($data) {
+            $this->assignVariablesToModel($data);
+        } else {
+            throw new Model\Exception\NotFoundException(sprintf(
+                'Thumbnail with ID "%s" does not exist.',
+                $this->model->getId()
+            ));
+        }
+    }
+
+    /**
      * Get Definition by name.
      *
-     * @param null $name
-     * @throws Exception
+     * @param string|null $id
      */
     public function getByName(string $id = null): void
     {
-        if ($id != null) {
-            $this->model->setName($id);
-        }
-
-        $data = $this->getDataByName($this->model->getName());
+        $data = $this->getDataByName((string)$this->model->getId());
 
         if ($data && $id != null) {
             $data['id'] = $id;
@@ -87,7 +109,6 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
 
         if ($data) {
             $this->assignVariablesToModel($data);
-            $this->model->setName($data['id']);
         } else {
             throw new Model\Exception\NotFoundException(sprintf(
                 'Thumbnail with ID "%s" does not exist.',
@@ -112,6 +133,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
         $dataRaw = get_object_vars($this->model);
         $data = [];
         $allowedProperties = [
+            'id',
             'name',
             'provider',
             'class',
@@ -149,7 +171,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
                 }
             }
         }
-        $this->saveData($this->model->getName(), $data);
+        $this->saveData((string)$this->model->getId(), $data);
     }
 
     protected function prepareDataStructureForYaml(string $id, mixed $data): mixed
@@ -169,6 +191,6 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
      */
     public function delete()
     {
-        $this->deleteData($this->model->getName());
+        $this->deleteData((string)$this->model->getId());
     }
 }

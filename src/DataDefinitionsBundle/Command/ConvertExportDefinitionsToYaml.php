@@ -10,11 +10,11 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConvertExportDefinitionsToYaml extends Command
 {
-    protected static $defaultName = 'data-definition:configuration:exporter:convert-to-yaml';
 
     protected function configure(): void
     {
         $this
+            ->setName('data-definition:configuration:exporter:convert-to-yaml')
             ->setDescription('Convert export definitions file to YAML files')
             ->setHelp('This command converts export definitions file to YAML')
             ->addArgument('file', InputArgument::OPTIONAL, 'Path to the PHP file', 'var/config/exportdefinitions.php');

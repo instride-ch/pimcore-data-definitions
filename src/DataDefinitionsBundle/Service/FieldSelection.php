@@ -27,6 +27,7 @@ class FieldSelection
         $fields = $class->getFieldDefinitions();
 
         $systemColumns = [
+            'o_id',
             'o_published',
             'o_key',
             'o_parentId',

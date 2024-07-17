@@ -1,6 +1,15 @@
 imports:
     - { resource: "services/contexts.yml" }
 
+data_definitions:
+    config_location:
+        import_definitions:
+            write_target:
+                type: 'settings-store'
+        export_definitions:
+            write_target:
+                type: 'settings-store'
+
 services:
     data_definitions.behat.shared_storage:
         class: Instride\Bundle\DataDefinitionsBundle\Behat\Service\SharedStorage

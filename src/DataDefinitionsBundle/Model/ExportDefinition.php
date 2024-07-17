@@ -41,7 +41,7 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
      */
     public $fetchUnpublished = false;
 
-    public static function getById(int $name)
+    public static function getById(int|string $name)
     {
         return static::getByName($name);
     }
@@ -49,7 +49,7 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
     public static function getByName($id)
     {
         $definitionEntry = new ExportDefinition();
-        $definitionEntry->setId((int)$id);
+        $definitionEntry->setId($id);
         /**
          * @var \Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
          */

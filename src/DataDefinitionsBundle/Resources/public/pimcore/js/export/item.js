@@ -125,6 +125,12 @@ pimcore.plugin.datadefinitions.export.item = Class.create(pimcore.plugin.datadef
                     checked: this.data.stopOnException
                 },
                 {
+                    fieldLabel: t('data_definitions_enable_inheritance'),
+                    xtype: 'checkbox',
+                    name: 'enableInheritance',
+                    checked: this.data.enableInheritance
+                },
+                {
                     fieldLabel: t('data_definitions_fetcher_objects_unpublished'),
                     xtype: 'checkbox',
                     name: 'fetchUnpublished',

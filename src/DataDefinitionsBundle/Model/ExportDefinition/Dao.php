@@ -121,6 +121,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
             'mapping',
             'runner',
             'stopOnException',
+            'enableInheritance',
             'fetchUnpublished',
             'failureNotificationDocument',
             'successNotificationDocument',

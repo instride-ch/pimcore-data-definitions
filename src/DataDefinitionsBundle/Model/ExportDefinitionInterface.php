@@ -19,6 +19,16 @@ namespace Instride\Bundle\DataDefinitionsBundle\Model;
 interface ExportDefinitionInterface extends DataDefinitionInterface
 {
     /**
+     * @param bool $enableInheritance
+     */
+    public function setEnableInheritance(bool $enableInheritance): void;
+
+    /**
+     * @return bool
+     */
+    public function isEnableInheritance(): bool;
+
+    /**
      * @return mixed
      */
     public function getFetcher();

@@ -67,6 +67,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('cleaner')->end()
                             ->scalarNode('key')->end()
                             ->scalarNode('filter')->end()
+                            ->scalarNode('persister')->end()
                             ->booleanNode('renameExistingObjects')->end()
                             ->booleanNode('relocateExistingObjects')->end()
                             ->booleanNode('skipNewObjects')->end()

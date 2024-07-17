@@ -134,6 +134,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
             'forceLoadObject',
             'loader',
             'fetcher',
+            'persister',
         ];
 
         foreach ($dataRaw as $key => $value) {

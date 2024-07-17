@@ -25,6 +25,6 @@ final class DefaultValueInterpreterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('value', TextType::class);
+            ->add('value', TextType::class, ['trim' => false]);
     }
 }

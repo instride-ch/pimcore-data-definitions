@@ -55,3 +55,7 @@ Wvision\Bundle\DataDefinitionsBundle\Model\ImportDefinition:
       exp: object.isWriteable()
       type: boolean
       serialized_name: isWriteable
+  persister:
+    expose: true
+    type: string
+    groups: [Detailed]

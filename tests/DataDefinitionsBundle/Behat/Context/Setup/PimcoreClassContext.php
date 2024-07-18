@@ -81,6 +81,7 @@ final class PimcoreClassContext implements Context
         $name = $this->classStorage->set($className);
 
         $classDefinition = new ClassDefinition();
+        $classDefinition->setId($name);
         $classDefinition->setName($name);
         $classDefinition->setLayoutDefinitions(
             json_decode(''),

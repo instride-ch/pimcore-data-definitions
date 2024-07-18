@@ -46,7 +46,7 @@ final class PimcoreDaoContext implements Context
     /**
      * @BeforeScenario
      */
-    public function purgeObjects()
+    public function purgeObjects(): void
     {
         Cache::clearAll();
         Cache\RuntimeCache::clear();
@@ -62,16 +62,16 @@ final class PimcoreDaoContext implements Context
         foreach ($list->getObjects() as $obj) {
             $obj->delete();
         }
+
+        //Force
+        $this->connection->executeQuery('DELETE FROM objects WHERE id <> 1');
     }
 
     /**
      * @BeforeScenario
      */
-    public function purgeAssets()
+    public function purgeAssets(): void
     {
-        Cache::clearAll();
-        Cache\RuntimeCache::clear();
-
         /**
          * @var Asset\Listing $list
          */
@@ -95,17 +95,20 @@ final class PimcoreDaoContext implements Context
     /**
      * @BeforeScenario
      */
-    public function purgeBricks()
+    public function purgeBricks(): void
     {
         $list = new Objectbrick\Definition\Listing();
         $list->load();
 
         foreach ($list->load() as $brick) {
+            /**
+             * @psalm-suppress DocblockTypeContradiction
+             */
             if (!$brick instanceof Objectbrick\Definition) {
                 continue;
             }
 
-            if (strpos($brick->getKey(), 'Behat') === 0) {
+            if (str_starts_with($brick->getKey(), 'Behat')) {
                 $brick->delete();
             }
         }
@@ -123,7 +126,7 @@ final class PimcoreDaoContext implements Context
     /**
      * @BeforeStep
      */
-    public function clearRuntimeCacheStep()
+    public function clearRuntimeCacheStep(): void
     {
         //We should not clear Pimcore Objects here, otherwise we lose the reference to it
         //and end up having the same object twice
@@ -131,7 +134,7 @@ final class PimcoreDaoContext implements Context
         $keepItems = [];
 
         foreach ($copy as $key => $value) {
-            if (strpos($key, 'object_') === 0) {
+            if (str_starts_with($key, 'object_')) {
                 $keepItems[] = $key;
             }
         }
@@ -142,13 +145,16 @@ final class PimcoreDaoContext implements Context
     /**
      * @BeforeScenario
      */
-    public function purgeClasses()
+    public function purgeClasses(): void
     {
         $list = new ClassDefinition\Listing();
         $list->setCondition('name LIKE ?', ['Behat%']);
         $list->load();
 
         foreach ($list->getClasses() as $class) {
+            /**
+             * @psalm-suppress DocblockTypeContradiction
+             */
             if (!$class instanceof ClassDefinition) {
                 continue;
             }
@@ -160,17 +166,20 @@ final class PimcoreDaoContext implements Context
     /**
      * @BeforeScenario
      */
-    public function purgeFieldCollections()
+    public function purgeFieldCollections(): void
     {
         $list = new Fieldcollection\Definition\Listing();
         $list->load();
 
         foreach ($list->load() as $collection) {
+            /**
+             * @psalm-suppress DocblockTypeContradiction
+             */
             if (!$collection instanceof Fieldcollection\Definition) {
                 continue;
             }
 
-            if (strpos($collection->getKey(), 'Behat') === 0) {
+            if (str_starts_with($collection->getKey(), 'Behat')) {
                 $collection->delete();
             }
         }

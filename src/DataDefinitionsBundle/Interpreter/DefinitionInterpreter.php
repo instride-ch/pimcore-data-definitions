@@ -16,11 +16,11 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Interpreter;
 
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
+use Pimcore\Model\DataObject;
 use Instride\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
-use Pimcore\Model\DataObject;
 
 class DefinitionInterpreter implements InterpreterInterface
 {
@@ -30,9 +30,8 @@ class DefinitionInterpreter implements InterpreterInterface
     ) {
     }
 
-    public function interpret(InterpreterContextInterface $context): mixed
-    {
-        $subDefinition = $this->definitionRepository->findByName($context->getConfiguration()['definition']);
+    public function interpret(InterpreterContextInterface $context): mixed {
+        $subDefinition = $this->definitionRepository->find($context->getConfiguration()['definition']);
 
         if (!$subDefinition instanceof ImportDefinitionInterface) {
             return null;

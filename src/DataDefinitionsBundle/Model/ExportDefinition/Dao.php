@@ -17,15 +17,15 @@ declare(strict_types=1);
 namespace Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
 
 use Exception;
-use InvalidArgumentException;
+use Instride\Bundle\DataDefinitionsBundle\Model\IdGenerator;
+use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
 use Pimcore\Model;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportMapping;
-use function count;
-use function in_array;
-use function is_array;
 
 class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
 {
+    use IdGenerator;
+
     private const CONFIG_KEY = 'export_definitions';
 
     /**
@@ -54,7 +54,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
                 $maps = array();
 
                 foreach ($this->model->getMapping() as $map) {
-                    if (is_array($map)) {
+                    if (\is_array($map)) {
                         $mapObj = new ExportMapping();
                         $mapObj->setValues($map);
 
@@ -68,32 +68,38 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
     }
 
     /**
-     * Get Definition by name.
-     *
-     * @param null $name
-     * @throws Exception
+     * @throws Model\Exception\NotFoundException
      */
-    public function getByName(string $id = null): void
+    public function getById(string $id)
     {
-        if ($id != null) {
-            $this->model->setName($id);
-        }
-
-        $data = $this->getDataByName($this->model->getName());
-
-        if ($data && $id != null) {
-            $data['id'] = $id;
-        }
+        $data = $this->getDataByName($id);
 
         if ($data) {
             $this->assignVariablesToModel($data);
-            $this->model->setName($data['id']);
         } else {
             throw new Model\Exception\NotFoundException(sprintf(
-                'Thumbnail with ID "%s" does not exist.',
-                $this->model->getName()
+                'Export Definition with ID "%s" does not exist.',
+                $id
             ));
         }
+    }
+
+    public function getByName(string $name): void
+    {
+        foreach ($this->loadIdList() as $id) {
+            $definition = ExportDefinition::getById((int)$id);
+
+            if ($definition->getName() === $name) {
+                $this->model = $definition;
+                $this->getById($id);
+                return;
+            }
+        }
+
+        throw new Model\Exception\NotFoundException(sprintf(
+            'Export Definition with Name "%s" does not exist.',
+            $name
+        ));
     }
 
     /**
@@ -104,6 +110,11 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
     public function save()
     {
         $ts = time();
+
+        if (!$this->model->getId()) {
+            $this->model->setId($this->model->getSuggestedId(new Listing()));
+        }
+
         if (!$this->model->getCreationDate()) {
             $this->model->setCreationDate($ts);
         }
@@ -112,6 +123,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
         $dataRaw = get_object_vars($this->model);
         $data = [];
         $allowedProperties = [
+            'id',
             'name',
             'provider',
             'class',
@@ -139,7 +151,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
                     if ($value) {
                         $data[$key] = array();
 
-                        if (is_array($value)) {
+                        if (\is_array($value)) {
                             foreach ($value as $map) {
                                 $data[$key][] = get_object_vars($map);
                             }
@@ -150,7 +162,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
                 }
             }
         }
-        $this->saveData($this->model->getName(), $data);
+        $this->saveData((string)$this->model->getId(), $data);
     }
 
     protected function prepareDataStructureForYaml(string $id, mixed $data): mixed
@@ -170,6 +182,6 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
      */
     public function delete()
     {
-        $this->deleteData($this->model->getName());
+        $this->deleteData((string)$this->model->getId());
     }
 }

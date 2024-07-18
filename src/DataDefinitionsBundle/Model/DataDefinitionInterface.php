@@ -21,6 +21,8 @@ use CoreShop\Component\Resource\Model\ResourceInterface;
 interface DataDefinitionInterface extends ResourceInterface
 {
 
+    public function getId(): int|string|null;
+
     /**
      * @param int $id
      */

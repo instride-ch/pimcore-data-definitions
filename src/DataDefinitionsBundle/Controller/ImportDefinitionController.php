@@ -70,7 +70,7 @@ class ImportDefinitionController extends AbstractDefinitionController
     public function testDataAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
-        $definition = $this->repository->findByName($id);
+        $definition = $this->repository->find($id);
 
         if ($definition instanceof ImportDefinitionInterface) {
             try {
@@ -92,7 +92,7 @@ class ImportDefinitionController extends AbstractDefinitionController
     public function getColumnsAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
-        $definition = $this->repository->findByName($id);
+        $definition = $this->repository->find($id);
 
         if ($definition instanceof ImportDefinitionInterface && $definition->getClass()) {
             $customFromColumn = new FromColumn();
@@ -193,10 +193,10 @@ class ImportDefinitionController extends AbstractDefinitionController
 
     public function exportAction(Request $request): Response
     {
-        $id = $request->get('id');
+        $id = (int)$request->get('id');
 
         if ($id) {
-            $definition = $this->repository->findByName($id);
+            $definition = $this->repository->find($id);
 
             if ($definition instanceof ImportDefinitionInterface) {
 
@@ -224,15 +224,15 @@ class ImportDefinitionController extends AbstractDefinitionController
 
     public function importAction(Request $request): JsonResponse
     {
-        $id = $request->get('id');
-        $definition = $this->repository->findByName($id);
+        $id = (int)$request->get('id');
+        $definition = $this->repository->find($id);
 
         if ($id && $definition instanceof ImportDefinitionInterface && $request->files->has('Filedata')) {
             $uploadedFile = $request->files->get('Filedata');
 
             if ($uploadedFile instanceof UploadedFile) {
                 $jsonContent = file_get_contents($uploadedFile->getPathname());
-                $data = $this->decodeJson($jsonContent, false);
+                $data = $this->decodeJson($jsonContent, false,[],false);
 
                 $form = $this->resourceFormFactory->create($this->metadata, $definition);
                 $handledForm = $form->submit($data);
@@ -253,8 +253,8 @@ class ImportDefinitionController extends AbstractDefinitionController
 
     public function duplicateAction(Request $request): JsonResponse
     {
-        $id = $request->get('id');
-        $definition = $this->repository->findByName($id);
+        $id = (int)$request->get('id');
+        $definition = $this->repository->find($id);
         $name = (string)$request->get('name');
 
         if ($definition instanceof ImportDefinitionInterface && $name) {

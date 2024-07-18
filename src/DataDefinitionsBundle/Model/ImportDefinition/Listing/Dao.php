@@ -27,8 +27,8 @@ class Dao extends ImportDefinition\Dao
     public function loadList(): array
     {
         $definitions = [];
-        foreach ($this->loadIdList() as $name) {
-            $definitions[] = ImportDefinition::getByName($name);
+        foreach ($this->loadIdList() as $id) {
+            $definitions[] = ImportDefinition::getById((int)$id);
         }
 
         if ($this->model->getFilter()) {
@@ -40,6 +40,11 @@ class Dao extends ImportDefinition\Dao
         $this->model->setObjects($definitions);
 
         return $definitions;
+    }
+
+    public function getAllIds(): array
+    {
+        return $this->loadIdList();
     }
 
     public function getTotalCount(): int

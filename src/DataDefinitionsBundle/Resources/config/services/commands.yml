@@ -52,3 +52,11 @@ services:
       - '@CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface'
     tags:
       - { name: 'console.command', command: 'data-definitions:definition:import:export' }
+
+  Instride\Bundle\DataDefinitionsBundle\Command\ConvertExportDefinitionsToYaml:
+    tags:
+      - { name: 'console.command', command: 'data-definition:configuration:exporter:convert-to-yaml' }
+
+  Instride\Bundle\DataDefinitionsBundle\Command\ConvertImportDefinitionsToYaml:
+    tags:
+      - { name: 'console.command', command: 'data-definition:configuration:importer:convert-to-yaml' }

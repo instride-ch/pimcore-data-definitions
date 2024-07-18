@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Form\Type;
 
-use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
+use CoreShop\Component\Resource\Repository\RepositoryInterface;
 use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class DefinitionChoiceType extends AbstractType
 {
@@ -50,7 +51,7 @@ final class DefinitionChoiceType extends AbstractType
                         }, $this->definitionRepository->findAll());
                     },
                     'choice_label' => function ($val) {
-                        $def = $this->definitionRepository->findByName($val);
+                        $def = $this->definitionRepository->find($val);
 
                         return $def !== null ? $def->getName() : null;
                     },

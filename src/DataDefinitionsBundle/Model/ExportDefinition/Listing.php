@@ -26,6 +26,7 @@ use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 /**
  * @method loadList()
+ * @method getAllIds()
  */
 class Listing extends AbstractModel implements CallableFilterListingInterface, CallableOrderListingInterface
 {

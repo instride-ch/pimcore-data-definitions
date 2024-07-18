@@ -86,22 +86,32 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
      */
     public $persister;
 
-    public static function getById(int|string $name)
+    public static function getById(int $id): self
     {
-        return static::getByName((string)$name);
-    }
-
-    public static function getByName(string $id)
-    {
-        $definitionEntry = new ImportDefinition();
-        $definitionEntry->setId($id);
-        /**
-         * @var \Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
-         */
+        $definitionEntry = new self();
         $dao = $definitionEntry->getDao();
-        $dao->getByName($id);
+        $dao->getById((string)$id);
 
         return $definitionEntry;
+    }
+
+    public static function getByName(string $name): self
+    {
+        $definitionEntry = new self();
+        $dao = $definitionEntry->getDao();
+        $dao->getByName($name);
+
+        return $definitionEntry;
+    }
+
+    public function setId($id)
+    {
+        $this->id = (int)$id;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     public function getLoader()

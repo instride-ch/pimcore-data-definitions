@@ -18,18 +18,18 @@ namespace Instride\Bundle\DataDefinitionsBundle\Messenger;
 
 class ImportRowMessage
 {
-    private int|string $definitionId;
+    private int $definitionId;
     private array $data;
     private array $params;
 
-    public function __construct(int|string $definitionId, array $data, array $params)
+    public function __construct(int $definitionId, array $data, array $params)
     {
         $this->definitionId = $definitionId;
         $this->data = $data;
         $this->params = $params;
     }
 
-    public function getDefinitionId(): int|string
+    public function getDefinitionId(): int
     {
         return $this->definitionId;
     }

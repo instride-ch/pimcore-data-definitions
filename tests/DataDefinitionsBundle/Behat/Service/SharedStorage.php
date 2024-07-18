@@ -14,10 +14,11 @@ namespace Instride\Bundle\DataDefinitionsBundle\Behat\Service;
 
 class SharedStorage implements SharedStorageInterface
 {
-    private $clipboard = [];
-    private $latestKey;
+    private array $clipboard = [];
 
-    public function get(string $key)
+    private ?string $latestKey = null;
+
+    public function get(string $key): mixed
     {
         if (!isset($this->clipboard[$key])) {
             throw new \InvalidArgumentException(sprintf('There is no current resource for "%s"!', $key));
@@ -31,13 +32,13 @@ class SharedStorage implements SharedStorageInterface
         return isset($this->clipboard[$key]);
     }
 
-    public function set(string $key, $resource): void
+    public function set(string $key, mixed $resource): void
     {
         $this->clipboard[$key] = $resource;
         $this->latestKey = $key;
     }
 
-    public function getLatestResource()
+    public function getLatestResource(): mixed
     {
         if (!isset($this->clipboard[$this->latestKey])) {
             throw new \InvalidArgumentException(sprintf('There is no "%s" latest resource!', $this->latestKey));

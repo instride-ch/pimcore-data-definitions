@@ -20,18 +20,16 @@ use Pimcore\Model\Asset;
 
 final class PimcoreAssetContext implements Context
 {
-    private $sharedStorage;
-
     public function __construct(
-        SharedStorageInterface $sharedStorage
+        private readonly SharedStorageInterface $sharedStorage
     ) {
-        $this->sharedStorage = $sharedStorage;
+
     }
 
     /**
      * @Transform /^asset "([^"]+)"$/
      */
-    public function objectInstanceWithKey($path)
+    public function objectInstanceWithKey(string $path): Asset
     {
         return Asset::getByPath($path);
     }

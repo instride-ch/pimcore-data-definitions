@@ -28,7 +28,7 @@ trait IdGenerator
         $maxNumber = null;
         foreach ($contents as $file) {
             if ($file->isFile() && preg_match('/^(\d+)\.yaml$/', $file->path(), $matches)) {
-                $number = intval($matches[1]);
+                $number = (int)$matches[1];
                 if ($maxNumber === null || $number > $maxNumber) {
                     $maxNumber = $number;
                 }

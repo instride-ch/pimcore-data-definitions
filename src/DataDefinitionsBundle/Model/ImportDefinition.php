@@ -101,13 +101,15 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
     public function setName($name)
     {
         $this->name = $name;
-        if(!$this->id) {
+
+        if (!$this->id) {
             $this->setId($this->getSuggestedId('import-definitions'));
         }
     }
 
-    public static function getById($id)
-    {   $definitionEntry = new ImportDefinition();
+    public static function getById(int $id): ImportDefinition
+    {
+        $definitionEntry = new ImportDefinition();
         $definitionEntry->setId((int)$id);
 
         $dao = $definitionEntry->getDao();
@@ -118,7 +120,7 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
     public static function getByName($id)
     {
         $definitionEntry = new ImportDefinition();
-        $definitionEntry->setId((int)$id);
+        $definitionEntry->setId($id);
         /**
          * @var \Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
          */

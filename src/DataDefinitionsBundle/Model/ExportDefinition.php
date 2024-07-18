@@ -26,6 +26,11 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
     use IdGenerator;
 
     /**
+     * @var bool
+     */
+    public $enableInheritance = true;
+
+    /**
      * @var string
      */
     public $fetcher;
@@ -40,13 +45,14 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
      */
     public $fetchUnpublished = false;
 
-    public static function getById($id)
+    public static function getById(int $id): ExportDefinition
     {
         $definitionEntry = new ExportDefinition();
-        $definitionEntry->setId((int)$id);
+        $definitionEntry->setId($id);
 
         $dao = $definitionEntry->getDao();
         $dao->getById($id);
+
         return $definitionEntry;
     }
 
@@ -70,7 +76,7 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
     public static function getByName($id)
     {
         $definitionEntry = new ExportDefinition();
-        $definitionEntry->setId((int)$id);
+        $definitionEntry->setId($id);
         /**
          * @var \Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
          */
@@ -78,6 +84,22 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
         $dao->getById($id);
 
         return $definitionEntry;
+    }
+
+    /**
+     * @param bool $enableInheritance
+     */
+    public function setEnableInheritance(bool $enableInheritance): void
+    {
+        $this->enableInheritance = $enableInheritance;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnableInheritance(): bool
+    {
+        return $this->enableInheritance;
     }
 
     public function getFetcher()

@@ -21,22 +21,18 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 final class PimcoreAssetContext implements Context
 {
-    private $sharedStorage;
-    private $kernel;
 
     public function __construct(
-        SharedStorageInterface $sharedStorage,
-        KernelInterface $kernel
+        private readonly SharedStorageInterface $sharedStorage,
+        private readonly KernelInterface $kernel
     ) {
-        $this->sharedStorage = $sharedStorage;
-        $this->kernel = $kernel;
     }
 
     /**
      * @Given /^there is a asset with bundle file "([^"]+)"$/
      * @Given /^there is a asset with bundle file "([^"]+)" at path "([^"]+)"$/
      */
-    public function thereIsAAssetWithBundleFile($bundleFile, $parentPath = null)
+    public function thereIsAAssetWithBundleFile(string $bundleFile, ?string $parentPath = null): void
     {
         $path = $this->kernel->locateResource($bundleFile);
         $parentId = 1;

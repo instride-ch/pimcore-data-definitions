@@ -14,7 +14,7 @@ namespace Instride\Bundle\DataDefinitionsBundle\Behat\Service;
 
 class ClassStorage implements ClassStorageInterface
 {
-    private $storage = [];
+    private array $storage = [];
 
     public function get(string $className): string
     {
@@ -42,3 +42,4 @@ class ClassStorage implements ClassStorageInterface
         return sprintf('Behat%s%s', $className, uniqid());
     }
 }
+

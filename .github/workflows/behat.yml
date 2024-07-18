@@ -20,12 +20,11 @@ jobs:
       PIMCORE_INSTALL_MYSQL_DATABASE: "coreshop_test"
       PIMCORE_INSTALL_MYSQL_PORT: "3306"
       PIMCORE_KERNEL_CLASS: 'Kernel'
-      PIMCORE_CLASS_DIRECTORY: 'var/tmp/behat/var/classes'
 
     strategy:
       matrix:
-        php: [ 8.1, 8.2 ]
-        pimcore: [ ^11.0 ]
+        php: [ 8.1, 8.2, 8.3 ]
+        pimcore: [ ^11.1, ^11.2, ^11.3 ]
         dependencies: [ highest ]
         exclude:
           - php: 8.1
@@ -73,13 +72,13 @@ jobs:
     - if: matrix.dependencies == 'highest'
       name: Install dependencies highest
       run: |
-        composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
+        composer req pimcore/pimcore:${{ matrix.pimcore }} coreshop/pimcore:4.0.x-dev --no-interaction --no-scripts --no-update
         composer update --no-progress --prefer-dist --optimize-autoloader
 
     - if: matrix.dependencies == 'lowest'
       name: Install dependencies lowest
       run: |
-        composer req pimcore/pimcore:${{ matrix.pimcore }} --no-interaction --no-scripts --no-update
+        composer req pimcore/pimcore:${{ matrix.pimcore }} coreshop/pimcore:4.0.x-dev --no-interaction --no-scripts --no-update
         composer update --no-progress --prefer-dist --optimize-autoloader --prefer-lowest
 
     - name: Cache clear
@@ -89,7 +88,7 @@ jobs:
       run: bin/console assets:install --symlink
 
     - name: Install Pimcore
-      run: PIMCORE_KERNEL_CLASS=Kernel vendor/bin/pimcore-install --env=test --skip-database-config
+      run: PIMCORE_KERNEL_CLASS=Kernel vendor/bin/pimcore-install --env=test --skip-database-config --no-interaction
 
     - name: Install DataDefinitions
       run: bin/console pimcore:bundle:install DataDefinitionsBundle

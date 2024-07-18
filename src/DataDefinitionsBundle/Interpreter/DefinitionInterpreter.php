@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Interpreter;
 
-use CoreShop\Component\Resource\Repository\RepositoryInterface;
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use Pimcore\Model\DataObject;
 use Instride\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;

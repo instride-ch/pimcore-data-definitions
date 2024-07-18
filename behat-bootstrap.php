@@ -10,7 +10,6 @@ if (!defined('PIMCORE_PROJECT_ROOT')) {
 }
 
 define('PIMCORE_TEST', true);
-define('PIMCORE_CLASS_DIRECTORY', __DIR__ . '/var/tmp/behat/var/classes');
 
 error_reporting(E_ALL);
 

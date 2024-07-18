@@ -16,15 +16,11 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Model;
 
-use League\Flysystem\FilesystemException;
-
 /**
  * @method ImportDefinition\Dao getDao()
  */
 class ImportDefinition extends AbstractDataDefinition implements ImportDefinitionInterface
 {
-    use IdGenerator;
-
     /**
      * @var string
      */
@@ -90,45 +86,32 @@ class ImportDefinition extends AbstractDataDefinition implements ImportDefinitio
      */
     public $persister;
 
-    /**
-     * @throws FilesystemException
-     */
+    public static function getById(int $id): self
+    {
+        $definitionEntry = new self();
+        $dao = $definitionEntry->getDao();
+        $dao->getById((string)$id);
+
+        return $definitionEntry;
+    }
+
+    public static function getByName(string $name): self
+    {
+        $definitionEntry = new self();
+        $dao = $definitionEntry->getDao();
+        $dao->getByName($name);
+
+        return $definitionEntry;
+    }
+
     public function setId($id)
     {
-        $this->id = $id  ?: $this->getSuggestedId('import-definitions') ;
+        $this->id = (int)$id;
     }
 
     public function setName($name)
     {
         $this->name = $name;
-
-        if (!$this->id) {
-            $this->setId($this->getSuggestedId('import-definitions'));
-        }
-    }
-
-    public static function getById(int $id): ImportDefinition
-    {
-        $definitionEntry = new ImportDefinition();
-        $definitionEntry->setId((int)$id);
-
-        $dao = $definitionEntry->getDao();
-        $dao->getById($id);
-        return $definitionEntry;
-    }
-
-    public static function getByName($id)
-    {
-        $definitionEntry = new ImportDefinition();
-        $definitionEntry->setId($id);
-        /**
-         * @var \Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
-         */
-        $dao = $definitionEntry->getDao();
-        $dao->getById($id);
-
-
-        return $definitionEntry;
     }
 
     public function getLoader()

@@ -27,6 +27,7 @@ use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 
 /**
  * @method loadList()
+ * @method getAllIds()
  */
 class Listing extends AbstractModel implements CallableFilterListingInterface, CallableOrderListingInterface
 {

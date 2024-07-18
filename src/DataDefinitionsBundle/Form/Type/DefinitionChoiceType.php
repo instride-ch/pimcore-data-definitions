@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Instride\Bundle\DataDefinitionsBundle\Form\Type;
 
 use CoreShop\Component\Resource\Repository\RepositoryInterface;
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

@@ -17,13 +17,18 @@ declare(strict_types=1);
 namespace Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
 
 use Exception;
+use Instride\Bundle\DataDefinitionsBundle\Model\IdGenerator;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
 use Pimcore\Model;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use function in_array;
-use function is_array;
 
+/**
+ * @var ImportDefinition $model
+ */
 class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
 {
+    use IdGenerator;
+
     private const CONFIG_KEY = 'import_definitions';
 
     /**
@@ -52,7 +57,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
                 $maps = array();
 
                 foreach ($this->model->getMapping() as $map) {
-                    if (is_array($map)) {
+                    if (\is_array($map)) {
                         $mapObj = new ImportMapping();
                         $mapObj->setValues($map);
 
@@ -66,43 +71,13 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
     }
 
     /**
-     * Get Configuration By id
-     *
-     * @param null $id
-     * @throws Exception
+     * @throws Model\Exception\NotFoundException
      */
-    public function getById($id = null)
+    public function getById(string $id)
     {
-        if (!$id) {
-            $this->model->setId($id);
-        }
-
-        $data = $this->getDataByName((string)$this->model->getId());
-        if ($data && $id != null) {
-            $data['id'] = $id;
-        }
+        $data = $this->getDataByName($id);
 
         if ($data) {
-            $this->assignVariablesToModel($data);
-        } else {
-            throw new Model\Exception\NotFoundException(sprintf(
-                'Thumbnail with ID "%s" does not exist.',
-                $this->model->getId()
-            ));
-        }
-    }
-
-    /**
-     * Get Definition by name.
-     *
-     * @param string|null $id
-     */
-    public function getByName(string $id = null): void
-    {
-
-        $data = $this->getDataByName((string)$this->model->getId());
-
-        if ($data && $id != null) {
             $data['id'] = $id;
         }
 
@@ -111,19 +86,40 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
         } else {
             throw new Model\Exception\NotFoundException(sprintf(
                 'Import Definition with ID "%s" does not exist.',
-                $this->model->getName()
+                $id
             ));
         }
     }
 
+    public function getByName(string $name): void
+    {
+        foreach ($this->loadIdList() as $id) {
+            $definition = ImportDefinition::getById((int)$id);
+
+            if ($definition->getName() === $name) {
+                $this->model = $definition;
+                $this->getById($id);
+                return;
+            }
+        }
+
+        throw new Model\Exception\NotFoundException(sprintf(
+            'Import Definition with Name "%s" does not exist.',
+            $name
+        ));
+    }
+
     /**
-     * Save Configuration
-     *
      * @throws Exception
      */
     public function save()
     {
         $ts = time();
+
+        if (!$this->model->getId()) {
+            $this->model->setId($this->getSuggestedId(new Listing()));
+        }
+
         if (!$this->model->getCreationDate()) {
             $this->model->setCreationDate($ts);
         }
@@ -170,7 +166,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
                     if ($value) {
                         $data[$key] = array();
 
-                        if (is_array($value)) {
+                        if (\is_array($value)) {
                             foreach ($value as $map) {
                                 $data[$key][] = get_object_vars($map);
                             }

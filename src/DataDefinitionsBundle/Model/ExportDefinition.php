@@ -16,15 +16,11 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\DataDefinitionsBundle\Model;
 
-use League\Flysystem\FilesystemException;
-
 /**
  * @method ExportDefinition\Dao getDao()
  */
 class ExportDefinition extends AbstractDataDefinition implements ExportDefinitionInterface
 {
-    use IdGenerator;
-
     /**
      * @var bool
      */
@@ -45,45 +41,32 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
      */
     public $fetchUnpublished = false;
 
-    public static function getById(int $id): ExportDefinition
+    public static function getById(int $id): self
     {
-        $definitionEntry = new ExportDefinition();
-        $definitionEntry->setId($id);
-
+        $definitionEntry = new self();
         $dao = $definitionEntry->getDao();
         $dao->getById($id);
 
         return $definitionEntry;
     }
 
-    /**
-     * @throws FilesystemException
-     * @throws FilesystemException
-     */
+    public static function getByName(string $name): self
+    {
+        $definitionEntry = new self();
+        $dao = $definitionEntry->getDao();
+        $dao->getByName($name);
+
+        return $definitionEntry;
+    }
+
     public function setId($id)
     {
-        $this->id = $id  ?: $this->getSuggestedId('export-definitions') ;
+        $this->id = (int)$id;
     }
 
     public function setName($name)
     {
         $this->name = $name;
-        if(!$this->id) {
-            $this->setId($this->getSuggestedId('export-definitions'));
-        }
-    }
-
-    public static function getByName($id)
-    {
-        $definitionEntry = new ExportDefinition();
-        $definitionEntry->setId($id);
-        /**
-         * @var \Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Dao|\Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Dao
-         */
-        $dao = $definitionEntry->getDao();
-        $dao->getById($id);
-
-        return $definitionEntry;
     }
 
     /**

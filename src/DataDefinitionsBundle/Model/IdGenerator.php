@@ -2,40 +2,26 @@
 
 namespace Instride\Bundle\DataDefinitionsBundle\Model;
 
-use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemException;
-use League\Flysystem\Local\LocalFilesystemAdapter;
+use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition\Listing as ExportListing;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition\Listing as ImportListing;
 
 trait IdGenerator
 {
     private string $mainPath = 'var/config';
 
-    /**
-     * @throws FilesystemException
-     */
-    private function getSuggestedId(string $definitionPath): int
+    private function getSuggestedId(ExportListing|ImportListing $listing): int
     {
-        // Create an adapter and a Filesystem instance
-        $adapter = new LocalFilesystemAdapter(
-            sprintf('%s/%s/%s', PIMCORE_PROJECT_ROOT, $this->mainPath, $definitionPath)
-        );
+        $ids = $listing->getAllIds();
 
-        $filesystem = new Filesystem($adapter);
+        $maxNumber = 1;
 
-        // Get the list of files from the directory
-        $contents = $filesystem->listContents('/', true);
-
-        $maxNumber = null;
-        foreach ($contents as $file) {
-            if ($file->isFile() && preg_match('/^(\d+)\.yaml$/', $file->path(), $matches)) {
-                $number = (int)$matches[1];
-                if ($maxNumber === null || $number > $maxNumber) {
-                    $maxNumber = $number;
-                }
+        foreach ($ids as $id) {
+            if ((int)$id >= $maxNumber) {
+                $maxNumber = (int)$id + 1;
             }
         }
 
-        return $maxNumber + 1;
+        return $maxNumber;
     }
 
 }

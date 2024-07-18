@@ -21,21 +21,16 @@ use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 
 final class ImportDefinitionContext implements Context
 {
-    private $sharedStorage;
-    private $definitionRepository;
-
     public function __construct(
-        SharedStorageInterface $sharedStorage,
-        PimcoreDaoRepositoryInterface $definitionRepository
+        private readonly SharedStorageInterface $sharedStorage,
+        private readonly PimcoreDaoRepositoryInterface $definitionRepository
     ) {
-        $this->sharedStorage = $sharedStorage;
-        $this->definitionRepository = $definitionRepository;
     }
 
     /**
      * @Transform /^import-definition "([^"]+)"$/
      */
-    public function definitionWithName($name)
+    public function definitionWithName(string $name): DataDefinitionInterface
     {
         $all = $this->definitionRepository->findAll();
 
@@ -55,7 +50,7 @@ final class ImportDefinitionContext implements Context
      * @Transform /^import-definition$/
      * @Transform /^import-definitions$/
      */
-    public function definition()
+    public function definition(): ?DataDefinitionInterface
     {
         return $this->sharedStorage->get('import-definition');
     }

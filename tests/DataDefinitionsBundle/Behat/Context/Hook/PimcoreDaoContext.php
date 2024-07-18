@@ -28,8 +28,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 final class PimcoreDaoContext implements Context
 {
     public function __construct(
-        private Connection $connection,
-        private KernelInterface $kernel,
+        private readonly Connection $connection,
+        private readonly KernelInterface $kernel,
     )
     {
 

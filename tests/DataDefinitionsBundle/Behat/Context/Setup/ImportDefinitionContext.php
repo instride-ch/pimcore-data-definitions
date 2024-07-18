@@ -29,33 +29,16 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 final class ImportDefinitionContext implements Context
 {
-    private $sharedStorage;
-    private $factory;
-    private $manager;
-    private $importer;
-    private $formFactory;
-    private $providerFormRegistry;
-    private $interpreterFormRegistry;
-    private $setterFormRegistry;
-
     public function __construct(
-        SharedStorageInterface $sharedStorage,
-        FactoryInterface $factory,
-        ObjectManager $manager,
-        ImporterInterface $importer,
-        FormFactoryInterface $formFactory,
-        FormTypeRegistryInterface $providerFormRegistry,
-        FormTypeRegistryInterface $interpreterFormRegistry,
-        FormTypeRegistryInterface $setterFormRegistry
+        private readonly SharedStorageInterface $sharedStorage,
+        private readonly FactoryInterface $factory,
+        private readonly ObjectManager $manager,
+        private readonly ImporterInterface $importer,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly FormTypeRegistryInterface $providerFormRegistry,
+        private readonly FormTypeRegistryInterface $interpreterFormRegistry,
+        private readonly FormTypeRegistryInterface $setterFormRegistry
     ) {
-        $this->sharedStorage = $sharedStorage;
-        $this->factory = $factory;
-        $this->manager = $manager;
-        $this->importer = $importer;
-        $this->formFactory = $formFactory;
-        $this->providerFormRegistry = $providerFormRegistry;
-        $this->interpreterFormRegistry = $interpreterFormRegistry;
-        $this->setterFormRegistry = $setterFormRegistry;
     }
 
     /**
@@ -63,7 +46,7 @@ final class ImportDefinitionContext implements Context
      * @Given /^there is a import-definition "([^"]+)" for (definition)$/
      * @Given /^there is a import-definition "([^"]+)" for (class "[^"]+")$/
      */
-    public function thereIsAImportDefinition($name, ClassDefinition $definition = null)
+    public function thereIsAImportDefinition(string $name, ClassDefinition $definition = null): void
     {
         /**
          * @var ImportDefinitionInterface $importDefinition
@@ -87,9 +70,9 @@ final class ImportDefinitionContext implements Context
      */
     public function theImportDefinitionsProviderIs(
         ImportDefinitionInterface $importDefinition,
-        $provider,
+        string $provider,
         TableNode $tableNode = null
-    ) {
+    ): void {
         $importDefinition->setProvider($provider);
 
         if (null !== $tableNode) {
@@ -103,7 +86,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) loader is "([^"]+)"$/
      */
-    public function theImportDefinitionsLoaderIs(ImportDefinitionInterface $importDefinition, $loader)
+    public function theImportDefinitionsLoaderIs(ImportDefinitionInterface $importDefinition, string $loader): void
     {
         $importDefinition->setLoader($loader);
 
@@ -113,7 +96,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) object-path is "([^"]+)"$/
      */
-    public function theImportDefinitionsObjectPathIs(ImportDefinitionInterface $importDefinition, $objectPath)
+    public function theImportDefinitionsObjectPathIs(ImportDefinitionInterface $importDefinition, string $objectPath): void
     {
         $importDefinition->setObjectPath($objectPath);
 
@@ -123,7 +106,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) cleaner is "([^"]+)"$/
      */
-    public function theImportDefinitionsCleanerIs(ImportDefinitionInterface $importDefinition, $cleaner)
+    public function theImportDefinitionsCleanerIs(ImportDefinitionInterface $importDefinition, string $cleaner): void
     {
         $importDefinition->setCleaner($cleaner);
 
@@ -133,7 +116,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) key is "([^"]+)"$/
      */
-    public function theImportDefinitionsKeyIs(ImportDefinitionInterface $importDefinition, $key)
+    public function theImportDefinitionsKeyIs(ImportDefinitionInterface $importDefinition, string $key): void
     {
         $importDefinition->setKey($key);
 
@@ -143,7 +126,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) filter is "([^"]+)"$/
      */
-    public function theImportDefinitionsFilterIs(ImportDefinitionInterface $importDefinition, $filter)
+    public function theImportDefinitionsFilterIs(ImportDefinitionInterface $importDefinition, string $filter): void
     {
         $importDefinition->setFilter($filter);
 
@@ -153,7 +136,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) renames existing objects$/
      */
-    public function theImportDefinitionsRenamesExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsRenamesExistingObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setRenameExistingObjects(true);
 
@@ -163,7 +146,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not rename existing objects$/
      */
-    public function theImportDefinitionsDoesNotRenameExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotRenameExistingObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setRenameExistingObjects(false);
 
@@ -173,7 +156,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) relocates existing objects$/
      */
-    public function theImportDefinitionsRelocatesExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsRelocatesExistingObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setRelocateExistingObjects(true);
 
@@ -183,7 +166,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not relocate existing objects$/
      */
-    public function theImportDefinitionsDoesNotRelocateExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotRelocateExistingObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setRelocateExistingObjects(false);
 
@@ -193,7 +176,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) omits the mandatory check$/
      */
-    public function theImportDefinitionsOmitsTheMandatoryCheck(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsOmitsTheMandatoryCheck(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setOmitMandatoryCheck(true);
 
@@ -203,7 +186,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not omit the mandatory check$/
      */
-    public function theImportDefinitionsDosNotOmitTheMandatoryCheck(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDosNotOmitTheMandatoryCheck(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setOmitMandatoryCheck(false);
 
@@ -213,7 +196,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) skips new objects$/
      */
-    public function theImportDefinitionsSkipsNewObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsSkipsNewObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setSkipNewObjects(true);
 
@@ -223,7 +206,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not skip new objects$/
      */
-    public function theImportDefinitionsDoesNotSkipNewObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotSkipNewObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setSkipNewObjects(false);
 
@@ -233,7 +216,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) skips existing objects$/
      */
-    public function theImportDefinitionsSkipsExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsSkipsExistingObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setSkipExistingObjects(true);
 
@@ -243,7 +226,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not skip existing objects$/
      */
-    public function theImportDefinitionsDoesNotSkipExistingObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotSkipExistingObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setSkipExistingObjects(false);
 
@@ -253,7 +236,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) force loads objects$/
      */
-    public function theImportDefinitionsForceLoadsObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsForceLoadsObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setForceLoadObject(true);
 
@@ -263,7 +246,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /^the (import-definitions) does not force load objects$/
      */
-    public function theImportDefinitionsDoesNotForceLoadObjects(ImportDefinitionInterface $importDefinition)
+    public function theImportDefinitionsDoesNotForceLoadObjects(ImportDefinitionInterface $importDefinition): void
     {
         $importDefinition->setForceLoadObject(false);
 
@@ -273,7 +256,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given /the (import-definitions) mapping is:/
      */
-    public function theImportDefinitionsMappingIs(ImportDefinitionInterface $definition, TableNode $table)
+    public function theImportDefinitionsMappingIs(ImportDefinitionInterface $definition, TableNode $table): void
     {
         $hash = $table->getHash();
 
@@ -333,7 +316,12 @@ final class ImportDefinitionContext implements Context
      * @Given /the (import-definitions) mapping for column "([^"]+)" uses interpreter "([^"]+)" with config:/
      * @Given /the (import-definition "[^"]+") mapping for column "([^"]+)" uses interpreter "([^"]+)" with config:/
      */
-    public function theImportDefinitionsHasAMapping(ImportDefinitionInterface $definition, $toColumn, $interpreter, PyStringNode $config)
+    public function theImportDefinitionsHasAMapping(
+        ImportDefinitionInterface $definition,
+        string $toColumn,
+        string $interpreter,
+        PyStringNode $config
+    ): void
     {
         $column = null;
 
@@ -369,7 +357,11 @@ final class ImportDefinitionContext implements Context
      * @Given /the (import-definitions) mapping for column "([^"]+)" uses interpreter "definition" for (import-definition "([^"]+)")$/
      * @Given /the (import-definition "[^"]+") mapping for column "([^"]+)" uses interpreter "definition" for (import-definition "([^"]+)")$/
      */
-    public function theImportDefinitionsHasAMappingForInterpreterDefinition(ImportDefinitionInterface $definition, $toColumn, ImportDefinitionInterface $subDefinition)
+    public function theImportDefinitionsHasAMappingForInterpreterDefinition(
+        ImportDefinitionInterface $definition,
+        string $toColumn,
+        ImportDefinitionInterface $subDefinition
+    ): void
     {
         $column = null;
 
@@ -405,7 +397,7 @@ final class ImportDefinitionContext implements Context
     /**
      * @Given there is a file :file with content:
      */
-    public function thereIsACSVFileWithContent($path, PyStringNode $content)
+    public function thereIsACSVFileWithContent(string $path, PyStringNode $content): void
     {
         file_put_contents(PIMCORE_PROJECT_ROOT.'/'.$path, $content);
     }
@@ -414,7 +406,7 @@ final class ImportDefinitionContext implements Context
      * @Given /I run the (import-definitions) with params:/
      * @Given /I run the (import-definition "[^"]+") with params:/
      */
-    public function IRunTheImportDefinition(ImportDefinitionInterface $importDefinition, TableNode $tableNode)
+    public function IRunTheImportDefinition(ImportDefinitionInterface $importDefinition, TableNode $tableNode): void
     {
         $config = [];
 
@@ -425,13 +417,7 @@ final class ImportDefinitionContext implements Context
         $this->importer->doImport($importDefinition, $config);
     }
 
-    /**
-     * @param FormTypeRegistryInterface $formRegistry
-     * @param                           $type
-     * @param TableNode                 $tableNode
-     * @return array
-     */
-    private function processTableConfiguration(FormTypeRegistryInterface $formRegistry, $type, TableNode $tableNode)
+    private function processTableConfiguration(FormTypeRegistryInterface $formRegistry, string $type, TableNode $tableNode): array
     {
         $config = [];
 
@@ -442,13 +428,7 @@ final class ImportDefinitionContext implements Context
         return $this->processArrayConfiguration($formRegistry, $type, $config);
     }
 
-    /**
-     * @param FormTypeRegistryInterface $formRegistry
-     * @param                           $type
-     * @param array                     $data
-     * @return array
-     */
-    private function processArrayConfiguration(FormTypeRegistryInterface $formRegistry, $type, array $data)
+    private function processArrayConfiguration(FormTypeRegistryInterface $formRegistry, string $type, array $data): array
     {
         $formType = $formRegistry->get($type, 'default');
 
@@ -462,10 +442,7 @@ final class ImportDefinitionContext implements Context
         return $form->getData();
     }
 
-    /**
-     * @param ImportDefinitionInterface $importDefinition
-     */
-    private function persist(ImportDefinitionInterface $importDefinition)
+    private function persist(ImportDefinitionInterface $importDefinition): void
     {
         $this->sharedStorage->set('import-definition', $importDefinition);
 

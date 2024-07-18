@@ -22,11 +22,11 @@ use Webmozart\Assert\Assert;
 
 final class PimcoreContext implements Context
 {
-    private $sharedStorage;
-
-    public function __construct(SharedStorageInterface $sharedStorage)
+    public function __construct(
+        private readonly SharedStorageInterface $sharedStorage
+    )
     {
-        $this->sharedStorage = $sharedStorage;
+
     }
 
     /**

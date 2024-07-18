@@ -26,21 +26,16 @@ use Webmozart\Assert\Assert;
 
 final class PimcoreClassContext implements Context
 {
-    private $sharedStorage;
-    private $classStorage;
-
     public function __construct(
-        SharedStorageInterface $sharedStorage,
-        ClassStorageInterface $classStorage
+        private readonly SharedStorageInterface $sharedStorage,
+        private readonly ClassStorageInterface $classStorage
     ) {
-        $this->sharedStorage = $sharedStorage;
-        $this->classStorage = $classStorage;
     }
 
     /**
      * @Transform /^class "([^"]+)"$/
      */
-    public function class($name)
+    public function class(string $name): ClassDefinition
     {
         RuntimeCache::clear();
 
@@ -56,7 +51,7 @@ final class PimcoreClassContext implements Context
     /**
      * @Transform /^field-collection "([^"]+)"$/
      */
-    public function fieldCollection($name)
+    public function fieldCollection(string $name): Definition
     {
         $name = $this->classStorage->get($name);
 
@@ -70,7 +65,7 @@ final class PimcoreClassContext implements Context
     /**
      * @Transform /^object-instance$/
      */
-    public function objectInstance()
+    public function objectInstance(): Concrete
     {
         return $this->sharedStorage->get('object-instance');
     }
@@ -78,7 +73,7 @@ final class PimcoreClassContext implements Context
     /**
      * @Transform /^object-instance "([^"]+)"$/
      */
-    public function objectInstanceWithKey($key)
+    public function objectInstanceWithKey(string $key): Concrete
     {
         return Concrete::getByPath('/'.$key);
     }
@@ -86,10 +81,13 @@ final class PimcoreClassContext implements Context
     /**
      * @Transform /^object of the definition$/
      */
-    public function objectOfTheDefinition()
+    public function objectOfTheDefinition(): Concrete
     {
         $definition = $this->definition();
 
+        /**
+         * @var class-string $fqcn
+         */
         $fqcn = 'Pimcore\Model\DataObject\\'.ucfirst($definition->getName());
 
         /**
@@ -106,7 +104,7 @@ final class PimcoreClassContext implements Context
     /**
      * @Transform /^object of class "([^"]+)"$/
      */
-    public function objectOfTheClass($name)
+    public function objectOfTheClass(string $name): Concrete
     {
         $definition = $this->class($name);
 
@@ -127,7 +125,7 @@ final class PimcoreClassContext implements Context
      * @Transform /^definition/
      * @Transform /^definitions/
      */
-    public function definition()
+    public function definition(): ClassDefinition
     {
         RuntimeCache::clear();
 

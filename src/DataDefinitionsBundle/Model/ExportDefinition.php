@@ -45,7 +45,7 @@ class ExportDefinition extends AbstractDataDefinition implements ExportDefinitio
     {
         $definitionEntry = new self();
         $dao = $definitionEntry->getDao();
-        $dao->getById($id);
+        $dao->getById((string) $id);
 
         return $definitionEntry;
     }

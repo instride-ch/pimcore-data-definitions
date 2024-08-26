@@ -19,6 +19,7 @@ namespace Instride\Bundle\DataDefinitionsBundle\Command;
 use Exception;
 use InvalidArgumentException;
 use Pimcore\Console\AbstractCommand;
+use Pimcore\Model\Exception\NotFoundException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -76,15 +77,22 @@ EOT
         $eventDispatcher = $this->eventDispatcher;
 
         $params = json_decode($input->getOption('params'), true);
+        $definitionId = $input->getOption('definition');
+
         $definition = null;
+
         try {
-            $definition = $this->repository->findByName($input->getOption('definition'));
-        } catch (InvalidArgumentException $e) {
+            if (filter_var($definitionId, FILTER_VALIDATE_INT)) {
+                $definition = $this->repository->find($definitionId);
+            } else {
+                $definition = $this->repository->findByName($definitionId);
+            }
+        } catch (NotFoundException) {
 
         }
 
         if (!$definition instanceof ExportDefinitionInterface) {
-            throw new Exception('Export Definition not found');
+            throw new Exception(sprintf('Export Definition with ID/Name "%s" not found', $definitionId));
         }
 
         $progress = null;

@@ -91,7 +91,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
 
             if ($definition->getName() === $name) {
                 $this->model = $definition;
-                $this->getById($id);
+                $this->getById((string) $id);
                 return;
             }
         }

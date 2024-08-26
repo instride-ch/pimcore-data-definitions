@@ -90,7 +90,6 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
             $definition = ExportDefinition::getById((int)$id);
 
             if ($definition->getName() === $name) {
-                $this->model = $definition;
                 $this->getById((string) $id);
                 return;
             }

@@ -19,6 +19,7 @@ namespace Instride\Bundle\DataDefinitionsBundle\Command;
 use Exception;
 use InvalidArgumentException;
 use Pimcore\Console\AbstractCommand;
+use Pimcore\Model\Exception\NotFoundException;
 use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -76,7 +77,8 @@ EOT
     {
         $eventDispatcher = $this->eventDispatcher;
 
-        $params = json_decode($input->getOption('params'), true);
+        $params = json_decode($input->getOption('params'), true, 512, JSON_THROW_ON_ERROR);
+        $definitionId = $input->getOption('definition');
 
         if (!isset($params['userId'])) {
             $params['userId'] = 0;
@@ -85,13 +87,17 @@ EOT
         $definition = null;
 
         try {
-            $definition = $this->repository->findByName($input->getOption('definition'));
-        } catch (InvalidArgumentException $e) {
+            if (filter_var($definitionId, FILTER_VALIDATE_INT)) {
+                $definition = $this->repository->find($definitionId);
+            } else {
+                $definition = $this->repository->findByName($definitionId);
+            }
+        } catch (NotFoundException) {
 
         }
 
         if (!$definition instanceof ImportDefinitionInterface) {
-            throw new Exception('Import Definition not found');
+            throw new Exception(sprintf('Import Definition with ID/Name "%s" not found', $definitionId));
         }
 
         $progress = null;

@@ -110,6 +110,7 @@ class Configuration implements ConfigurationInterface
                             ->variableNode('configuration')->end()
                             ->scalarNode('runner')->end()
                             ->booleanNode('stopOnException')->end()
+                            ->booleanNode('enableInheritance')->end()
                             ->scalarNode('failureNotificationDocument')->end()
                             ->scalarNode('successNotificationDocument')->end()
                             ->arrayNode('mapping')

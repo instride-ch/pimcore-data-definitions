@@ -9,7 +9,7 @@ trait IdGenerator
 {
     private string $mainPath = 'var/config';
 
-    private function getSuggestedId(ExportListing|ImportListing $listing): int
+    public function getSuggestedId(ExportListing|ImportListing $listing): int
     {
         $ids = $listing->getAllIds();
 

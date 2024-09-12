@@ -42,4 +42,9 @@ bin/console pimcore:bundle:install DataDefinitionsBundle
 [instride.ch](https://instride.ch), connect@instride.ch  
 Copyright © 2024 instride AG. All rights reserved.
 
+**CORS GmbH**, Zeileisstraße 6, 4600 Wels, Österreich
+[cors.gmbh](https://cors.gmbh), info@cors.gmbh  
+Copyright © 2024 CORS GmbH. All rights reserved.
+
+
 For licensing details please visit [LICENSE.md](LICENSE.md)

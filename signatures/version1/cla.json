@@ -1,4 +1,44 @@
 {
   "signedContributors": [
+    {
+      "name": "dpfaffenbauer",
+      "id": 5981845,
+      "comment_id": 2346292662,
+      "created_at": "2024-09-12T13:30:45Z",
+      "repoId": 62632812,
+      "pullRequestNo": 422
+    },
+    {
+      "name": "dpfaffenbauer",
+      "id": 5981845,
+      "comment_id": 2346296210,
+      "created_at": "2024-09-12T13:32:00Z",
+      "repoId": 62632812,
+      "pullRequestNo": 422
+    },
+    {
+      "name": "dpfaffenbauer",
+      "id": 5981845,
+      "comment_id": 2346302271,
+      "created_at": "2024-09-12T13:34:37Z",
+      "repoId": 62632812,
+      "pullRequestNo": 422
+    },
+    {
+      "name": "dpfaffenbauer",
+      "id": 5981845,
+      "comment_id": 2346303578,
+      "created_at": "2024-09-12T13:35:09Z",
+      "repoId": 62632812,
+      "pullRequestNo": 422
+    },
+    {
+      "name": "dpfaffenbauer",
+      "id": 5981845,
+      "comment_id": 2346304975,
+      "created_at": "2024-09-12T13:35:43Z",
+      "repoId": 62632812,
+      "pullRequestNo": 422
+    }
   ]
 }

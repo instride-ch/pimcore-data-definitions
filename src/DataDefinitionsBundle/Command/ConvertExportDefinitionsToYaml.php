@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
 class ConvertExportDefinitionsToYaml extends Command
@@ -24,6 +25,11 @@ class ConvertExportDefinitionsToYaml extends Command
     {
         $filePath = $input->getArgument('file');
         $data = require $filePath;
+
+        $fs = new Filesystem();
+        if (!$fs->exists('var/config/export-definitions')) {
+            $fs->mkdir('var/config/export-definitions');
+        }
 
         foreach ($data as $entry) {
 

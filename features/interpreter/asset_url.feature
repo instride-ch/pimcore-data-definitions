@@ -23,10 +23,10 @@ Feature: Adding a import with a interpreter
     Given there is a file test.csv with content:
       """
       name,image
-      test1,https://placehold.co/600x400?text=Hello+Pimcore.png
+      test1,https://www.coreshop.org/assets/img/logo-full.svg
       """
     And I run the import-definitions with params:
       | key  | value    |
       | file | test.csv |
     Then there should be "1" data-objects for definition
-    And the field "image" for object of the definition should have the value of asset "/images/fff.png"
+    And the field "image" for object of the definition should have the value of asset "/images/logo-full.svg.png"

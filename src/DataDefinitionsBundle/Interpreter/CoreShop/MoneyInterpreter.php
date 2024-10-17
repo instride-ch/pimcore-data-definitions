@@ -1,18 +1,17 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Interpreter\CoreShop;
 
@@ -26,15 +25,16 @@ final class MoneyInterpreter implements InterpreterInterface
 {
     private $currencyRepository;
 
-    public function __construct(CurrencyRepositoryInterface $currencyRepository)
-    {
+    public function __construct(
+        CurrencyRepositoryInterface $currencyRepository,
+    ) {
         $this->currencyRepository = $currencyRepository;
     }
 
     public function interpret(InterpreterContextInterface $context): mixed
     {
-        $value = $this->getValue((string)$context->getValue(), $context);
-        $currency = $this->resolveCurrency((string)$value, $context);
+        $value = $this->getValue((string) $context->getValue(), $context);
+        $currency = $this->resolveCurrency((string) $value, $context);
 
         if (null === $currency) {
             return null;
@@ -47,26 +47,26 @@ final class MoneyInterpreter implements InterpreterInterface
     {
         $inputIsFloat = $context->getConfiguration()['isFloat'];
 
-        $value = preg_replace("/[^0-9,.]+/", "", $value);
+        $value = preg_replace('/[^0-9,.]+/', '', $value);
 
         if (\is_string($value)) {
             $value = str_replace(',', '.', $value);
-            $value = (float)$value;
+            $value = (float) $value;
         }
 
         if ($inputIsFloat) {
-            $value = (int)round(round($value, 2) * 100, 0);
+            $value = (int) round(round($value, 2) * 100, 0);
         }
 
-        return (int)$value;
+        return (int) $value;
     }
 
-    private function resolveCurrency(string $value, InterpreterContextInterface$context): ?CurrencyInterface
+    private function resolveCurrency(string $value, InterpreterContextInterface $context): ?CurrencyInterface
     {
         $currency = null;
 
         if (preg_match('/^\pL+$/u', $value)) {
-            $currencyCode = preg_replace("/[^a-zA-Z]+/", "", $value);
+            $currencyCode = preg_replace('/[^a-zA-Z]+/', '', $value);
 
             $currency = $this->currencyRepository->getByCode($currencyCode);
         }

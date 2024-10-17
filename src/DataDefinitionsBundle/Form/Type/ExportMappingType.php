@@ -1,37 +1,39 @@
 <?php
-/**
- * Data Definitions.
+
+declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
  *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    GPLv3 and DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Form\Type;
 
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use CoreShop\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Instride\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ExportMapping;
 
 final class ExportMappingType extends AbstractResourceType
 {
     private FormTypeRegistryInterface $interpreterTypeRegistry;
+
     private FormTypeRegistryInterface $getterTypeRegistry;
 
     public function __construct(
         array $validationGroups,
         FormTypeRegistryInterface $getterTypeRegistry,
-        FormTypeRegistryInterface $interpreterTypeRegistry
+        FormTypeRegistryInterface $interpreterTypeRegistry,
     ) {
         parent::__construct(ExportMapping::class, $validationGroups);
 
@@ -45,7 +47,8 @@ final class ExportMappingType extends AbstractResourceType
             ->add('fromColumn', TextType::class)
             ->add('toColumn', TextType::class)
             ->add('getter', TextType::class)
-            ->add('interpreter', TextType::class);
+            ->add('interpreter', TextType::class)
+        ;
 
         /** Getter Configurations */
         $builder
@@ -75,7 +78,8 @@ final class ExportMappingType extends AbstractResourceType
                 }
 
                 $this->addGetterConfigurationFields($event->getForm(), $formType);
-            });
+            })
+        ;
 
         /** Interpreter Configurations */
         $builder
@@ -105,32 +109,22 @@ final class ExportMappingType extends AbstractResourceType
                 }
 
                 $this->addInterpreterConfigurationFields($event->getForm(), $formType);
-            });
+            })
+        ;
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $configurationType
-     */
     protected function addGetterConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('getterConfig', $configurationType);
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $configurationType
-     */
     protected function addInterpreterConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('interpreterConfig', $configurationType);
     }
 
-
     /**
-     * @param FormInterface $form
      * @param mixed $data
-     * @return string|null
      */
     protected function getGetterRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
@@ -142,9 +136,7 @@ final class ExportMappingType extends AbstractResourceType
     }
 
     /**
-     * @param FormInterface $form
      * @param mixed $data
-     * @return string|null
      */
     protected function getInterpreterRegistryIdentifier(FormInterface $form, $data = null): ?string
     {

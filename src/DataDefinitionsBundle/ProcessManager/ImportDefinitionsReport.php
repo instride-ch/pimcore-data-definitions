@@ -1,18 +1,17 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\ProcessManager;
 
@@ -21,18 +20,27 @@ use ProcessManagerBundle\Report\ReportInterface;
 
 class ImportDefinitionsReport implements ReportInterface
 {
-    const EVENT_TOTAL = 'data_definitions.import.total: ';
-    const EVENT_STATUS = 'data_definitions.import.status: ';
-    const EVENT_PROGRESS = 'data_definitions.import.progress: ';
-    const EVENT_FINISHED = 'data_definitions.import.finished: ';
-    const EVENT_STATUS_ERROR = self::EVENT_STATUS.'Error: ';
-    const EVENT_STATUS_IMPORT_NEW = self::EVENT_STATUS.'Import Object new';
-    const EVENT_STATUS_IMPORT_EXISTING = self::EVENT_STATUS.'Import Object';
-    const EVENT_STATUS_IGNORE_NEW = self::EVENT_STATUS.'Ignoring new Object';
-    const EVENT_STATUS_IGNORE_EXISTING = self::EVENT_STATUS.'Ignoring existing Object';
-    const EVENT_STATUS_IGNORE_FILTERED = self::EVENT_STATUS.'Filtered Object';
+    public const EVENT_TOTAL = 'data_definitions.import.total: ';
 
-    const CHECKS = [
+    public const EVENT_STATUS = 'data_definitions.import.status: ';
+
+    public const EVENT_PROGRESS = 'data_definitions.import.progress: ';
+
+    public const EVENT_FINISHED = 'data_definitions.import.finished: ';
+
+    public const EVENT_STATUS_ERROR = self::EVENT_STATUS . 'Error: ';
+
+    public const EVENT_STATUS_IMPORT_NEW = self::EVENT_STATUS . 'Import Object new';
+
+    public const EVENT_STATUS_IMPORT_EXISTING = self::EVENT_STATUS . 'Import Object';
+
+    public const EVENT_STATUS_IGNORE_NEW = self::EVENT_STATUS . 'Ignoring new Object';
+
+    public const EVENT_STATUS_IGNORE_EXISTING = self::EVENT_STATUS . 'Ignoring existing Object';
+
+    public const EVENT_STATUS_IGNORE_FILTERED = self::EVENT_STATUS . 'Filtered Object';
+
+    public const CHECKS = [
         [
             'text' => self::EVENT_STATUS_IMPORT_NEW,
             'attr' => 'new',
@@ -55,7 +63,6 @@ class ImportDefinitionsReport implements ReportInterface
         ],
     ];
 
-
     public function generateReport(ProcessInterface $process, string $log): string
     {
         $result = $this->doReport($log);
@@ -75,42 +82,42 @@ class ImportDefinitionsReport implements ReportInterface
                 $status = $result['productStatus'][$iter];
 
                 if (isset($status['error'])) {
-                    $errors[] = '<b>Line '.($iter + 1).'. Error: </b>'.$status['error'];
-                    $errorsCnt++;
+                    $errors[] = '<b>Line ' . ($iter + 1) . '. Error: </b>' . $status['error'];
+                    ++$errorsCnt;
                 } elseif (isset($status['ignore_filtered'])) {
-                    $skippedFiltered++;
+                    ++$skippedFiltered;
                 } elseif (isset($status['ignore_new'])) {
-                    $skippedNew++;
+                    ++$skippedNew;
                 } elseif (isset($status['ignore_existing'])) {
-                    $skippedExisting++;
+                    ++$skippedExisting;
                 } elseif (isset($status['new'])) {
-                    $importedNew++;
+                    ++$importedNew;
                 } elseif (isset($status['existing'])) {
-                    $importedExisting++;
+                    ++$importedExisting;
                 }
             }
         }
 
         $items = [];
-        $items[] = 'Total lines processed: '.$total;
+        $items[] = 'Total lines processed: ' . $total;
         if ($importedNew) {
-            $items[] = 'Imported new objects: '.$importedNew;
+            $items[] = 'Imported new objects: ' . $importedNew;
         }
 
         if ($importedExisting) {
-            $items[] = 'Updates: '.$importedExisting;
+            $items[] = 'Updates: ' . $importedExisting;
         }
 
         if ($skippedNew) {
-            $items[] = 'Skipped new: '.$skippedNew;
+            $items[] = 'Skipped new: ' . $skippedNew;
         }
         if ($skippedExisting) {
-            $items[] = 'Skipped existing: '.$skippedExisting;
+            $items[] = 'Skipped existing: ' . $skippedExisting;
         }
         if ($skippedFiltered) {
-            $items[] = 'Filtered: '.$skippedFiltered;
+            $items[] = 'Filtered: ' . $skippedFiltered;
         }
-        $items[] = 'Errors count: '.$errorsCnt;
+        $items[] = 'Errors count: ' . $errorsCnt;
 
         if (count($errors)) {
             $items[] = 'Errors: ';
@@ -122,7 +129,7 @@ class ImportDefinitionsReport implements ReportInterface
 
     protected function doReport($log)
     {
-        $lines = explode(PHP_EOL, $log);
+        $lines = explode(\PHP_EOL, $log);
         $result = [
             'currentObject' => 0,
             'productStatus' => [],
@@ -135,16 +142,11 @@ class ImportDefinitionsReport implements ReportInterface
         return $result;
     }
 
-    /**
-     * @param $line
-     * @param $result
-     */
     protected function processLine($line, &$result)
     {
         if ($this->checkForProgress($line, $result)) {
             return;
         }
-
 
         if ($this->checkForTotal($line, $result)) {
             return;
@@ -157,11 +159,6 @@ class ImportDefinitionsReport implements ReportInterface
         $this->processChecks($line, $result);
     }
 
-    /**
-     * @param $line
-     * @param $result
-     * @return bool
-     */
     protected function checkForProgress($line, &$result): bool
     {
         if (str_contains($line, self::EVENT_PROGRESS)) {
@@ -173,17 +170,12 @@ class ImportDefinitionsReport implements ReportInterface
         return false;
     }
 
-    /**
-     * @param $line
-     * @param $result
-     * @return bool
-     */
     protected function checkForTotal($line, &$result): bool
     {
         $pos = strpos($line, self::EVENT_TOTAL);
         if ($pos) {
             $total = substr($line, $pos + strlen(self::EVENT_TOTAL));
-            $result['total'] = (int)$total;
+            $result['total'] = (int) $total;
 
             return true;
         }
@@ -191,18 +183,13 @@ class ImportDefinitionsReport implements ReportInterface
         return false;
     }
 
-    /**
-     * @param $line
-     * @param $result
-     * @return bool
-     */
     protected function checkForError($line, &$result): bool
     {
         $pos = strpos($line, self::EVENT_STATUS_ERROR);
         if (false !== $pos) {
             $result['productStatus'][$result['currentObject']]['error'] = substr(
                 $line,
-                $pos + strlen(self::EVENT_STATUS_ERROR)
+                $pos + strlen(self::EVENT_STATUS_ERROR),
             );
 
             return true;
@@ -211,10 +198,6 @@ class ImportDefinitionsReport implements ReportInterface
         return false;
     }
 
-    /**
-     * @param $line
-     * @param $result
-     */
     protected function processChecks($line, &$result): void
     {
         foreach (self::CHECKS as $check) {

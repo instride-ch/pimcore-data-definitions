@@ -12,3 +12,6 @@ default:
                 path: src/BehatKernel.php
                 class: BehatKernel
                 environment: test
+    gherkin:
+        filters:
+            tags: '~@wip'

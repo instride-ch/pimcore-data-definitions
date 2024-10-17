@@ -1,19 +1,17 @@
 <?php
 
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
-
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle;
 
@@ -21,11 +19,6 @@ use Composer\InstalledVersions;
 use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Bundle\RuleBundle\CoreShopRuleBundle;
-use Pimcore\Bundle\AdminBundle\PimcoreAdminBundle;
-use Pimcore\Bundle\SimpleBackendSearchBundle\PimcoreSimpleBackendSearchBundle;
-use Pimcore\Extension\Bundle\Installer\InstallerInterface;
-use Pimcore\HttpKernel\BundleCollection\BundleCollection;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportRunnerRegistryCompilerPass;
@@ -40,6 +33,11 @@ use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\Persister
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ProviderRegistryCompilerPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\RunnerRegistryCompilerPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\SetterRegistryCompilerPass;
+use Pimcore\Bundle\AdminBundle\PimcoreAdminBundle;
+use Pimcore\Bundle\SimpleBackendSearchBundle\PimcoreSimpleBackendSearchBundle;
+use Pimcore\Extension\Bundle\Installer\InstallerInterface;
+use Pimcore\HttpKernel\BundleCollection\BundleCollection;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DataDefinitionsBundle extends AbstractResourceBundle
 {

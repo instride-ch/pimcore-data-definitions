@@ -1,36 +1,38 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Interpreter;
 
 use Doctrine\DBAL\Query\QueryBuilder;
+use Instride\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 use Pimcore\File;
 use Pimcore\Model\Asset;
-use Instride\Bundle\DataDefinitionsBundle\Context\InterpreterContextInterface;
 
 class AssetUrlInterpreter implements InterpreterInterface
 {
     protected const METADATA_ORIGIN_URL = 'origin_url';
+
     protected const METADATA_ORIGIN_HASH = 'origin_hash';
+
     protected \Psr\Http\Client\ClientInterface $httpClient;
+
     protected \Psr\Http\Message\RequestFactoryInterface $requestFactory;
 
     public function __construct(
         \Psr\Http\Client\ClientInterface $httpClient,
-        \Psr\Http\Message\RequestFactoryInterface $requestFactory
+        \Psr\Http\Message\RequestFactoryInterface $requestFactory,
     ) {
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
@@ -41,7 +43,7 @@ class AssetUrlInterpreter implements InterpreterInterface
         $path = $context->getConfiguration()['path'];
         $url = $context->getValue();
 
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+        if (filter_var($url, \FILTER_VALIDATE_URL) === false) {
             throw new \InvalidArgumentException(sprintf('Provided asset URL value %1$s is not a valid URL', $url));
         }
         $parent = Asset\Service::createFolderByPath($path);
@@ -74,7 +76,7 @@ class AssetUrlInterpreter implements InterpreterInterface
         $save = false;
         $currentUrl = $asset->getMetadata(self::METADATA_ORIGIN_URL) ?? '';
         if (strpos($currentUrl, $url) === false) {
-            $url = $currentUrl ? $currentUrl .'|'. $url : $url;
+            $url = $currentUrl ? $currentUrl . '|' . $url : $url;
             $asset->addMetadata(self::METADATA_ORIGIN_URL, 'input', $url);
             $save = true;
         }
@@ -110,11 +112,11 @@ class AssetUrlInterpreter implements InterpreterInterface
                 $headers = $response->getHeaders();
 
                 if (
-                    isset($headers["Content-Disposition"]) &&
+                    isset($headers['Content-Disposition']) &&
                     preg_match(
                         '/^.*?filename=(?<f>[^\s]+|\x22[^\x22]+\x22)\x3B?.*$/m',
-                        current($headers["Content-Disposition"]),
-                        $match
+                        current($headers['Content-Disposition']),
+                        $match,
                     )
                 ) {
                     $filename = trim($match['f'], ' ";');
@@ -135,14 +137,14 @@ class AssetUrlInterpreter implements InterpreterInterface
             $request = $this->requestFactory->createRequest('GET', $value);
             $response = $this->httpClient->sendRequest($request);
         } catch (\Psr\Http\Client\ClientExceptionInterface $ex) {
-            throw new \RuntimeException('Unable to download asset from URL '.$value);
+            throw new \RuntimeException('Unable to download asset from URL ' . $value);
         }
 
         if ($response->getStatusCode() === 200) {
-            return (string)$response->getBody();
+            return (string) $response->getBody();
         }
 
-        throw new \RuntimeException('Unable to download asset from URL '.$value);
+        throw new \RuntimeException('Unable to download asset from URL ' . $value);
     }
 
     private function deduplicateAssetByUrl(string $value): ?Asset
@@ -161,11 +163,11 @@ class AssetUrlInterpreter implements InterpreterInterface
         $listing->onCreateQueryBuilder(
             function (QueryBuilder $select) {
                 $select->join('assets', 'assets_metadata', 'am', 'id = am.cid');
-            }
+            },
         );
         $listing->addConditionParam('am.name = ?', $name);
         if ($fuzzy) {
-            $listing->addConditionParam('am.data LIKE ?', '%'. $value .'%');
+            $listing->addConditionParam('am.data LIKE ?', '%' . $value . '%');
         } else {
             $listing->addConditionParam('am.data = ?', $value);
         }

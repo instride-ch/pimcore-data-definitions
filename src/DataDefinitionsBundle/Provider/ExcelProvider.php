@@ -1,21 +1,26 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
 
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    GPLv3 and DDCL
+ */
+
 namespace Instride\Bundle\DataDefinitionsBundle\Provider;
 
+use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
+use Instride\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
+use Instride\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 use OpenSpout\Common\Entity\Row;
 use OpenSpout\Reader\ReaderInterface;
 use OpenSpout\Reader\XLSX\Reader;
@@ -23,12 +28,6 @@ use OpenSpout\Writer\WriterInterface;
 use OpenSpout\Writer\XLSX\Writer;
 use Pimcore\Model\Asset;
 use Pimcore\Tool\Storage;
-use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
-use Instride\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
-use Instride\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
 
 class ExcelProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
@@ -62,7 +61,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
                 }
             }
         } elseif ($configuration['excelHeaders']) {
-            return $this->buildColumns(str_getcsv((string)$configuration['excelHeaders']));
+            return $this->buildColumns(str_getcsv((string) $configuration['excelHeaders']));
         }
 
         return [];
@@ -72,7 +71,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null
+        FilterInterface $filter = null,
     ): ImportDataSetInterface {
         $file = $this->getFile($params);
 
@@ -97,7 +96,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
             $rowCount = count($rowArray);
             if ($rowCount < $headersCount) {
                 // append missing values
-                $rowArray = array_pad($rowArray, (int)$headersCount, null);
+                $rowArray = array_pad($rowArray, (int) $headersCount, null);
             } elseif ($rowCount >= $headersCount) {
                 // remove overflow
                 $rowArray = array_slice($rowArray, 0, $headersCount);
@@ -111,7 +110,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
         array $data,
         array $configuration,
         ExportDefinitionInterface $definition,
-        array $params
+        array $params,
     ): void {
         $headers = null;
         if (!isset($this->writer)) {
@@ -122,7 +121,7 @@ class ExcelProvider extends AbstractFileProvider implements ImportProviderInterf
 
         foreach ($data as $key => $item) {
             if (is_object($item)) {
-                $data[$key] = (string)$item;
+                $data[$key] = (string) $item;
             }
         }
         $writer->addRow(Row::fromValues(array_values($data)));

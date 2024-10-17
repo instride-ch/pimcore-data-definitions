@@ -1,27 +1,22 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\DependencyInjection;
 
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Component\Resource\Factory\Factory;
-use Pimcore\Bundle\CoreBundle\DependencyInjection\ConfigurationHelper;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Instride\Bundle\DataDefinitionsBundle\Controller\ExportDefinitionController;
 use Instride\Bundle\DataDefinitionsBundle\Controller\ImportDefinitionController;
 use Instride\Bundle\DataDefinitionsBundle\Form\Type\ExportDefinitionType;
@@ -31,6 +26,10 @@ use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinition;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Repository;
+use Pimcore\Bundle\CoreBundle\DependencyInjection\ConfigurationHelper;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
@@ -41,13 +40,14 @@ class Configuration implements ConfigurationInterface
 
         ConfigurationHelper::addConfigLocationWithWriteTargetNodes($rootNode, [
             'import_definitions' => '/var/config/import-definitions',
-            'export_definitions' => '/var/config/export-definitions'
+            'export_definitions' => '/var/config/export-definitions',
         ]);
 
         $rootNode
             ->children()
                 ->scalarNode('driver')->defaultValue(CoreShopResourceBundle::DRIVER_PIMCORE)->end()
-            ->end();
+            ->end()
+        ;
 
         $rootNode
             ->children()
@@ -131,7 +131,8 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
 
         $this->addPimcoreResourcesSection($rootNode);
         $this->addModelsSection($rootNode);
@@ -213,6 +214,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-        ->end();
+        ->end()
+        ;
     }
 }

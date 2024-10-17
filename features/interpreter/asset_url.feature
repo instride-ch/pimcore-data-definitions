@@ -1,4 +1,4 @@
-@interpreter @interpreter_asset_url
+@interpreter @interpreter_asset_url @wip
 Feature: Adding a import with a interpreter
   The Interpreter will check for an image to download and assign it if found
 
@@ -23,10 +23,10 @@ Feature: Adding a import with a interpreter
     Given there is a file test.csv with content:
       """
       name,image
-      test1,https://via.placeholder.com/300/09f/fff.png
+      test1,https://www.coreshop.org/assets/img/logo-full.svg
       """
     And I run the import-definitions with params:
       | key  | value    |
       | file | test.csv |
     Then there should be "1" data-objects for definition
-    And the field "image" for object of the definition should have the value of asset "/images/fff.png"
+    And the field "image" for object of the definition should have the value of asset "/images/logo-full.svg.png"

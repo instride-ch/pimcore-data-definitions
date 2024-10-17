@@ -1,26 +1,25 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Model\Log;
 
 use Exception;
+use function in_array;
+use Instride\Bundle\DataDefinitionsBundle\Model\Log;
 use Pimcore\Model;
 use Pimcore\Model\Paginator\PaginateListingInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\Log;
-use function in_array;
 
 class Listing extends Model\Listing\AbstractListing implements PaginateListingInterface
 {
@@ -40,8 +39,6 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      * Test if the passed key is valid.
      *
      * @param string $key
-     *
-     * @return bool
      */
     public function isValidOrderKey($key): bool
     {
@@ -50,6 +47,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
 
     /**
      * @return Log[]
+     *
      * @throws Exception
      */
     public function getObjects()
@@ -74,7 +72,6 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Get total count
      *
-     * @return int
      * @throws Exception
      */
     public function count(): int
@@ -87,7 +84,7 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
      *
      * @param int $offset
      * @param int $itemCountPerPage
-     * @return array
+     *
      * @throws Exception
      */
     public function getItems($offset, $itemCountPerPage): array
@@ -146,7 +143,6 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Current
      *
-     * @return mixed
      * @throws Exception
      */
     public function current(): mixed
@@ -159,7 +155,6 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Key
      *
-     * @return int|string|null
      * @throws Exception
      */
     public function key(): int|string|null
@@ -172,7 +167,6 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Next
      *
-     * @return void
      * @throws Exception
      */
     public function next(): void
@@ -185,7 +179,6 @@ class Listing extends Model\Listing\AbstractListing implements PaginateListingIn
     /**
      * Valid
      *
-     * @return bool
      * @throws Exception
      */
     public function valid(): bool

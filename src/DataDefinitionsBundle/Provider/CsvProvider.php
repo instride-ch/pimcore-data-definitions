@@ -1,32 +1,31 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
 
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
+
 namespace Instride\Bundle\DataDefinitionsBundle\Provider;
 
-use League\Csv\Reader;
-use League\Csv\Statement;
-use League\Csv\Writer;
+use function chr;
+use function count;
 use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Instride\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Instride\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
-use function chr;
-use function count;
+use League\Csv\Reader;
+use League\Csv\Statement;
+use League\Csv\Writer;
 
 class CsvProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
@@ -41,7 +40,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
 
     public function getColumns(array $configuration): array
     {
-        $csvHeaders = (string)$configuration['csvHeaders'];
+        $csvHeaders = (string) $configuration['csvHeaders'];
         $csvExample = $configuration['csvExample'];
         $delimiter = $configuration['delimiter'];
         $enclosure = $configuration['enclosure'];
@@ -78,7 +77,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null
+        FilterInterface $filter = null,
     ): ImportDataSetInterface {
         $csvHeaders = $configuration['csvHeaders'];
         $delimiter = $configuration['delimiter'];
@@ -115,11 +114,11 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         $stmt = new Statement();
 
         if ($offset) {
-            $stmt = $stmt->offset((int)$offset);
+            $stmt = $stmt->offset((int) $offset);
         }
 
         if ($limit) {
-            $stmt = $stmt->limit((int)$limit);
+            $stmt = $stmt->limit((int) $limit);
         }
 
         $records = $stmt->process($csv);
@@ -151,7 +150,7 @@ class CsvProvider extends AbstractFileProvider implements ImportProviderInterfac
         array $data,
         array $configuration,
         ExportDefinitionInterface $definition,
-        array $params
+        array $params,
     ): void {
         $this->exportData[] = $data;
     }

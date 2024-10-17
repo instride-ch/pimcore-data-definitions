@@ -1,27 +1,26 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
 
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
+
 namespace Instride\Bundle\DataDefinitionsBundle\Fetcher;
 
+use Instride\Bundle\DataDefinitionsBundle\Context\FetcherContextInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use InvalidArgumentException;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\Listing;
-use Instride\Bundle\DataDefinitionsBundle\Context\FetcherContextInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 
 class ObjectsFetcher implements FetcherInterface
 {
@@ -53,8 +52,8 @@ class ObjectsFetcher implements FetcherInterface
             throw new InvalidArgumentException(sprintf('Class not found %s', $class));
         }
 
-        $classList = '\Pimcore\Model\DataObject\\'.ucfirst($class).'\Listing';
-        $list = new $classList;
+        $classList = '\Pimcore\Model\DataObject\\' . ucfirst($class) . '\Listing';
+        $list = new $classList();
         $list->setUnpublished($definition->isFetchUnpublished());
 
         $rootNode = null;
@@ -64,26 +63,26 @@ class ObjectsFetcher implements FetcherInterface
 
             if (null !== $rootNode) {
                 $quotedPath = $list->quote($rootNode->getRealFullPath());
-                $quotedWildcardPath = $list->quote(str_replace('//', '/', $rootNode->getRealFullPath().'/').'%');
-                $conditionFilters[] = '(path = '.$quotedPath.' OR path LIKE '.$quotedWildcardPath.')';
+                $quotedWildcardPath = $list->quote(str_replace('//', '/', $rootNode->getRealFullPath() . '/') . '%');
+                $conditionFilters[] = '(path = ' . $quotedPath . ' OR path LIKE ' . $quotedWildcardPath . ')';
             }
         }
 
         if (isset($params['query'])) {
             $query = $this->filterQueryParam($params['query']);
             if (!empty($query)) {
-                $conditionFilters[] = 'oo_id IN (SELECT id FROM search_backend_data WHERE MATCH (`data`,`properties`) AGAINST ('.$list->quote(
-                        $query
-                    ).' IN BOOLEAN MODE))';
+                $conditionFilters[] = 'oo_id IN (SELECT id FROM search_backend_data WHERE MATCH (`data`,`properties`) AGAINST (' . $list->quote(
+                    $query,
+                ) . ' IN BOOLEAN MODE))';
             }
         }
 
         if (isset($params['only_direct_children']) && $params['only_direct_children'] == 'true' && null !== $rootNode) {
-            $conditionFilters[] = 'parentId = '.$rootNode->getId();
+            $conditionFilters[] = 'parentId = ' . $rootNode->getId();
         }
 
         if (isset($params['condition'])) {
-            $conditionFilters[] = '('.$params['condition'].')';
+            $conditionFilters[] = '(' . $params['condition'] . ')';
         }
         if (isset($params['ids'])) {
             $quotedIds = [];
@@ -91,7 +90,7 @@ class ObjectsFetcher implements FetcherInterface
                 $quotedIds[] = $list->quote($id);
             }
             if (!empty($quotedIds)) {
-                $conditionFilters[] = 'oo_id IN ('.implode(',', $quotedIds).')';
+                $conditionFilters[] = 'oo_id IN (' . implode(',', $quotedIds) . ')';
             }
         }
 

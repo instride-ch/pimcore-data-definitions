@@ -1,23 +1,25 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Command;
 
 use Exception;
-use InvalidArgumentException;
+use Instride\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
+use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use Pimcore\Console\AbstractCommand;
 use Pimcore\Model\Exception\NotFoundException;
 use Symfony\Component\Console\Helper\Helper;
@@ -26,21 +28,19 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Instride\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
-use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 final class ImportCommand extends AbstractCommand
 {
     protected EventDispatcherInterface $eventDispatcher;
+
     protected DefinitionRepository $repository;
+
     protected ImporterInterface $importer;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DefinitionRepository $repository,
-        ImporterInterface $importer
+        ImporterInterface $importer,
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->repository = $repository;
@@ -63,21 +63,22 @@ EOT
                 'definition',
                 'd',
                 InputOption::VALUE_REQUIRED,
-                'Import Definition ID or Name'
+                'Import Definition ID or Name',
             )
             ->addOption(
                 'params',
                 'p',
                 InputOption::VALUE_REQUIRED,
-                'JSON Encoded Params'
-            );
+                'JSON Encoded Params',
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $eventDispatcher = $this->eventDispatcher;
 
-        $params = json_decode($input->getOption('params'), true, 512, JSON_THROW_ON_ERROR);
+        $params = json_decode($input->getOption('params'), true, 512, \JSON_THROW_ON_ERROR);
         $definitionId = $input->getOption('definition');
 
         if (!isset($params['userId'])) {
@@ -87,13 +88,12 @@ EOT
         $definition = null;
 
         try {
-            if (filter_var($definitionId, FILTER_VALIDATE_INT)) {
+            if (filter_var($definitionId, \FILTER_VALIDATE_INT)) {
                 $definition = $this->repository->find($definitionId);
             } else {
                 $definition = $this->repository->findByName($definitionId);
             }
         } catch (NotFoundException) {
-
         }
 
         if (!$definition instanceof ImportDefinitionInterface) {
@@ -115,8 +115,8 @@ EOT
                         $countProgress,
                         Helper::formatTime(time() - $startTime),
                         Helper::formatMemory(memory_get_usage(true)),
-                        $e->getSubject()
-                    )
+                        $e->getSubject(),
+                    ),
                 );
             }
         };
@@ -124,7 +124,7 @@ EOT
         $imTotal = function (ImportDefinitionEvent $e) use ($output, &$progress) {
             $progress = new ProgressBar($output, $e->getSubject());
             $progress->setFormat(
-                ' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%'
+                ' %current%/%max% [%bar%] %percent:3s%% (%elapsed:6s%/%estimated:-6s%) %memory:6s%: %message%',
             );
             $progress->start();
         };
@@ -134,7 +134,7 @@ EOT
                 $progress->advance();
             }
 
-            $countProgress++;
+            ++$countProgress;
         };
 
         $imFinished = function (ImportDefinitionEvent $e) use ($output, &$progress) {

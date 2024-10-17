@@ -1,25 +1,24 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
 
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
+
 namespace Instride\Bundle\DataDefinitionsBundle\Exception;
 
-use RuntimeException;
-use Throwable;
 use Instride\Bundle\DataDefinitionsBundle\Model\DataDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\MappingInterface;
+use RuntimeException;
+use Throwable;
 
 class InterpreterException extends RuntimeException
 {
@@ -28,7 +27,7 @@ class InterpreterException extends RuntimeException
         MappingInterface $mapping,
         array $params,
         $value,
-        ?Throwable $previous = null
+        ?Throwable $previous = null,
     ) {
         parent::__construct($this->formatMessage($definition, $mapping, $params, $value, $previous), 0, $previous);
     }
@@ -38,8 +37,8 @@ class InterpreterException extends RuntimeException
         MappingInterface $mapping,
         array $params,
         $value,
-        ?Throwable $previous = null
-    ): InterpreterException {
+        ?Throwable $previous = null,
+    ): self {
         return new self($definition, $mapping, $params, $value, $previous);
     }
 
@@ -48,7 +47,7 @@ class InterpreterException extends RuntimeException
         MappingInterface $mapping,
         array $params,
         $value,
-        ?Throwable $previous = null
+        ?Throwable $previous = null,
     ): string {
         $format = '%1$s, %2$s';
         if ($previous !== null) {
@@ -59,7 +58,7 @@ class InterpreterException extends RuntimeException
             $format,
             $this->formatDefinition($definition),
             $this->formatSource($mapping, $value, $params['row'] ?? null),
-            $previous ? $previous->getMessage() : null
+            $previous ? $previous->getMessage() : null,
         );
     }
 
@@ -82,7 +81,7 @@ class InterpreterException extends RuntimeException
             $mapping->getInterpreter(),
             var_export_pretty($mapping->getInterpreterConfig()),
             $row,
-            $this->formatValue($value)
+            $this->formatValue($value),
         );
     }
 

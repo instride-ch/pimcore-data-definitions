@@ -1,38 +1,22 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Importer;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use Countable;
-use InvalidArgumentException;
-use Pimcore;
-use Pimcore\File;
-use Pimcore\Mail;
-use Pimcore\Model\DataObject\ClassDefinition;
-use Pimcore\Model\DataObject\Concrete;
-use Pimcore\Model\DataObject\Service;
-use Pimcore\Model\Document;
-use Pimcore\Model\Factory;
-use Pimcore\Model\Version;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Throwable;
 use Instride\Bundle\DataDefinitionsBundle\Context\ContextFactoryInterface;
 use Instride\Bundle\DataDefinitionsBundle\Event\EventDispatcherInterface;
 use Instride\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
@@ -54,6 +38,21 @@ use Instride\Bundle\DataDefinitionsBundle\Runner\RunnerInterface;
 use Instride\Bundle\DataDefinitionsBundle\Runner\SaveRunnerInterface;
 use Instride\Bundle\DataDefinitionsBundle\Runner\SetterRunnerInterface;
 use Instride\Bundle\DataDefinitionsBundle\Setter\SetterInterface;
+use InvalidArgumentException;
+use Pimcore;
+use Pimcore\File;
+use Pimcore\Mail;
+use Pimcore\Model\DataObject\ClassDefinition;
+use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\DataObject\Service;
+use Pimcore\Model\Document;
+use Pimcore\Model\Factory;
+use Pimcore\Model\Version;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Throwable;
 
 final class Importer implements ImporterInterface, AsyncImporterInterface
 {
@@ -75,7 +74,6 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         private ExpressionLanguage $expressionLanguage,
         private MessageBusInterface $bus,
     ) {
-
     }
 
     public function doImportRowAsync(ImportDefinitionInterface $definition, array $row, array $params): void
@@ -110,14 +108,13 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $filter = $this->filterRegistry->get($filterType);
         }
 
-
         $object = $this->importRow(
             $definition,
             $row,
             $dataSet,
             $params,
             $filter,
-            $runner
+            $runner,
         );
     }
 
@@ -132,7 +129,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                     $definition->getId(),
                     $row,
                     $params,
-                )
+                ),
             );
         }
     }
@@ -155,7 +152,6 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $filter = $this->filterRegistry->get($filterType);
         }
 
-
         /** @var ImportDataSetInterface|array $data */
         $data = $this->getData($definition, $params);
 
@@ -168,7 +164,6 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
              */
             $runner = $this->runnerRegistry->get($definition->getRunner());
         }
-
 
         if ((\is_countable($data) || $data instanceof Countable) && ($count = \count($data)) > 0) {
             $this->eventDispatcher->dispatch($definition, 'data_definitions.import.total', $count, $params);
@@ -192,7 +187,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $this->eventDispatcher->dispatch(
                 $definition,
                 'data_definitions.import.status',
-                sprintf('Running Cleaner "%s"', $cleanerType)
+                sprintf('Running Cleaner "%s"', $cleanerType),
             );
 
             if ($cleaner instanceof ParamsAwareInterface) {
@@ -209,7 +204,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $this->eventDispatcher->dispatch(
                 $definition,
                 'data_definitions.import.status',
-                sprintf('Finished Cleaner "%s"', $cleanerType)
+                sprintf('Finished Cleaner "%s"', $cleanerType),
             );
         }
 
@@ -234,7 +229,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $definition,
             Document::getById($definition->getSuccessNotificationDocument()),
             $objectIds,
-            $exceptions
+            $exceptions,
         );
         $this->eventDispatcher->dispatch($definition, 'data_definitions.import.success', $params);
     }
@@ -249,7 +244,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $definition,
             Document::getById($definition->getFailureNotificationDocument()),
             $objectIds,
-            $exceptions
+            $exceptions,
         );
         $this->eventDispatcher->dispatch($definition, 'data_definitions.import.failure', $params);
     }
@@ -263,7 +258,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         ImportDefinitionInterface $definition,
         ?Document $document,
         array $objectIds,
-        array $exceptions
+        array $exceptions,
     ) {
         if ($document instanceof Document) {
             $params = [
@@ -322,7 +317,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                     $dataSet,
                     array_merge($params, ['row' => $count]),
                     $filter,
-                    $runner
+                    $runner,
                 );
 
                 if ($object instanceof Concrete) {
@@ -337,7 +332,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                     $definition,
                     'data_definitions.import.failure',
                     sprintf('Error: %s', $ex->getMessage()),
-                    $params
+                    $params,
                 );
 
                 if ($definition->getStopOnException()) {
@@ -351,11 +346,11 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                         $definition,
                         'data_definitions.import.status',
                         'Collect Garbage',
-                        $params
+                        $params,
                     );
                 }
 
-                $count++;
+                ++$count;
             }
 
             $this->eventDispatcher->dispatch($definition, 'data_definitions.import.progress', '', $params);
@@ -364,7 +359,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                 $this->eventDispatcher->dispatch(
                     $definition,
                     'data_definitions.import.status',
-                    'Process has been stopped.'
+                    'Process has been stopped.',
                 );
 
                 return [$objectIds, $exceptions];
@@ -390,7 +385,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                     $definition,
                     'data_definitions.import.status',
                     'Ignoring new Object',
-                    $params
+                    $params,
                 );
 
                 return null;
@@ -401,7 +396,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                     $definition,
                     'data_definitions.import.status',
                     'Ignoring existing Object',
-                    $params
+                    $params,
                 );
 
                 return null;
@@ -420,7 +415,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                     $definition,
                     'data_definitions.import.status',
                     'Filtered Object',
-                    $params
+                    $params,
                 );
 
                 return null;
@@ -431,13 +426,13 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $definition,
             'data_definitions.import.status',
             sprintf('Import Object %s', ($object->getId() ? $object->getFullPath() : 'new')),
-            $params
+            $params,
         );
         $this->eventDispatcher->dispatch(
             $definition,
             'data_definitions.import.object.start',
             $object,
-            $params
+            $params,
         );
 
         $runnerContext = $this->contextFactory->createRunnerContext($definition, $params, $data, $dataSet, $object);
@@ -456,7 +451,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         foreach ($definition->getMapping() as $mapItem) {
             $value = null;
 
-            if (array_key_exists($mapItem->getFromColumn(), $data) || $mapItem->getFromColumn() === "custom") {
+            if (array_key_exists($mapItem->getFromColumn(), $data) || $mapItem->getFromColumn() === 'custom') {
                 $value = $data[$mapItem->getFromColumn()] ?? null;
                 $this->setObjectValue($object, $mapItem, $value, $data, $dataSet, $definition, $params, $runner);
             }
@@ -483,14 +478,14 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                 $definition,
                 'data_definitions.import.status',
                 sprintf('Imported Object %s', $object->getFullPath()),
-                $params
+                $params,
             );
         } else {
             $this->eventDispatcher->dispatch(
                 $definition,
                 'data_definitions.import.status',
                 sprintf('Skipped Object %s', $object->getFullPath()),
-                $params
+                $params,
             );
         }
 
@@ -498,13 +493,13 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
             $definition,
             'data_definitions.import.status',
             sprintf('Imported Object %s', $object->getFullPath()),
-            $params
+            $params,
         );
         $this->eventDispatcher->dispatch(
             $definition,
             'data_definitions.import.object.finished',
             $object,
-            $params
+            $params,
         );
 
         if ($runner instanceof RunnerInterface) {
@@ -526,7 +521,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         ImportDataSetInterface $dataSet,
         ImportDefinitionInterface $definition,
         array $params,
-        RunnerInterface $runner = null
+        RunnerInterface $runner = null,
     ): void {
         if ($map->getInterpreter()) {
             try {
@@ -549,7 +544,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                         $dataSet,
                         $object,
                         $value,
-                        $map
+                        $map,
                     );
                     $value = $interpreter->interpret($context);
                 } catch (UnexpectedValueException $ex) {
@@ -557,15 +552,13 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                         sprintf(
                             'Unexpected Value from Interpreter "%s" with message "%s"',
                             $map->getInterpreter(),
-                            $ex->getMessage()
-                        )
+                            $ex->getMessage(),
+                        ),
                     );
                 }
-
             } catch (DoNotSetException $ex) {
                 return;
             }
-
         }
 
         if ($map->getToColumn() === 'o_type' && $map->getSetter() !== 'object_type') {
@@ -595,7 +588,7 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
                 $map,
                 $data,
                 $dataSet,
-                $value
+                $value,
             );
 
             if ($setter instanceof SetterInterface) {
@@ -614,10 +607,10 @@ final class Importer implements ImporterInterface, AsyncImporterInterface
         ImportDefinitionInterface $definition,
         $data,
         ImportDataSetInterface $dataSet,
-        $params
+        $params,
     ): Concrete {
         $class = $definition->getClass();
-        $classObject = '\Pimcore\Model\DataObject\\'.ucfirst($class);
+        $classObject = '\Pimcore\Model\DataObject\\' . ucfirst($class);
         $classDefinition = ClassDefinition::getByName($class);
 
         if (!$classDefinition instanceof ClassDefinition) {

@@ -1,18 +1,17 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Form\Type;
 
@@ -29,13 +28,14 @@ use Symfony\Component\Form\FormInterface;
 final class ExportDefinitionType extends AbstractResourceType
 {
     private FormTypeRegistryInterface $formTypeRegistry;
+
     private FormTypeRegistryInterface $fetcherFormTypeRegistry;
 
     public function __construct(
         $dataClass,
         array $validationGroups,
         FormTypeRegistryInterface $formTypeRegistry,
-        FormTypeRegistryInterface $fetcherFormTypeRegistry
+        FormTypeRegistryInterface $fetcherFormTypeRegistry,
     ) {
         parent::__construct($dataClass, $validationGroups);
 
@@ -56,7 +56,8 @@ final class ExportDefinitionType extends AbstractResourceType
             ->add('fetchUnpublished', CheckboxType::class)
             ->add('failureNotificationDocument', IntegerType::class)
             ->add('successNotificationDocument', IntegerType::class)
-            ->add('mapping', ExportMappingCollectionType::class);
+            ->add('mapping', ExportMappingCollectionType::class)
+        ;
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -93,7 +94,8 @@ final class ExportDefinitionType extends AbstractResourceType
                 }
 
                 $this->addConfigurationFields($event->getForm(), $formType);
-            });
+            })
+        ;
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -130,22 +132,17 @@ final class ExportDefinitionType extends AbstractResourceType
                 }
 
                 $this->addFetcherConfigurationFields($event->getForm(), $formType);
-            });
+            })
+        ;
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $configurationType
-     */
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('configuration', $configurationType);
     }
 
     /**
-     * @param FormInterface $form
      * @param mixed $data
-     * @return string|null
      */
     protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
@@ -160,19 +157,13 @@ final class ExportDefinitionType extends AbstractResourceType
         return null;
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $configurationType
-     */
     protected function addFetcherConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('fetcherConfig', $configurationType);
     }
 
     /**
-     * @param FormInterface $form
      * @param mixed $data
-     * @return string|null
      */
     protected function getFetcherRegistryIdentifier(FormInterface $form, $data = null): ?string
     {

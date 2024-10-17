@@ -1,37 +1,37 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Form\Type\Interpreter;
 
 use CoreShop\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
+use Instride\Bundle\DataDefinitionsBundle\Form\Type\InterpreterChoiceType;
+use Instride\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Instride\Bundle\DataDefinitionsBundle\Form\Type\InterpreterChoiceType;
-use Instride\Bundle\DataDefinitionsBundle\Form\Type\NoConfigurationType;
 
 final class InterpreterType extends AbstractType
 {
     private FormTypeRegistryInterface $formTypeRegistry;
 
-    public function __construct(FormTypeRegistryInterface $formTypeRegistry)
-    {
+    public function __construct(
+        FormTypeRegistryInterface $formTypeRegistry,
+    ) {
         $this->formTypeRegistry = $formTypeRegistry;
     }
 
@@ -40,7 +40,8 @@ final class InterpreterType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('type', InterpreterChoiceType::class);
+            ->add('type', InterpreterChoiceType::class)
+        ;
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -75,7 +76,8 @@ final class InterpreterType extends AbstractType
                 }
 
                 $this->addConfigurationFields($event->getForm(), $formType);
-            });
+            })
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -84,23 +86,17 @@ final class InterpreterType extends AbstractType
 
         $resolver
             ->setDefault('configuration_type', null)
-            ->setAllowedTypes('configuration_type', ['string', 'null']);
+            ->setAllowedTypes('configuration_type', ['string', 'null'])
+        ;
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $configurationType
-     */
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('interpreterConfig', $configurationType);
     }
 
     /**
-     * @param FormInterface $form
      * @param mixed $data
-     *
-     * @return string|null
      */
     protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
     {

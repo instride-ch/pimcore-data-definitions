@@ -1,26 +1,25 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
 
 use Exception;
-use Instride\Bundle\DataDefinitionsBundle\Model\IdGenerator;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinition;
-use Pimcore\Model;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportMapping;
+use Instride\Bundle\DataDefinitionsBundle\Model\IdGenerator;
+use Pimcore\Model;
 
 class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
 {
@@ -51,7 +50,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
 
         foreach ($data as $key => $value) {
             if ($key === 'mapping') {
-                $maps = array();
+                $maps = [];
 
                 foreach ($this->model->getMapping() as $map) {
                     if (\is_array($map)) {
@@ -79,7 +78,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
         } else {
             throw new Model\Exception\NotFoundException(sprintf(
                 'Export Definition with ID "%s" does not exist.',
-                $id
+                $id,
             ));
         }
     }
@@ -87,17 +86,18 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
     public function getByName(string $name): void
     {
         foreach ($this->loadIdList() as $id) {
-            $definition = ExportDefinition::getById((int)$id);
+            $definition = ExportDefinition::getById((int) $id);
 
             if ($definition->getName() === $name) {
                 $this->getById((string) $id);
+
                 return;
             }
         }
 
         throw new Model\Exception\NotFoundException(sprintf(
             'Export Definition with Name "%s" does not exist.',
-            $name
+            $name,
         ));
     }
 
@@ -148,7 +148,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
                     }
                 } elseif ($key === 'mapping') {
                     if ($value) {
-                        $data[$key] = array();
+                        $data[$key] = [];
 
                         if (\is_array($value)) {
                             foreach ($value as $map) {
@@ -161,7 +161,7 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
                 }
             }
         }
-        $this->saveData((string)$this->model->getId(), $data);
+        $this->saveData((string) $this->model->getId(), $data);
     }
 
     protected function prepareDataStructureForYaml(string $id, mixed $data): mixed
@@ -177,10 +177,11 @@ class Dao extends Model\Dao\PimcoreLocationAwareConfigDao
 
     /**
      * Deletes object from database
+     *
      * @throws Exception
      */
     public function delete()
     {
-        $this->deleteData((string)$this->model->getId());
+        $this->deleteData((string) $this->model->getId());
     }
 }

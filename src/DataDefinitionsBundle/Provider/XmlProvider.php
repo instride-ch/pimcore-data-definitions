@@ -1,46 +1,47 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
 
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
+
 namespace Instride\Bundle\DataDefinitionsBundle\Provider;
 
-use Pimcore\File;
-use Pimcore\Model\Asset;
-use Pimcore\Tool\Storage;
-use Symfony\Component\Console\Exception\RuntimeException;
-use Symfony\Component\Process\Process;
+use function count;
 use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ExportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Instride\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactGenerationProviderInterface;
 use Instride\Bundle\DataDefinitionsBundle\ProcessManager\ArtifactProviderTrait;
+use Pimcore\File;
+use Pimcore\Model\Asset;
+use Pimcore\Tool\Storage;
+use Symfony\Component\Console\Exception\RuntimeException;
+use Symfony\Component\Process\Process;
 use XMLWriter;
-use function count;
 
 class XmlProvider extends AbstractFileProvider implements ImportProviderInterface, ExportProviderInterface, ArtifactGenerationProviderInterface
 {
     use ArtifactProviderTrait;
 
     private XMLWriter $writer;
+
     private string $exportPath;
+
     private int $exportCounter = 0;
 
     protected function convertXmlToArray($xml, $xpath)
     {
-        $xml = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $xml = simplexml_load_string($xml, 'SimpleXMLElement', \LIBXML_NOCDATA);
         $xml = $xml->xpath($xpath);
 
         $json = json_encode($xml);
@@ -49,7 +50,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         foreach ($array as &$arrayEntry) {
             if (array_key_exists('@attributes', $arrayEntry)) {
                 foreach ($arrayEntry['@attributes'] as $key => $value) {
-                    $arrayEntry['attr_'.$key] = $value;
+                    $arrayEntry['attr_' . $key] = $value;
                 }
             }
         }
@@ -89,7 +90,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         array $configuration,
         ImportDefinitionInterface $definition,
         array $params,
-        FilterInterface $filter = null
+        FilterInterface $filter = null,
     ): ImportDataSetInterface {
         $file = $this->getFile($params);
         $xml = file_get_contents($file);
@@ -101,7 +102,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         array $data,
         array $configuration,
         ExportDefinitionInterface $definition,
-        array $params
+        array $params,
     ): void {
         $writer = $this->getXMLWriter();
 
@@ -109,7 +110,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
         $this->serializeCollection($writer, $data);
         $writer->endElement();
 
-        $this->exportCounter++;
+        ++$this->exportCounter;
         if ($this->exportCounter >= 50) {
             $this->flush($writer);
             $this->exportCounter = 0;
@@ -135,7 +136,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                 throw new RuntimeException(sprintf('Passed XSLT file "%1$s" not found', $path));
             }
 
-            $extension = pathinfo($configuration['xsltPath'], PATHINFO_EXTENSION);
+            $extension = pathinfo($configuration['xsltPath'], \PATHINFO_EXTENSION);
             $workingPath = File::getLocalTempFilePath($extension);
             file_put_contents($workingPath, $storage->read($path));
 
@@ -202,7 +203,7 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
 
     private function flush(XMLWriter $writer): void
     {
-        file_put_contents($this->getExportPath(), $writer->flush(true), FILE_APPEND);
+        file_put_contents($this->getExportPath(), $writer->flush(true), \FILE_APPEND);
     }
 
     private function serialize(XMLWriter $writer, ?string $name, $data, ?int $key = null): void
@@ -213,13 +214,13 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                 $writer->writeAttribute('name', $name);
             }
             if (null !== $key) {
-                $writer->writeAttribute('key', (string)$key);
+                $writer->writeAttribute('key', (string) $key);
             }
             if (is_string($data)) {
                 $writer->writeCdata($data);
             } else {
                 // TODO: should be more elaborate/exact for "non-string" scalar values
-                $writer->text((string)$data);
+                $writer->text((string) $data);
             }
             $writer->endElement();
         } else {
@@ -229,20 +230,20 @@ class XmlProvider extends AbstractFileProvider implements ImportProviderInterfac
                     $writer->writeAttribute('name', $name);
                 }
                 if (null !== $key) {
-                    $writer->writeAttribute('key', (string)$key);
+                    $writer->writeAttribute('key', (string) $key);
                 }
                 $this->serializeCollection($writer, $data);
                 $writer->endElement();
             } else {
-                if ((string)$data) {
+                if ((string) $data) {
                     $writer->startElement('property');
                     if (null !== $name) {
                         $writer->writeAttribute('name', $name);
                     }
                     if (null !== $key) {
-                        $writer->writeAttribute('key', (string)$key);
+                        $writer->writeAttribute('key', (string) $key);
                     }
-                    $writer->writeCdata((string)$data);
+                    $writer->writeCdata((string) $data);
                     $writer->endElement();
                 }
             }

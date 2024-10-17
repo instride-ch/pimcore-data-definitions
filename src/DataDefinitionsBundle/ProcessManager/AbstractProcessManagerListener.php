@@ -1,46 +1,49 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\ProcessManager;
 
 use Carbon\Carbon;
 use CoreShop\Component\Resource\Factory\FactoryInterface;
-use ProcessManagerBundle\Factory\ProcessFactoryInterface;
+use Instride\Bundle\DataDefinitionsBundle\Event\DefinitionEventInterface;
 use ProcessManagerBundle\Logger\ProcessLogger;
 use ProcessManagerBundle\Model\ProcessInterface;
 use ProcessManagerBundle\ProcessManagerBundle;
 use ProcessManagerBundle\Repository\ProcessRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Instride\Bundle\DataDefinitionsBundle\Event\DefinitionEventInterface;
 
 abstract class AbstractProcessManagerListener
 {
     public const PROCESS_TYPE = 'data_definitions';
+
     public const PROCESS_NAME = 'Data Definitions';
 
     private const PROCESS_PROGRESS_THROTTLE_SECONDS = 1;
 
     protected $process;
+
     protected $processFactory;
+
     protected $processLogger;
+
     protected $repository;
+
     protected $eventDispatcher;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     protected $lastProgressAt;
 
@@ -50,7 +53,7 @@ abstract class AbstractProcessManagerListener
     protected $lastProgressStepsCount = 0;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     protected $lastStatusAt;
 
@@ -58,7 +61,7 @@ abstract class AbstractProcessManagerListener
         FactoryInterface $processFactory,
         ProcessLogger $processLogger,
         ProcessRepository $repository,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
     ) {
         $this->processFactory = $processFactory;
         $this->processLogger = $processLogger;
@@ -74,9 +77,6 @@ abstract class AbstractProcessManagerListener
         return $this->process;
     }
 
-    /**
-     * @param DefinitionEventInterface $event
-     */
     public function onTotalEvent(DefinitionEventInterface $event): void
     {
         if (null === $this->process) {
@@ -84,9 +84,9 @@ abstract class AbstractProcessManagerListener
 
             $this->process = $this->processFactory->createProcess(
                 sprintf(
-                    static::PROCESS_NAME.' (%s): %s',
+                    static::PROCESS_NAME . ' (%s): %s',
                     $date->formatLocalized('%A %d %B %Y'),
-                    $event->getDefinition()->getName()
+                    $event->getDefinition()->getName(),
                 ),
                 static::PROCESS_TYPE,
                 'Loading',
@@ -95,23 +95,19 @@ abstract class AbstractProcessManagerListener
                 -1,
                 0,
                 1,
-                ProcessManagerBundle::STATUS_RUNNING
-
+                ProcessManagerBundle::STATUS_RUNNING,
             );
             $this->process->save();
 
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_TOTAL.$event->getSubject());
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_TOTAL . $event->getSubject());
         }
     }
 
-    /**
-     * @return void
-     */
     public function onProgressEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
             $now = new \DateTimeImmutable();
-            $this->lastProgressStepsCount++;
+            ++$this->lastProgressStepsCount;
             if ($this->lastProgressAt instanceof \DateTimeInterface) {
                 $diff = $now->getTimestamp() - $this->lastProgressAt->getTimestamp();
 
@@ -139,13 +135,10 @@ abstract class AbstractProcessManagerListener
         }
     }
 
-    /**
-     * @param DefinitionEventInterface $event
-     */
     public function onStatusEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS.$event->getSubject());
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS . $event->getSubject());
 
             $now = new \DateTimeImmutable();
             if ($this->lastStatusAt instanceof \DateTimeInterface) {
@@ -165,9 +158,6 @@ abstract class AbstractProcessManagerListener
         }
     }
 
-    /**
-     * @param DefinitionEventInterface $event
-     */
     public function onFinishedEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
@@ -178,13 +168,10 @@ abstract class AbstractProcessManagerListener
                 $this->process->setCompleted(time());
                 $this->process->save();
             }
-            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED.$event->getSubject());
+            $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_FINISHED . $event->getSubject());
         }
     }
 
-    /**
-     * @param DefinitionEventInterface $event
-     */
     public function onFailureEvent(DefinitionEventInterface $event): void
     {
         if ($this->process) {
@@ -197,7 +184,7 @@ abstract class AbstractProcessManagerListener
             $this->process->save();
 
             if (is_string($event->getSubject())) {
-                $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS_ERROR.$event->getSubject());
+                $this->processLogger->info($this->process, ImportDefinitionsReport::EVENT_STATUS_ERROR . $event->getSubject());
             }
         }
     }

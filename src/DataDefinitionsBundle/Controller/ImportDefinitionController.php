@@ -1,24 +1,28 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Controller;
 
 use CoreShop\Component\Registry\ServiceRegistryInterface;
 use Exception;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
 use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
+use Instride\Bundle\DataDefinitionsBundle\Service\FieldSelection;
+use function is_array;
 use Pimcore\Model\DataObject;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -27,11 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\Service\Attribute\SubscribedService;
-use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping;
-use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping\FromColumn;
-use Instride\Bundle\DataDefinitionsBundle\Service\FieldSelection;
-use function is_array;
 
 /**
  * @property DefinitionRepository $repository
@@ -75,9 +74,9 @@ class ImportDefinitionController extends AbstractDefinitionController
         if ($definition instanceof ImportDefinitionInterface) {
             try {
                 if ($this->container->get('data_definitions.registry.provider')->get(
-                    $definition->getProvider()
+                    $definition->getProvider(),
                 )->testData(
-                    $definition->getConfiguration()
+                    $definition->getConfiguration(),
                 )) {
                     return $this->viewHandler->handle(['success' => true]);
                 }
@@ -101,7 +100,7 @@ class ImportDefinitionController extends AbstractDefinitionController
 
             try {
                 $fromColumns = $this->container->get('data_definitions.registry.provider')->get(
-                    $definition->getProvider()
+                    $definition->getProvider(),
                 )->getColumns($definition->getConfiguration());
                 $fromColumns[] = $customFromColumn;
             } catch (Exception $e) {
@@ -193,13 +192,12 @@ class ImportDefinitionController extends AbstractDefinitionController
 
     public function exportAction(Request $request): Response
     {
-        $id = (int)$request->get('id');
+        $id = (int) $request->get('id');
 
         if ($id) {
             $definition = $this->repository->find($id);
 
             if ($definition instanceof ImportDefinitionInterface) {
-
                 $name = $definition->getName();
                 unset($definition->id, $definition->creationDate, $definition->modificationDate);
 
@@ -207,7 +205,7 @@ class ImportDefinitionController extends AbstractDefinitionController
                 $response->headers->set('Content-Type', 'application/json');
                 $response->headers->set(
                     'Content-Disposition',
-                    sprintf('attachment; filename="import-definition-%s.json"', $name)
+                    sprintf('attachment; filename="import-definition-%s.json"', $name),
                 );
                 $response->headers->set('Pragma', 'no-cache');
                 $response->headers->set('Expires', '0');
@@ -224,7 +222,7 @@ class ImportDefinitionController extends AbstractDefinitionController
 
     public function importAction(Request $request): JsonResponse
     {
-        $id = (int)$request->get('id');
+        $id = (int) $request->get('id');
         $definition = $this->repository->find($id);
 
         if ($id && $definition instanceof ImportDefinitionInterface && $request->files->has('Filedata')) {
@@ -232,7 +230,7 @@ class ImportDefinitionController extends AbstractDefinitionController
 
             if ($uploadedFile instanceof UploadedFile) {
                 $jsonContent = file_get_contents($uploadedFile->getPathname());
-                $data = $this->decodeJson($jsonContent, false,[],false);
+                $data = $this->decodeJson($jsonContent, false, [], false);
 
                 $form = $this->resourceFormFactory->create($this->metadata, $definition);
                 $handledForm = $form->submit($data);
@@ -253,9 +251,9 @@ class ImportDefinitionController extends AbstractDefinitionController
 
     public function duplicateAction(Request $request): JsonResponse
     {
-        $id = (int)$request->get('id');
+        $id = (int) $request->get('id');
         $definition = $this->repository->find($id);
-        $name = (string)$request->get('name');
+        $name = (string) $request->get('name');
 
         if ($definition instanceof ImportDefinitionInterface && $name) {
             $newDefinition = clone $definition;
@@ -275,10 +273,9 @@ class ImportDefinitionController extends AbstractDefinitionController
     {
         return parent::getSubscribedServices() + [
                 FieldSelection::class,
-                new SubscribedService('data_definitions.registry.provider', ServiceRegistryInterface::class, attributes: new Autowire(service: 'data_definitions.registry.provider'))
+                new SubscribedService('data_definitions.registry.provider', ServiceRegistryInterface::class, attributes: new Autowire(service: 'data_definitions.registry.provider')),
             ];
     }
-
 
     protected function getConfigProviders(): array
     {

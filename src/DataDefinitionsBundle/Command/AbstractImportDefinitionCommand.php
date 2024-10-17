@@ -1,43 +1,45 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Command;
 
 use CoreShop\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use CoreShop\Bundle\ResourceBundle\Pimcore\ObjectManager;
 use CoreShop\Component\Resource\Metadata\MetadataInterface;
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use InvalidArgumentException;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 abstract class AbstractImportDefinitionCommand extends AbstractCommand
 {
     protected MetadataInterface $metadata;
+
     protected DefinitionRepository $repository;
+
     protected ObjectManager $manager;
+
     protected ResourceFormFactoryInterface $resourceFormFactory;
 
     public function __construct(
         MetadataInterface $metadata,
         DefinitionRepository $repository,
         ObjectManager $manager,
-        ResourceFormFactoryInterface $resourceFormFactory
+        ResourceFormFactoryInterface $resourceFormFactory,
     ) {
         $this->metadata = $metadata;
         $this->repository = $repository;
@@ -57,8 +59,9 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
             ->addArgument(
                 'path',
                 InputArgument::REQUIRED,
-                sprintf('Path to %s Definition JSON export file', $type)
-            );
+                sprintf('Path to %s Definition JSON export file', $type),
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -96,9 +99,7 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
     /**
      * Validate and return path to JSON file
      *
-     * @return string
      * @throws InvalidArgumentException
-     *
      */
     protected function getPath(): string
     {
@@ -112,8 +113,6 @@ abstract class AbstractImportDefinitionCommand extends AbstractCommand
 
     /**
      * Get type
-     *
-     * @return string
      */
     abstract protected function getType(): string;
 }

@@ -1,42 +1,37 @@
 <?php
-/**
- * Data Definitions.
- *
- * LICENSE
- *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
- *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
- */
 
 declare(strict_types=1);
+
+/*
+ * This source file is available under two different licenses:
+ *  - GNU General Public License version 3 (GPLv3)
+ *  - Data Definitions Commercial License (DDCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://www.instride.ch)
+ * @license    GPLv3 and DDCL
+ */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Command;
 
 use Exception;
+use Instride\Bundle\DataDefinitionsBundle\Importer\AsyncImporterInterface;
+use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
+use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use InvalidArgumentException;
 use Pimcore\Console\AbstractCommand;
-use Symfony\Component\Console\Helper\Helper;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Instride\Bundle\DataDefinitionsBundle\Event\ImportDefinitionEvent;
-use Instride\Bundle\DataDefinitionsBundle\Importer\AsyncImporterInterface;
-use Instride\Bundle\DataDefinitionsBundle\Importer\ImporterInterface;
-use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
-use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 
 final class ImportAsyncCommand extends AbstractCommand
 {
     public function __construct(
         protected EventDispatcherInterface $eventDispatcher,
         protected DefinitionRepository $repository,
-        protected AsyncImporterInterface $importer
+        protected AsyncImporterInterface $importer,
     ) {
         parent::__construct();
     }
@@ -50,14 +45,15 @@ final class ImportAsyncCommand extends AbstractCommand
                 'definition',
                 'd',
                 InputOption::VALUE_REQUIRED,
-                'Import Definition ID or Name'
+                'Import Definition ID or Name',
             )
             ->addOption(
                 'params',
                 'p',
                 InputOption::VALUE_REQUIRED,
-                'JSON Encoded Params'
-            );
+                'JSON Encoded Params',
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ## Data Definitions Commercial License (DDCL)
 Alternatively, commercial and supported versions of the program - also known as
 Commercial Distributions - must be used in accordance with the terms and conditions
-contained in a separate written agreement between you and CoreShop GmbH.
+contained in a separate written agreement between you and CORS GmbH/instride AG.
 For more information about the Data Definitions Commercial License (DDCL) please contact office@cors.gmbh.
 
 

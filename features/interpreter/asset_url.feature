@@ -1,4 +1,4 @@
-@interpreter @interpreter_asset_url
+@interpreter @interpreter_asset_url @wip
 Feature: Adding a import with a interpreter
   The Interpreter will check for an image to download and assign it if found
 

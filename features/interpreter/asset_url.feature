@@ -23,7 +23,7 @@ Feature: Adding a import with a interpreter
     Given there is a file test.csv with content:
       """
       name,image
-      test1,https://via.placeholder.com/300/09f/fff.png
+      test1,https://placehold.co/600x400?text=Hello+Pimcore.png
       """
     And I run the import-definitions with params:
       | key  | value    |

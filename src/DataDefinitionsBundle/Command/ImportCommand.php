@@ -71,6 +71,12 @@ EOT
                 InputOption::VALUE_REQUIRED,
                 'JSON Encoded Params',
             )
+            ->addOption(
+                'monitoring-item-id',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Contains the monitoring item for Elements ProcessManager if executed via the Pimcore backend'
+            )
         ;
     }
 
@@ -83,6 +89,10 @@ EOT
 
         if (!isset($params['userId'])) {
             $params['userId'] = 0;
+        }
+
+        iF ($input->getOption('monitoring-item-id')) {
+            $params['monitoringItemId'] = $input->getOption('monitoring-item-id');
         }
 
         $definition = null;

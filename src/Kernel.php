@@ -20,8 +20,13 @@ class Kernel extends PimcoreKernel
 {
     public function registerBundlesToCollection(BundleCollection $collection): void
     {
+        $collection->addBundle(new Pimcore\Bundle\ApplicationLoggerBundle\PimcoreApplicationLoggerBundle());
         $collection->addBundle(new \Instride\Bundle\DataDefinitionsBundle\DataDefinitionsBundle());
         $collection->addBundle(new \FriendsOfBehat\SymfonyExtension\Bundle\FriendsOfBehatSymfonyExtensionBundle());
+
+        if (class_exists(\Elements\Bundle\ProcessManagerBundle\ElementsProcessManagerBundle::class)) {
+            $collection->addBundle(new \Elements\Bundle\ProcessManagerBundle\ElementsProcessManagerBundle());
+        }
     }
 
     public function boot(): void

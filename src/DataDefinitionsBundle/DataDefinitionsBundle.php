@@ -20,6 +20,7 @@ use CoreShop\Bundle\ResourceBundle\AbstractResourceBundle;
 use CoreShop\Bundle\ResourceBundle\CoreShopResourceBundle;
 use CoreShop\Bundle\RuleBundle\CoreShopRuleBundle;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\CleanerRegistryCompilerPass;
+use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ElementsProcessManagerCommandsValidatorPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportProviderRegistryCompilerPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\ExportRunnerRegistryCompilerPass;
 use Instride\Bundle\DataDefinitionsBundle\DependencyInjection\Compiler\FetcherRegistryCompilerPass;
@@ -80,6 +81,7 @@ class DataDefinitionsBundle extends AbstractResourceBundle
         $container->addCompilerPass(new ImportRuleConditionPass());
         $container->addCompilerPass(new ImportRuleActionPass());
         $container->addCompilerPass(new PersisterRegistryCompilerPass());
+        $container->addCompilerPass(new ElementsProcessManagerCommandsValidatorPass());
     }
 
     public function getVersion(): string

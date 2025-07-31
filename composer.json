@@ -34,6 +34,7 @@
     "coreshop/pimcore-bundle": "^4.0",
     "coreshop/resource-bundle": "^4.0",
     "coreshop/rule-bundle": "^4.0",
+    "elements/process-manager-bundle": "^5.0",
     "jms/serializer": "^3.17",
     "league/csv": "^9.7",
     "nyholm/psr7": "^1.5",

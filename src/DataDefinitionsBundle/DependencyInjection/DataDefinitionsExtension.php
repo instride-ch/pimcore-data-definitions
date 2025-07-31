@@ -77,6 +77,10 @@ class DataDefinitionsExtension extends AbstractModelExtension implements Prepend
             $loader->load('guzzle_psr7.yml');
         }
 
+        if (array_key_exists('ElementsProcessManagerBundle', $bundles)) {
+            $loader->load('services/elements-pm.yml');
+        }
+
         $this->registerDependantBundles('coreshop', [PimcoreSimpleBackendSearchBundle::class], $container);
         $this->registerPimcoreResources('data_definitions', $config['pimcore_admin'], $container);
 

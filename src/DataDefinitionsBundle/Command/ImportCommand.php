@@ -91,7 +91,7 @@ EOT
             $params['userId'] = 0;
         }
 
-        iF ($input->getOption('monitoring-item-id')) {
+        if ($input->getOption('monitoring-item-id')) {
             $params['monitoringItemId'] = $input->getOption('monitoring-item-id');
         }
 

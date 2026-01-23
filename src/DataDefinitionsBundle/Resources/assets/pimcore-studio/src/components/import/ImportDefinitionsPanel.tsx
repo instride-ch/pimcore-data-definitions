@@ -41,13 +41,14 @@ export const ImportDefinitionsPanel: React.FC<ImportDefinitionsPanelProps> = ({ 
   }, [loadDefinitions])
 
   const handleAdd = async () => {
-    if (!newDefinitionName.trim()) {
+    const sanitizedName = newDefinitionName.trim().substring(0, 255)
+    if (!sanitizedName) {
       message.warning('Please enter a name for the definition')
       return
     }
 
     try {
-      const newDef = await dataDefinitionsApi.addImportDefinition(newDefinitionName)
+      const newDef = await dataDefinitionsApi.addImportDefinition(sanitizedName)
       setDefinitions([...definitions, newDef])
       setIsAddModalVisible(false)
       setNewDefinitionName('')
@@ -248,6 +249,8 @@ export const ImportDefinitionsPanel: React.FC<ImportDefinitionsPanelProps> = ({ 
           onChange={e => setNewDefinitionName(e.target.value)}
           onPressEnter={handleAdd}
           autoFocus
+          maxLength={255}
+          showCount
         />
       </Modal>
     </Card>

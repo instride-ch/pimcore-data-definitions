@@ -72,3 +72,11 @@ test-commands.txt
 .docker
 cache
 config/pimcore/data-definitions
+
+# Pimcore Studio Build Output
+src/DataDefinitionsBundle/Resources/public/studio/
+
+# Node modules
+node_modules/
+.rsbuild/
+dist/

@@ -3,7 +3,7 @@
     "module": "ESNext",
     "target": "es2017",
     "moduleResolution": "bundler",
-    "baseUrl": "./src/",
+    "baseUrl": "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/",
     "strictNullChecks": true,
     "jsx": "react",
     "esModuleInterop": true,
@@ -17,7 +17,7 @@
     }
   },
   "include": [
-    "./src/**/*",
-    "./@mf-types/*"
+    "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/**/*",
+    "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/@mf-types/*"
   ]
 }

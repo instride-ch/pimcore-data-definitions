@@ -12,11 +12,12 @@ import { v4 } from 'uuid'
 
 const buildId = v4()
 const bundlePrefix = 'datadefinitions'
-const buildPath = path.resolve(__dirname, '../../public/studio', buildId)
-const entryFile = './src/main.ts'
+const studioAssetsPath = path.resolve(__dirname, 'src/DataDefinitionsBundle/Resources/assets/pimcore-studio')
+const buildPath = path.resolve(__dirname, 'src/DataDefinitionsBundle/Resources/public/studio', buildId)
+const entryFile = path.resolve(studioAssetsPath, 'src/main.ts')
 
 // Clean old build directories
-const studioPath = path.resolve(__dirname, '../../public/studio')
+const studioPath = path.resolve(__dirname, 'src/DataDefinitionsBundle/Resources/public/studio')
 if (fs.existsSync(studioPath)) {
   fs.readdirSync(studioPath).forEach((file) => {
     const filePath = path.resolve(studioPath, file)
@@ -43,6 +44,7 @@ const devPort = 3050
 
 export default defineConfig({
   mode: env,
+  root: studioAssetsPath,
   server: {
     port: devPort,
     publicDir: {
@@ -68,8 +70,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@DataDefinitions': './src',
-      '@DataDefinitions/assets': './src/assets'
+      '@DataDefinitions': path.resolve(studioAssetsPath, 'src'),
+      '@DataDefinitions/assets': path.resolve(studioAssetsPath, 'src/assets')
     }
   },
   output: {

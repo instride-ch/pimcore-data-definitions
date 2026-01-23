@@ -2,15 +2,15 @@
   "name": "@instride/data-definitions-studio",
   "version": "1.0.0",
   "description": "Data Definitions - Pimcore Studio Plugin",
-  "main": "src/index.ts",
+  "main": "src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src/index.ts"
   },
   "scripts": {
     "build": "rsbuild build",
     "dev": "rsbuild dev",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
-    "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src",
+    "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx ./src/DataDefinitionsBundle/Resources/assets/pimcore-studio/src --fix",
     "check-types": "tsc --noEmit",
     "check-types-watch": "tsc --noEmit --watch",
     "clean": "rm -rf node_modules/.cache dist"

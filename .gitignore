@@ -72,9 +72,6 @@ test-commands.txt
 cache
 config/pimcore/data-definitions
 
-# Pimcore Studio Build Output
-src/DataDefinitionsBundle/Resources/public/studio/
-
 # Node modules
 node_modules/
 .rsbuild/

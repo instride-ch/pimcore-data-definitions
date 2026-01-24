@@ -1,10 +1,10 @@
-pimcore_studio_backend:
-    mercure_settings:
-        # Server-side: Docker internal network
-        hub_url_server: 'http://mercure/.well-known/mercure'
-        # Client-side: Full URL including .well-known/mercure
-        hub_url_client: 'https://datadefinitions.localhost/hub/.well-known/mercure'
-        # Must match docker-compose.yaml
-        jwt_key: 'SECRET_MERCURE_KEY_SECRET_MERCURE_KEY'
-        # Cookie path must be /hub for all Mercure requests
-        jwt_cookie_host: 'datadefinitions.localhost'
+#pimcore_studio_backend:
+#    mercure_settings:
+#        # Server-side: Docker internal network
+#        hub_url_server: 'http://mercure/.well-known/mercure'
+#        # Client-side: Full URL including .well-known/mercure
+#        hub_url_client: 'https://datadefinitions.localhost/hub/.well-known/mercure'
+#        # Must match docker-compose.yaml
+#        jwt_key: 'SECRET_MERCURE_KEY_SECRET_MERCURE_KEY'
+#        # Cookie path must be /hub for all Mercure requests
+#        jwt_cookie_host: 'datadefinitions.localhost'

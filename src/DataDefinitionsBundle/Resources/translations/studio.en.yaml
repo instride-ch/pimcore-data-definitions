@@ -1,0 +1,269 @@
+# DataDefinitions Studio Translations - English
+
+# Menu
+data_definitions.menu.title: Data Definitions
+data_definitions.menu.import: Import Definitions
+data_definitions.menu.export: Export Definitions
+
+# Common
+data_definitions.save: Save
+data_definitions.add: Add
+data_definitions.delete: Delete
+data_definitions.refresh: Refresh
+data_definitions.cancel: Cancel
+data_definitions.apply: Apply
+data_definitions.close: Close
+data_definitions.loading: Loading...
+data_definitions.search: Search
+data_definitions.configure: Configure
+data_definitions.remove: Remove
+data_definitions.duplicate: Duplicate
+data_definitions.export: Export
+data_definitions.import: Import
+data_definitions.edit: Edit
+data_definitions.active: Active
+
+# Tabs
+data_definitions.settings: Settings
+data_definitions.provider_settings: Provider Settings
+data_definitions.mapping: Mapping
+
+# Settings Form
+data_definitions.name: Name
+data_definitions.provider: Provider
+data_definitions.loader: Loader
+data_definitions.class: Class
+data_definitions.object_path: Object Path
+data_definitions.key: Key
+data_definitions.cleaner: Cleaner
+data_definitions.persister: Persister
+data_definitions.filter: Filter
+data_definitions.runner: Runner
+data_definitions.fetcher: Fetcher
+
+# Options
+data_definitions.options: Options
+data_definitions.relocate_existing_objects: Relocate existing objects
+data_definitions.rename_existing_objects: Rename existing objects
+data_definitions.skip_existing_objects: Skip existing objects
+data_definitions.skip_new_objects: Skip new objects
+data_definitions.create_version: Create version
+data_definitions.stop_on_exception: Stop on exception
+data_definitions.omit_mandatory_check: Omit mandatory check
+data_definitions.force_load_object: Force load object
+data_definitions.enable_inheritance: Enable inheritance
+data_definitions.fetch_unpublished: Fetch unpublished
+
+# Notifications
+data_definitions.notifications: Notifications
+data_definitions.failure_notification_document: Failure Notification Document
+data_definitions.success_notification_document: Success Notification Document
+
+# Mapping
+data_definitions.to_column: To Column
+data_definitions.from_column: From Column
+data_definitions.primary: Primary
+data_definitions.primary_identifier: Primary Identifier
+data_definitions.no_mapping: No mapping configured
+data_definitions.select_class_first: Please select a class in Settings first
+
+# Mapping Config Dialog
+data_definitions.field_config: "Field ({field})"
+data_definitions.mapping_config: Mapping Configuration
+data_definitions.interpreter: Interpreter
+data_definitions.interpreter_configuration: Interpreter Configuration
+data_definitions.select_interpreter: Select interpreter
+data_definitions.setter: Setter
+data_definitions.setter_class: Setter Class
+data_definitions.setter_configuration: Setter Configuration
+data_definitions.select_setter: Select setter class
+data_definitions.getter: Getter
+data_definitions.getter_class: Getter Class
+data_definitions.getter_configuration: Getter Configuration
+data_definitions.select_getter: Select getter class
+data_definitions.select_column: Select column
+
+# Provider Settings - CSV
+data_definitions.csv.format_settings: CSV Format Settings
+data_definitions.csv.delimiter: Delimiter
+data_definitions.csv.delimiter_help: Field separator
+data_definitions.csv.enclosure: Enclosure
+data_definitions.csv.enclosure_help: Text wrapper
+data_definitions.csv.escape: Escape
+data_definitions.csv.escape_help: Escape character
+data_definitions.csv.skip_first_row: Skip first row (headers)
+data_definitions.csv.data: CSV Data
+data_definitions.csv.example_data: CSV Example Data
+data_definitions.csv.example_data_help: Paste sample CSV data to auto-detect columns. Include header row.
+data_definitions.csv.detected_columns: Detected Columns
+data_definitions.csv.manual_headers: Manual Column Headers (Optional)
+data_definitions.csv.headers: Column Headers
+data_definitions.csv.headers_help: One column name per line. Leave empty to use headers from CSV example data.
+
+# Provider Settings - JSON
+data_definitions.json.path_expression: JSON Path Expression
+data_definitions.json.path: JSON Path
+data_definitions.json.path_help: JSONPath expression to select data. Use $.data[*] for array at root.data
+data_definitions.json.path_examples: JSONPath Examples
+data_definitions.json.example_data: JSON Example Data
+data_definitions.json.sample: Sample JSON
+data_definitions.json.sample_help: Paste sample JSON data to auto-detect columns.
+data_definitions.json.detected_structure: Detected Structure
+
+# Provider Settings - XML
+data_definitions.xml.xpath_configuration: XPath Configuration
+data_definitions.xml.xpath: XPath Expression
+data_definitions.xml.xpath_help: XPath expression to select repeating elements
+data_definitions.xml.xpath_examples: XPath Examples
+data_definitions.xml.field_extraction: Field Extraction Pattern
+data_definitions.xml.example_xpath: Example XPath for Fields
+data_definitions.xml.example_xpath_help: Pattern used to extract field values from each element
+data_definitions.xml.example_file: Example File (Asset ID)
+data_definitions.xml.example_file_help: Pimcore Asset ID
+data_definitions.xml.example_data: XML Example Data (Optional)
+data_definitions.xml.sample: Sample XML
+data_definitions.xml.sample_help: Paste sample XML to help configure field mappings
+
+# Provider Settings - SQL
+data_definitions.sql.internal_database: Internal Database
+data_definitions.sql.internal_database_help: This provider uses the Pimcore database connection. No additional configuration needed.
+data_definitions.sql.query: SQL Query
+data_definitions.sql.query_help: SQL query to retrieve import data. Each row becomes one import record.
+data_definitions.sql.security_note: Security Note
+data_definitions.sql.security_note_text: Avoid using user input directly in queries. Use parameterized queries when possible.
+
+# Provider Settings - External SQL
+data_definitions.external_sql.connection: Database Connection
+data_definitions.external_sql.adapter: Adapter
+data_definitions.external_sql.adapter_help: Database driver
+data_definitions.external_sql.host: Host
+data_definitions.external_sql.host_help: Database server hostname or IP
+data_definitions.external_sql.port: Port
+data_definitions.external_sql.port_help: "Default: 3306"
+data_definitions.external_sql.database: Database Name
+data_definitions.external_sql.credentials: Credentials
+data_definitions.external_sql.username: Username
+data_definitions.external_sql.password: Password
+
+# Provider Settings - Excel
+data_definitions.excel.file: Excel File
+data_definitions.excel.example_file: Example File (Asset ID)
+data_definitions.excel.example_file_help: Pimcore Asset ID
+data_definitions.excel.sheet: Sheet Name/Index
+data_definitions.excel.sheet_help: Leave empty for first sheet
+data_definitions.excel.supported_formats: Supported Formats
+data_definitions.excel.supported_formats_help: XLSX, XLS, ODS files are supported
+data_definitions.excel.settings: Import Settings
+data_definitions.excel.first_row_headers: First row contains headers
+data_definitions.excel.headers_override: Column Headers (Optional Override)
+data_definitions.excel.custom_headers: Custom Headers
+data_definitions.excel.custom_headers_help: One column name per line. Leave empty to use headers from Excel file.
+
+# Provider Settings - Raw
+data_definitions.raw.title: Raw Data Provider
+data_definitions.raw.description: Use this provider when data is supplied programmatically or via custom loaders. Define the expected column structure below.
+data_definitions.raw.column_definition: Column Definition
+data_definitions.raw.headers: Column Headers
+data_definitions.raw.headers_help: Define one column name per line. These will be available for field mapping.
+data_definitions.raw.defined_columns: Defined Columns
+
+# Interpreters
+data_definitions.interpreter.default_value: Default Value
+data_definitions.interpreter.default_value.value: Default Value
+data_definitions.interpreter.expression: Expression
+data_definitions.interpreter.expression.expression: Expression
+data_definitions.interpreter.expression.expression_help: Symfony Expression Language expression. Use 'value' for the input value.
+data_definitions.interpreter.mapping: Mapping
+data_definitions.interpreter.mapping.mapping: Value Mapping
+data_definitions.interpreter.mapping.return_null: Return null for unmapped values
+data_definitions.interpreter.twig: Twig
+data_definitions.interpreter.twig.template: Twig Template
+data_definitions.interpreter.twig.template_help: "Available variables: value, object, data"
+data_definitions.interpreter.type_casting: Type Casting
+data_definitions.interpreter.type_casting.type: Cast to Type
+data_definitions.interpreter.carbon: Carbon (Date/Time)
+data_definitions.interpreter.carbon.format: Date Format
+data_definitions.interpreter.carbon.format_help: PHP date format (e.g., Y-m-d H:i:s)
+data_definitions.interpreter.href: Object Reference
+data_definitions.interpreter.href.class: Target Class
+data_definitions.interpreter.object_resolver: Object Resolver
+data_definitions.interpreter.object_resolver.class: Target Class
+data_definitions.interpreter.object_resolver.match_field: Match Field
+data_definitions.interpreter.object_resolver.attribute: Object Attribute
+data_definitions.interpreter.asset_by_path: Asset by Path
+data_definitions.interpreter.asset_by_path.path: Asset Path Expression
+data_definitions.interpreter.asset_url: Asset by URL
+data_definitions.interpreter.asset_url.path: Target Path
+data_definitions.interpreter.asset_url.deduplicate: Deduplicate by URL
+data_definitions.interpreter.asset_url.asset_folder: Asset Folder
+data_definitions.interpreter.quantity_value: Quantity Value
+data_definitions.interpreter.quantity_value.unit: Unit
+data_definitions.interpreter.specific_object: Specific Object
+data_definitions.interpreter.specific_object.object_id: Object ID
+data_definitions.interpreter.metadata: Metadata
+data_definitions.interpreter.metadata.key: Metadata Key
+data_definitions.interpreter.definition: Definition (Nested Import)
+data_definitions.interpreter.definition.definition: Import Definition
+data_definitions.interpreter.conditional: Conditional
+data_definitions.interpreter.conditional.condition: Condition Expression
+data_definitions.interpreter.conditional.true_interpreter: Interpreter if True
+data_definitions.interpreter.conditional.false_interpreter: Interpreter if False
+data_definitions.interpreter.iterator: Iterator
+data_definitions.interpreter.iterator.interpreter: Interpreter for each item
+data_definitions.interpreter.nested: Nested Interpreters
+data_definitions.interpreter.nested.interpreters: Interpreter Chain
+data_definitions.interpreter.nested.add: Add Interpreter
+
+# Import Rules Interpreter
+data_definitions.import_rules: Import Rules
+data_definitions.import_rule.new_rule: New Rule
+data_definitions.import_rule.conditions: Conditions
+data_definitions.import_rule.actions: Actions
+data_definitions.import_rule.add_condition: Add Condition
+data_definitions.import_rule.add_action: Add Action
+data_definitions.import_rule.no_conditions: No conditions defined
+data_definitions.import_rule.no_actions: No actions defined
+data_definitions.import_rule.no_rules: No rules defined
+data_definitions.import_rule.select_or_create: Select a rule or create a new one
+
+# Setters
+data_definitions.setter.localized_field: Localized Field
+data_definitions.setter.localized_field.language: Language
+data_definitions.setter.object_brick: Object Brick
+data_definitions.setter.object_brick.type: Brick Type
+data_definitions.setter.object_brick.class: Brick Class
+data_definitions.setter.object_brick.field: Brick Field
+data_definitions.setter.field_collection: Field Collection
+data_definitions.setter.field_collection.keys: Collection Keys
+data_definitions.setter.field_collection.class: Field Collection Class
+data_definitions.setter.field_collection.field: Field
+data_definitions.setter.field_collection.commit: Commit after add
+data_definitions.setter.classification_store: Classification Store
+data_definitions.setter.classification_store.group: Store Group ID
+data_definitions.setter.classification_store.key: Store Key ID
+
+# Getters (for Export)
+data_definitions.getter.localized_field: Localized Field
+data_definitions.getter.localized_field.language: Language
+data_definitions.getter.object_brick: Object Brick
+data_definitions.getter.object_brick.type: Brick Type
+data_definitions.getter.object_brick.class: Brick Class
+data_definitions.getter.object_brick.field: Brick Field
+data_definitions.getter.field_collection: Field Collection
+data_definitions.getter.field_collection.keys: Collection Keys
+data_definitions.getter.field_collection.class: Field Collection Class
+data_definitions.getter.classification_store: Classification Store
+data_definitions.getter.classification_store.group: Store Group ID
+data_definitions.getter.classification_store.key: Store Key ID
+
+# Messages
+data_definitions.save_success: Definition saved successfully
+data_definitions.save_error: Failed to save definition
+data_definitions.delete_confirm: Are you sure you want to delete this definition?
+data_definitions.delete_success: Definition deleted successfully
+data_definitions.delete_error: Failed to delete definition
+data_definitions.add_success: Definition created successfully
+data_definitions.add_error: Failed to create definition
+data_definitions.duplicate_success: Definition duplicated successfully
+data_definitions.duplicate_error: Failed to duplicate definition
+data_definitions.select_provider_first: Please select a provider first in the Settings tab.

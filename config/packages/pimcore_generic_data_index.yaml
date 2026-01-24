@@ -1,8 +1,4 @@
-# OpenSearch Configuration for Pimcore Generic Data Index
-# This configures the connection to OpenSearch used by Pimcore Studio for indexing
-
-pimcore_generic_data_index:
-    index_service:
-        client_params:
-            hosts:
-                - '%env(PIMCORE_OPENSEARCH_HOST)%'
+pimcore_open_search_client:
+  clients:
+    default:
+      hosts: ['opensearch']

@@ -6,7 +6,7 @@
 
 import { container } from '@pimcore/studio-ui-bundle'
 import { serviceIds } from '@pimcore/studio-ui-bundle/app'
-import { type IconLibrary } from '@pimcore/studio-ui-bundle/modules/icon-library'
+import { IconLibrary } from '@pimcore/studio-ui-bundle/modules/icon-library'
 import React from 'react'
 
 // Import Definition Icon SVG

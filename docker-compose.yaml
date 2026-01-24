@@ -1,0 +1,117 @@
+name: datadefinitions
+
+services:
+  db:
+    image: mysql:8.4
+    working_dir: /application
+    volumes:
+      - datadefinitions-database:/var/lib/mysql
+      - .:/application:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=ROOT
+      - MYSQL_DATABASE=pimcore
+      - MYSQL_USER=pimcore
+      - MYSQL_PASSWORD=pimcore
+    networks:
+      - datadefinitions
+
+  redis:
+    image: redis:alpine
+    networks:
+      - datadefinitions
+
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./:/var/www/html:ro
+      - ./.docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.datadefinitions.rule=Host(`datadefinitions.localhost`)
+      - traefik.http.routers.datadefinitions.entrypoints=cors_dev
+      - traefik.http.routers.datadefinitions.tls=true
+      - traefik.http.services.datadefinitions.loadbalancer.server.port=80
+      - traefik.docker.network=cors_dev
+    depends_on:
+      - php
+      - php-debug
+    networks:
+      - datadefinitions
+
+  php:
+    image: ghcr.io/cors-gmbh/pimcore-docker/php-fpm:8.4-alpine3.22-7.0-latest
+    command: 'php-fpm'
+    entrypoint: docker-php-entrypoint
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./:/var/www/html:cached
+    networks:
+      - datadefinitions
+    environment:
+      - PHP_IDE_CONFIG=serverName=localhost
+
+  php-debug:
+    image: ghcr.io/cors-gmbh/pimcore-docker/php-fpm-debug:8.4-alpine3.22-7.0-latest
+    command: 'php-fpm'
+    entrypoint: xdebug-entrypoint
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./:/var/www/html:cached
+    networks:
+      - datadefinitions
+    environment:
+      - PHP_IDE_CONFIG=serverName=localhost
+
+  supervisord:
+    image: ghcr.io/cors-gmbh/pimcore-docker/php-supervisord:8.4-alpine3.22-7.0-latest
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./:/var/www/html:cached
+    networks:
+      - datadefinitions
+
+  opensearch:
+    image: opensearchproject/opensearch:${OPENSEARCH_VERSION:-2.11.1}
+    networks:
+      - datadefinitions
+    environment:
+      discovery.type: single-node
+      node.name: opensearch
+      OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+      plugins.security.disabled: 'true'
+      action.auto_create_index: 'false'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+
+  mercure:
+    image: dunglas/mercure
+    restart: unless-stopped
+    networks:
+      - datadefinitions
+    ports:
+      - "3000:80"
+    environment:
+      SERVER_NAME: ':80'
+      MERCURE_PUBLISHER_JWT_KEY: 'SECRET_MERCURE_KEY_SECRET_MERCURE_KEY'
+      MERCURE_SUBSCRIBER_JWT_KEY: 'SECRET_MERCURE_KEY_SECRET_MERCURE_KEY'
+
+volumes:
+  datadefinitions-database:
+  opensearch-data:
+
+networks:
+  datadefinitions:
+    driver: bridge

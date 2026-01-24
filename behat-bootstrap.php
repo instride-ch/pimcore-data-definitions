@@ -1,13 +1,13 @@
 <?php
 /**
- * CoreShop.
+ * Data Definitions.
  *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
+ * This source file is available under the Data Definitions Commercial License (DDCL).
+ * Full copyright and license information is available in LICENSE.md
+ * which is distributed with this source code.
  *
- * @copyright  Copyright (c) CoreShop GmbH (https://www.coreshop.org)
- * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    DDCL
  */
 
 if (!defined('PIMCORE_PROJECT_ROOT')) {

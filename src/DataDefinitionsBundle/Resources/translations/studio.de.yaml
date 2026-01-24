@@ -1,0 +1,269 @@
+# DataDefinitions Studio Translations - German
+
+# Menu
+data_definitions.menu.title: Daten-Definitionen
+data_definitions.menu.import: Import-Definitionen
+data_definitions.menu.export: Export-Definitionen
+
+# Common
+data_definitions.save: Speichern
+data_definitions.add: Hinzufügen
+data_definitions.delete: Löschen
+data_definitions.refresh: Aktualisieren
+data_definitions.cancel: Abbrechen
+data_definitions.apply: Anwenden
+data_definitions.close: Schließen
+data_definitions.loading: Laden...
+data_definitions.search: Suchen
+data_definitions.configure: Konfigurieren
+data_definitions.remove: Entfernen
+data_definitions.duplicate: Duplizieren
+data_definitions.export: Exportieren
+data_definitions.import: Importieren
+data_definitions.edit: Bearbeiten
+data_definitions.active: Aktiv
+
+# Tabs
+data_definitions.settings: Einstellungen
+data_definitions.provider_settings: Provider-Einstellungen
+data_definitions.mapping: Mapping
+
+# Settings Form
+data_definitions.name: Name
+data_definitions.provider: Provider
+data_definitions.loader: Loader
+data_definitions.class: Klasse
+data_definitions.object_path: Objektpfad
+data_definitions.key: Schlüssel
+data_definitions.cleaner: Cleaner
+data_definitions.persister: Persister
+data_definitions.filter: Filter
+data_definitions.runner: Runner
+data_definitions.fetcher: Fetcher
+
+# Options
+data_definitions.options: Optionen
+data_definitions.relocate_existing_objects: Bestehende Objekte verschieben
+data_definitions.rename_existing_objects: Bestehende Objekte umbenennen
+data_definitions.skip_existing_objects: Bestehende Objekte überspringen
+data_definitions.skip_new_objects: Neue Objekte überspringen
+data_definitions.create_version: Version erstellen
+data_definitions.stop_on_exception: Bei Fehler stoppen
+data_definitions.omit_mandatory_check: Pflichtfeld-Prüfung überspringen
+data_definitions.force_load_object: Objekt-Laden erzwingen
+data_definitions.enable_inheritance: Vererbung aktivieren
+data_definitions.fetch_unpublished: Unveröffentlichte laden
+
+# Notifications
+data_definitions.notifications: Benachrichtigungen
+data_definitions.failure_notification_document: Benachrichtigung bei Fehler
+data_definitions.success_notification_document: Benachrichtigung bei Erfolg
+
+# Mapping
+data_definitions.to_column: Ziel-Spalte
+data_definitions.from_column: Quell-Spalte
+data_definitions.primary: Primär
+data_definitions.primary_identifier: Primär-Identifikator
+data_definitions.no_mapping: Kein Mapping konfiguriert
+data_definitions.select_class_first: Bitte wählen Sie zuerst eine Klasse in den Einstellungen
+
+# Mapping Config Dialog
+data_definitions.field_config: "Feld ({field})"
+data_definitions.mapping_config: Mapping-Konfiguration
+data_definitions.interpreter: Interpreter
+data_definitions.interpreter_configuration: Interpreter-Konfiguration
+data_definitions.select_interpreter: Interpreter wählen
+data_definitions.setter: Setter
+data_definitions.setter_class: Setter-Klasse
+data_definitions.setter_configuration: Setter-Konfiguration
+data_definitions.select_setter: Setter-Klasse wählen
+data_definitions.getter: Getter
+data_definitions.getter_class: Getter-Klasse
+data_definitions.getter_configuration: Getter-Konfiguration
+data_definitions.select_getter: Getter-Klasse wählen
+data_definitions.select_column: Spalte wählen
+
+# Provider Settings - CSV
+data_definitions.csv.format_settings: CSV-Format-Einstellungen
+data_definitions.csv.delimiter: Trennzeichen
+data_definitions.csv.delimiter_help: Feld-Trennzeichen
+data_definitions.csv.enclosure: Textbegrenzung
+data_definitions.csv.enclosure_help: Text-Umschließung
+data_definitions.csv.escape: Escape
+data_definitions.csv.escape_help: Escape-Zeichen
+data_definitions.csv.skip_first_row: Erste Zeile überspringen (Kopfzeile)
+data_definitions.csv.data: CSV-Daten
+data_definitions.csv.example_data: CSV-Beispieldaten
+data_definitions.csv.example_data_help: Fügen Sie CSV-Beispieldaten ein, um Spalten automatisch zu erkennen. Inkl. Kopfzeile.
+data_definitions.csv.detected_columns: Erkannte Spalten
+data_definitions.csv.manual_headers: Manuelle Spaltenüberschriften (Optional)
+data_definitions.csv.headers: Spaltenüberschriften
+data_definitions.csv.headers_help: Ein Spaltenname pro Zeile. Leer lassen, um Überschriften aus CSV-Beispieldaten zu verwenden.
+
+# Provider Settings - JSON
+data_definitions.json.path_expression: JSON-Pfad-Ausdruck
+data_definitions.json.path: JSON-Pfad
+data_definitions.json.path_help: JSONPath-Ausdruck zur Datenauswahl. Verwenden Sie $.data[*] für ein Array unter root.data
+data_definitions.json.path_examples: JSONPath-Beispiele
+data_definitions.json.example_data: JSON-Beispieldaten
+data_definitions.json.sample: Beispiel-JSON
+data_definitions.json.sample_help: Fügen Sie JSON-Beispieldaten ein, um Spalten automatisch zu erkennen.
+data_definitions.json.detected_structure: Erkannte Struktur
+
+# Provider Settings - XML
+data_definitions.xml.xpath_configuration: XPath-Konfiguration
+data_definitions.xml.xpath: XPath-Ausdruck
+data_definitions.xml.xpath_help: XPath-Ausdruck zur Auswahl wiederkehrender Elemente
+data_definitions.xml.xpath_examples: XPath-Beispiele
+data_definitions.xml.field_extraction: Feld-Extraktionsmuster
+data_definitions.xml.example_xpath: Beispiel-XPath für Felder
+data_definitions.xml.example_xpath_help: Muster zur Extraktion von Feldwerten aus jedem Element
+data_definitions.xml.example_file: Beispieldatei (Asset-ID)
+data_definitions.xml.example_file_help: Pimcore Asset-ID
+data_definitions.xml.example_data: XML-Beispieldaten (Optional)
+data_definitions.xml.sample: Beispiel-XML
+data_definitions.xml.sample_help: Fügen Sie Beispiel-XML ein, um Feld-Mappings zu konfigurieren
+
+# Provider Settings - SQL
+data_definitions.sql.internal_database: Interne Datenbank
+data_definitions.sql.internal_database_help: Dieser Provider nutzt die Pimcore-Datenbankverbindung. Keine zusätzliche Konfiguration erforderlich.
+data_definitions.sql.query: SQL-Abfrage
+data_definitions.sql.query_help: SQL-Abfrage zum Abrufen der Importdaten. Jede Zeile wird zu einem Import-Datensatz.
+data_definitions.sql.security_note: Sicherheitshinweis
+data_definitions.sql.security_note_text: Vermeiden Sie Benutzereingaben direkt in Abfragen. Verwenden Sie parametrisierte Abfragen, wenn möglich.
+
+# Provider Settings - External SQL
+data_definitions.external_sql.connection: Datenbankverbindung
+data_definitions.external_sql.adapter: Adapter
+data_definitions.external_sql.adapter_help: Datenbanktreiber
+data_definitions.external_sql.host: Host
+data_definitions.external_sql.host_help: Datenbank-Server Hostname oder IP
+data_definitions.external_sql.port: Port
+data_definitions.external_sql.port_help: "Standard: 3306"
+data_definitions.external_sql.database: Datenbankname
+data_definitions.external_sql.credentials: Anmeldedaten
+data_definitions.external_sql.username: Benutzername
+data_definitions.external_sql.password: Passwort
+
+# Provider Settings - Excel
+data_definitions.excel.file: Excel-Datei
+data_definitions.excel.example_file: Beispieldatei (Asset-ID)
+data_definitions.excel.example_file_help: Pimcore Asset-ID
+data_definitions.excel.sheet: Blattname/Index
+data_definitions.excel.sheet_help: Leer lassen für erstes Blatt
+data_definitions.excel.supported_formats: Unterstützte Formate
+data_definitions.excel.supported_formats_help: XLSX, XLS, ODS Dateien werden unterstützt
+data_definitions.excel.settings: Import-Einstellungen
+data_definitions.excel.first_row_headers: Erste Zeile enthält Überschriften
+data_definitions.excel.headers_override: Spaltenüberschriften (Optionale Überschreibung)
+data_definitions.excel.custom_headers: Eigene Überschriften
+data_definitions.excel.custom_headers_help: Ein Spaltenname pro Zeile. Leer lassen, um Überschriften aus Excel-Datei zu verwenden.
+
+# Provider Settings - Raw
+data_definitions.raw.title: Raw Data Provider
+data_definitions.raw.description: Verwenden Sie diesen Provider, wenn Daten programmatisch oder über eigene Loader bereitgestellt werden. Definieren Sie die erwartete Spaltenstruktur unten.
+data_definitions.raw.column_definition: Spaltendefinition
+data_definitions.raw.headers: Spaltenüberschriften
+data_definitions.raw.headers_help: Definieren Sie einen Spaltennamen pro Zeile. Diese stehen für das Feld-Mapping zur Verfügung.
+data_definitions.raw.defined_columns: Definierte Spalten
+
+# Interpreters
+data_definitions.interpreter.default_value: Standardwert
+data_definitions.interpreter.default_value.value: Standardwert
+data_definitions.interpreter.expression: Ausdruck
+data_definitions.interpreter.expression.expression: Ausdruck
+data_definitions.interpreter.expression.expression_help: Symfony Expression Language Ausdruck. Verwenden Sie 'value' für den Eingabewert.
+data_definitions.interpreter.mapping: Mapping
+data_definitions.interpreter.mapping.mapping: Wert-Mapping
+data_definitions.interpreter.mapping.return_null: Null für nicht zugeordnete Werte zurückgeben
+data_definitions.interpreter.twig: Twig
+data_definitions.interpreter.twig.template: Twig-Template
+data_definitions.interpreter.twig.template_help: "Verfügbare Variablen: value, object, data"
+data_definitions.interpreter.type_casting: Typ-Umwandlung
+data_definitions.interpreter.type_casting.type: Umwandeln in Typ
+data_definitions.interpreter.carbon: Carbon (Datum/Zeit)
+data_definitions.interpreter.carbon.format: Datumsformat
+data_definitions.interpreter.carbon.format_help: PHP-Datumsformat (z.B. Y-m-d H:i:s)
+data_definitions.interpreter.href: Objekt-Referenz
+data_definitions.interpreter.href.class: Ziel-Klasse
+data_definitions.interpreter.object_resolver: Objekt-Resolver
+data_definitions.interpreter.object_resolver.class: Ziel-Klasse
+data_definitions.interpreter.object_resolver.match_field: Vergleichsfeld
+data_definitions.interpreter.object_resolver.attribute: Objekt-Attribut
+data_definitions.interpreter.asset_by_path: Asset nach Pfad
+data_definitions.interpreter.asset_by_path.path: Asset-Pfad-Ausdruck
+data_definitions.interpreter.asset_url: Asset nach URL
+data_definitions.interpreter.asset_url.path: Zielpfad
+data_definitions.interpreter.asset_url.deduplicate: Nach URL deduplizieren
+data_definitions.interpreter.asset_url.asset_folder: Asset-Ordner
+data_definitions.interpreter.quantity_value: Mengenwert
+data_definitions.interpreter.quantity_value.unit: Einheit
+data_definitions.interpreter.specific_object: Spezifisches Objekt
+data_definitions.interpreter.specific_object.object_id: Objekt-ID
+data_definitions.interpreter.metadata: Metadaten
+data_definitions.interpreter.metadata.key: Metadaten-Schlüssel
+data_definitions.interpreter.definition: Definition (Verschachtelter Import)
+data_definitions.interpreter.definition.definition: Import-Definition
+data_definitions.interpreter.conditional: Bedingt
+data_definitions.interpreter.conditional.condition: Bedingungs-Ausdruck
+data_definitions.interpreter.conditional.true_interpreter: Interpreter wenn Wahr
+data_definitions.interpreter.conditional.false_interpreter: Interpreter wenn Falsch
+data_definitions.interpreter.iterator: Iterator
+data_definitions.interpreter.iterator.interpreter: Interpreter für jedes Element
+data_definitions.interpreter.nested: Verschachtelte Interpreter
+data_definitions.interpreter.nested.interpreters: Interpreter-Kette
+data_definitions.interpreter.nested.add: Interpreter hinzufügen
+
+# Import Rules Interpreter
+data_definitions.import_rules: Import-Regeln
+data_definitions.import_rule.new_rule: Neue Regel
+data_definitions.import_rule.conditions: Bedingungen
+data_definitions.import_rule.actions: Aktionen
+data_definitions.import_rule.add_condition: Bedingung hinzufügen
+data_definitions.import_rule.add_action: Aktion hinzufügen
+data_definitions.import_rule.no_conditions: Keine Bedingungen definiert
+data_definitions.import_rule.no_actions: Keine Aktionen definiert
+data_definitions.import_rule.no_rules: Keine Regeln definiert
+data_definitions.import_rule.select_or_create: Wählen Sie eine Regel oder erstellen Sie eine neue
+
+# Setters
+data_definitions.setter.localized_field: Lokalisiertes Feld
+data_definitions.setter.localized_field.language: Sprache
+data_definitions.setter.object_brick: Object Brick
+data_definitions.setter.object_brick.type: Brick-Typ
+data_definitions.setter.object_brick.class: Brick-Klasse
+data_definitions.setter.object_brick.field: Brick-Feld
+data_definitions.setter.field_collection: Field Collection
+data_definitions.setter.field_collection.keys: Collection-Schlüssel
+data_definitions.setter.field_collection.class: Field Collection-Klasse
+data_definitions.setter.field_collection.field: Feld
+data_definitions.setter.field_collection.commit: Nach Hinzufügen speichern
+data_definitions.setter.classification_store: Classification Store
+data_definitions.setter.classification_store.group: Store-Gruppen-ID
+data_definitions.setter.classification_store.key: Store-Schlüssel-ID
+
+# Getters (for Export)
+data_definitions.getter.localized_field: Lokalisiertes Feld
+data_definitions.getter.localized_field.language: Sprache
+data_definitions.getter.object_brick: Object Brick
+data_definitions.getter.object_brick.type: Brick-Typ
+data_definitions.getter.object_brick.class: Brick-Klasse
+data_definitions.getter.object_brick.field: Brick-Feld
+data_definitions.getter.field_collection: Field Collection
+data_definitions.getter.field_collection.keys: Collection-Schlüssel
+data_definitions.getter.field_collection.class: Field Collection-Klasse
+data_definitions.getter.classification_store: Classification Store
+data_definitions.getter.classification_store.group: Store-Gruppen-ID
+data_definitions.getter.classification_store.key: Store-Schlüssel-ID
+
+# Messages
+data_definitions.save_success: Definition erfolgreich gespeichert
+data_definitions.save_error: Fehler beim Speichern der Definition
+data_definitions.delete_confirm: Sind Sie sicher, dass Sie diese Definition löschen möchten?
+data_definitions.delete_success: Definition erfolgreich gelöscht
+data_definitions.delete_error: Fehler beim Löschen der Definition
+data_definitions.add_success: Definition erfolgreich erstellt
+data_definitions.add_error: Fehler beim Erstellen der Definition
+data_definitions.duplicate_success: Definition erfolgreich dupliziert
+data_definitions.duplicate_error: Fehler beim Duplizieren der Definition
+data_definitions.select_provider_first: Bitte wählen Sie zuerst einen Provider im Tab Einstellungen.

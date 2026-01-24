@@ -1,10 +1,14 @@
 {
   "name": "instride/data-definitions",
   "type": "pimcore-bundle",
-  "license": "GPL-3.0-or-later",
+  "license": "proprietary",
   "config": {
     "optimize-autoloader": true,
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "php-http/discovery": true,
+      "symfony/runtime": true
+    }
   },
   "description": "Data Definitions allows you to define your DataObject Imports and Exports using a nice GUI and re-run the definitions as often you like.",
   "keywords": [
@@ -29,21 +33,23 @@
     }
   ],
   "require": {
-    "php": "^8.3",
+    "php": "^8.4",
     "ext-json": "*",
-    "coreshop/pimcore-bundle": "^5.0",
-    "coreshop/resource-bundle": "^5.0",
-    "coreshop/rule-bundle": "^5.0",
+    "coreshop/core-shop": "dev-studiov2",
     "jms/serializer": "^3.17",
     "league/csv": "^9.7",
     "nyholm/psr7": "^1.5",
     "openspout/openspout": "^4.23",
-    "pimcore/admin-ui-classic-bundle": "^2.0",
-    "pimcore/pimcore": "^12.3",
+    "pimcore/pimcore": "^12.0",
+    "pimcore/studio-backend-bundle": "^0.13.20",
+    "pimcore/studio-ui-bundle": "^0.13.20",
     "psr/http-client-implementation": "^1.0",
     "psr/http-factory-implementation": "^1.0",
     "symfony/dotenv": "^6.3 | ^7.0",
-    "symfony/http-client": "^6.3 | ^7.0"
+    "symfony/framework-bundle": "^6.4",
+    "symfony/http-client": "^6.3 | ^7.0",
+    "symfony/http-kernel": "^6.4",
+    "symfony/runtime": "^6.4"
   },
   "require-dev": {
     "behat/behat": "^3.8",
@@ -89,5 +95,11 @@
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "repositories": {
+    "coreshop-pr": {
+      "type": "vcs",
+      "url": "https://github.com/dpfaffenbauer/CoreShop"
+    }
+  }
 }

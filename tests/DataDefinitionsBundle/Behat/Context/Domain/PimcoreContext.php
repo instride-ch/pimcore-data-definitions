@@ -4,12 +4,12 @@
  *
  * LICENSE
  *
- * This source file is subject to the GNU General Public License version 3 (GPLv3)
- * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
- * files that are distributed with this source code.
+ * This source file is available under the Data Definitions Commercial License (DDCL).
+ * Full copyright and license information is available in LICENSE.md
+ * which is distributed with this source code.
  *
- * @copyright 2024 instride AG (https://instride.ch)
- * @license   https://github.com/instride-ch/DataDefinitions/blob/5.0/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\Behat\Context\Domain;

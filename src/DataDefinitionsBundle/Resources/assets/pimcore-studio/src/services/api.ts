@@ -1,140 +1,175 @@
 /**
- * Data Definitions API Service
+ * DataDefinitions API Service
  */
 
-import type { ImportDefinition, ExportDefinition, DefinitionConfig } from '../types/definitions'
+import { EntityApi } from '@coreshop/resource/src/entities'
+import type { ImportDefinition, ExportDefinition, DefinitionConfig, ColumnResponse } from '../types/definitions'
 
-const API_BASE = '/admin/data_definitions'
+/**
+ * Import Definition API - extends CoreShop EntityApi
+ */
+export class ImportDefinitionApi extends EntityApi<ImportDefinition> {
+  constructor() {
+    super({
+      basePath: '/pimcore-studio/api',
+      resourcePath: '/data_definitions/import_definitions'
+    })
+  }
 
-class ApiError extends Error {
-  constructor(message: string, public status?: number) {
-    super(message)
-    this.name = 'ApiError'
+  protected buildUrl(route: string): string {
+    return `/pimcore-studio/api/data_definitions/import_definitions${route}`
+  }
+  /**
+   * Get import configuration (providers, loaders, interpreters, etc.)
+   */
+  async getConfig(): Promise<DefinitionConfig> {
+    const url = this.buildUrl('/get-config')
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin'
+    })
+    if (!response.ok) throw new Error('Failed to fetch import config')
+    return await response.json()
+  }
+
+  /**
+   * Get columns for a definition (fromColumns, toColumns, existing mapping)
+   */
+  async getColumns(definitionId: number): Promise<ColumnResponse> {
+    const url = this.buildUrl(`/get-columns?id=${definitionId}`)
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin'
+    })
+    if (!response.ok) throw new Error('Failed to fetch columns')
+    return await response.json()
+  }
+
+  /**
+   * Export a definition as JSON file
+   */
+  async export(definitionId: number): Promise<Blob> {
+    const url = this.buildUrl(`/export?id=${definitionId}`)
+    const response = await fetch(url, {
+      method: 'POST',
+      credentials: 'same-origin'
+    })
+    if (!response.ok) throw new Error('Failed to export definition')
+    return await response.blob()
+  }
+
+  /**
+   * Import a definition from JSON file
+   */
+  async import(definitionId: number, file: File): Promise<ImportDefinition> {
+    const formData = new FormData()
+    formData.append('Filedata', file)
+    formData.append('id', String(definitionId))
+
+    const url = this.buildUrl('/import')
+    const response = await fetch(url, {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: formData
+    })
+    if (!response.ok) throw new Error('Failed to import definition')
+    const data = await response.json()
+    return data.data
+  }
+
+  /**
+   * Duplicate a definition
+   */
+  async duplicate(definitionId: number, name: string): Promise<ImportDefinition> {
+    const url = this.buildUrl('/duplicate')
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ id: definitionId, name })
+    })
+    if (!response.ok) throw new Error('Failed to duplicate definition')
+    const data = await response.json()
+    return data.data
   }
 }
 
-async function handleResponse<T>(response: Response): Promise<T> {
-  if (!response.ok) {
-    throw new ApiError(`API request failed: ${response.statusText}`, response.status)
-  }
-  const data = await response.json()
-  return data
-}
-
-class DataDefinitionsApi {
-  // Import Definitions
-  async getImportDefinitions(): Promise<ImportDefinition[]> {
-    const response = await fetch(`${API_BASE}/import_definitions/list`)
-    const data = await handleResponse<{ data: ImportDefinition[] }>(response)
-    return data.data || []
+/**
+ * Export Definition API - extends CoreShop EntityApi
+ */
+export class ExportDefinitionApi extends EntityApi<ExportDefinition> {
+  constructor() {
+    super({
+      basePath: '/pimcore-studio/api',
+      resourcePath: '/data_definitions/export_definitions'
+    })
   }
 
-  async getImportDefinition(id: number): Promise<ImportDefinition> {
-    const response = await fetch(`${API_BASE}/import_definitions/get?id=${encodeURIComponent(id)}`)
-    const data = await handleResponse<{ data: ImportDefinition }>(response)
-    return data.data
+  protected buildUrl(route: string): string {
+    return `/pimcore-studio/api/data_definitions/export_definitions${route}`
+  }
+  /**
+   * Get export configuration (providers, interpreters, etc.)
+   */
+  async getConfig(): Promise<DefinitionConfig> {
+    const url = this.buildUrl('/get-config')
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin'
+    })
+    if (!response.ok) throw new Error('Failed to fetch export config')
+    return await response.json()
   }
 
-  async addImportDefinition(name: string): Promise<ImportDefinition> {
-    const response = await fetch(`${API_BASE}/import_definitions/add`, {
+  /**
+   * Get columns for a definition
+   */
+  async getColumns(definitionId: number): Promise<ColumnResponse> {
+    const url = this.buildUrl(`/get-columns?id=${definitionId}`)
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin'
+    })
+    if (!response.ok) throw new Error('Failed to fetch columns')
+    return await response.json()
+  }
+
+  /**
+   * Export a definition as JSON file
+   */
+  async export(definitionId: number): Promise<Blob> {
+    const url = this.buildUrl(`/export?id=${definitionId}`)
+    const response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name: name.trim() })
+      credentials: 'same-origin'
     })
-    const data = await handleResponse<{ data: ImportDefinition }>(response)
-    return data.data
+    if (!response.ok) throw new Error('Failed to export definition')
+    return await response.blob()
   }
 
-  async saveImportDefinition(definition: ImportDefinition): Promise<ImportDefinition> {
-    const response = await fetch(`${API_BASE}/import_definitions/save`, {
+  /**
+   * Duplicate a definition
+   */
+  async duplicate(definitionId: number, name: string): Promise<ExportDefinition> {
+    const url = this.buildUrl('/duplicate')
+    const response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(definition)
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ id: definitionId, name })
     })
-    const data = await handleResponse<{ data: ImportDefinition }>(response)
+    if (!response.ok) throw new Error('Failed to duplicate definition')
+    const data = await response.json()
     return data.data
-  }
-
-  async deleteImportDefinition(id: number): Promise<void> {
-    const response = await fetch(`${API_BASE}/import_definitions/delete?id=${encodeURIComponent(id)}`, {
-      method: 'DELETE'
-    })
-    await handleResponse<void>(response)
-  }
-
-  async getImportConfig(): Promise<DefinitionConfig> {
-    const response = await fetch(`${API_BASE}/import_definitions/get-config`)
-    return await handleResponse<DefinitionConfig>(response)
-  }
-
-  async runImportDefinition(id: number, params?: Record<string, string>): Promise<void> {
-    const queryParams = new URLSearchParams({ id: id.toString(), ...params })
-    const response = await fetch(`${API_BASE}/import_definitions/import?${queryParams}`, {
-      method: 'POST'
-    })
-    await handleResponse<void>(response)
-  }
-
-  // Export Definitions
-  async getExportDefinitions(): Promise<ExportDefinition[]> {
-    const response = await fetch(`${API_BASE}/export_definitions/list`)
-    const data = await handleResponse<{ data: ExportDefinition[] }>(response)
-    return data.data || []
-  }
-
-  async getExportDefinition(id: number): Promise<ExportDefinition> {
-    const response = await fetch(`${API_BASE}/export_definitions/get?id=${encodeURIComponent(id)}`)
-    const data = await handleResponse<{ data: ExportDefinition }>(response)
-    return data.data
-  }
-
-  async addExportDefinition(name: string): Promise<ExportDefinition> {
-    const response = await fetch(`${API_BASE}/export_definitions/add`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name: name.trim() })
-    })
-    const data = await handleResponse<{ data: ExportDefinition }>(response)
-    return data.data
-  }
-
-  async saveExportDefinition(definition: ExportDefinition): Promise<ExportDefinition> {
-    const response = await fetch(`${API_BASE}/export_definitions/save`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(definition)
-    })
-    const data = await handleResponse<{ data: ExportDefinition }>(response)
-    return data.data
-  }
-
-  async deleteExportDefinition(id: number): Promise<void> {
-    const response = await fetch(`${API_BASE}/export_definitions/delete?id=${encodeURIComponent(id)}`, {
-      method: 'DELETE'
-    })
-    await handleResponse<void>(response)
-  }
-
-  async getExportConfig(): Promise<DefinitionConfig> {
-    const response = await fetch(`${API_BASE}/export_definitions/get-config`)
-    return await handleResponse<DefinitionConfig>(response)
-  }
-
-  async runExportDefinition(id: number, params?: Record<string, string>): Promise<void> {
-    const queryParams = new URLSearchParams({ id: id.toString(), ...params })
-    const response = await fetch(`${API_BASE}/export_definitions/export?${queryParams}`, {
-      method: 'POST'
-    })
-    await handleResponse<void>(response)
   }
 }
 
-export const dataDefinitionsApi = new DataDefinitionsApi()
+/**
+ * API Instances
+ */
+export const importDefinitionApi = new ImportDefinitionApi()
+export const exportDefinitionApi = new ExportDefinitionApi()

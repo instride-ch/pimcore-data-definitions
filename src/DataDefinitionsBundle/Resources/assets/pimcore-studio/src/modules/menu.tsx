@@ -6,10 +6,10 @@
 
 import { container } from '@pimcore/studio-ui-bundle'
 import { serviceIds } from '@pimcore/studio-ui-bundle/app'
-import { type MainNavRegistry, type IMainNavItem } from '@pimcore/studio-ui-bundle/modules/app'
-import { type WidgetRegistry } from '@pimcore/studio-ui-bundle/modules/widget-manager'
-import { ImportDefinitionsPanel } from '../components/import/ImportDefinitionsPanel'
-import { ExportDefinitionsPanel } from '../components/export/ExportDefinitionsPanel'
+import { MainNavRegistry, type IMainNavItem } from '@pimcore/studio-ui-bundle/modules/app'
+import { WidgetRegistry } from '@pimcore/studio-ui-bundle/modules/widget-manager'
+import { ImportDefinitionManager } from '../components/import/ImportDefinitionManager'
+import { ExportDefinitionManager } from '../components/export/ExportDefinitionManager'
 
 export const DataDefinitionsMenuModule = {
   onInit(): void {
@@ -19,13 +19,13 @@ export const DataDefinitionsMenuModule = {
     // Register Import Definitions widget
     widgetRegistry.registerWidget({
       name: 'data-definitions-import',
-      component: ImportDefinitionsPanel
+      component: ImportDefinitionManager
     })
 
     // Register Export Definitions widget
     widgetRegistry.registerWidget({
       name: 'data-definitions-export',
-      component: ExportDefinitionsPanel
+      component: ExportDefinitionManager
     })
 
     // Register main navigation item for Data Definitions

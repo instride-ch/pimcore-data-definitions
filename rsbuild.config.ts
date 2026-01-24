@@ -6,6 +6,7 @@ import { defineConfig } from '@rsbuild/core'
 import { pluginReact } from '@rsbuild/plugin-react'
 import { pluginSvgr } from '@rsbuild/plugin-svgr'
 import { pluginModuleFederation } from '@module-federation/rsbuild-plugin'
+import { pluginGenerateEntrypoints } from '@pimcore/studio-ui-bundle/rsbuild/plugins'
 import path from 'path'
 import fs from 'fs'
 import { v4 } from 'uuid'
@@ -71,7 +72,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@DataDefinitions': path.resolve(studioAssetsPath, 'src'),
-      '@DataDefinitions/assets': path.resolve(studioAssetsPath, 'src/assets')
+      '@DataDefinitions/assets': path.resolve(studioAssetsPath, 'src/assets'),
+      '@coreshop/resource': path.resolve(__dirname, 'vendor/coreshop/core-shop/src/CoreShop/Bundle/ResourceBundle/Resources/assets/pimcore-studio')
     }
   },
   output: {
@@ -87,6 +89,7 @@ export default defineConfig({
     }
   },
   plugins: [
+    pluginGenerateEntrypoints(),
     pluginReact(),
     pluginSvgr({
       svgrOptions: {

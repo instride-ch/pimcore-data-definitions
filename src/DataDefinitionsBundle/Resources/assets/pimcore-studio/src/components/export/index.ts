@@ -2,5 +2,5 @@
  * Export Components Export
  */
 
-export { ExportDefinitionsPanel } from './ExportDefinitionsPanel'
-export { ExportDefinitionEditor } from './ExportDefinitionEditor'
+export { ExportDefinitionManager } from './ExportDefinitionManager'
+export { ExportDefinitionDetail } from './ExportDefinitionDetail'

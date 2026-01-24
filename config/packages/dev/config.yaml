@@ -1,2 +1,8 @@
 imports:
     - { resource: ../../config.yaml }
+
+framework:
+    trusted_proxies: '192.0.0.1/8,10.0.0.0/8,172.0.0.0/8'
+    trusted_headers: [ 'x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port' ]
+    session:
+        cookie_samesite: 'lax'

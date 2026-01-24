@@ -60,7 +60,6 @@ Icon\?
 *.sublime-project
 .idea/
 composer.lock
-docker-compose.yml
 config/local
 var/classes
 var/config

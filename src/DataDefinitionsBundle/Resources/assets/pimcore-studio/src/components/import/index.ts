@@ -2,5 +2,5 @@
  * Import Components Export
  */
 
-export { ImportDefinitionsPanel } from './ImportDefinitionsPanel'
-export { ImportDefinitionEditor } from './ImportDefinitionEditor'
+export { ImportDefinitionManager } from './ImportDefinitionManager'
+export { ImportDefinitionDetail } from './ImportDefinitionDetail'

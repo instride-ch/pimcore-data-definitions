@@ -3,14 +3,12 @@
 declare(strict_types=1);
 
 /*
- * This source file is available under two different licenses:
- *  - GNU General Public License version 3 (GPLv3)
- *  - Data Definitions Commercial License (DDCL)
+ * This source file is available under the Data Definitions Commercial License (DDCL).
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh) in combination with instride AG (https://instride.ch)
- * @license    GPLv3 and DDCL
+ * @license    DDCL
  */
 
 namespace Instride\Bundle\DataDefinitionsBundle\DependencyInjection;
@@ -133,6 +131,11 @@ class DataDefinitionsExtension extends AbstractModelExtension implements Prepend
 
         $container->setParameter('data_definitions.import_definitions', $config['import_definitions']);
         $container->setParameter('data_definitions.export_definitions', $config['export_definitions']);
+
+        // Load Studio UI integration if available
+        if (interface_exists(\Pimcore\Bundle\StudioUiBundle\Webpack\WebpackEntryPointProviderInterface::class)) {
+            $loader->load('services/studio.yaml');
+        }
     }
 
     public function prepend(ContainerBuilder $container): void

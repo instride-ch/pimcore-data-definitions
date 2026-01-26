@@ -66,8 +66,8 @@ export const ImportRuleConfig: React.FC<InterpreterConfigProps> = ({
   const [rules, setRules] = useState<ImportRule[]>(config.rules || [])
   const [selectedRuleId, setSelectedRuleId] = useState<string | null>(null)
 
-  const availableConditions = definitionConfig.import_rules?.conditions || []
-  const availableActions = definitionConfig.import_rules?.actions || []
+  const availableConditions = definitionConfig?.import_rules?.conditions || []
+  const availableActions = definitionConfig?.import_rules?.actions || []
   const initializedRef = useRef(false)
 
   // Initialize config with correct structure if it doesn't have rules

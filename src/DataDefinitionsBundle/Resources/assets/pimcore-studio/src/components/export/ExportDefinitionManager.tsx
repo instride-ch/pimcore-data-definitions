@@ -1,12 +1,11 @@
 /**
  * Export Definition Manager Component
- * Uses CoreShop EntityTabbedManager for consistent UI
  */
 
 import React from 'react'
 import { Modal, Input, message } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { EntityTabbedManager } from '@coreshop/resource/src/entities'
+import { TabbedEntityManager } from '../shared/TabbedEntityManager'
 import { exportDefinitionApi } from '../../services/api'
 import type { ExportDefinition, DefinitionConfig } from '../../types/definitions'
 import { ExportDefinitionDetail } from './ExportDefinitionDetail'
@@ -49,7 +48,7 @@ export const ExportDefinitionManager: React.FC = () => {
           }
           try {
             const res = await exportDefinitionApi.add({ name })
-            resolve(res.data.id!)
+            resolve(res.id!)
           } catch (error) {
             message.error('Failed to create definition')
             reject(error)
@@ -60,19 +59,31 @@ export const ExportDefinitionManager: React.FC = () => {
     })
   }
 
+  const buildSavePayload = (data: ExportDefinition): Record<string, any> => {
+    // Filter out mappings without toColumn
+    const filteredMappings = (data.mapping || []).filter(
+      m => m.toColumn != null && m.toColumn !== ''
+    )
+    return {
+      ...data,
+      mapping: filteredMappings
+    }
+  }
+
   return (
-    <EntityTabbedManager<ExportDefinition>
+    <TabbedEntityManager<ExportDefinition>
       api={exportDefinitionApi}
-      getTitle={(listItem, data) => data?.name ?? listItem?.name ?? 'Export Definition'}
+      title={t('data_definitions.menu.export')}
       onAdd={handleAdd}
-      leftRootTitle={t('data_definitions.menu.export')}
+      buildSavePayload={buildSavePayload}
+      getTabTitle={(item) => item.name || `#${item.id}`}
       renderDetail={(data, setData) => {
-        if (!data || !config) return null
+        if (!config) return null
         return (
           <ExportDefinitionDetail
             definition={data}
             config={config}
-            onChange={(updated) => setData(updated)}
+            onChange={setData}
           />
         )
       }}

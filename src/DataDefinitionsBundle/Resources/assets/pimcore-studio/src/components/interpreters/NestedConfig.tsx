@@ -63,7 +63,7 @@ export const NestedConfig: React.FC<InterpreterConfigProps> = ({
           value={undefined}
           style={{ width: '100%', marginBottom: 16 }}
         >
-          {definitionConfig.interpreter
+          {definitionConfig?.interpreter
             ?.filter(i => i !== 'nested')
             .map(i => (
               <Select.Option key={i} value={i}>{i}</Select.Option>
@@ -108,7 +108,7 @@ export const NestedConfig: React.FC<InterpreterConfigProps> = ({
                 value={interpreter.type}
                 onChange={type => updateInterpreterType(index, type)}
               >
-                {definitionConfig.interpreter
+                {definitionConfig?.interpreter
                   ?.filter(i => i !== 'nested')
                   .map(i => (
                     <Select.Option key={i} value={i}>{i}</Select.Option>

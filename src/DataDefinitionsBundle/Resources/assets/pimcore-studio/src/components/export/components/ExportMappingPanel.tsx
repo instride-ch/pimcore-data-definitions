@@ -128,7 +128,8 @@ export const ExportMappingPanel: React.FC<ExportMappingPanelProps> = ({
   const mappings = definition.mapping || []
 
   // Group mappings by their path/type
-  const getGroupKey = (fromColumn: string): string => {
+  const getGroupKey = (fromColumn: string | undefined): string => {
+    if (!fromColumn) return 'fields'
     // Check for localized fields
     if (fromColumn.includes('~')) {
       const parts = fromColumn.split('~')

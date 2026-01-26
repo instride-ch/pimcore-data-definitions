@@ -21,18 +21,18 @@ const loadClasses = async (): Promise<string[]> => {
   if (cachedClasses) return cachedClasses
   if (loadPromise) return loadPromise
 
-  loadPromise = (async () => {
+  loadPromise = (async (): Promise<string[]> => {
     try {
       const response = await fetch('/pimcore-studio/api/class/collection')
       const data = await response.json()
+      let result: string[] = []
       if (data.items && Array.isArray(data.items)) {
-        cachedClasses = data.items.map((c: any) => c.name || c.id)
+        result = data.items.map((c: any) => c.name || c.id)
       } else if (Array.isArray(data)) {
-        cachedClasses = data.map((c: any) => c.name || c.text || c.id)
-      } else {
-        cachedClasses = []
+        result = data.map((c: any) => c.name || c.text || c.id)
       }
-      return cachedClasses
+      cachedClasses = result
+      return result
     } catch (err) {
       console.error('Failed to load classes:', err)
       return []

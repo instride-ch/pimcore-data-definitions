@@ -136,6 +136,7 @@ export const ExportDefinitionEditor: React.FC<ExportDefinitionEditorProps> = ({
   }
 
   const handleExportDefinition = async () => {
+    if (!definition.id) return
     try {
       const blob = await exportDefinitionApi.export(definition.id)
       const url = window.URL.createObjectURL(blob)
@@ -152,13 +153,15 @@ export const ExportDefinitionEditor: React.FC<ExportDefinitionEditorProps> = ({
   }
 
   const handleDuplicate = () => {
+    if (!definition.id) return
+    const defId = definition.id
     Modal.confirm({
       title: 'Duplicate Definition',
       content: <Input id="duplicate-name" defaultValue={`${definition.name} (Copy)`} />,
       onOk: async () => {
         const nameInput = document.getElementById('duplicate-name') as HTMLInputElement
         try {
-          await exportDefinitionApi.duplicate(definition.id, nameInput?.value || `${definition.name} (Copy)`)
+          await exportDefinitionApi.duplicate(defId, nameInput?.value || `${definition.name} (Copy)`)
           message.success('Definition duplicated')
         } catch (error) {
           message.error('Failed to duplicate')

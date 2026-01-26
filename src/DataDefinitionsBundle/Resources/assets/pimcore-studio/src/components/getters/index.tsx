@@ -14,7 +14,7 @@ import type { ConfigRegistry } from '../../registry/base-config-registry'
 export interface GetterConfigProps {
   type: string
   config: Record<string, any>
-  definitionConfig: DefinitionConfig
+  definitionConfig?: DefinitionConfig
   fromColumnConfig?: Record<string, any>
   onChange: (config: Record<string, any>) => void
 }

@@ -51,7 +51,7 @@ export const ImportDefinitionEditor: React.FC<ImportDefinitionEditorProps> = ({
   const [selectedMappingIndex, setSelectedMappingIndex] = useState<number | null>(null)
   const [providerConfig, setProviderConfig] = useState<Record<string, any>>(definition.configuration || {})
   const [selectedProvider, setSelectedProvider] = useState<string | undefined>(definition.provider)
-  const [fromColumns, setFromColumns] = useState<Array<{ id: string; identifier: string; label?: string }>>([])
+  const [fromColumns, setFromColumns] = useState<Array<{ id?: string; identifier: string; label?: string }>>([])
   const [toColumns, setToColumns] = useState<Array<{ identifier: string; label?: string; group?: string }>>([])
   const [availableClasses, setAvailableClasses] = useState<string[]>([])
   const [expandedKeys, setExpandedKeys] = useState<string[]>(['fields', 'systemColumn'])
@@ -95,6 +95,7 @@ export const ImportDefinitionEditor: React.FC<ImportDefinitionEditorProps> = ({
   }
 
   const loadColumns = async () => {
+    if (!definition.id) return
     try {
       const columns = await importDefinitionApi.getColumns(definition.id)
       setFromColumns(columns.fromColumns)
@@ -151,6 +152,7 @@ export const ImportDefinitionEditor: React.FC<ImportDefinitionEditorProps> = ({
   }
 
   const handleExportDefinition = async () => {
+    if (!definition.id) return
     try {
       const blob = await importDefinitionApi.export(definition.id)
       const url = window.URL.createObjectURL(blob)
@@ -167,13 +169,15 @@ export const ImportDefinitionEditor: React.FC<ImportDefinitionEditorProps> = ({
   }
 
   const handleDuplicate = () => {
+    if (!definition.id) return
+    const defId = definition.id
     Modal.confirm({
       title: 'Duplicate Definition',
       content: <Input id="duplicate-name" defaultValue={`${definition.name} (Copy)`} />,
       onOk: async () => {
         const nameInput = document.getElementById('duplicate-name') as HTMLInputElement
         try {
-          await importDefinitionApi.duplicate(definition.id, nameInput?.value || `${definition.name} (Copy)`)
+          await importDefinitionApi.duplicate(defId, nameInput?.value || `${definition.name} (Copy)`)
           message.success('Definition duplicated')
         } catch (error) {
           message.error('Failed to duplicate')

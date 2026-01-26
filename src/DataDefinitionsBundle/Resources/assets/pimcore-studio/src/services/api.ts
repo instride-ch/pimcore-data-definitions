@@ -2,23 +2,86 @@
  * DataDefinitions API Service
  */
 
-import { EntityApi } from '@coreshop/resource/src/entities'
 import type { ImportDefinition, ExportDefinition, DefinitionConfig, ColumnResponse } from '../types/definitions'
 
+interface EntityWithId {
+  id?: number
+}
+
 /**
- * Import Definition API - extends CoreShop EntityApi
+ * Base API class for entity operations
  */
-export class ImportDefinitionApi extends EntityApi<ImportDefinition> {
-  constructor() {
-    super({
-      basePath: '/pimcore-studio/api',
-      resourcePath: '/data_definitions/import_definitions'
+abstract class BaseEntityApi<T extends EntityWithId> {
+  protected abstract buildUrl(route: string): string
+
+  async list(): Promise<T[]> {
+    const url = this.buildUrl('/list')
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin'
     })
+    if (!response.ok) throw new Error('Failed to fetch list')
+    const data = await response.json()
+    return data.data || data
   }
 
+  async get(id: number): Promise<T> {
+    const url = this.buildUrl(`/get?id=${id}`)
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin'
+    })
+    if (!response.ok) throw new Error('Failed to fetch entity')
+    const data = await response.json()
+    return data.data || data
+  }
+
+  async add(entity: Partial<T>): Promise<T> {
+    const url = this.buildUrl('/add')
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(entity)
+    })
+    if (!response.ok) throw new Error('Failed to add entity')
+    const data = await response.json()
+    return data.data || data
+  }
+
+  async save(entity: T): Promise<T> {
+    const url = this.buildUrl('/save')
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(entity)
+    })
+    if (!response.ok) throw new Error('Failed to save entity')
+    const data = await response.json()
+    return data.data || data
+  }
+
+  async delete(id: number): Promise<void> {
+    const url = this.buildUrl(`/delete?id=${id}`)
+    const response = await fetch(url, {
+      method: 'DELETE',
+      credentials: 'same-origin'
+    })
+    if (!response.ok) throw new Error('Failed to delete entity')
+  }
+}
+
+/**
+ * Import Definition API
+ */
+export class ImportDefinitionApi extends BaseEntityApi<ImportDefinition> {
   protected buildUrl(route: string): string {
     return `/pimcore-studio/api/data_definitions/import_definitions${route}`
   }
+
   /**
    * Get import configuration (providers, loaders, interpreters, etc.)
    */
@@ -97,19 +160,13 @@ export class ImportDefinitionApi extends EntityApi<ImportDefinition> {
 }
 
 /**
- * Export Definition API - extends CoreShop EntityApi
+ * Export Definition API
  */
-export class ExportDefinitionApi extends EntityApi<ExportDefinition> {
-  constructor() {
-    super({
-      basePath: '/pimcore-studio/api',
-      resourcePath: '/data_definitions/export_definitions'
-    })
-  }
-
+export class ExportDefinitionApi extends BaseEntityApi<ExportDefinition> {
   protected buildUrl(route: string): string {
     return `/pimcore-studio/api/data_definitions/export_definitions${route}`
   }
+
   /**
    * Get export configuration (providers, interpreters, etc.)
    */

@@ -131,7 +131,8 @@ export const MappingPanel: React.FC<MappingPanelProps> = ({
   const mappings = definition.mapping || []
 
   // Group mappings by their path/type
-  const getGroupKey = (toColumn: string): string => {
+  const getGroupKey = (toColumn: string | undefined): string => {
+    if (!toColumn) return 'fields'
     // Check for localized fields (e.g., localizedfield.en)
     if (toColumn.includes('~')) {
       const parts = toColumn.split('~')

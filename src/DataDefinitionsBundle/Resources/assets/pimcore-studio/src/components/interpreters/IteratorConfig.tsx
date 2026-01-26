@@ -42,7 +42,7 @@ export const IteratorConfig: React.FC<InterpreterConfigProps> = ({
           allowClear
           placeholder={t('data_definitions.select_interpreter')}
         >
-          {definitionConfig.interpreter?.map(i => (
+          {definitionConfig?.interpreter?.map(i => (
             <Select.Option key={i} value={i}>{i}</Select.Option>
           ))}
         </Select>

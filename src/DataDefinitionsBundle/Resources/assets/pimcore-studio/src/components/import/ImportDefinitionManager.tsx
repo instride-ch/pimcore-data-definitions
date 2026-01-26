@@ -1,12 +1,11 @@
 /**
  * Import Definition Manager Component
- * Uses CoreShop EntityTabbedManager for consistent UI
  */
 
 import React from 'react'
 import { Modal, Input, message } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { EntityTabbedManager } from '@coreshop/resource/src/entities'
+import { TabbedEntityManager } from '../shared/TabbedEntityManager'
 import { importDefinitionApi } from '../../services/api'
 import type { ImportDefinition, DefinitionConfig } from '../../types/definitions'
 import { ImportDefinitionDetail } from './ImportDefinitionDetail'
@@ -49,7 +48,7 @@ export const ImportDefinitionManager: React.FC = () => {
           }
           try {
             const res = await importDefinitionApi.add({ name })
-            resolve(res.data.id!)
+            resolve(res.id!)
           } catch (error) {
             message.error('Failed to create definition')
             reject(error)
@@ -72,19 +71,19 @@ export const ImportDefinitionManager: React.FC = () => {
   }
 
   return (
-    <EntityTabbedManager<ImportDefinition>
+    <TabbedEntityManager<ImportDefinition>
       api={importDefinitionApi}
-      getTitle={(listItem, data) => data?.name ?? listItem?.name ?? 'Import Definition'}
-      buildSavePayload={buildSavePayload}
+      title={t('data_definitions.menu.import')}
       onAdd={handleAdd}
-      leftRootTitle={t('data_definitions.menu.import')}
+      buildSavePayload={buildSavePayload}
+      getTabTitle={(item) => item.name || `#${item.id}`}
       renderDetail={(data, setData) => {
-        if (!data || !config) return null
+        if (!config) return null
         return (
           <ImportDefinitionDetail
             definition={data}
             config={config}
-            onChange={(updated) => setData(updated)}
+            onChange={setData}
           />
         )
       }}

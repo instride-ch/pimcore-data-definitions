@@ -22,7 +22,6 @@ use Instride\Bundle\DataDefinitionsBundle\Exception\DoNotSetException;
 use Instride\Bundle\DataDefinitionsBundle\Exception\UnexpectedValueException;
 use Instride\Bundle\DataDefinitionsBundle\Filter\FilterInterface;
 use Instride\Bundle\DataDefinitionsBundle\Interpreter\InterpreterInterface;
-use Instride\Bundle\DataDefinitionsBundle\Loader\LoaderInterface;
 use Instride\Bundle\DataDefinitionsBundle\Messenger\ImportRowMessage;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportMapping;

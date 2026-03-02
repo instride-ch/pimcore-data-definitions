@@ -16,10 +16,10 @@ namespace Instride\Bundle\DataDefinitionsBundle\Command;
 
 use Exception;
 use Instride\Bundle\DataDefinitionsBundle\Importer\AsyncImporterInterface;
-use Pimcore\Model\Exception\NotFoundException;
 use Instride\Bundle\DataDefinitionsBundle\Model\ImportDefinitionInterface;
 use Instride\Bundle\DataDefinitionsBundle\Repository\DefinitionRepository;
 use Pimcore\Console\AbstractCommand;
+use Pimcore\Model\Exception\NotFoundException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
